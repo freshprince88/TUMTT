@@ -1,7 +1,8 @@
+using System;
+using System.Collections.Generic;
+using Caliburn.Micro;
+
 namespace TT.Viewer {
-    using System;
-    using System.Collections.Generic;
-    using Caliburn.Micro;
 
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
