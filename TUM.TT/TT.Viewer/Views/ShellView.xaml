@@ -4,8 +4,8 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:lib="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
                    
-        Width="600"
-        Height="800"
+        Width="800"
+        Height="600"
         EnableDWMDropShadow="True"
         ResizeMode="CanResizeWithGrip"
 
@@ -38,26 +38,36 @@
             <ColumnDefinition x:Name="Column3" Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Expander x:Name="MenuExpander" ExpandDirection="Right" Margin="0 0 0 0">
+        <Expander x:Name="MenuExpander" ExpandDirection="Right" Margin="0 0 0 0" IsExpanded="True">
             <Expander.Header>
                 <TabControl x:Name="HeaderTabControl" TabStripPlacement="Left">
-                    <TabItem x:Name="PositionsTabHeader" Header="1"/>
-                    <TabItem x:Name="OrdersTabHeader" Header="2"/>
-                    <TabItem x:Name="TradesTabHeader" Header="3"/>
+                    <TabItem x:Name="ServiceTabHeader" Header="A"/>
+                    <TabItem x:Name="ReceiveTabHeader" Header="R"/>
+                    <TabItem x:Name="ThirdTabHeader" Header="3"/>
+                    <TabItem x:Name="LastTabHeader" Header="L"/>
+                    <TabItem x:Name="KombiTabHeader" Header="K"/>
                 </TabControl>
             </Expander.Header>
             <TabControl>
                 <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=PositionsTabHeader, Path=IsSelected}">
-                    Positions go here
+                 IsSelected="{Binding ElementName=ServiceTabHeader, Path=IsSelected}">
+                    Aufschlag
                 </TabItem>
                 <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=OrdersTabHeader, Path=IsSelected}">
-                    Orders go here
+                 IsSelected="{Binding ElementName=ReceiveTabHeader, Path=IsSelected}">
+                    Rueckschlag
                 </TabItem>
                 <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=TradesTabHeader, Path=IsSelected}">
-                    Trades go here
+                 IsSelected="{Binding ElementName=ThirdTabHeader, Path=IsSelected}">
+                    Dritter Ball
+                </TabItem>
+                <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=LastTabHeader, Path=IsSelected}">
+                    Letzter Ball
+                </TabItem>
+                <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=KombiTabHeader, Path=IsSelected}">
+                    Kombi
                 </TabItem>
             </TabControl>
         </Expander>
@@ -65,7 +75,18 @@
 
         </Border>
         <Border Grid.Column="2" BorderThickness="1 0 0 0" BorderBrush="Black">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
+                <MediaElement Grid.Row="0">
+
+                </MediaElement>
+
+            </Grid>                        
         </Border>
     </Grid>
 </Controls:MetroWindow>
