@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
+using TT.Viewer.ViewModels;
 
 namespace TT.Viewer {
 

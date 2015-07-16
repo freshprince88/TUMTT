@@ -5,7 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <Expander x:Name="MenuExpander" ExpandDirection="Right" Margin="0 0 0 0" IsExpanded="True">
+        <Expander.Header>
+            <TabControl x:Name="HeaderTabControl" TabStripPlacement="Left">
+                <TabItem x:Name="ServiceTabHeader" Header="A"/>
+                <TabItem x:Name="ReceiveTabHeader" Header="R"/>
+                <TabItem x:Name="ThirdTabHeader" Header="3"/>
+                <TabItem x:Name="LastTabHeader" Header="L"/>
+                <TabItem x:Name="KombiTabHeader" Header="K"/>
+            </TabControl>
+        </Expander.Header>
+        <TabControl>
+            <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=ServiceTabHeader, Path=IsSelected}">
+                Aufschlag
+            </TabItem>
+            <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=ReceiveTabHeader, Path=IsSelected}">
+                Rueckschlag
+            </TabItem>
+            <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=ThirdTabHeader, Path=IsSelected}">
+                Dritter Ball
+            </TabItem>
+            <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=LastTabHeader, Path=IsSelected}">
+                Letzter Ball
+            </TabItem>
+            <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=KombiTabHeader, Path=IsSelected}">
+                Kombi
+            </TabItem>
+        </TabControl>
+    </Expander>
 </UserControl>

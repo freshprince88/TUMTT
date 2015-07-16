@@ -1,4 +1,4 @@
-<Controls:MetroWindow x:Class="TT.Viewer.ShellView"
+<Controls:MetroWindow x:Class="TT.Viewer.Views.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -12,12 +12,12 @@
         WindowTransitionsEnabled="False"
         WindowStartupLocation="CenterScreen"
         Title="TUM TT">
-    
+
 
     <Window.Resources>
         <lib:Visibility2BoolConverter x:Key="bvc2" />
         <lib:Column2TabConverter x:Key="c2tc" />
-        <lib:TabSizeConverter x:Key="tabSizeConverter" />        
+        <lib:TabSizeConverter x:Key="tabSizeConverter" />
 
         <!--<Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="{x:Type TabItem}">
             <Setter Property="Height">
@@ -33,61 +33,30 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=MenuExpander, Converter={StaticResource c2tc}}"/>
+            <!--<ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=FilterView, Converter={StaticResource c2tc}}"/>-->
+            <ColumnDefinition x:Name="Column1" Width="*"/>
             <ColumnDefinition x:Name="Column2" Width="*"/>
             <ColumnDefinition x:Name="Column3" Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Expander x:Name="MenuExpander" ExpandDirection="Right" Margin="0 0 0 0" IsExpanded="True">
-            <Expander.Header>
-                <TabControl x:Name="HeaderTabControl" TabStripPlacement="Left">
-                    <TabItem x:Name="ServiceTabHeader" Header="A"/>
-                    <TabItem x:Name="ReceiveTabHeader" Header="R"/>
-                    <TabItem x:Name="ThirdTabHeader" Header="3"/>
-                    <TabItem x:Name="LastTabHeader" Header="L"/>
-                    <TabItem x:Name="KombiTabHeader" Header="K"/>
-                </TabControl>
-            </Expander.Header>
-            <TabControl>
-                <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=ServiceTabHeader, Path=IsSelected}">
-                    Aufschlag
-                </TabItem>
-                <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=ReceiveTabHeader, Path=IsSelected}">
-                    Rueckschlag
-                </TabItem>
-                <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=ThirdTabHeader, Path=IsSelected}">
-                    Dritter Ball
-                </TabItem>
-                <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=LastTabHeader, Path=IsSelected}">
-                    Letzter Ball
-                </TabItem>
-                <TabItem Visibility="Collapsed"
-                 IsSelected="{Binding ElementName=KombiTabHeader, Path=IsSelected}">
-                    Kombi
-                </TabItem>
-            </TabControl>
-        </Expander>
-        <Border Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="Black">
+        <ContentControl x:Name="FilterView" Grid.Column="0"/>
+        <Border Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="{DynamicResource AccentColorBrush}">
 
         </Border>
-        <Border Grid.Column="2" BorderThickness="1 0 0 0" BorderBrush="Black">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <MediaElement Grid.Row="0">
-
+            <Border Grid.Row="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
+                <MediaElement>
                 </MediaElement>
-
-            </Grid>                        
-        </Border>
+            </Border>
+            <Border Grid.Row="1" BorderThickness="1 0 0 1 " BorderBrush="{DynamicResource AccentColorBrush}" />
+            <Border Grid.Row="2" BorderThickness="1 0 0 0 " BorderBrush="{DynamicResource AccentColorBrush}" />
+        </Grid>
     </Grid>
 </Controls:MetroWindow>
     
