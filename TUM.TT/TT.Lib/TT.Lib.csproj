@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Column2TabConverter.cs" />
+    <Compile Include="Util\MathConverter.cs" />
     <Compile Include="Util\TabSizeConverter.cs" />
     <Compile Include="Util\Visibility2BoolConverter.cs" />
   </ItemGroup>

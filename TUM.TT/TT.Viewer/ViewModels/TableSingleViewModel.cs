@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TT.Viewer.ViewModels
 {
-    class ServiceViewModel : Screen
+    class TableSingleViewModel : PropertyChangedBase
     {
     }
 }
