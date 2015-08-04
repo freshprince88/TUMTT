@@ -17,94 +17,148 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>            
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
-            <Slider HorizontalAlignment="Left" Margin="56,10,0,0" VerticalAlignment="Top"/>
+            <Slider HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Width="30" Height="30">
-                <Rectangle Width="20"
-                Height="20"
+            <Button Grid.Column="1" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_sound_2}" />
+                          Visual="{DynamicResource appbar_control_rewind}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Rectangle Grid.Column="1" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_repeat }" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="3" Width="20" Height="20"  Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_control_rewind}" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="4" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_control_rewind_variant}" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="5" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_navigate_previous}" />
-                </Rectangle.Fill>
-             </Rectangle>
-            <Rectangle Grid.Column="6" Width="20" Height="20" Margin="5,0,5,0">
-                    <Rectangle.Fill>
-                        <VisualBrush Visual="{StaticResource appbar_control_pause}" />
-                    </Rectangle.Fill>
+            <Button Grid.Column="2" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_rewind_variant}" />
+                    </Rectangle.OpacityMask>
                 </Rectangle>
-            <Rectangle Grid.Column="7" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_control_play}" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="8" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_control_stop}" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="9" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_navigate_next}" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="10" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_control_fastforward_variant}" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="11" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_control_fastforward}" />
-                </Rectangle.Fill>
-            </Rectangle>
-            <Rectangle Grid.Column="12" Width="20" Height="20" Margin="5,0,5,0">
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_control_fastforward}" />
-                </Rectangle.Fill>
-            </Rectangle>
+            </Button>
+            <Button Grid.Column="3" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_navigate_previous}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Grid.Column="5" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_stop}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <ToggleButton Grid.Column="6" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_play}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </ToggleButton>
+            <Button Grid.Column="7" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_pause}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Grid.Column="9" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_navigate_next}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Grid.Column="10" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_fastforward_variant}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Grid.Column="11" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_fastforward}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="6" Height="30" Width="30" BorderThickness="0">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_pause}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            
+            <Button Grid.Column="1" MinWidth="30" MinHeight="30" Margin="0" VerticalAlignment="Top" BorderThickness="0">
+                <Rectangle MinWidth="20" MinHeight="20"
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_sound_3}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
         </Grid>
     </Grid>
-    
-    
+
+
 </UserControl>
