@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TT.Viewer.Views
+namespace TT.Lib.Templates
 {
     /// <summary>
-    /// Interaktionslogik für FilterView.xaml
+    /// Interaktionslogik für CircleBorder.xaml
     /// </summary>
-    public partial class FilterView : UserControl
+    public partial class CircleBorder : UserControl
     {
-        public FilterView()
+        public CircleBorder()
         {
             InitializeComponent();
         }

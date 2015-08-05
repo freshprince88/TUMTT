@@ -11,6 +11,7 @@ namespace TT.Viewer.ViewModels
     class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
         private Expander _expander;
+        public Screen ServiceView { get; set; }
 
         public bool IsExpanded
         {
@@ -22,6 +23,12 @@ namespace TT.Viewer.ViewModels
             {
                 _expander.IsExpanded = value;
             }
+        }
+
+        public FilterViewModel()
+        {
+            ServiceView = new ServiceViewModel();
+            this.ActivateItem(ServiceView);
         }
     }
 }

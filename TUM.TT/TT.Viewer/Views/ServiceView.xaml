@@ -4,8 +4,84 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             d:DesignHeight="600" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid x:Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}">Aufschlag</TextBlock>
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="1" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+        <Grid x:Name="PreGrid" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0"  FontSize="12" Margin="5 5 5 5">Spieler:</Label>
+            <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5"/>
+
+            <ToggleButton Width="50" Height="50" Style="{DynamicResource MetroCircleToggleButtonStyle}" Grid.Row="1" Grid.Column="1">
+                <TextBlock FontSize="14">
+                    VH
+                </TextBlock>
+            </ToggleButton>
+
+            <ToggleButton Width="50" Height="50" Style="{DynamicResource MetroCircleToggleButtonStyle}" Grid.Row="1" Grid.Column="2">
+                <TextBlock FontSize="14">
+                    RH
+                </TextBlock>
+            </ToggleButton>
+        </Grid>
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="3" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+        
+        <Grid x:Name="TecGrid" Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <CheckBox Content="Pendulum" Grid.Row="0" Grid.Column="0" Margin="0 2 0 0"/>
+            <CheckBox Content="Gegenläufer" Grid.Row="0" Grid.Column="1" Margin="0 2 0 0"/>
+            <CheckBox Content="Tomahawk" Grid.Row="1" Grid.Column="0" Margin="0 2 0 0"/>
+            <CheckBox Content="Spezial" Grid.Row="1" Grid.Column="1" Margin="0 2 0 0"/>
+        </Grid>
+        
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="5" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+
+        <Grid x:Name="SpinGrid" Grid.Row="6">
+            <ContentControl x:Name="SpinControl" />
+        </Grid>
+
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+
+        <Grid x:Name="PosGrid" Grid.Row="8">
+
+        </Grid>
+
     </Grid>
 </UserControl>

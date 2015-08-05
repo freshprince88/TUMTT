@@ -11,6 +11,7 @@
                 <TabItem x:Name="ServiceTabHeader" Header="A"/>
                 <TabItem x:Name="ReceiveTabHeader" Header="R"/>
                 <TabItem x:Name="ThirdTabHeader" Header="3"/>
+                <TabItem x:Name="FourthTabHeader" Header="4"/>
                 <TabItem x:Name="LastTabHeader" Header="L"/>
                 <TabItem x:Name="KombiTabHeader" Header="K"/>
             </TabControl>
@@ -18,7 +19,7 @@
         <TabControl>
             <TabItem Visibility="Collapsed"
                  IsSelected="{Binding ElementName=ServiceTabHeader, Path=IsSelected}">
-                Aufschlag
+                <ContentControl x:Name="ServiceView" />
             </TabItem>
             <TabItem Visibility="Collapsed"
                  IsSelected="{Binding ElementName=ReceiveTabHeader, Path=IsSelected}">
@@ -27,6 +28,10 @@
             <TabItem Visibility="Collapsed"
                  IsSelected="{Binding ElementName=ThirdTabHeader, Path=IsSelected}">
                 Dritter Ball
+            </TabItem>
+            <TabItem Visibility="Collapsed"
+                 IsSelected="{Binding ElementName=FourthTabHeader, Path=IsSelected}">
+                Vierter Ball
             </TabItem>
             <TabItem Visibility="Collapsed"
                  IsSelected="{Binding ElementName=LastTabHeader, Path=IsSelected}">
