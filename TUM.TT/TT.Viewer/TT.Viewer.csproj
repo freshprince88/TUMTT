@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\TableSingleViewModel.cs" />
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
@@ -121,6 +122,10 @@
     <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SpinControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TableSingleView.xaml">
       <SubType>Designer</SubType>

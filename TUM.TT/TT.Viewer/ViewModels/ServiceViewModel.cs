@@ -9,5 +9,12 @@ namespace TT.Viewer.ViewModels
 {
     class ServiceViewModel : Screen
     {
+        public SpinControlViewModel SpinControl { get; set; }
+
+        public ServiceViewModel()
+        {
+            SpinControl = new SpinControlViewModel();
+        }
+
     }
 }
