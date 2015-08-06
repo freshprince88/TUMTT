@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="400">
 
@@ -10,6 +11,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -21,25 +24,29 @@
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
-            <Slider HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="*" ></ColumnDefinition>
+                <ColumnDefinition  Width="8*" MinWidth="240" ></ColumnDefinition>
+                <ColumnDefinition  Width="*" ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1" Margin="0,5,0,5" Background="{DynamicResource AccentColorBrush2}" />  
+            <Slider Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center" />
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Height="30" Width="30" BorderThickness="0">
+             </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="1">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -48,7 +55,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Grid.Column="2" Height="30" Width="30" BorderThickness="0">
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -57,7 +64,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Grid.Column="3" Height="30" Width="30" BorderThickness="0">
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="3">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -66,16 +73,8 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Grid.Column="5" Height="30" Width="30" BorderThickness="0">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_control_stop}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            <ToggleButton Grid.Column="6" Height="30" Width="30" BorderThickness="0">
+            
+            <ToggleButton Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -84,16 +83,8 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-            <Button Grid.Column="7" Height="30" Width="30" BorderThickness="0">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_control_pause}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            <Button Grid.Column="9" Height="30" Width="30" BorderThickness="0">
+
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="7">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -102,7 +93,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Grid.Column="10" Height="30" Width="30" BorderThickness="0">
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="8">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -111,7 +102,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Grid.Column="11" Height="30" Width="30" BorderThickness="0">
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="9">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -125,38 +116,47 @@
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30"></ColumnDefinition>
+                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="6" Height="30" Width="30" BorderThickness="0">
+
+            
+
+
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="2">
                 <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_repeat}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </ToggleButton>            
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="4">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                           Visual="{DynamicResource appbar_control_pause}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-            </Button>
-            
-            <Button Grid.Column="1" MinWidth="30" MinHeight="30" Margin="0" VerticalAlignment="Top" BorderThickness="0">
-                <Rectangle MinWidth="20" MinHeight="20"
+            </ToggleButton>
+            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="6">
+                <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_sound_3}" />
+                          Visual="{DynamicResource appbar_control_stop}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
+            <Slider Style="{DynamicResource FlatSlider}" Grid.Column="7" VerticalAlignment="Center" Width="Auto"></Slider>
         </Grid>
     </Grid>
 
