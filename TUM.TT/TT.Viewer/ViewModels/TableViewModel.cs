@@ -10,6 +10,8 @@ namespace TT.Viewer.ViewModels
     public class TableViewModel : PropertyChangedBase
     {
 
+        private readonly IEventAggregator _eventAggregator;
+
         public enum ViewMode
         {
             Top,
@@ -25,18 +27,17 @@ namespace TT.Viewer.ViewModels
             }
             set
             {
-                if(!_mode.Equals(value))
-                    SwitchView(value);
+                if (!_mode.Equals(value))
+                    _eventAggregator.BeginPublishOnUIThread(value);
 
                 _mode = value;
                 
             }
         }
 
-
-        public void SwitchView(ViewMode mode)
+        public TableViewModel(IEventAggregator eventAggregator)
         {
-            
+            _eventAggregator = eventAggregator;
         }
     }
 }

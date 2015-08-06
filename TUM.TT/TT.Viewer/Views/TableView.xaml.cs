@@ -32,8 +32,12 @@ namespace TT.Viewer.Views
             switch (message)
             {
                 case TableViewModel.ViewMode.Top:
+                    TopField.Visibility = Visibility.Visible;
+                    BottomField.Visibility = Visibility.Hidden;
                     break;
                 case TableViewModel.ViewMode.Bottom:
+                    TopField.Visibility = Visibility.Hidden;
+                    BottomField.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;

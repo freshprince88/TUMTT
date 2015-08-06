@@ -7,11 +7,11 @@ namespace TT.Viewer.ViewModels {
     public class ShellViewModel : Conductor<object>.Collection.AllActive, IShell {
 
         public Screen FilterView { get; private set; }
-        
-        public ShellViewModel()
+
+        public ShellViewModel(IEventAggregator eventAggregator)
         {
             this.DisplayName = "TUM.TT";
-            FilterView = new FilterViewModel();            
+            FilterView = new FilterViewModel(eventAggregator);            
             ActivateItem(FilterView);
         }
             

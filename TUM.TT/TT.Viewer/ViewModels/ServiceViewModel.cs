@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,23 @@ namespace TT.Viewer.ViewModels
         public SpinControlViewModel SpinControl { get; set; }
         public TableViewModel TableView { get; set; }
 
-        public ServiceViewModel()
+        public ServiceViewModel(IEventAggregator eventAggregator)
         {
             SpinControl = new SpinControlViewModel();
-            TableView = new TableViewModel();
+            TableView = new TableViewModel(eventAggregator);
+        }
+
+        public void SwitchTable(object o)
+        {
+            ToggleSwitch toggle = o as ToggleSwitch;
+            if (toggle.IsChecked.Value)
+            {
+                TableView.Mode = TableViewModel.ViewMode.Top;
+            }
+            else
+            {
+                TableView.Mode = TableViewModel.ViewMode.Bottom;
+            }
         }
 
     }

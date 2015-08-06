@@ -25,9 +25,9 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public FilterViewModel()
+        public FilterViewModel(IEventAggregator eventAggregator)
         {
-            ServiceView = new ServiceViewModel();
+            ServiceView = new ServiceViewModel(eventAggregator);
             this.ActivateItem(ServiceView);
         }
     }

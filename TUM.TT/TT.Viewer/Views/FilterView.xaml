@@ -19,7 +19,9 @@
         <TabControl>
             <TabItem Visibility="Collapsed"
                  IsSelected="{Binding ElementName=ServiceTabHeader, Path=IsSelected}">
-                <ContentControl x:Name="ServiceView" />
+                <ScrollViewer>
+                    <ContentControl x:Name="ServiceView" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Visibility="Collapsed"
                  IsSelected="{Binding ElementName=ReceiveTabHeader, Path=IsSelected}">
