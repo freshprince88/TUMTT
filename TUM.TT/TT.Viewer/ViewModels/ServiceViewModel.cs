@@ -10,12 +10,12 @@ namespace TT.Viewer.ViewModels
     class ServiceViewModel : Screen
     {
         public SpinControlViewModel SpinControl { get; set; }
-        public TableSingleViewModel TableView { get; set; }
+        public TableViewModel TableView { get; set; }
 
         public ServiceViewModel()
         {
             SpinControl = new SpinControlViewModel();
-            TableView = new TableSingleViewModel();
+            TableView = new TableViewModel();
         }
 
     }
