@@ -11,8 +11,13 @@ namespace TT.Viewer.ViewModels
 {
     public class MediaViewModel : Screen
 
-    { public MediaViewModel()
+    {
+        private IEventAggregator events;
+
+
+        public MediaViewModel(IEventAggregator eventAggregator)
         {
+            events = eventAggregator;
         }
 
 
@@ -106,36 +111,47 @@ namespace TT.Viewer.ViewModels
 
 
 
-        //private readonly IEventAggregator _eventAggregator;
 
-        //public enum ViewMode
-        //{
 
-        //    Paused,
-        //    Played
-        //}
+        public enum PlayPause
+        {
 
-        //private ViewMode _mode;
-        //public ViewMode Mode
-        //{
-        //    get
-        //    {
-        //        return _mode;
-        //    }
-        //    set
-        //    {
-        //        if (!_mode.Equals(value))
-        //            _eventAggregator.BeginPublishOnUIThread(value);
+            Paused,
+            Played
+        }
 
-        //        _mode = value;
+        private PlayPause _mode;
+        public PlayPause Mode
+        {
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                if (!_mode.Equals(value))
+                    events.PublishOnUIThread(value);
 
-        //    }
-        //}
+                _mode = value;
 
-        //public MediaViewModel(IEventAggregator eventAggregator)
-        //{
-        //    _eventAggregator = eventAggregator;
-        //}
+            }
+        }
+        /// <summary>
+        /// Initializes this view model.
+        /// </summary>
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+        }
+
+        /// <summary>
+        /// Handles deactivation of this view model.
+        /// </summary>
+        /// <param name="close">Whether the view model is closed</param>
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+        }
 
 
     }
