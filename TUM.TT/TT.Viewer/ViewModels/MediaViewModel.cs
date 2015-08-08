@@ -10,28 +10,33 @@ namespace TT.Viewer.ViewModels
 {
     public class MediaViewModel : Screen
 
-    { MediaElement myMediaElement = new MediaElement();
+    {public MediaViewModel()
+        {
+        }
+
+        
 
         public void Play(MediaElement myMediaElement)
         {
             myMediaElement.Play();
+            
         }
-        public void Pause(MediaElement mediaElement)
+        public void Pause(MediaElement myMediaElement)
         {
-            mediaElement.Pause();
+            myMediaElement.Pause();
         }
         public void Stop(MediaElement myMediaElement)
         {
             myMediaElement.Stop();
         }
-        public void Previous5Frames(MediaElement mediaElement)
+        public void Previous5Frames(MediaElement myMediaElement)
         {
-            mediaElement.Pause();
+            myMediaElement.Pause();
             //mediaIsPaused = true;
-            TimeSpan Position_now = mediaElement.Position;
+            TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
-            mediaElement.Position = Position_now - delta_time;
-            mediaElement.ScrubbingEnabled = true;
+            myMediaElement.Position = Position_now - delta_time;
+            myMediaElement.ScrubbingEnabled = true;
             //buttonPlay.Content = "Play";
         }
         public void PreviousFrame(MediaElement mediaElement)
