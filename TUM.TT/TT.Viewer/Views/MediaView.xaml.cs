@@ -20,29 +20,31 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für MediaView.xaml
     /// </summary>
-    public partial class MediaView : UserControl
-        /* , IHandle<MediaViewModel.ViewMode*/
+    public partial class MediaView : UserControl , IHandle<MediaViewModel.PlayPause>
     {
+        public IEventAggregator Events { get; set; }
         public MediaView()
         {
             InitializeComponent();
+            Events = IoC.Get<IEventAggregator>();
+            Events.Subscribe(this);
         }
-        //public void Handle(MediaViewModel.ViewMode message)
-        //{
-        //    switch (message)
-        //    {
-        //        case MediaViewModel.ViewMode.Played:
-        //            PlayButton.Visibility = Visibility.Visible;
-        //            PauseButton.Visibility = Visibility.Hidden;
-        //            break;
-        //        case MediaViewModel.ViewMode.Paused:
-        //            PlayButton.Visibility = Visibility.Hidden;
-        //            PauseButton.Visibility = Visibility.Visible;
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        public void Handle(MediaViewModel.PlayPause message)
+        {
+            switch (message)
+            {
+                case MediaViewModel.PlayPause.Played:
+                    PlayButton.Visibility = Visibility.Visible;
+                    PauseButton.Visibility = Visibility.Hidden;
+                    break;
+                case MediaViewModel.PlayPause.Paused:
+                    PlayButton.Visibility = Visibility.Hidden;
+                    PauseButton.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+        }
 
     }
 }

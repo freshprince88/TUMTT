@@ -97,7 +97,7 @@
                 </i:Interaction.Triggers>
             </Button>
 
-            <ToggleButton x:Name="playButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
+            <ToggleButton x:Name="PlayButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -113,7 +113,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <ToggleButton x:Name="pauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="5" Visibility="Hidden">
+            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="5" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
