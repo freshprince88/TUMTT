@@ -21,6 +21,8 @@ namespace TT.Viewer.ViewModels
         public ServiceViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
+            SpinControl = new SpinControlViewModel();
+            TableView = new TableViewModel(events);
         }
 
         public void SwitchTable(bool check)
@@ -43,11 +45,12 @@ namespace TT.Viewer.ViewModels
             base.OnInitialize();
 
             // Subscribe ourself to the event bus
-            this.events.Subscribe(this);
+            //this.events.Subscribe(this);
+        }
 
-            // Activate the welcome model
-            SpinControl = new SpinControlViewModel();
-            TableView = new TableViewModel(events);
+        protected override void OnActivate()
+        {
+            base.OnActivate();
             this.ActivateItem(SpinControl);
             this.ActivateItem(TableView);
         }

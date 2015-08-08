@@ -35,5 +35,22 @@ namespace TT.Viewer.ViewModels
         {
             MessageBox.Show("Bot");
         }
+
+        /// <summary>
+        /// Initializes this view model.
+        /// </summary>
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+        }
+
+        /// <summary>
+        /// Handles deactivation of this view model.
+        /// </summary>
+        /// <param name="close">Whether the view model is closed</param>
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+        }
     }
 }
