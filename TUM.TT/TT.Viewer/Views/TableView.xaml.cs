@@ -27,6 +27,8 @@ namespace TT.Viewer.Views
         public TableView()
         {
             InitializeComponent();
+            Events = IoC.Get<IEventAggregator>();
+            Events.Subscribe(this);
         }
 
         public void Handle(TableViewModel.ViewMode message)

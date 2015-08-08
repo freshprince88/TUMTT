@@ -8,9 +8,9 @@ using System.Windows.Controls;
 
 namespace TT.Viewer.ViewModels
 {
-    class FilterViewModel : Conductor<IScreen>.Collection.OneActive
+    public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public Screen ServiceView { get; set; }
+        public IScreen ServiceView { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -37,6 +37,30 @@ namespace TT.Viewer.ViewModels
             {
                 ServiceView = new ServiceViewModel(this.events);
                 this.ActivateItem(ServiceView);
+            }
+        }
+
+        public void FilterSelected(SelectionChangedEventArgs args)
+        {
+            TabItem selected = args.AddedItems[0] as TabItem;
+            switch (selected.Name)
+            {
+                case "ServiceTabHeader":
+                    this.ActivateItem(ServiceView);
+                    break;
+                case "ReceiveTabHeader":
+                    this.ActivateItem(new ReceptionViewModel());
+                    break;
+                case "ThirdTabHeader":
+                    break;
+                case "FourthTabHeader":
+                    break;
+                case "LastTabHeader":
+                    break;
+                case "KombiTabHeader":
+                    break;
+                default:
+                    break;
             }
         }
     }

@@ -23,10 +23,9 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
         }
 
-        public void SwitchTable(object o)
+        public void SwitchTable(bool check)
         {
-            ToggleSwitch toggle = o as ToggleSwitch;
-            if (toggle.IsChecked.Value)
+            if (check)
             {
                 TableView.Mode = TableViewModel.ViewMode.Top;
             }

@@ -17,7 +17,7 @@ namespace TT.Viewer {
 
             container.Singleton<IWindowManager, WindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
-            container.PerRequest<IShell, ShellViewModel>();
+            container.PerRequest<IShell, ShellViewModel>();            
         }
 
         protected override object GetInstance(Type service, string key) {

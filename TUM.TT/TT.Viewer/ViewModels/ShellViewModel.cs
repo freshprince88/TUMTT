@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace TT.Viewer.ViewModels {
 
-    public class ShellViewModel : Conductor<object>.Collection.AllActive, IShell {
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell {
 
-        public Screen FilterView { get; private set; }
+        public FilterViewModel FilterView { get; private set; }
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
@@ -14,7 +14,8 @@ namespace TT.Viewer.ViewModels {
 
         public ShellViewModel(IEventAggregator eventAggregator)
         {
-            Events = eventAggregator;            
+            Events = eventAggregator;
+            FilterView = new FilterViewModel(Events);
         }
 
         /// <summary>
@@ -25,10 +26,7 @@ namespace TT.Viewer.ViewModels {
             base.OnInitialize();
 
             // Subscribe ourself to the event bus
-            //this.Events.Subscribe(this);
-
-            FilterView = new FilterViewModel(Events);
-            ActivateItem(FilterView);
+            //this.Events.Subscribe(this);        
         }
         
             
@@ -40,6 +38,7 @@ namespace TT.Viewer.ViewModels {
         protected override void OnActivate()
         {            
             base.OnActivate();
+            this.ActivateItem(FilterView);
         }
     }
 }
