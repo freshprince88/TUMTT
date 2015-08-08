@@ -97,7 +97,7 @@
                 </i:Interaction.Triggers>
             </Button>
 
-            <ToggleButton x:Name="PlayButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
+            <ToggleButton x:Name="playButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -113,7 +113,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="5" Visibility="Hidden">
+            <ToggleButton x:Name="pauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="5" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -195,20 +195,42 @@
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="1">
+            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1">
                 75%
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Slow75Percent">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="2">
+            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2">
                 50%
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Slow50Percent">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="3">
+            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3">
                 25%
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Slow25Percent">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
 
 
 
 
-            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="5">
+
+            <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="5">
                     <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -252,8 +274,8 @@
                 </Rectangle>
             </Button>
         </Grid>
-        <MediaElement x:Name="myMediaElement" Source="C:\Users\Michael Fuchs\Videos\OvtcharovDimitrij_ZhangJike_WTTTC_2014_MT_Final.mp4" LoadedBehavior="Manual"
-                      HorizontalAlignment="Left" Height="auto" Margin="10,0,10,0" VerticalAlignment="Center" Width="auto"/>
+        <MediaElement x:Name="myMediaElement" Source="C:\Users\Michael Fuchs\Videos\OvtcharovDimitrij_ZhangJike_WTTTC_2014_MT_Final.mp4" LoadedBehavior="Manual" 
+                      UnloadedBehavior="Stop" SpeedRatio="1" HorizontalAlignment="Left" Height="auto" Margin="10,0,10,0" VerticalAlignment="Center" Width="auto"/>
     </Grid>
 
 
