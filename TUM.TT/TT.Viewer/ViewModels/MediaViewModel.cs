@@ -10,30 +10,12 @@ using TT.Lib;
 namespace TT.Viewer.ViewModels
 {
     public class MediaViewModel : Screen
-    {
-        private IEventAggregator events;
 
-     public MediaViewModel(IEventAggregator eventAggregator)
+    { public MediaViewModel()
         {
-            events = eventAggregator;
         }
 
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-        }
 
-        /// <summary>
-        /// Handles deactivation of this view model.
-        /// </summary>
-        /// <param name="close">Whether the view model is closed</param>
-        protected override void OnDeactivate(bool close)
-        {
-            base.OnDeactivate(close);
-        }
 
         public void Play(MediaElement myMediaElement)
         {
@@ -108,7 +90,7 @@ namespace TT.Viewer.ViewModels
                 myMediaElement.SpeedRatio = 1;
             }
             else
-                myMediaElement.SpeedRatio = 0.75;
+                myMediaElement.SpeedRatio = 0.75; 
 
         }
         public void Slow50Percent(MediaElement myMediaElement)
@@ -121,30 +103,40 @@ namespace TT.Viewer.ViewModels
         }
 
 
-        public enum PlayPause
-        {
 
-            
-            Played,
-            Paused
-        }
 
-        private PlayPause _mode;
-        public PlayPause Mode
-        {
-            get
-            {
-                return _mode;
-            }
-            set
-            {
-                if (!_mode.Equals(value))
-                    events.PublishOnUIThread(value);
 
-                _mode = value;
+        //private readonly IEventAggregator _eventAggregator;
 
-            }
-        }
+        //public enum ViewMode
+        //{
+
+        //    Paused,
+        //    Played
+        //}
+
+        //private ViewMode _mode;
+        //public ViewMode Mode
+        //{
+        //    get
+        //    {
+        //        return _mode;
+        //    }
+        //    set
+        //    {
+        //        if (!_mode.Equals(value))
+        //            _eventAggregator.BeginPublishOnUIThread(value);
+
+        //        _mode = value;
+
+        //    }
+        //}
+
+        //public MediaViewModel(IEventAggregator eventAggregator)
+        //{
+        //    _eventAggregator = eventAggregator;
+        //}
+
 
     }
 }
