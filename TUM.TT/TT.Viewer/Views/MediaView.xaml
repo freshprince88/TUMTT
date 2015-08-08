@@ -3,7 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+      xmlns:cal="http://www.caliburnproject.org"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="400">
 
@@ -29,7 +31,7 @@
                 <ColumnDefinition  Width="8*" MinWidth="240" ></ColumnDefinition>
                 <ColumnDefinition  Width="*" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="1" Margin="0,5,0,5" Background="{DynamicResource AccentColorBrush2}" />  
+            <Border Grid.Column="1" Margin="0,5,0,5" Background="{DynamicResource AccentColorBrush2}" />
             <Slider Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center" />
         </Grid>
         <Grid Grid.Row="2">
@@ -45,8 +47,8 @@
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
-             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="1">
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action PreviousRally(mediaElement)]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -55,7 +57,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Previous5Frames(mediaElement)]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -64,7 +66,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="3">
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="3" cal:Message.Attach="[Event Click] = [Action PreviousFrame(mediaElement)]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -73,8 +75,8 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            
-            <ToggleButton Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
+
+            <ToggleButton x:Name="PlayButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="5" cal:Message.Attach="[Event Click] = [Action Play(mediaElement)]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -83,62 +85,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="7">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_navigate_next}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="8">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_control_fastforward_variant}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="9">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_control_fastforward}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            
-        </Grid>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            
-
-
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="2">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_repeat}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </ToggleButton>            
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="4">
+            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="5" Visibility="Hidden" cal:Message.Attach="[Event Click] = [Action Pause(mediaElement)]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -147,18 +94,112 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="6">
+
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="7" cal:Message.Attach="[Event Click] = [Action NextFrame(mediaElement)]">
                 <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_navigate_next}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="8" cal:Message.Attach="[Event Click] = [Action Next5Frames(mediaElement)]">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_fastforward_variant}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="9" cal:Message.Attach="[Event Click] = [Action NextRally(mediaElement)]">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_fastforward}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="1">
+                75%
+            </ToggleButton>
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="2">
+                50%
+            </ToggleButton>
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="3">
+                25%
+            </ToggleButton>
+
+
+
+
+            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="5">
+                    <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                           Visual="{DynamicResource appbar_control_stop}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Stop">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <Slider Style="{DynamicResource FlatSlider}" Grid.Column="7" VerticalAlignment="Center" Width="Auto"></Slider>
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="7">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_repeat}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </ToggleButton>
+            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="9" >
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_sound_3}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="9" Visibility="Hidden">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_sound_0}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
         </Grid>
+        <MediaElement x:Name="myMediaElement" Source="C:\Users\Michael Fuchs\Videos\OvtcharovDimitrij_ZhangJike_WTTTC_2014_MT_Final.mp4" 
+                      HorizontalAlignment="Left" Height="295" Margin="10,10,0,0" VerticalAlignment="Center" Width="380"/>
     </Grid>
 
 
 </UserControl>
+

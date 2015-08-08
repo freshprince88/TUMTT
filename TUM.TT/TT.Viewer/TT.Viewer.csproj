@@ -108,6 +108,9 @@
     </Compile>
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\TableSingleViewModel.cs" />
+    <Compile Include="Views\MediaView.xaml.cs">
+      <DependentUpon>MediaView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -2,8 +2,9 @@ using Caliburn.Micro;
 using System.Windows;
 using System.Reflection;
 
-namespace TT.Viewer.ViewModels {
 
+namespace TT.Viewer.ViewModels {
+    
     public class ShellViewModel : Conductor<object>.Collection.AllActive, IShell {
 
         public Screen FilterView { get; private set; }
