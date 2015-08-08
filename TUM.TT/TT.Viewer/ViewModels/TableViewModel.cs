@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace TT.Viewer.ViewModels
 {
-    public class TableViewModel : PropertyChangedBase
+    public class TableViewModel : Screen
     {
 
-        private readonly IEventAggregator _eventAggregator;
+        private IEventAggregator events;
 
         public enum ViewMode
         {
@@ -28,7 +28,7 @@ namespace TT.Viewer.ViewModels
             set
             {
                 if (!_mode.Equals(value))
-                    _eventAggregator.BeginPublishOnUIThread(value);
+                    events.PublishOnUIThread(value);
 
                 _mode = value;
                 
@@ -37,7 +37,7 @@ namespace TT.Viewer.ViewModels
 
         public TableViewModel(IEventAggregator eventAggregator)
         {
-            _eventAggregator = eventAggregator;
+            events = eventAggregator;
         }
     }
 }

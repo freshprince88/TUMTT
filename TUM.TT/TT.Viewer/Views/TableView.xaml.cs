@@ -22,6 +22,8 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class TableView : UserControl, IHandle<TableViewModel.ViewMode>
     {
+        public IEventAggregator Events { get; set; }
+
         public TableView()
         {
             InitializeComponent();

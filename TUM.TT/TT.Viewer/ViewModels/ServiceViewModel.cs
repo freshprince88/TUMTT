@@ -8,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace TT.Viewer.ViewModels
 {
-    class ServiceViewModel : Screen
+    class ServiceViewModel : Conductor<IScreen>.Collection.AllActive
     {
         public SpinControlViewModel SpinControl { get; set; }
         public TableViewModel TableView { get; set; }
 
+        /// <summary>
+        /// Gets the event bus of this shell.
+        /// </summary>
+        private IEventAggregator events;
+
         public ServiceViewModel(IEventAggregator eventAggregator)
         {
-            SpinControl = new SpinControlViewModel();
-            TableView = new TableViewModel(eventAggregator);
+            this.events = eventAggregator;
         }
 
         public void SwitchTable(object o)
@@ -30,6 +34,23 @@ namespace TT.Viewer.ViewModels
             {
                 TableView.Mode = TableViewModel.ViewMode.Bottom;
             }
+        }
+
+        /// <summary>
+        /// Initializes this view model.
+        /// </summary>
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            // Subscribe ourself to the event bus
+            this.events.Subscribe(this);
+
+            // Activate the welcome model
+            SpinControl = new SpinControlViewModel();
+            TableView = new TableViewModel(events);
+            this.ActivateItem(SpinControl);
+            this.ActivateItem(TableView);
         }
 
     }

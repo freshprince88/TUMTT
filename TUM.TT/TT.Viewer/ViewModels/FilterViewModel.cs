@@ -10,25 +10,34 @@ namespace TT.Viewer.ViewModels
 {
     class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        private Expander _expander;
         public Screen ServiceView { get; set; }
 
-        public bool IsExpanded
-        {
-            get
-            {
-                return _expander.IsExpanded;
-            }
-            set
-            {
-                _expander.IsExpanded = value;
-            }
-        }
+        /// <summary>
+        /// Gets the event bus of this shell.
+        /// </summary>
+        private IEventAggregator events;
 
         public FilterViewModel(IEventAggregator eventAggregator)
         {
-            ServiceView = new ServiceViewModel(eventAggregator);
-            this.ActivateItem(ServiceView);
+            this.events = eventAggregator;
+        }
+
+        /// <summary>
+        /// Initializes this view model.
+        /// </summary>
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            // Subscribe ourself to the event bus
+            //this.events.Subscribe(this);
+
+            // Activate the welcome model
+            if (this.ActiveItem == null)
+            {
+                ServiceView = new ServiceViewModel(this.events);
+                this.ActivateItem(ServiceView);
+            }
         }
     }
 }

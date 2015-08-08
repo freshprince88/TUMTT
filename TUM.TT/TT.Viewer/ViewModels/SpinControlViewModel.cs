@@ -8,7 +8,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace TT.Viewer.ViewModels
 {
-    class SpinControlViewModel : PropertyChangedBase
+    class SpinControlViewModel : Screen
     {
 
         public void SelectTop()
