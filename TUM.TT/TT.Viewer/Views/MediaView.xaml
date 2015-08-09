@@ -196,10 +196,10 @@
             </Grid.ColumnDefinitions>
 
             <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
-                75%>
+                75%
             </ToggleButton>
             <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow50Percent(Slow50PercentButton.IsChecked)]">
-                50%>
+                50%
             </ToggleButton>
             <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Slow25Percent(Slow25PercentButton.IsChecked)]">
                 25%
@@ -231,7 +231,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="9" >
+            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="9" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -239,16 +239,30 @@
                           Visual="{DynamicResource appbar_sound_3}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Mute">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="9" Visibility="Hidden">
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentToggle}" Grid.Column="9" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_sound_0}" />
+                          Visual="{DynamicResource appbar_sound_mute}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-            </Button>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Unmute">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ToggleButton>
             <Button x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">

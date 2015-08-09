@@ -20,7 +20,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für MediaView.xaml
     /// </summary>
-    public partial class MediaView : UserControl, IHandle<MediaViewModel.PlayPause>, IHandle<MediaViewModel.PlaySpeed>
+    public partial class MediaView : UserControl, IHandle<MediaViewModel.PlayPause>, IHandle<MediaViewModel.PlaySpeed>, IHandle<MediaViewModel.MuteUnmute>
     {
         public IEventAggregator Events { get; set; }
         public MediaView()
@@ -28,6 +28,24 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
+        }
+        public void Handle(MediaViewModel.MuteUnmute message)
+        {
+            switch (message)
+            {
+                case MediaViewModel.MuteUnmute.Mute:
+                    MuteButton.Visibility = Visibility.Hidden;
+                    UnmuteButton.Visibility = Visibility.Visible;
+                    UnmuteButton.IsChecked = true;
+                    break;
+                case MediaViewModel.MuteUnmute.Unmute:
+                    MuteButton.Visibility = Visibility.Visible;
+                    UnmuteButton.Visibility = Visibility.Hidden;
+                    UnmuteButton.IsChecked = false;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void Handle(MediaViewModel.PlayPause message)
@@ -51,17 +69,28 @@ namespace TT.Viewer.Views
 
         public void Handle(MediaViewModel.PlaySpeed message)
         {
-            //TODO: Handle Speed change
             switch (message)
             {
                 case MediaViewModel.PlaySpeed.Quarter:
                     myMediaElement.SpeedRatio = 0.25;
+                    Slow50PercentButton.IsChecked = false;
+                    Slow75PercentButton.IsChecked = false;
                     break;
                 case MediaViewModel.PlaySpeed.Half:
+                    myMediaElement.SpeedRatio = 0.50;
+                    Slow25PercentButton.IsChecked = false;
+                    Slow75PercentButton.IsChecked = false;
                     break;
                 case MediaViewModel.PlaySpeed.Third:
+                    myMediaElement.SpeedRatio = 0.75;
+                    Slow25PercentButton.IsChecked = false;
+                    Slow50PercentButton.IsChecked = false;
                     break;
                 case MediaViewModel.PlaySpeed.Full:
+                    myMediaElement.SpeedRatio = 1;
+                    Slow25PercentButton.IsChecked = false;
+                    Slow50PercentButton.IsChecked = false;
+                    Slow75PercentButton.IsChecked = false;
                     break;
                 default:
                     break;

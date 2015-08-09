@@ -14,11 +14,28 @@ namespace TT.Viewer.ViewModels
     {
         private IEventAggregator events;
 
-        public enum PlayPause
+       
+        public enum MuteUnmute
         {
 
-            Pause,
-            Play
+            Mute,
+            Unmute
+        }
+        private MuteUnmute _sound;
+        public MuteUnmute Sound
+        {
+            get
+            {
+                return _sound;
+            }
+            set
+            {
+                if (!_mode.Equals(value))
+                    events.PublishOnUIThread(value);
+
+                _sound = value;
+
+            }
         }
 
         public enum PlaySpeed
@@ -45,7 +62,12 @@ namespace TT.Viewer.ViewModels
 
             }
         }
+        public enum PlayPause
+        {
 
+            Pause,
+            Play
+        }
         private PlayPause _mode;
         public PlayPause Mode
         {
@@ -165,6 +187,16 @@ namespace TT.Viewer.ViewModels
                 this.Speed = PlaySpeed.Quarter;
             else
                 this.Speed = PlaySpeed.Full;
+        }
+        public void Mute(MediaElement myMediaElement)
+        {
+            myMediaElement.IsMuted = true;
+            this.Sound = MuteUnmute.Mute;
+        }
+        public void Unmute(MediaElement myMediaElement)
+        {
+            myMediaElement.IsMuted = false;
+            this.Sound = MuteUnmute.Unmute;
         }
 
         public void Fullscreen(MediaElement myMediaElement)
