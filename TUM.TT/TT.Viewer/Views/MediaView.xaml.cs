@@ -20,7 +20,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für MediaView.xaml
     /// </summary>
-    public partial class MediaView : UserControl , IHandle<MediaViewModel.PlayPause>
+    public partial class MediaView : UserControl, IHandle<MediaViewModel.PlayPause>, IHandle<MediaViewModel.PlaySpeed>
     {
         public IEventAggregator Events { get; set; }
         public MediaView()
@@ -43,6 +43,25 @@ namespace TT.Viewer.Views
                     PlayButton.Visibility = Visibility.Visible;
                     PauseButton.Visibility = Visibility.Hidden;
                     PauseButton.IsChecked = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void Handle(MediaViewModel.PlaySpeed message)
+        {
+            //TODO: Handle Speed change
+            switch (message)
+            {
+                case MediaViewModel.PlaySpeed.Quarter:
+                    myMediaElement.SpeedRatio = 0.25;
+                    break;
+                case MediaViewModel.PlaySpeed.Half:
+                    break;
+                case MediaViewModel.PlaySpeed.Third:
+                    break;
+                case MediaViewModel.PlaySpeed.Full:
                     break;
                 default:
                     break;

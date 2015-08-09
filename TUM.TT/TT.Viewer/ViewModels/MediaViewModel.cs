@@ -21,6 +21,31 @@ namespace TT.Viewer.ViewModels
             Play
         }
 
+        public enum PlaySpeed
+        {
+            Quarter,
+            Half,
+            Third,
+            Full
+        }
+
+        private PlaySpeed _speed;
+        public PlaySpeed Speed
+        {
+            get
+            {
+                return _speed;
+            }
+            set
+            {
+                if (!_mode.Equals(value))
+                    events.PublishOnUIThread(value);
+
+                _speed = value;
+
+            }
+        }
+
         private PlayPause _mode;
         public PlayPause Mode
         {
@@ -118,19 +143,28 @@ namespace TT.Viewer.ViewModels
         {
             
         }
-        public void Slow75Percent(MediaElement myMediaElement)
+        public void Slow75Percent(bool isChecked)
         {
-            
-                myMediaElement.SpeedRatio = 0.75; 
+            if (isChecked)
+                this.Speed = PlaySpeed.Third;
+            else
+                this.Speed = PlaySpeed.Full;
+        }
 
-        }
-        public void Slow50Percent(MediaElement myMediaElement)
+        public void Slow50Percent(bool isChecked)
         {
-            myMediaElement.SpeedRatio = 0.50;
+            if (isChecked)
+                this.Speed = PlaySpeed.Half;
+            else
+                this.Speed = PlaySpeed.Full;
         }
-        public void Slow25Percent(MediaElement myMediaElement)
+
+        public void Slow25Percent(bool isChecked)
         {
-            myMediaElement.SpeedRatio = 0.25;
+            if (isChecked)
+                this.Speed = PlaySpeed.Quarter;
+            else
+                this.Speed = PlaySpeed.Full;
         }
 
         

@@ -195,41 +195,17 @@
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1">
-                75%
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Slow75Percent">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
+                75%>
             </ToggleButton>
-            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2">
-                50%
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Slow50Percent">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow50Percent(Slow50PercentButton.IsChecked)]">
+                50%>
             </ToggleButton>
-            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3">
+            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Slow25Percent(Slow25PercentButton.IsChecked)]">
                 25%
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Slow25Percent">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
             </ToggleButton>
 
-
-
-
-
+            
             <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="5">
                     <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
