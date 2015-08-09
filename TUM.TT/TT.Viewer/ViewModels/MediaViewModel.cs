@@ -60,7 +60,8 @@ namespace TT.Viewer.ViewModels
         public void Stop(MediaElement myMediaElement)
         {
             myMediaElement.Stop();
-            
+            this.Mode = PlayPause.Pause;
+
         }
         public void Previous5Frames(MediaElement myMediaElement)
         {
@@ -70,6 +71,7 @@ namespace TT.Viewer.ViewModels
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now - delta_time;
             myMediaElement.ScrubbingEnabled = true;
+            this.Mode = PlayPause.Pause;
             //buttonPlay.Content = "Play";
         }
         public void PreviousFrame(MediaElement myMediaElement)
@@ -80,6 +82,7 @@ namespace TT.Viewer.ViewModels
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             myMediaElement.Position = Position_now - delta_time;
             myMediaElement.ScrubbingEnabled = true;
+            this.Mode = PlayPause.Pause;
             //buttonPlay.Content = "Play";
         }
         public void Next5Frames(MediaElement myMediaElement)
@@ -90,6 +93,7 @@ namespace TT.Viewer.ViewModels
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now + delta_time;
             myMediaElement.ScrubbingEnabled = true;
+            this.Mode = PlayPause.Pause;
             //buttonPlay.Content = "Play";
         }
         public void NextFrame(MediaElement myMediaElement)
@@ -100,6 +104,7 @@ namespace TT.Viewer.ViewModels
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             myMediaElement.Position = Position_now + delta_time;
             myMediaElement.ScrubbingEnabled = true;
+            this.Mode = PlayPause.Pause;
             //buttonPlay.Content = "Play";
         }
        
@@ -115,11 +120,7 @@ namespace TT.Viewer.ViewModels
         }
         public void Slow75Percent(MediaElement myMediaElement)
         {
-            if (myMediaElement.SpeedRatio == 0.75)
-            {
-                myMediaElement.SpeedRatio = 1;
-            }
-            else
+            
                 myMediaElement.SpeedRatio = 0.75; 
 
         }

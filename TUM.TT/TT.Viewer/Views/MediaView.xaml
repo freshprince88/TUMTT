@@ -97,9 +97,9 @@
                 </i:Interaction.Triggers>
             </Button>
 
-            <ToggleButton x:Name="PlayButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
+            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="5">
                 <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                           Visual="{DynamicResource appbar_control_play}" />
@@ -112,7 +112,7 @@
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </ToggleButton>
+            </Button>
             <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="5" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">

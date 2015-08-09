@@ -37,10 +37,12 @@ namespace TT.Viewer.Views
                 case MediaViewModel.PlayPause.Play:
                     PlayButton.Visibility = Visibility.Hidden;
                     PauseButton.Visibility = Visibility.Visible;
+                    PauseButton.IsChecked = true;
                     break;
                 case MediaViewModel.PlayPause.Pause:
                     PlayButton.Visibility = Visibility.Visible;
                     PauseButton.Visibility = Visibility.Hidden;
+                    PauseButton.IsChecked = false;
                     break;
                 default:
                     break;
