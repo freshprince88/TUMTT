@@ -36,7 +36,8 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
@@ -46,9 +47,10 @@
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="1">
+            <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -64,7 +66,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2" >
+            <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="3" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -80,7 +82,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="PreviousFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="3">
+            <Button x:Name="PreviousFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="4">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -97,7 +99,7 @@
                 </i:Interaction.Triggers>
             </Button>
 
-            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="5">
+            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="6">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -113,7 +115,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="5" Visibility="Hidden">
+            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="6" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -130,7 +132,7 @@
                 </i:Interaction.Triggers>
             </ToggleButton>
 
-            <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="7" >
+            <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -146,7 +148,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button  x:Name="Next5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8">
+            <Button  x:Name="Next5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="9">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -162,7 +164,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="9">
+            <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="10">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -186,27 +188,29 @@
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MaxWidth="10"></ColumnDefinition>
                 <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
                 <ColumnDefinition MaxWidth="10"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
+            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
                 75%
             </ToggleButton>
-            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow50Percent(Slow50PercentButton.IsChecked)]">
+            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Slow50Percent(Slow50PercentButton.IsChecked)]">
                 50%
             </ToggleButton>
-            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Slow25Percent(Slow25PercentButton.IsChecked)]">
+            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="4" cal:Message.Attach="[Event Click] = [Action Slow25Percent(Slow25PercentButton.IsChecked)]">
                 25%
             </ToggleButton>
 
             
-            <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="5">
+            <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="6">
                     <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -222,7 +226,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="7">
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="8">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -231,7 +235,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="9" >
+            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -247,7 +251,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentToggle}" Grid.Column="9" Visibility="Hidden">
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentToggle}" Grid.Column="10" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -263,7 +267,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <Button x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
+            <Button x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="11" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
