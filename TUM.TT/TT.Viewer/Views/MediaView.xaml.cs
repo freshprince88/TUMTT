@@ -29,17 +29,18 @@ namespace TT.Viewer.Views
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
         }
+
         public void Handle(MediaViewModel.PlayPause message)
         {
             switch (message)
             {
-                case MediaViewModel.PlayPause.Played:
-                    PlayButton.Visibility = Visibility.Visible;
-                    PauseButton.Visibility = Visibility.Hidden;
-                    break;
-                case MediaViewModel.PlayPause.Paused:
+                case MediaViewModel.PlayPause.Play:
                     PlayButton.Visibility = Visibility.Hidden;
                     PauseButton.Visibility = Visibility.Visible;
+                    break;
+                case MediaViewModel.PlayPause.Pause:
+                    PlayButton.Visibility = Visibility.Visible;
+                    PauseButton.Visibility = Visibility.Hidden;
                     break;
                 default:
                     break;

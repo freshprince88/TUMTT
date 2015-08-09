@@ -14,6 +14,29 @@ namespace TT.Viewer.ViewModels
     {
         private IEventAggregator events;
 
+        public enum PlayPause
+        {
+
+            Pause,
+            Play
+        }
+
+        private PlayPause _mode;
+        public PlayPause Mode
+        {
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                if (!_mode.Equals(value))
+                    events.PublishOnUIThread(value);
+
+                _mode = value;
+
+            }
+        }
 
         public MediaViewModel(IEventAggregator eventAggregator)
         {
@@ -25,11 +48,13 @@ namespace TT.Viewer.ViewModels
         public void Play(MediaElement myMediaElement)
         {
             myMediaElement.Play();
-            
+            this.Mode = PlayPause.Play;          
         }
+
         public void Pause(MediaElement myMediaElement)
         {
             myMediaElement.Pause();
+            this.Mode = PlayPause.Pause;
         }
        
         public void Stop(MediaElement myMediaElement)
@@ -107,35 +132,7 @@ namespace TT.Viewer.ViewModels
             myMediaElement.SpeedRatio = 0.25;
         }
 
-
-
-
-
-
-
-        public enum PlayPause
-        {
-
-            Paused,
-            Played
-        }
-
-        private PlayPause _mode;
-        public PlayPause Mode
-        {
-            get
-            {
-                return _mode;
-            }
-            set
-            {
-                if (!_mode.Equals(value))
-                    events.PublishOnUIThread(value);
-
-                _mode = value;
-
-            }
-        }
+        
         /// <summary>
         /// Initializes this view model.
         /// </summary>

@@ -17,8 +17,6 @@ namespace TT.Viewer.ViewModels {
             this.DisplayName = "TUM.TT";
             FilterView = new FilterViewModel();
             MediaView = new MediaViewModel(Events);
-            ActivateItem(FilterView);
-            ActivateItem(MediaView);
         }
 
         protected override void OnInitialize()
@@ -38,6 +36,7 @@ namespace TT.Viewer.ViewModels {
         {
             base.OnActivate();
             this.ActivateItem(MediaView);
+            this.ActivateItem(FilterView);
         }
     }
 }
