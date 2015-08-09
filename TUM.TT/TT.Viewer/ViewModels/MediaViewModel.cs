@@ -167,7 +167,9 @@ namespace TT.Viewer.ViewModels
                 this.Speed = PlaySpeed.Full;
         }
 
-        
+        public void Fullscreen(MediaElement myMediaElement)
+        {     
+        }
         /// <summary>
         /// Initializes this view model.
         /// </summary>

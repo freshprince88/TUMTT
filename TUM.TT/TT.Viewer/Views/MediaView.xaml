@@ -249,6 +249,22 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
+            <Button x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_fullscreen}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Fullscreen">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </Grid>
         <MediaElement x:Name="myMediaElement" Source="C:\Users\Michael Fuchs\Videos\OvtcharovDimitrij_ZhangJike_WTTTC_2014_MT_Final.mp4" LoadedBehavior="Manual" 
                       UnloadedBehavior="Stop" SpeedRatio="1" HorizontalAlignment="Left" Height="auto" Margin="10,0,10,0" VerticalAlignment="Center" Width="auto"/>
