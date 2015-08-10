@@ -113,7 +113,7 @@
   </xs:element>
   <xs:element name="DataSetTT" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
     <xs:complexType>
-      <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:choice maxOccurs="unbounded">
         <xs:element ref="Rank" />
         <xs:element ref="Match" />
       </xs:choice>

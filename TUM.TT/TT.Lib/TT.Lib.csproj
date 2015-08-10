@@ -57,27 +57,80 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.AvalonDock">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DataSetTT.Designer.cs">
+      <DependentUpon>DataSetTT.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\MatchDS.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Models\Serialization\IMatchSerializer.cs" />
+    <Compile Include="Models\Serialization\XmlMatchSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results\BusyIndicatorResult.cs" />
+    <Compile Include="Results\DeserializeMatchResult.cs" />
+    <Compile Include="Results\ErrorMessageResult.cs" />
+    <Compile Include="Results\ErrorResult.cs" />
+    <Compile Include="Results\FileDialogResult.cs" />
+    <Compile Include="Results\Helper\RescueSyntax.cs" />
+    <Compile Include="Results\OpenFileDialogResult.cs" />
+    <Compile Include="Results\RescueResult.cs" />
+    <Compile Include="Results\ResultExtensions.cs" />
+    <Compile Include="Results\SerializeMatchResult.cs" />
     <Compile Include="Templates\CircleBorder.xaml.cs">
       <DependentUpon>CircleBorder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\CircleMarginConverter .cs" />
     <Compile Include="Util\Column2TabConverter.cs" />
+    <Compile Include="Util\Format.cs" />
+    <Compile Include="Util\FrameworkElementExtension.cs" />
+    <Compile Include="Util\MatchExtensions.cs" />
     <Compile Include="Util\MathConverter.cs" />
+    <Compile Include="Util\StringExtensions.cs" />
     <Compile Include="Util\TabSizeConverter.cs" />
     <Compile Include="Util\Visibility2BoolConverter.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Models\DataSetTT.xsc">
+      <DependentUpon>DataSetTT.xsd</DependentUpon>
+    </None>
+    <None Include="Models\DataSetTT.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetTT.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Models\DataSetTT.xss">
+      <DependentUpon>DataSetTT.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Models\Test.xml" />
     <Content Include="Resources\Entypo-license.txt" />
     <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>

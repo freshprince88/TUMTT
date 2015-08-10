@@ -86,14 +86,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Import\Test.cs">
-      <DependentUpon>Test.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Import\Test.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Test.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="Events\MatchEvent.cs" />
+    <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
@@ -161,17 +155,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Import\Test.xsc">
-      <DependentUpon>Test.xsd</DependentUpon>
-    </None>
-    <None Include="Import\Test.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Test.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Import\Test.xss">
-      <DependentUpon>Test.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -194,9 +177,6 @@
       <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
       <Name>TT.Lib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Import\Test.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

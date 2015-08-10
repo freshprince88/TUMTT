@@ -1,10 +1,19 @@
 using Caliburn.Micro;
 using System.Windows;
 using System.Reflection;
+using TT.Lib.Results;
+using TT.Lib.Util;
+using TT.Viewer.Events;
+using System.Collections.Generic;
+using TT.Lib.Models;
 
-namespace TT.Viewer.ViewModels {
+namespace TT.Viewer.ViewModels
+{
 
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IShell {
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
+        IShell,
+        IHandle<MatchOpenedEvent>
+    {
 
         public FilterViewModel FilterView { get; private set; }
         /// <summary>
@@ -18,6 +27,8 @@ namespace TT.Viewer.ViewModels {
             FilterView = new FilterViewModel(Events);
         }
 
+        #region Caliburn hooks
+
         /// <summary>
         /// Initializes this view model.
         /// </summary>
@@ -28,17 +39,58 @@ namespace TT.Viewer.ViewModels {
             // Subscribe ourself to the event bus
             //this.Events.Subscribe(this);        
         }
-        
-            
+
         protected override void OnViewLoaded(object view)
-        {            
+        {
             base.OnViewLoaded(view);
         }
 
         protected override void OnActivate()
-        {            
+        {
             base.OnActivate();
+            Events.Subscribe(this);
             this.ActivateItem(FilterView);
         }
+
+        #endregion
+
+        #region Methods
+
+        public IEnumerable<IResult> OpenNewMatch()
+        {
+            var dialog = new OpenFileDialogResult()
+            {
+                Title = "Open match...",
+                Filter = Format.XML.DialogFilter,
+            };
+            yield return dialog;
+
+            var deserialization = new DeserializeMatchResult(dialog.Result, Format.XML.Serializer);
+            yield return deserialization
+                .IsBusy("Loading")
+                .Rescue()
+                .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
+                .Propagate(); // Reraise the error to abort the coroutine
+
+            this.Events.PublishOnUIThread(new MatchOpenedEvent(deserialization.Result, deserialization.FileName));
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Handles an opened match.
+        /// </summary>
+        /// <remarks>
+        /// Fills the Active Filter
+        /// </remarks>
+        /// <param name="message">The event.</param>
+        public void Handle(MatchOpenedEvent message)
+        {
+            Match m = message.Match;
+        }
+
+        #endregion
     }
 }
