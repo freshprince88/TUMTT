@@ -8,43 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="360" d:DesignWidth="360">
 
-    <UserControl.Resources>        
-        <Style x:Key="ButtonTop" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MetroToggleButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Path Fill="{TemplateBinding Background}"
-                            Data="M 0,10 V 120 H 120 V 10 S 60,-9 0,10" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonBot" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MetroToggleButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Path Fill="{TemplateBinding Background}"
-                            Data="M 0,0 V 110 S 60,130 120,110 V 0 Z" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonMid" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MetroToggleButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Grid>
-                            <Ellipse Stroke="Black"
-                         StrokeThickness="2" Fill="{TemplateBinding Background}" />
-                            <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-
     <Viewbox Stretch="Uniform">
         <template:CircleBorder>
             <Grid>
@@ -59,11 +22,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ToggleButton Style="{StaticResource ButtonTop}" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectTop]"/>
-                <ToggleButton Style="{StaticResource MetroSpinLeftToggle}" Grid.Row="1" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectLeft]"/>
-                <ToggleButton Height="120" Width="120" Style="{StaticResource ButtonMid}"  Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectMid]"/>
-                <ToggleButton Style="{StaticResource MetroSpinRightToggle}" Grid.Row="1" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectRight]"/>
-                <ToggleButton Style="{StaticResource ButtonBot}" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectBot]"/>
+                <ToggleButton Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectTop]"/>
+                <ToggleButton Style="{StaticResource MetroSpinLeftToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectLeft]"/>
+                <ToggleButton Height="120" Width="120" Style="{StaticResource MetroSpinMidToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectMid]"/>
+                <ToggleButton Style="{StaticResource MetroSpinRightToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectRight]"/>
+                <ToggleButton Style="{StaticResource MetroSpinBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectBot]"/>
             </Grid>
         </template:CircleBorder>
     </Viewbox>

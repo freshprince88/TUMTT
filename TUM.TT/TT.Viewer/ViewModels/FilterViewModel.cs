@@ -8,27 +8,60 @@ using System.Windows.Controls;
 
 namespace TT.Viewer.ViewModels
 {
-    class FilterViewModel : Conductor<IScreen>.Collection.OneActive
+    public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        private Expander _expander;
-        public Screen ServiceView { get; set; }
+        public IScreen ServiceView { get; set; }
 
-        public bool IsExpanded
+        /// <summary>
+        /// Gets the event bus of this shell.
+        /// </summary>
+        private IEventAggregator events;
+
+        public FilterViewModel(IEventAggregator eventAggregator)
         {
-            get
+            this.events = eventAggregator;
+        }
+
+        /// <summary>
+        /// Initializes this view model.
+        /// </summary>
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            // Subscribe ourself to the event bus
+            //this.events.Subscribe(this);
+
+            // Activate the welcome model
+            if (this.ActiveItem == null)
             {
-                return _expander.IsExpanded;
-            }
-            set
-            {
-                _expander.IsExpanded = value;
+                ServiceView = new ServiceViewModel(this.events);
+                this.ActivateItem(ServiceView);
             }
         }
 
-        public FilterViewModel()
+        public void FilterSelected(SelectionChangedEventArgs args)
         {
-            ServiceView = new ServiceViewModel();
-            this.ActivateItem(ServiceView);
+            TabItem selected = args.AddedItems[0] as TabItem;
+            switch (selected.Name)
+            {
+                case "ServiceTabHeader":
+                    this.ActivateItem(ServiceView);
+                    break;
+                case "ReceiveTabHeader":
+                    this.ActivateItem(new ReceptionViewModel());
+                    break;
+                case "ThirdTabHeader":
+                    break;
+                case "FourthTabHeader":
+                    break;
+                case "LastTabHeader":
+                    break;
+                case "KombiTabHeader":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

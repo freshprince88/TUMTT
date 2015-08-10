@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TT.Viewer.ViewModels
 {
-    class MediaViewModel : Screen
+    public class MediaViewModel : Screen
 
     {
     }

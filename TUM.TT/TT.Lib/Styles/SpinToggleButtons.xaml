@@ -171,4 +171,256 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ToggleButton"
+           x:Key="MetroSpinTopToggle">
+        <Setter Property="Controls:ButtonHelper.CornerRadius"
+                Value="3" />
+        <Setter Property="Background"
+                Value="{DynamicResource GrayBrush10}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource DefaultFont}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource UpperCaseContentFontSize}" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+        <Setter Property="Padding"
+                Value="5,6" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="MinHeight"
+                Value="25" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Path x:Name="Shape" Fill="{TemplateBinding Background}"
+                            Data="M 0,10 V 120 H 120 V 10 S 60,-9 0,10" />
+                        <ContentPresenter x:Name="contentPresenter"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          RecognizesAccessKey="True"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush2}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ToggleButton"
+           x:Key="MetroSpinBotToggle">
+        <Setter Property="Controls:ButtonHelper.CornerRadius"
+                Value="3" />
+        <Setter Property="Background"
+                Value="{DynamicResource GrayBrush10}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource DefaultFont}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource UpperCaseContentFontSize}" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+        <Setter Property="Padding"
+                Value="5,6" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="MinHeight"
+                Value="25" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Path x:Name="Shape" Fill="{TemplateBinding Background}"
+                            Data="M 0,0 V 110 S 60,130 120,110 V 0 Z" />
+                        <ContentPresenter x:Name="contentPresenter"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          RecognizesAccessKey="True"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush2}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ToggleButton"
+           x:Key="MetroSpinMidToggle">
+        <Setter Property="Controls:ButtonHelper.CornerRadius"
+                Value="3" />
+        <Setter Property="Background"
+                Value="{DynamicResource GrayBrush10}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource DefaultFont}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource UpperCaseContentFontSize}" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+        <Setter Property="Padding"
+                Value="5,6" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="MinHeight"
+                Value="25" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Ellipse x:Name="Shape" Stroke="Black"
+                         StrokeThickness="2" Fill="{TemplateBinding Background}" />
+                        <ContentPresenter x:Name="contentPresenter"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          RecognizesAccessKey="True"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="Shape"
+                                    Property="Fill"
+                                    Value="{DynamicResource AccentColorBrush2}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

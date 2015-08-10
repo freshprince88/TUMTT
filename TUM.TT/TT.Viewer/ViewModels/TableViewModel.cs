@@ -4,36 +4,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xceed.Wpf.Toolkit;
 
 namespace TT.Viewer.ViewModels
 {
-    class SpinControlViewModel : Screen
+    public class TableViewModel : Screen
     {
 
-        public void SelectTop()
+        private IEventAggregator events;
+
+        public enum ViewMode
         {
-            MessageBox.Show("Top");
+            Top,
+            Bottom
         }
 
-        public void SelectLeft()
+        private ViewMode _mode;
+        public ViewMode Mode
         {
-            MessageBox.Show("Left");
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                if (!_mode.Equals(value))
+                    events.PublishOnUIThread(value);
+
+                _mode = value;
+                
+            }
         }
 
-        public void SelectMid()
+        public TableViewModel(IEventAggregator eventAggregator)
         {
-            MessageBox.Show("Mid");
-        }
-
-        public void SelectRight()
-        {
-            MessageBox.Show("Right");
-        }
-
-        public void SelectBot()
-        {
-            MessageBox.Show("Bot");
+            events = eventAggregator;
         }
 
         /// <summary>
