@@ -3,7 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+      xmlns:cal="http://www.caliburnproject.org"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="400">
 
@@ -29,12 +31,13 @@
                 <ColumnDefinition  Width="8*" MinWidth="240" ></ColumnDefinition>
                 <ColumnDefinition  Width="*" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="1" Margin="0,5,0,5" Background="{DynamicResource AccentColorBrush2}" />  
+            <Border Grid.Column="1" Margin="0,5,0,5" Background="{DynamicResource AccentColorBrush2}" />
             <Slider Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center" />
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
@@ -44,9 +47,10 @@
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
-             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="1">
+            </Grid.ColumnDefinitions>
+            <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -54,8 +58,15 @@
                           Visual="{DynamicResource appbar_control_rewind}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="PreviousRally">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
+            <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="3" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -63,8 +74,15 @@
                           Visual="{DynamicResource appbar_control_rewind_variant}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Previous5Frames">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="3">
+            <Button x:Name="PreviousFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="4">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -72,73 +90,32 @@
                           Visual="{DynamicResource appbar_navigate_previous}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="PreviousFrame">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            
-            <ToggleButton Style="{StaticResource MetroAccentToggle}"  Grid.Column="5">
+
+            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="6">
                 <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                           Visual="{DynamicResource appbar_control_play}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-            </ToggleButton>
-
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="7">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_navigate_next}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Play">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="8">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_control_fastforward_variant}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            <Button Style="{StaticResource MetroAccentFlat}" Grid.Column="9">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_control_fastforward}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            
-        </Grid>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            
-
-
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="2">
-                <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                          Visual="{DynamicResource appbar_repeat}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </ToggleButton>            
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="4">
+            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="6" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -146,19 +123,171 @@
                           Visual="{DynamicResource appbar_control_pause}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Pause">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
-            <Button  Style="{StaticResource MetroAccentFlat}" Grid.Column="6">
+
+            <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8" >
                 <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_navigate_next}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="NextFrame">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button  x:Name="Next5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="9">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_fastforward_variant}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Next5Frames">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="10">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_control_fastforward}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="NextRally">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
+                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
+                75%
+            </ToggleButton>
+            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Slow50Percent(Slow50PercentButton.IsChecked)]">
+                50%
+            </ToggleButton>
+            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="4" cal:Message.Attach="[Event Click] = [Action Slow25Percent(Slow25PercentButton.IsChecked)]">
+                25%
+            </ToggleButton>
+
+            
+            <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="6">
+                    <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                           Visual="{DynamicResource appbar_control_stop}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Stop">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <Slider Style="{DynamicResource FlatSlider}" Grid.Column="7" VerticalAlignment="Center" Width="Auto"></Slider>
+            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="8">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_repeat}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </ToggleButton>
+            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_sound_3}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Mute">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentToggle}" Grid.Column="10" Visibility="Hidden">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_sound_mute}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Unmute">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ToggleButton>
+            <Button x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="11" >
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_fullscreen}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Fullscreen">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </Grid>
+        <MediaElement x:Name="myMediaElement" Source="C:\Users\Michael Fuchs\Videos\OvtcharovDimitrij_ZhangJike_WTTTC_2014_MT_Final.mp4" LoadedBehavior="Manual" 
+                      UnloadedBehavior="Stop" SpeedRatio="1" HorizontalAlignment="Left" Height="auto" Margin="10,0,10,0" VerticalAlignment="Center" Width="auto"/>
     </Grid>
 
 
 </UserControl>
+

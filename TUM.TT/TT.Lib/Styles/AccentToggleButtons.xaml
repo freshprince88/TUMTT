@@ -148,13 +148,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="ButtonSplitStyle"
-           TargetType="{x:Type Button}"
-           BasedOn="{StaticResource ButtonDropDownStyle}">
-        <Setter Property="HorizontalAlignment"
-                Value="Stretch" />
-        <Setter Property="VerticalAlignment"
-                Value="Stretch" />
-    </Style>
+   
+   
 
 </ResourceDictionary>

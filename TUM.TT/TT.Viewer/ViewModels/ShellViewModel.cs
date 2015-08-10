@@ -27,7 +27,7 @@ namespace TT.Viewer.ViewModels
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             FilterView = new FilterViewModel(Events);
-            MediaView = new MediaViewModel();
+            MediaView = new MediaViewModel(Events);
         }
 
         #region Caliburn hooks

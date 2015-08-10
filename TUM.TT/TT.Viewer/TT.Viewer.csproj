@@ -113,6 +113,9 @@
     <Compile Include="Views\TableView.xaml.cs">
       <DependentUpon>TableView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MediaView.xaml.cs">
+      <DependentUpon>MediaView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -200,7 +203,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
