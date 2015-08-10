@@ -438,7 +438,7 @@ namespace TT.Lib.Models
 
         private MatchRallyCurrentSetScore currentSetScoreField;
 
-        private MatchRallySchlag schlagField;
+        private MatchRallySchlag[] schlagField;
 
         private string nummerField;
 
@@ -483,8 +483,8 @@ namespace TT.Lib.Models
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public MatchRallySchlag Schlag
+        [System.Xml.Serialization.XmlElementAttribute("Schlag", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public MatchRallySchlag[] Schlag
         {
             get
             {

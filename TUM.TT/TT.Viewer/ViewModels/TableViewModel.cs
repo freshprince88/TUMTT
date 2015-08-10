@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
@@ -18,6 +19,26 @@ namespace TT.Viewer.ViewModels
             Bottom
         }
 
+        public enum TablePosition
+        {
+            TopLeft = 1,
+            TopMid,
+            TopRight,
+            MidLeft,
+            MidMid,
+            MidRight,
+            BotLeft,
+            BotMid,
+            BotRight
+        }
+
+        public enum StrokeLength
+        {
+            Short,
+            Half,
+            Long
+        }
+
         private ViewMode _mode;
         public ViewMode Mode
         {
@@ -28,7 +49,7 @@ namespace TT.Viewer.ViewModels
             set
             {
                 if (!_mode.Equals(value))
-                    events.PublishOnUIThread(value);
+                    events.PublishOnUIThread(new TableViewModeChangedEvent(value));
 
                 _mode = value;
                 

@@ -22,11 +22,15 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ToggleButton Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectTop]"/>
-                <ToggleButton Style="{StaticResource MetroSpinLeftToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectLeft]"/>
-                <ToggleButton Height="120" Width="120" Style="{StaticResource MetroSpinMidToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectMid]"/>
-                <ToggleButton Style="{StaticResource MetroSpinRightToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectRight]"/>
-                <ToggleButton Style="{StaticResource MetroSpinBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectBot]"/>
+                <ToggleButton Style="{StaticResource MetroSpinLeftTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectTop($source)]"/>
+                <ToggleButton Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectTop($source)]"/>
+                <ToggleButton Style="{StaticResource MetroSpinRightTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectTop($source)]"/>
+                <ToggleButton Style="{StaticResource MetroSpinLeftToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectLeft($source)]"/>
+                <ToggleButton Height="120" Width="120" Style="{StaticResource MetroSpinMidToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectMid($source)]"/>
+                <ToggleButton Style="{StaticResource MetroSpinRightToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectRight($source)]"/>
+                <ToggleButton Style="{StaticResource MetroSpinLeftBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectBot($source)]"/>
+                <ToggleButton Style="{StaticResource MetroSpinBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectBot($source)]"/>
+                <ToggleButton Style="{StaticResource MetroSpinRightBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectBot($source)]"/>
             </Grid>
         </template:CircleBorder>
     </Viewbox>

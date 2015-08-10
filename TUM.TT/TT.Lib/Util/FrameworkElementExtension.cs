@@ -15,7 +15,7 @@ namespace TT.Lib.Util
     public static class FrameworkElementExtension
     {
         /// <summary>
-        /// Traverse all logical parents of <paramref name="element"/>, including <paramref name="element"/> itself.
+        /// Traverse all logical parents of <paramref name="element"/>, including <paramref name="element"/> itself and its direct children.
         /// </summary>
         /// <param name="element">The element whose parents to traverse.</param>
         /// <returns>An enumerable of all parents with <paramref name="element"/> is first item.</returns>

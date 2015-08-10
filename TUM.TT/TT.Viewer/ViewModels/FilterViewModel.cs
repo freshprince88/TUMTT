@@ -10,7 +10,7 @@ namespace TT.Viewer.ViewModels
 {
     public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public IScreen ServiceView { get; set; }
+        public ServiceViewModel ServiceView { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.

@@ -11,8 +11,7 @@ namespace TT.Viewer.ViewModels
 {
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
-        IShell,
-        IHandle<MatchOpenedEvent>
+        IShell
     {
 
         public FilterViewModel FilterView { get; private set; }
@@ -78,18 +77,6 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Event Handlers
-
-        /// <summary>
-        /// Handles an opened match.
-        /// </summary>
-        /// <remarks>
-        /// Fills the Active Filter
-        /// </remarks>
-        /// <param name="message">The event.</param>
-        public void Handle(MatchOpenedEvent message)
-        {
-            Match m = message.Match;
-        }
 
         #endregion
     }

@@ -86,8 +86,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Events\FilterSelectionChangedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
+    <Compile Include="Events\RalliesEvent.cs" />
+    <Compile Include="Events\ServiceViewLoadedEvent.cs" />
+    <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
+    <Compile Include="Events\TableViewModeChangedEvent.cs" />
+    <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />

@@ -57,8 +57,9 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
-    <Controls:MetroContentControl>
-        <xctk:BusyIndicator>
+
+    <xctk:BusyIndicator>
+        <Controls:MetroContentControl>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <!--<ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=FilterView, Converter={StaticResource c2tc}}"/>-->
@@ -86,8 +87,9 @@
                     <Border Grid.Row="2" BorderThickness="1 0 0 0 " BorderBrush="{DynamicResource AccentColorBrush}" />
                 </Grid>
             </Grid>
-        </xctk:BusyIndicator>
-    </Controls:MetroContentControl>
+        </Controls:MetroContentControl>
+    </xctk:BusyIndicator>
+
 </Controls:MetroWindow>
     
     

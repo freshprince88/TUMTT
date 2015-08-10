@@ -50,10 +50,13 @@ namespace TT.Lib.Results
         {
             var view = context.View as FrameworkElement;
             if (view != null)
-            {
+            {                
                 var indicator = view.TraverseParents()
                    .OfType<BusyIndicator>()
                    .FirstOrDefault();
+
+                indicator = indicator ?? LogicalTreeHelper.GetChildren(view).OfType<BusyIndicator>().FirstOrDefault();
+
                 if (indicator != null)
                 {
                     Caliburn.Micro.Execute.OnUIThread(() =>
