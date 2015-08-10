@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:lib="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                    
         Width="800"
         Height="600"
@@ -15,9 +18,16 @@
 
 
     <Window.Resources>
-        <lib:Visibility2BoolConverter x:Key="bvc2" />
-        <lib:Column2TabConverter x:Key="c2tc" />
-        <lib:TabSizeConverter x:Key="tabSizeConverter" />
+        <ResourceDictionary>
+            <lib:Visibility2BoolConverter x:Key="bvc2" />
+            <lib:Column2TabConverter x:Key="c2tc" />
+            <lib:TabSizeConverter x:Key="tabSizeConverter" />
+
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
 
         <!--<Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="{x:Type TabItem}">
             <Setter Property="Height">
@@ -31,32 +41,53 @@
         </Style>-->
     </Window.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <!--<ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=FilterView, Converter={StaticResource c2tc}}"/>-->
-            <ColumnDefinition x:Name="Column1" Width="*"/>
-            <ColumnDefinition x:Name="Column2" Width="*"/>
-            <ColumnDefinition x:Name="Column3" Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <ContentControl x:Name="FilterView" Grid.Column="0"/>
-        <Border Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="{DynamicResource AccentColorBrush}">
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button ToolTip="Open new Match"
+                    cal:Message.Attach="[Event Click] = [Action OpenNewMatch()]">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_folder_open}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
-        </Border>
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <Controls:MetroContentControl>
+        <xctk:BusyIndicator>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <!--<ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=FilterView, Converter={StaticResource c2tc}}"/>-->
+                    <ColumnDefinition x:Name="Column1" Width="*"/>
+                    <ColumnDefinition x:Name="Column2" Width="*"/>
+                    <ColumnDefinition x:Name="Column3" Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                <ContentControl x:Name="MediaView"/>
-            </Border>
-            <Border Grid.Row="1" BorderThickness="1 0 0 1 " BorderBrush="{DynamicResource AccentColorBrush}" />
-            <Border Grid.Row="2" BorderThickness="1 0 0 0 " BorderBrush="{DynamicResource AccentColorBrush}" />
-        </Grid>
-    </Grid>
+                <ContentControl x:Name="FilterView" Grid.Column="0"/>
+                <Border Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="{DynamicResource AccentColorBrush}">
+
+                </Border>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
+                        <ContentControl x:Name="MediaView"/>
+                    </Border>
+                    <Border Grid.Row="1" BorderThickness="1 0 0 1 " BorderBrush="{DynamicResource AccentColorBrush}" />
+                    <Border Grid.Row="2" BorderThickness="1 0 0 0 " BorderBrush="{DynamicResource AccentColorBrush}" />
+                </Grid>
+            </Grid>
+        </xctk:BusyIndicator>
+    </Controls:MetroContentControl>
 </Controls:MetroWindow>
     
     

@@ -1,21 +1,46 @@
 using Caliburn.Micro;
 using System.Windows;
 using System.Reflection;
+using TT.Lib.Results;
+using TT.Lib.Util;
+using TT.Viewer.Events;
+using System.Collections.Generic;
+using TT.Lib.Models;
 
-namespace TT.Viewer.ViewModels {
+namespace TT.Viewer.ViewModels
+{
 
-    public class ShellViewModel : Conductor<object>.Collection.AllActive, IShell {
+    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
+        IShell,
+        IHandle<MatchOpenedEvent>
+    {
+        public MediaViewModel MediaView { get; private set; }
+        public FilterViewModel FilterView { get; private set; }
 
-        public Screen FilterView { get; private set; }
-        public Screen MediaView { get; set; }
+        /// <summary>
+        /// Gets the event bus of this shell.
+        /// </summary>
+        public IEventAggregator Events { get; private set; }
 
-        public ShellViewModel()
+        public ShellViewModel(IEventAggregator eventAggregator)
         {
             this.DisplayName = "TUM.TT";
-            FilterView = new FilterViewModel();
+            Events = eventAggregator;
+            FilterView = new FilterViewModel(Events);
             MediaView = new MediaViewModel();
-            ActivateItem(FilterView);
-            ActivateItem(MediaView);
+        }
+
+        #region Caliburn hooks
+
+        /// <summary>
+        /// Initializes this view model.
+        /// </summary>
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            // Subscribe ourself to the event bus
+            //this.Events.Subscribe(this);        
         }
 
         protected override void OnViewLoaded(object view)
@@ -26,6 +51,50 @@ namespace TT.Viewer.ViewModels {
         protected override void OnActivate()
         {
             base.OnActivate();
+            Events.Subscribe(this);
+            this.ActivateItem(FilterView);
+            this.ActivateItem(MediaView);
         }
+
+        #endregion
+
+        #region Methods
+
+        public IEnumerable<IResult> OpenNewMatch()
+        {
+            var dialog = new OpenFileDialogResult()
+            {
+                Title = "Open match...",
+                Filter = Format.XML.DialogFilter,
+            };
+            yield return dialog;
+
+            var deserialization = new DeserializeMatchResult(dialog.Result, Format.XML.Serializer);
+            yield return deserialization
+                .IsBusy("Loading")
+                .Rescue()
+                .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
+                .Propagate(); // Reraise the error to abort the coroutine
+
+            this.Events.PublishOnUIThread(new MatchOpenedEvent(deserialization.Result, deserialization.FileName));
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Handles an opened match.
+        /// </summary>
+        /// <remarks>
+        /// Fills the Active Filter
+        /// </remarks>
+        /// <param name="message">The event.</param>
+        public void Handle(MatchOpenedEvent message)
+        {
+            Match m = message.Match;
+        }
+
+        #endregion
     }
 }
