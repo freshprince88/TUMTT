@@ -63,7 +63,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <!--<ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=FilterView, Converter={StaticResource c2tc}}"/>-->
-                    <ColumnDefinition x:Name="Column1" Width="*"/>
+                    <ColumnDefinition x:Name="Column1" Width="*" MinWidth="250" MaxWidth="400"/>
                     <ColumnDefinition x:Name="Column2" Width="*"/>
                     <ColumnDefinition x:Name="Column3" Width="*"/>
                 </Grid.ColumnDefinitions>

@@ -11,6 +11,7 @@ namespace TT.Viewer.ViewModels
     public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public IScreen ServiceView { get; set; }
+        public IScreen ReceptionView { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -37,6 +38,7 @@ namespace TT.Viewer.ViewModels
             {
                 ServiceView = new ServiceViewModel(this.events);
                 this.ActivateItem(ServiceView);
+                ReceptionView = new ReceptionViewModel(this.events);
             }
         }
 
@@ -49,7 +51,7 @@ namespace TT.Viewer.ViewModels
                     this.ActivateItem(ServiceView);
                     break;
                 case "ReceiveTabHeader":
-                    this.ActivateItem(new ReceptionViewModel());
+                    this.ActivateItem(ReceptionView);
                     break;
                 case "ThirdTabHeader":
                     break;

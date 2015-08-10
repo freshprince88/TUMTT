@@ -26,8 +26,8 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-
-                <Controls:RangeSlider Orientation="Vertical" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" />
+                <Controls:RangeSlider  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" />
+                <!--<Controls:RangeSlider Orientation="Vertical" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" />-->
 
                 <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
                     <Grid Name="InnerFieldGrid">

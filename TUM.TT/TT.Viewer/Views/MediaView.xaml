@@ -115,7 +115,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentToggle}" Grid.Column="6" Visibility="Hidden">
+            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="6" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -199,13 +199,13 @@
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
+            <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentFlatToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
                 75%
             </ToggleButton>
-            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Slow50Percent(Slow50PercentButton.IsChecked)]">
+            <ToggleButton x:Name="Slow50PercentButton" Style="{StaticResource MetroAccentFlatToggle}"  Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Slow50Percent(Slow50PercentButton.IsChecked)]">
                 50%
             </ToggleButton>
-            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentToggle}"  Grid.Column="4" cal:Message.Attach="[Event Click] = [Action Slow25Percent(Slow25PercentButton.IsChecked)]">
+            <ToggleButton x:Name="Slow25PercentButton" Style="{StaticResource MetroAccentFlatToggle}"  Grid.Column="4" cal:Message.Attach="[Event Click] = [Action Slow25Percent(Slow25PercentButton.IsChecked)]">
                 25%
             </ToggleButton>
 
@@ -226,7 +226,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton Style="{StaticResource MetroAccentToggle}" Grid.Column="8">
+            <ToggleButton Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="8">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -251,7 +251,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentToggle}" Grid.Column="10" Visibility="Hidden">
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="10" Visibility="Hidden">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
