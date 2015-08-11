@@ -117,7 +117,6 @@ namespace TT.Viewer.ViewModels
         private bool HasSpins(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
-            List<bool> ANDresults = new List<bool>();
             MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
 
             foreach (var spin in SelectedSpins)
@@ -140,26 +139,23 @@ namespace TT.Viewer.ViewModels
                         ORresults.Add(service.Spin.US == "1");
                         break;
                     case SpinControlViewModel.Spins.USSL:
-                        ANDresults.Add(service.Spin.US == "1" && service.Spin.SL == "1");
+                        ORresults.Add(service.Spin.US == "1" && service.Spin.SL == "1");
                         break;
                     case SpinControlViewModel.Spins.USSR:
-                        ANDresults.Add(service.Spin.US == "1" && service.Spin.SR == "1");
+                        ORresults.Add(service.Spin.US == "1" && service.Spin.SR == "1");
                         break;
                     case SpinControlViewModel.Spins.ÜSSL:
-                        ANDresults.Add(service.Spin.ÜS == "1" && service.Spin.SL == "1");
+                        ORresults.Add(service.Spin.ÜS == "1" && service.Spin.SL == "1");
                         break;
                     case SpinControlViewModel.Spins.ÜSSR:
-                        ANDresults.Add(service.Spin.ÜS == "1" && service.Spin.SR == "1");
+                        ORresults.Add(service.Spin.ÜS == "1" && service.Spin.SR == "1");
                         break;
                     default:
                         break;
                 }
             }
-            bool OR = ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
-            bool AND = ANDresults.Count == 0 ? false : ANDresults.Aggregate(true, (a, b) => a && b);
 
-            return OR && AND;
-
+            return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
         #endregion
