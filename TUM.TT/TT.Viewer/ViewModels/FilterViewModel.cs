@@ -11,7 +11,7 @@ namespace TT.Viewer.ViewModels
     public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public ServiceViewModel ServiceView { get; set; }
-        public IScreen ReceptionView { get; set; }
+        public ReceptionViewModel ReceptionView { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -33,12 +33,13 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             //this.events.Subscribe(this);
 
+            ReceptionView = new ReceptionViewModel(this.events);
+            ServiceView = new ServiceViewModel(this.events);
+
             // Activate the welcome model
             if (this.ActiveItem == null)
-            {
-                ServiceView = new ServiceViewModel(this.events);
-                this.ActivateItem(ServiceView);
-                ReceptionView = new ReceptionViewModel(this.events);
+            {                
+                this.ActivateItem(ServiceView);               
             }
         }
 

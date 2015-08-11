@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TT.Viewer.ViewModels
 {
-    class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive
+    public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive
     {
         public SpinControlViewModel SpinControl { get; set; }
         public TableViewModel TableView { get; set; }
