@@ -23,6 +23,10 @@ namespace TT.Viewer.ViewModels
         public List<SpinControlViewModel.Spins> SelectedSpins { get; private set; }
         public EHand Hand { get; private set; }
 
+        public HashSet<int> SelectedSets { get; private set; }
+
+     
+       
         public enum EHand
         {
             Fore,
@@ -44,6 +48,7 @@ namespace TT.Viewer.ViewModels
             SelectedSpins = new List<SpinControlViewModel.Spins>();
             Match = new Match();
             Hand = EHand.None;
+            SelectedSets = new HashSet<int>(); 
 
             SpinControl = new SpinControlViewModel(events);
             TableView = new TableViewModel(events);
@@ -60,6 +65,109 @@ namespace TT.Viewer.ViewModels
             else
             {
                 TableView.Mode = TableViewModel.ViewMode.Bottom;
+            }
+        }
+        public void SetFilter(int set, bool isChecked)
+        {
+            if (set == 0)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(1);
+                    SelectedSets.Add(2);
+                    SelectedSets.Add(3);
+                    SelectedSets.Add(4);
+                    SelectedSets.Add(5);
+                    SelectedSets.Add(6);
+                    SelectedSets.Add(7);
+                }
+                else
+                {
+                    SelectedSets.Remove(1);
+                    SelectedSets.Remove(2);
+                    SelectedSets.Remove(3);
+                    SelectedSets.Remove(4);
+                    SelectedSets.Remove(5);
+                    SelectedSets.Remove(6);
+                    SelectedSets.Remove(7);
+                }
+            }
+            else if (set == 1)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(1);
+                }
+                else
+                {
+                    SelectedSets.Remove(1);
+                }
+            }
+            else if (set == 2)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(2);
+                }
+                else
+                {
+                    SelectedSets.Remove(2);
+                }
+            }
+            else if (set == 3)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(3);
+                }
+                else
+                {
+                    SelectedSets.Remove(3);
+                }
+            }
+            else if (set == 4)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(4);
+                }
+                else
+                {
+                    SelectedSets.Remove(4);
+                }
+            }
+            else if (set == 5)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(5);
+                }
+                else
+                {
+                    SelectedSets.Remove(5);
+                }
+            }
+            else if (set == 6)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(6);
+                }
+                else
+                {
+                    SelectedSets.Remove(6);
+                }
+            }
+            else if (set == 7)
+            {
+                if (!isChecked)
+                {
+                    SelectedSets.Add(7);
+                }
+                else
+                {
+                    SelectedSets.Remove(7);
+                }
             }
         }
 
@@ -84,7 +192,20 @@ namespace TT.Viewer.ViewModels
             }
             else if (hand == "back")
             {
-
+                if (!isChecked)
+                {
+                    if (Hand == EHand.None)
+                        Hand = EHand.Back;
+                    else if (Hand == EHand.Fore)
+                        Hand = EHand.Both;
+                }
+                else
+                {
+                    if (Hand == EHand.Back)
+                        Hand = EHand.None;
+                    else if (Hand == EHand.Both)
+                        Hand = EHand.Fore;
+                }
             }
         }
 
@@ -149,7 +270,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r)).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r) && HasSet(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -214,7 +335,18 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+        private bool HasSet(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
 
-        #endregion
-    }
+            foreach (var set in SelectedSets)
+            {
+                int setTotal = Convert.ToInt32(r.CurrentSetScore.First) + Convert.ToInt32(r.CurrentSetScore.Second) + 1;
+                ORresults.Add(setTotal == set);
+            }
+            return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+            #endregion
+        }
 }

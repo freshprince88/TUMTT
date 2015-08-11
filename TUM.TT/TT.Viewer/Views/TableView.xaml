@@ -7,7 +7,15 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="434">
-
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <!--<UserControl.Resources>
         <lib:MathConverter x:Key="MathConverter" />
     </UserControl.Resources>-->
@@ -21,20 +29,54 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <Controls:RangeSlider  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" />
-                <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
+                <Grid Grid.Row="4" Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>                        
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Controls:RangeSlider Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" ></Controls:RangeSlider>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}" Grid.Row="1" Grid.Column="0">                       
+                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}" Grid.Row="1" Grid.Column="1">
+                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}" Grid.Row="1" Grid.Column="2">
+                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}" Grid.Row="1" Grid.Column="3">
+                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}"  Grid.Row="1" Grid.Column="4">
+                    </ToggleButton>
                 </Grid>
+                <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="5*"/>                        
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}" Grid.Row="0" Grid.Column="1">
+                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}" Grid.Row="1" Grid.Column="1">
+                    </ToggleButton>
+                    <ToggleButton Style="{StaticResource MetroAccentFlatGrayToggle}" Grid.Row="2" Grid.Column="1">
+                    </ToggleButton>
+                </Grid>
+                
                 
 
                 <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
@@ -44,7 +86,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="Hidden">
+                        <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="Visible">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
@@ -67,7 +109,7 @@
                             <ToggleButton x:Name="Btn1_top" Content="1" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30"/>
                         </Grid>
 
-                        <Grid x:Name="BottomField" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True">
+                        <Grid x:Name="BottomField" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="Hidden">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
