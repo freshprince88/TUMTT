@@ -20,6 +20,8 @@
             </TabControl>
         </Expander.Header>
 
-        <ContentControl x:Name="ActiveItem" />
+        <ScrollViewer>
+            <ContentControl x:Name="ActiveItem" />
+        </ScrollViewer>
     </Expander>
 </UserControl>

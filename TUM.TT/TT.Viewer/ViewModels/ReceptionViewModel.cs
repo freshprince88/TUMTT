@@ -21,8 +21,8 @@ namespace TT.Viewer.ViewModels
         public ReceptionViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
-            SpinControl = new SpinControlViewModel();
-            TableView = new TableViewModel(events);
+            SpinControl = new SpinControlViewModel(this.events);
+            TableView = new TableViewModel(this.events);
         }
 
         public void SwitchTable(bool check)

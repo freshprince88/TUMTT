@@ -144,6 +144,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -157,15 +158,14 @@
             <ContentControl x:Name="SpinControl" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Center" />
             <ContentControl x:Name="TableView" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Label Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Qualität:"/>
-            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top"  >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Schlecht" />
-                <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="1" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Gut" />
-            </Grid>
-           
+                <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top"  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Schlecht" />
+                    <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="1" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Gut" />
+                </Grid>
         </Grid>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
 

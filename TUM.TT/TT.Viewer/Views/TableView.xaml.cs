@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TT.Viewer.Events;
 using TT.Viewer.ViewModels;
 
 namespace TT.Viewer.Views
@@ -20,7 +21,9 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für TableView.xaml
     /// </summary>
-    public partial class TableView : UserControl, IHandle<TableViewModel.ViewMode>
+    public partial class TableView : UserControl,
+        IHandle<TableViewModeChangedEvent>,
+        IHandle<ServiceViewLoadedEvent>
     {
         public IEventAggregator Events { get; set; }
 
@@ -31,9 +34,9 @@ namespace TT.Viewer.Views
             Events.Subscribe(this);
         }
 
-        public void Handle(TableViewModel.ViewMode message)
+        public void Handle(TableViewModeChangedEvent message)
         {
-            switch (message)
+            switch (message.Mode)
             {
                 case TableViewModel.ViewMode.Top:
                     TopField.Visibility = Visibility.Visible;
@@ -46,6 +49,11 @@ namespace TT.Viewer.Views
                 default:
                     break;
             }
+        }
+
+        public void Handle(ServiceViewLoadedEvent message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

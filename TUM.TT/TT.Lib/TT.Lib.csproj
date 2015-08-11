@@ -86,15 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\DataSetTT.Designer.cs">
-      <DependentUpon>DataSetTT.xsd</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Models\Match.cs" />
-    <Compile Include="Models\MatchDS.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Models\Serialization\IMatchSerializer.cs" />
     <Compile Include="Models\Serialization\XmlMatchSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,17 +116,6 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Models\DataSetTT.xsc">
-      <DependentUpon>DataSetTT.xsd</DependentUpon>
-    </None>
-    <None Include="Models\DataSetTT.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetTT.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Models\DataSetTT.xss">
-      <DependentUpon>DataSetTT.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Resources\Entypo.ttf" />
   </ItemGroup>

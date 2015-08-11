@@ -56,15 +56,15 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ToggleButton x:Name="Btn9_top" Content="9" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="14"/>
-                            <ToggleButton x:Name="Btn8_top" Content="8" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="14"/>
-                            <ToggleButton x:Name="Btn7_top" Content="7" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="14"/>
-                            <ToggleButton x:Name="Btn6_top" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="14"/>
-                            <ToggleButton x:Name="Btn5_top" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="14"/>
-                            <ToggleButton x:Name="Btn4_top" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="14"/>
-                            <ToggleButton x:Name="Btn3_top" Content="3" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="14"/>
-                            <ToggleButton x:Name="Btn2_top" Content="2" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="14"/>
-                            <ToggleButton x:Name="Btn1_top" Content="1" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="14"/>
+                            <ToggleButton x:Name="Btn9_top" Content="9" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30"/>
+                            <ToggleButton x:Name="Btn8_top" Content="8" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30"/>
+                            <ToggleButton x:Name="Btn7_top" Content="7" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="30"/>
+                            <ToggleButton x:Name="Btn6_top" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="30"/>
+                            <ToggleButton x:Name="Btn5_top" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="30"/>
+                            <ToggleButton x:Name="Btn4_top" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="30"/>
+                            <ToggleButton x:Name="Btn3_top" Content="3" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="30"/>
+                            <ToggleButton x:Name="Btn2_top" Content="2" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="30"/>
+                            <ToggleButton x:Name="Btn1_top" Content="1" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30"/>
                         </Grid>
 
                         <Grid x:Name="BottomField" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True">
@@ -78,15 +78,15 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="Btn1_bot" Content="1" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="14"/>
-                            <ToggleButton x:Name="Btn2_bot" Content="2" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="14"/>
-                            <ToggleButton x:Name="Btn3_bot" Content="3" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="14"/>
-                            <ToggleButton x:Name="Btn4_bot" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="14"/>
-                            <ToggleButton x:Name="Btn5_bot" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="14"/>
-                            <ToggleButton x:Name="Btn6_bot" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="14"/>
-                            <ToggleButton x:Name="Btn7_bot" Content="7" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="14"/>
-                            <ToggleButton x:Name="Btn8_bot" Content="8" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="14"/>
-                            <ToggleButton x:Name="Btn9_bot" Content="7" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="14"/>
+                            <ToggleButton x:Name="Btn1_bot" Content="1" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30"/>
+                            <ToggleButton x:Name="Btn2_bot" Content="2" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30"/>
+                            <ToggleButton x:Name="Btn3_bot" Content="3" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="30"/>
+                            <ToggleButton x:Name="Btn4_bot" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="30"/>
+                            <ToggleButton x:Name="Btn5_bot" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="30"/>
+                            <ToggleButton x:Name="Btn6_bot" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="30"/>
+                            <ToggleButton x:Name="Btn7_bot" Content="7" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="30"/>
+                            <ToggleButton x:Name="Btn8_bot" Content="8" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="30"/>
+                            <ToggleButton x:Name="Btn9_bot" Content="9" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30"/>
                         </Grid>
 
                     </Grid>
