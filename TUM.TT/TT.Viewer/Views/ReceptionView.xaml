@@ -13,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.GroupBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -212,16 +213,33 @@
                 <ToggleButton x:Name="FilterStrokeTecAllButton" Grid.Row="0"  MinWidth="75"   Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                     Alle
                 </ToggleButton>
-                <WrapPanel Grid.Row="1">
-                    <ToggleButton  x:Name="FilterStrokeTecPushButton" MinWidth="60" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                <GroupBox Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" Grid.Column="0" MinWidth="50" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                         Schupf
                     </ToggleButton>
-                    <ToggleButton x:Name="FilterStrokeTecFlipButton"  MinWidth="60" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                    <ToggleButton  x:Name="FilterStrokeTecFlipButton" Grid.Row="0" Grid.Column="1" MinWidth="50" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                         Flip
                     </ToggleButton>
-                </WrapPanel>
-                
-                <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="3" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                    <ToggleButton  x:Name="FilterStrokeTecPushAggressiveButton" Grid.Row="1" Grid.Column="0" MinWidth="50" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        aggressiv
+                    </ToggleButton>
+                    <ToggleButton  x:Name="FilterStrokeTecFlipBananaButton" Grid.Row="1" Grid.Column="1" MinWidth="50" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        Banane
+                    </ToggleButton>
+                </Grid>
+                </GroupBox>
+
+
+                <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="3" MinWidth="75"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                     Topspin
                 </ToggleButton>
                 <ToggleButton x:Name="FilterStrokeTecBlockButton" Grid.Row="4"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >

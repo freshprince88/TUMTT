@@ -14,7 +14,7 @@
 
     <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Border BorderThickness="3 3 3 3" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid Name="OuterFieldGrid" Width="434" Height="700">
+            <Grid Name="OuterFieldGrid" Width="434" Height="800">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
@@ -24,10 +24,18 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="150"/>
                 </Grid.RowDefinitions>
                 <Controls:RangeSlider  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" />
-                <!--<Controls:RangeSlider Orientation="Vertical" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" />-->
+                <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>                        
+                    </Grid.RowDefinitions>
+                    <Controls:RangeSlider Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" ></Controls:RangeSlider>
+                </Grid>
+                
 
                 <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
                     <Grid Name="InnerFieldGrid">
