@@ -15,18 +15,20 @@ namespace TT.Viewer.ViewModels
     {
         public MediaViewModel MediaView { get; private set; }
         public FilterViewModel FilterView { get; private set; }
+        public ResultViewModel ResultView { get; private set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         public IEventAggregator Events { get; private set; }
 
-        public ShellViewModel(IEventAggregator eventAggregator)
+        public ShellViewModel(IEventAggregator eventAggregator, IEnumerable<IResultViewTabItem> resultTabs)
         {
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             FilterView = new FilterViewModel(Events);
             MediaView = new MediaViewModel(Events);
+            ResultView = new ResultViewModel(resultTabs);
         }
 
         #region Caliburn hooks
@@ -53,6 +55,7 @@ namespace TT.Viewer.ViewModels
             Events.Subscribe(this);
             this.ActivateItem(FilterView);
             this.ActivateItem(MediaView);
+            this.ActivateItem(ResultView);
         }
 
         #endregion
