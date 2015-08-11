@@ -89,7 +89,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"  FontSize="10" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="Option:"/>
-                <ToggleButton  x:Name="FilterGameCrunshTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunsh-Time"  />
+                <ToggleButton  x:Name="FilterGameCrunshTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time"  />
             </Grid>
             <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
             <ToggleButton  x:Name="FilterPointPlayer1Button" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Content="Player 1"/>
@@ -122,10 +122,12 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Technik:"/>
-            <ToggleButton x:Name="FilterForhandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+            <ToggleButton x:Name="FilterForhandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand('fore', $source.IsChecked)]">
                 <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" >
+            <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand('back', $source.IsChecked)]">
                 <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
             </ToggleButton>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
