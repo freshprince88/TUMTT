@@ -15,14 +15,6 @@ namespace TT.Viewer.ViewModels
         IHandle<TableViewSelectionChangedEvent>,
         IHandle<SpinControlSelectionChangedEvent>
     {
-        public enum EFilterMode
-        {
-            AND,
-            OR
-        }
-
-        public EFilterMode FilterMode { get; set; }
-
         public SpinControlViewModel SpinControl { get; private set; }
         public TableViewModel TableView { get; private set; }
         public List<MatchRally> SelectedRallies { get; private set; }
@@ -44,8 +36,6 @@ namespace TT.Viewer.ViewModels
 
             SpinControl = new SpinControlViewModel(events);
             TableView = new TableViewModel(events);
-
-            this.FilterMode = EFilterMode.OR;
         }
 
         public void SwitchTable(bool check)
@@ -119,14 +109,15 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 0 && HasSpins(r, this.FilterMode)).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 0 && HasSpins(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
 
-        private bool HasSpins(MatchRally r, EFilterMode mode)
+        private bool HasSpins(MatchRally r)
         {
-            List<bool> results = new List<bool>();
+            List<bool> ORresults = new List<bool>();
+            List<bool> ANDresults = new List<bool>();
             MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
 
             foreach (var spin in SelectedSpins)
@@ -134,34 +125,41 @@ namespace TT.Viewer.ViewModels
                 switch (spin)
                 {
                     case SpinControlViewModel.Spins.ÜS:
-                        results.Add(service.Spin.ÜS == "1");
+                        ORresults.Add(service.Spin.ÜS == "1");
                         break;
                     case SpinControlViewModel.Spins.SR:
-                        results.Add(service.Spin.SR == "1");
+                        ORresults.Add(service.Spin.SR == "1");
                         break;
                     case SpinControlViewModel.Spins.No:
-                        results.Add(service.Spin.No == "1");
+                        ORresults.Add(service.Spin.No == "1");
                         break;
                     case SpinControlViewModel.Spins.SL:
-                        results.Add(service.Spin.SL == "1");
+                        ORresults.Add(service.Spin.SL == "1");
                         break;
                     case SpinControlViewModel.Spins.US:
-                        results.Add(service.Spin.US == "1");
+                        ORresults.Add(service.Spin.US == "1");
+                        break;
+                    case SpinControlViewModel.Spins.USSL:
+                        ANDresults.Add(service.Spin.US == "1" && service.Spin.SL == "1");
+                        break;
+                    case SpinControlViewModel.Spins.USSR:
+                        ANDresults.Add(service.Spin.US == "1" && service.Spin.SR == "1");
+                        break;
+                    case SpinControlViewModel.Spins.ÜSSL:
+                        ANDresults.Add(service.Spin.ÜS == "1" && service.Spin.SL == "1");
+                        break;
+                    case SpinControlViewModel.Spins.ÜSSR:
+                        ANDresults.Add(service.Spin.ÜS == "1" && service.Spin.SR == "1");
                         break;
                     default:
                         break;
                 }
             }
+            bool OR = ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
+            bool AND = ANDresults.Count == 0 ? false : ANDresults.Aggregate(true, (a, b) => a && b);
 
-            switch (mode)
-            {
-                case EFilterMode.AND:
-                    return results.Count == 0 ? false : results.Aggregate(true, (a, b) => a && b);
-                case EFilterMode.OR:
-                    return results.Count == 0 ? false : results.Aggregate(false, (a, b) => a || b);
-                default:
-                    return false;
-            }
+            return OR && AND;
+
         }
 
         #endregion

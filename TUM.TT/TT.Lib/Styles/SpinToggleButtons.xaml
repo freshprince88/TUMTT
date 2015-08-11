@@ -282,7 +282,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
                         <Path x:Name="Shape" Fill="{TemplateBinding Background}"
-                            Data="M 0,0 V 108 S 60,130 120,108 V 0 Z" />
+                            Data="M 0,0 V 108 S 60,130 119,108 V 0 " />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"
@@ -450,7 +450,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
                         <Path x:Name="Shape" Fill="{TemplateBinding Background}"
-                            Data="M 10,1 S 30,74 119,108 L 119,108 119,1"  />
+                            Data="M 10,1 S 30,74 118,108 L 118,108 118,1"  />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"
@@ -534,7 +534,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
                         <Path x:Name="Shape" Fill="{TemplateBinding Background}"
-                            Data="M 108,1 S 85,75 1,108 L 1,108 0,1"  />
+                            Data="M 108,1 S 85,75 0,108 L 0,108 0,1"  />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"
@@ -702,7 +702,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
                         <Path x:Name="Shape" Fill="{TemplateBinding Background}"
-                            Data="M 10,119 S 30,45 119,10 L 119,10 119,119"  />
+                            Data="M 10,119 S 30,45 118,10 L 118,10 118,119"  />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"

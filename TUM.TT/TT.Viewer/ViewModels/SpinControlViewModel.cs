@@ -20,7 +20,11 @@ namespace TT.Viewer.ViewModels
             SR,
             No,
             SL,
-            US
+            US,
+            ÜSSR,
+            USSR,
+            USSL,
+            ÜSSL
         }
 
         private HashSet<Spins> _spins;
@@ -117,6 +121,68 @@ namespace TT.Viewer.ViewModels
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
+
+        public void SelectBotRight(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                if (!Selected.Contains(Spins.USSR))
+                    Selected.Add(Spins.USSR);
+            }
+            else
+            {
+                if (Selected.Contains(Spins.USSR))
+                    Selected.Remove(Spins.USSR);
+            }
+            this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
+        }
+
+        public void SelectBotLeft(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                if (!Selected.Contains(Spins.USSL))
+                    Selected.Add(Spins.USSL);
+            }
+            else
+            {
+                if (Selected.Contains(Spins.USSL))
+                    Selected.Remove(Spins.USSL);
+            }
+            this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
+        }
+
+        public void SelectTopLeft(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                if (!Selected.Contains(Spins.ÜSSL))
+                    Selected.Add(Spins.ÜSSL);
+            }
+            else
+            {
+                if (Selected.Contains(Spins.ÜSSL))
+                    Selected.Remove(Spins.ÜSSL);
+            }
+            this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
+        }
+
+        public void SelectTopRight(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                if (!Selected.Contains(Spins.ÜSSR))
+                    Selected.Add(Spins.ÜSSR);
+            }
+            else
+            {
+                if (Selected.Contains(Spins.ÜSSR))
+                    Selected.Remove(Spins.ÜSSR);
+            }
+            this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
+        }
+
+
 
         /// <summary>
         /// Initializes this view model.
