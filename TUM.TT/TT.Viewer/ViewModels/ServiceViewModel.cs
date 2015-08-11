@@ -22,17 +22,58 @@ namespace TT.Viewer.ViewModels
         public Match Match { get; private set; }
         public List<SpinControlViewModel.Spins> SelectedSpins { get; private set; }
         public EHand Hand { get; private set; }
+        public EPoint Point { get; private set; }
+        public EServer Server { get; private set; }
+        public EQuality Quality { get; private set; }
+        public ESpecials Specials { get; private set; }
+        public ECrunch Crunch { get; private set; }
 
         public HashSet<int> SelectedSets { get; private set; }
+        public HashSet<int> SelectedRallyLengths { get; private set; }
 
-     
-       
+
+
         public enum EHand
         {
             Fore,
             Back,
             None,
             Both
+        }
+        public enum EPoint
+
+        {
+            Player1,
+            Player2,
+            None,
+            Both
+        }
+        public enum EServer
+
+        {
+            Player1,
+            Player2,
+            None,
+            Both
+        }
+        public enum EQuality
+        {
+            Bad,
+            Good,
+            None,
+            Both
+        }
+        public enum ESpecials
+        {
+            EdgeTable,
+            EdgeRacket,
+            None,
+            Both
+        }
+        public enum ECrunch
+        {
+            CrunshTime,
+            Not
         }
 
 
@@ -48,7 +89,12 @@ namespace TT.Viewer.ViewModels
             SelectedSpins = new List<SpinControlViewModel.Spins>();
             Match = new Match();
             Hand = EHand.None;
-            SelectedSets = new HashSet<int>(); 
+            Point = EPoint.None;
+            Server = EServer.None;
+            Quality = EQuality.None;
+            Specials = ESpecials.None;
+            SelectedSets = new HashSet<int>();
+            SelectedRallyLengths = new HashSet<int>();
 
             SpinControl = new SpinControlViewModel(events);
             TableView = new TableViewModel(events);
@@ -171,6 +217,112 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public void RallyLengthFilter(int rallylength, bool isChecked)
+        {
+            if (rallylength == 0)
+            {
+                if (!isChecked)
+                {
+                    SelectedRallyLengths.Add(1);
+                    SelectedRallyLengths.Add(2);
+                    SelectedRallyLengths.Add(3);
+                    SelectedRallyLengths.Add(4);
+                    SelectedRallyLengths.Add(5);
+                    SelectedRallyLengths.Add(6);
+                }
+                else
+                {
+                    SelectedRallyLengths.Remove(1);
+                    SelectedRallyLengths.Remove(2);
+                    SelectedRallyLengths.Remove(3);
+                    SelectedRallyLengths.Remove(4);
+                    SelectedRallyLengths.Remove(5);
+                    SelectedRallyLengths.Remove(6);
+                }
+            }
+            else if (rallylength == 1)
+            {
+                if (!isChecked)
+                {
+                    SelectedRallyLengths.Add(1);
+                }
+                else
+                {
+                    SelectedRallyLengths.Remove(1);
+                }
+            }
+            else if (rallylength == 2)
+            {
+                if (!isChecked)
+                {
+                    SelectedRallyLengths.Add(2);
+                }
+                else
+                {
+                    SelectedRallyLengths.Remove(2);
+                }
+            }
+            else if (rallylength == 3)
+            {
+                if (!isChecked)
+                {
+                    SelectedRallyLengths.Add(3);
+                }
+                else
+                {
+                    SelectedRallyLengths.Remove(3);
+                }
+            }
+            else if (rallylength == 4)
+            {
+                if (!isChecked)
+                {
+                    SelectedRallyLengths.Add(4);
+                }
+                else
+                {
+                    SelectedRallyLengths.Remove(4);
+                }
+            }
+            else if (rallylength == 5)
+            {
+                if (!isChecked)
+                {
+                    SelectedRallyLengths.Add(5);
+                }
+                else
+                {
+                    SelectedRallyLengths.Remove(5);
+                }
+            }
+            else if (rallylength == 6)
+            {
+                if (!isChecked)
+                {
+                    SelectedRallyLengths.Add(6);
+                }
+                else
+                {
+                    SelectedRallyLengths.Remove(6);
+                }
+            }
+            
+        }
+        public void CrunchOrNot (string crunch, bool isChecked)
+        {
+            if (crunch == "crunch")
+            {
+                if (!isChecked)
+                {
+                    Crunch = ECrunch.CrunshTime;
+                }
+                else
+                {
+                    Crunch = ECrunch.Not;
+                }
+            }
+        }
+
         public void ForBackHand(string hand, bool isChecked)
         {
             if (hand == "fore")
@@ -205,6 +357,154 @@ namespace TT.Viewer.ViewModels
                         Hand = EHand.None;
                     else if (Hand == EHand.Both)
                         Hand = EHand.Fore;
+                }
+            }
+        }
+        public void P1P2Point (string player, bool isChecked)
+        {
+            if (player == "player1")
+            {
+                if (!isChecked)
+                {
+                    if (Point == EPoint.None)
+                        Point = EPoint.Player1;
+                    else if (Point == EPoint.Player2)
+                        Point = EPoint.Both;
+                }
+                else
+                {
+                    if (Point == EPoint.Player1)
+                        Point = EPoint.None;
+                    else if (Point == EPoint.Both)
+                        Point = EPoint.Player2;
+                }
+            }
+            else if (player == "player2")
+            {
+                if (!isChecked)
+                {
+                    if (Point == EPoint.None)
+                        Point = EPoint.Player2;
+                    else if (Point == EPoint.Player1)
+                        Point = EPoint.Both;
+                }
+                else
+                {
+                    if (Point == EPoint.Player2)
+                        Point = EPoint.None;
+                    else if (Point == EPoint.Both)
+                        Point = EPoint.Player1;
+                }
+            }
+        }
+        public void P1P2Server(string server, bool isChecked)
+        {
+            if (server == "player1")
+            {
+                if (!isChecked)
+                {
+                    if (Server == EServer.None)
+                        Server = EServer.Player1;
+                    else if (Server == EServer.Player2)
+                        Server = EServer.Both;
+                }
+                else
+                {
+                    if (Server == EServer.Player1)
+                        Server = EServer.None;
+                    else if (Server == EServer.Both)
+                        Server = EServer.Player2;
+                }
+            }
+            else if (server == "player2")
+            {
+                if (!isChecked)
+                {
+                    if (Server == EServer.None)
+                        Server = EServer.Player2;
+                    else if (Server == EServer.Player1)
+                        Server = EServer.Both;
+                }
+                else
+                {
+                    if (Server == EServer.Player2)
+                        Server = EServer.None;
+                    else if (Server == EServer.Both)
+                        Server = EServer.Player1;
+                }
+            }
+        }
+        public void GoodBadQuality(string quality, bool isChecked)
+        {
+            if (quality == "good")
+            {
+                if (!isChecked)
+                {
+                    if (Quality == EQuality.None)
+                        Quality = EQuality.Good;
+                    else if (Quality == EQuality.Bad)
+                        Quality = EQuality.Both;
+                }
+                else
+                {
+                    if (Quality == EQuality.Good)
+                        Quality = EQuality.None;
+                    else if (Quality == EQuality.Both)
+                        Quality = EQuality.Bad;
+                }
+            }
+            else if (quality == "bad")
+            {
+                if (!isChecked)
+                {
+                    if (Quality == EQuality.None)
+                        Quality = EQuality.Bad;
+                    else if (Quality == EQuality.Good)
+                        Quality = EQuality.Both;
+                }
+                else
+                {
+                    if (Quality == EQuality.Bad)
+                        Quality = EQuality.None;
+                    else if (Quality == EQuality.Both)
+                        Quality = EQuality.Good;
+                }
+            }
+        }
+        public void EdgeSpecials(string edge, bool isChecked)
+        {
+            if (edge == "edgeTable")
+            {
+                if (!isChecked)
+                {
+                    if (Specials == ESpecials.None)
+                        Specials = ESpecials.EdgeTable;
+                    else if (Specials == ESpecials.EdgeRacket)
+                        Specials = ESpecials.Both;
+                }
+                else
+                {
+                    if (Specials == ESpecials.EdgeTable)
+                        Specials = ESpecials.None;
+                    else if (Specials == ESpecials.Both)
+                        Specials = ESpecials.EdgeRacket;
+                }
+            }
+            else if (edge == "edgeRacket")
+            {
+                if (!isChecked)
+                {
+                    if (Specials == ESpecials.None)
+                        Specials = ESpecials.EdgeRacket;
+                    else if (Specials == ESpecials.EdgeTable)
+                        Specials = ESpecials.Both;
+                }
+                else
+                {
+                    if (Specials == ESpecials.EdgeRacket)
+                        Specials = ESpecials.None;
+                    else if (Specials == ESpecials.Both)
+                        Specials = ESpecials.EdgeTable;
                 }
             }
         }
@@ -270,7 +570,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r) && HasSet(r)).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r) && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasQuality(r) && HasSpecials(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -335,6 +635,70 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+        private bool HasPoint(MatchRally r)
+        {
+            switch (this.Point)
+            {
+                case EPoint.Player1:
+                    return r.Winner == "First";  //TODO Name der Spieler dynamisch????
+                case EPoint.Player2:
+                    return r.Winner == "Second"; //TODO Name der Spieler dynamisch????
+                case EPoint.None:
+                    return true;
+                case EPoint.Both:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        private bool HasServer(MatchRally r)
+        {
+            switch (this.Server)
+            {
+                case EServer.Player1:
+                    return r.Schlag[0].Spieler == "First";  //TODO Name der Spieler dynamisch????
+                case EServer.Player2:
+                    return r.Schlag[0].Spieler == "Second"; //TODO Name der Spieler dynamisch????
+                case EServer.None:
+                    return true;
+                case EServer.Both:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        private bool HasQuality(MatchRally r)
+        {
+            switch (this.Quality)
+            {
+                case EQuality.Good:
+                    return r.Schlag[0].Qualität == "gut";  
+                case EQuality.Bad:
+                    return r.Schlag[0].Qualität == "schlecht"; 
+                case EQuality.None:
+                    return true;
+                case EQuality.Both:
+                    return r.Schlag[0].Qualität == "gut" || r.Schlag[0].Qualität == "schlecht";
+                default:
+                    return false;
+            }
+        }
+        private bool HasSpecials(MatchRally r)
+        {
+            switch (this.Specials)
+            {
+                case ESpecials.EdgeTable:
+                    return r.Schlag[0].Besonderes == "Tischkante";  
+                case ESpecials.EdgeRacket:
+                    return r.Schlag[0].Besonderes == "Schlägerkante"; 
+                case ESpecials.None:
+                    return true;
+                case ESpecials.Both:
+                    return r.Schlag[0].Besonderes == "Tischkante" || r.Schlag[0].Besonderes == "Schlägerkante";
+                default:
+                    return false;
+            }
+        }
         private bool HasSet(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
@@ -345,6 +709,38 @@ namespace TT.Viewer.ViewModels
                 ORresults.Add(setTotal == set);
             }
             return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+        private bool HasRallyLength(MatchRally r)      //TODO Korrekt????
+        {
+            List<bool> ORresults = new List<bool>();
+
+            foreach (var rallylength in SelectedSets)
+            {  if (rallylength <= 5)
+                {
+                    ORresults.Add(Convert.ToInt32(r.Length) == rallylength);
+                }
+                
+            else if (rallylength==6)
+                {
+                    ORresults.Add(Convert.ToInt32(r.Length) >= rallylength);
+                }
+
+
+            }
+            return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+        private bool HasCrunchTime(MatchRally r)
+        {
+            switch (this.Crunch)
+            {
+                case ECrunch.CrunshTime:
+                    return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
+                case ECrunch.Not:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
             #endregion

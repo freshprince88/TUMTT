@@ -58,7 +58,7 @@
             <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Satz:"/>
             <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <ToggleButton x:Name="FilterGameAllButton" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SetFilter(0, $source.IsChecked)]">
-                    <TextBlock FontSize="10"><Run Text="Alle"/></TextBlock>
+                    <TextBlock FontSize="12"><Run Text="A"/></TextBlock>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterGame1Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SetFilter(1, $source.IsChecked)]">
                     <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
@@ -89,23 +89,23 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"  FontSize="10" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="Option:"/>
-                <ToggleButton  x:Name="FilterGameCrunshTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time"  />
+                <ToggleButton  x:Name="FilterGameCrunshTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" cal:Message.Attach="[Event Click] = [Action CrunchOrNot('crunch', $source.IsChecked)]" />
             </Grid>
             <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
-            <ToggleButton  x:Name="FilterPointPlayer1Button" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Content="Player 1"/>
-            <ToggleButton x:Name="FilterPointPlayer2Button" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Content="Player 2"/>
+            <ToggleButton  x:Name="FilterPointPlayer1Button" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Content="Player 1"  cal:Message.Attach="[Event Click] = [Action P1P2Point('player1', $source.IsChecked)]"/>
+            <ToggleButton x:Name="FilterPointPlayer2Button" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Content="Player 2" cal:Message.Attach="[Event Click] = [Action P1P2Point('player2', $source.IsChecked)]"/>
             <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Aufschlag:"/>
-            <ToggleButton x:Name="FilterServerPlayer1Button" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Content="Player 1" />
-            <ToggleButton x:Name="FilterServerPlayer2Button" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Content="Player 2"  />
+            <ToggleButton x:Name="FilterServerPlayer1Button" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Content="Player 1" cal:Message.Attach="[Event Click] = [Action P1P2Server('player1', $source.IsChecked)]" />
+            <ToggleButton x:Name="FilterServerPlayer2Button" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Content="Player 2" cal:Message.Attach="[Event Click] = [Action P1P2Server('player2', $source.IsChecked)]" />
             <Label Grid.Row="4" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Rallylänge:"/>
             <WrapPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
-                <ToggleButton x:Name="FilterRallyLengthAllButton" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Column="0" Content="Alle"/>
-                <ToggleButton x:Name="FilterRallyLength1Button"  Grid.Row="0" Grid.Column="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="1"/>
-                <ToggleButton x:Name="FilterRallyLength2Button"  Grid.Row="0" Grid.Column="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="2"/>
-                <ToggleButton x:Name="FilterRallyLength3Button"  Grid.Row="0" Grid.Column="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="3"/>
-                <ToggleButton x:Name="FilterRallyLength4Button"  Grid.Row="0" Grid.Column="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="4"/>
-                <ToggleButton x:Name="FilterRallyLength5Button"  Grid.Row="0" Grid.Column="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5"/>
-                <ToggleButton x:Name="FilterRallyLength5UpButton"  Grid.Row="0" Grid.Column="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5+"/>
+                <ToggleButton x:Name="FilterRallyLengthAllButton" Grid.Row="0" Grid.Column="0"  Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="A" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter(0, $source.IsChecked)]"/>
+                <ToggleButton x:Name="FilterRallyLength1Button"  Grid.Row="0" Grid.Column="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="1" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter(1, $source.IsChecked)]"/>
+                <ToggleButton x:Name="FilterRallyLength2Button"  Grid.Row="0" Grid.Column="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="2" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter(2, $source.IsChecked)]"/>
+                <ToggleButton x:Name="FilterRallyLength3Button"  Grid.Row="0" Grid.Column="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="3" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter(3, $source.IsChecked)]"/>
+                <ToggleButton x:Name="FilterRallyLength4Button"  Grid.Row="0" Grid.Column="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="4" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter(4, $source.IsChecked)]"/>
+                <ToggleButton x:Name="FilterRallyLength5Button"  Grid.Row="0" Grid.Column="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter(5, $source.IsChecked)]"/>
+                <ToggleButton x:Name="FilterRallyLength5UpButton"  Grid.Row="0" Grid.Column="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5+" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter(6, $source.IsChecked)]"/>
             </WrapPanel>
         </Grid>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="3" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
@@ -153,21 +153,21 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spin:"/>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spin"/>
             <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <AccessText TextWrapping="Wrap" Text="Position &amp; Platzierung"/>
             </Label>
             <ContentControl x:Name="SpinControl" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Center" />
             <ContentControl x:Name="TableView" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Label Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Qualität:"/>
-                <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top"  >
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Schlecht" />
-                    <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="1" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Gut" />
-                </Grid>
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top"  >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Schlecht" cal:Message.Attach="[Event Click] = [Action GoodBadQuality('bad', $source.IsChecked)]" />
+                <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="1" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Gut" cal:Message.Attach="[Event Click] = [Action GoodBadQuality('good', $source.IsChecked)]"/>
+            </Grid>
         </Grid>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
 
@@ -187,12 +187,15 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0"  FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Besonderes:"/>
-            <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
-                <ToggleButton  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="90" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggleNoSideBorder}" Content="Tischkante" />
-                <ToggleButton  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="90" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggleNoSideBorder}" Content="Schlägerkante" />
+            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Besonderes:</Label>
+            <ToggleButton  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" >
+                Tischkante
+            </ToggleButton>
 
-            </WrapPanel>
+            <ToggleButton  Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  Width="auto" MinWidth="40" Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >
+                Schlägerkante
+            </ToggleButton>
         </Grid>
     </Grid>
 </UserControl>
+

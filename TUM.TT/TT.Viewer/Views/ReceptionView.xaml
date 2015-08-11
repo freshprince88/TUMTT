@@ -7,7 +7,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="800" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -57,8 +57,8 @@
             <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Satz:</Label>
             <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <ToggleButton x:Name="FilterGameAllButton" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Column="0">
-                    <TextBlock FontSize="10">
-                    Alle
+                    <TextBlock FontSize="12">
+                    A
                     </TextBlock>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterGame1Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="1">
@@ -105,7 +105,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"  FontSize="10" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch">Option:</Label>
                 <ToggleButton  x:Name="FilterGameCrunshTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  >
-                    Crunsh-Time
+                    Crunch-Time
                 </ToggleButton>
             </Grid>
             <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Punkt:</Label>
@@ -125,7 +125,7 @@
             <Label Grid.Row="4" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Rallylänge:</Label>
             <WrapPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <ToggleButton x:Name="FilterRallyLengthAllButton" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Column="0">
-                    Alle
+                    A
                 </ToggleButton>
                 <ToggleButton x:Name="FilterRallyLength1Button"  Grid.Row="0" Grid.Column="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
                     1
@@ -190,7 +190,9 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                Schlagart
+            </Label>
             <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <Label.Content>
                     <AccessText TextWrapping="Wrap" Text="Position &amp; Platzierung"/>
@@ -202,19 +204,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    
                 </Grid.RowDefinitions>
-                <ToggleButton x:Name="FilterStrokeTecAllButton" Grid.Row="0"  MinWidth="75"   Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Alle
-                </ToggleButton>
-                <GroupBox Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
-                    <Grid Grid.Row="1">
+                <GroupBox Grid.Row="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -223,59 +215,160 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" Grid.Column="0" MinWidth="50" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                    <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                         Schupf
                     </ToggleButton>
-                    <ToggleButton  x:Name="FilterStrokeTecFlipButton" Grid.Row="0" Grid.Column="1" MinWidth="50" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                    <ToggleButton  x:Name="FilterStrokeTecFlipButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                         Flip
                     </ToggleButton>
-                    <ToggleButton  x:Name="FilterStrokeTecPushAggressiveButton" Grid.Row="1" Grid.Column="0" MinWidth="50" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                    <ToggleButton  x:Name="FilterStrokeTecPushAggressiveButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="8" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                         aggressiv
                     </ToggleButton>
-                    <ToggleButton  x:Name="FilterStrokeTecFlipBananaButton" Grid.Row="1" Grid.Column="1" MinWidth="50" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                    <ToggleButton  x:Name="FilterStrokeTecFlipBananaButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
                         Banane
                     </ToggleButton>
                 </Grid>
                 </GroupBox>
-
-
-                <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="3" MinWidth="75"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Topspin
-                </ToggleButton>
-                <ToggleButton x:Name="FilterStrokeTecBlockButton" Grid.Row="4"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Block
-                </ToggleButton>
-                <ToggleButton  x:Name="FilterStrokeTecCounterButton" Grid.Row="5" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Konter
-                </ToggleButton>
-                <ToggleButton x:Name="FilterStrokeTecSmashButton" Grid.Row="6"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Schuss
-                </ToggleButton>
-                <ToggleButton  x:Name="FilterStrokeTecLobButton" Grid.Row="7" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Ballonabwehr
-                </ToggleButton>
-                <ToggleButton x:Name="FilterStrokeTecChopButton" Grid.Row="8"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Schnittabwehr
-                </ToggleButton>
-                <ToggleButton  x:Name="FilterStrokeTecElseButton" Grid.Row="9" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Sonstiges
-                </ToggleButton>
+                <GroupBox Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                            Topspin
+                        </ToggleButton>
+                        <ToggleButton  x:Name="FilterStrokeTecTopspinSpinButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                            Spin
+                        </ToggleButton>
+                        <ToggleButton  x:Name="FilterStrokeTecTopspinTempoButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                            Tempo
+                        </ToggleButton>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="2"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton  x:Name="FilterStrokeTecBlockButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                            Block
+                        </ToggleButton>
+                        <ToggleButton  x:Name="FilterStrokeTecBlockTempoButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                            Tempo
+                        </ToggleButton>
+                        <ToggleButton  x:Name="FilterStrokeTecBlockChopButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                            Chop
+                        </ToggleButton>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="3"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton  x:Name="FilterStrokeTecCounterButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >
+                            Konter
+                        </ToggleButton>
+                        <ToggleButton  x:Name="FilterStrokeTecSmashButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                            Schuss
+                        </ToggleButton>
+                    </Grid>
+                </GroupBox>
             </Grid>
-            <ContentControl x:Name="TableView" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Label Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="2" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Bottom" HorizontalAlignment="Center">Qualität:</Label>
-            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top"  >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Schlecht
-                </ToggleButton>
-                <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="1" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
-                    Gut
-                </ToggleButton>
-            </Grid>            
+            <ContentControl x:Name="TableView" Grid.Row="1" Grid.RowSpan="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                           
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton  x:Name="FilterStrokeTecLobButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                            Ballonabwehr
+                        </ToggleButton>
+                        <ToggleButton  x:Name="FilterStrokeChopButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                            Schnittabwehr
+                        </ToggleButton>                        
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">                   
+                        <ToggleButton  x:Name="FilterStrokeSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                            Sonstiges
+                        </ToggleButton>                    
+                </GroupBox>
+            </Grid>        
         </Grid>
-        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="5" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
+        <Grid Grid.Row="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="70" Width="3*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aktivität:</Label>
+            <ToggleButton x:Name="FilteActivityAktiveButton" Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
+                aktiv
+            </ToggleButton>
+            <ToggleButton x:Name="FilterActivityControlButton" Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
+                Kontrolle
+            </ToggleButton>
+            <ToggleButton x:Name="FilterActivityPassiveButton" Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
+                passiv
+            </ToggleButton>
+        </Grid>
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="9" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
+        <Grid Grid.Row="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="70" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Qualität:</Label>
+            <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
+                    Schlecht
+            </ToggleButton>
+            <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
+                    Gut
+            </ToggleButton>            
+        </Grid>
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="11" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
+        <Grid Grid.Row="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="70" Width="3*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Besonderes:</Label>
+            <ToggleButton  Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" >
+                Tischkante
+            </ToggleButton>
+            <ToggleButton  Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" >
+                Netzkante
+            </ToggleButton>
+            <ToggleButton  Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >
+                Schlägerkante
+            </ToggleButton>
+        </Grid>
     </Grid>
 </UserControl>
+
