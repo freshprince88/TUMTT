@@ -18,9 +18,9 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für TableView.xaml
     /// </summary>
-    public partial class TableView : UserControl
+    public partial class TableStandardView : UserControl
     {
-        public TableView()
+        public TableStandardView()
         {
             InitializeComponent();
         }
