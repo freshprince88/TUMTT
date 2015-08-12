@@ -616,7 +616,7 @@ namespace TT.Viewer.ViewModels
                 }
             }
 
-            return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
         private bool HasHand(MatchRally r)

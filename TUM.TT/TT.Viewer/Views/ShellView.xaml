@@ -70,9 +70,9 @@
                 </Grid.ColumnDefinitions>
 
                 <ContentControl x:Name="FilterView" Grid.Column="0"/>
-                <Border Grid.Column="1" BorderThickness="0 0 0 0" BorderBrush="{DynamicResource AccentColorBrush}">
 
-                </Border>
+                <ContentControl x:Name="ResultView" Grid.Column="1"/>
+                
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" />

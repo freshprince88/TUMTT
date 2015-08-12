@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
 using TT.Viewer.ViewModels;
+using System.Reflection;
 
 namespace TT.Viewer {
 
@@ -17,7 +18,8 @@ namespace TT.Viewer {
 
             container.Singleton<IWindowManager, WindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
-            container.PerRequest<IShell, ShellViewModel>();            
+            container.PerRequest<IShell, ShellViewModel>();
+            container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
         }
 
         protected override object GetInstance(Type service, string key) {
