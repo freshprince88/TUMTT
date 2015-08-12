@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Viewer.Events;
 
@@ -93,6 +94,7 @@ namespace TT.Viewer.ViewModels
             Server = EServer.None;
             Quality = EQuality.None;
             Specials = ESpecials.None;
+            Crunch = ECrunch.Not;
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
 
@@ -113,6 +115,7 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = TableViewModel.ViewMode.Bottom;
             }
         }
+
         public void SetFilter(int set, bool isChecked)
         {
             if (set == 0)
@@ -215,6 +218,7 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(7);
                 }
             }
+            UpdateSelection();
         }
 
         public void RallyLengthFilter(int rallylength, bool isChecked)
@@ -306,8 +310,9 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(6);
                 }
             }
-            
+            UpdateSelection();
         }
+
         public void CrunchOrNot (string crunch, bool isChecked)
         {
             if (crunch == "crunch")
@@ -321,6 +326,7 @@ namespace TT.Viewer.ViewModels
                     Crunch = ECrunch.Not;
                 }
             }
+            UpdateSelection();
         }
 
         public void ForBackHand(string hand, bool isChecked)
@@ -359,7 +365,9 @@ namespace TT.Viewer.ViewModels
                         Hand = EHand.Fore;
                 }
             }
+            UpdateSelection();
         }
+
         public void P1P2Point (string player, bool isChecked)
         {
             if (player == "player1")
@@ -396,12 +404,14 @@ namespace TT.Viewer.ViewModels
                         Point = EPoint.Player1;
                 }
             }
+            UpdateSelection();
         }
-        public void P1P2Server(string server, bool isChecked)
+
+        public void P1P2Server(ToggleButton source)
         {
-            if (server == "player1")
+            if (source.Name.ToLower().Contains("player1"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Server == EServer.None)
                         Server = EServer.Player1;
@@ -416,9 +426,9 @@ namespace TT.Viewer.ViewModels
                         Server = EServer.Player2;
                 }
             }
-            else if (server == "player2")
+            else if (source.Name.ToLower().Contains("player2"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Server == EServer.None)
                         Server = EServer.Player2;
@@ -433,7 +443,9 @@ namespace TT.Viewer.ViewModels
                         Server = EServer.Player1;
                 }
             }
+            UpdateSelection();
         }
+
         public void GoodBadQuality(string quality, bool isChecked)
         {
             if (quality == "good")
@@ -470,7 +482,9 @@ namespace TT.Viewer.ViewModels
                         Quality = EQuality.Good;
                 }
             }
+            UpdateSelection();
         }
+
         public void EdgeSpecials(string edge, bool isChecked)
         {
             if (edge == "edgeTable")
@@ -507,6 +521,7 @@ namespace TT.Viewer.ViewModels
                         Specials = ESpecials.EdgeTable;
                 }
             }
+            UpdateSelection();
         }
 
         #endregion
@@ -615,7 +630,6 @@ namespace TT.Viewer.ViewModels
                         break;
                 }
             }
-
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
@@ -708,7 +722,7 @@ namespace TT.Viewer.ViewModels
                 int setTotal = Convert.ToInt32(r.CurrentSetScore.First) + Convert.ToInt32(r.CurrentSetScore.Second) + 1;
                 ORresults.Add(setTotal == set);
             }
-            return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
         private bool HasRallyLength(MatchRally r)      //TODO Korrekt????
         {
@@ -727,7 +741,7 @@ namespace TT.Viewer.ViewModels
 
 
             }
-            return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
         private bool HasCrunchTime(MatchRally r)
