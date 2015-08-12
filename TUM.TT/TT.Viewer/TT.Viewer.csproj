@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
+    <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="Views\ReceptionView.xaml.cs">
       <DependentUpon>ReceptionView.xaml</DependentUpon>
     </Compile>
@@ -143,6 +144,9 @@
     </Compile>
     <Compile Include="Views\MediaView.xaml.cs">
       <DependentUpon>MediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableStandardView.xaml.cs">
+      <DependentUpon>TableStandardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
@@ -190,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TableServiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableStandardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
