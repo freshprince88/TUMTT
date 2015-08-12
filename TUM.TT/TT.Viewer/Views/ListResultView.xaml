@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
 
@@ -14,5 +15,32 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <ListBox x:Name="Items" ItemTemplate="{StaticResource ItemViewTemplate}"/>
+    <!--<ListBox x:Name="Items" ItemTemplate="{StaticResource ItemViewTemplate}"/>-->
+
+    <ListView x:Name="Items"
+            Margin="0"
+            BorderThickness="0"
+            SelectedIndex="0"
+            ctrl:ListViewLayoutManager.Enabled="true" >
+        <ListView.View>
+            <GridView>
+                <GridViewColumn DisplayMemberBinding="{Binding Score}"
+                                            Header="Score" 
+                                ctrl:ProportionalColumn.Width="1"/>
+                <GridViewColumn DisplayMemberBinding="{Binding Sets}"
+                                            Header="Sets" 
+                                ctrl:ProportionalColumn.Width="1"/>
+                <GridViewColumn DisplayMemberBinding="{Binding Server}"
+                                            Header="Server" 
+                                ctrl:ProportionalColumn.Width="1"/>
+                <GridViewColumn DisplayMemberBinding="{Binding Point}"
+                                            Header="Point" 
+                                ctrl:ProportionalColumn.Width="1"/>
+                <GridViewColumn DisplayMemberBinding="{Binding Length}"
+                                            Header="Length" 
+                                ctrl:ProportionalColumn.Width="1"/>
+            </GridView>
+        </ListView.View>
+    </ListView>
+
 </UserControl>
