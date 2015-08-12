@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TT.Viewer.Events;
 using TT.Viewer.ViewModels;
 
 namespace TT.Viewer.Views
@@ -20,7 +21,11 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für MediaView.xaml
     /// </summary>
-    public partial class MediaView : UserControl, IHandle<MediaViewModel.PlayPause>, IHandle<MediaViewModel.PlaySpeed>, IHandle<MediaViewModel.MuteUnmute>
+    public partial class MediaView : UserControl, 
+        IHandle<MediaViewModel.PlayPause>, 
+        IHandle<MediaViewModel.PlaySpeed>, 
+        IHandle<MediaViewModel.MuteUnmute>,
+        IHandle<VideoLoadedEvent>
     {
         public IEventAggregator Events { get; set; }
         public MediaView()
@@ -97,5 +102,10 @@ namespace TT.Viewer.Views
             }
         }
 
+
+        public void Handle(VideoLoadedEvent message)
+        {
+            this.myMediaElement.Source = new Uri(message.VideoFile);
+        }
     }
 }

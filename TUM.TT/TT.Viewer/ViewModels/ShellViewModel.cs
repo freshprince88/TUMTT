@@ -6,6 +6,7 @@ using TT.Lib.Util;
 using TT.Viewer.Events;
 using System.Collections.Generic;
 using TT.Lib.Models;
+using System.IO;
 
 namespace TT.Viewer.ViewModels
 {
@@ -78,7 +79,20 @@ namespace TT.Viewer.ViewModels
                 .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
                 .Propagate(); // Reraise the error to abort the coroutine
 
-            this.Events.PublishOnUIThread(new MatchOpenedEvent(deserialization.Result, deserialization.FileName));
+            Match match = deserialization.Result;
+
+            if(string.IsNullOrEmpty(match.VideoFile) || !File.Exists(match.VideoFile)){
+                var videoDialog = new OpenFileDialogResult()
+                {
+                    Title = "Open video file...",
+                    Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
+                };
+                yield return videoDialog;
+
+                match.VideoFile = videoDialog.Result;
+            }
+            this.Events.PublishOnUIThread(new MatchOpenedEvent(match, deserialization.FileName));
+            this.Events.PublishOnUIThread(new VideoLoadedEvent(match.VideoFile));
         }
 
         #endregion
