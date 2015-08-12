@@ -21,13 +21,13 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für TableView.xaml
     /// </summary>
-    public partial class TableView : UserControl,
+    public partial class TableServiceView : UserControl,
         IHandle<TableViewModeChangedEvent>,
         IHandle<ServiceViewLoadedEvent>
     {
         public IEventAggregator Events { get; set; }
 
-        public TableView()
+        public TableServiceView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
