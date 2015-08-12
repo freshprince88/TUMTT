@@ -17,7 +17,7 @@ namespace TT.Viewer.ViewModels
         IHandle<SpinControlSelectionChangedEvent>
     {
         public SpinControlViewModel SpinControl { get; private set; }
-        public TableViewModel TableView { get; private set; }
+        public TableServiceViewModel TableView { get; private set; }
         public List<MatchRally> SelectedRallies { get; private set; }
 
         public Match Match { get; private set; }
@@ -99,7 +99,7 @@ namespace TT.Viewer.ViewModels
             SelectedRallyLengths = new HashSet<int>();
 
             SpinControl = new SpinControlViewModel(events);
-            TableView = new TableViewModel(events);
+            TableView = new TableServiceViewModel(events);
         }
 
         #region View Methods
@@ -108,11 +108,11 @@ namespace TT.Viewer.ViewModels
         {
             if (check)
             {
-                TableView.Mode = TableViewModel.ViewMode.Top;
+                TableView.Mode = TableServiceViewModel.ViewMode.Top;
             }
             else
             {
-                TableView.Mode = TableViewModel.ViewMode.Bottom;
+                TableView.Mode = TableServiceViewModel.ViewMode.Bottom;
             }
         }
 

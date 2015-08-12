@@ -25,25 +25,32 @@ namespace TT.Viewer.Views
         IHandle<MediaViewModel.PlayPause>, 
         IHandle<MediaViewModel.PlaySpeed>, 
         IHandle<MediaViewModel.MuteUnmute>,
-        IHandle<VideoLoadedEvent>
+        IHandle<VideoLoadedEvent>,
+        IHandle<VideoPlayEvent>
     {
-        public IEventAggregator Events { get; set; }
+        public IEventAggregator Events { get; private set; }
         public MediaView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
+            myMediaElement.ScrubbingEnabled = true;
         }
+
+        #region Event Handlers
+
         public void Handle(MediaViewModel.MuteUnmute message)
         {
             switch (message)
             {
                 case MediaViewModel.MuteUnmute.Mute:
+                    myMediaElement.IsMuted = true;
                     MuteButton.Visibility = Visibility.Hidden;
                     UnmuteButton.Visibility = Visibility.Visible;
                     UnmuteButton.IsChecked = true;
                     break;
                 case MediaViewModel.MuteUnmute.Unmute:
+                    myMediaElement.IsMuted = false;
                     MuteButton.Visibility = Visibility.Visible;
                     UnmuteButton.Visibility = Visibility.Hidden;
                     UnmuteButton.IsChecked = false;
@@ -58,11 +65,19 @@ namespace TT.Viewer.Views
             switch (message)
             {
                 case MediaViewModel.PlayPause.Play:
+                    myMediaElement.Play();
                     PlayButton.Visibility = Visibility.Hidden;
                     PauseButton.Visibility = Visibility.Visible;
                     PauseButton.IsChecked = true;
                     break;
                 case MediaViewModel.PlayPause.Pause:
+                    myMediaElement.Pause();
+                    PlayButton.Visibility = Visibility.Visible;
+                    PauseButton.Visibility = Visibility.Hidden;
+                    PauseButton.IsChecked = false;
+                    break;
+                case MediaViewModel.PlayPause.Stop:
+                    myMediaElement.Stop();
                     PlayButton.Visibility = Visibility.Visible;
                     PauseButton.Visibility = Visibility.Hidden;
                     PauseButton.IsChecked = false;
@@ -102,10 +117,18 @@ namespace TT.Viewer.Views
             }
         }
 
-
         public void Handle(VideoLoadedEvent message)
         {
             this.myMediaElement.Source = new Uri(message.VideoFile);
         }
+
+        public void Handle(VideoPlayEvent message)
+        {
+            myMediaElement.Position = new TimeSpan(0, 0, 0, 0, message.Start);
+            Events.PublishOnUIThread(MediaViewModel.PlayPause.Play);
+        }
+
+        #endregion
+        
     }
 }

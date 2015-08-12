@@ -14,8 +14,8 @@ namespace TT.Viewer.ViewModels
         public string Point { get; set; }
         public string Length { get; set; }
 
-        public double RallyStart { get; set; }
-        public double RallyEnd { get; set; }
+        public int RallyStart { get; set; }
+        public int RallyEnd { get; set; }
 
         public ItemViewModel()
         {
@@ -28,13 +28,15 @@ namespace TT.Viewer.ViewModels
             RallyEnd = 0;
         }
 
-        public ItemViewModel(string score, string sets, string server, string point, string length)
+        public ItemViewModel(string score, string sets, string server, string point, string length, int start, int end)
         {
             Score = score;
             Sets = sets;
             Server = server;
             Point = point;
             Length = length;
+            RallyStart = start;
+            RallyEnd = end;
         }
     }
 }

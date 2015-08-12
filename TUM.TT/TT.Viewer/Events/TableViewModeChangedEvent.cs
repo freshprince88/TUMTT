@@ -9,11 +9,11 @@ namespace TT.Viewer.Events
 {
     public class TableViewModeChangedEvent
     {
-        public TableViewModeChangedEvent(TableViewModel.ViewMode mode)
+        public TableViewModeChangedEvent(TableServiceViewModel.ViewMode mode)
         {
             Mode = mode;
         }
 
-        public TableViewModel.ViewMode Mode { get; set; }
+        public TableServiceViewModel.ViewMode Mode { get; set; }
     }
 }

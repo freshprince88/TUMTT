@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Lib;
+using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
     public class MediaViewModel : Screen
-
     {
         private IEventAggregator events;
-
        
         public enum MuteUnmute
         {
@@ -64,7 +63,7 @@ namespace TT.Viewer.ViewModels
         }
         public enum PlayPause
         {
-
+            Stop,
             Pause,
             Play
         }
@@ -90,81 +89,69 @@ namespace TT.Viewer.ViewModels
             events = eventAggregator;
         }
 
+        #region View Methods
 
-
-        public void Play(MediaElement myMediaElement)
-        {
-            myMediaElement.Play();
+        public void Play()
+        {            
             this.Mode = PlayPause.Play;          
         }
 
-        public void Pause(MediaElement myMediaElement)
-        {
-            myMediaElement.Pause();
+        public void Pause()
+        {            
             this.Mode = PlayPause.Pause;
         }
        
-        public void Stop(MediaElement myMediaElement)
-        {
-            myMediaElement.Stop();
-            this.Mode = PlayPause.Pause;
-
+        public void Stop()
+        {            
+            this.Mode = PlayPause.Stop;
         }
+
         public void Previous5Frames(MediaElement myMediaElement)
         {
-            myMediaElement.Pause();
-            //mediaIsPaused = true;
+            this.Mode = PlayPause.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now - delta_time;
-            myMediaElement.ScrubbingEnabled = true;
-            this.Mode = PlayPause.Pause;
-            //buttonPlay.Content = "Play";
+            //myMediaElement.ScrubbingEnabled = true;
+            
         }
+
         public void PreviousFrame(MediaElement myMediaElement)
         {
-            myMediaElement.Pause();
-            //mediaIsPaused = true;
+            this.Mode = PlayPause.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             myMediaElement.Position = Position_now - delta_time;
-            myMediaElement.ScrubbingEnabled = true;
-            this.Mode = PlayPause.Pause;
-            //buttonPlay.Content = "Play";
+            //myMediaElement.ScrubbingEnabled = true;
         }
+
         public void Next5Frames(MediaElement myMediaElement)
         {
-            myMediaElement.Pause();
-            //mediaIsPaused = true;
+            this.Mode = PlayPause.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now + delta_time;
-            myMediaElement.ScrubbingEnabled = true;
-            this.Mode = PlayPause.Pause;
-            //buttonPlay.Content = "Play";
+            //myMediaElement.ScrubbingEnabled = true;
         }
+
         public void NextFrame(MediaElement myMediaElement)
         {
-            myMediaElement.Pause();
-            //mediaIsPaused = true;
+            this.Mode = PlayPause.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            myMediaElement.Position = Position_now + delta_time;
-            myMediaElement.ScrubbingEnabled = true;
-            this.Mode = PlayPause.Pause;
-            //buttonPlay.Content = "Play";
-        }
-       
-
+            myMediaElement.Position = Position_now + delta_time;                        
+        }       
 
         public void PreviousRally(MediaElement myMediaElement)
         {
             
         }
+
         public void NextRally(MediaElement myMediaElement)
         {
             
         }
+
         public void Slow75Percent(bool isChecked)
         {
             if (isChecked)
@@ -188,26 +175,32 @@ namespace TT.Viewer.ViewModels
             else
                 this.Speed = PlaySpeed.Full;
         }
-        public void Mute(MediaElement myMediaElement)
-        {
-            myMediaElement.IsMuted = true;
+
+        public void Mute()
+        {           
             this.Sound = MuteUnmute.Mute;
         }
-        public void Unmute(MediaElement myMediaElement)
-        {
-            myMediaElement.IsMuted = false;
+
+        public void Unmute()
+        {            
             this.Sound = MuteUnmute.Unmute;
         }
 
         public void Fullscreen(MediaElement myMediaElement)
         {     
         }
+
+        #endregion
+
+        #region Caliburn Hooks
+
         /// <summary>
         /// Initializes this view model.
         /// </summary>
         protected override void OnInitialize()
         {
             base.OnInitialize();
+            events.Subscribe(this);
         }
 
         /// <summary>
@@ -216,9 +209,13 @@ namespace TT.Viewer.ViewModels
         /// <param name="close">Whether the view model is closed</param>
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);
+            events.Unsubscribe(this);
+            base.OnDeactivate(close);            
         }
+        #endregion
 
+        #region Event Handlers
 
+        #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace TT.Viewer.ViewModels
         IHandle<TableViewSelectionChangedEvent>
     {
      
-        public TableViewModel TableView { get; set; }
+        public TableServiceViewModel TableView { get; set; }
         public List<MatchRally> SelectedRallies { get; private set; }
         public Match Match { get; private set; }
         public EHand Hand { get; private set; }
@@ -41,7 +41,7 @@ namespace TT.Viewer.ViewModels
             Match = new Match();
             Hand = EHand.None;
             SelectedSets = new HashSet<int>();
-            TableView = new TableViewModel(this.events);
+            TableView = new TableServiceViewModel(this.events);
         }
 
 
@@ -50,11 +50,11 @@ namespace TT.Viewer.ViewModels
         {
             if (check)
             {
-                TableView.Mode = TableViewModel.ViewMode.Top;
+                TableView.Mode = TableServiceViewModel.ViewMode.Top;
             }
             else
             {
-                TableView.Mode = TableViewModel.ViewMode.Bottom;
+                TableView.Mode = TableServiceViewModel.ViewMode.Bottom;
             }
         }
         public void SetFilter(int set, bool isChecked)

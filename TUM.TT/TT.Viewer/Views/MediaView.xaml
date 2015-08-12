@@ -109,9 +109,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Play">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="Play" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -125,9 +123,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Pause">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="Pause"/>                        
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
@@ -220,9 +216,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Stop">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="Stop" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>

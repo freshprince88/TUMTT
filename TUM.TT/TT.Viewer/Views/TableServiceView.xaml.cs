@@ -38,11 +38,11 @@ namespace TT.Viewer.Views
         {
             switch (message.Mode)
             {
-                case TableViewModel.ViewMode.Top:
+                case TableServiceViewModel.ViewMode.Top:
                     TopField.Visibility = Visibility.Visible;
                     BottomField.Visibility = Visibility.Hidden;
                     break;
-                case TableViewModel.ViewMode.Bottom:
+                case TableServiceViewModel.ViewMode.Bottom:
                     TopField.Visibility = Visibility.Hidden;
                     BottomField.Visibility = Visibility.Visible;
                     break;

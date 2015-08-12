@@ -8,7 +8,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class TableViewModel : Screen
+    public class TableServiceViewModel : Screen
     {
 
         private IEventAggregator events;
@@ -56,7 +56,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public TableViewModel(IEventAggregator eventAggregator)
+        public TableServiceViewModel(IEventAggregator eventAggregator)
         {
             events = eventAggregator;
         }

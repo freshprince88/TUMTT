@@ -108,6 +108,7 @@
     <Compile Include="Events\TableViewModeChangedEvent.cs" />
     <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
+    <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
@@ -124,7 +125,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
-    <Compile Include="ViewModels\TableViewModel.cs" />
+    <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="Views\ReceptionView.xaml.cs">
       <DependentUpon>ReceptionView.xaml</DependentUpon>
     </Compile>
@@ -137,8 +138,8 @@
     <Compile Include="Views\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TableView.xaml.cs">
-      <DependentUpon>TableView.xaml</DependentUpon>
+    <Compile Include="Views\TableServiceView.xaml.cs">
+      <DependentUpon>TableServiceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MediaView.xaml.cs">
       <DependentUpon>MediaView.xaml</DependentUpon>
@@ -188,7 +189,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TableView.xaml">
+    <Page Include="Views\TableServiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

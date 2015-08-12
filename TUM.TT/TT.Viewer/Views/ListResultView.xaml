@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
 
@@ -21,7 +23,8 @@
             Margin="0"
             BorderThickness="0"
             SelectedIndex="0"
-            ctrl:ListViewLayoutManager.Enabled="true" >
+            ctrl:ListViewLayoutManager.Enabled="true" 
+            cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action ListItemSelected($source)]">
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding Score}"

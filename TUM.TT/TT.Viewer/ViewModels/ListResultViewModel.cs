@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
@@ -35,6 +36,32 @@ namespace TT.Viewer.ViewModels
             events = e;
         }
 
+        #region View Methods
+
+        public void ListItemSelected(ListView view)
+        {
+            ItemViewModel item = (ItemViewModel)view.SelectedItem;
+
+            if (item != null)
+            {
+                var prevIdx = view.SelectedIndex > 0 ? view.SelectedIndex - 1 : 0;
+                var nextIDx = view.SelectedIndex + 1 < Items.Count ? view.SelectedIndex + 1 : view.SelectedIndex;
+
+                ItemViewModel prev = prevIdx != view.SelectedIndex ? (ItemViewModel)view.Items[prevIdx] : item;
+                ItemViewModel next = nextIDx != view.SelectedIndex ? (ItemViewModel)view.Items[nextIDx] : item;
+
+
+                this.events.PublishOnUIThread(new VideoPlayEvent()
+                {
+                    Start = item.RallyStart,
+                    End = item.RallyEnd,
+                    Next = next.RallyStart,
+                    Previous = prev.RallyStart
+                });
+            }
+        }
+        #endregion
+
 
         #region Event Handlers
 
@@ -55,8 +82,8 @@ namespace TT.Viewer.ViewModels
                     Server = rally.Server,
                     Point = rally.Winner,
                     Length = rally.Length,
-                    RallyStart = Convert.ToDouble(rally.Anfang),
-                    RallyEnd = Convert.ToDouble(rally.Ende)
+                    RallyStart = Convert.ToInt32(rally.Anfang),
+                    RallyEnd = Convert.ToInt32(rally.Ende)
                 });
             }
         }
