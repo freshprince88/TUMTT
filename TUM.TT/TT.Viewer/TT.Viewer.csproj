@@ -130,13 +130,12 @@
     </Compile>
     <Compile Include="Views\ServiceView.xaml.cs">
       <DependentUpon>ServiceView.xaml</DependentUpon>
-
+    </Compile>
     <Compile Include="Views\ListResultView.xaml.cs">
       <DependentUpon>ListResultView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
-
     </Compile>
     <Compile Include="Views\TableView.xaml.cs">
       <DependentUpon>TableView.xaml</DependentUpon>
