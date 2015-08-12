@@ -73,8 +73,27 @@ namespace TT.Viewer.ViewModels
         }
         public enum ECrunch
         {
-            CrunshTime,
+            CrunchTime,
             Not
+        }
+        public enum Services
+        {
+            Pendulum,
+            Reverse,
+            Tomahawk,
+            Special
+        }
+        private HashSet<Services> _services;
+
+        public HashSet<Services> SelectedServices
+        {
+            get
+            {
+                return _services;
+            }
+            private set
+            { _services = value;
+            }
         }
 
 
@@ -97,12 +116,62 @@ namespace TT.Viewer.ViewModels
             Crunch = ECrunch.Not;
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
+            SelectedServices = new HashSet<Services>();
 
             SpinControl = new SpinControlViewModel(events);
             TableView = new TableServiceViewModel(events);
         }
 
         #region View Methods
+        public void SelectService(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("pendulum"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedServices.Add(Services.Pendulum);
+                }
+                else
+                {
+                    SelectedServices.Remove(Services.Pendulum);
+                }
+            }
+            else if (source.Name.ToLower().Contains("reverse"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedServices.Add(Services.Reverse);
+                }
+                else
+                {
+                    SelectedServices.Remove(Services.Reverse);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tomahawk"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedServices.Add(Services.Tomahawk);
+                }
+                else
+                {
+                    SelectedServices.Remove(Services.Tomahawk);
+                }
+            }
+            else if (source.Name.ToLower().Contains("special"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedServices.Add(Services.Special);
+                }
+                else
+                {
+                    SelectedServices.Remove(Services.Special);
+                }
+            }
+            UpdateSelection();
+
+        }
 
         public void SwitchTable(bool check)
         {
@@ -116,11 +185,11 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public void SetFilter(int set, bool isChecked)
+        public void SetFilter(ToggleButton source)
         {
-            if (set == 0)
+            if (source.Name.ToLower().Contains("setallbutton"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(1);
                     SelectedSets.Add(2);
@@ -141,9 +210,9 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(7);
                 }
             }
-            else if (set == 1)
+            else if (source.Name.ToLower().Contains("set1button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(1);
                 }
@@ -152,9 +221,9 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(1);
                 }
             }
-            else if (set == 2)
+            else if (source.Name.ToLower().Contains("set2button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(2);
                 }
@@ -163,9 +232,9 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(2);
                 }
             }
-            else if (set == 3)
+            else if (source.Name.ToLower().Contains("set3button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(3);
                 }
@@ -174,9 +243,9 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(3);
                 }
             }
-            else if (set == 4)
+            else if (source.Name.ToLower().Contains("set4button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(4);
                 }
@@ -185,9 +254,9 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(4);
                 }
             }
-            else if (set == 5)
+            else if (source.Name.ToLower().Contains("set5button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(5);
                 }
@@ -196,9 +265,9 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(5);
                 }
             }
-            else if (set == 6)
+            else if (source.Name.ToLower().Contains("set6button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(6);
                 }
@@ -207,9 +276,9 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(6);
                 }
             }
-            else if (set == 7)
+            else if (source.Name.ToLower().Contains("set7button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedSets.Add(7);
                 }
@@ -221,11 +290,11 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-        public void RallyLengthFilter(int rallylength, bool isChecked)
+        public void RallyLengthFilter(ToggleButton source)
         {
-            if (rallylength == 0)
+            if (source.Name.ToLower().Contains("rallylengthallbutton"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedRallyLengths.Add(1);
                     SelectedRallyLengths.Add(2);
@@ -244,9 +313,9 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(6);
                 }
             }
-            else if (rallylength == 1)
+            else if (source.Name.ToLower().Contains("rallylength1button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedRallyLengths.Add(1);
                 }
@@ -255,9 +324,9 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(1);
                 }
             }
-            else if (rallylength == 2)
+            else if (source.Name.ToLower().Contains("rallylength2button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedRallyLengths.Add(2);
                 }
@@ -266,9 +335,9 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(2);
                 }
             }
-            else if (rallylength == 3)
+            else if (source.Name.ToLower().Contains("rallylength3button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedRallyLengths.Add(3);
                 }
@@ -277,9 +346,9 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(3);
                 }
             }
-            else if (rallylength == 4)
+            else if (source.Name.ToLower().Contains("rallylength4button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedRallyLengths.Add(4);
                 }
@@ -288,9 +357,9 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(4);
                 }
             }
-            else if (rallylength == 5)
+            else if (source.Name.ToLower().Contains("rallylength5button"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedRallyLengths.Add(5);
                 }
@@ -299,9 +368,9 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(5);
                 }
             }
-            else if (rallylength == 6)
+            else if (source.Name.ToLower().Contains("rallylength5upbutton"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     SelectedRallyLengths.Add(6);
                 }
@@ -313,13 +382,13 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-        public void CrunchOrNot (string crunch, bool isChecked)
+        public void CrunchOrNot (ToggleButton source)
         {
-            if (crunch == "crunch")
+            if (source.Name.ToLower().Contains("crunchtime"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
-                    Crunch = ECrunch.CrunshTime;
+                    Crunch = ECrunch.CrunchTime;
                 }
                 else
                 {
@@ -329,11 +398,11 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-        public void ForBackHand(string hand, bool isChecked)
+        public void ForBackHand(ToggleButton source)
         {
-            if (hand == "fore")
+            if (source.Name.ToLower().Contains("forhand"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Hand == EHand.None)
                         Hand = EHand.Fore;
@@ -348,9 +417,9 @@ namespace TT.Viewer.ViewModels
                         Hand = EHand.Back;
                 }
             }
-            else if (hand == "back")
+            else if (source.Name.ToLower().Contains("backhand"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Hand == EHand.None)
                         Hand = EHand.Back;
@@ -368,11 +437,11 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-        public void P1P2Point (string player, bool isChecked)
+        public void P1P2Point (ToggleButton source)
         {
-            if (player == "player1")
+            if (source.Name.ToLower().Contains("player1"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Point == EPoint.None)
                         Point = EPoint.Player1;
@@ -387,9 +456,9 @@ namespace TT.Viewer.ViewModels
                         Point = EPoint.Player2;
                 }
             }
-            else if (player == "player2")
+            else if (source.Name.ToLower().Contains("player2"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Point == EPoint.None)
                         Point = EPoint.Player2;
@@ -446,11 +515,11 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-        public void GoodBadQuality(string quality, bool isChecked)
+        public void GoodBadQuality(ToggleButton source)
         {
-            if (quality == "good")
+            if (source.Name.ToLower().Contains("goodq"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Quality == EQuality.None)
                         Quality = EQuality.Good;
@@ -465,9 +534,9 @@ namespace TT.Viewer.ViewModels
                         Quality = EQuality.Bad;
                 }
             }
-            else if (quality == "bad")
+            else if (source.Name.ToLower().Contains("badq"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Quality == EQuality.None)
                         Quality = EQuality.Bad;
@@ -485,11 +554,11 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-        public void EdgeSpecials(string edge, bool isChecked)
+        public void EdgeSpecials(ToggleButton source)
         {
-            if (edge == "edgeTable")
+            if (source.Name.ToLower().Contains("edgetable"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Specials == ESpecials.None)
                         Specials = ESpecials.EdgeTable;
@@ -504,9 +573,9 @@ namespace TT.Viewer.ViewModels
                         Specials = ESpecials.EdgeRacket;
                 }
             }
-            else if (edge == "edgeRacket")
+            else if (source.Name.ToLower().Contains("edgeracket"))
             {
-                if (!isChecked)
+                if (source.IsChecked.Value)
                 {
                     if (Specials == ESpecials.None)
                         Specials = ESpecials.EdgeRacket;
@@ -585,7 +654,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r) && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasQuality(r) && HasSpecials(r)).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r) && HasServices(r) && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasQuality(r) && HasSpecials(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -600,19 +669,19 @@ namespace TT.Viewer.ViewModels
                 switch (spin)
                 {
                     case SpinControlViewModel.Spins.ÜS:
-                        ORresults.Add(service.Spin.ÜS == "1");
+                        ORresults.Add(service.Spin.ÜS == "1" && service.Spin.SL == "0" && service.Spin.SR == "0");
                         break;
                     case SpinControlViewModel.Spins.SR:
-                        ORresults.Add(service.Spin.SR == "1");
+                        ORresults.Add(service.Spin.SR == "1" && service.Spin.ÜS == "0" && service.Spin.US == "0");
                         break;
                     case SpinControlViewModel.Spins.No:
-                        ORresults.Add(service.Spin.No == "1");
+                        ORresults.Add(service.Spin.No == "1" && service.Spin.SL == "0" && service.Spin.SR == "0" && service.Spin.ÜS == "0" && service.Spin.US == "0");
                         break;
                     case SpinControlViewModel.Spins.SL:
-                        ORresults.Add(service.Spin.SL == "1");
+                        ORresults.Add(service.Spin.SL == "1" && service.Spin.ÜS == "0" && service.Spin.US == "0");
                         break;
                     case SpinControlViewModel.Spins.US:
-                        ORresults.Add(service.Spin.US == "1");
+                        ORresults.Add(service.Spin.US == "1" && service.Spin.SL == "0" && service.Spin.SR == "0");
                         break;
                     case SpinControlViewModel.Spins.USSL:
                         ORresults.Add(service.Spin.US == "1" && service.Spin.SL == "1");
@@ -628,11 +697,39 @@ namespace TT.Viewer.ViewModels
                         break;
                     default:
                         break;
+
                 }
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
+        private bool HasServices(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
 
+            foreach (var service in SelectedServices)
+            {
+                switch (service)
+                {
+                    case Services.Pendulum:
+                        ORresults.Add(r.Schlag[0].Aufschlagart=="Pendulum");
+                        break;
+                    case Services.Reverse:
+                        ORresults.Add(r.Schlag[0].Aufschlagart == "Gegenläufer");
+                        break;
+                    case Services.Tomahawk:
+                        ORresults.Add(r.Schlag[0].Aufschlagart == "Tomahawk");
+                        break;
+                    case Services.Special:
+                        ORresults.Add(r.Schlag[0].Aufschlagart == "Spezial");
+                        break;
+                    default:
+                        break;
+
+                }
+
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
         private bool HasHand(MatchRally r)
         {
             switch (this.Hand)
@@ -728,8 +825,10 @@ namespace TT.Viewer.ViewModels
         {
             List<bool> ORresults = new List<bool>();
 
-            foreach (var rallylength in SelectedSets)
-            {  if (rallylength <= 5)
+            foreach (var rallylength in SelectedRallyLengths)
+            {
+
+                if (rallylength <= 5)
                 {
                     ORresults.Add(Convert.ToInt32(r.Length) == rallylength);
                 }
@@ -748,7 +847,7 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Crunch)
             {
-                case ECrunch.CrunshTime:
+                case ECrunch.CrunchTime:
                     return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
                 case ECrunch.Not:
                     return true;
