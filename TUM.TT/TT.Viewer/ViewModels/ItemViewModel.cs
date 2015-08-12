@@ -8,11 +8,25 @@ namespace TT.Viewer.ViewModels
 {
     public class ItemViewModel : Screen
     {
-        public string Score { get; private set; }
-        public string Sets { get; private set; }
-        public string Server { get; private set; }
-        public string Point { get; private set; }
-        public string Length { get; private set; }
+        public string Score { get; set; }
+        public string Sets { get; set; }
+        public string Server { get; set; }
+        public string Point { get; set; }
+        public string Length { get; set; }
+
+        public double RallyStart { get; set; }
+        public double RallyEnd { get; set; }
+
+        public ItemViewModel()
+        {
+            Score = String.Empty;
+            Sets = String.Empty;
+            Server = String.Empty;
+            Point = String.Empty;
+            Length = String.Empty;
+            RallyStart = 0;
+            RallyEnd = 0;
+        }
 
         public ItemViewModel(string score, string sets, string server, string point, string length)
         {
