@@ -23,9 +23,10 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class TableServiceView : UserControl,
         IHandle<TableViewModeChangedEvent>,
-        IHandle<ServiceViewLoadedEvent>
+        IHandle<FilterSwitchedEvent>
     {
         public IEventAggregator Events { get; set; }
+        private List<MatchRally> rallies { get; set; }
 
         public TableServiceView()
         {
@@ -51,9 +52,50 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(ServiceViewLoadedEvent message)
+        public void Handle(FilterSwitchedEvent message)
         {
-            throw new NotImplementedException();
+            if (message.Match.Rallies != null)
+            {
+                rallies = message.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
+                int topLeft = rallies.Where(r => r.Schlag[0].IsTopLeft()).Count();
+                int topMid = rallies.Where(r => r.Schlag[0].IsTopMid()).Count();
+                int topRight = rallies.Where(r => r.Schlag[0].IsTopRight()).Count();
+
+                int midLeft = rallies.Where(r => r.Schlag[0].IsMidLeft()).Count();
+                int midMid = rallies.Where(r => r.Schlag[0].IsMidMid()).Count();
+                int midRight = rallies.Where(r => r.Schlag[0].IsMidRight()).Count();
+
+                int botLeft = rallies.Where(r => r.Schlag[0].IsBotLeft()).Count();
+                int botMid = rallies.Where(r => r.Schlag[0].IsBotMid()).Count();
+                int botRight = rallies.Where(r => r.Schlag[0].IsBotRight()).Count();
+
+                this.Btn1_bot.Content = topLeft;
+                this.Btn1_top.Content = topLeft;
+
+                this.Btn2_bot.Content = topMid;
+                this.Btn2_top.Content = topMid;
+
+                this.Btn3_bot.Content = topRight;
+                this.Btn3_top.Content = topRight;
+
+                this.Btn4_bot.Content = midLeft;
+                this.Btn4_top.Content = midLeft;
+
+                this.Btn5_bot.Content = midMid;
+                this.Btn5_top.Content = midMid;
+
+                this.Btn6_bot.Content = midRight;
+                this.Btn6_top.Content = midRight;
+
+                this.Btn7_bot.Content = botLeft;
+                this.Btn7_top.Content = botLeft;
+
+                this.Btn8_bot.Content = botMid;
+                this.Btn8_top.Content = botMid;
+
+                this.Btn9_bot.Content = botRight;
+                this.Btn9_top.Content = botRight;
+            }
         }
     }
 }

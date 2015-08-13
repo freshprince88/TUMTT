@@ -9,5 +9,12 @@ namespace TT.Viewer.ViewModels
 {
     public class TableStandardViewModel : Screen
     {
+
+        public enum EStrokeLength
+        {
+            Short,
+            Half,
+            Long
+        }
     }
 }

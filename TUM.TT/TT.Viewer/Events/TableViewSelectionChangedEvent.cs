@@ -9,15 +9,13 @@ namespace TT.Viewer.Events
 {
     public class TableViewSelectionChangedEvent
     {
-        public TableViewSelectionChangedEvent(List<TableServiceViewModel.TablePosition> positions, List<TableServiceViewModel.StrokeLength> length, int playerPos)
+        public TableViewSelectionChangedEvent(HashSet<TableServiceViewModel.ETablePosition> positions, HashSet<TableServiceViewModel.EServerPosition> playerPos)
         {
             Positions = positions;
-            Length = length;
-            PlayerPosition = playerPos;
+            PlayerPositions = playerPos;
         }
 
-        public List<TableServiceViewModel.TablePosition> Positions { get; set; }
-        public List<TableServiceViewModel.StrokeLength> Length { get; set; }
-        public int PlayerPosition { get; set; }
+        public HashSet<TableServiceViewModel.ETablePosition> Positions { get; set; }
+        public HashSet<TableServiceViewModel.EServerPosition> PlayerPositions { get; set; }
     }
 }

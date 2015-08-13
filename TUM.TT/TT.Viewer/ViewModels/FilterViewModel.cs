@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
+    public class FilterViewModel : Conductor<IScreen>.Collection.OneActive,
+        IHandle<MatchOpenedEvent>
     {
         public ServiceViewModel ServiceView { get; set; }
         public ReceptionViewModel ReceptionView { get; set; }
+        private Match match;
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -20,7 +23,8 @@ namespace TT.Viewer.ViewModels
 
         public FilterViewModel(IEventAggregator eventAggregator)
         {
-            this.events = eventAggregator;
+            this.events = eventAggregator;            
+            this.match = new Match();
         }
 
         /// <summary>
@@ -31,7 +35,7 @@ namespace TT.Viewer.ViewModels
             base.OnInitialize();
 
             // Subscribe ourself to the event bus
-            //this.events.Subscribe(this);
+            this.events.Subscribe(this);
 
             ReceptionView = new ReceptionViewModel(this.events);
             ServiceView = new ServiceViewModel(this.events);
@@ -39,7 +43,7 @@ namespace TT.Viewer.ViewModels
             // Activate the welcome model
             if (this.ActiveItem == null)
             {                
-                this.ActivateItem(ServiceView);               
+                this.ActivateItem(ServiceView);
             }
         }
 
@@ -50,9 +54,11 @@ namespace TT.Viewer.ViewModels
             {
                 case "ServiceTabHeader":
                     this.ActivateItem(ServiceView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
                     break;
                 case "ReceiveTabHeader":
                     this.ActivateItem(ReceptionView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
                     break;
                 case "ThirdTabHeader":
                     break;
@@ -65,6 +71,12 @@ namespace TT.Viewer.ViewModels
                 default:
                     break;
             }
+        }
+
+        public void Handle(MatchOpenedEvent message)
+        {
+            this.match = message.Match;
+            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
         }
     }
 }

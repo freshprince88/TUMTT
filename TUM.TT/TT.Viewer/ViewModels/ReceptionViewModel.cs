@@ -10,9 +10,9 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive, 
-        IHandle<MatchOpenedEvent>,
-        IHandle<TableViewSelectionChangedEvent>
+    public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<TableViewSelectionChangedEvent>,
+        IHandle<FilterSwitchedEvent>
     {
      
         public TableServiceViewModel TableView { get; set; }
@@ -231,8 +231,9 @@ namespace TT.Viewer.ViewModels
             this.events.Unsubscribe(this);
         }
         #endregion
+
         #region Event Handlers
-        public void Handle(MatchOpenedEvent message)
+        public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
             SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 0).ToList();
@@ -245,7 +246,9 @@ namespace TT.Viewer.ViewModels
         }
 
         #endregion
+
         #region Helper Methods
+
         private void UpdateSelection()
         {
             if (this.Match.Rallies != null)
@@ -254,6 +257,7 @@ namespace TT.Viewer.ViewModels
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
+
         private bool HasHand(MatchRally r)
         {
             switch (this.Hand)
@@ -270,6 +274,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasSet(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
@@ -281,6 +286,7 @@ namespace TT.Viewer.ViewModels
             }
             return ORresults.Count == 0 ? false : ORresults.Aggregate(false, (a, b) => a || b);
         }
+
         #endregion
     }
 }
