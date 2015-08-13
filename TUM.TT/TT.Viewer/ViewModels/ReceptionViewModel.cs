@@ -68,7 +68,27 @@ namespace TT.Viewer.ViewModels
             Block,
             BlockTempo,
             BlockChop,
+            Counter,
+            Smash,
+            Lob,
+            Chop,
+            Special
         }
+
+        private HashSet<StrokeTec> _strokeTec;
+
+        public HashSet<StrokeTec> SelectedStrokeTec
+        {
+            get
+            {
+                return _strokeTec;
+            }
+            private set
+            {
+                _strokeTec = value;
+            }
+        }
+
         public enum EQuality
         {
             Bad,
@@ -436,6 +456,178 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
+        public void SelectStrokeTec(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("tecpushbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Push);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Push);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecpushaggressivebutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.PushAggressive);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.PushAggressive);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecflipbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Flip);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Flip);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecflipbananabutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Banana);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Banana);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tectopspinbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Topspin);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Topspin);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tectopspinspinbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.TopspinSpin);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.TopspinSpin);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tectopspintempobutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.TopspinTempo);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.TopspinTempo);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecblockbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Block);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Block);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecblocktempobutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.BlockTempo);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.BlockTempo);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecblockchopbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.BlockChop);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.BlockChop);
+                }
+            }
+            else if (source.Name.ToLower().Contains("teccounterbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Counter);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Counter);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecsmashbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Smash);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Smash);
+                }
+            }
+            else if (source.Name.ToLower().Contains("teclobbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Lob);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Lob);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecchopbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Chop);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Chop);
+                }
+            }
+            else if (source.Name.ToLower().Contains("tecspecialbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(StrokeTec.Special);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(StrokeTec.Special);
+                }
+            }
+            
+            UpdateSelection();
+
+        }
         public void GoodBadQuality(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("goodq"))
@@ -528,7 +720,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 1 && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasRallyLength(r) && HasHand(r) && HasQuality(r)  ).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 1 && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasRallyLength(r) && HasHand(r) && HasStrokeTec(r) && HasQuality(r)  ).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -629,6 +821,66 @@ namespace TT.Viewer.ViewModels
                 default:
                     return false;
             }
+        }
+
+        private bool HasStrokeTec(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
+
+            foreach (var stroketec in SelectedStrokeTec)
+            {
+                switch (stroketec)
+                {
+                    case StrokeTec.Push:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art=="Schupf");
+                        break;
+                    case StrokeTec.PushAggressive:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Schlagtechnik.Option=="aggressiv");
+                        break;
+                    case StrokeTec.Flip:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip");
+                        break;
+                    case StrokeTec.Banana:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Schlagtechnik.Option == "Banane");
+                        break;
+                    case StrokeTec.Topspin:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin");
+                        break;
+                    case StrokeTec.TopspinSpin:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Spin");
+                        break;
+                    case StrokeTec.TopspinTempo:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
+                        break;
+                    case StrokeTec.Block:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block");
+                        break;
+                    case StrokeTec.BlockTempo:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
+                        break;
+                    case StrokeTec.BlockChop:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Chop");
+                        break;
+                    case StrokeTec.Counter:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Konter");
+                        break;
+                    case StrokeTec.Smash:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schuss");
+                        break;
+                    case StrokeTec.Lob:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Ballonabwehr");
+                        break;
+                    case StrokeTec.Chop:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schnittabwehr");
+                        break;
+                    case StrokeTec.Special:
+                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Sonstige");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
         private bool HasQuality(MatchRally r)

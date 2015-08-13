@@ -276,13 +276,13 @@
                         <ToggleButton  x:Name="FilterStrokeTecLobButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
                             Ballonabwehr
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeChopButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecChopButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
                             Schnittabwehr
                         </ToggleButton>                        
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">                   
-                        <ToggleButton  x:Name="FilterStrokeSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
                             Sonstiges
                         </ToggleButton>                    
                 </GroupBox>
