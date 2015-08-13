@@ -115,6 +115,7 @@ namespace TT.Viewer.ViewModels
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
             Quality = EQuality.None;
+            SelectedStrokeTec = new HashSet<StrokeTec>();
 
             TableView = new TableServiceViewModel(this.events);
         }

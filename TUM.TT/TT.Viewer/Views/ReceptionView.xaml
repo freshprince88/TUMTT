@@ -179,10 +179,12 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                            <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}" 
+                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 Schupf
                             </ToggleButton>                            
-                            <ToggleButton  x:Name="FilterStrokeTecPushAggressiveButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="8"   Style="{DynamicResource MetroAccentToggle}" >
+                            <ToggleButton  x:Name="FilterStrokeTecPushAggressiveButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="8"   Style="{DynamicResource MetroAccentToggle}"
+                                           cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 aggressiv
                             </ToggleButton>                            
                         </Grid>
@@ -193,10 +195,12 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>                           
-                            <ToggleButton  x:Name="FilterStrokeTecFlipButton" Grid.Row="0"  MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                            <ToggleButton  x:Name="FilterStrokeTecFlipButton" Grid.Row="0"  MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                           cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 Flip
                             </ToggleButton>                            
-                            <ToggleButton  x:Name="FilterStrokeTecFlipBananaButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                            <ToggleButton  x:Name="FilterStrokeTecFlipBananaButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                           cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 Banane
                             </ToggleButton>
                         </Grid>
@@ -213,13 +217,17 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                                       
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]" >
                             Topspin
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecTopspinSpinButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecTopspinSpinButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Spin
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecTopspinTempoButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecTopspinTempoButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Tempo
                         </ToggleButton>
                     </Grid>
@@ -234,13 +242,16 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecBlockButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Block
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockTempoButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecBlockTempoButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Tempo
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockChopButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecBlockChopButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Chop
                         </ToggleButton>
                     </Grid>
@@ -251,10 +262,12 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecCounterButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecCounterButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Konter
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecSmashButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecSmashButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Schuss
                         </ToggleButton>
                     </Grid>
@@ -273,16 +286,19 @@
                             <ColumnDefinition/>
                            
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecLobButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecLobButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Ballonabwehr
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecChopButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecChopButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Schnittabwehr
                         </ToggleButton>                        
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">                   
-                        <ToggleButton  x:Name="FilterStrokeTecSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}" >
+                        <ToggleButton  x:Name="FilterStrokeTecSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Sonstiges
                         </ToggleButton>                    
                 </GroupBox>
