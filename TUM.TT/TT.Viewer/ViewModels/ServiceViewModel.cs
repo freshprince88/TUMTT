@@ -12,10 +12,16 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class ServiceViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<MatchOpenedEvent>,
+        IHandle<FilterSwitchedEvent>,
         IHandle<TableViewSelectionChangedEvent>,
         IHandle<SpinControlSelectionChangedEvent>
     {
+
+        #region Properties
+
+        public string FilterPointPlayer1Button { get; set; }
+        public string FilterPointPlayer2Button { get; set; }
+
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
         public List<MatchRally> SelectedRallies { get; private set; }
@@ -32,7 +38,13 @@ namespace TT.Viewer.ViewModels
         public HashSet<int> SelectedSets { get; private set; }
         public HashSet<int> SelectedRallyLengths { get; private set; }
 
+        public HashSet<Services> SelectedServices { get; private set; }
+        public HashSet<TableServiceViewModel.ETablePosition> SelectedTablePositions { get; set; }
+        public HashSet<TableServiceViewModel.EServerPosition> SelectedServerPositions { get; set; }
 
+        #endregion
+
+        #region Enums
 
         public enum EHand
         {
@@ -90,19 +102,7 @@ namespace TT.Viewer.ViewModels
             Special
         }
 
-        private HashSet<Services> _services;
-
-        public HashSet<Services> SelectedServices
-        {
-            get
-            {
-                return _services;
-            }
-            private set
-            { _services = value;
-            }
-        }
-
+        #endregion
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -124,9 +124,13 @@ namespace TT.Viewer.ViewModels
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
             SelectedServices = new HashSet<Services>();
+            SelectedServerPositions = new HashSet<TableServiceViewModel.EServerPosition>();
+            SelectedTablePositions = new HashSet<TableServiceViewModel.ETablePosition>();
 
             SpinControl = new SpinControlViewModel(events);
             TableView = new TableServiceViewModel(events);
+            FilterPointPlayer1Button = "Spieler 1";
+            FilterPointPlayer2Button = "Spieler 2";
         }
 
         #region View Methods
@@ -635,16 +639,19 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-        public void Handle(MatchOpenedEvent message)
+        public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
-            SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 0).ToList();
-            this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+            FilterPointPlayer1Button = this.Match.FirstPlayer.Name.Split(' ')[0];
+            FilterPointPlayer2Button = this.Match.SecondPlayer.Name.Split(' ')[0];
+            UpdateSelection();
         }
 
         public void Handle(TableViewSelectionChangedEvent message)
         {
-            throw new NotImplementedException();
+            SelectedServerPositions = message.PlayerPositions;
+            SelectedTablePositions = message.Positions;
+            UpdateSelection();
         }
 
         public void Handle(SpinControlSelectionChangedEvent message)
@@ -661,7 +668,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r) && HasServices(r) && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasQuality(r) && HasSpecials(r)).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0 && HasSpins(r) && HasHand(r) && HasServices(r) && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasQuality(r) && HasSpecials(r) && HasTablePosition(r) && HasServerPosition(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -874,6 +881,81 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-            #endregion
+        private bool HasTablePosition(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
+            MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
+            foreach (var sel in SelectedTablePositions)
+            {
+                switch (sel)
+                {
+                    case TableServiceViewModel.ETablePosition.TopLeft:
+                        ORresults.Add(service.IsTopLeft());
+                        break;
+                    case TableServiceViewModel.ETablePosition.TopMid:
+                        ORresults.Add(service.IsTopMid());
+                        break;
+                    case TableServiceViewModel.ETablePosition.TopRight:
+                        ORresults.Add(service.IsTopRight());
+                        break;
+                    case TableServiceViewModel.ETablePosition.MidLeft:
+                        ORresults.Add(service.IsMidLeft());
+                        break;
+                    case TableServiceViewModel.ETablePosition.MidMid:
+                        ORresults.Add(service.IsMidMid());
+                        break;
+                    case TableServiceViewModel.ETablePosition.MidRight:
+                        ORresults.Add(service.IsMidRight());
+                        break;
+                    case TableServiceViewModel.ETablePosition.BotLeft:
+                        ORresults.Add(service.IsBotLeft());
+                        break;
+                    case TableServiceViewModel.ETablePosition.BotMid:
+                        ORresults.Add(service.IsBotMid());
+                        break;
+                    case TableServiceViewModel.ETablePosition.BotRight:
+                        ORresults.Add(service.IsBotRight());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+        private bool HasServerPosition(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
+            MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
+            double X = service.Spielerposition == "" ? 999 : Convert.ToDouble(service.Spielerposition);
+
+            foreach (var sel in SelectedServerPositions)
+            {
+                switch (sel)
+                {
+                    case TableServiceViewModel.EServerPosition.Left:
+                        ORresults.Add(X <= 30.5);
+                        break;
+                    case TableServiceViewModel.EServerPosition.HalfLeft:
+                        ORresults.Add(X <= 61);
+                        break;
+                    case TableServiceViewModel.EServerPosition.Mid:
+                        ORresults.Add(X <= 91.5);
+                        break;
+                    case TableServiceViewModel.EServerPosition.HalfRight:
+                        ORresults.Add(X <= 122);
+                        break;
+                    case TableServiceViewModel.EServerPosition.Right:
+                        ORresults.Add(X <= 152.5);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+        #endregion
         }
 }

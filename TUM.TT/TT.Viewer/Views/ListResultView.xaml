@@ -9,16 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Views/ItemView.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
-    <!--<ListBox x:Name="Items" ItemTemplate="{StaticResource ItemViewTemplate}"/>-->
-
     <ListView x:Name="Items"
             Margin="0"
             BorderThickness="0"

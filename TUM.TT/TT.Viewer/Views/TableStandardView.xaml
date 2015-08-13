@@ -6,7 +6,7 @@
              xmlns:lib="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="394">
+             d:DesignHeight="755" d:DesignWidth="394">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,13 +28,14 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>                    
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="150"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
+                <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5*"/>
                         <RowDefinition Height="2*"/>
@@ -53,7 +54,7 @@
                     </ToggleButton>
                 </Grid>
 
-                <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
+                <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
                     <Grid Name="InnerFieldGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition />

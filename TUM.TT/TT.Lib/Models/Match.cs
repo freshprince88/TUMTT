@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.Xml.Serialization;
 
 // 
@@ -761,6 +762,74 @@ public partial class MatchRallySchlag {
         set {
             this.aggressivitätField = value;
         }
+    }
+
+    public bool IsTopLeft()
+        {            
+            double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+            double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+            return (X >= 0 && X < 50.5 && Y >= 0 && Y <= 46) || (X <= 152.5 && X > 102 && Y <= 274 && Y >= 228);
+        }
+
+    public bool IsTopMid()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X >= 50.5 && X <= 102 && Y >= 0 && Y <= 46) || (X >= 50.5 && X <= 102 && Y >= 228 && Y <= 274);
+    }
+
+    public bool IsTopRight()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X <= 152.5 && X > 102 && Y >= 0 && Y <= 46) || (X >= 0 && X < 50.5 && Y >= 228 && Y <= 274);
+    }
+
+    public bool IsMidLeft()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X >= 0 && X < 50.5 && Y <= 92 && Y > 46) || (X <= 152.5 && X > 102 && Y < 228 && Y >= 182);
+    }
+    public bool IsMidMid()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X >= 50.5 && X <= 102 && Y <= 92 && Y > 46) || (X >= 50.5 && X <= 102 && Y < 228 && Y >= 182);
+    }
+    public bool IsMidRight()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X <= 152.5 && X > 102 && Y <= 92 && Y > 46) || (X >= 0 && X < 50.5 && Y < 228 && Y >= 182);
+    }
+
+    public bool IsBotLeft()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X >= 0 && X < 50.5 && Y < 137 && Y > 92) || (X <= 152.5 && X > 102 && Y >= 137 && Y < 182);
+    }
+    public bool IsBotMid()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X >= 50.5 && X <= 102 && Y < 137 && Y > 92) || (X >= 50.5 && X <= 102 && Y >= 137 && Y < 182);
+    }
+    public bool IsBotRight()
+    {
+        double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
+        double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
+
+        return (X <= 152.5 && X > 102 && Y < 137 && Y > 92) || (X >= 0 && X < 50.5 && Y >= 137 && Y < 182);
     }
 }
 
