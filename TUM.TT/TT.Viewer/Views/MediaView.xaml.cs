@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using TT.Viewer.Events;
 using TT.Viewer.ViewModels;
 
@@ -29,12 +30,23 @@ namespace TT.Viewer.Views
         IHandle<VideoPlayEvent>
     {
         public IEventAggregator Events { get; private set; }
+        public MediaViewModel.PlayPause PlayMode { get; set; }
+        private DispatcherTimer stopTimer;
+
+        private int RallyStart;
+        private int RallyEnd;
+
         public MediaView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             myMediaElement.ScrubbingEnabled = true;
+            PlayMode = MediaViewModel.PlayPause.Pause;
+            stopTimer = new DispatcherTimer();
+            RallyStart = 0;
+            RallyEnd = 0;
+            stopTimer.Tick += new EventHandler(StopTimerTick);
         }
 
         #region Event Handlers
@@ -69,18 +81,21 @@ namespace TT.Viewer.Views
                     PlayButton.Visibility = Visibility.Hidden;
                     PauseButton.Visibility = Visibility.Visible;
                     PauseButton.IsChecked = true;
+                    this.PlayMode = MediaViewModel.PlayPause.Play;
                     break;
                 case MediaViewModel.PlayPause.Pause:
                     myMediaElement.Pause();
                     PlayButton.Visibility = Visibility.Visible;
                     PauseButton.Visibility = Visibility.Hidden;
                     PauseButton.IsChecked = false;
+                    this.PlayMode = MediaViewModel.PlayPause.Pause;
                     break;
                 case MediaViewModel.PlayPause.Stop:
                     myMediaElement.Stop();
                     PlayButton.Visibility = Visibility.Visible;
                     PauseButton.Visibility = Visibility.Hidden;
                     PauseButton.IsChecked = false;
+                    this.PlayMode = MediaViewModel.PlayPause.Stop;
                     break;
                 default:
                     break;
@@ -124,11 +139,60 @@ namespace TT.Viewer.Views
 
         public void Handle(VideoPlayEvent message)
         {
-            myMediaElement.Position = new TimeSpan(0, 0, 0, 0, message.Start);
-            Events.PublishOnUIThread(MediaViewModel.PlayPause.Play);
+            RallyStart = message.Start;
+            RallyEnd = message.End;
+
+             // Neuen Timer erstellen 
+            double dauer = (RallyEnd - RallyStart) * (1 / myMediaElement.SpeedRatio); // Spieldauer des Video ermitteln
+            if (dauer > 0)
+            {
+                stopTimer.Interval = TimeSpan.FromMilliseconds(dauer + 1500);
+                stopTimer.Start(); //Timer starten
+                myMediaElement.Position = new TimeSpan(0, 0, 0, 0, message.Start);
+                Events.PublishOnUIThread(MediaViewModel.PlayPause.Play);
+            }
+            else
+            {
+                Events.PublishOnUIThread(MediaViewModel.PlayPause.Pause);
+            }
         }
 
         #endregion
+
+        private void StopTimerTick(object sender, EventArgs e)
+        {
+            MediaViewModel.PlayPause temp = this.PlayMode;
+            Events.PublishOnUIThread(MediaViewModel.PlayPause.Pause);
+
+            //if ((bool)buttonLoop.IsChecked)
+            //{
+            //    myMediaElement.Position = new TimeSpan(0, 0, 0, 0, loopingStart);
+            //    //slider_timeline.Value = ((myMediaElement.Position.TotalMilliseconds - loopingStart) / 4);
+            //    stopTimer.Start();
+            //    myMediaElement.Play();
+            //    this.PlayMode = MediaViewModel.PlayPause.Play;
+            //}
+            //else
+            //{
+                stopTimer.Stop();
+                if (temp == MediaViewModel.PlayPause.Play)
+                {
+                    stopTimer.Interval = TimeSpan.FromMilliseconds(0xffffff);
+                    //slider_timeline.Value = 0;
+                    TimeSpan ts = new TimeSpan(0, 0, 0, 0, RallyStart);
+                    myMediaElement.Position = ts;
+                }
+                else
+                {
+                    double dauer = RallyEnd;
+                    TimeSpan dauer_ts = TimeSpan.FromMilliseconds(dauer + 1500);
+                    stopTimer.Interval = dauer_ts - myMediaElement.Position;
+                    stopTimer.Start();
+                }
+
+
+            //}
+        }
         
     }
 }
