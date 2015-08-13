@@ -41,6 +41,7 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
+
         public enum EPoint
 
         {
@@ -49,6 +50,7 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
+
         public enum EServer
 
         {
@@ -57,6 +59,7 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
+
         public enum EQuality
         {
             Bad,
@@ -64,6 +67,7 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
+
         public enum ESpecials
         {
             EdgeTable,
@@ -71,11 +75,13 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
+
         public enum ECrunch
         {
             CrunchTime,
             Not
         }
+
         public enum Services
         {
             Pendulum,
@@ -83,6 +89,7 @@ namespace TT.Viewer.ViewModels
             Tomahawk,
             Special
         }
+
         private HashSet<Services> _services;
 
         public HashSet<Services> SelectedServices
@@ -668,6 +675,9 @@ namespace TT.Viewer.ViewModels
             {
                 switch (spin)
                 {
+                    case SpinControlViewModel.Spins.Hidden:
+                        ORresults.Add(service.Spin.ÜS == "" || service.Spin.SL == "" || service.Spin.SR == "" || service.Spin.US=="" || service.Spin.No=="" );
+                        break;
                     case SpinControlViewModel.Spins.ÜS:
                         ORresults.Add(service.Spin.ÜS == "1" && service.Spin.SL == "0" && service.Spin.SR == "0");
                         break;
@@ -702,6 +712,7 @@ namespace TT.Viewer.ViewModels
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
+
         private bool HasServices(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
@@ -730,6 +741,7 @@ namespace TT.Viewer.ViewModels
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
+
         private bool HasHand(MatchRally r)
         {
             switch (this.Hand)
@@ -746,6 +758,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasPoint(MatchRally r)
         {
             switch (this.Point)
@@ -762,6 +775,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasServer(MatchRally r)
         {
             switch (this.Server)
@@ -778,6 +792,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasQuality(MatchRally r)
         {
             switch (this.Quality)
@@ -794,6 +809,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasSpecials(MatchRally r)
         {
             switch (this.Specials)
@@ -810,6 +826,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasSet(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
@@ -821,7 +838,8 @@ namespace TT.Viewer.ViewModels
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
-        private bool HasRallyLength(MatchRally r)      //TODO Korrekt????
+
+        private bool HasRallyLength(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
 

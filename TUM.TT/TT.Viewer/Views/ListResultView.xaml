@@ -28,19 +28,19 @@
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding Score}"
-                                            Header="Score" 
+                                            Header="Punkte" 
                                 ctrl:ProportionalColumn.Width="1"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Sets}"
-                                            Header="Sets" 
+                                            Header="Sätze" 
                                 ctrl:ProportionalColumn.Width="1"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Server}"
-                                            Header="Server" 
-                                ctrl:ProportionalColumn.Width="1"/>
+                                            Header="Aufschlag" 
+                                ctrl:ProportionalColumn.Width="2"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Point}"
-                                            Header="Point" 
-                                ctrl:ProportionalColumn.Width="1"/>
+                                            Header="Punkt" 
+                                ctrl:ProportionalColumn.Width="2"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Length}"
-                                            Header="Length" 
+                                            Header="Länge" 
                                 ctrl:ProportionalColumn.Width="1"/>
             </GridView>
         </ListView.View>

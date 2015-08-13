@@ -24,7 +24,8 @@ namespace TT.Viewer.ViewModels
             ÜSSR,
             USSR,
             USSL,
-            ÜSSL
+            ÜSSL,
+            Hidden
         }
 
         private HashSet<Spins> _spins;
@@ -178,6 +179,20 @@ namespace TT.Viewer.ViewModels
             {
                 if (Selected.Contains(Spins.ÜSSR))
                     Selected.Remove(Spins.ÜSSR);
+            }
+            this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
+        }
+        public void SelectHidden(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                if (!Selected.Contains(Spins.Hidden))
+                    Selected.Add(Spins.Hidden);
+            }
+            else
+            {
+                if (Selected.Contains(Spins.Hidden))
+                    Selected.Remove(Spins.Hidden);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }

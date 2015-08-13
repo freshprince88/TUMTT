@@ -32,7 +32,7 @@ namespace TT.Viewer.ViewModels
 
         public ListResultViewModel(IEventAggregator e)
         {
-            this.DisplayName = "List";
+            this.DisplayName = "Hitlist";
             events = e;
         }
 

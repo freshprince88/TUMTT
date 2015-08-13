@@ -14,7 +14,7 @@
 
         WindowTransitionsEnabled="False"
         WindowStartupLocation="CenterScreen"
-        Title="TUM TT">
+        Title="TUM-TT">
 
 
     <Window.Resources>
