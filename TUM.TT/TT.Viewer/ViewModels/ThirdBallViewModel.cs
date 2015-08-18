@@ -15,8 +15,8 @@ namespace TT.Viewer.ViewModels
         IHandle<TableViewSelectionChangedEvent>,
         IHandle<FilterSwitchedEvent>
     {
-                
-        public TableServiceViewModel TableView { get; set; }
+
+        public TableStandardViewModel TableView { get; set; }
         public List<MatchRally> SelectedRallies { get; private set; }
         public Match Match { get; private set; }
         public EHand Hand { get; private set; }
@@ -36,7 +36,6 @@ namespace TT.Viewer.ViewModels
             Both
         }
         public enum EPoint
-
         {
             Player1,
             Player2,
@@ -44,7 +43,6 @@ namespace TT.Viewer.ViewModels
             Both
         }
         public enum EServer
-
         {
             Player1,
             Player2,
@@ -124,7 +122,7 @@ namespace TT.Viewer.ViewModels
             SelectedStrokeTec = new HashSet<StrokeTec>();
             StepAround = EStepAround.Not;
 
-            TableView = new TableServiceViewModel(this.events);
+            TableView = new TableStandardViewModel(this.events);
         }
 
 
@@ -133,11 +131,11 @@ namespace TT.Viewer.ViewModels
         {
             if (check)
             {
-                TableView.Mode = TableServiceViewModel.ViewMode.Top;
+                TableView.Mode = TableStandardViewModel.ViewMode.Top;
             }
             else
             {
-                TableView.Mode = TableServiceViewModel.ViewMode.Bottom;
+                TableView.Mode = TableStandardViewModel.ViewMode.Bottom;
             }
         }
         public void SetFilter(ToggleButton source)
@@ -726,8 +724,11 @@ namespace TT.Viewer.ViewModels
         public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
-            SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 2).ToList();
-            this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+            if (this.Match.Rallies != null)
+            {
+                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 2).ToList();
+                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+            }
         }
 
         public void Handle(TableViewSelectionChangedEvent message)

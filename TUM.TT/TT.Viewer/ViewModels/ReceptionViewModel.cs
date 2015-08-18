@@ -12,11 +12,11 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<TableViewSelectionChangedEvent>,
+        IHandle<TableStdViewSelectionChangedEvent>,
         IHandle<FilterSwitchedEvent>
     {
      
-        public TableServiceViewModel TableView { get; set; }
+        public TableStandardViewModel TableView { get; set; }
         public List<MatchRally> SelectedRallies { get; private set; }
         public Match Match { get; private set; }
         public EHand Hand { get; private set; }       
@@ -25,6 +25,8 @@ namespace TT.Viewer.ViewModels
         public ECrunch Crunch { get; private set; }
         public HashSet<int> SelectedSets { get; private set; }
         public HashSet<int> SelectedRallyLengths { get; private set; }
+        public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
+        public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
         public EQuality Quality { get; private set; }
 
         public EStepAround StepAround { get; private set; }
@@ -121,11 +123,13 @@ namespace TT.Viewer.ViewModels
             Crunch = ECrunch.Not;
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
+            SelectedStrokeLengths = new HashSet<TableStandardViewModel.EStrokeLength>();
+            SelectedTablePositions = new HashSet<TableStandardViewModel.ETablePosition>();
             Quality = EQuality.None;
             SelectedStrokeTec = new HashSet<StrokeTec>();
             StepAround = EStepAround.Not;
 
-            TableView = new TableServiceViewModel(this.events);
+            TableView = new TableStandardViewModel(this.events);
         }
 
 
@@ -134,11 +138,11 @@ namespace TT.Viewer.ViewModels
         {
             if (check)
             {
-                TableView.Mode = TableServiceViewModel.ViewMode.Top;
+                TableView.Mode = TableStandardViewModel.ViewMode.Top;
             }
             else
             {
-                TableView.Mode = TableServiceViewModel.ViewMode.Bottom;
+                TableView.Mode = TableStandardViewModel.ViewMode.Bottom;
             }
         }
         public void SetFilter(ToggleButton source)
@@ -727,13 +731,18 @@ namespace TT.Viewer.ViewModels
         public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
-            SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 1).ToList();
-            this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+            if (this.Match.Rallies != null)
+            {
+                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 1).ToList();
+                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+            }
         }
 
-        public void Handle(TableViewSelectionChangedEvent message)
+        public void Handle(TableStdViewSelectionChangedEvent message)
         {
-            throw new NotImplementedException();
+            SelectedStrokeLengths = message.StrokeLengths;
+            SelectedTablePositions = message.Positions;
+            UpdateSelection();
         }
 
         #endregion
@@ -744,7 +753,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 1 && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasRallyLength(r) && HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r)  ).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 1 && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasRallyLength(r) && HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -933,6 +942,74 @@ namespace TT.Viewer.ViewModels
                 default:
                     return false;
             }
+        }
+
+        private bool HasTablePosition(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
+            MatchRallySchlag stroke = r.Schlag.Where(s => s.Nummer == "2").FirstOrDefault();
+            foreach (var sel in SelectedTablePositions)
+            {
+                switch (sel)
+                {
+                    case TableStandardViewModel.ETablePosition.TopLeft:
+                        ORresults.Add(stroke.IsTopLeft());
+                        break;
+                    case TableStandardViewModel.ETablePosition.TopMid:
+                        ORresults.Add(stroke.IsTopMid());
+                        break;
+                    case TableStandardViewModel.ETablePosition.TopRight:
+                        ORresults.Add(stroke.IsTopRight());
+                        break;
+                    case TableStandardViewModel.ETablePosition.MidLeft:
+                        ORresults.Add(stroke.IsMidLeft());
+                        break;
+                    case TableStandardViewModel.ETablePosition.MidMid:
+                        ORresults.Add(stroke.IsMidMid());
+                        break;
+                    case TableStandardViewModel.ETablePosition.MidRight:
+                        ORresults.Add(stroke.IsMidRight());
+                        break;
+                    case TableStandardViewModel.ETablePosition.BotLeft:
+                        ORresults.Add(stroke.IsBotLeft());
+                        break;
+                    case TableStandardViewModel.ETablePosition.BotMid:
+                        ORresults.Add(stroke.IsBotMid());
+                        break;
+                    case TableStandardViewModel.ETablePosition.BotRight:
+                        ORresults.Add(stroke.IsBotRight());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+        private bool HasStrokeLength(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
+            MatchRallySchlag stroke = r.Schlag.Where(s => s.Nummer == "2").FirstOrDefault();
+
+            foreach (var sel in SelectedStrokeLengths)
+            {
+                switch (sel)
+                {
+                    case TableStandardViewModel.EStrokeLength.Short:
+                        ORresults.Add(stroke.IsShort());
+                        break;                        
+                    case TableStandardViewModel.EStrokeLength.Half:
+                        ORresults.Add(stroke.IsHalf());
+                        break;
+                    case TableStandardViewModel.EStrokeLength.Long:
+                        ORresults.Add(stroke.IsLong());
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
         #endregion

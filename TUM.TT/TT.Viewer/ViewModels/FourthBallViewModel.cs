@@ -727,8 +727,11 @@ namespace TT.Viewer.ViewModels
         public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
-            SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 3).ToList();
-            this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+            if (this.Match.Rallies != null)
+            {
+                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 3).ToList();
+                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+            }
         }
 
         public void Handle(TableViewSelectionChangedEvent message)
