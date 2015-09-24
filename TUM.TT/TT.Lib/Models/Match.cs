@@ -831,6 +831,21 @@ public partial class MatchRallySchlag {
 
         return (X <= 152.5 && X > 102 && Y < 137 && Y > 92) || (X >= 0 && X < 50.5 && Y >= 137 && Y < 182);
     }
+
+    public bool IsShort()
+    {
+        return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "über";
+    }
+
+    public bool IsHalf()
+    {
+        return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "halbdistanz";
+    }
+
+    public bool IsLong()
+    {
+        return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "hinter";
+    }
 }
 
 /// <remarks/>

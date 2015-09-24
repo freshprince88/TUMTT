@@ -14,6 +14,8 @@ namespace TT.Viewer.ViewModels
     {
         public ServiceViewModel ServiceView { get; set; }
         public ReceptionViewModel ReceptionView { get; set; }
+        public ThirdBallViewModel ThirdBallView { get; set; }
+        public FourthBallViewModel FourthBallView { get; set; }
         private Match match;
 
         /// <summary>
@@ -36,7 +38,8 @@ namespace TT.Viewer.ViewModels
 
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-
+            FourthBallView = new FourthBallViewModel(this.events);
+            ThirdBallView = new ThirdBallViewModel(this.events);
             ReceptionView = new ReceptionViewModel(this.events);
             ServiceView = new ServiceViewModel(this.events);
 
@@ -61,8 +64,12 @@ namespace TT.Viewer.ViewModels
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
                     break;
                 case "ThirdTabHeader":
+                    this.ActivateItem(ThirdBallView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
                     break;
                 case "FourthTabHeader":
+                    this.ActivateItem(FourthBallView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
                     break;
                 case "LastTabHeader":
                     break;

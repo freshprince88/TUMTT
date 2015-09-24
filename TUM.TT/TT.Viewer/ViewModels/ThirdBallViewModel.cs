@@ -11,24 +11,21 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<TableStdViewSelectionChangedEvent>,
+    public class ThirdBallViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<TableViewSelectionChangedEvent>,
         IHandle<FilterSwitchedEvent>
     {
-     
+
         public TableStandardViewModel TableView { get; set; }
         public List<MatchRally> SelectedRallies { get; private set; }
         public Match Match { get; private set; }
-        public EHand Hand { get; private set; }       
+        public EHand Hand { get; private set; }
         public EPoint Point { get; private set; }
         public EServer Server { get; private set; }
         public ECrunch Crunch { get; private set; }
         public HashSet<int> SelectedSets { get; private set; }
         public HashSet<int> SelectedRallyLengths { get; private set; }
-        public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
-        public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
         public EQuality Quality { get; private set; }
-
         public EStepAround StepAround { get; private set; }
 
         public enum EHand
@@ -39,7 +36,6 @@ namespace TT.Viewer.ViewModels
             Both
         }
         public enum EPoint
-
         {
             Player1,
             Player2,
@@ -47,7 +43,6 @@ namespace TT.Viewer.ViewModels
             Both
         }
         public enum EServer
-
         {
             Player1,
             Player2,
@@ -112,7 +107,7 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public ReceptionViewModel(IEventAggregator eventAggregator)
+        public ThirdBallViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<MatchRally>();
@@ -123,8 +118,6 @@ namespace TT.Viewer.ViewModels
             Crunch = ECrunch.Not;
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
-            SelectedStrokeLengths = new HashSet<TableStandardViewModel.EStrokeLength>();
-            SelectedTablePositions = new HashSet<TableStandardViewModel.ETablePosition>();
             Quality = EQuality.None;
             SelectedStrokeTec = new HashSet<StrokeTec>();
             StepAround = EStepAround.Not;
@@ -652,7 +645,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(StrokeTec.Special);
                 }
             }
-            
+
             UpdateSelection();
 
         }
@@ -720,7 +713,7 @@ namespace TT.Viewer.ViewModels
         }
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);            
+            base.OnDeactivate(close);
             this.DeactivateItem(TableView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
@@ -733,16 +726,14 @@ namespace TT.Viewer.ViewModels
             this.Match = message.Match;
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 1).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 2).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
 
-        public void Handle(TableStdViewSelectionChangedEvent message)
+        public void Handle(TableViewSelectionChangedEvent message)
         {
-            SelectedStrokeLengths = message.StrokeLengths;
-            SelectedTablePositions = message.Positions;
-            UpdateSelection();
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -753,11 +744,11 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 1 && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasRallyLength(r) && HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
+                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 2 && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasRallyLength(r) && HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
-       
+
         private bool HasSet(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
@@ -788,9 +779,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Server)
             {
                 case EServer.Player1:
-                    return r.Schlag[1].Spieler == "First";  //TODO Name der Spieler dynamisch????
+                    return r.Schlag[2].Spieler == "First";  //TODO Name der Spieler dynamisch????
                 case EServer.Player2:
-                    return r.Schlag[1].Spieler == "Second"; //TODO Name der Spieler dynamisch????
+                    return r.Schlag[2].Spieler == "Second"; //TODO Name der Spieler dynamisch????
                 case EServer.None:
                     return true;
                 case EServer.Both:
@@ -844,9 +835,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Hand)
             {
                 case EHand.Fore:
-                    return r.Schlag[1].Schlägerseite == "Vorhand";
+                    return r.Schlag[2].Schlägerseite == "Vorhand";
                 case EHand.Back:
-                    return r.Schlag[1].Schlägerseite == "Rückhand";
+                    return r.Schlag[2].Schlägerseite == "Rückhand";
                 case EHand.None:
                     return true;
                 case EHand.Both:
@@ -860,13 +851,14 @@ namespace TT.Viewer.ViewModels
             switch (this.StepAround)
             {
                 case EStepAround.StepAround:
-                    return r.Schlag[1].Umlaufen == "ja";
+                    return r.Schlag[2].Umlaufen == "ja";
                 case EStepAround.Not:
                     return true;
                 default:
                     return false;
             }
         }
+
         private bool HasStrokeTec(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
@@ -876,49 +868,49 @@ namespace TT.Viewer.ViewModels
                 switch (stroketec)
                 {
                     case StrokeTec.Push:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art=="Schupf");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schupf");
                         break;
                     case StrokeTec.PushAggressive:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Schlagtechnik.Option=="aggressiv");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schupf" && r.Schlag[2].Schlagtechnik.Option == "aggressiv");
                         break;
                     case StrokeTec.Flip:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Flip");
                         break;
                     case StrokeTec.Banana:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Schlagtechnik.Option == "Banane");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Flip" && r.Schlag[2].Schlagtechnik.Option == "Banane");
                         break;
                     case StrokeTec.Topspin:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Topspin");
                         break;
                     case StrokeTec.TopspinSpin:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Spin");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Topspin" && r.Schlag[2].Schlagtechnik.Option == "Spin");
                         break;
                     case StrokeTec.TopspinTempo:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Topspin" && r.Schlag[2].Schlagtechnik.Option == "Tempo");
                         break;
                     case StrokeTec.Block:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Block");
                         break;
                     case StrokeTec.BlockTempo:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Block" && r.Schlag[2].Schlagtechnik.Option == "Tempo");
                         break;
                     case StrokeTec.BlockChop:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Chop");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Block" && r.Schlag[2].Schlagtechnik.Option == "Chop");
                         break;
                     case StrokeTec.Counter:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Konter");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Konter");
                         break;
                     case StrokeTec.Smash:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schuss");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schuss");
                         break;
                     case StrokeTec.Lob:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Ballonabwehr");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Ballonabwehr");
                         break;
                     case StrokeTec.Chop:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schnittabwehr");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schnittabwehr");
                         break;
                     case StrokeTec.Special:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Sonstige");
+                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Sonstige");
                         break;
                     default:
                         break;
@@ -932,84 +924,16 @@ namespace TT.Viewer.ViewModels
             switch (this.Quality)
             {
                 case EQuality.Good:
-                    return r.Schlag[1].Qualität == "gut";
+                    return r.Schlag[2].Qualität == "gut";
                 case EQuality.Bad:
-                    return r.Schlag[1].Qualität == "schlecht";
+                    return r.Schlag[2].Qualität == "schlecht";
                 case EQuality.None:
                     return true;
                 case EQuality.Both:
-                    return r.Schlag[1].Qualität == "gut" || r.Schlag[1].Qualität == "schlecht";
+                    return r.Schlag[2].Qualität == "gut" || r.Schlag[2].Qualität == "schlecht";
                 default:
                     return false;
             }
-        }
-
-        private bool HasTablePosition(MatchRally r)
-        {
-            List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => s.Nummer == "2").FirstOrDefault();
-            foreach (var sel in SelectedTablePositions)
-            {
-                switch (sel)
-                {
-                    case TableStandardViewModel.ETablePosition.TopLeft:
-                        ORresults.Add(stroke.IsTopLeft());
-                        break;
-                    case TableStandardViewModel.ETablePosition.TopMid:
-                        ORresults.Add(stroke.IsTopMid());
-                        break;
-                    case TableStandardViewModel.ETablePosition.TopRight:
-                        ORresults.Add(stroke.IsTopRight());
-                        break;
-                    case TableStandardViewModel.ETablePosition.MidLeft:
-                        ORresults.Add(stroke.IsMidLeft());
-                        break;
-                    case TableStandardViewModel.ETablePosition.MidMid:
-                        ORresults.Add(stroke.IsMidMid());
-                        break;
-                    case TableStandardViewModel.ETablePosition.MidRight:
-                        ORresults.Add(stroke.IsMidRight());
-                        break;
-                    case TableStandardViewModel.ETablePosition.BotLeft:
-                        ORresults.Add(stroke.IsBotLeft());
-                        break;
-                    case TableStandardViewModel.ETablePosition.BotMid:
-                        ORresults.Add(stroke.IsBotMid());
-                        break;
-                    case TableStandardViewModel.ETablePosition.BotRight:
-                        ORresults.Add(stroke.IsBotRight());
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
-        }
-
-        private bool HasStrokeLength(MatchRally r)
-        {
-            List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => s.Nummer == "2").FirstOrDefault();
-
-            foreach (var sel in SelectedStrokeLengths)
-            {
-                switch (sel)
-                {
-                    case TableStandardViewModel.EStrokeLength.Short:
-                        ORresults.Add(stroke.IsShort());
-                        break;                        
-                    case TableStandardViewModel.EStrokeLength.Half:
-                        ORresults.Add(stroke.IsHalf());
-                        break;
-                    case TableStandardViewModel.EStrokeLength.Long:
-                        ORresults.Add(stroke.IsLong());
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
         #endregion

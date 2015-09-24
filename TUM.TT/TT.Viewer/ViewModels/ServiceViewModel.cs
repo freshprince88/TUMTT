@@ -642,8 +642,11 @@ namespace TT.Viewer.ViewModels
         public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
-            FilterPointPlayer1Button = this.Match.FirstPlayer.Name.Split(' ')[0];
-            FilterPointPlayer2Button = this.Match.SecondPlayer.Name.Split(' ')[0];
+            if (this.Match.FirstPlayer != null && this.Match.SecondPlayer != null)
+            {
+                FilterPointPlayer1Button = this.Match.FirstPlayer.Name.Split(' ')[0];
+                FilterPointPlayer2Button = this.Match.SecondPlayer.Name.Split(' ')[0];
+            }
             UpdateSelection();
         }
 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TT.Viewer.Views.ReceptionView"
+﻿<UserControl x:Class="TT.Viewer.Views.FourthBallView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,7 +18,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid x:Name="Container">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -37,7 +37,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}">Rückschlag</TextBlock>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}">4. Schlag</TextBlock>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="1" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         <Grid x:Name="PreGrid" Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -93,15 +93,15 @@
             <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
             <ToggleButton  x:Name="FilterPointPlayer1Button" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Content="Player 1"  cal:Message.Attach="[Event Click] = [Action P1P2Point($source]"/>
             <ToggleButton x:Name="FilterPointPlayer2Button" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Content="Player 2" cal:Message.Attach="[Event Click] = [Action P1P2Point($source)]"/>
-            <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Rückschlag:"/>
+            <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="4.Schlag:"/>
             <ToggleButton x:Name="FilterServerPlayer1Button" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Content="Player 1" cal:Message.Attach="[Event Click] = [Action P1P2Server($source)]" />
             <ToggleButton x:Name="FilterServerPlayer2Button" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Content="Player 2" cal:Message.Attach="[Event Click] = [Action P1P2Server($source)]" />
             <Label Grid.Row="4" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Rallylänge:"/>
             <WrapPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <!--<ToggleButton x:Name="FilterRallyLengthAllButton" Grid.Row="0" Grid.Column="0"  Width="30" Height="30" IsChecked="True" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="A" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>-->
                 <!--<ToggleButton x:Name="FilterRallyLength1Button"  Grid.Row="0" Grid.Column="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="1" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>-->
-                <ToggleButton x:Name="FilterRallyLength2Button"  Grid.Row="0" Grid.Column="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="2" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
-                <ToggleButton x:Name="FilterRallyLength3Button"  Grid.Row="0" Grid.Column="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="3" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
+                <!--<ToggleButton x:Name="FilterRallyLength2Button"  Grid.Row="0" Grid.Column="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="2" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>-->
+                <!--<ToggleButton x:Name="FilterRallyLength3Button"  Grid.Row="0" Grid.Column="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="3" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>-->
                 <ToggleButton x:Name="FilterRallyLength4Button"  Grid.Row="0" Grid.Column="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="4" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
                 <ToggleButton x:Name="FilterRallyLength5Button"  Grid.Row="0" Grid.Column="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
                 <ToggleButton x:Name="FilterRallyLength5UpButton"  Grid.Row="0" Grid.Column="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5+" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
@@ -182,11 +182,11 @@
                             <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}" 
                                             cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 Schupf
-                            </ToggleButton>                            
+                            </ToggleButton>
                             <ToggleButton  x:Name="FilterStrokeTecPushAggressiveButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="8"   Style="{DynamicResource MetroAccentToggle}"
                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 aggressiv
-                            </ToggleButton>                            
+                            </ToggleButton>
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
@@ -194,11 +194,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
-                            </Grid.RowDefinitions>                           
+                            </Grid.RowDefinitions>
                             <ToggleButton  x:Name="FilterStrokeTecFlipButton" Grid.Row="0"  MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 Flip
-                            </ToggleButton>                            
+                            </ToggleButton>
                             <ToggleButton  x:Name="FilterStrokeTecFlipBananaButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 Banane
@@ -206,7 +206,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                
+
                 <GroupBox Grid.Row="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -284,7 +284,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
-                           
+
                         </Grid.ColumnDefinitions>
                         <ToggleButton  x:Name="FilterStrokeTecLobButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
@@ -293,16 +293,16 @@
                         <ToggleButton  x:Name="FilterStrokeTecChopButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Schnittabwehr
-                        </ToggleButton>                        
+                        </ToggleButton>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">                   
-                        <ToggleButton  x:Name="FilterStrokeTecSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <ToggleButton  x:Name="FilterStrokeTecSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
-                            Sonstiges
-                        </ToggleButton>                    
+                        Sonstiges
+                    </ToggleButton>
                 </GroupBox>
-            </Grid>        
+            </Grid>
         </Grid>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
         <Grid Grid.Row="8">
@@ -335,12 +335,12 @@
             <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Qualität:</Label>
             <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
-                    Schlecht
+                Schlecht
             </ToggleButton>
             <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
-                    Gut
-            </ToggleButton>            
+                Gut
+            </ToggleButton>
         </Grid>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="11" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
         <Grid Grid.Row="12">
@@ -363,4 +363,5 @@
         </Grid>
     </Grid>
 </UserControl>
+
 
