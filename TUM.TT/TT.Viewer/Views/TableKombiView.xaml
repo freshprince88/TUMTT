@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
 
-            <ToggleButton x:Name="Service_left" Grid.Row="2" Grid.Column="1" >
+            <ToggleButton x:Name="Service_left" Grid.Row="2" Grid.Column="1">
             </ToggleButton>
             <ToggleButton x:Name="Service_mid" Grid.Row="2" Grid.Column="2" >
             </ToggleButton>
@@ -39,6 +39,8 @@
             </ToggleButton>
             <ToggleButton x:Name="Return_right" Grid.Row="5" Grid.Column="3" >
             </ToggleButton>
+            
+            <ToggleButton x:Name="Select_All" Content="Select All" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Margin="0 10 0 10"/>
 
             <Grid.Background>
                 <DrawingBrush>

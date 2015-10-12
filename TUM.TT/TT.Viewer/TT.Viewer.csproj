@@ -127,6 +127,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
+    <Compile Include="ViewModels\TableKombiViewModel.cs" />
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
