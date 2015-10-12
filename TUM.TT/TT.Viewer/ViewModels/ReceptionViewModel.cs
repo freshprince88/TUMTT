@@ -132,7 +132,6 @@ namespace TT.Viewer.ViewModels
             TableView = new TableStandardViewModel(this.events);
         }
 
-
         #region View Methods
         public void SwitchTable(bool check)
         {
@@ -145,6 +144,7 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = TableStandardViewModel.ViewMode.Bottom;
             }
         }
+
         public void SetFilter(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("setallbutton"))
@@ -249,6 +249,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void RallyLengthFilter(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("rallylengthallbutton"))
@@ -340,6 +341,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void CrunchOrNot(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("crunchtime"))
@@ -355,6 +357,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void P1P2Point(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("player1"))
@@ -393,6 +396,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void P1P2Server(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("player1"))
@@ -431,6 +435,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void ForBackHand(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("forhand"))
@@ -469,6 +474,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void StepAroundOrNot(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("steparoundbutton"))
@@ -656,6 +662,7 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
 
         }
+
         public void GoodBadQuality(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("goodq"))
@@ -695,10 +702,7 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-
-
         #endregion
-
 
         #region Caliburn Hooks
         /// <summary>
@@ -707,7 +711,6 @@ namespace TT.Viewer.ViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-
         }
 
         protected override void OnActivate()
@@ -855,6 +858,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasStepAround(MatchRally r)
         {
             switch (this.StepAround)
@@ -867,6 +871,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasStrokeTec(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
