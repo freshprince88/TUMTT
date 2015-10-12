@@ -16,6 +16,7 @@ namespace TT.Viewer.ViewModels
         public ReceptionViewModel ReceptionView { get; set; }
         public ThirdBallViewModel ThirdBallView { get; set; }
         public FourthBallViewModel FourthBallView { get; set; }
+        public CombiViewModel CombiView { get; set; }
         private Match match;
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace TT.Viewer.ViewModels
             ThirdBallView = new ThirdBallViewModel(this.events);
             ReceptionView = new ReceptionViewModel(this.events);
             ServiceView = new ServiceViewModel(this.events);
+            CombiView = new CombiViewModel(this.events);
 
             // Activate the welcome model
             if (this.ActiveItem == null)
@@ -74,6 +76,8 @@ namespace TT.Viewer.ViewModels
                 case "LastTabHeader":
                     break;
                 case "KombiTabHeader":
+                    this.ActivateItem(CombiView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
                     break;
                 default:
                     break;

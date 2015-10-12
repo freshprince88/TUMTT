@@ -16,15 +16,15 @@ namespace TT.Viewer.ViewModels
 
 
 
-        public Tuple<int,int> ButtonPosition
-        {
-            get { return (Tuple<int,int>)GetValue(ButtonPositionProperty); }
-            set { SetValue(ButtonPositionProperty, value); }
-        }
+        //public Tuple<int,int> ButtonPosition
+        //{
+        //    get { return (Tuple<int,int>)GetValue(ButtonPositionProperty); }
+        //    set { SetValue(ButtonPositionProperty, value); }
+        //}
 
-        // Using a DependencyProperty as the backing store for ButtonPosition.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ButtonPositionProperty =
-            DependencyProperty.Register("ButtonPosition", typeof(Tuple<int,int>), typeof(TableKombiViewModel), null);
+        //// Using a DependencyProperty as the backing store for ButtonPosition.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty ButtonPositionProperty =
+        //    DependencyProperty.Register("ButtonPosition", typeof(Tuple<int,int>), typeof(TableKombiViewModel), null);
 
         
         #endregion

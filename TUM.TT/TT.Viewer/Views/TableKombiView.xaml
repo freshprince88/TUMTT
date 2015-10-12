@@ -26,21 +26,21 @@
                 <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
 
-            <ToggleButton x:Name="Service_left" Grid.Row="2" Grid.Column="1">
-            </ToggleButton>
-            <ToggleButton x:Name="Service_mid" Grid.Row="2" Grid.Column="2" >
-            </ToggleButton>
-            <ToggleButton x:Name="Service_right" Grid.Row="2" Grid.Column="3" >
-            </ToggleButton>
+            <Rectangle x:Name="Service_left" Fill="{DynamicResource GrayBrush2}" Grid.Row="3" Grid.Column="1">
+            </Rectangle>
+            <Rectangle x:Name="Service_mid" Fill="{DynamicResource GrayBrush2}" Grid.Row="3" Grid.Column="2" >
+            </Rectangle>
+            <Rectangle x:Name="Service_right" Fill="{DynamicResource GrayBrush2}" Grid.Row="3" Grid.Column="3" >
+            </Rectangle>
 
-            <ToggleButton x:Name="Return_left" Grid.Row="5" Grid.Column="1" >
+            <ToggleButton x:Name="Return_left" Grid.Row="6" Grid.Column="1" >
             </ToggleButton>
-            <ToggleButton x:Name="Return_mid" Grid.Row="5" Grid.Column="2" >
+            <ToggleButton x:Name="Return_mid" Grid.Row="6" Grid.Column="2" >
             </ToggleButton>
-            <ToggleButton x:Name="Return_right" Grid.Row="5" Grid.Column="3" >
+            <ToggleButton x:Name="Return_right" Grid.Row="6" Grid.Column="3" >
             </ToggleButton>
             
-            <ToggleButton x:Name="Select_All" Content="Select All" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Margin="0 10 0 10"/>
+            <ToggleButton x:Name="Select" Content="Auswählen" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" FontSize="14" Margin="0 10 0 10"/>
 
             <Grid.Background>
                 <DrawingBrush>
