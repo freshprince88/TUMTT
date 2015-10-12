@@ -76,6 +76,13 @@ namespace TT.Viewer.ViewModels
             SelectedRallyLengths = new HashSet<int>();
             FilterPointPlayer1Button = "Spieler 1";
             FilterPointPlayer2Button = "Spieler 2";
+
+            TableKombi = new TableKombiViewModel(this.events)
+            {
+                ButtonsVisible = true,
+                TopButtonPositions = new List<int>() { 1,2,3 },
+                BottomButtonPositions = new List<int>() { 7,8,9 },
+            };
         }
 
         #region View Methods

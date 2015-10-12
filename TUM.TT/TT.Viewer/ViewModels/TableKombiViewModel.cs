@@ -13,18 +13,37 @@ namespace TT.Viewer.ViewModels
 
         #region Properties
         public bool ButtonsVisible { get; set; }
+        private List<int> m_botBtnPos;
+        private List<int> m_topBtnPos;
 
+        public Match Game { get; set; }
 
+        public List<int> TopButtonPositions
+        {
+            get
+            {
+                return m_topBtnPos;
+            }
+            set
+            {
+                m_topBtnPos = value;
+                ChangeVisibleButtons();
+            }
+        }
 
-        //public Tuple<int,int> ButtonPosition
-        //{
-        //    get { return (Tuple<int,int>)GetValue(ButtonPositionProperty); }
-        //    set { SetValue(ButtonPositionProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for ButtonPosition.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty ButtonPositionProperty =
-        //    DependencyProperty.Register("ButtonPosition", typeof(Tuple<int,int>), typeof(TableKombiViewModel), null);
+        public List<int> BottomButtonPositions
+        {
+            get
+            {
+                return m_botBtnPos;
+            }
+            set
+            {
+                m_botBtnPos = value;
+                ChangeVisibleButtons();
+            }
+        }
+          
 
         
         #endregion
@@ -32,6 +51,29 @@ namespace TT.Viewer.ViewModels
         public TableKombiViewModel(IEventAggregator eventAggregator)
         {
             events = eventAggregator;
+            TopButtonPositions = new List<int>();
+            BottomButtonPositions = new List<int>();
         }
+
+        #region Helper Methods
+
+        private void ChangeVisibleButtons()
+        {
+            if (TopButtonPositions != null)
+            {
+                foreach (var pos in TopButtonPositions)
+                {
+                    //TODO: Set Button on this position visisble
+                }
+            }
+            if (BottomButtonPositions != null)
+            {
+                foreach (var pos in BottomButtonPositions)
+                {
+                    //TODO: Set Button on this position visisble
+                }
+            }
+        }
+        #endregion
     }
 }
