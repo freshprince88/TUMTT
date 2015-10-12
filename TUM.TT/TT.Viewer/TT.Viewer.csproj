@@ -127,6 +127,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
+    <Compile Include="ViewModels\TableKombiViewModel.cs" />
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
@@ -144,6 +145,9 @@
     </Compile>
     <Compile Include="Views\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableKombiView.xaml.cs">
+      <DependentUpon>TableKombiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableServiceView.xaml.cs">
       <DependentUpon>TableServiceView.xaml</DependentUpon>
@@ -199,6 +203,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SpinControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableKombiView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

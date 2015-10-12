@@ -16,13 +16,14 @@ namespace TT.Viewer.ViewModels
         public HashSet<ETablePosition> SelectedPositions { get; set; }
         public HashSet<EStrokeLength> SelectedStrokeLength { get; set; }
 
+      
+        #region Enums
+
         public enum ViewMode
         {
             Top,
             Bottom
         }
-
-        #region Enums
 
         public enum EStrokeLength
         {
