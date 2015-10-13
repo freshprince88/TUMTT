@@ -104,6 +104,7 @@
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />
+    <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableViewModeChangedEvent.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />
+    <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\FourthBallViewModel.cs" />
@@ -131,6 +133,9 @@
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
+    <Compile Include="Views\BasicFilterView.xaml.cs">
+      <DependentUpon>BasicFilterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
     </Compile>
@@ -165,6 +170,10 @@
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BasicFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CombiView.xaml">
       <SubType>Designer</SubType>

@@ -60,24 +60,30 @@ namespace TT.Viewer.ViewModels
                 case "ServiceTabHeader":
                     this.ActivateItem(ServiceView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
+
                     break;
                 case "ReceiveTabHeader":
                     this.ActivateItem(ReceptionView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(2));
                     break;
                 case "ThirdTabHeader":
                     this.ActivateItem(ThirdBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(3));
                     break;
                 case "FourthTabHeader":
                     this.ActivateItem(FourthBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(4));
                     break;
                 case "LastTabHeader":
                     break;
                 case "KombiTabHeader":
                     this.ActivateItem(CombiView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
                     break;
                 default:
                     break;
