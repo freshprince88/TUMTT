@@ -137,6 +137,9 @@
     <Compile Include="Views\BasicFilterView.xaml.cs">
       <DependentUpon>BasicFilterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CombiView.xaml.cs">
+      <DependentUpon>CombiView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
     </Compile>
