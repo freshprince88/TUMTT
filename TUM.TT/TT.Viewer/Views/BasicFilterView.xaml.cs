@@ -33,7 +33,7 @@ namespace TT.Viewer.Views
 
         public void Handle(RallyLengthChangedEvent message)
         {
-            //TODO: Make Buttons Invisible
+           
             switch (message)
             {
                 case 1:

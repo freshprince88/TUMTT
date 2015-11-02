@@ -106,6 +106,7 @@
     <Compile Include="Events\RalliesEvent.cs" />
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
+    <Compile Include="Events\TableKombiViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableViewModeChangedEvent.cs" />
     <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
