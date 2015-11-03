@@ -119,6 +119,7 @@
     <Compile Include="ViewModels\FourthBallViewModel.cs" />
     <Compile Include="ViewModels\IResultViewTabItem.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\LastBallViewModel.cs" />
     <Compile Include="ViewModels\ListResultViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="ViewModels\ReceptionViewModel.cs" />
@@ -142,6 +143,9 @@
     </Compile>
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LastBallView.xaml.cs">
+      <DependentUpon>LastBallView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReceptionView.xaml.cs">
       <DependentUpon>ReceptionView.xaml</DependentUpon>
@@ -188,6 +192,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FourthBallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LastBallView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,6 +16,7 @@ namespace TT.Viewer.ViewModels
         public ReceptionViewModel ReceptionView { get; set; }
         public ThirdBallViewModel ThirdBallView { get; set; }
         public FourthBallViewModel FourthBallView { get; set; }
+        public LastBallViewModel LastBallView { get; set; }
         public CombiViewModel CombiView { get; set; }
         private Match match;
 
@@ -39,6 +40,7 @@ namespace TT.Viewer.ViewModels
 
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+            LastBallView = new LastBallViewModel(this.events);
             FourthBallView = new FourthBallViewModel(this.events);
             ThirdBallView = new ThirdBallViewModel(this.events);
             ReceptionView = new ReceptionViewModel(this.events);
@@ -79,6 +81,10 @@ namespace TT.Viewer.ViewModels
                     this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(4));
                     break;
                 case "LastTabHeader":
+                    this.ActivateItem(LastBallView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(5));
+                    break;
                     break;
                 case "KombiTabHeader":
                     this.ActivateItem(CombiView);

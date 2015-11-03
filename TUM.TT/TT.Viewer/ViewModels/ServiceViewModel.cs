@@ -94,7 +94,7 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
                 MinRallyLength = 0,
-                PlayerLabel = "Aufschlag"
+                PlayerLabel = "Aufschlag:"
             };
             TableView = new TableServiceViewModel(events);
         }
@@ -484,7 +484,7 @@ namespace TT.Viewer.ViewModels
         private bool HasTablePosition(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
+            MatchRallySchlag service = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 1).FirstOrDefault();
             foreach (var sel in SelectedTablePositions)
             {
                 switch (sel)

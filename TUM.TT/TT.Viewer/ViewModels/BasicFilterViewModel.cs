@@ -480,9 +480,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Server)
             {
                 case EServer.Player1:
-                    return r.Schlag[MinRallyLength].Spieler == "First";  //TODO Name der Spieler dynamisch????
+                    return r.Schlag[MinRallyLength].Spieler == "First";  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
                 case EServer.Player2:
-                    return r.Schlag[MinRallyLength].Spieler == "Second"; //TODO Name der Spieler dynamisch????
+                    return r.Schlag[MinRallyLength].Spieler == "Second"; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
                 case EServer.None:
                     return true;
                 case EServer.Both:

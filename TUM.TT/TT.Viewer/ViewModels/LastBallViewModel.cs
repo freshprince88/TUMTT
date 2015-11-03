@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class LastBallViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
         IHandle<FilterSwitchedEvent>
     {
@@ -19,7 +19,7 @@ namespace TT.Viewer.ViewModels
         public TableStandardViewModel TableView { get; set; }
         public List<MatchRally> SelectedRallies { get; private set; }
         public Match Match { get; private set; }
-        public EHand Hand { get; private set; }       
+        public EHand Hand { get; private set; }
         public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
         public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
         public EQuality Quality { get; private set; }
@@ -33,7 +33,7 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
-        
+
 
         public enum StrokeTec
         {
@@ -87,7 +87,7 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public ReceptionViewModel(IEventAggregator eventAggregator)
+        public LastBallViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<MatchRally>();
@@ -101,7 +101,7 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
                 MinRallyLength = 1,
-                PlayerLabel = "Rückschlag:"
+                PlayerLabel = "Letzter Ball:"
             };
 
             TableView = new TableStandardViewModel(this.events);
@@ -120,7 +120,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-       
+
         public void ForBackHand(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("forhand"))
@@ -343,7 +343,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(StrokeTec.Special);
                 }
             }
-            
+
             UpdateSelection();
 
         }
@@ -408,7 +408,7 @@ namespace TT.Viewer.ViewModels
         }
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);            
+            base.OnDeactivate(close);
             this.DeactivateItem(TableView, close);
             this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
@@ -446,16 +446,16 @@ namespace TT.Viewer.ViewModels
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
-       
+
 
         private bool HasHand(MatchRally r)
         {
             switch (this.Hand)
             {
                 case EHand.Fore:
-                    return r.Schlag[1].Schlägerseite == "Vorhand";
+                    return r.Schlag[Convert.ToInt32(r.Length)-1].Schlägerseite == "Vorhand";
                 case EHand.Back:
-                    return r.Schlag[1].Schlägerseite == "Rückhand";
+                    return r.Schlag[Convert.ToInt32(r.Length) - 1].Schlägerseite == "Rückhand";
                 case EHand.None:
                     return true;
                 case EHand.Both:
@@ -470,7 +470,7 @@ namespace TT.Viewer.ViewModels
             switch (this.StepAround)
             {
                 case EStepAround.StepAround:
-                    return r.Schlag[1].Umlaufen == "ja";
+                    return r.Schlag[Convert.ToInt32(r.Length) - 1].Umlaufen == "ja";
                 case EStepAround.Not:
                     return true;
                 default:
@@ -487,49 +487,49 @@ namespace TT.Viewer.ViewModels
                 switch (stroketec)
                 {
                     case StrokeTec.Push:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art=="Schupf");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Schupf");
                         break;
                     case StrokeTec.PushAggressive:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Schlagtechnik.Option=="aggressiv");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Schupf" && r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Option == "aggressiv");
                         break;
                     case StrokeTec.Flip:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Flip");
                         break;
                     case StrokeTec.Banana:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Schlagtechnik.Option == "Banane");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Flip" && r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Option == "Banane");
                         break;
                     case StrokeTec.Topspin:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Topspin");
                         break;
                     case StrokeTec.TopspinSpin:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Spin");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Topspin" && r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Option == "Spin");
                         break;
                     case StrokeTec.TopspinTempo:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Topspin" && r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Option == "Tempo");
                         break;
                     case StrokeTec.Block:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Block");
                         break;
                     case StrokeTec.BlockTempo:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Block" && r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Option == "Tempo");
                         break;
                     case StrokeTec.BlockChop:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Chop");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Block" && r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Option == "Chop");
                         break;
                     case StrokeTec.Counter:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Konter");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Konter");
                         break;
                     case StrokeTec.Smash:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schuss");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Schuss");
                         break;
                     case StrokeTec.Lob:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Ballonabwehr");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Ballonabwehr");
                         break;
                     case StrokeTec.Chop:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schnittabwehr");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Schnittabwehr");
                         break;
                     case StrokeTec.Special:
-                        ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Sonstige");
+                        ORresults.Add(r.Schlag[Convert.ToInt32(r.Length) - 1].Schlagtechnik.Art == "Sonstige");
                         break;
                     default:
                         break;
@@ -543,13 +543,13 @@ namespace TT.Viewer.ViewModels
             switch (this.Quality)
             {
                 case EQuality.Good:
-                    return r.Schlag[1].Qualität == "gut";
+                    return r.Schlag[Convert.ToInt32(r.Length) - 1].Qualität == "gut";
                 case EQuality.Bad:
-                    return r.Schlag[1].Qualität == "schlecht";
+                    return r.Schlag[Convert.ToInt32(r.Length) - 1].Qualität == "schlecht";
                 case EQuality.None:
                     return true;
                 case EQuality.Both:
-                    return r.Schlag[1].Qualität == "gut" || r.Schlag[1].Qualität == "schlecht";
+                    return r.Schlag[Convert.ToInt32(r.Length) - 1].Qualität == "gut" || r.Schlag[Convert.ToInt32(r.Length) - 1].Qualität == "schlecht";
                 default:
                     return false;
             }
@@ -558,7 +558,7 @@ namespace TT.Viewer.ViewModels
         private bool HasTablePosition(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) ==2).FirstOrDefault();
+            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == Convert.ToInt32(r.Length)-1).FirstOrDefault();
             foreach (var sel in SelectedTablePositions)
             {
                 switch (sel)
@@ -600,7 +600,7 @@ namespace TT.Viewer.ViewModels
         private bool HasStrokeLength(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 2).FirstOrDefault();
+            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == Convert.ToInt32(r.Length) - 1).FirstOrDefault();
 
             foreach (var sel in SelectedStrokeLengths)
             {
@@ -608,7 +608,7 @@ namespace TT.Viewer.ViewModels
                 {
                     case TableStandardViewModel.EStrokeLength.Short:
                         ORresults.Add(stroke.IsShort());
-                        break;                        
+                        break;
                     case TableStandardViewModel.EStrokeLength.Half:
                         ORresults.Add(stroke.IsHalf());
                         break;

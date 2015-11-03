@@ -12,7 +12,7 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class ThirdBallViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<TableViewSelectionChangedEvent>,
+        IHandle<TableStdViewSelectionChangedEvent>,
         IHandle<FilterSwitchedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
@@ -20,6 +20,8 @@ namespace TT.Viewer.ViewModels
         public List<MatchRally> SelectedRallies { get; private set; }
         public Match Match { get; private set; }
         public EHand Hand { get; private set; }
+        public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
+        public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
         public EQuality Quality { get; private set; }
         public EStepAround StepAround { get; private set; }
 
@@ -90,13 +92,15 @@ namespace TT.Viewer.ViewModels
             SelectedRallies = new List<MatchRally>();
             Match = new Match();           
             Hand = EHand.None;
+            SelectedStrokeLengths = new HashSet<TableStandardViewModel.EStrokeLength>();
+            SelectedTablePositions = new HashSet<TableStandardViewModel.ETablePosition>();
             Quality = EQuality.None;
             SelectedStrokeTec = new HashSet<StrokeTec>();
             StepAround = EStepAround.Not;
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
                 MinRallyLength = 2,
-                PlayerLabel="3.Schlag"
+                PlayerLabel="3.Schlag:"
             };
             TableView = new TableStandardViewModel(this.events);
         }
@@ -423,9 +427,11 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public void Handle(TableViewSelectionChangedEvent message)
+        public void Handle(TableStdViewSelectionChangedEvent message)
         {
-            throw new NotImplementedException();
+            SelectedStrokeLengths = message.StrokeLengths;
+            SelectedTablePositions = message.Positions;
+            UpdateSelection();
         }
 
         #endregion
@@ -436,7 +442,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r)).ToList();
+                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -556,7 +562,73 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+        private bool HasTablePosition(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
+            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
+            foreach (var sel in SelectedTablePositions)
+            {
+                switch (sel)
+                {
+                    case TableStandardViewModel.ETablePosition.TopLeft:
+                        ORresults.Add(stroke.IsTopLeft());
+                        break;
+                    case TableStandardViewModel.ETablePosition.TopMid:
+                        ORresults.Add(stroke.IsTopMid());
+                        break;
+                    case TableStandardViewModel.ETablePosition.TopRight:
+                        ORresults.Add(stroke.IsTopRight());
+                        break;
+                    case TableStandardViewModel.ETablePosition.MidLeft:
+                        ORresults.Add(stroke.IsMidLeft());
+                        break;
+                    case TableStandardViewModel.ETablePosition.MidMid:
+                        ORresults.Add(stroke.IsMidMid());
+                        break;
+                    case TableStandardViewModel.ETablePosition.MidRight:
+                        ORresults.Add(stroke.IsMidRight());
+                        break;
+                    case TableStandardViewModel.ETablePosition.BotLeft:
+                        ORresults.Add(stroke.IsBotLeft());
+                        break;
+                    case TableStandardViewModel.ETablePosition.BotMid:
+                        ORresults.Add(stroke.IsBotMid());
+                        break;
+                    case TableStandardViewModel.ETablePosition.BotRight:
+                        ORresults.Add(stroke.IsBotRight());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
 
+        private bool HasStrokeLength(MatchRally r)
+        {
+            List<bool> ORresults = new List<bool>();
+            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
+
+            foreach (var sel in SelectedStrokeLengths)
+            {
+                switch (sel)
+                {
+                    case TableStandardViewModel.EStrokeLength.Short:
+                        ORresults.Add(stroke.IsShort());
+                        break;
+                    case TableStandardViewModel.EStrokeLength.Half:
+                        ORresults.Add(stroke.IsHalf());
+                        break;
+                    case TableStandardViewModel.EStrokeLength.Long:
+                        ORresults.Add(stroke.IsLong());
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
         #endregion
     }
 }

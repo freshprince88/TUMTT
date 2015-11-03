@@ -15,7 +15,7 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         public HashSet<ETablePosition> SelectedPositions { get; set; }
         public HashSet<EStrokeLength> SelectedStrokeLength { get; set; }
-
+        public int StrokeNumber { get; set; }
       
         #region Enums
 
@@ -68,6 +68,7 @@ namespace TT.Viewer.ViewModels
 
         public TableStandardViewModel(IEventAggregator eventAggregator)
         {
+            StrokeNumber = 0;
             events = eventAggregator;
             SelectedStrokeLength = new HashSet<EStrokeLength>();
             SelectedPositions = new HashSet<ETablePosition>();
