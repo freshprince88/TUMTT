@@ -13,7 +13,8 @@ namespace TT.Viewer.ViewModels
 {
     public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
-        IHandle<FilterSwitchedEvent>
+        IHandle<FilterSwitchedEvent>,
+        IHandle<FilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
@@ -430,6 +431,13 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
+        //FilterSelection in BasicFilter Changed
+        //Get SelectedRallies and apply own filters
+        public void Handle(FilterSelectionChangedEvent message)
+        {
+            UpdateSelection();
+        }
+
         #endregion
 
         #region Helper Methods
@@ -438,9 +446,8 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
-                BasicFilterView.UpdateSelection(false);
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
        
@@ -621,5 +628,6 @@ namespace TT.Viewer.ViewModels
         }
 
         #endregion
+
     }
 }

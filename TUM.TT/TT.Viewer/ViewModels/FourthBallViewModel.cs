@@ -444,7 +444,7 @@ namespace TT.Viewer.ViewModels
             if (this.Match.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
 

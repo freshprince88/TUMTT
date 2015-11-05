@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class ListResultViewModel : Conductor<ItemViewModel>.Collection.AllActive, IResultViewTabItem,
-        IHandle<FilterSelectionChangedEvent>
+        IHandle<ResultsChangedEvent>
     {
         private IEventAggregator events;
 
@@ -65,7 +65,7 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-        public void Handle(FilterSelectionChangedEvent message)
+        public void Handle(ResultsChangedEvent message)
         {
             this.Items.Clear();
 

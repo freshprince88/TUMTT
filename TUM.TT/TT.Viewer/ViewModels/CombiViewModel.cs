@@ -107,7 +107,7 @@ namespace TT.Viewer.ViewModels
             {
                 SelectedRallies = BasicFilterView.SelectedRallies; 
                 // .Where().ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
        
