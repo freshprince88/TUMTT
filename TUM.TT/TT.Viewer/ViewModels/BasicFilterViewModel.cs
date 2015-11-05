@@ -439,21 +439,13 @@ namespace TT.Viewer.ViewModels
 
         #region Helper Methods
 
-        private void showButtonsRallyLength(int minLength)
-        {
-            for (int i = minLength; i < 5; i++)
-            {
-                
-            }
-
-        }
-
-        private void UpdateSelection()
+        public void UpdateSelection(bool sendEvent = true)
         {
             if (this.Match.Rallies != null)
             {
                 SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                if(sendEvent)
+                    this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
 

@@ -420,11 +420,7 @@ namespace TT.Viewer.ViewModels
         public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
-            if (this.Match.Rallies != null)
-            {
-                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > BasicFilterView.MinRallyLength).ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
-            }
+            UpdateSelection();
         }
 
         public void Handle(TableStdViewSelectionChangedEvent message)
@@ -442,6 +438,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Match.Rallies != null)
             {
+                BasicFilterView.UpdateSelection(false);
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
