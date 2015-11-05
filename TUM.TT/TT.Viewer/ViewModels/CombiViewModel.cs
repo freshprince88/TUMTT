@@ -12,8 +12,9 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class CombiViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>
-        
+        IHandle<FilterSwitchedEvent>,
+        IHandle<FilterSelectionChangedEvent>
+
     {
         #region Properties
         public BasicFilterViewModel BasicFilterView { get; set; }
@@ -88,6 +89,13 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Event Handlers
+
+        //FilterSelection in BasicFilter Changed
+        //Get SelectedRallies and apply own filters
+        public void Handle(FilterSelectionChangedEvent message)
+        {
+            UpdateSelection();
+        }
         public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;

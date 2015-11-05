@@ -62,29 +62,28 @@ namespace TT.Viewer.ViewModels
                 case "ServiceTabHeader":
                     this.ActivateItem(ServiceView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
 
                     break;
                 case "ReceiveTabHeader":
                     this.ActivateItem(ReceptionView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(2));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
                     break;
                 case "ThirdTabHeader":
                     this.ActivateItem(ThirdBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(3));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
                     break;
                 case "FourthTabHeader":
                     this.ActivateItem(FourthBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(4));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
                     break;
                 case "LastTabHeader":
                     this.ActivateItem(LastBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(5));
-                    break;
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
                     break;
                 case "KombiTabHeader":
                     this.ActivateItem(CombiView);

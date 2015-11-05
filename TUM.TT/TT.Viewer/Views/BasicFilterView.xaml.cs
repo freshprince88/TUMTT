@@ -40,11 +40,13 @@ namespace TT.Viewer.Views
                     FilterRallyLength1Button.Visibility = Visibility.Visible;
                     FilterRallyLength2Button.Visibility = Visibility.Visible;
                     FilterRallyLength3Button.Visibility = Visibility.Visible;
+                    
                     break;
                 case 2:
                     FilterRallyLength1Button.Visibility = Visibility.Collapsed;
                     FilterRallyLength2Button.Visibility = Visibility.Visible;
                     FilterRallyLength3Button.Visibility = Visibility.Visible;
+                    FilterPointPlayer1Button.IsChecked = true;
                     break;
                 case 3:
                     FilterRallyLength1Button.Visibility = Visibility.Collapsed;

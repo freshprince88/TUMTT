@@ -13,7 +13,8 @@ namespace TT.Viewer.ViewModels
 {
     public class LastBallViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
-        IHandle<FilterSwitchedEvent>
+        IHandle<FilterSwitchedEvent>,
+        IHandle<FilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
@@ -417,6 +418,13 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Event Handlers
+
+        //FilterSelection in BasicFilter Changed
+        //Get SelectedRallies and apply own filters
+        public void Handle(FilterSelectionChangedEvent message)
+        {
+            UpdateSelection();
+        }
         public void Handle(FilterSwitchedEvent message)
         {
             this.Match = message.Match;
