@@ -35,6 +35,7 @@ namespace TT.Viewer.ViewModels
         public HashSet<int> SelectedSets { get; private set; }
         public HashSet<int> SelectedRallyLengths { get; private set; }
         public int MinRallyLength { get; set; }
+
         public String PlayerLabel { get; set; }
 
 

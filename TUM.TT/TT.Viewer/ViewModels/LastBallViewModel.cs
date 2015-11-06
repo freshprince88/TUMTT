@@ -609,7 +609,7 @@ namespace TT.Viewer.ViewModels
         private bool HasStrokeLength(MatchRally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == Convert.ToInt32(r.Length) - 1).FirstOrDefault();
+            MatchRallySchlag stroke = r.Schlag.Where(s => (Convert.ToInt32(s.Nummer) == Convert.ToInt32(r.Length) - 1) && Convert.ToInt32(r.Length) > 1).FirstOrDefault();
 
             foreach (var sel in SelectedStrokeLengths)
             {

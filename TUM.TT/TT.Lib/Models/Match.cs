@@ -839,12 +839,12 @@ public partial class MatchRallySchlag {
 
     public bool IsHalf()
     {
-        return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "halbdistanz";
+        return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "hinter";
     }
 
     public bool IsLong()
     {
-        return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "hinter";
+        return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "Halbdistanz";
     }
 }
 

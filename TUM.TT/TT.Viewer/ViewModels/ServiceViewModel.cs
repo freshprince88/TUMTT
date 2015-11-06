@@ -534,26 +534,35 @@ namespace TT.Viewer.ViewModels
         {
             List<bool> ORresults = new List<bool>();
             MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
-            double X = service.Spielerposition == "" ? 999 : Convert.ToDouble(service.Spielerposition);
+            double X;
+            double Seite = service.Platzierung.WY == "" ? 999 : Convert.ToDouble(service.Platzierung.WY);
+            if (Seite >= 137)
+            {
 
+                X = 152.5 - (service.Spielerposition == "" ? 999 : Convert.ToDouble(service.Spielerposition));
+            }
+            else
+            {
+                X = service.Spielerposition == "" ? 999 : Convert.ToDouble(service.Spielerposition);
+            }
             foreach (var sel in SelectedServerPositions)
             {
                 switch (sel)
                 {
                     case TableServiceViewModel.EServerPosition.Left:
-                        ORresults.Add(X <= 30.5);
+                        ORresults.Add(0 <=X && X <= 30.5);
                         break;
                     case TableServiceViewModel.EServerPosition.HalfLeft:
-                        ORresults.Add(X <= 61);
+                        ORresults.Add(30.5 < X && X <= 61);
                         break;
                     case TableServiceViewModel.EServerPosition.Mid:
-                        ORresults.Add(X <= 91.5);
+                        ORresults.Add(61 < X && X <= 91.5);
                         break;
                     case TableServiceViewModel.EServerPosition.HalfRight:
-                        ORresults.Add(X <= 122);
+                        ORresults.Add(91.5 < X && X <= 122);
                         break;
                     case TableServiceViewModel.EServerPosition.Right:
-                        ORresults.Add(X <= 152.5);
+                        ORresults.Add(122 < X && X <= 152.5);
                         break;
                     default:
                         break;
