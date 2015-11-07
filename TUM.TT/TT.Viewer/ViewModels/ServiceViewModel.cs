@@ -95,7 +95,10 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
                 MinRallyLength = 0,
-                PlayerLabel = "Aufschlag:"
+                PlayerLabel = "Aufschlag:",
+                LastStroke = false,
+                StrokeNumber=0
+                
             };
             TableView = new TableServiceViewModel(events);
         }

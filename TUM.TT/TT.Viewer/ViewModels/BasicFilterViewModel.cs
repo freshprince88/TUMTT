@@ -35,6 +35,8 @@ namespace TT.Viewer.ViewModels
         public HashSet<int> SelectedSets { get; private set; }
         public HashSet<int> SelectedRallyLengths { get; private set; }
         public int MinRallyLength { get; set; }
+        public bool LastStroke { get; set; }
+        public int StrokeNumber { get; set; }
 
         public String PlayerLabel { get; set; }
 
@@ -95,6 +97,10 @@ namespace TT.Viewer.ViewModels
             FilterPointPlayer2Button = "Spieler 2";
             MinRallyLength = 0;
             PlayerLabel = "";
+            LastStroke = false;
+            StrokeNumber = 0;
+
+
         }
 
         #region View Methods
@@ -472,9 +478,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Server)
             {
                 case EServer.Player1:
-                    return r.Schlag[MinRallyLength].Spieler == "First";  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
+                    return r.Schlag[StrokeNumber].Spieler == "First";  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
                 case EServer.Player2:
-                    return r.Schlag[MinRallyLength].Spieler == "Second"; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
+                    return r.Schlag[StrokeNumber].Spieler == "Second"; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
                 case EServer.None:
                     return true;
                 case EServer.Both:

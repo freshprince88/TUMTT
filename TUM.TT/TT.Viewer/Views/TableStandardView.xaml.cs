@@ -91,6 +91,7 @@ namespace TT.Viewer.Views
                     this.Btn9_bot.Content = botRight;
                     this.Btn9_top.Content = botRight;
                     }
+                   
                     break;
            
                 case 3:
@@ -182,17 +183,17 @@ namespace TT.Viewer.Views
                 case 5: //TODO funktioniert noch nicht richtig!!!
                     if (rallies != null)
                     {
-                        int topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopLeft()).Count();
-                        int topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopMid()).Count();
-                        int topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopRight()).Count();
+                        int topLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopLeft()).Count();
+                        int topMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopMid()).Count();
+                        int topRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopRight()).Count();
 
-                        int midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidLeft()).Count();
-                        int midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidMid()).Count();
-                        int midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidRight()).Count();
+                        int midLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidLeft()).Count();
+                        int midMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidMid()).Count();
+                        int midRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidRight()).Count();
 
-                        int botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotLeft()).Count();
-                        int botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotMid()).Count();
-                        int botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotRight()).Count();
+                        int botLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotLeft()).Count();
+                        int botMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotMid()).Count();
+                        int botRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotRight()).Count();
 
                         this.Btn1_bot.Content = topLeft;
                         this.Btn1_top.Content = topLeft;
@@ -226,7 +227,9 @@ namespace TT.Viewer.Views
                     break;
             }
         }
-
+        #region HelperMethods
+        
+        #endregion
         //public void Handle(FilterSwitchedEvent message)
         //{
 
