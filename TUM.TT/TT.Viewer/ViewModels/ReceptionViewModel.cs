@@ -13,18 +13,14 @@ namespace TT.Viewer.ViewModels
 {
     public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
-        IHandle<FilterSwitchedEvent>
+        IHandle<FilterSwitchedEvent>,
+        IHandle<FilterSelectionChangedEvent>
     {
-     
+        public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
-        public List<MatchRally> SelectedRallies { get; private set; }
-        public Match Match { get; private set; }
+        public List<Rally> SelectedRallies { get; private set; }
+        public Playlist ActivePlaylist { get; private set; }
         public EHand Hand { get; private set; }       
-        public EPoint Point { get; private set; }
-        public EServer Server { get; private set; }
-        public ECrunch Crunch { get; private set; }
-        public HashSet<int> SelectedSets { get; private set; }
-        public HashSet<int> SelectedRallyLengths { get; private set; }
         public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
         public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
         public EQuality Quality { get; private set; }
@@ -38,27 +34,7 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
-        public enum EPoint
-
-        {
-            Player1,
-            Player2,
-            None,
-            Both
-        }
-        public enum EServer
-
-        {
-            Player1,
-            Player2,
-            None,
-            Both
-        }
-        public enum ECrunch
-        {
-            CrunchTime,
-            Not
-        }
+        
 
         public enum StrokeTec
         {
@@ -115,19 +91,19 @@ namespace TT.Viewer.ViewModels
         public ReceptionViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
-            SelectedRallies = new List<MatchRally>();
-            Match = new Match();
+            SelectedRallies = new List<Rally>();
+            ActivePlaylist = new Playlist();
             Hand = EHand.None;
-            Point = EPoint.None;
-            Server = EServer.None;
-            Crunch = ECrunch.Not;
-            SelectedSets = new HashSet<int>();
-            SelectedRallyLengths = new HashSet<int>();
             SelectedStrokeLengths = new HashSet<TableStandardViewModel.EStrokeLength>();
             SelectedTablePositions = new HashSet<TableStandardViewModel.ETablePosition>();
             Quality = EQuality.None;
             SelectedStrokeTec = new HashSet<StrokeTec>();
             StepAround = EStepAround.Not;
+            BasicFilterView = new BasicFilterViewModel(this.events)
+            {
+                MinRallyLength = 1,
+                PlayerLabel = "Rückschlag:"
+            };
 
             TableView = new TableStandardViewModel(this.events);
         }
@@ -144,298 +120,7 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = TableStandardViewModel.ViewMode.Bottom;
             }
         }
-
-        public void SetFilter(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("setallbutton"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(1);
-                    SelectedSets.Add(2);
-                    SelectedSets.Add(3);
-                    SelectedSets.Add(4);
-                    SelectedSets.Add(5);
-                    SelectedSets.Add(6);
-                    SelectedSets.Add(7);
-                }
-                else
-                {
-                    SelectedSets.Remove(1);
-                    SelectedSets.Remove(2);
-                    SelectedSets.Remove(3);
-                    SelectedSets.Remove(4);
-                    SelectedSets.Remove(5);
-                    SelectedSets.Remove(6);
-                    SelectedSets.Remove(7);
-                }
-            }
-            else if (source.Name.ToLower().Contains("set1button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(1);
-                }
-                else
-                {
-                    SelectedSets.Remove(1);
-                }
-            }
-            else if (source.Name.ToLower().Contains("set2button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(2);
-                }
-                else
-                {
-                    SelectedSets.Remove(2);
-                }
-            }
-            else if (source.Name.ToLower().Contains("set3button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(3);
-                }
-                else
-                {
-                    SelectedSets.Remove(3);
-                }
-            }
-            else if (source.Name.ToLower().Contains("set4button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(4);
-                }
-                else
-                {
-                    SelectedSets.Remove(4);
-                }
-            }
-            else if (source.Name.ToLower().Contains("set5button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(5);
-                }
-                else
-                {
-                    SelectedSets.Remove(5);
-                }
-            }
-            else if (source.Name.ToLower().Contains("set6button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(6);
-                }
-                else
-                {
-                    SelectedSets.Remove(6);
-                }
-            }
-            else if (source.Name.ToLower().Contains("set7button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedSets.Add(7);
-                }
-                else
-                {
-                    SelectedSets.Remove(7);
-                }
-            }
-            UpdateSelection();
-        }
-
-        public void RallyLengthFilter(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("rallylengthallbutton"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedRallyLengths.Add(1);
-                    SelectedRallyLengths.Add(2);
-                    SelectedRallyLengths.Add(3);
-                    SelectedRallyLengths.Add(4);
-                    SelectedRallyLengths.Add(5);
-                    SelectedRallyLengths.Add(6);
-                }
-                else
-                {
-                    SelectedRallyLengths.Remove(1);
-                    SelectedRallyLengths.Remove(2);
-                    SelectedRallyLengths.Remove(3);
-                    SelectedRallyLengths.Remove(4);
-                    SelectedRallyLengths.Remove(5);
-                    SelectedRallyLengths.Remove(6);
-                }
-            }
-            else if (source.Name.ToLower().Contains("rallylength1button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedRallyLengths.Add(1);
-                }
-                else
-                {
-                    SelectedRallyLengths.Remove(1);
-                }
-            }
-            else if (source.Name.ToLower().Contains("rallylength2button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedRallyLengths.Add(2);
-                }
-                else
-                {
-                    SelectedRallyLengths.Remove(2);
-                }
-            }
-            else if (source.Name.ToLower().Contains("rallylength3button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedRallyLengths.Add(3);
-                }
-                else
-                {
-                    SelectedRallyLengths.Remove(3);
-                }
-            }
-            else if (source.Name.ToLower().Contains("rallylength4button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedRallyLengths.Add(4);
-                }
-                else
-                {
-                    SelectedRallyLengths.Remove(4);
-                }
-            }
-            else if (source.Name.ToLower().Contains("rallylength5button"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedRallyLengths.Add(5);
-                }
-                else
-                {
-                    SelectedRallyLengths.Remove(5);
-                }
-            }
-            else if (source.Name.ToLower().Contains("rallylength5upbutton"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    SelectedRallyLengths.Add(6);
-                }
-                else
-                {
-                    SelectedRallyLengths.Remove(6);
-                }
-            }
-            UpdateSelection();
-        }
-
-        public void CrunchOrNot(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("crunchtime"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    Crunch = ECrunch.CrunchTime;
-                }
-                else
-                {
-                    Crunch = ECrunch.Not;
-                }
-            }
-            UpdateSelection();
-        }
-
-        public void P1P2Point(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("player1"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Point == EPoint.None)
-                        Point = EPoint.Player1;
-                    else if (Point == EPoint.Player2)
-                        Point = EPoint.Both;
-                }
-                else
-                {
-                    if (Point == EPoint.Player1)
-                        Point = EPoint.None;
-                    else if (Point == EPoint.Both)
-                        Point = EPoint.Player2;
-                }
-            }
-            else if (source.Name.ToLower().Contains("player2"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Point == EPoint.None)
-                        Point = EPoint.Player2;
-                    else if (Point == EPoint.Player1)
-                        Point = EPoint.Both;
-                }
-                else
-                {
-                    if (Point == EPoint.Player2)
-                        Point = EPoint.None;
-                    else if (Point == EPoint.Both)
-                        Point = EPoint.Player1;
-                }
-            }
-            UpdateSelection();
-        }
-
-        public void P1P2Server(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("player1"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Server == EServer.None)
-                        Server = EServer.Player1;
-                    else if (Server == EServer.Player2)
-                        Server = EServer.Both;
-                }
-                else
-                {
-                    if (Server == EServer.Player1)
-                        Server = EServer.None;
-                    else if (Server == EServer.Both)
-                        Server = EServer.Player2;
-                }
-            }
-            else if (source.Name.ToLower().Contains("player2"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Server == EServer.None)
-                        Server = EServer.Player2;
-                    else if (Server == EServer.Player1)
-                        Server = EServer.Both;
-                }
-                else
-                {
-                    if (Server == EServer.Player2)
-                        Server = EServer.None;
-                    else if (Server == EServer.Both)
-                        Server = EServer.Player1;
-                }
-            }
-            UpdateSelection();
-        }
-
+       
         public void ForBackHand(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("forhand"))
@@ -718,13 +403,14 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-
             this.ActivateItem(TableView);
+            this.ActivateItem(BasicFilterView);
         }
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);            
             this.DeactivateItem(TableView, close);
+            this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
         }
@@ -733,12 +419,8 @@ namespace TT.Viewer.ViewModels
         #region Event Handlers
         public void Handle(FilterSwitchedEvent message)
         {
-            this.Match = message.Match;
-            if (this.Match.Rallies != null)
-            {
-                SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > 1).ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
-            }
+            this.ActivePlaylist = message.Playlist;
+            UpdateSelection();
         }
 
         public void Handle(TableStdViewSelectionChangedEvent message)
@@ -748,101 +430,28 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
+        //FilterSelection in BasicFilter Changed
+        //Get SelectedRallies and apply own filters
+        public void Handle(FilterSelectionChangedEvent message)
+        {
+            UpdateSelection();
+        }
+
         #endregion
 
         #region Helper Methods
 
         private void UpdateSelection()
         {
-            if (this.Match.Rallies != null)
+            if (this.ActivePlaylist.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 1 && HasSet(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r) && HasRallyLength(r) && HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
+                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
        
-        private bool HasSet(MatchRally r)
-        {
-            List<bool> ORresults = new List<bool>();
 
-            foreach (var set in SelectedSets)
-            {
-                int setTotal = Convert.ToInt32(r.CurrentSetScore.First) + Convert.ToInt32(r.CurrentSetScore.Second) + 1;
-                ORresults.Add(setTotal == set);
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
-        }
-
-        private bool HasCrunchTime(MatchRally r)
-        {
-            switch (this.Crunch)
-            {
-                case ECrunch.CrunchTime:
-                    return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
-                case ECrunch.Not:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool HasServer(MatchRally r)
-        {
-            switch (this.Server)
-            {
-                case EServer.Player1:
-                    return r.Schlag[1].Spieler == "First";  //TODO Name der Spieler dynamisch????
-                case EServer.Player2:
-                    return r.Schlag[1].Spieler == "Second"; //TODO Name der Spieler dynamisch????
-                case EServer.None:
-                    return true;
-                case EServer.Both:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool HasPoint(MatchRally r)
-        {
-            switch (this.Point)
-            {
-                case EPoint.Player1:
-                    return r.Winner == "First";  //TODO Name der Spieler dynamisch????
-                case EPoint.Player2:
-                    return r.Winner == "Second"; //TODO Name der Spieler dynamisch????
-                case EPoint.None:
-                    return true;
-                case EPoint.Both:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool HasRallyLength(MatchRally r)
-        {
-            List<bool> ORresults = new List<bool>();
-
-            foreach (var rallylength in SelectedRallyLengths)
-            {
-
-                if (rallylength <= 5)
-                {
-                    ORresults.Add(Convert.ToInt32(r.Length) == rallylength);
-                }
-
-                else if (rallylength == 6)
-                {
-                    ORresults.Add(Convert.ToInt32(r.Length) >= rallylength);
-                }
-
-
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
-        }
-
-        private bool HasHand(MatchRally r)
+        private bool HasHand(Rally r)
         {
             switch (this.Hand)
             {
@@ -859,7 +468,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private bool HasStepAround(MatchRally r)
+        private bool HasStepAround(Rally r)
         {
             switch (this.StepAround)
             {
@@ -872,7 +481,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private bool HasStrokeTec(MatchRally r)
+        private bool HasStrokeTec(Rally r)
         {
             List<bool> ORresults = new List<bool>();
 
@@ -932,7 +541,7 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasQuality(MatchRally r)
+        private bool HasQuality(Rally r)
         {
             switch (this.Quality)
             {
@@ -949,10 +558,10 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private bool HasTablePosition(MatchRally r)
+        private bool HasTablePosition(Rally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => s.Nummer == "2").FirstOrDefault();
+            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) ==2).FirstOrDefault();
             foreach (var sel in SelectedTablePositions)
             {
                 switch (sel)
@@ -991,10 +600,10 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasStrokeLength(MatchRally r)
+        private bool HasStrokeLength(Rally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => s.Nummer == "2").FirstOrDefault();
+            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 2).FirstOrDefault();
 
             foreach (var sel in SelectedStrokeLengths)
             {
@@ -1018,5 +627,6 @@ namespace TT.Viewer.ViewModels
         }
 
         #endregion
+
     }
 }

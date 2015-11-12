@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TT.Lib.Models;
 
 namespace TT.Viewer.Events
 {
-    public class FilterSelectionChangedEvent : RalliesEvent
-    {
-
+    public class ResultsChangedEvent : RalliesEvent
+    {        
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterSelectionChangedEvent"/> class.
+        /// Initializes a new instance of the <see cref="ResultsChangedEvent"/> class.
         /// </summary>
         /// <param name="match">The match.</param>
-        public FilterSelectionChangedEvent(List<Rally> rallies)
+        public ResultsChangedEvent(List<Rally> rallies)
             : base(rallies.ToArray())
         {
         }

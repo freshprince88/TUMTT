@@ -26,7 +26,7 @@ namespace TT.Viewer.Views
         IHandle<FilterSwitchedEvent>
     {
         public IEventAggregator Events { get; set; }
-        private List<MatchRally> rallies { get; set; }
+        private List<Rally> rallies { get; set; }
 
         public TableServiceView()
         {
@@ -54,9 +54,9 @@ namespace TT.Viewer.Views
 
         public void Handle(FilterSwitchedEvent message)
         {
-            if (message.Match.Rallies != null)
+            if (message.Playlist.Rallies != null)
             {
-                rallies = message.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
+                rallies = message.Playlist.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
                 int topLeft = rallies.Where(r => r.Schlag[0].IsTopLeft()).Count();
                 int topMid = rallies.Where(r => r.Schlag[0].IsTopMid()).Count();
                 int topRight = rallies.Where(r => r.Schlag[0].IsTopRight()).Count();

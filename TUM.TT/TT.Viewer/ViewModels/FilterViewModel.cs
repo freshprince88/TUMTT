@@ -16,8 +16,9 @@ namespace TT.Viewer.ViewModels
         public ReceptionViewModel ReceptionView { get; set; }
         public ThirdBallViewModel ThirdBallView { get; set; }
         public FourthBallViewModel FourthBallView { get; set; }
+        public LastBallViewModel LastBallView { get; set; }
         public CombiViewModel CombiView { get; set; }
-        private Match match;
+        private Playlist ActivePlaylist;
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -26,8 +27,8 @@ namespace TT.Viewer.ViewModels
 
         public FilterViewModel(IEventAggregator eventAggregator)
         {
-            this.events = eventAggregator;            
-            this.match = new Match();
+            this.events = eventAggregator;
+            this.ActivePlaylist = new Playlist();
         }
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace TT.Viewer.ViewModels
 
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+            LastBallView = new LastBallViewModel(this.events);
             FourthBallView = new FourthBallViewModel(this.events);
             ThirdBallView = new ThirdBallViewModel(this.events);
             ReceptionView = new ReceptionViewModel(this.events);
@@ -59,25 +61,34 @@ namespace TT.Viewer.ViewModels
             {
                 case "ServiceTabHeader":
                     this.ActivateItem(ServiceView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
+
                     break;
                 case "ReceiveTabHeader":
                     this.ActivateItem(ReceptionView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
                     break;
                 case "ThirdTabHeader":
                     this.ActivateItem(ThirdBallView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
                     break;
                 case "FourthTabHeader":
                     this.ActivateItem(FourthBallView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
                     break;
                 case "LastTabHeader":
+                    this.ActivateItem(LastBallView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
                     break;
                 case "KombiTabHeader":
                     this.ActivateItem(CombiView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
                     break;
                 default:
                     break;
@@ -86,8 +97,8 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MatchOpenedEvent message)
         {
-            this.match = message.Match;
-            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.match));
+            this.ActivePlaylist = message.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
+            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
         }
     }
 }

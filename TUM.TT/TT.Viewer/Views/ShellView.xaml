@@ -8,12 +8,11 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                    
         Width="1024"
-        Height="768"
+        Height="768"         
         EnableDWMDropShadow="True"
         ResizeMode="CanResizeWithGrip"
-
         WindowTransitionsEnabled="False"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen"            
         Title="TUM-TT">
 
 

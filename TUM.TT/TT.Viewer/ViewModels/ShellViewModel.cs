@@ -83,6 +83,8 @@ namespace TT.Viewer.ViewModels
 
             Match match = deserialization.Result;
 
+            this.Events.PublishOnUIThread(new MatchOpenedEvent(match, deserialization.FileName));
+
             if(string.IsNullOrEmpty(match.VideoFile) || !File.Exists(match.VideoFile)){
                 var videoDialog = new OpenFileDialogResult()
                 {
@@ -92,9 +94,9 @@ namespace TT.Viewer.ViewModels
                 yield return videoDialog;
 
                 match.VideoFile = videoDialog.Result;
-            }
-            this.Events.PublishOnUIThread(new MatchOpenedEvent(match, deserialization.FileName));
-            this.Events.PublishOnUIThread(new VideoLoadedEvent(match.VideoFile));
+                this.Events.PublishOnUIThread(new VideoLoadedEvent(match.VideoFile));
+            }            
+            
         }
 
         #endregion

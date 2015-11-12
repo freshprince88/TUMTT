@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="TT.Viewer.Views.BasicFilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:local="clr-namespace:TT.Viewer.Views" 
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+    
+    <Grid x:Name="PreGrid" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="70" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />          
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Satz:"/>
+        <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
+            <!--<ToggleButton x:Name="FilterSetAllButton" Width="30" Height="30" IsChecked="True"  Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                    <TextBlock FontSize="12"><Run Text="A"/></TextBlock>
+                </ToggleButton>-->
+            <ToggleButton x:Name="FilterSet1Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
+            </ToggleButton>
+            <ToggleButton x:Name="FilterSet2Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                <TextBlock FontSize="12"><Run Text="2"/></TextBlock>
+            </ToggleButton>
+            <ToggleButton x:Name="FilterSet3Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="3" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                <TextBlock FontSize="12"><Run Text="3"/></TextBlock>
+            </ToggleButton>
+            <ToggleButton x:Name="FilterSet4Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="4" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                <TextBlock FontSize="12"><Run Text="4"/></TextBlock>
+            </ToggleButton>
+            <ToggleButton x:Name="FilterSet5Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="5" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                <TextBlock FontSize="12"><Run Text="5"/></TextBlock>
+            </ToggleButton>
+            <ToggleButton x:Name="FilterSet6Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="6" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                <TextBlock FontSize="12"><Run Text="6"/></TextBlock>
+            </ToggleButton>
+            <ToggleButton x:Name="FilterSet7Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="7" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
+                <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
+            </ToggleButton>
+        </WrapPanel>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"  FontSize="10" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="Option:"/>
+            <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" cal:Message.Attach="[Event Click] = [Action CrunchOrNot($source)]" />
+        </Grid>
+        <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
+        <ToggleButton  x:Name="FilterPointPlayer1Button" Content="Player 1" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  cal:Message.Attach="[Event Click] = [Action P1P2Point($source]"/>
+        <ToggleButton x:Name="FilterPointPlayer2Button" Content="Player 2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" cal:Message.Attach="[Event Click] = [Action P1P2Point($source)]"/>
+        <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding PlayerLabel}"/>
+        <ToggleButton x:Name="FilterServerPlayer1Button" Content="Player 1" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" cal:Message.Attach="[Event Click] = [Action P1P2Server($source)]" />
+        <ToggleButton x:Name="FilterServerPlayer2Button" Content="Player 2" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" cal:Message.Attach="[Event Click] = [Action P1P2Server($source)]" />
+        <Label Grid.Row="4" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Rallylänge:"/>
+        <WrapPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
+            <!--<ToggleButton x:Name="FilterRallyLengthAllButton" Grid.Row="0" Grid.Column="0"  Width="30" Height="30" IsChecked="True" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="A" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>-->
+            <ToggleButton x:Name="FilterRallyLength1Button"  Grid.Row="0" Grid.Column="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="1" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
+            <ToggleButton x:Name="FilterRallyLength2Button"  Grid.Row="0" Grid.Column="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="2" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
+            <ToggleButton x:Name="FilterRallyLength3Button"  Grid.Row="0" Grid.Column="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="3" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
+            <ToggleButton x:Name="FilterRallyLength4Button"  Grid.Row="0" Grid.Column="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="4" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
+            <ToggleButton x:Name="FilterRallyLength5Button"  Grid.Row="0" Grid.Column="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
+            <ToggleButton x:Name="FilterRallyLength5UpButton"  Grid.Row="0" Grid.Column="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5+" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>
+        </WrapPanel>
+    </Grid>
+    </Grid>
+</UserControl>

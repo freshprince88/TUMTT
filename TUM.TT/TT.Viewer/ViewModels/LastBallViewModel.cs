@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class FourthBallViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class LastBallViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
         IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
@@ -24,6 +24,8 @@ namespace TT.Viewer.ViewModels
         public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
         public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
         public EQuality Quality { get; private set; }
+        public EWinnerOrNetOut Winner { get; private set; } 
+
         public EStepAround StepAround { get; private set; }
 
         public enum EHand
@@ -33,7 +35,7 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
-       
+
 
         public enum StrokeTec
         {
@@ -75,11 +77,17 @@ namespace TT.Viewer.ViewModels
             None,
             Both
         }
-
         public enum EStepAround
         {
             StepAround,
             Not
+        }
+        public enum EWinnerOrNetOut
+        {
+            Winner,
+            NetOut,
+            None,
+            Both
         }
 
 
@@ -88,7 +96,7 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public FourthBallViewModel(IEventAggregator eventAggregator)
+        public LastBallViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();
@@ -99,14 +107,17 @@ namespace TT.Viewer.ViewModels
             Quality = EQuality.None;
             SelectedStrokeTec = new HashSet<StrokeTec>();
             StepAround = EStepAround.Not;
+            Winner = EWinnerOrNetOut.None;
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
-                MinRallyLength = 3,
-                PlayerLabel = "4.Schlag:"
+                MinRallyLength = 1,
+                PlayerLabel = "Aufschlag:",
+                LastStroke = true,
+                StrokeNumber=0
             };
+
             TableView = new TableStandardViewModel(this.events);
         }
-
 
         #region View Methods
         public void SwitchTable(bool check)
@@ -120,7 +131,45 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = TableStandardViewModel.ViewMode.Bottom;
             }
         }
-        
+        public void WinnerOrNetOut(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("winner"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Winner == EWinnerOrNetOut.None)
+                        Winner = EWinnerOrNetOut.Winner;
+                    else if (Winner == EWinnerOrNetOut.NetOut)
+                        Winner = EWinnerOrNetOut.Both;
+                }
+                else
+                {
+                    if (Winner == EWinnerOrNetOut.Winner)
+                        Winner = EWinnerOrNetOut.None;
+                    else if (Winner == EWinnerOrNetOut.Both)
+                        Winner = EWinnerOrNetOut.NetOut;
+                }
+            }
+            else if (source.Name.ToLower().Contains("netout"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Winner == EWinnerOrNetOut.None)
+                        Winner = EWinnerOrNetOut.NetOut;
+                    else if (Winner == EWinnerOrNetOut.Winner)
+                        Winner = EWinnerOrNetOut.Both;
+                }
+                else
+                {
+                    if (Winner == EWinnerOrNetOut.NetOut)
+                        Winner = EWinnerOrNetOut.None;
+                    else if (Winner == EWinnerOrNetOut.Both)
+                        Winner = EWinnerOrNetOut.Winner;
+                }
+            }
+            UpdateSelection();
+        }
+
         public void ForBackHand(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("forhand"))
@@ -159,6 +208,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void StepAroundOrNot(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("steparoundbutton"))
@@ -174,6 +224,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection();
         }
+
         public void SelectStrokeTec(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("tecpushbutton"))
@@ -345,6 +396,7 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
 
         }
+
         public void GoodBadQuality(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("goodq"))
@@ -384,8 +436,6 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-
-
         #endregion
 
         #region Caliburn Hooks
@@ -395,7 +445,6 @@ namespace TT.Viewer.ViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-
         }
 
         protected override void OnActivate()
@@ -424,7 +473,6 @@ namespace TT.Viewer.ViewModels
         {
             UpdateSelection();
         }
-
         public void Handle(FilterSwitchedEvent message)
         {
             this.ActivePlaylist = message.Playlist;
@@ -451,21 +499,48 @@ namespace TT.Viewer.ViewModels
         {
             if (this.ActivePlaylist.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
+                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasWinner(r) && HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
 
-        
+        private bool HasWinner(Rally r)
+        {
+            int StrokeNumber = Convert.ToInt32(r.Length) - 1;
+            
+           
+            switch (this.Winner)
+            {
+                case EWinnerOrNetOut.Winner:
+                    return r.Schlag[StrokeNumber].Verlauf == "Winner";
+                case EWinnerOrNetOut.NetOut:
+                    return r.Schlag[StrokeNumber].Verlauf == "Netz" || r.Schlag[StrokeNumber].Verlauf == "Aus";
+                case EWinnerOrNetOut.None:
+                    return true;
+                case EWinnerOrNetOut.Both:
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         private bool HasHand(Rally r)
         {
+            int StrokeNumber;
+            if (r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner)
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 1;
+            }
+            else
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 2;
+            }
             switch (this.Hand)
             {
                 case EHand.Fore:
-                    return r.Schlag[3].Schlägerseite == "Vorhand";
+                    return r.Schlag[StrokeNumber].Schlägerseite == "Vorhand";
                 case EHand.Back:
-                    return r.Schlag[3].Schlägerseite == "Rückhand";
+                    return r.Schlag[StrokeNumber].Schlägerseite == "Rückhand";
                 case EHand.None:
                     return true;
                 case EHand.Both:
@@ -474,12 +549,22 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
+
         private bool HasStepAround(Rally r)
         {
+            int StrokeNumber;
+            if (r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner)
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 1;
+            }
+            else
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 2;
+            }
             switch (this.StepAround)
             {
                 case EStepAround.StepAround:
-                    return r.Schlag[3].Umlaufen == "ja";
+                    return r.Schlag[StrokeNumber].Umlaufen == "ja";
                 case EStepAround.Not:
                     return true;
                 default:
@@ -489,6 +574,15 @@ namespace TT.Viewer.ViewModels
 
         private bool HasStrokeTec(Rally r)
         {
+            int StrokeNumber;
+            if (r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner)
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 1;
+            }
+            else
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 2;
+            }
             List<bool> ORresults = new List<bool>();
 
             foreach (var stroketec in SelectedStrokeTec)
@@ -496,49 +590,49 @@ namespace TT.Viewer.ViewModels
                 switch (stroketec)
                 {
                     case StrokeTec.Push:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Schupf");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Schupf");
                         break;
                     case StrokeTec.PushAggressive:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Schupf" && r.Schlag[3].Schlagtechnik.Option == "aggressiv");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Schupf" && r.Schlag[StrokeNumber].Schlagtechnik.Option == "aggressiv");
                         break;
                     case StrokeTec.Flip:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Flip");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Flip");
                         break;
                     case StrokeTec.Banana:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Flip" && r.Schlag[3].Schlagtechnik.Option == "Banane");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Flip" && r.Schlag[StrokeNumber].Schlagtechnik.Option == "Banane");
                         break;
                     case StrokeTec.Topspin:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Topspin");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Topspin");
                         break;
                     case StrokeTec.TopspinSpin:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Topspin" && r.Schlag[3].Schlagtechnik.Option == "Spin");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Topspin" && r.Schlag[StrokeNumber].Schlagtechnik.Option == "Spin");
                         break;
                     case StrokeTec.TopspinTempo:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Topspin" && r.Schlag[3].Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Topspin" && r.Schlag[StrokeNumber].Schlagtechnik.Option == "Tempo");
                         break;
                     case StrokeTec.Block:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Block");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Block");
                         break;
                     case StrokeTec.BlockTempo:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Block" && r.Schlag[3].Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Block" && r.Schlag[StrokeNumber].Schlagtechnik.Option == "Tempo");
                         break;
                     case StrokeTec.BlockChop:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Block" && r.Schlag[3].Schlagtechnik.Option == "Chop");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Block" && r.Schlag[StrokeNumber].Schlagtechnik.Option == "Chop");
                         break;
                     case StrokeTec.Counter:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Konter");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Konter");
                         break;
                     case StrokeTec.Smash:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Schuss");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Schuss");
                         break;
                     case StrokeTec.Lob:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Ballonabwehr");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Ballonabwehr");
                         break;
                     case StrokeTec.Chop:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Schnittabwehr");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Schnittabwehr");
                         break;
                     case StrokeTec.Special:
-                        ORresults.Add(r.Schlag[3].Schlagtechnik.Art == "Sonstige");
+                        ORresults.Add(r.Schlag[StrokeNumber].Schlagtechnik.Art == "Sonstige");
                         break;
                     default:
                         break;
@@ -549,24 +643,43 @@ namespace TT.Viewer.ViewModels
 
         private bool HasQuality(Rally r)
         {
+            int StrokeNumber;
+            if (r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner)
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) -1;
+            }
+            else
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 2;
+            }
             switch (this.Quality)
             {
                 case EQuality.Good:
-                    return r.Schlag[3].Qualität == "gut";
+                    return r.Schlag[StrokeNumber].Qualität == "gut";
                 case EQuality.Bad:
-                    return r.Schlag[3].Qualität == "schlecht";
+                    return r.Schlag[StrokeNumber].Qualität == "schlecht";
                 case EQuality.None:
                     return true;
                 case EQuality.Both:
-                    return r.Schlag[3].Qualität == "gut" || r.Schlag[3].Qualität == "schlecht";
+                    return r.Schlag[StrokeNumber].Qualität == "gut" || r.Schlag[StrokeNumber].Qualität == "schlecht";
                 default:
                     return false;
             }
         }
+
         private bool HasTablePosition(Rally r)
         {
+            int StrokeNumber;
+            if (r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner)
+            {
+                StrokeNumber = Convert.ToInt32(r.Length);
+            }
+            else
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 1;
+            }
             List<bool> ORresults = new List<bool>();
-            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 4).FirstOrDefault();
+            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == StrokeNumber).FirstOrDefault();
             foreach (var sel in SelectedTablePositions)
             {
                 switch (sel)
@@ -607,8 +720,18 @@ namespace TT.Viewer.ViewModels
 
         private bool HasStrokeLength(Rally r)
         {
+            int StrokeNumber;
+            if (r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner)
+            {
+                StrokeNumber = Convert.ToInt32(r.Length);
+            }
+            else
+            {
+                StrokeNumber = Convert.ToInt32(r.Length) - 1;
+            }
             List<bool> ORresults = new List<bool>();
-            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 4).FirstOrDefault();
+            
+            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == StrokeNumber).FirstOrDefault();
 
             foreach (var sel in SelectedStrokeLengths)
             {
