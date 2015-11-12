@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace TT.Viewer.Events
 {
-    public class FilterSwitchedEvent : PlaylistEvent
+    public class PlaylistEvent
     {
-        public FilterSwitchedEvent(Playlist list)
-            : base(list)
-        {
 
+        public Playlist Playlist { get; set; }
+
+        public PlaylistEvent(Playlist list)
+        {
+            this.Playlist = list;
         }
     }
 }

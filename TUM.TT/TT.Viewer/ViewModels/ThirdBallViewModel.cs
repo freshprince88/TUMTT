@@ -18,8 +18,8 @@ namespace TT.Viewer.ViewModels
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
-        public List<MatchRally> SelectedRallies { get; private set; }
-        public Match Match { get; private set; }
+        public List<Rally> SelectedRallies { get; private set; }
+        public Playlist ActivePlaylist { get; private set; }
         public EHand Hand { get; private set; }
         public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
         public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
@@ -90,8 +90,8 @@ namespace TT.Viewer.ViewModels
         public ThirdBallViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
-            SelectedRallies = new List<MatchRally>();
-            Match = new Match();           
+            SelectedRallies = new List<Rally>();
+            ActivePlaylist = new Playlist();           
             Hand = EHand.None;
             SelectedStrokeLengths = new HashSet<TableStandardViewModel.EStrokeLength>();
             SelectedTablePositions = new HashSet<TableStandardViewModel.ETablePosition>();
@@ -388,7 +388,6 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
-
         #region Caliburn Hooks
         /// <summary>
         /// Initializes this view model.
@@ -427,7 +426,7 @@ namespace TT.Viewer.ViewModels
         }
         public void Handle(FilterSwitchedEvent message)
         {
-            this.Match = message.Match;
+            this.ActivePlaylist = message.Playlist;
             //if (this.Match.Rallies != null)
             //{
             //    SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > BasicFilterView.MinRallyLength).ToList();
@@ -449,24 +448,14 @@ namespace TT.Viewer.ViewModels
 
         private void UpdateSelection()
         {
-            if (this.Match.Rallies != null)
+            if (this.ActivePlaylist.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
-
-      
-
        
-
-       
-
-        
-
-        
-
-        private bool HasHand(MatchRally r)
+        private bool HasHand(Rally r)
         {
             switch (this.Hand)
             {
@@ -482,7 +471,8 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
-        private bool HasStepAround(MatchRally r)
+
+        private bool HasStepAround(Rally r)
         {
             switch (this.StepAround)
             {
@@ -495,7 +485,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private bool HasStrokeTec(MatchRally r)
+        private bool HasStrokeTec(Rally r)
         {
             List<bool> ORresults = new List<bool>();
 
@@ -555,7 +545,7 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasQuality(MatchRally r)
+        private bool HasQuality(Rally r)
         {
             switch (this.Quality)
             {
@@ -571,10 +561,10 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
-        private bool HasTablePosition(MatchRally r)
+        private bool HasTablePosition(Rally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
+            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
             foreach (var sel in SelectedTablePositions)
             {
                 switch (sel)
@@ -613,10 +603,10 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasStrokeLength(MatchRally r)
+        private bool HasStrokeLength(Rally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
+            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
 
             foreach (var sel in SelectedStrokeLengths)
             {

@@ -22,8 +22,8 @@ namespace TT.Viewer.ViewModels
         public BasicFilterViewModel BasicFilterView { get; set; }
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
-        public List<MatchRally> SelectedRallies { get; private set; }
-        public Match Match { get; private set; }
+        public List<Rally> SelectedRallies { get; private set; }
+        public Playlist RallyList { get; private set; }
         public List<SpinControlViewModel.Spins> SelectedSpins { get; private set; }
         public EHand Hand { get; private set; }       
         public EQuality Quality { get; private set; }
@@ -82,9 +82,9 @@ namespace TT.Viewer.ViewModels
         public ServiceViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
-            SelectedRallies = new List<MatchRally>();
+            SelectedRallies = new List<Rally>();
             SelectedSpins = new List<SpinControlViewModel.Spins>();
-            Match = new Match();
+            RallyList = new Playlist();
             Hand = EHand.None;       
             Quality = EQuality.None;
             Specials = ESpecials.None;          
@@ -328,11 +328,8 @@ namespace TT.Viewer.ViewModels
         }
         public void Handle(FilterSwitchedEvent message)
         {
-            this.Match = message.Match;
-            if (this.Match.FirstPlayer != null && this.Match.SecondPlayer != null)
-            {
-                
-            }
+            this.RallyList = message.Playlist;
+
             UpdateSelection();
         }
 
@@ -355,17 +352,17 @@ namespace TT.Viewer.ViewModels
 
         private void UpdateSelection()
         {
-            if (this.Match.Rallies != null)
+            if (this.RallyList.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasSpins(r) && HasHand(r) && HasServices(r)  && HasQuality(r) && HasSpecials(r) && HasTablePosition(r) && HasServerPosition(r)).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
 
-        private bool HasSpins(MatchRally r)
+        private bool HasSpins(Rally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
+            Schlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
 
             foreach (var spin in SelectedSpins)
             {
@@ -409,7 +406,7 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasServices(MatchRally r)
+        private bool HasServices(Rally r)
         {
             List<bool> ORresults = new List<bool>();
 
@@ -438,7 +435,7 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasHand(MatchRally r)
+        private bool HasHand(Rally r)
         {
             switch (this.Hand)
             {
@@ -456,7 +453,7 @@ namespace TT.Viewer.ViewModels
         }
 
        
-        private bool HasQuality(MatchRally r)
+        private bool HasQuality(Rally r)
         {
             switch (this.Quality)
             {
@@ -473,7 +470,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private bool HasSpecials(MatchRally r)
+        private bool HasSpecials(Rally r)
         {
             switch (this.Specials)
             {
@@ -491,10 +488,10 @@ namespace TT.Viewer.ViewModels
         }
 
 
-        private bool HasTablePosition(MatchRally r)
+        private bool HasTablePosition(Rally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag service = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 1).FirstOrDefault();
+            Schlag service = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 1).FirstOrDefault();
             foreach (var sel in SelectedTablePositions)
             {
                 switch (sel)
@@ -533,10 +530,10 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasServerPosition(MatchRally r)
+        private bool HasServerPosition(Rally r)
         {
             List<bool> ORresults = new List<bool>();
-            MatchRallySchlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
+            Schlag service = r.Schlag.Where(s => s.Nummer == "1").FirstOrDefault();
             double X;
             double Seite = service.Platzierung.WY == "" ? 999 : Convert.ToDouble(service.Platzierung.WY);
             if (Seite >= 137)

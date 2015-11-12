@@ -12,8 +12,8 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>
-       
+        IHandle<FilterSwitchedEvent>,
+        IHandle<MatchOpenedEvent>
     {
         #region Properties
 
@@ -22,9 +22,9 @@ namespace TT.Viewer.ViewModels
 
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
-        public List<MatchRally> SelectedRallies { get; private set; }
+        public List<Rally> SelectedRallies { get; private set; }
 
-        public Match Match { get; private set; }
+        public Playlist RallyList { get; private set; }
         public List<SpinControlViewModel.Spins> SelectedSpins { get; private set; }
         
         public EPoint Point { get; private set; }
@@ -86,8 +86,8 @@ namespace TT.Viewer.ViewModels
         public BasicFilterViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
-            SelectedRallies = new List<MatchRally>();            
-            Match = new Match();            
+            SelectedRallies = new List<Rally>();            
+            RallyList = new Playlist();            
             Point = EPoint.None;
             Server = EServer.None;           
             Crunch = ECrunch.Not;
@@ -431,16 +431,19 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(FilterSwitchedEvent message)
         {
-            this.Match = message.Match;
-            if (this.Match.FirstPlayer != null && this.Match.SecondPlayer != null)
-            {
-                FilterPointPlayer1Button = this.Match.FirstPlayer.Name.Split(' ')[0];
-                FilterPointPlayer2Button = this.Match.SecondPlayer.Name.Split(' ')[0];
-            }
+            this.RallyList = message.Playlist;
+
             UpdateSelection();
         }
 
-
+        public void Handle(MatchOpenedEvent message)
+        {
+            if (message.Match.FirstPlayer != null && message.Match.SecondPlayer != null)
+            {
+                FilterPointPlayer1Button = message.Match.FirstPlayer.Name.Split(' ')[0];
+                FilterPointPlayer2Button = message.Match.SecondPlayer.Name.Split(' ')[0];
+            }
+        }
 
         #endregion
 
@@ -448,15 +451,15 @@ namespace TT.Viewer.ViewModels
 
         public void UpdateSelection()
         {
-            if (this.Match.Rallies != null)
+            if (this.RallyList.Rallies != null)
             {
-                SelectedRallies = this.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
+                SelectedRallies = this.RallyList.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
 
 
-        private bool HasPoint(MatchRally r)
+        private bool HasPoint(Rally r)
         {
             switch (this.Point)
             {
@@ -473,7 +476,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private bool HasServer(MatchRally r)
+        private bool HasServer(Rally r)
         {
             switch (this.Server)
             {
@@ -491,7 +494,7 @@ namespace TT.Viewer.ViewModels
         }
 
        
-        private bool HasSet(MatchRally r)
+        private bool HasSet(Rally r)
         {
             List<bool> ORresults = new List<bool>();
 
@@ -503,7 +506,7 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasRallyLength(MatchRally r)
+        private bool HasRallyLength(Rally r)
         {
             List<bool> ORresults = new List<bool>();
 
@@ -525,7 +528,7 @@ namespace TT.Viewer.ViewModels
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        private bool HasCrunchTime(MatchRally r)
+        private bool HasCrunchTime(Rally r)
         {
             switch (this.Crunch)
             {

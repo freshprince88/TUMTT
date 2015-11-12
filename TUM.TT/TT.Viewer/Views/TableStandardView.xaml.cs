@@ -27,7 +27,7 @@ namespace TT.Viewer.Views
         #region Properties
 
         public IEventAggregator Events { get; set; }
-        private List<MatchRally> rallies { get; set; }
+        private List<Rally> rallies { get; set; }
         #endregion
 
 
@@ -39,9 +39,9 @@ namespace TT.Viewer.Views
         }
         public void Handle(FilterSwitchedEvent message)
         {
-            if (message.Match.Rallies != null)
+            if (message.Playlist.Rallies != null)
             {
-                rallies = message.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
+                rallies = message.Playlist.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
             }
         }
         public void Handle(RallyLengthChangedEvent message)
@@ -227,9 +227,11 @@ namespace TT.Viewer.Views
                     break;
             }
         }
+
         #region HelperMethods
         
         #endregion
+
         //public void Handle(FilterSwitchedEvent message)
         //{
 

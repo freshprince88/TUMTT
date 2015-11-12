@@ -13,7 +13,7 @@ namespace TT.Viewer.Events
         /// Initializes a new instance of the <see cref="FilterSelectionChangedEvent"/> class.
         /// </summary>
         /// <param name="match">The match.</param>
-        public FilterSelectionChangedEvent(List<MatchRally> rallies)
+        public FilterSelectionChangedEvent(List<Rally> rallies)
             : base(rallies.ToArray())
         {
         }

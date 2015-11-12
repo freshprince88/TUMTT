@@ -18,12 +18,13 @@ namespace TT.Viewer.ViewModels
     {
         #region Properties
         public BasicFilterViewModel BasicFilterView { get; set; }
-        public List<MatchRally> SelectedRallies { get; private set; }
-        public Match Match { get; private set; } 
+        public List<Rally> SelectedRallies { get; private set; }
+        public Playlist ActivePlaylist { get; private set; } 
 
         public TableKombiViewModel TableKombi { get; private set; } 
 
         #endregion
+
         #region Enums
 
        
@@ -38,8 +39,8 @@ namespace TT.Viewer.ViewModels
         public CombiViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
-            SelectedRallies = new List<MatchRally>();
-            Match = new Match();
+            SelectedRallies = new List<Rally>();
+            ActivePlaylist = new Playlist();
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
                 MinRallyLength = 0,
@@ -98,20 +99,18 @@ namespace TT.Viewer.ViewModels
         }
         public void Handle(FilterSwitchedEvent message)
         {
-            this.Match = message.Match;
-            if (this.Match.FirstPlayer != null && this.Match.SecondPlayer != null)
-            {
-                
-            }
+            this.ActivePlaylist = message.Playlist;
+
             UpdateSelection();
         }
 
         #endregion
+
         #region Helper Methods
 
         private void UpdateSelection()
         {
-            if (this.Match.Rallies != null)
+            if (this.ActivePlaylist.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies; 
                 // .Where().ToList();

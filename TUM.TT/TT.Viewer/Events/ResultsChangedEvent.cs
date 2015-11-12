@@ -13,7 +13,7 @@ namespace TT.Viewer.Events
         /// Initializes a new instance of the <see cref="ResultsChangedEvent"/> class.
         /// </summary>
         /// <param name="match">The match.</param>
-        public ResultsChangedEvent(List<MatchRally> rallies)
+        public ResultsChangedEvent(List<Rally> rallies)
             : base(rallies.ToArray())
         {
         }

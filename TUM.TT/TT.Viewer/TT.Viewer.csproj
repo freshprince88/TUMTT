@@ -123,6 +123,7 @@
     <Compile Include="ViewModels\LastBallViewModel.cs" />
     <Compile Include="ViewModels\ListResultViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
+    <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="ViewModels\ReceptionViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />

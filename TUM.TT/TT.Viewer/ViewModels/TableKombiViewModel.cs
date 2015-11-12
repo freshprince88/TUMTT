@@ -16,7 +16,7 @@ namespace TT.Viewer.ViewModels
         private List<int> m_botBtnPos;
         private List<int> m_topBtnPos;
 
-        public Match Game { get; set; }
+        //public Match Game { get; set; }
 
         public List<int> TopButtonPositions
         {
