@@ -17,6 +17,7 @@ namespace TT.Viewer.ViewModels
         public MediaViewModel MediaView { get; private set; }
         public FilterViewModel FilterView { get; private set; }
         public ResultViewModel ResultView { get; private set; }
+        public PlaylistViewModel PlaylistView { get; private set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -30,6 +31,7 @@ namespace TT.Viewer.ViewModels
             FilterView = new FilterViewModel(Events);
             MediaView = new MediaViewModel(Events);
             ResultView = new ResultViewModel(resultTabs);
+            PlaylistView = new PlaylistViewModel(Events);
         }
 
         #region Caliburn hooks

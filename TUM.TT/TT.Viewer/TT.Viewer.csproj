@@ -114,6 +114,7 @@
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />
+    <Compile Include="Models\PlaylistItem.cs" />
     <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="ViewModels\LastBallViewModel.cs" />
     <Compile Include="ViewModels\ListResultViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="ViewModels\ReceptionViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
@@ -145,6 +147,9 @@
     </Compile>
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlaylistView.xaml.cs">
+      <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LastBallView.xaml.cs">
       <DependentUpon>LastBallView.xaml</DependentUpon>
@@ -206,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
