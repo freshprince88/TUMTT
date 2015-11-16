@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300">
@@ -33,13 +34,16 @@
             Margin="0"
             BorderThickness="0"
             SelectedIndex="0"
+            dd:DragDrop.IsDragSource="False"
+            dd:DragDrop.IsDropTarget="True"
+            dd:DragDrop.DropHandler="{Binding}"
             cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action ListItemSelected($source)]">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel>
                             <BulletDecorator>
                                 <BulletDecorator.Bullet>
-                                    <Rectangle Width="12" Height="12" Fill="{DynamicResource AccentColorBrush}">
+                                    <Rectangle Width="14" Height="14" Fill="{DynamicResource AccentColorBrush}" Margin="2 2 2 2">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_book_list}" />
                                         </Rectangle.OpacityMask>

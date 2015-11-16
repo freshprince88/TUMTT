@@ -1,15 +1,18 @@
 ﻿using Caliburn.Micro;
+using GongSolutions.Wpf.DragDrop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
     public class PlaylistViewModel : Conductor<PlaylistItem>.Collection.AllActive,
+        IDropTarget,
         IHandle<MatchOpenedEvent>
     {
         private IEventAggregator events;
@@ -71,6 +74,25 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public void DragOver(IDropInfo dropInfo)
+        {
+            var sourceItem = dropInfo.Data as ResultListItem;
+            var targetItem = dropInfo.TargetItem as PlaylistItem;
+
+            if (sourceItem != null && targetItem != null)
+            {
+                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                dropInfo.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            var sourceItem = dropInfo.Data as ResultListItem;
+            var targetItem = dropInfo.TargetItem as PlaylistItem;
+        }
+
         #endregion
+
     }
 }
