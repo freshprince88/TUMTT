@@ -9,7 +9,6 @@ namespace TT.Viewer.ViewModels
 {
     public class ResultViewModel : Conductor<IResultViewTabItem>.Collection.OneActive
     {
-
         public ResultViewModel(IEnumerable<IResultViewTabItem> tabs)
         {
             Items.AddRange(tabs);

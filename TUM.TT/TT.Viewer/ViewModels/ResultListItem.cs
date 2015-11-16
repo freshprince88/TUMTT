@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ItemViewModel : Screen
+    public class ResultListItem : Screen
     {
         public string Score { get; set; }
         public string Sets { get; set; }
@@ -17,7 +17,7 @@ namespace TT.Viewer.ViewModels
         public int RallyStart { get; set; }
         public int RallyEnd { get; set; }
 
-        public ItemViewModel()
+        public ResultListItem()
         {
             Score = String.Empty;
             Sets = String.Empty;
@@ -28,7 +28,7 @@ namespace TT.Viewer.ViewModels
             RallyEnd = 0;
         }
 
-        public ItemViewModel(string score, string sets, string server, string point, string length, int start, int end)
+        public ResultListItem(string score, string sets, string server, string point, string length, int start, int end)
         {
             Score = score;
             Sets = sets;

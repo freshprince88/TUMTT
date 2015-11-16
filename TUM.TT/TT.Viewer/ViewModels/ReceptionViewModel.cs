@@ -408,11 +408,11 @@ namespace TT.Viewer.ViewModels
         }
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);            
             this.DeactivateItem(TableView, close);
             this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
+            base.OnDeactivate(close);            
         }
         #endregion
 

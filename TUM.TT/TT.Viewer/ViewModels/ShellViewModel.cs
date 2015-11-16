@@ -59,6 +59,7 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(FilterView);
             this.ActivateItem(MediaView);
             this.ActivateItem(ResultView);
+            this.ActivateItem(PlaylistView);
         }
 
         #endregion

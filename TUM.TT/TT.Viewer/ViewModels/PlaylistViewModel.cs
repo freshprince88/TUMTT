@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Viewer.Events;
-using TT.Viewer.Models;
 
 namespace TT.Viewer.ViewModels
 {
@@ -40,6 +39,7 @@ namespace TT.Viewer.ViewModels
         public void ListItemSelected(ListView view)
         {
             PlaylistItem item = (PlaylistItem)view.SelectedItem;
+            this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
         }
         #endregion
 
@@ -57,7 +57,18 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MatchOpenedEvent message)
         {
-            throw new NotImplementedException();
+            this.Items.Clear();
+
+            foreach (var playlist in message.Match.Playlists)
+            {
+                string name = playlist.Name;
+
+                this.ActivateItem(new PlaylistItem()
+                {
+                    Name = name,
+                    Count = playlist.Rallies.Count()
+                });
+            }
         }
 
         #endregion

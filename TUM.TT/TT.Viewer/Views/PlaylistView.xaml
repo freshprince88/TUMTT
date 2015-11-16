@@ -34,6 +34,23 @@
             BorderThickness="0"
             SelectedIndex="0"
             cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action ListItemSelected($source)]">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Rectangle Width="12" Height="12" Fill="{DynamicResource AccentColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_book_list}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </BulletDecorator.Bullet>
+                            </BulletDecorator>
+                            <TextBlock Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0"/>
+                            <TextBlock Text="{Binding Path=CountStr, UpdateSourceTrigger=PropertyChanged}" Margin="5 0 0 0"/>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </Border>
 
