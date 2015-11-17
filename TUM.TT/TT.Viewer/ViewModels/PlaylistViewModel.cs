@@ -96,7 +96,7 @@ namespace TT.Viewer.ViewModels
         public void DragOver(IDropInfo dropInfo)
         {
             var sourceItem = dropInfo.Data as ResultListItem;
-            var targetItem = dropInfo.TargetItem as PlaylistItem;
+            var targetItem = dropInfo.TargetItem as PlaylistItem;            
 
             if (sourceItem != null && targetItem != null)
             {
@@ -112,8 +112,11 @@ namespace TT.Viewer.ViewModels
 
             Playlist list = this.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
 
-            if(!list.Rallies.Contains(sourceItem.Rally))
+            if (!list.Rallies.Contains(sourceItem.Rally))
+            {
                 list.Rallies.Add(sourceItem.Rally);
+                targetItem.Count++;
+            }
 
             this.events.PublishOnUIThread(new PlaylistEditedEvent());
         }

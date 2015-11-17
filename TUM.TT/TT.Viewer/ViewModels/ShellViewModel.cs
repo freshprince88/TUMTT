@@ -150,11 +150,12 @@ namespace TT.Viewer.ViewModels
                 fileName = dialog.Result;
             }
 
-            yield return new SerializeMatchResult(this.Match, fileName, Format.XML.Serializer)
+            var serialization = new SerializeMatchResult(this.Match, fileName, Format.XML.Serializer);
+            yield return serialization
                 .IsBusy("Saving")
                 .Rescue()
                 .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", fileName))
-                .Propagate();
+                .Propagate(); // Reraise the error to abort the coroutine
 
             this.SaveFileName = fileName;
             this.IsModified = false;
@@ -175,7 +176,7 @@ namespace TT.Viewer.ViewModels
             if (IsModified)
             {
                 this.Match = message.Match;
-                SaveMatch();
+                Coroutine.BeginExecute(SaveMatch().GetEnumerator(), new CoroutineExecutionContext() { View = this.GetView(), Target = this });
             }
         }
 
