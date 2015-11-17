@@ -17,8 +17,11 @@ namespace TT.Viewer.ViewModels
         public int RallyStart { get; set; }
         public int RallyEnd { get; set; }
 
+        public Rally Rally { get; set; }
+
         public ResultListItem()
         {
+            Rally = null;
             Score = String.Empty;
             Sets = String.Empty;
             Server = String.Empty;
@@ -28,15 +31,20 @@ namespace TT.Viewer.ViewModels
             RallyEnd = 0;
         }
 
-        public ResultListItem(string score, string sets, string server, string point, string length, int start, int end)
+        public ResultListItem(Rally rally)
         {
+            Rally = rally;
+
+            string score = String.Format("{0} : {1}", rally.CurrentRallyScore.First, rally.CurrentRallyScore.Second);
+            string sets = String.Format("({0} : {1})", rally.CurrentSetScore.First, rally.CurrentSetScore.Second);
+
             Score = score;
             Sets = sets;
-            Server = server;
-            Point = point;
-            Length = length;
-            RallyStart = start;
-            RallyEnd = end;
+            Server = rally.Server;
+            Point = rally.Winner;
+            Length = rally.Length;
+            RallyStart = Convert.ToInt32(rally.Anfang);
+            RallyEnd = Convert.ToInt32(rally.Ende);
         }
     }
 }

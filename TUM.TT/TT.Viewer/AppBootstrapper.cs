@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Caliburn.Micro;
 using TT.Viewer.ViewModels;
 using System.Reflection;
+using TT.Lib.Models.Serialization;
 
 namespace TT.Viewer {
 
@@ -18,6 +19,7 @@ namespace TT.Viewer {
 
             container.Singleton<IWindowManager, WindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
+            container.Singleton<IMatchSerializer, XmlMatchSerializer>();
             container.PerRequest<IShell, ShellViewModel>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
         }

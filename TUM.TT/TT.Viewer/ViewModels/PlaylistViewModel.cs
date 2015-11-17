@@ -17,6 +17,8 @@ namespace TT.Viewer.ViewModels
     {
         private IEventAggregator events;
 
+        public Match Match { get; private set; }
+
         private PlaylistItem _selected;
         public PlaylistItem SelectedItemView
         {
@@ -44,6 +46,22 @@ namespace TT.Viewer.ViewModels
             PlaylistItem item = (PlaylistItem)view.SelectedItem;
             this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
         }
+
+        public void Add()
+        {
+
+        }
+
+        public void Save()
+        {
+            this.events.PublishOnUIThread(new SaveMatchEvent(this.Match));
+        }
+
+        public void ShowSettings()
+        {
+
+        }
+
         #endregion
 
         #region Caliburn Hooks
@@ -60,6 +78,7 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MatchOpenedEvent message)
         {
+            this.Match = message.Match;
             this.Items.Clear();
 
             foreach (var playlist in message.Match.Playlists)
@@ -90,6 +109,13 @@ namespace TT.Viewer.ViewModels
         {
             var sourceItem = dropInfo.Data as ResultListItem;
             var targetItem = dropInfo.TargetItem as PlaylistItem;
+
+            Playlist list = this.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
+
+            if(!list.Rallies.Contains(sourceItem.Rally))
+                list.Rallies.Add(sourceItem.Rally);
+
+            this.events.PublishOnUIThread(new PlaylistEditedEvent());
         }
 
         #endregion

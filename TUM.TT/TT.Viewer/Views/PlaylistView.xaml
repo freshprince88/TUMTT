@@ -24,6 +24,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
@@ -69,6 +70,21 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <cal:ActionMessage MethodName="Add" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+
+        <Button x:Name="SaveButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Grid.Row="1" Height="25" Width="25">
+            <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_save}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <cal:ActionMessage MethodName="Save" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>

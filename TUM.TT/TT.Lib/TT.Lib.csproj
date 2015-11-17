@@ -99,6 +99,7 @@
     <Compile Include="Results\OpenFileDialogResult.cs" />
     <Compile Include="Results\RescueResult.cs" />
     <Compile Include="Results\ResultExtensions.cs" />
+    <Compile Include="Results\SaveFileDialogResult.cs" />
     <Compile Include="Results\SerializeMatchResult.cs" />
     <Compile Include="Templates\CircleBorder.xaml.cs">
       <DependentUpon>CircleBorder.xaml</DependentUpon>

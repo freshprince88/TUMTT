@@ -7,17 +7,24 @@ using TT.Viewer.Events;
 using System.Collections.Generic;
 using TT.Lib.Models;
 using System.IO;
+using TTA.Results;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace TT.Viewer.ViewModels
 {
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<PlaylistEditedEvent>,
+        IHandle<SaveMatchEvent>,
         IShell
     {
         public MediaViewModel MediaView { get; private set; }
         public FilterViewModel FilterView { get; private set; }
         public ResultViewModel ResultView { get; private set; }
         public PlaylistViewModel PlaylistView { get; private set; }
+        public string SaveFileName { get; private set; }
+        public Match Match { get; private set; }
+        public bool IsModified { get; private set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -62,6 +69,30 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(PlaylistView);
         }
 
+        protected override void OnDeactivate(bool close)
+        {
+            if (IsModified)
+            {
+                var mySettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = "Save and Quit",
+                    NegativeButtonText = "Cancel",
+                    FirstAuxiliaryButtonText = "Quit Without Saving",
+                    AnimateShow = true,
+                    AnimateHide = false
+                };
+
+                //var result = await DialogManager.ShowMessageAsync(this, "Quit application?",
+                //    "Sure you want to quit application?",
+                //    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+                //bool _shutdown = result == MessageDialogResult.Affirmative;
+
+                //if (_shutdown)
+                //    Application.Current.Shutdown();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -82,11 +113,13 @@ namespace TT.Viewer.ViewModels
                 .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
                 .Propagate(); // Reraise the error to abort the coroutine
 
-            Match match = deserialization.Result;
+            SaveFileName = dialog.Result;
+            Match = deserialization.Result;
 
-            this.Events.PublishOnUIThread(new MatchOpenedEvent(match, deserialization.FileName));
+            this.Events.PublishOnUIThread(new MatchOpenedEvent(Match, deserialization.FileName));
 
-            if(string.IsNullOrEmpty(match.VideoFile) || !File.Exists(match.VideoFile)){
+            if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
+            {
                 var videoDialog = new OpenFileDialogResult()
                 {
                     Title = "Open video file...",
@@ -94,16 +127,58 @@ namespace TT.Viewer.ViewModels
                 };
                 yield return videoDialog;
 
-                match.VideoFile = videoDialog.Result;
-                this.Events.PublishOnUIThread(new VideoLoadedEvent(match.VideoFile));
-            }            
-            
+                Match.VideoFile = videoDialog.Result;
+                this.Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+            }
+
+        }
+
+        public IEnumerable<IResult> SaveMatch()
+        {
+            //yield return new SequentialResult(this.SwapPlayersIfNecessary().GetEnumerator());
+
+            var fileName = this.SaveFileName;
+            if (fileName == null)
+            {
+                var dialog = new SaveFileDialogResult()
+                {
+                    Title = string.Format("Save match \"{0}\"...", this.Match.Title()),
+                    Filter = Format.XML.DialogFilter,
+                    DefaultFileName = this.Match.DefaultFilename(),
+                };
+                yield return dialog;
+                fileName = dialog.Result;
+            }
+
+            yield return new SerializeMatchResult(this.Match, fileName, Format.XML.Serializer)
+                .IsBusy("Saving")
+                .Rescue()
+                .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", fileName))
+                .Propagate();
+
+            this.SaveFileName = fileName;
+            this.IsModified = false;
+
         }
 
         #endregion
 
         #region Event Handlers
 
-        #endregion
+        public void Handle(PlaylistEditedEvent message)
+        {
+            IsModified = true;
+        }
+
+        public void Handle(SaveMatchEvent message)
+        {
+            if (IsModified)
+            {
+                this.Match = message.Match;
+                SaveMatch();
+            }
+        }
+
+        #endregion       
     }
 }

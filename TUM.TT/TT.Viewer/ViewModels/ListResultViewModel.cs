@@ -70,20 +70,8 @@ namespace TT.Viewer.ViewModels
 
             foreach (var rally in message.Rallies)
             {
-                string score = String.Format("{0} : {1}", rally.CurrentRallyScore.First, rally.CurrentRallyScore.Second);
-                string sets = String.Format("({0} : {1})", rally.CurrentSetScore.First, rally.CurrentSetScore.Second);
-
                 //this.ActivateItem(new ItemViewModel(score, sets, rally.Server, rally.Winner, rally.Length));
-                this.ActivateItem(new ResultListItem()
-                {
-                    Score = score,
-                    Sets = sets,
-                    Server = rally.Server,
-                    Point = rally.Winner,
-                    Length = rally.Length,
-                    RallyStart = Convert.ToInt32(rally.Anfang),
-                    RallyEnd = Convert.ToInt32(rally.Ende)
-                });
+                this.ActivateItem(new ResultListItem(rally));
             }
         }
 
