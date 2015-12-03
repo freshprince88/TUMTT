@@ -73,14 +73,14 @@ namespace TT.Viewer.ViewModels
         {
             if (IsModified)
             {
-                var mySettings = new MetroDialogSettings()
-                {
-                    AffirmativeButtonText = "Save and Quit",
-                    NegativeButtonText = "Cancel",
-                    FirstAuxiliaryButtonText = "Quit Without Saving",
-                    AnimateShow = true,
-                    AnimateHide = false
-                };
+                //var mySettings = new MetroDialogSettings()
+                //{
+                //    AffirmativeButtonText = "Save and Quit",
+                //    NegativeButtonText = "Cancel",
+                //    FirstAuxiliaryButtonText = "Quit Without Saving",
+                //    AnimateShow = true,
+                //    AnimateHide = false
+                //};
 
                 //var result = await DialogManager.ShowMessageAsync(this, "Quit application?",
                 //    "Sure you want to quit application?",

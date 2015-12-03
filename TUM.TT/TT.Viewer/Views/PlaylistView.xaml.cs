@@ -23,7 +23,8 @@ namespace TT.Viewer.Views
     /// Interaction logic for PlaylistView.xaml
     /// </summary>
     public partial class PlaylistView : UserControl,
-        IHandle<ShowInputDialogEvent>
+        IHandle<ShowInputDialogEvent>,
+        IHandle<ShowPlaylistSettingsEvent>
     {
         public IEventAggregator Events { get; private set; }
 
@@ -52,6 +53,12 @@ namespace TT.Viewer.Views
                 this.Events.PublishOnUIThread(new PlaylistNamedEvent(result));
             }                
         }
+
+        public void Handle(ShowPlaylistSettingsEvent message)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
+
     }
 }
