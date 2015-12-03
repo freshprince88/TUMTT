@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace TT.Viewer.Events
 {
-    public class PlaylistEditedEvent
+    public class MatchEditedEvent : MatchEvent
     {
+        public MatchEditedEvent(Match m)
+            : base(m)
+        {
+
+        }
     }
 }

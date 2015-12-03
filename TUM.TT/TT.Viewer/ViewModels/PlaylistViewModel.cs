@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TT.Viewer.Events;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace TT.Viewer.ViewModels
 {
     public class PlaylistViewModel : Conductor<PlaylistItem>.Collection.AllActive,
         IDropTarget,
-        IHandle<MatchOpenedEvent>
+        IHandle<MatchOpenedEvent>,
+        IHandle<PlaylistNamedEvent>
     {
         private IEventAggregator events;
-
+        
         public Match Match { get; private set; }
 
         private PlaylistItem _selected;
@@ -49,7 +52,7 @@ namespace TT.Viewer.ViewModels
 
         public void Add()
         {
-
+            this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist"));                
         }
 
         public void Save()
@@ -72,6 +75,13 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
         }
+
+        protected override void OnDeactivate(bool close)
+        {          
+            // Unsubscribe ourself to the event bus
+            this.events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
         #endregion
 
         #region Events
@@ -91,6 +101,28 @@ namespace TT.Viewer.ViewModels
                     Count = playlist.Rallies.Count()
                 });
             }
+        }
+
+        public void Handle(PlaylistNamedEvent message)
+        {
+            string name = message.Name;
+
+            if (name == string.Empty)
+                return;
+
+
+            Playlist p = new Playlist();
+            p.Name = name;
+            p.Rallies = new List<Rally>();
+            this.Match.Playlists.Add(p);
+
+            this.ActivateItem(new PlaylistItem()
+            {
+                Name = name,
+                Count = p.Rallies.Count()
+            });
+
+            this.events.PublishOnUIThread(new MatchEditedEvent(this.Match));
         }
 
         public void DragOver(IDropInfo dropInfo)
@@ -116,9 +148,10 @@ namespace TT.Viewer.ViewModels
             {
                 list.Rallies.Add(sourceItem.Rally);
                 targetItem.Count++;
+                this.Items.Refresh();
             }
 
-            this.events.PublishOnUIThread(new PlaylistEditedEvent());
+            this.events.PublishOnUIThread(new MatchEditedEvent(this.Match));
         }
 
         #endregion

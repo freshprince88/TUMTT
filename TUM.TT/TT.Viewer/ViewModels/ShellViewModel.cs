@@ -14,7 +14,7 @@ namespace TT.Viewer.ViewModels
 {
 
     public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<PlaylistEditedEvent>,
+        IHandle<MatchEditedEvent>,
         IHandle<SaveMatchEvent>,
         IShell
     {
@@ -127,16 +127,13 @@ namespace TT.Viewer.ViewModels
                 };
                 yield return videoDialog;
 
-                Match.VideoFile = videoDialog.Result;
-                this.Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+                Match.VideoFile = videoDialog.Result;                
             }
-
+            this.Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
         }
 
         public IEnumerable<IResult> SaveMatch()
         {
-            //yield return new SequentialResult(this.SwapPlayersIfNecessary().GetEnumerator());
-
             var fileName = this.SaveFileName;
             if (fileName == null)
             {
@@ -166,17 +163,19 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-        public void Handle(PlaylistEditedEvent message)
+        public void Handle(MatchEditedEvent message)
         {
             IsModified = true;
+            this.Match = message.Match;
         }
 
         public void Handle(SaveMatchEvent message)
         {
             if (IsModified)
             {
-                this.Match = message.Match;
-                Coroutine.BeginExecute(SaveMatch().GetEnumerator(), new CoroutineExecutionContext() { View = this.GetView(), Target = this });
+                //this.Match = message.Match;
+                Coroutine.BeginExecute(SaveMatch().GetEnumerator(), 
+                    new CoroutineExecutionContext() { View = this.GetView(), Target = this });
             }
         }
 

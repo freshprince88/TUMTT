@@ -104,7 +104,8 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Events\FilterSelectionChangedEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
-    <Compile Include="Events\PlaylistEditedEvent.cs" />
+    <Compile Include="Events\MatchEditedEvent.cs" />
+    <Compile Include="Events\PlaylistNamedEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
     <Compile Include="Events\FilterSwitchedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Events\RalliesEvent.cs" />
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\SaveMatchEvent.cs" />
+    <Compile Include="Events\ShowInputDialogEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\TableKombiViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
