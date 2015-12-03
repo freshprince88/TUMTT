@@ -13,7 +13,7 @@ namespace TT.Viewer.ViewModels
     public class MediaViewModel : Screen
     {
         private IEventAggregator events;
-       
+
         public enum MuteUnmute
         {
 
@@ -76,11 +76,7 @@ namespace TT.Viewer.ViewModels
             }
             set
             {
-                if (!_mode.Equals(value))
-                    events.PublishOnUIThread(value);
-
                 _mode = value;
-
             }
         }
 
@@ -92,33 +88,38 @@ namespace TT.Viewer.ViewModels
         #region View Methods
 
         public void Play()
-        {            
-            this.Mode = PlayPause.Play;          
+        {
+            this.Mode = PlayPause.Play;
+            events.PublishOnUIThread(this.Mode);
         }
 
         public void Pause()
-        {            
+        {
             this.Mode = PlayPause.Pause;
+            events.PublishOnUIThread(this.Mode);
         }
-       
+
         public void Stop()
-        {            
+        {
             this.Mode = PlayPause.Stop;
+            events.PublishOnUIThread(this.Mode);
         }
 
         public void Previous5Frames(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
+            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now - delta_time;
             //myMediaElement.ScrubbingEnabled = true;
-            
+
         }
 
         public void PreviousFrame(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
+            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             myMediaElement.Position = Position_now - delta_time;
@@ -128,6 +129,7 @@ namespace TT.Viewer.ViewModels
         public void Next5Frames(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
+            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now + delta_time;
@@ -137,19 +139,20 @@ namespace TT.Viewer.ViewModels
         public void NextFrame(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
+            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            myMediaElement.Position = Position_now + delta_time;                        
-        }       
+            myMediaElement.Position = Position_now + delta_time;
+        }
 
         public void PreviousRally(MediaElement myMediaElement)
         {
-            
+
         }
 
         public void NextRally(MediaElement myMediaElement)
         {
-            
+
         }
 
         public void Slow75Percent(bool isChecked)
@@ -177,17 +180,17 @@ namespace TT.Viewer.ViewModels
         }
 
         public void Mute()
-        {           
+        {
             this.Sound = MuteUnmute.Mute;
         }
 
         public void Unmute()
-        {            
+        {
             this.Sound = MuteUnmute.Unmute;
         }
 
         public void Fullscreen(MediaElement myMediaElement)
-        {     
+        {
         }
 
         #endregion
@@ -210,7 +213,7 @@ namespace TT.Viewer.ViewModels
         protected override void OnDeactivate(bool close)
         {
             events.Unsubscribe(this);
-            base.OnDeactivate(close);            
+            base.OnDeactivate(close);
         }
         #endregion
 
