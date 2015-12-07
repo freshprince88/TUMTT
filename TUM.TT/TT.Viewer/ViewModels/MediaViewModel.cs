@@ -30,7 +30,6 @@ namespace TT.Viewer.ViewModels
             set
             {
                 if (!_mode.Equals(value))
-                    events.PublishOnUIThread(value);
 
                 _sound = value;
 
@@ -55,7 +54,6 @@ namespace TT.Viewer.ViewModels
             set
             {
                 if (!_mode.Equals(value))
-                    events.PublishOnUIThread(value);
 
                 _speed = value;
 
@@ -108,41 +106,41 @@ namespace TT.Viewer.ViewModels
         public void Previous5Frames(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
-            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now - delta_time;
             //myMediaElement.ScrubbingEnabled = true;
+            events.PublishOnUIThread(this.Mode);
 
         }
 
         public void PreviousFrame(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
-            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             myMediaElement.Position = Position_now - delta_time;
             //myMediaElement.ScrubbingEnabled = true;
+            events.PublishOnUIThread(this.Mode);
         }
 
         public void Next5Frames(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
-            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             myMediaElement.Position = Position_now + delta_time;
             //myMediaElement.ScrubbingEnabled = true;
+            events.PublishOnUIThread(this.Mode);
         }
 
         public void NextFrame(MediaElement myMediaElement)
         {
             this.Mode = PlayPause.Pause;
-            events.PublishOnUIThread(this.Mode);
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             myMediaElement.Position = Position_now + delta_time;
+            events.PublishOnUIThread(this.Mode);
         }
 
         public void PreviousRally(MediaElement myMediaElement)
@@ -157,10 +155,14 @@ namespace TT.Viewer.ViewModels
 
         public void Slow75Percent(bool isChecked)
         {
-            if (isChecked)
+            if (isChecked) 
                 this.Speed = PlaySpeed.Third;
+            
             else
+            
                 this.Speed = PlaySpeed.Full;
+        
+        events.PublishOnUIThread(this.Speed);
         }
 
         public void Slow50Percent(bool isChecked)
@@ -169,6 +171,7 @@ namespace TT.Viewer.ViewModels
                 this.Speed = PlaySpeed.Half;
             else
                 this.Speed = PlaySpeed.Full;
+            events.PublishOnUIThread(this.Speed);
         }
 
         public void Slow25Percent(bool isChecked)
@@ -177,16 +180,19 @@ namespace TT.Viewer.ViewModels
                 this.Speed = PlaySpeed.Quarter;
             else
                 this.Speed = PlaySpeed.Full;
+            events.PublishOnUIThread(this.Speed);
         }
 
         public void Mute()
         {
             this.Sound = MuteUnmute.Mute;
+            events.PublishOnUIThread(this.Sound);
         }
 
         public void Unmute()
         {
             this.Sound = MuteUnmute.Unmute;
+            events.PublishOnUIThread(this.Sound);
         }
 
         public void Fullscreen(MediaElement myMediaElement)

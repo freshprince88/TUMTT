@@ -8,20 +8,39 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Expander x:Name="MenuExpander" ExpandDirection="Right" Margin="0 0 0 0" IsExpanded="True">
-        <Expander.Header>
-            <TabControl x:Name="HeaderTabControl" TabStripPlacement="Left" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
-                <TabItem x:Name="ServiceTabHeader" Header="A"/>
-                <TabItem x:Name="ReceiveTabHeader" Header="R"/>
-                <TabItem x:Name="ThirdTabHeader" Header="3"/>
-                <TabItem x:Name="FourthTabHeader" Header="4"/>
-                <TabItem x:Name="LastTabHeader" Header="L"/>
-                <TabItem x:Name="KombiTabHeader" Header="K"/>
-            </TabControl>
-        </Expander.Header>
+    <Grid x:Name="FilterStatisticsContainer">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto
+                              "/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl  x:Name="FilterStatisticsSwitch" Grid.Row="0"  Grid.Column="1" Controls:TabControlHelper.IsUnderlined="True" TabStripPlacement="Top" cal:Message.Attach="[Event SelectionChanged] = [Action TODO ($eventArgs)]">
+            <TabItem x:Name="FilterTab" Header=" Filter"/>
+            <TabItem x:Name="StatisticsTab" Header="Statistik"/>
+        </TabControl>
+        <TabControl Grid.Row="1" Grid.Column="0" x:Name="HeaderTabControl"  TabStripPlacement="Left" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabPanel}">
+                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
+                </Style>
+            </TabControl.Resources>
+                    <TabItem x:Name="ServiceTabHeader" Header="A"/>
+                    <TabItem x:Name="ReceiveTabHeader" Header="R"/>
+                    <TabItem x:Name="ThirdTabHeader" Header="3"/>
+                    <TabItem x:Name="FourthTabHeader" Header="4"/>
+                    <TabItem x:Name="LastTabHeader" Header="L"/>
+                    <TabItem x:Name="KombiTabHeader" Header="K"/>
+         </TabControl>
+            
 
-        <ScrollViewer>
-            <ContentControl x:Name="ActiveItem" />
-        </ScrollViewer>
-    </Expander>
+            <ScrollViewer Grid.Row="1" Grid.Column="1">
+                <ContentControl x:Name="ActiveItem" />
+            </ScrollViewer>
+        </Grid>
+   
+
 </UserControl>

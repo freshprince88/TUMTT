@@ -29,6 +29,7 @@ namespace TT.Viewer.ViewModels
             Length = String.Empty;
             RallyStart = 0;
             RallyEnd = 0;
+            
         }
 
         public ResultListItem(Rally rally)

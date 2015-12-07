@@ -6,6 +6,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
-        <TabControl x:Name="Items" />
+        <TabControl x:Name="Items">
+            <!--<TabItem x:Name="List" Header="Hitlist"/>
+            <TabItem x:Name="SmallTables" Header="Minitische"/>
+            <TabItem x:Name="BigTable" Header="Tisch"/>-->
+            
+        </TabControl>
     </Grid>
 </UserControl>
