@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ServiceStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class ThirdBallStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
@@ -35,7 +35,7 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public ServiceStatisticsViewModel(IEventAggregator eventAggregator)
+        public ThirdBallStatisticsViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();
@@ -99,7 +99,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.ActivePlaylist.Rallies != null)
             {
-                SelectedRallies = this.ActivePlaylist.Rallies;
+                SelectedRallies = this.ActivePlaylist.Rallies.Where(r => Convert.ToInt32(r.Length) > 2).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }

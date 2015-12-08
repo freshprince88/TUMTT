@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ReceptionViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class ReceiveViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
         IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
@@ -88,7 +88,7 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public ReceptionViewModel(IEventAggregator eventAggregator)
+        public ReceiveViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();

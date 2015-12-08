@@ -130,19 +130,22 @@
     <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PlaylistItem.cs" />
     <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\FourthBallViewModel.cs" />
     <Compile Include="ViewModels\IResultViewTabItem.cs" />
+    <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ResultListItem.cs" />
     <Compile Include="ViewModels\LastBallViewModel.cs" />
     <Compile Include="ViewModels\ListResultViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
-    <Compile Include="ViewModels\ReceptionViewModel.cs" />
+    <Compile Include="ViewModels\ReceiveViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="ViewModels\TableKombiViewModel.cs" />
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
+    <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
     <Compile Include="Views\BasicFilterView.xaml.cs">
       <DependentUpon>BasicFilterView.xaml</DependentUpon>
@@ -169,8 +173,14 @@
     <Compile Include="Views\FilterView.xaml.cs">
       <DependentUpon>FilterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FourthBallStatisticsView.xaml.cs">
+      <DependentUpon>FourthBallStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LastBallStatisticsView.xaml.cs">
+      <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
@@ -178,8 +188,11 @@
     <Compile Include="Views\LastBallView.xaml.cs">
       <DependentUpon>LastBallView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReceptionView.xaml.cs">
-      <DependentUpon>ReceptionView.xaml</DependentUpon>
+    <Compile Include="Views\ReceiveStatisticsView.xaml.cs">
+      <DependentUpon>ReceiveStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReceiveView.xaml.cs">
+      <DependentUpon>ReceiveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ServiceStatisticsView.xaml.cs">
       <DependentUpon>ServiceStatisticsView.xaml</DependentUpon>
@@ -208,6 +221,9 @@
     <Compile Include="Views\TableStandardView.xaml.cs">
       <DependentUpon>TableStandardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ThirdBallStatisticsView.xaml.cs">
+      <DependentUpon>ThirdBallStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ThirdBallView.xaml.cs">
       <DependentUpon>ThirdBallView.xaml</DependentUpon>
     </Compile>
@@ -232,7 +248,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FourthBallStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FourthBallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LastBallStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,7 +276,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ReceptionView.xaml">
+    <Page Include="Views\ReceiveStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReceiveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TableStandardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ThirdBallStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

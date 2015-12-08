@@ -14,10 +14,12 @@ namespace TT.Viewer.ViewModels
         IHandle<PlaylistChangedEvent>
     {
         public ServiceStatisticsViewModel ServiceStatisticsView { get; set; }
-        
-      
-        private Playlist ActivePlaylist;
-        private Match match;
+        public ReceiveStatisticsViewModel ReceiveStatisticsView { get; set; }
+        public ThirdBallStatisticsViewModel ThirdBallStatisticsView { get; set; }
+        public FourthBallStatisticsViewModel FourthBallStatisticsView { get; set; }
+        public LastBallStatisticsViewModel LastBallStatisticsView { get; set; }
+        public Playlist ActivePlaylist { get; set; }
+        public Match match;
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -38,9 +40,12 @@ namespace TT.Viewer.ViewModels
             base.OnInitialize();
 
             // Subscribe ourself to the event bus
-            this.events.Subscribe(this);
-            
+            this.events.Subscribe(this);            
             ServiceStatisticsView = new ServiceStatisticsViewModel(this.events);
+            ReceiveStatisticsView = new ReceiveStatisticsViewModel(this.events);
+            ThirdBallStatisticsView = new ThirdBallStatisticsViewModel(this.events);
+            FourthBallStatisticsView = new FourthBallStatisticsViewModel(this.events);
+            LastBallStatisticsView = new LastBallStatisticsViewModel(this.events);
 
             // Activate the welcome model
             if (this.ActiveItem == null)
@@ -59,29 +64,28 @@ namespace TT.Viewer.ViewModels
                     this.ActivateItem(ServiceStatisticsView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-
                     break;
-                //case "ReceiveTabHeader":
-                //    this.ActivateItem();
-                //    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-                //    this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
-                //    break;
-                //case "ThirdTabHeader":
-                //    this.ActivateItem();
-                //    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-                //    this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
-                //    break;
-                //case "FourthTabHeader":
-                //    this.ActivateItem(FourthBallView);
-                //    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-                //    this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
-                //    break;
-                //case "LastTabHeader":
-                //    this.ActivateItem(LastBallView);
-                //    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-                //    this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
-                //    break;
-                
+                case "ReceiveStatisticsTabHeader":
+                    this.ActivateItem(ReceiveStatisticsView); 
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
+                    break;
+                case "ThirdStatisticsTabHeader":
+                    this.ActivateItem(ThirdBallStatisticsView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
+                    break;
+                case "FourthStatisticsTabHeader":
+                    this.ActivateItem(FourthBallStatisticsView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
+                    break;
+                case "LastStatisticsTabHeader":
+                    this.ActivateItem(LastBallStatisticsView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
+                    break;
+
                 default:
                     break;
             }

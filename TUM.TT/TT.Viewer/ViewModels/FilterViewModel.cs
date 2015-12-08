@@ -14,12 +14,12 @@ namespace TT.Viewer.ViewModels
         IHandle<PlaylistChangedEvent>
     {
         public ServiceViewModel ServiceView { get; set; }
-        public ReceptionViewModel ReceptionView { get; set; }
+        public ReceiveViewModel ReceiveView { get; set; }
         public ThirdBallViewModel ThirdBallView { get; set; }
         public FourthBallViewModel FourthBallView { get; set; }
         public LastBallViewModel LastBallView { get; set; }
         public CombiViewModel CombiView { get; set; }
-        private Playlist ActivePlaylist;
+        private Playlist ActivePlaylist {  get; set; }
         private Match match;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace TT.Viewer.ViewModels
             LastBallView = new LastBallViewModel(this.events);
             FourthBallView = new FourthBallViewModel(this.events);
             ThirdBallView = new ThirdBallViewModel(this.events);
-            ReceptionView = new ReceptionViewModel(this.events);
+            ReceiveView = new ReceiveViewModel(this.events);
             ServiceView = new ServiceViewModel(this.events);
             CombiView = new CombiViewModel(this.events);
 
@@ -69,7 +69,7 @@ namespace TT.Viewer.ViewModels
 
                     break;
                 case "ReceiveTabHeader":
-                    this.ActivateItem(ReceptionView);
+                    this.ActivateItem(ReceiveView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
                     break;

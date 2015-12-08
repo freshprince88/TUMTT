@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace TT.Viewer.Views
 {
     /// <summary>
-    /// Interaktionslogik für ReceptionView.xaml
+    /// Interaktionslogik für ReceiveView.xaml
     /// </summary>
-    public partial class ReceptionView : UserControl
+    public partial class ReceiveView : UserControl
     {
-        public ReceptionView()
+        public ReceiveView()
         {
             InitializeComponent();
         }

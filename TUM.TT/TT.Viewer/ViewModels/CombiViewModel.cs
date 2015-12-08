@@ -43,7 +43,7 @@ namespace TT.Viewer.ViewModels
             ActivePlaylist = new Playlist();
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
-                MinRallyLength = 0,
+                MinRallyLength= 0,
                 PlayerLabel = "Aufschlag:"
             };
                     TableKombi = new TableKombiViewModel(this.events)

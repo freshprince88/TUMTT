@@ -15,7 +15,7 @@ namespace TT.Viewer.ViewModels
     {
         public FilterViewModel FilterView { get; set; }
         public StatisticsViewModel StatisticsView { get; set; }
-        private Playlist ActivePlaylist;
+        private Playlist ActivePlaylist { get; set; }
         private Match match;
         /// <summary>
         /// Gets the event bus of this shell.

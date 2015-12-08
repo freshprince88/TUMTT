@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ServiceStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class LastBallStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
@@ -35,7 +35,7 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public ServiceStatisticsViewModel(IEventAggregator eventAggregator)
+        public LastBallStatisticsViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();
