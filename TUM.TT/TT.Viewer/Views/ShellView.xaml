@@ -68,7 +68,7 @@
                     <ColumnDefinition x:Name="Column3" Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <ContentControl x:Name="FilterView" Grid.Column="0"/>
+                    <ContentControl x:Name="FilterStatisticsView" Grid.Column="0"/>
                 </Border>
                 <Border Grid.Column="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <ContentControl x:Name="ResultView" Grid.Column="1"/>

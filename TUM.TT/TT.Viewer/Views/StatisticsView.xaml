@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TT.Viewer.Views.FilterView"
+﻿<UserControl x:Class="TT.Viewer.Views.StatisticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,7 +10,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid x:Name="FilterStatisticsContainer">
         <Grid.RowDefinitions>
- 
+
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,19 +18,18 @@
                               "/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <TabControl Grid.Row="0" Grid.Column="0" x:Name="HeaderTabControl"  TabStripPlacement="Left" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabPanel}">
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
                 </Style>
             </TabControl.Resources>
-            <TabItem x:Name="ServiceTabHeader" Header="A"/>
-            <TabItem x:Name="ReceiveTabHeader" Header="R"/>
-            <TabItem x:Name="ThirdTabHeader" Header="3"/>
-            <TabItem x:Name="FourthTabHeader" Header="4"/>
-            <TabItem x:Name="LastTabHeader" Header="L"/>
-            <TabItem x:Name="KombiTabHeader" Header="K"/>
+            <TabItem x:Name="ServiceStatisticsTabHeader" Header="A"/>
+            <TabItem x:Name="ReceiveStatisticsTabHeader" Header="R"/>
+            <TabItem x:Name="ThirdStatisticsTabHeader" Header="3"/>
+            <TabItem x:Name="FourthStatisticsTabHeader" Header="4"/>
+            <TabItem x:Name="LastStatisticsTabHeader" Header="L"/>            
         </TabControl>
 
 

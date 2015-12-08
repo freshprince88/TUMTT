@@ -55,6 +55,7 @@ namespace TT.Viewer.ViewModels
                 this.ActivateItem(ServiceView);
             }
         }
+        
 
         public void FilterSelected(SelectionChangedEventArgs args)
         {

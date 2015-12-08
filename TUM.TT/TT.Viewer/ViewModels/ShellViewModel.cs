@@ -19,7 +19,7 @@ namespace TT.Viewer.ViewModels
         IShell
     {
         public MediaViewModel MediaView { get; private set; }
-        public FilterViewModel FilterView { get; private set; }
+        public FilterStatisticsViewModel FilterStatisticsView { get; private set; }
         public ResultViewModel ResultView { get; private set; }
         public PlaylistViewModel PlaylistView { get; private set; }
         public string SaveFileName { get; private set; }
@@ -35,7 +35,7 @@ namespace TT.Viewer.ViewModels
         {
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
-            FilterView = new FilterViewModel(Events);
+            FilterStatisticsView = new FilterStatisticsViewModel(Events);
             MediaView = new MediaViewModel(Events);
             ResultView = new ResultViewModel(resultTabs);
             PlaylistView = new PlaylistViewModel(Events);
@@ -63,7 +63,7 @@ namespace TT.Viewer.ViewModels
         {
             base.OnActivate();
             Events.Subscribe(this);
-            this.ActivateItem(FilterView);
+            this.ActivateItem(FilterStatisticsView);
             this.ActivateItem(MediaView);
             this.ActivateItem(ResultView);
             this.ActivateItem(PlaylistView);
