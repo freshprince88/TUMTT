@@ -10,8 +10,7 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class StatisticsViewModel : Conductor<IScreen>.Collection.OneActive,
-        IHandle<MatchOpenedEvent>,
-        IHandle<PlaylistChangedEvent>
+        IHandle<FilterSwitchedEvent>
     {
         public ServiceStatisticsViewModel ServiceStatisticsView { get; set; }
         public ReceiveStatisticsViewModel ReceiveStatisticsView { get; set; }
@@ -19,7 +18,6 @@ namespace TT.Viewer.ViewModels
         public FourthBallStatisticsViewModel FourthBallStatisticsView { get; set; }
         public LastBallStatisticsViewModel LastBallStatisticsView { get; set; }
         public Playlist ActivePlaylist { get; set; }
-        public Match match;
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -91,17 +89,9 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public void Handle(MatchOpenedEvent message)
+        public void Handle(FilterSwitchedEvent message)
         {
-            this.match = message.Match;
-            this.ActivePlaylist = message.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-        }
-
-        public void Handle(PlaylistChangedEvent message)
-        {
-            this.ActivePlaylist = this.match.Playlists.Where(p => p.Name == message.PlaylistName).FirstOrDefault();
-            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+            this.ActivePlaylist = message.Playlist;
         }
     }
 }

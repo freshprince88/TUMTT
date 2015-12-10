@@ -44,12 +44,12 @@ namespace TT.Viewer.ViewModels
                 this.ActivateItem(FilterView);
             }
         }
+
         public void FilterStatisticsSelected(SelectionChangedEventArgs args)
         {
             TabItem selected = args.AddedItems[0] as TabItem;
             switch (selected.Name)
             { //wie kann ich zwischen den 2 TabControls unterscheiden?
-
 
                 case "FilterTab":
                     this.ActivateItem(FilterView);
