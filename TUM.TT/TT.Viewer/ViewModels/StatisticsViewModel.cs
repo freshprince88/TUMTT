@@ -83,6 +83,7 @@ namespace TT.Viewer.ViewModels
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
                     break;
+                    case ""
 
                 default:
                     break;

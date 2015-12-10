@@ -161,6 +161,7 @@
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
+    <Compile Include="ViewModels\TotalMatchStatisticsViewModel.cs" />
     <Compile Include="Views\BasicFilterView.xaml.cs">
       <DependentUpon>BasicFilterView.xaml</DependentUpon>
     </Compile>
@@ -226,6 +227,9 @@
     </Compile>
     <Compile Include="Views\ThirdBallView.xaml.cs">
       <DependentUpon>ThirdBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TotalMatchStatisticsView.xaml.cs">
+      <DependentUpon>TotalMatchStatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
@@ -325,6 +329,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ThirdBallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TotalMatchStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

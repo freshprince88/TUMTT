@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ReceiveStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class TotalMatchStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
@@ -35,11 +35,12 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public ReceiveStatisticsViewModel(IEventAggregator eventAggregator)
+        public TotalMatchStatisticsViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();
             ActivePlaylist = new Playlist();
+
         }
 
         #region View Methods
@@ -88,7 +89,7 @@ namespace TT.Viewer.ViewModels
         {
             this.ActivePlaylist = message.Playlist;
 
-             UpdateSelection();
+            UpdateSelection();
         }
 
         #endregion
@@ -98,7 +99,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.ActivePlaylist.Rallies != null)
             {
-                SelectedRallies = this.ActivePlaylist.Rallies.Where(r => Convert.ToInt32(r.Length) > 1).ToList();
+                SelectedRallies = this.ActivePlaylist.Rallies;
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
