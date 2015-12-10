@@ -10,8 +10,7 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class FilterViewModel : Conductor<IScreen>.Collection.OneActive,
-        IHandle<MatchOpenedEvent>,
-        IHandle<PlaylistChangedEvent>
+        IHandle<FilterSwitchedEvent>
     {
         public ServiceViewModel ServiceView { get; set; }
         public ReceiveViewModel ReceiveView { get; set; }
@@ -20,7 +19,6 @@ namespace TT.Viewer.ViewModels
         public LastBallViewModel LastBallView { get; set; }
         public CombiViewModel CombiView { get; set; }
         private Playlist ActivePlaylist {  get; set; }
-        private Match match;
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -98,17 +96,9 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public void Handle(MatchOpenedEvent message)
+        public void Handle(FilterSwitchedEvent message)
         {
-            this.match = message.Match;
-            this.ActivePlaylist = message.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-        }
-
-        public void Handle(PlaylistChangedEvent message)
-        {
-            this.ActivePlaylist = this.match.Playlists.Where(p => p.Name == message.PlaylistName).FirstOrDefault();
-            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));        
+            this.ActivePlaylist = message.Playlist;
         }
     }
 }
