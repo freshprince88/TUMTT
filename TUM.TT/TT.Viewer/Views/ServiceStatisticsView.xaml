@@ -8,7 +8,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.ServiceStatisticsView"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="700" d:DesignWidth="300">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -40,9 +40,431 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Aufschlag"/></TextBlock>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="1" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        
-        <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="3" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        
+        <ContentControl x:Name="BasicFilterStatisticsView" Grid.Row="2" />
+        <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="3" Stroke="{DynamicResource AccentColorBrush}"   Margin="0 5 0 0"/>
+        <!--<ContentControl x:Name="PlacementStatisticsView" Grid.Row="4" />-->
+        <Grid Grid.Row="4" x:Name="BasisInformation" Margin="0 0 10 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="70"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Anzahl:"/>
+            <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="∑:"/>
+            <Label Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 1:"/>
+            <Label Grid.Row="0" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 2:"/>
+            <Button Grid.Row="0" Grid.Column="2" Style="{DynamicResource MetroAccentFlat}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="50"/>
+            <Button Grid.Row="0" Grid.Column="5" Style="{DynamicResource MetroAccentFlat}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="26"/>
+            <Button Grid.Row="0" Grid.Column="8" Style="{DynamicResource MetroAccentFlat}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="24"/>
+        </Grid>
+        <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="5" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+        <Grid x:Name="PlacementGrid" Grid.Row="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" HorizontalAlignment="Center" Content="Platzierung"/>            
+            <Viewbox Grid.Row="1" Margin="10 10 10 10">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" MinHeight="50"/>
+                        <RowDefinition Height="auto" MinHeight="50" />
+                        <RowDefinition Height="auto" MinHeight="50"/>
+                        <RowDefinition Height="auto" MinHeight="50"/>
+                        <RowDefinition Height="auto" MinHeight="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>                        
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>                     
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="5" Background="{DynamicResource GrayBrush5}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BorderBrush="White" BorderThickness="2 2 2 0" Background="{DynamicResource AccentColorBrush}"/>
+                    <Border Grid.Row="4" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="3" BorderBrush="White" BorderThickness="2 2 2 0" Background="{DynamicResource AccentColorBrush}"/>
+                    <Border Grid.Row="0" Grid.RowSpan="4" Grid.Column="2"  BorderBrush="Black" BorderThickness="1 0 1 0" />
+                    <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Margin="2 0 0 0" BorderBrush="Black" BorderThickness="0 1 0 1" />
+
+                    <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="∑"/>
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="l"/>
+                    <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="h"/>
+                    <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="k"/>
+                    <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="F"/>
+                    <Grid Grid.Row="0" Grid.Column="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementForhandAllTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementForhandAllPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandAllPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1" Margin="2 2 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementForhandLongTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" VerticalAlignment="Stretch" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementForhandLongPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"  />
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.Column="1" Margin="2 1 0 1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementForhandHalfLongTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementForhandHalfLongPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandHalfLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandHalfLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible" />
+                    </Grid>
+                    <Grid Grid.Row="3" Grid.Column="1" Margin="2 0 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementForhandShortTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementForhandShortPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandShortDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PlacementForhandShortPointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"  />
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementMiddleAllTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementMiddleAllPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementMiddleAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PlacementMiddleAllPointsLostnButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible" />
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="2" Margin="1 2 1 0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementMiddleLongTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementMiddleLongPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementMiddleLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PlacementMiddleLongPointsLostnButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible" />
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.Column="2" Margin="1 1 1 1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementMiddleHalfLongTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementMiddleHalfLongPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible"/>
+                        <Button x:Name="PlacementMiddleHalflongirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PlacementMiddleHalfLongPointsLostnButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible" />
+                    </Grid>
+                    <Grid Grid.Row="3" Grid.Column="2" Margin="1 0 1 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementMiddleShortTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementMiddleShortPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible"/>
+                        <Button x:Name="PlacementMiddleShortDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementMiddleShortPointsLostnButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible" />
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementBackhandAllTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementBackhandAllPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementBackhandAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementBackhandAllPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%"  Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="3" Margin="0 2 2 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementBackhandLongTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementBackhandLongPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible"/>
+                        <Button x:Name="PlacementBackhandLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementBackhandLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%"  Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.Column="3" Margin="0 1 2 1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementBackhandHalfLongTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementBackhandHalfLongPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible"/>
+                        <Button x:Name="PlacementBackhandHalfLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementBackhandHalfLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible" />
+                    </Grid>
+                    <Grid Grid.Row="3" Grid.Column="3" Margin="0 0 2 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementBackhandShortTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementBackhandShortPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible"/>
+                        <Button x:Name="PlacementBackhandShortDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementBackhandShortPointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible" />
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementAllLongTotalButton"  Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementAllLongPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible"/>
+                        <Button x:Name="PlacementAllLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementAllLongPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%"  Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.Column="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementAllHalfLongTotalButton"  Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementAllHalfLongPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible"/>
+                        <Button x:Name="PlacementAllHalfLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementAllHalfLongPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%"  Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="3" Grid.Column="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementAllShortTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PlacementAllShortPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PlacementAllShortDirectPointsWonButton"  Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
+                        <Button x:Name="PlacementAllShortPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%"  Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="4" Grid.Column="2" Margin="0 2 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PlacementAllServiceErrorsTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                    </Grid>
+                </Grid>
+            </Viewbox>
+            <Label Grid.Row="2" HorizontalAlignment="Center" Content="Position"/>
+            <Expander  Grid.Row="3" Background="Transparent" Header="Position">
+                <Viewbox   Margin="10 10 10 10">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" MinHeight="20"/>
+                        <RowDefinition Height="auto" MinHeight="50" />
+                        
+                        
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>
+                        <ColumnDefinition Width="auto" MinWidth="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="5" Background="{DynamicResource GrayBrush5}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="White" BorderThickness="2 0 2 2" Background="{DynamicResource AccentColorBrush}"/>
+                    <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"  BorderBrush="Black" BorderThickness="1 0 1 0" />
+                    <Grid Grid.Row="1" Grid.Column="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PositionForhandTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PositionForhandPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PositiontForhandDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PositionForhandPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="2" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PositionMiddleTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PositionMiddlePointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PositiontMiddleDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PositionMiddlePointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="3" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="PositionBackhandTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="PositionBackhandPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="PositiontBackhandDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="PositionBackhandPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                    </Grid>
+
+                </Grid>
+            </Viewbox>
+            </Expander>
+
+        </Grid>
+        <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+        <Grid x:Name="TypeGrid" Grid.Row="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" HorizontalAlignment="Center" Content="Typ"/>
+            <Viewbox Grid.Row="1" Margin="10 10 10 10">
+            <Grid ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" MinWidth="60"/>
+                    <ColumnDefinition Width="auto" MinWidth="60"/>
+                    <ColumnDefinition Width="auto" MinWidth="60"/>
+                    <ColumnDefinition Width="auto" MinWidth="60"/>
+                    <ColumnDefinition Width="auto" MinWidth="60"/>
+                    <ColumnDefinition Width="auto" MinWidth="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Pendulum"/>
+                    <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Gegenläufer"/>
+                    <Label Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Tomahawk"/>
+                    <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Spezial"/>
+                    <Label Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="∑"/>
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="VH"/>
+                    <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="RH"/>
+                    <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="∑"/>
+                    <Grid Grid.Row="1" Grid.Column="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="TypeForhandPendulumTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 -5 2 -5"  FontSize="40"   Content="9"  />
+                        <Button x:Name="TypeForhandPendulumPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                        <Button x:Name="TypeForhandPendulumDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                        <Button x:Name="TypeForhandPendulumPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                    </Grid>
+
+                </Grid>
+            </Viewbox>
+        </Grid>
     </Grid>
 </UserControl>
 

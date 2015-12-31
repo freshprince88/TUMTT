@@ -17,6 +17,7 @@ namespace TT.Viewer.ViewModels
         public ThirdBallStatisticsViewModel ThirdBallStatisticsView { get; set; }
         public FourthBallStatisticsViewModel FourthBallStatisticsView { get; set; }
         public LastBallStatisticsViewModel LastBallStatisticsView { get; set; }
+        public TotalMatchStatisticsViewModel TotalMatchStatisticsView { get; set; }
         public Playlist ActivePlaylist { get; set; }
 
         /// <summary>
@@ -44,6 +45,7 @@ namespace TT.Viewer.ViewModels
             ThirdBallStatisticsView = new ThirdBallStatisticsViewModel(this.events);
             FourthBallStatisticsView = new FourthBallStatisticsViewModel(this.events);
             LastBallStatisticsView = new LastBallStatisticsViewModel(this.events);
+            TotalMatchStatisticsView = new TotalMatchStatisticsViewModel(this.events);
 
             // Activate the welcome model
             if (this.ActiveItem == null)
@@ -83,7 +85,12 @@ namespace TT.Viewer.ViewModels
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
                     break;
-                    case ""
+                case "TotalMatchStatisticsTabHeader":
+                    this.ActivateItem(TotalMatchStatisticsView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
+                    break;
+
 
                 default:
                     break;

@@ -11,16 +11,12 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ServiceStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class TotalMatchViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
 
         #region Properties
-
-        public BasicFilterStatisticsViewModel BasicFilterStatisticsView { get; set; }
-        public PlacementStatisticsViewModel PlacementStatisticsView { get; set; }
-        public PlacementStatisticsTableViewModel PlacementStatisticsTableView { get; set; }
 
         public List<Rally> SelectedRallies { get; private set; }
         public Playlist ActivePlaylist { get; private set; }
@@ -39,22 +35,11 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
 
-        public ServiceStatisticsViewModel(IEventAggregator eventAggregator)
+        public TotalMatchViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();
             ActivePlaylist = new Playlist();
-            PlacementStatisticsTableView = new PlacementStatisticsTableViewModel(this.events);
-            PlacementStatisticsView = new PlacementStatisticsViewModel(this.events);
-            BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events)
-            {
-                MinRallyLength = 0,
-                LastStroke = false,
-                StrokeNumber = 0
-
-            };
-
-
 
         }
 
@@ -78,9 +63,6 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            this.ActivateItem(PlacementStatisticsView);
-            this.ActivateItem(PlacementStatisticsTableView);
-            this.ActivateItem(BasicFilterStatisticsView);
 
 
         }
@@ -88,12 +70,9 @@ namespace TT.Viewer.ViewModels
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
-            this.DeactivateItem(PlacementStatisticsView, close);
-            this.DeactivateItem(BasicFilterStatisticsView, close);
 
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
-        
         }
 
         #endregion
@@ -120,7 +99,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.ActivePlaylist.Rallies != null)
             {
-                SelectedRallies = BasicFilterStatisticsView.SelectedRallies;
+                SelectedRallies = this.ActivePlaylist.Rallies;
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }

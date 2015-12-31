@@ -17,6 +17,7 @@ namespace TT.Viewer.ViewModels
         public ThirdBallViewModel ThirdBallView { get; set; }
         public FourthBallViewModel FourthBallView { get; set; }
         public LastBallViewModel LastBallView { get; set; }
+        public TotalMatchViewModel TotalMatchView { get; set; }
         public CombiViewModel CombiView { get; set; }
         private Playlist ActivePlaylist {  get; set; }
 
@@ -45,6 +46,7 @@ namespace TT.Viewer.ViewModels
             ThirdBallView = new ThirdBallViewModel(this.events);
             ReceiveView = new ReceiveViewModel(this.events);
             ServiceView = new ServiceViewModel(this.events);
+            TotalMatchView = new TotalMatchViewModel(this.events);
             CombiView = new CombiViewModel(this.events);
 
             // Activate the welcome model
@@ -60,33 +62,38 @@ namespace TT.Viewer.ViewModels
             TabItem selected = args.AddedItems[0] as TabItem;
             switch (selected.Name)
             {
-                case "ServiceTabHeader":
+                case "ServiceFilterTabHeader":
                     this.ActivateItem(ServiceView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
 
                     break;
-                case "ReceiveTabHeader":
+                case "ReceiveFilterTabHeader":
                     this.ActivateItem(ReceiveView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
                     break;
-                case "ThirdTabHeader":
+                case "ThirdFilterTabHeader":
                     this.ActivateItem(ThirdBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
                     break;
-                case "FourthTabHeader":
+                case "FourthFilterTabHeader":
                     this.ActivateItem(FourthBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
                     break;
-                case "LastTabHeader":
+                case "LastFilterTabHeader":
                     this.ActivateItem(LastBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
                     break;
-                case "KombiTabHeader":
+                case "TotalMatchFilterTabHeader":
+                    this.ActivateItem(TotalMatchView);
+                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
+                    break;
+                case "KombiFilterTabHeader":
                     this.ActivateItem(CombiView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));

@@ -129,9 +129,12 @@
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />
+    <Compile Include="ViewModels\BasicFilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PlacementStatisticsTableViewModel.cs" />
+    <Compile Include="ViewModels\PlacementStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PlaylistItem.cs" />
     <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
@@ -162,6 +165,10 @@
     <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
     <Compile Include="ViewModels\TotalMatchStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\TotalMatchViewModel.cs" />
+    <Compile Include="Views\BasicFilterStatisticsView.xaml.cs">
+      <DependentUpon>BasicFilterStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BasicFilterView.xaml.cs">
       <DependentUpon>BasicFilterView.xaml</DependentUpon>
     </Compile>
@@ -182,6 +189,12 @@
     </Compile>
     <Compile Include="Views\LastBallStatisticsView.xaml.cs">
       <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
+      <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlacementStatisticsView.xaml.cs">
+      <DependentUpon>PlacementStatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
@@ -231,10 +244,17 @@
     <Compile Include="Views\TotalMatchStatisticsView.xaml.cs">
       <DependentUpon>TotalMatchStatisticsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TotalMatchView.xaml.cs">
+      <DependentUpon>TotalMatchView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BasicFilterStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BasicFilterView.xaml">
       <SubType>Designer</SubType>
@@ -273,6 +293,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlacementStatisticsTableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlacementStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -336,6 +364,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TotalMatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -367,12 +399,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\WindowsIcons-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Entypo-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\TT.Lib\TT.Lib.csproj">
       <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
       <Name>TT.Lib</Name>
@@ -380,6 +406,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />
+    <Resource Include="Resources\Entypo-license.txt" />
+    <Resource Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

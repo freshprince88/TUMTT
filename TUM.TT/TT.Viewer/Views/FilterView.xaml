@@ -25,12 +25,14 @@
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
                 </Style>
             </TabControl.Resources>
-            <TabItem x:Name="ServiceTabHeader" Header="A"/>
-            <TabItem x:Name="ReceiveTabHeader" Header="R"/>
-            <TabItem x:Name="ThirdTabHeader" Header="3"/>
-            <TabItem x:Name="FourthTabHeader" Header="4"/>
-            <TabItem x:Name="LastTabHeader" Header="L"/>
-            <TabItem x:Name="KombiTabHeader" Header="K"/>
+            <TabItem x:Name="ServiceFilterTabHeader" Header="A"/>
+            <TabItem x:Name="ReceiveFilterTabHeader" Header="R"/>
+            <TabItem x:Name="ThirdFilterTabHeader" Header="3"/>
+            <TabItem x:Name="FourthFilterTabHeader" Header="4"/>
+            <TabItem x:Name="LastFilterTabHeader" Header="L"/>
+            <TabItem x:Name="TotalMatchFilterTabHeader" Header="G"/>
+            <TabItem x:Name="KombiFilterTabHeader" Header="K"/>
+            
         </TabControl>
 
 
