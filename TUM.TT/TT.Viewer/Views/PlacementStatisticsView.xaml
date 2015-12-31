@@ -1,0 +1,99 @@
+﻿<UserControl 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lib="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.PlacementStatisticsView"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0" ShowGridLines="True" Margin="0 10 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="kurz">
+            </Label>
+            <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Content="halblang">
+            </Label>
+            <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Content="lang">
+            </Label>
+            <Label Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Content="∑">
+            </Label>
+            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Content="Punkt">
+            </Label>
+            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Content="direkter Punkt">
+            </Label>
+            <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Content="kein Punkt">
+            </Label>
+            <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Content="∑">
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1" ShowGridLines="True" Margin="0 10 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="VH">
+            </Label>
+            <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Content="Mitte">
+            </Label>
+            <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Content="RH">
+            </Label>
+            <Label Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Content="∑">
+            </Label>
+            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Content="Punkt">
+            </Label>
+            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Content="direkter Punkt">
+            </Label>
+            <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Content="kein Punkt">
+            </Label>
+            <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Content="∑">
+            </Label>
+        </Grid>
+    </Grid>
+</UserControl>
+

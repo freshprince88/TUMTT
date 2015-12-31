@@ -50,6 +50,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\packages\gong-wpf-dragdrop.0.1.4.3\lib\net40\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="Itenso.Windows.Controls.ListViewLayout, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
@@ -74,23 +77,29 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.AvalonDock">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.4\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -100,12 +109,18 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Events\FilterSelectionChangedEvent.cs" />
+    <Compile Include="Events\PlaylistChangedEvent.cs" />
+    <Compile Include="Events\MatchEditedEvent.cs" />
+    <Compile Include="Events\PlaylistNamedEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
     <Compile Include="Events\FilterSwitchedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
+    <Compile Include="Events\SaveMatchEvent.cs" />
+    <Compile Include="Events\ShowInputDialogEvent.cs" />
+    <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\TableKombiViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
@@ -114,20 +129,28 @@
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />
-    <Compile Include="Models\PlaylistItem.cs" />
+    <Compile Include="ViewModels\BasicFilterStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PlacementStatisticsTableViewModel.cs" />
+    <Compile Include="ViewModels\PlacementStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistItem.cs" />
     <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\FourthBallViewModel.cs" />
     <Compile Include="ViewModels\IResultViewTabItem.cs" />
-    <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ResultListItem.cs" />
     <Compile Include="ViewModels\LastBallViewModel.cs" />
     <Compile Include="ViewModels\ListResultViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
-    <Compile Include="ViewModels\ReceptionViewModel.cs" />
+    <Compile Include="ViewModels\ReceiveViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
+    <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
@@ -135,18 +158,43 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
+    <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\TableKombiViewModel.cs" />
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
+    <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
+    <Compile Include="ViewModels\TotalMatchStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\TotalMatchViewModel.cs" />
+    <Compile Include="Views\BasicFilterStatisticsView.xaml.cs">
+      <DependentUpon>BasicFilterStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BasicFilterView.xaml.cs">
       <DependentUpon>BasicFilterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CombiView.xaml.cs">
       <DependentUpon>CombiView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FilterStatisticsView.xaml.cs">
+      <DependentUpon>FilterStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterView.xaml.cs">
+      <DependentUpon>FilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FourthBallStatisticsView.xaml.cs">
+      <DependentUpon>FourthBallStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LastBallStatisticsView.xaml.cs">
+      <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
+      <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlacementStatisticsView.xaml.cs">
+      <DependentUpon>PlacementStatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
@@ -154,8 +202,14 @@
     <Compile Include="Views\LastBallView.xaml.cs">
       <DependentUpon>LastBallView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReceptionView.xaml.cs">
-      <DependentUpon>ReceptionView.xaml</DependentUpon>
+    <Compile Include="Views\ReceiveStatisticsView.xaml.cs">
+      <DependentUpon>ReceiveStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReceiveView.xaml.cs">
+      <DependentUpon>ReceiveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceStatisticsView.xaml.cs">
+      <DependentUpon>ServiceStatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ServiceView.xaml.cs">
       <DependentUpon>ServiceView.xaml</DependentUpon>
@@ -165,6 +219,9 @@
     </Compile>
     <Compile Include="Views\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticsView.xaml.cs">
+      <DependentUpon>StatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableKombiView.xaml.cs">
       <DependentUpon>TableKombiView.xaml</DependentUpon>
@@ -178,13 +235,26 @@
     <Compile Include="Views\TableStandardView.xaml.cs">
       <DependentUpon>TableStandardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ThirdBallStatisticsView.xaml.cs">
+      <DependentUpon>ThirdBallStatisticsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ThirdBallView.xaml.cs">
       <DependentUpon>ThirdBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TotalMatchStatisticsView.xaml.cs">
+      <DependentUpon>TotalMatchStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TotalMatchView.xaml.cs">
+      <DependentUpon>TotalMatchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BasicFilterStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BasicFilterView.xaml">
       <SubType>Designer</SubType>
@@ -194,11 +264,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FilterStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FilterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FourthBallStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FourthBallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LastBallStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,15 +296,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PlacementStatisticsTableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlacementStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ReceptionView.xaml">
+    <Page Include="Views\ReceiveStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReceiveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServiceStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,6 +336,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\StatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TableKombiView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -250,7 +352,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ThirdBallStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ThirdBallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TotalMatchStatisticsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TotalMatchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -285,12 +399,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\WindowsIcons-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Entypo-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\TT.Lib\TT.Lib.csproj">
       <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
       <Name>TT.Lib</Name>
@@ -298,6 +406,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />
+    <Resource Include="Resources\Entypo-license.txt" />
+    <Resource Include="Resources\WindowsIcons-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

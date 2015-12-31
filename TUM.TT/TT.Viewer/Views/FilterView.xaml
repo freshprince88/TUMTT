@@ -8,20 +8,38 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Expander x:Name="MenuExpander" ExpandDirection="Right" Margin="0 0 0 0" IsExpanded="True">
-        <Expander.Header>
-            <TabControl x:Name="HeaderTabControl" TabStripPlacement="Left" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
-                <TabItem x:Name="ServiceTabHeader" Header="A"/>
-                <TabItem x:Name="ReceiveTabHeader" Header="R"/>
-                <TabItem x:Name="ThirdTabHeader" Header="3"/>
-                <TabItem x:Name="FourthTabHeader" Header="4"/>
-                <TabItem x:Name="LastTabHeader" Header="L"/>
-                <TabItem x:Name="KombiTabHeader" Header="K"/>
-            </TabControl>
-        </Expander.Header>
+    <Grid x:Name="FilterStatisticsContainer">
+        <Grid.RowDefinitions>
+ 
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto
+                              "/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <TabControl Grid.Row="0" Grid.Column="0" x:Name="HeaderTabControl"  TabStripPlacement="Left" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabPanel}">
+                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
+                </Style>
+            </TabControl.Resources>
+            <TabItem x:Name="ServiceFilterTabHeader" Header="A"/>
+            <TabItem x:Name="ReceiveFilterTabHeader" Header="R"/>
+            <TabItem x:Name="ThirdFilterTabHeader" Header="3"/>
+            <TabItem x:Name="FourthFilterTabHeader" Header="4"/>
+            <TabItem x:Name="LastFilterTabHeader" Header="L"/>
+            <TabItem x:Name="TotalMatchFilterTabHeader" Header="G"/>
+            <TabItem x:Name="KombiFilterTabHeader" Header="K"/>
+            
+        </TabControl>
 
-        <ScrollViewer>
+
+        <ScrollViewer Grid.Row="0" Grid.Column="1">
             <ContentControl x:Name="ActiveItem" />
         </ScrollViewer>
-    </Expander>
+    </Grid>
+
+
 </UserControl>

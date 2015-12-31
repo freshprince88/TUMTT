@@ -35,6 +35,8 @@ namespace TT.Viewer.Views
 
         private int RallyStart;
         private int RallyEnd;
+        private int NextRallyStart;
+        private int PreviousRallyStart;
 
         public MediaView()
         {
@@ -141,6 +143,9 @@ namespace TT.Viewer.Views
         {
             RallyStart = message.Start;
             RallyEnd = message.End;
+            NextRallyStart = message.Next;
+            PreviousRallyStart = message.Previous;
+
 
              // Neuen Timer erstellen 
             double dauer = (RallyEnd - RallyStart) * (1 / myMediaElement.SpeedRatio); // Spieldauer des Video ermitteln
@@ -153,6 +158,7 @@ namespace TT.Viewer.Views
             }
             else
             {
+                
                 Events.PublishOnUIThread(MediaViewModel.PlayPause.Pause);
             }
         }
@@ -181,7 +187,16 @@ namespace TT.Viewer.Views
                     //slider_timeline.Value = 0;
                     TimeSpan ts = new TimeSpan(0, 0, 0, 0, RallyStart);
                     myMediaElement.Position = ts;
-                }
+     
+                //Events.PublishOnUIThread(new VideoPlayEvent()
+                //{
+                //    Start = RallyStart ,
+                //    End = RallyEnd,
+                //    Next = NextRallyStart,
+                //    Previous = PreviousRallyStart
+                //}
+                //    );
+            }
                 else
                 {
                     double dauer = RallyEnd;

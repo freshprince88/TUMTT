@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 // 
@@ -73,7 +74,7 @@ public partial class Match
 
     private SecondPlayer secondPlayerField;
 
-    private Playlist[] playlistsField;
+    private List<Playlist> playlistsField;
 
     private string tournamentField;
 
@@ -116,7 +117,7 @@ public partial class Match
     /// <remarks/>
     [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Playlist", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable = false)]
-    public Playlist[] Playlists
+    public List<Playlist> Playlists
     {
         get
         {
@@ -450,14 +451,14 @@ public partial class SecondPlayer
 public partial class Playlist
 {
 
-    private Rally[] ralliesField;
+    private List<Rally> ralliesField;
 
     private string nameField;
 
     /// <remarks/>
     [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Rally", Form = System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable = false)]
-    public Rally[] Rallies
+    public List<Rally> Rallies
     {
         get
         {
@@ -497,7 +498,7 @@ public partial class Rally
 
     private CurrentSetScore currentSetScoreField;
 
-    private Schlag[] schlagField;
+    private List<Schlag> schlagField;
 
     private string nummerField;
 
@@ -543,7 +544,7 @@ public partial class Rally
 
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("Schlag", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public Schlag[] Schlag
+    public List<Schlag> Schlag
     {
         get
         {

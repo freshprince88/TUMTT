@@ -6,6 +6,7 @@
              xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
 
@@ -14,24 +15,26 @@
             BorderThickness="0"
             SelectedIndex="0"
             ctrl:ListViewLayoutManager.Enabled="true" 
+            dd:DragDrop.IsDragSource="True"
+            dd:DragDrop.IsDropTarget="False"
             cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action ListItemSelected($source)]">
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding Score}"
                                             Header="Punkte" 
-                                ctrl:ProportionalColumn.Width="1"/>
+                                ctrl:ProportionalColumn.Width="2"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Sets}"
                                             Header="Sätze" 
-                                ctrl:ProportionalColumn.Width="1"/>
+                                ctrl:ProportionalColumn.Width="2"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Server}"
                                             Header="Aufschlag" 
-                                ctrl:ProportionalColumn.Width="2"/>
+                                ctrl:ProportionalColumn.Width="3"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Point}"
                                             Header="Punkt" 
-                                ctrl:ProportionalColumn.Width="2"/>
+                                ctrl:ProportionalColumn.Width="3"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Length}"
                                             Header="Länge" 
-                                ctrl:ProportionalColumn.Width="1"/>
+                                ctrl:ProportionalColumn.Width="2"/>
             </GridView>
         </ListView.View>
     </ListView>

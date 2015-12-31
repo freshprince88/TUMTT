@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:lib="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
-        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:cal="http://www.caliburnproject.org" 
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                    
@@ -67,12 +67,14 @@
                     <ColumnDefinition x:Name="Column2" Width="*"/>
                     <ColumnDefinition x:Name="Column3" Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
+                    <ContentControl x:Name="FilterStatisticsView" Grid.Column="0"/>
+                </Border>
+                <Border Grid.Column="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
+                        <ContentControl x:Name="ResultView" Grid.Column="1"/>
+                    </Border>
 
-                <ContentControl x:Name="FilterView" Grid.Column="0"/>
-
-                <ContentControl x:Name="ResultView" Grid.Column="1"/>
-                
-                <Grid Grid.Column="2">
+                    <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" />
                         <RowDefinition Height="*" />
