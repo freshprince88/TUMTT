@@ -10,7 +10,7 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class StatisticsViewModel : Conductor<IScreen>.Collection.OneActive,
-        IHandle<FilterSwitchedEvent>
+        IHandle<FilterSwitchedEvent>,IHandle<MatchInformationEvent>
     {
         public ServiceStatisticsViewModel ServiceStatisticsView { get; set; }
         public ReceiveStatisticsViewModel ReceiveStatisticsView { get; set; }
@@ -19,6 +19,7 @@ namespace TT.Viewer.ViewModels
         public LastBallStatisticsViewModel LastBallStatisticsView { get; set; }
         public TotalMatchStatisticsViewModel TotalMatchStatisticsView { get; set; }
         public Playlist ActivePlaylist { get; set; }
+        private Match Match { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -64,31 +65,37 @@ namespace TT.Viewer.ViewModels
                     this.ActivateItem(ServiceStatisticsView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ReceiveStatisticsTabHeader":
                     this.ActivateItem(ReceiveStatisticsView); 
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ThirdStatisticsTabHeader":
                     this.ActivateItem(ThirdBallStatisticsView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "FourthStatisticsTabHeader":
                     this.ActivateItem(FourthBallStatisticsView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "LastStatisticsTabHeader":
                     this.ActivateItem(LastBallStatisticsView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "TotalMatchStatisticsTabHeader":
                     this.ActivateItem(TotalMatchStatisticsView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
 
 
@@ -100,6 +107,10 @@ namespace TT.Viewer.ViewModels
         public void Handle(FilterSwitchedEvent message)
         {
             this.ActivePlaylist = message.Playlist;
+        }
+        public void Handle(MatchInformationEvent message)
+        {
+            this.Match = message.Match;
         }
     }
 }

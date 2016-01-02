@@ -89,6 +89,7 @@ namespace TT.Viewer.ViewModels
         public void Handle(MatchOpenedEvent message)
         {
             this.Match = message.Match;
+            this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
             this.Items.Clear();
 
             foreach (var playlist in message.Match.Playlists)

@@ -429,7 +429,7 @@
                     <Label HorizontalAlignment="Center" Content="Technik"/>
                 </Expander.Header>
                 <Viewbox Grid.Row="1">
-                    <Grid ShowGridLines="True">
+                    <Grid ShowGridLines="False">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -444,15 +444,29 @@
                             <ColumnDefinition Width="auto" MinWidth="60"/>
                             <ColumnDefinition Width="auto" MinWidth="60"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Pendulum"/>
-                        <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Gegenläufer"/>
-                        <Label Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Tomahawk"/>
-                        <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="Spezial"/>
+                        <Border Grid.Row="1" Grid.Column="5" Grid.RowSpan="2" Background="{DynamicResource GrayBrush5}"/>
+                        <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4"  Background="{DynamicResource GrayBrush5}"/>
+                        <Border Grid.Row="3" Grid.Column="5" Background="{DynamicResource GrayBrush2}"/>
+                        <Border Grid.Row="0" Grid.Column="5" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="2 0 0 0" />
+                        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 2 0 0"/>
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 0 0 1" />
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 0 0 1"/>
+                        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="0 0 1 0" />                        
+                        <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
+                        <Border Grid.Row="0" Grid.Column="3" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
+                        <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
+                        
+                        
+                        <Label Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"  Content="Pendulum"/>
+                        <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Reverse"/>
+                        <Label Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Tomahawk"/>
+                        <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Spezial"/>
                         <Label Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="∑"/>
                         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="VH"/>
                         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="RH"/>
                         <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="∑"/>
-                        <Grid Grid.Row="1" Grid.Column="1" >
+                        
+                        <Grid Grid.Row="1" Grid.Column="1" Margin="0 0 0 1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -467,7 +481,7 @@
                             <Button x:Name="ForhandPendulumDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="ForhandPendulumPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="2" Grid.Column="1" >
+                        <Grid Grid.Row="2" Grid.Column="1" Margin="0 0 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -482,7 +496,7 @@
                             <Button x:Name="BackhandPendulumDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="BackhandPendulumPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="3" Grid.Column="1" >
+                        <Grid Grid.Row="3" Grid.Column="1" Margin="0 2 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -497,7 +511,7 @@
                             <Button x:Name="AllPendulumDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="AllPendulumPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="1" Grid.Column="2" >
+                        <Grid Grid.Row="1" Grid.Column="2" Margin="1 0 0 1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -512,7 +526,7 @@
                             <Button x:Name="ForhandReversePendulumDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="ForhandReversePendulumPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="2" Grid.Column="2" >
+                        <Grid Grid.Row="2" Grid.Column="2" Margin="1 0 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -527,7 +541,7 @@
                             <Button x:Name="BackhandReversePendulumDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="BackhandReversePendulumPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="3" Grid.Column="2" >
+                        <Grid Grid.Row="3" Grid.Column="2" Margin=" 1 2 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -542,7 +556,7 @@
                             <Button x:Name="AllReversePendulumDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="AllReversePendulumPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="1" Grid.Column="3" >
+                        <Grid Grid.Row="1" Grid.Column="3" Margin="1 0 0 1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -557,7 +571,7 @@
                             <Button x:Name="ForhandTomahawkDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="ForhandTomahawkPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="2" Grid.Column="3" >
+                        <Grid Grid.Row="2" Grid.Column="3" Margin="1 0 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -572,7 +586,7 @@
                             <Button x:Name="BackhandTomahawkDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="BackhandTomahawkPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="3" Grid.Column="3" >
+                        <Grid Grid.Row="3" Grid.Column="3" Margin="1 2 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -587,7 +601,7 @@
                             <Button x:Name="AllTomahawkDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="AllTomahawkPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="1" Grid.Column="4" >
+                        <Grid Grid.Row="1" Grid.Column="4" Margin="1 0 0 1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -602,7 +616,7 @@
                             <Button x:Name="ForhandSpecialDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="ForhandSpecialPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="2" Grid.Column="4" >
+                        <Grid Grid.Row="2" Grid.Column="4" Margin="1 0 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -617,7 +631,7 @@
                             <Button x:Name="BackhandSpecialDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="BackhandSpecialPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="3" Grid.Column="4" >
+                        <Grid Grid.Row="3" Grid.Column="4" Margin="1 2 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -632,7 +646,7 @@
                             <Button x:Name="AllSpecialDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="AllSpecialPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="1" Grid.Column="5" >
+                        <Grid Grid.Row="1" Grid.Column="5" Margin="2 0 0 1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -647,7 +661,7 @@
                             <Button x:Name="ForhandAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="ForhandAllPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="2" Grid.Column="5" >
+                        <Grid Grid.Row="2" Grid.Column="5" Margin="2 0 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -662,7 +676,7 @@
                             <Button x:Name="BackhandAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="BackhandAllPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="3" Grid.Column="5" >
+                        <Grid Grid.Row="3" Grid.Column="5" Margin="2 2 0 0" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -672,10 +686,10 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="AllServiceTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="9"  />
-                            <Button x:Name="AllServicePointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
-                            <Button x:Name="AllServiceDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
-                            <Button x:Name="AllServicePointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                            <Button x:Name="AllServiceTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="9"  />
+                            <Button x:Name="AllServicePointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                            <Button x:Name="AllServiceDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                            <Button x:Name="AllServicePointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
 
                     </Grid>
@@ -707,10 +721,11 @@
                             <ColumnDefinition Width="auto" MinWidth="60"/>
                             <ColumnDefinition Width="auto" MinWidth="60"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Row="1" Grid.Column="5" Grid.RowSpan="3" Background="{DynamicResource GrayBrush5}"/>
+                        <Border Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" Background="{DynamicResource GrayBrush5}"/>
                         <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"  Background="{DynamicResource GrayBrush5}"/>
-                        <Border Grid.Row="0" Grid.Column="5" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="2 0 0 0" />
-                        <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0 2 0 0"/>
+                        <Border Grid.Row="4" Grid.Column="4" Background="{DynamicResource GrayBrush2}"/>
+                        <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="2 0 0 0" />
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0 2 0 0"/>
                         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0 0 0 1" />
                         <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="0 0 1 0" />
                         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0 1 0 1"/>
@@ -959,10 +974,10 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="AllSpinTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="9"  />
-                            <Button x:Name="AllSpinPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
-                            <Button x:Name="AllSpinDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
-                            <Button x:Name="AllSpinPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                            <Button x:Name="AllSpinTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="9"  />
+                            <Button x:Name="AllSpinPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                            <Button x:Name="AllSpinDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                            <Button x:Name="AllSpinPointsLostButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
 
                     </Grid>

@@ -10,7 +10,7 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class FilterViewModel : Conductor<IScreen>.Collection.OneActive,
-        IHandle<FilterSwitchedEvent>
+        IHandle<FilterSwitchedEvent>, IHandle<MatchInformationEvent>
     {
         public ServiceViewModel ServiceView { get; set; }
         public ReceiveViewModel ReceiveView { get; set; }
@@ -19,7 +19,8 @@ namespace TT.Viewer.ViewModels
         public LastBallViewModel LastBallView { get; set; }
         public TotalMatchViewModel TotalMatchView { get; set; }
         public CombiViewModel CombiView { get; set; }
-        private Playlist ActivePlaylist {  get; set; }
+        private Playlist ActivePlaylist { get; set; }
+        private Match Match { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -51,11 +52,11 @@ namespace TT.Viewer.ViewModels
 
             // Activate the welcome model
             if (this.ActiveItem == null)
-            {                
+            {
                 this.ActivateItem(ServiceView);
             }
         }
-        
+
 
         public void FilterSelected(SelectionChangedEventArgs args)
         {
@@ -66,37 +67,43 @@ namespace TT.Viewer.ViewModels
                     this.ActivateItem(ServiceView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ReceiveFilterTabHeader":
                     this.ActivateItem(ReceiveView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ThirdFilterTabHeader":
                     this.ActivateItem(ThirdBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "FourthFilterTabHeader":
                     this.ActivateItem(FourthBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "LastFilterTabHeader":
                     this.ActivateItem(LastBallView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "TotalMatchFilterTabHeader":
                     this.ActivateItem(TotalMatchView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "KombiFilterTabHeader":
                     this.ActivateItem(CombiView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 default:
                     break;
@@ -106,6 +113,11 @@ namespace TT.Viewer.ViewModels
         public void Handle(FilterSwitchedEvent message)
         {
             this.ActivePlaylist = message.Playlist;
+        }
+
+        public void Handle(MatchInformationEvent message)
+        {
+            this.Match = message.Match;
         }
     }
 }
