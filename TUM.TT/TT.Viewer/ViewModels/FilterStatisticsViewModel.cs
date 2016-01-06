@@ -69,7 +69,7 @@ namespace TT.Viewer.ViewModels
         public void Handle(MatchOpenedEvent message)
         {
             this.match = message.Match;
-            this.events.PublishOnUIThread(new MatchInformationEvent(this.match));
+            this.events.BeginPublishOnUIThread(new MatchInformationEvent(this.match));
             this.ActivePlaylist = message.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
         }

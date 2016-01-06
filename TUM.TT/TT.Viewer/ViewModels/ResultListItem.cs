@@ -11,7 +11,7 @@ using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ResultListItem : Conductor<IScreen>.Collection.AllActive, IHandle<MatchInformationEvent>
+    public class ResultListItem : Conductor<IScreen>.Collection.AllActive, IHandle<MatchOpenedEvent>
     {
         public string Score { get; set; }
         public string Sets { get; set; }
@@ -34,7 +34,6 @@ namespace TT.Viewer.ViewModels
         {
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
-
             Match = null;
             Rally = null;
             Score = String.Empty;
@@ -53,7 +52,7 @@ namespace TT.Viewer.ViewModels
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             string test = this.Player1Name;
-
+            
             Rally = rally;
 
             string score = String.Format("{0} : {1}", rally.CurrentRallyScore.First, rally.CurrentRallyScore.Second);
@@ -78,12 +77,14 @@ namespace TT.Viewer.ViewModels
             RallyStart = Convert.ToInt32(rally.Anfang);
             RallyEnd = Convert.ToInt32(rally.Ende);
         }
-        public void Handle(MatchInformationEvent message)
+        public void Handle(MatchOpenedEvent message)
         {
             if (message.Match != null)
             {
+                this.Match = message.Match;
                 Player1Name = message.Match.FirstPlayer.Name.Split(' ')[0]; //wird erst nachdem die Hitlist erstellt wird geändert...
                 Player2Name = message.Match.SecondPlayer.Name.Split(' ')[0]; //wird erst nachdem die Hitlist erstellt wird geändert...
+                
             }
 
         }

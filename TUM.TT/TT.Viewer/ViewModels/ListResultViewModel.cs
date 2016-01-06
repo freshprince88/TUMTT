@@ -67,9 +67,8 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(ResultsChangedEvent message)
         {
-            this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
+           
             this.Items.Clear();
-
             foreach (var rally in message.Rallies)
             {
                 

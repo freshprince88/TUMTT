@@ -17,7 +17,7 @@ namespace TT.Viewer.ViewModels
     {
 
         #region Properties
-
+        public BasicFilterStatisticsViewModel BasicFilterStatisticsView { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
         public Playlist ActivePlaylist { get; private set; }
 
@@ -40,6 +40,12 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();
             ActivePlaylist = new Playlist();
+            BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events)
+            {
+                MinRallyLength = 1,
+                LastStroke = false,
+                StrokeNumber = 1
+            };
         }
 
         #region View Methods
@@ -62,14 +68,13 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-
-
+            this.ActivateItem(BasicFilterStatisticsView);
         }
 
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
-
+            this.DeactivateItem(BasicFilterStatisticsView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
         }
@@ -98,7 +103,7 @@ namespace TT.Viewer.ViewModels
         {
             if (this.ActivePlaylist.Rallies != null)
             {
-                SelectedRallies = this.ActivePlaylist.Rallies.Where(r => Convert.ToInt32(r.Length) > 1).ToList();
+                SelectedRallies = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 1).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
