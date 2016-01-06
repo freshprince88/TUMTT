@@ -109,6 +109,7 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Events\FilterSelectionChangedEvent.cs" />
+    <Compile Include="Events\MediaControlEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
     <Compile Include="Events\MatchEditedEvent.cs" />
     <Compile Include="Events\PlaylistNamedEvent.cs" />

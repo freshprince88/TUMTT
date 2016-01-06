@@ -9,16 +9,16 @@ namespace TT.Viewer.Events
 {
     public class ResultListControlEvent
     {
-        public Media.Control Control { get; set; }
+        public Rally SelectedRally { get; set; }
 
         public ResultListControlEvent()
         {
-            this.Control = Media.Control.None;
+            this.SelectedRally = null;
         }
 
-        public ResultListControlEvent(Media.Control ctrl)
+        public ResultListControlEvent(Rally selected)
         {
-            this.Control = ctrl;
+            this.SelectedRally = selected;
         }
     }
 }

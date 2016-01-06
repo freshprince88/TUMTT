@@ -15,27 +15,31 @@ namespace TT.Viewer.ViewModels
         IHandle<ResultsChangedEvent>
     {
         private IEventAggregator events;
+        private bool blockEvents;
 
 
         public ListResultViewModel(IEventAggregator e)
         {
             this.DisplayName = "Hitlist";
             events = e;
+            blockEvents = true;
         }
 
         #region View Methods
 
-        public void ListItemSelected(ListView view)
+        public void ListItemSelected(SelectionChangedEventArgs e)
         {
-            ResultListItem item = (ResultListItem)view.SelectedItem;
+            ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
 
-            if (item != null)
+            if (item != null && !blockEvents)
             {
                 this.events.PublishOnUIThread(new VideoPlayEvent()
                 {
                     Current = item.Rally
                 });
             }
+
+            blockEvents = false;
         }
         #endregion
 
@@ -47,7 +51,6 @@ namespace TT.Viewer.ViewModels
 
             foreach (var rally in message.Rallies)
             {
-                //this.ActivateItem(new ItemViewModel(score, sets, rally.Server, rally.Winner, rally.Length));
                 this.ActivateItem(new ResultListItem(rally));
             }
         }

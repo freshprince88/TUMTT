@@ -17,7 +17,7 @@
             ctrl:ListViewLayoutManager.Enabled="true" 
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="False"
-            cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action ListItemSelected($source)]">
+            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]">
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding Score}"

@@ -19,7 +19,7 @@ namespace TT.Viewer.ViewModels
         IHandle<PlaylistNamedEvent>
     {
         private IEventAggregator events;
-        
+
         public Match Match { get; private set; }
 
         private PlaylistItem _selected;
@@ -44,10 +44,14 @@ namespace TT.Viewer.ViewModels
 
         #region View Methods
 
-        public void ListItemSelected(ListView view)
+        public void ListItemSelected(SelectionChangedEventArgs e)
         {
-            PlaylistItem item = (PlaylistItem)view.SelectedItem;
-            this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
+            PlaylistItem item = e.AddedItems.Count > 0 ? (PlaylistItem)e.AddedItems[0] : null;
+
+            if (item != null)
+            {
+                this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
+            }           
         }
 
         public void Add()

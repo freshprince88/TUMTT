@@ -38,7 +38,7 @@
             dd:DragDrop.IsDragSource="False"
             dd:DragDrop.IsDropTarget="True"
             dd:DragDrop.DropHandler="{Binding}"
-            cal:Message.Attach="[Event PreviewMouseLeftButtonUp] = [Action ListItemSelected($source)]">
+            cal:Message.Attach="[Event SelectionChanged] = [Action ListItemSelected($eventArgs)]">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel>

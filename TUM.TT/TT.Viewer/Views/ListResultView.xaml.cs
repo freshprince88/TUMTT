@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Util.Enums;
 using TT.Viewer.Events;
+using TT.Viewer.ViewModels;
 
 namespace TT.Viewer.Views
 {
@@ -31,27 +32,17 @@ namespace TT.Viewer.Views
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
-            Events.Subscribe(this);
+            Events.Subscribe(this);            
         }
 
 
         public void Handle(ResultListControlEvent msg)
         {
-            int selectedIndex = Items.SelectedIndex;
 
-            switch (msg.Control)
-            {
-                case Media.Control.Previous:
-                    selectedIndex = (selectedIndex - 1) < 0 ? Items.Items.Count - 1 : selectedIndex - 1;
-                    Items.SelectedIndex = selectedIndex;
-                    break;
-                case Media.Control.Next:
-                    selectedIndex = (selectedIndex + 1) % Items.Items.Count;
-                    Items.SelectedIndex = selectedIndex;
-                    break;
-                default:
-                    break;
-            }
+            var newSelection = Items.Items.Cast<ResultListItem>().Where(i => i.Rally == msg.SelectedRally).FirstOrDefault();
+
+            if (newSelection != null)
+                Items.SelectedItem = newSelection;
         }
     }
 }

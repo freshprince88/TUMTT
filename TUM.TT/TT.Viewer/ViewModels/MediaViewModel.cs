@@ -14,7 +14,8 @@ namespace TT.Viewer.ViewModels
 {
     public class MediaViewModel : Screen,
         IHandle<ResultsChangedEvent>,
-        IHandle<VideoPlayEvent>
+        IHandle<VideoPlayEvent>,
+        IHandle<MediaControlEvent>
     {
         private IEventAggregator events;
         private bool isDragging;
@@ -34,7 +35,7 @@ namespace TT.Viewer.ViewModels
             {
                 if (!_mode.Equals(value))
 
-                _muted = value;
+                    _muted = value;
 
             }
         }
@@ -50,7 +51,7 @@ namespace TT.Viewer.ViewModels
             {
                 if (!_mode.Equals(value))
 
-                _speed = value;
+                    _speed = value;
 
             }
         }
@@ -79,45 +80,34 @@ namespace TT.Viewer.ViewModels
 
         #region View Methods
 
-        public void Play(MediaElement myMediaElement)
+        public void Play()
         {
-            this.Mode = Media.Mode.Play;
-            int RallyStart = Convert.ToInt32(myMediaElement.Position.TotalMilliseconds); ;
-            int RallyEnd = Convert.ToInt32(CurrentRally.Value.Ende);
-
-            // Neuen Timer erstellen 
-            double dauer = (RallyEnd - RallyStart) * (1 / ((double)this.Speed / 100)); // Spieldauer des Video ermitteln
-            if (dauer > 0)
+            if (CurrentRally != null)
             {
                 events.PublishOnUIThread(new VideoControlEvent()
                 {
-                    Position = new TimeSpan(0, 0, 0, 0, RallyStart),
-                    PlayMode = this.Mode,
+                    Start = this.Mode == Media.Mode.Pause ? -100 : Convert.ToDouble(CurrentRally.Value.Anfang),
+                    End = Convert.ToDouble(CurrentRally.Value.Ende),
+                    PlayMode = Media.Mode.Play,
                     PlaySpeed = this.Speed,
-                    Duration = dauer + 1500,
-                    Restart = true
+                    Restart = true,
+                    Init = this.Mode == Media.Mode.Pause ? false : true,
                 });
             }
+
+            this.Mode = Media.Mode.Play;
         }
 
-        public void Pause(MediaElement myMediaElement)
+        public void Pause()
         {
             this.Mode = Media.Mode.Pause;
-            int RallyStart = Convert.ToInt32(myMediaElement.Position.TotalMilliseconds);
-            int RallyEnd = Convert.ToInt32(CurrentRally.Value.Ende);
 
-            // Neuen Timer erstellen 
-            double dauer = (RallyEnd - RallyStart) * (1 / ((double)this.Speed / 100)); // Spieldauer des Video ermitteln
-            if (dauer > 0)
+            events.PublishOnUIThread(new VideoControlEvent()
             {
-                events.PublishOnUIThread(new VideoControlEvent()
-                {
-                    Position = new TimeSpan(0, 0, 0, 0, RallyStart),
-                    PlayMode = this.Mode,
-                    PlaySpeed = this.Speed,
-                    Duration = dauer + 1500
-                });
-            }
+                PlayMode = this.Mode,
+                PlaySpeed = this.Speed
+            });
+
         }
 
         public void Stop()
@@ -134,8 +124,12 @@ namespace TT.Viewer.ViewModels
             this.Mode = Media.Mode.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
-            myMediaElement.Position = Position_now - delta_time;            
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Mode,
+                PlaySpeed = this.Speed,
+                Position = Position_now - delta_time
+            });
 
         }
 
@@ -144,8 +138,12 @@ namespace TT.Viewer.ViewModels
             this.Mode = Media.Mode.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            myMediaElement.Position = Position_now - delta_time;
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Mode,
+                PlaySpeed = this.Speed,
+                Position = Position_now - delta_time
+            });
         }
 
         public void Next5Frames(MediaElement myMediaElement)
@@ -153,8 +151,12 @@ namespace TT.Viewer.ViewModels
             this.Mode = Media.Mode.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
-            myMediaElement.Position = Position_now + delta_time;
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Mode,
+                PlaySpeed = this.Speed,
+                Position = Position_now + delta_time
+            });
         }
 
         public void NextFrame(MediaElement myMediaElement)
@@ -162,30 +164,40 @@ namespace TT.Viewer.ViewModels
             this.Mode = Media.Mode.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            myMediaElement.Position = Position_now + delta_time;
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Mode,
+                PlaySpeed = this.Speed,
+                Position = Position_now + delta_time
+            });
         }
 
-        public void PreviousRally(MediaElement myMediaElement)
+        public void PreviousRally()
         {
-            events.PublishOnUIThread(new ResultListControlEvent(Media.Control.Previous));
+            CurrentRally = CurrentRally == Playlist.First ? Playlist.Last : CurrentRally.Previous;
+
+            events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
         }
 
-        public void NextRally(MediaElement myMediaElement)
+        public void NextRally()
         {
-            events.PublishOnUIThread(new ResultListControlEvent(Media.Control.Next));
+            CurrentRally = CurrentRally == Playlist.Last ? Playlist.First : CurrentRally.Next;
+
+            events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
         }
 
         public void Slow75Percent(bool isChecked)
         {
             if (isChecked)
-                this.Speed = Media.Speed.Third;         
+                this.Speed = Media.Speed.Third;
             else
                 this.Speed = Media.Speed.Full;
 
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlaySpeed = this.Speed
+                PlaySpeed = this.Speed,
+                PlayMode = this.Mode,
+                Restart = this.Mode == Media.Mode.Play ? true : false
             });
         }
 
@@ -195,9 +207,12 @@ namespace TT.Viewer.ViewModels
                 this.Speed = Media.Speed.Half;
             else
                 this.Speed = Media.Speed.Full;
+
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlaySpeed = this.Speed
+                PlaySpeed = this.Speed,
+                PlayMode = this.Mode,
+                Restart = this.Mode == Media.Mode.Play ? true : false
             });
         }
 
@@ -210,7 +225,9 @@ namespace TT.Viewer.ViewModels
 
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlaySpeed = this.Speed
+                PlaySpeed = this.Speed,
+                PlayMode = this.Mode,
+                Restart = this.Mode == Media.Mode.Play ? true : false
             });
         }
 
@@ -272,9 +289,8 @@ namespace TT.Viewer.ViewModels
                     events.PublishOnUIThread(new VideoControlEvent()
                     {
                         Position = new TimeSpan(0, 0, 0, 0, RallyStart),
-                        PlayMode = Media.Mode.None,
+                        PlayMode = this.Mode,
                         PlaySpeed = Media.Speed.None,
-                        Duration = dauer + 1500,
                         Restart = this.Mode == Media.Mode.Play ? true : false
                     });
                 }
@@ -314,29 +330,28 @@ namespace TT.Viewer.ViewModels
             CurrentRally = Playlist.First;
         }
 
+        public void Handle(MediaControlEvent message)
+        {
+            switch (message.PrevNext)
+            {
+                case Media.Control.Previous:
+                    this.PreviousRally();
+                    break;
+                case Media.Control.Next:
+                    this.NextRally();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void Handle(VideoPlayEvent message)
         {
             Rally r = message.Current;
-
             CurrentRally = Playlist.Find(r);
 
-            int RallyStart = Convert.ToInt32(CurrentRally.Value.Anfang);
-            int RallyEnd = Convert.ToInt32(CurrentRally.Value.Ende);
-
-            // Neuen Timer erstellen 
-            double dauer = (RallyEnd - RallyStart) * (1 / ((double)this.Speed/100)); // Spieldauer des Video ermitteln
-            if (dauer > 0)
-            {
-                events.PublishOnUIThread(new VideoControlEvent()
-                {
-                    Position = new TimeSpan(0, 0, 0, 0, RallyStart),
-                    PlayMode = Media.Mode.Play,
-                    PlaySpeed = this.Speed,
-                    Duration = dauer + 1500,
-                    Init = true
-                });
-            }
-        } 
+            Play();
+        }
 
         #endregion
 

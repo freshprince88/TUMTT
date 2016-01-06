@@ -66,7 +66,7 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />                
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
                 <Rectangle Width="15" Height="15" 
@@ -78,9 +78,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="PreviousRally">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="PreviousRally"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -127,9 +125,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Play" >
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="Play" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -143,10 +139,8 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Pause">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>                        
-                    </i:EventTrigger>                    
+                        <cal:ActionMessage MethodName="Pause"/>
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
 
@@ -192,9 +186,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="NextRally">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="NextRally"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -227,9 +219,9 @@
                 25%
             </ToggleButton>
 
-            
+
             <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="6">
-                    <Rectangle Width="15" Height="15" 
+                <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
@@ -270,9 +262,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Mute">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="Mute"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -286,9 +276,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Unmute">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
+                        <cal:ActionMessage MethodName="Unmute"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
@@ -309,7 +297,7 @@
                 </i:Interaction.Triggers>
             </Button>
         </Grid>
-        
+
     </Grid>
 
 
