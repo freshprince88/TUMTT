@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using TT.Lib.Util.Enums;
 using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
@@ -15,20 +16,6 @@ namespace TT.Viewer.ViewModels
     {
         private IEventAggregator events;
 
-        private ResultListItem _selected;
-        public ResultListItem SelectedItemView
-        {
-            get
-            {
-                return _selected;
-            }
-            set
-            {
-                if (_selected == value) return;
-                _selected = value;
-                NotifyOfPropertyChange("SelectedItemView");
-            }
-        }
 
         public ListResultViewModel(IEventAggregator e)
         {
@@ -44,19 +31,9 @@ namespace TT.Viewer.ViewModels
 
             if (item != null)
             {
-                var prevIdx = view.SelectedIndex > 0 ? view.SelectedIndex - 1 : 0;
-                var nextIDx = view.SelectedIndex + 1 < Items.Count ? view.SelectedIndex + 1 : view.SelectedIndex;
-
-                ResultListItem prev = prevIdx != view.SelectedIndex ? (ResultListItem)view.Items[prevIdx] : item;
-                ResultListItem next = nextIDx != view.SelectedIndex ? (ResultListItem)view.Items[nextIDx] : item;
-
-
                 this.events.PublishOnUIThread(new VideoPlayEvent()
                 {
-                    Start = item.RallyStart,
-                    End = item.RallyEnd,
-                    Next = next.RallyStart,
-                    Previous = prev.RallyStart
+                    Current = item.Rally
                 });
             }
         }
@@ -74,6 +51,8 @@ namespace TT.Viewer.ViewModels
                 this.ActivateItem(new ResultListItem(rally));
             }
         }
+
+
 
         #endregion
 

@@ -25,28 +25,48 @@
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
+
+        <MediaElement x:Name="myMediaElement" LoadedBehavior="Manual" Grid.Row="0"
+                      UnloadedBehavior="Stop" SpeedRatio="1" HorizontalAlignment="Stretch" Margin="10,0,10,0" VerticalAlignment="Stretch"/>
+
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition  Width="*" MinWidth="240" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="1" Margin="0,5,0,5" Background="{DynamicResource AccentColorBrush2}" />
-            <Slider Grid.Column="1" Margin="5,0,5,0" VerticalAlignment="Center" />
+            <Slider x:Name="slider_timeline" Grid.Column="1" Margin="5,0,5,0" VerticalAlignment="Center" >
+                <i:Interaction.Triggers>
+                    <!--<i:EventTrigger EventName="ValueChanged">
+                        <cal:ActionMessage MethodName="SeekToMediaPosition">
+                            <cal:Parameter Value="{Binding ElementName=slider_timeline,Path=Value}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>-->
+                    <i:EventTrigger EventName="Thumb.DragStarted">
+                        <cal:ActionMessage MethodName="SliderDragStarted" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Thumb.DragCompleted">
+                        <cal:ActionMessage MethodName="SliderDragCompleted" >
+                            <cal:Parameter Value="{Binding ElementName=slider_timeline,Path=Value}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Slider>
         </Grid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />                
             </Grid.ColumnDefinitions>
             <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
                 <Rectangle Width="15" Height="15" 
@@ -107,7 +127,9 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Play" />
+                        <cal:ActionMessage MethodName="Play" >
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -121,8 +143,10 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Pause"/>                        
-                    </i:EventTrigger>
+                        <cal:ActionMessage MethodName="Pause">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>                        
+                    </i:EventTrigger>                    
                 </i:Interaction.Triggers>
             </ToggleButton>
 
@@ -176,21 +200,21 @@
             </Button>
 
         </Grid>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition Width="2*" MinWidth="60" MaxWidth="80"></ColumnDefinition>
-                <ColumnDefinition MaxWidth="10"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition MinWidth="30" MaxWidth="40"></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentFlatToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
@@ -218,12 +242,21 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="8">
+            <ToggleButton x:Name="cbRepeat" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="8">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                           Visual="{DynamicResource appbar_repeat}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </ToggleButton>
+            <ToggleButton x:Name="cbInfinite" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="9" IsChecked="True">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_infinite}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
@@ -276,8 +309,7 @@
                 </i:Interaction.Triggers>
             </Button>
         </Grid>
-        <MediaElement x:Name="myMediaElement" LoadedBehavior="Manual" 
-                      UnloadedBehavior="Stop" SpeedRatio="1" HorizontalAlignment="Left" Height="auto" Margin="10,0,10,0" VerticalAlignment="Center" Width="auto"/>
+        
     </Grid>
 
 

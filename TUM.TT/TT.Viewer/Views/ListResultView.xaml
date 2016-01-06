@@ -13,7 +13,7 @@
     <ListView x:Name="Items"
             Margin="0"
             BorderThickness="0"
-            SelectedIndex="0"
+            SelectedIndex="0"            
             ctrl:ListViewLayoutManager.Enabled="true" 
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="False"

@@ -112,6 +112,7 @@
     <Compile Include="Events\PlaylistChangedEvent.cs" />
     <Compile Include="Events\MatchEditedEvent.cs" />
     <Compile Include="Events\PlaylistNamedEvent.cs" />
+    <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
     <Compile Include="Events\FilterSwitchedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableViewModeChangedEvent.cs" />
     <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
+    <Compile Include="Events\VideoControlEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />

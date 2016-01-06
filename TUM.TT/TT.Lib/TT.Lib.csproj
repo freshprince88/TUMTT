@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Util\CircleMarginConverter .cs" />
     <Compile Include="Util\Column2TabConverter.cs" />
+    <Compile Include="Util\Enums.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\FrameworkElementExtension.cs" />
     <Compile Include="Util\MatchExtensions.cs" />
