@@ -46,7 +46,7 @@
         <Grid Grid.Row="4" x:Name="BasisInformation" Margin="0 0 10 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>                
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="70"/>
@@ -116,8 +116,26 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="PlacementForhandAllTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   Content="9"  />
-                            <Button x:Name="PlacementForhandAllPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                            <ToggleButton x:Name="PlacementForhandAllTotalButton" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40" Content="9">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=PlacementGrid}" />
+                                            <cal:Parameter Value="{Binding ElementName=PlacementForhandAllTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ToggleButton>
+                            <ToggleButton x:Name="PlacementForhandAllPointsWonButton" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=PlacementGrid}" />
+                                            <cal:Parameter Value="{Binding ElementName=PlacementForhandAllPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ToggleButton>
                             <Button x:Name="PlacementForhandAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
                             <Button x:Name="PlacementForhandAllPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
                         </Grid>
@@ -451,12 +469,12 @@
                         <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 2 0 0"/>
                         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 0 0 1" />
                         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 0 0 1"/>
-                        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="0 0 1 0" />                        
+                        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="0 0 1 0" />
                         <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
                         <Border Grid.Row="0" Grid.Column="3" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
                         <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
-                        
-                        
+
+
                         <Label Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"  Content="Pendulum"/>
                         <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Reverse"/>
                         <Label Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Tomahawk"/>
@@ -465,7 +483,7 @@
                         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="VH"/>
                         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="RH"/>
                         <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="∑"/>
-                        
+
                         <Grid Grid.Row="1" Grid.Column="1" Margin="0 0 0 1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -730,7 +748,7 @@
                         <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="0 0 1 0" />
                         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" BorderBrush="Black" BorderThickness="0 1 0 1"/>
                         <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1 0 1 0"/>
-                        
+
                         <Label Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="←"/>
                         <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="0"/>
                         <Label Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="→"/>
@@ -786,19 +804,19 @@
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="4" Margin="2 0 0 0">
                             <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button x:Name="UpAllTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="9"  />
-                                <Button x:Name="UpAllPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
-                                <Button x:Name="UpAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
-                                <Button x:Name="UpAllPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
-                            </Grid>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="UpAllTotalButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="9"  />
+                            <Button x:Name="UpAllPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="33%" Visibility="Visible" />
+                            <Button x:Name="UpAllDirectPointsWonButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible" />
+                            <Button x:Name="UpAllPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%" Visibility="Visible"/>
+                        </Grid>
                         <Grid Grid.Row="2" Grid.Column="1" Margin="0 1 0 1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
