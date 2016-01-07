@@ -126,6 +126,7 @@
     <Compile Include="Events\ShowInputDialogEvent.cs" />
     <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
+    <Compile Include="Events\StatisticDetailChangedEvent.cs" />
     <Compile Include="Events\TableKombiViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableViewModeChangedEvent.cs" />
