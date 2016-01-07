@@ -95,7 +95,6 @@ namespace TT.Viewer.ViewModels
 
         #region View Methods
 
-
         public void SetFilter(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("setallbutton"))
@@ -201,7 +200,6 @@ namespace TT.Viewer.ViewModels
             UpdateSelection();
         }
 
-
         public void CrunchOrNot(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("crunchtime"))
@@ -216,10 +214,7 @@ namespace TT.Viewer.ViewModels
                 }
             }
             UpdateSelection();
-        }
-
-
-      
+        }     
 
         public void P1P2(ToggleButton source)
         {
@@ -258,6 +253,16 @@ namespace TT.Viewer.ViewModels
                 }
             }
             UpdateSelection();
+        }
+
+        public void DetailsChecked(bool radio_percent_checked)
+        {
+            events.PublishOnUIThread(new StatisticDetailChangedEvent(true, radio_percent_checked));
+        }
+
+        public void DetailsUnchecked(bool radio_percent_checked)
+        {
+            events.PublishOnUIThread(new StatisticDetailChangedEvent(false, radio_percent_checked));
         }
 
         #endregion

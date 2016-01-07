@@ -349,18 +349,8 @@
                             <Button x:Name="PlacementAllShortDirectPointsWonButton"  Style="{DynamicResource MetroAccentFlat}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(33%)" Visibility="Visible"/>
                             <Button x:Name="PlacementAllShortPointsLostButton" Style="{DynamicResource MetroAccentFlat}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="66%"  Visibility="Visible"/>
                         </Grid>
-                        <Grid Grid.Row="4" Grid.Column="2" Margin="0 2 0 0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="PlacementAllServiceErrorsTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" VerticalAlignment="Stretch" Padding="2 -5 2 0"  FontSize="40"   Content="9"  />
-                        </Grid>
+
+                        <Button x:Name="PlacementAllServiceErrorsTotalButton" Style="{DynamicResource MetroAccentFlatGray}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" Padding="2 -5 2 0"  FontSize="40"   Content="9"  />
                     </Grid>
                 </Viewbox>
             </Expander>

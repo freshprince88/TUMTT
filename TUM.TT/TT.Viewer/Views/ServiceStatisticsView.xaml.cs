@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +13,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TT.Viewer.Events;
 
 namespace TT.Viewer.Views
 {
     /// <summary>
     /// Interaktionslogik für ServiceStatisticsView.xaml
     /// </summary>
-    public partial class ServiceStatisticsView : UserControl
+    public partial class ServiceStatisticsView : UserControl,
+        IHandle<StatisticDetailChangedEvent>
     {
+        public IEventAggregator Events { get; set; }
+
         public ServiceStatisticsView()
         {
             InitializeComponent();
+            Events = IoC.Get<IEventAggregator>();
+            Events.Subscribe(this);
+        }
+
+        public void Handle(StatisticDetailChangedEvent message)
+        {
+            bool isChecked = message.DetailChecked;
+            bool percent = message.Percent;
+
+            //TODO: Switch Button text
         }
     }
 }
