@@ -12,8 +12,9 @@ using TT.Viewer.Events;
 namespace TT.Viewer.ViewModels
 {
     public class ListResultViewModel : Conductor<ResultListItem>.Collection.AllActive, IResultViewTabItem,
-        IHandle<ResultsChangedEvent>
+        IHandle<ResultsChangedEvent>,IHandle<MatchInformationEvent>
     {
+        public Match Match { get; set; }
         private IEventAggregator events;
         private bool blockEvents;
 
@@ -47,15 +48,13 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(ResultsChangedEvent message)
         {
-            this.Items.Clear();
 
+            this.Items.Clear();
             foreach (var rally in message.Rallies)
             {
                 this.ActivateItem(new ResultListItem(rally));
             }
         }
-
-
 
         #endregion
 
@@ -66,6 +65,11 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+        }
+
+        public void Handle(MatchInformationEvent message)
+        {
+            this.Match = message.Match;
         }
         #endregion
     }

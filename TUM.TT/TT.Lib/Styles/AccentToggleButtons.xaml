@@ -540,6 +540,11 @@
                             <Setter Property="Background"
                                     Value="{DynamicResource AccentColorBrush3}" />
                         </Trigger>
+                        <!--<Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -587,6 +592,11 @@
                             <Setter Property="Background"
                                     Value="Gainsboro" />
                         </Trigger>
+                        <!--<Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

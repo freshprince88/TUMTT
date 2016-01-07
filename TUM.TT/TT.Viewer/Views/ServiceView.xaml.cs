@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Viewer.ViewModels;
+using TT.Viewer.Events;
 
 namespace TT.Viewer.Views
 {
@@ -29,5 +30,7 @@ namespace TT.Viewer.Views
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
         }
+
+        
     }
 }

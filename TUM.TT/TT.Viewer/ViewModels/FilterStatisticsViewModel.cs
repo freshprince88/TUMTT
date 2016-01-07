@@ -52,19 +52,24 @@ namespace TT.Viewer.ViewModels
             { //wie kann ich zwischen den 2 TabControls unterscheiden?
 
                 case "FilterTab":
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.match));
                     this.ActivateItem(FilterView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    
                     break;
 
                 case "StatisticsTab":
+                    this.events.PublishOnUIThread(new MatchInformationEvent(this.match));
                     this.ActivateItem(StatisticsView);
                     this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    
                     break;
             }
         }
         public void Handle(MatchOpenedEvent message)
         {
             this.match = message.Match;
+            this.events.BeginPublishOnUIThread(new MatchInformationEvent(this.match));
             this.ActivePlaylist = message.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
         }
