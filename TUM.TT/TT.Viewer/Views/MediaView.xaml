@@ -34,23 +34,8 @@
                 <ColumnDefinition  Width="*" MinWidth="240" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="1" Margin="0,5,0,5" Background="{DynamicResource AccentColorBrush2}" />
-            <Slider x:Name="slider_timeline" Grid.Column="1" Margin="5,0,5,0" VerticalAlignment="Center" >
-                <i:Interaction.Triggers>
-                    <!--<i:EventTrigger EventName="ValueChanged">
-                        <cal:ActionMessage MethodName="SeekToMediaPosition">
-                            <cal:Parameter Value="{Binding ElementName=slider_timeline,Path=Value}" />
-                        </cal:ActionMessage>
-                    </i:EventTrigger>-->
-                    <i:EventTrigger EventName="Thumb.DragStarted">
-                        <cal:ActionMessage MethodName="SliderDragStarted" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="Thumb.DragCompleted">
-                        <cal:ActionMessage MethodName="SliderDragCompleted" >
-                            <cal:Parameter Value="{Binding ElementName=slider_timeline,Path=Value}" />
-                        </cal:ActionMessage>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Slider>
+            <Slider x:Name="slider_timeline" Grid.Column="1" Margin="5,0,5,0" VerticalAlignment="Center" Thumb.DragStarted="Slider_DragStarted"
+                Thumb.DragCompleted="Slider_DragCompleted" ValueChanged="Slider_ValueChanged"/>
         </Grid>
         <Grid Grid.Row="2" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>

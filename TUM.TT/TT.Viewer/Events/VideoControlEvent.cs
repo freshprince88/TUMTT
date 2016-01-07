@@ -10,7 +10,7 @@ namespace TT.Viewer.Events
 {
     public class VideoControlEvent
     {
-        public Media.Mode PlayMode { get; set; }
+        public Media.Control PlayMode { get; set; }
         public Media.Speed PlaySpeed { get; set; }
         public double Start { get; set; }
         public double End { get; set; }
@@ -20,7 +20,7 @@ namespace TT.Viewer.Events
 
         public VideoControlEvent()
         {
-            PlayMode = Media.Mode.None;
+            PlayMode = Media.Control.None;
             Start = -100;
             End = -100;
             PlaySpeed = Media.Speed.None;

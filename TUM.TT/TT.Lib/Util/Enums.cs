@@ -23,18 +23,13 @@ namespace TT.Lib.Util.Enums
             None
         }
 
-        public enum Mode
-        {
-            Stop,
-            Pause,
-            Play,
-            None
-        }
-
         public enum Control
         {
             Previous,
             Next,
+            Stop,
+            Pause,
+            Play,
             None
         }
     }

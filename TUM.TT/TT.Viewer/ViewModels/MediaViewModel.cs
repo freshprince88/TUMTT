@@ -18,7 +18,6 @@ namespace TT.Viewer.ViewModels
         IHandle<MediaControlEvent>
     {
         private IEventAggregator events;
-        private bool isDragging;
 
         public LinkedList<Rally> Playlist { get; set; }
         public LinkedListNode<Rally> CurrentRally { get; set; }
@@ -56,8 +55,8 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private Media.Mode _mode;
-        public Media.Mode Mode
+        private Media.Control _mode;
+        public Media.Control Control
         {
             get
             {
@@ -72,10 +71,9 @@ namespace TT.Viewer.ViewModels
         public MediaViewModel(IEventAggregator eventAggregator)
         {
             events = eventAggregator;
-            isDragging = false;
             _speed = Media.Speed.Full;
             _muted = Media.Mute.Unmute;
-            _mode = Media.Mode.Stop;
+            _mode = Media.Control.Stop;
         }
 
         #region View Methods
@@ -86,25 +84,25 @@ namespace TT.Viewer.ViewModels
             {
                 events.PublishOnUIThread(new VideoControlEvent()
                 {
-                    Start = this.Mode == Media.Mode.Pause ? -100 : Convert.ToDouble(CurrentRally.Value.Anfang),
+                    Start = this.Control == Media.Control.Pause ? -100 : Convert.ToDouble(CurrentRally.Value.Anfang),
                     End = Convert.ToDouble(CurrentRally.Value.Ende),
-                    PlayMode = Media.Mode.Play,
+                    PlayMode = Media.Control.Play,
                     PlaySpeed = this.Speed,
                     Restart = true,
-                    Init = this.Mode == Media.Mode.Pause ? false : true,
+                    Init = this.Control == Media.Control.Pause ? false : true
                 });
             }
 
-            this.Mode = Media.Mode.Play;
+            this.Control = Media.Control.Play;
         }
 
         public void Pause()
         {
-            this.Mode = Media.Mode.Pause;
+            this.Control = Media.Control.Pause;
 
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlayMode = this.Mode,
+                PlayMode = this.Control,
                 PlaySpeed = this.Speed
             });
 
@@ -112,21 +110,21 @@ namespace TT.Viewer.ViewModels
 
         public void Stop()
         {
-            this.Mode = Media.Mode.Stop;
+            this.Control = Media.Control.Stop;
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlayMode = this.Mode
+                PlayMode = this.Control
             });
         }
 
         public void Previous5Frames(MediaElement myMediaElement)
         {
-            this.Mode = Media.Mode.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlayMode = this.Mode,
+                PlayMode = this.Control,
                 PlaySpeed = this.Speed,
                 Position = Position_now - delta_time
             });
@@ -135,12 +133,12 @@ namespace TT.Viewer.ViewModels
 
         public void PreviousFrame(MediaElement myMediaElement)
         {
-            this.Mode = Media.Mode.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlayMode = this.Mode,
+                PlayMode = this.Control,
                 PlaySpeed = this.Speed,
                 Position = Position_now - delta_time
             });
@@ -148,12 +146,12 @@ namespace TT.Viewer.ViewModels
 
         public void Next5Frames(MediaElement myMediaElement)
         {
-            this.Mode = Media.Mode.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlayMode = this.Mode,
+                PlayMode = this.Control,
                 PlaySpeed = this.Speed,
                 Position = Position_now + delta_time
             });
@@ -161,12 +159,12 @@ namespace TT.Viewer.ViewModels
 
         public void NextFrame(MediaElement myMediaElement)
         {
-            this.Mode = Media.Mode.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             events.PublishOnUIThread(new VideoControlEvent()
             {
-                PlayMode = this.Mode,
+                PlayMode = this.Control,
                 PlaySpeed = this.Speed,
                 Position = Position_now + delta_time
             });
@@ -196,8 +194,8 @@ namespace TT.Viewer.ViewModels
             events.PublishOnUIThread(new VideoControlEvent()
             {
                 PlaySpeed = this.Speed,
-                PlayMode = this.Mode,
-                Restart = this.Mode == Media.Mode.Play ? true : false
+                PlayMode = this.Control,
+                Restart = this.Control == Media.Control.Play ? true : false
             });
         }
 
@@ -211,8 +209,8 @@ namespace TT.Viewer.ViewModels
             events.PublishOnUIThread(new VideoControlEvent()
             {
                 PlaySpeed = this.Speed,
-                PlayMode = this.Mode,
-                Restart = this.Mode == Media.Mode.Play ? true : false
+                PlayMode = this.Control,
+                Restart = this.Control == Media.Control.Play ? true : false
             });
         }
 
@@ -226,8 +224,8 @@ namespace TT.Viewer.ViewModels
             events.PublishOnUIThread(new VideoControlEvent()
             {
                 PlaySpeed = this.Speed,
-                PlayMode = this.Mode,
-                Restart = this.Mode == Media.Mode.Play ? true : false
+                PlayMode = this.Control,
+                Restart = this.Control == Media.Control.Play ? true : false
             });
         }
 
@@ -247,56 +245,7 @@ namespace TT.Viewer.ViewModels
         {
         }
 
-        //public void SeekToMediaPosition(int sliderValue)
-        //{
-        //    if (!isDragging)
-        //    {
-        //        int RallyStart = sliderValue;
-        //        int RallyEnd = Convert.ToInt32(CurrentRally.Value.Ende);
-
-        //        // Neuen Timer erstellen 
-        //        double dauer = (RallyEnd - RallyStart) * (1 / ((double)this.Speed / 100)); // Spieldauer des Video ermitteln
-        //        if (dauer > 0)
-        //        {
-        //            events.PublishOnUIThread(new VideoControlEvent()
-        //            {
-        //                Position = new TimeSpan(0, 0, 0, 0, RallyStart),
-        //                PlayMode = Media.Mode.None,
-        //                PlaySpeed = Media.Speed.None,
-        //                Duration = dauer + 1500,
-        //                Restart = this.Mode == Media.Mode.Play ? true : false
-        //            });
-        //        }
-        //    }
-        //}
-
-        private void SliderDragStarted()
-        {
-            isDragging = true;
-        }
-
-        private void SliderDragCompleted(int sliderValue)
-        {
-            if (isDragging)
-            {
-                int RallyStart = sliderValue;
-                int RallyEnd = Convert.ToInt32(CurrentRally.Value.Ende);
-
-                // Neuen Timer erstellen 
-                double dauer = (RallyEnd - RallyStart) * (1 / ((double)this.Speed / 100)); // Spieldauer des Video ermitteln
-                if (dauer > 0)
-                {
-                    events.PublishOnUIThread(new VideoControlEvent()
-                    {
-                        Position = new TimeSpan(0, 0, 0, 0, RallyStart),
-                        PlayMode = this.Mode,
-                        PlaySpeed = Media.Speed.None,
-                        Restart = this.Mode == Media.Mode.Play ? true : false
-                    });
-                }
-            }
-            isDragging = false;
-        }
+        
 
         #endregion
 
@@ -340,6 +289,9 @@ namespace TT.Viewer.ViewModels
                 case Media.Control.Next:
                     this.NextRally();
                     break;
+                case Media.Control.Pause:
+                    this.Pause();
+                    break;
                 default:
                     break;
             }
@@ -349,7 +301,7 @@ namespace TT.Viewer.ViewModels
         {
             Rally r = message.Current;
             CurrentRally = Playlist.Find(r);
-
+            this.Control = Media.Control.Play;
             Play();
         }
 
