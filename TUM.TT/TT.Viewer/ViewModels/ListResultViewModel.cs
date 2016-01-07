@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using TT.Lib.Util.Enums;
 using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
@@ -15,51 +16,31 @@ namespace TT.Viewer.ViewModels
     {
         public Match Match { get; set; }
         private IEventAggregator events;
+        private bool blockEvents;
 
-        private ResultListItem _selected;
-        public ResultListItem SelectedItemView
-        {
-            get
-            {
-                return _selected;
-            }
-            set
-            {
-                if (_selected == value) return;
-                _selected = value;
-                NotifyOfPropertyChange("SelectedItemView");
-            }
-        }
 
         public ListResultViewModel(IEventAggregator e)
         {
             this.DisplayName = "Hitlist";
             events = e;
+            blockEvents = true;
         }
 
         #region View Methods
 
-        public void ListItemSelected(ListView view)
+        public void ListItemSelected(SelectionChangedEventArgs e)
         {
-            ResultListItem item = (ResultListItem)view.SelectedItem;
+            ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
 
-            if (item != null)
+            if (item != null && !blockEvents)
             {
-                var prevIdx = view.SelectedIndex > 0 ? view.SelectedIndex - 1 : 0;
-                var nextIDx = view.SelectedIndex + 1 < Items.Count ? view.SelectedIndex + 1 : view.SelectedIndex;
-
-                ResultListItem prev = prevIdx != view.SelectedIndex ? (ResultListItem)view.Items[prevIdx] : item;
-                ResultListItem next = nextIDx != view.SelectedIndex ? (ResultListItem)view.Items[nextIDx] : item;
-
-
                 this.events.PublishOnUIThread(new VideoPlayEvent()
                 {
-                    Start = item.RallyStart,
-                    End = item.RallyEnd,
-                    Next = next.RallyStart,
-                    Previous = prev.RallyStart
+                    Current = item.Rally
                 });
             }
+
+            blockEvents = false;
         }
         #endregion
 
@@ -67,12 +48,10 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(ResultsChangedEvent message)
         {
-           
+
             this.Items.Clear();
             foreach (var rally in message.Rallies)
             {
-                
-                //this.ActivateItem(new ItemViewModel(score, sets, rally.Server, rally.Winner, rally.Length));
                 this.ActivateItem(new ResultListItem(rally));
             }
         }

@@ -58,15 +58,14 @@
       <HintPath>Libs\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.2.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.1.2.0.0\lib\net45\MahApps.Metro.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -112,9 +111,11 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Events\FilterSelectionChangedEvent.cs" />
     <Compile Include="Events\MatchInformationEvent.cs" />
+    <Compile Include="Events\MediaControlEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
     <Compile Include="Events\MatchEditedEvent.cs" />
     <Compile Include="Events\PlaylistNamedEvent.cs" />
+    <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
     <Compile Include="Events\FilterSwitchedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableViewModeChangedEvent.cs" />
     <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
+    <Compile Include="Events\VideoControlEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />

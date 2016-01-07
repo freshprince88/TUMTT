@@ -5,47 +5,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using TT.Lib;
+using TT.Lib.Util.Enums;
 using TT.Viewer.Events;
 
 namespace TT.Viewer.ViewModels
 {
-    public class MediaViewModel : Screen
+    public class MediaViewModel : Screen,
+        IHandle<ResultsChangedEvent>,
+        IHandle<VideoPlayEvent>,
+        IHandle<MediaControlEvent>
     {
         private IEventAggregator events;
 
-        public enum MuteUnmute
-        {
+        public LinkedList<Rally> Playlist { get; set; }
+        public LinkedListNode<Rally> CurrentRally { get; set; }
 
-            Mute,
-            Unmute
-        }
-        private MuteUnmute _sound;
-        public MuteUnmute Sound
+
+        private Media.Mute _muted;
+        public Media.Mute Muted
         {
             get
             {
-                return _sound;
+                return _muted;
             }
             set
             {
                 if (!_mode.Equals(value))
 
-                _sound = value;
+                    _muted = value;
 
             }
         }
 
-        public enum PlaySpeed
-        {
-            Quarter,
-            Half,
-            Third,
-            Full
-        }
-
-        private PlaySpeed _speed;
-        public PlaySpeed Speed
+        private Media.Speed _speed;
+        public Media.Speed Speed
         {
             get
             {
@@ -55,18 +50,13 @@ namespace TT.Viewer.ViewModels
             {
                 if (!_mode.Equals(value))
 
-                _speed = value;
+                    _speed = value;
 
             }
         }
-        public enum PlayPause
-        {
-            Stop,
-            Pause,
-            Play
-        }
-        private PlayPause _mode;
-        public PlayPause Mode
+
+        private Media.Control _mode;
+        public Media.Control Control
         {
             get
             {
@@ -81,123 +71,181 @@ namespace TT.Viewer.ViewModels
         public MediaViewModel(IEventAggregator eventAggregator)
         {
             events = eventAggregator;
+            _speed = Media.Speed.Full;
+            _muted = Media.Mute.Unmute;
+            _mode = Media.Control.Stop;
         }
 
         #region View Methods
 
         public void Play()
         {
-            this.Mode = PlayPause.Play;
-            events.PublishOnUIThread(this.Mode);
+            if (CurrentRally != null)
+            {
+                events.PublishOnUIThread(new VideoControlEvent()
+                {
+                    Start = this.Control == Media.Control.Pause ? -100 : Convert.ToDouble(CurrentRally.Value.Anfang),
+                    End = Convert.ToDouble(CurrentRally.Value.Ende),
+                    PlayMode = Media.Control.Play,
+                    PlaySpeed = this.Speed,
+                    Restart = true,
+                    Init = this.Control == Media.Control.Pause ? false : true
+                });
+            }
+
+            this.Control = Media.Control.Play;
         }
 
         public void Pause()
         {
-            this.Mode = PlayPause.Pause;
-            events.PublishOnUIThread(this.Mode);
+            this.Control = Media.Control.Pause;
+
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Control,
+                PlaySpeed = this.Speed
+            });
+
         }
 
         public void Stop()
         {
-            this.Mode = PlayPause.Stop;
-            events.PublishOnUIThread(this.Mode);
+            this.Control = Media.Control.Stop;
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Control
+            });
         }
 
         public void Previous5Frames(MediaElement myMediaElement)
         {
-            this.Mode = PlayPause.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
-            myMediaElement.Position = Position_now - delta_time;
-            //myMediaElement.ScrubbingEnabled = true;
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Control,
+                PlaySpeed = this.Speed,
+                Position = Position_now - delta_time
+            });
 
         }
 
         public void PreviousFrame(MediaElement myMediaElement)
         {
-            this.Mode = PlayPause.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            myMediaElement.Position = Position_now - delta_time;
-            //myMediaElement.ScrubbingEnabled = true;
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Control,
+                PlaySpeed = this.Speed,
+                Position = Position_now - delta_time
+            });
         }
 
         public void Next5Frames(MediaElement myMediaElement)
         {
-            this.Mode = PlayPause.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
-            myMediaElement.Position = Position_now + delta_time;
-            //myMediaElement.ScrubbingEnabled = true;
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Control,
+                PlaySpeed = this.Speed,
+                Position = Position_now + delta_time
+            });
         }
 
         public void NextFrame(MediaElement myMediaElement)
         {
-            this.Mode = PlayPause.Pause;
+            this.Control = Media.Control.Pause;
             TimeSpan Position_now = myMediaElement.Position;
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            myMediaElement.Position = Position_now + delta_time;
-            events.PublishOnUIThread(this.Mode);
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Control,
+                PlaySpeed = this.Speed,
+                Position = Position_now + delta_time
+            });
         }
 
-        public void PreviousRally(MediaElement myMediaElement)
+        public void PreviousRally()
         {
+            CurrentRally = CurrentRally == Playlist.First ? Playlist.Last : CurrentRally.Previous;
 
+            events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
         }
 
-        public void NextRally(MediaElement myMediaElement)
+        public void NextRally()
         {
+            CurrentRally = CurrentRally == Playlist.Last ? Playlist.First : CurrentRally.Next;
 
+            events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
         }
 
         public void Slow75Percent(bool isChecked)
         {
-            if (isChecked) 
-                this.Speed = PlaySpeed.Third;
-            
+            if (isChecked)
+                this.Speed = Media.Speed.Third;
             else
-            
-                this.Speed = PlaySpeed.Full;
-        
-        events.PublishOnUIThread(this.Speed);
+                this.Speed = Media.Speed.Full;
+
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlaySpeed = this.Speed,
+                PlayMode = this.Control,
+                Restart = this.Control == Media.Control.Play ? true : false
+            });
         }
 
         public void Slow50Percent(bool isChecked)
         {
             if (isChecked)
-                this.Speed = PlaySpeed.Half;
+                this.Speed = Media.Speed.Half;
             else
-                this.Speed = PlaySpeed.Full;
-            events.PublishOnUIThread(this.Speed);
+                this.Speed = Media.Speed.Full;
+
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlaySpeed = this.Speed,
+                PlayMode = this.Control,
+                Restart = this.Control == Media.Control.Play ? true : false
+            });
         }
 
         public void Slow25Percent(bool isChecked)
         {
             if (isChecked)
-                this.Speed = PlaySpeed.Quarter;
+                this.Speed = Media.Speed.Quarter;
             else
-                this.Speed = PlaySpeed.Full;
-            events.PublishOnUIThread(this.Speed);
+                this.Speed = Media.Speed.Full;
+
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlaySpeed = this.Speed,
+                PlayMode = this.Control,
+                Restart = this.Control == Media.Control.Play ? true : false
+            });
         }
 
         public void Mute()
         {
-            this.Sound = MuteUnmute.Mute;
-            events.PublishOnUIThread(this.Sound);
+            this.Muted = Media.Mute.Mute;
+            events.PublishOnUIThread(this.Muted);
         }
 
         public void Unmute()
         {
-            this.Sound = MuteUnmute.Unmute;
-            events.PublishOnUIThread(this.Sound);
+            this.Muted = Media.Mute.Unmute;
+            events.PublishOnUIThread(this.Muted);
         }
 
         public void Fullscreen(MediaElement myMediaElement)
         {
         }
+
+        
 
         #endregion
 
@@ -224,6 +272,47 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Event Handlers
+
+        public void Handle(ResultsChangedEvent message)
+        {
+            this.Playlist = new LinkedList<Rally>(message.Rallies);
+            CurrentRally = Playlist.First;
+        }
+
+        public void Handle(MediaControlEvent message)
+        {
+            switch (message.PrevNext)
+            {
+                case Media.Control.Previous:
+                    this.PreviousRally();
+                    break;
+                case Media.Control.Next:
+                    this.NextRally();
+                    break;
+                case Media.Control.Pause:
+                    this.Pause();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void Handle(VideoPlayEvent message)
+        {
+            Rally r = message.Current;
+            CurrentRally = Playlist.Find(r);
+            this.Control = Media.Control.Play;
+            Play();
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void InitVideo()
+        {
+
+        }
 
         #endregion
     }

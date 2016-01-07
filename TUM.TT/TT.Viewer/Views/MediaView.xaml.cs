@@ -16,27 +16,28 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using TT.Viewer.Events;
 using TT.Viewer.ViewModels;
+using TT.Lib.Util.Enums;
+using System.Windows.Controls.Primitives;
+using System.Timers;
 
 namespace TT.Viewer.Views
 {
     /// <summary>
     /// Interaktionslogik für MediaView.xaml
     /// </summary>
-    public partial class MediaView : UserControl, 
-        IHandle<MediaViewModel.PlayPause>, 
-        IHandle<MediaViewModel.PlaySpeed>, 
-        IHandle<MediaViewModel.MuteUnmute>,
-        IHandle<VideoLoadedEvent>,
-        IHandle<VideoPlayEvent>
+    public partial class MediaView : UserControl,
+        IHandle<VideoControlEvent>,
+        IHandle<Media.Mute>,
+        IHandle<VideoLoadedEvent>
     {
         public IEventAggregator Events { get; private set; }
-        public MediaViewModel.PlayPause PlayMode { get; set; }
         private DispatcherTimer stopTimer;
-
-        private int RallyStart;
-        private int RallyEnd;
-        private int NextRallyStart;
-        private int PreviousRallyStart;
+        private DispatcherTimer sliderTimer;
+        private double Start;
+        private double End;
+        private double slider_tick;
+        private bool mediaIsPaused;
+        private bool isDragging;
 
         public MediaView()
         {
@@ -44,90 +45,35 @@ namespace TT.Viewer.Views
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             myMediaElement.ScrubbingEnabled = true;
-            PlayMode = MediaViewModel.PlayPause.Pause;
             stopTimer = new DispatcherTimer();
-            RallyStart = 0;
-            RallyEnd = 0;
             stopTimer.Tick += new EventHandler(StopTimerTick);
+            slider_tick = 100;
+            sliderTimer = new DispatcherTimer();
+            sliderTimer.Tick += new EventHandler(SliderTimerTick); ;
+            sliderTimer.Interval = TimeSpan.FromMilliseconds(slider_tick);
+            Start = 0;
+            End = 0;
+            mediaIsPaused = true;
+            isDragging = false;
         }
 
         #region Event Handlers
 
-        public void Handle(MediaViewModel.MuteUnmute message)
+        public void Handle(Media.Mute message)
         {
             switch (message)
             {
-                case MediaViewModel.MuteUnmute.Mute:
+                case Media.Mute.Mute:
                     myMediaElement.IsMuted = true;
                     MuteButton.Visibility = Visibility.Hidden;
                     UnmuteButton.Visibility = Visibility.Visible;
                     UnmuteButton.IsChecked = true;
                     break;
-                case MediaViewModel.MuteUnmute.Unmute:
+                case Media.Mute.Unmute:
                     myMediaElement.IsMuted = false;
                     MuteButton.Visibility = Visibility.Visible;
                     UnmuteButton.Visibility = Visibility.Hidden;
                     UnmuteButton.IsChecked = false;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void Handle(MediaViewModel.PlayPause message)
-        {
-            switch (message)
-            {
-                case MediaViewModel.PlayPause.Play:
-                    myMediaElement.Play();
-                    PlayButton.Visibility = Visibility.Hidden;
-                    PauseButton.Visibility = Visibility.Visible;
-                    PauseButton.IsChecked = true;
-                    this.PlayMode = MediaViewModel.PlayPause.Play;
-                    break;
-                case MediaViewModel.PlayPause.Pause:
-                    myMediaElement.Pause();
-                    PlayButton.Visibility = Visibility.Visible;
-                    PauseButton.Visibility = Visibility.Hidden;
-                    PauseButton.IsChecked = false;
-                    this.PlayMode = MediaViewModel.PlayPause.Pause;
-                    break;
-                case MediaViewModel.PlayPause.Stop:
-                    myMediaElement.Stop();
-                    PlayButton.Visibility = Visibility.Visible;
-                    PauseButton.Visibility = Visibility.Hidden;
-                    PauseButton.IsChecked = false;
-                    this.PlayMode = MediaViewModel.PlayPause.Stop;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void Handle(MediaViewModel.PlaySpeed message)
-        {
-            switch (message)
-            {
-                case MediaViewModel.PlaySpeed.Quarter:
-                    myMediaElement.SpeedRatio = 0.25;
-                    Slow50PercentButton.IsChecked = false;
-                    Slow75PercentButton.IsChecked = false;
-                    break;
-                case MediaViewModel.PlaySpeed.Half:
-                    myMediaElement.SpeedRatio = 0.50;
-                    Slow25PercentButton.IsChecked = false;
-                    Slow75PercentButton.IsChecked = false;
-                    break;
-                case MediaViewModel.PlaySpeed.Third:
-                    myMediaElement.SpeedRatio = 0.75;
-                    Slow25PercentButton.IsChecked = false;
-                    Slow50PercentButton.IsChecked = false;
-                    break;
-                case MediaViewModel.PlaySpeed.Full:
-                    myMediaElement.SpeedRatio = 1;
-                    Slow25PercentButton.IsChecked = false;
-                    Slow50PercentButton.IsChecked = false;
-                    Slow75PercentButton.IsChecked = false;
                     break;
                 default:
                     break;
@@ -139,75 +85,213 @@ namespace TT.Viewer.Views
             this.myMediaElement.Source = new Uri(message.VideoFile);
         }
 
-        public void Handle(VideoPlayEvent message)
+        public void Handle(VideoControlEvent message)
         {
-            RallyStart = message.Start;
-            RallyEnd = message.End;
-            NextRallyStart = message.Next;
-            PreviousRallyStart = message.Previous;
+            stopTimer.Stop();
+            sliderTimer.Stop();
+            myMediaElement.Pause();
 
+            Start = message.Start >= 0 ? message.Start : Start;
+            End = message.End >= 0 ? message.End : End;
 
-             // Neuen Timer erstellen 
-            double dauer = (RallyEnd - RallyStart) * (1 / myMediaElement.SpeedRatio); // Spieldauer des Video ermitteln
-            if (dauer > 0)
+            if (!message.PlaySpeed.Equals(Media.Speed.None))
+                HandlePlaySpeed(message.PlaySpeed);
+
+            if (message.Position.CompareTo(TimeSpan.Zero) < 0 && message.Start >= 0)
             {
-                stopTimer.Interval = TimeSpan.FromMilliseconds(dauer + 1500);
+                myMediaElement.Position = TimeSpan.FromMilliseconds(Start); // Im Video zum Startzeitpunkt springen
+            }
+            else if (message.Position.CompareTo(TimeSpan.Zero) >= 0)
+            {
+                if (message.Position.TotalMilliseconds > End)
+                {
+                    if (cbRepeat.IsChecked.Value)
+                    {
+                        myMediaElement.Position = TimeSpan.FromMilliseconds(Start + (message.Position.TotalMilliseconds - End));
+                        slider_timeline.Value = Start + (message.Position.TotalMilliseconds - End);
+                    }
+                    else
+                    {
+                        stopTimer.Stop();
+                        myMediaElement.Pause();
+                        Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next));
+                    }
+                }
+                else
+                {
+                    myMediaElement.Position = message.Position;
+                    slider_timeline.Value = message.Position.TotalMilliseconds;
+                }
+            }
+
+            // Neuen Timer erstellen
+            double Pos = message.Start < 0 ? myMediaElement.Position.TotalMilliseconds : Start;
+
+            double dauer = (End - Pos) * (1 / (myMediaElement.SpeedRatio)); // Spieldauer des Video ermitteln
+            stopTimer.Interval = dauer > 0 ? TimeSpan.FromMilliseconds(dauer) : stopTimer.Interval;
+
+            if (message.Init)
+            {
+                slider_timeline.Minimum = Start;
+                slider_timeline.Maximum = End - 100;
+                slider_timeline.SmallChange = 40;
+                slider_timeline.LargeChange = 200;
+                slider_timeline.Value = slider_timeline.Minimum;
+
                 stopTimer.Start(); //Timer starten
-                myMediaElement.Position = new TimeSpan(0, 0, 0, 0, message.Start);
-                Events.PublishOnUIThread(MediaViewModel.PlayPause.Play);
+                sliderTimer.Start();
+            }
+            else if (message.Restart)
+            {
+                stopTimer.Start(); //Timer starten
+                sliderTimer.Start();
+            }
+
+            if (!message.PlayMode.Equals(Media.Control.None))
+                HandlePlayMode(message.PlayMode);
+        }
+
+        private void StopTimerTick(object sender, EventArgs e)
+        {
+            if (cbRepeat.IsChecked.Value)
+            {
+                TimeSpan pos = TimeSpan.FromMilliseconds(Start);
+                Events.PublishOnUIThread(new VideoControlEvent()
+                {
+                    Position = pos,
+                    PlayMode = mediaIsPaused ? Media.Control.Pause : Media.Control.Play,
+                    Restart = mediaIsPaused ? false : true
+                });
+            }
+            else if (cbInfinite.IsChecked.Value)
+            {
+                stopTimer.Stop();
+                myMediaElement.Pause();
+                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next));
             }
             else
             {
-                
-                Events.PublishOnUIThread(MediaViewModel.PlayPause.Pause);
+                myMediaElement.Position = TimeSpan.FromMilliseconds(Start);
+                slider_timeline.Value = slider_timeline.Minimum;
+                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
             }
+        }
+
+        private void SliderTimerTick(object sender, EventArgs e)
+        {
+            double distance = slider_timeline.Maximum - slider_timeline.Minimum;
+            double ticks = distance / slider_tick;
+            double add = distance / (0.9 * ticks);
+
+            Dispatcher.Invoke(() => slider_timeline.Value += add);
+
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (isDragging)
+                myMediaElement.Position = TimeSpan.FromMilliseconds(e.NewValue);
+        }
+
+        private void Slider_DragStarted(object sender, DragStartedEventArgs e)
+        {
+            if (myMediaElement.Source == null)
+                return;
+
+            sliderTimer.Stop();
+            myMediaElement.Pause();
+            isDragging = true;
+        }
+
+        private void Slider_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            if (myMediaElement.Source == null)
+                return;
+
+            double newValue = ((Slider)sender).Value;
+
+            TimeSpan pos = TimeSpan.FromMilliseconds(newValue);
+            Events.PublishOnUIThread(new VideoControlEvent()
+            {
+                Position = pos,
+                PlayMode = mediaIsPaused ? Media.Control.Pause : Media.Control.Play,
+                Restart = mediaIsPaused ? false : true
+
+            });
+            isDragging = false;
         }
 
         #endregion
 
-        private void StopTimerTick(object sender, EventArgs e)
+        #region Helper Methods
+
+        private void HandlePlayMode(Media.Control mode)
         {
-            MediaViewModel.PlayPause temp = this.PlayMode;
-            Events.PublishOnUIThread(MediaViewModel.PlayPause.Pause);
-
-            //if ((bool)buttonLoop.IsChecked)
-            //{
-            //    myMediaElement.Position = new TimeSpan(0, 0, 0, 0, loopingStart);
-            //    //slider_timeline.Value = ((myMediaElement.Position.TotalMilliseconds - loopingStart) / 4);
-            //    stopTimer.Start();
-            //    myMediaElement.Play();
-            //    this.PlayMode = MediaViewModel.PlayPause.Play;
-            //}
-            //else
-            //{
-                stopTimer.Stop();
-                if (temp == MediaViewModel.PlayPause.Play)
-                {
-                    stopTimer.Interval = TimeSpan.FromMilliseconds(0xffffff);
+            switch (mode)
+            {
+                case Media.Control.Play:
+                    myMediaElement.Play();
+                    PlayButton.Visibility = Visibility.Hidden;
+                    PauseButton.Visibility = Visibility.Visible;
+                    PauseButton.IsChecked = true;
+                    mediaIsPaused = false;
+                    sliderTimer.Start();
+                    break;
+                case Media.Control.Pause:
+                    myMediaElement.Pause();
+                    PlayButton.Visibility = Visibility.Visible;
+                    PauseButton.Visibility = Visibility.Hidden;
+                    PauseButton.IsChecked = false;
+                    mediaIsPaused = true;
+                    sliderTimer.Stop();
+                    break;
+                case Media.Control.Stop:
+                    myMediaElement.Stop();
+                    //slider_timeline.Minimum = 0;
+                    //slider_timeline.Maximum = myMediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
                     //slider_timeline.Value = 0;
-                    TimeSpan ts = new TimeSpan(0, 0, 0, 0, RallyStart);
-                    myMediaElement.Position = ts;
-     
-                //Events.PublishOnUIThread(new VideoPlayEvent()
-                //{
-                //    Start = RallyStart ,
-                //    End = RallyEnd,
-                //    Next = NextRallyStart,
-                //    Previous = PreviousRallyStart
-                //}
-                //    );
+                    PlayButton.Visibility = Visibility.Visible;
+                    PauseButton.Visibility = Visibility.Hidden;
+                    PauseButton.IsChecked = false;
+                    mediaIsPaused = true;
+                    sliderTimer.Stop();
+                    break;
+                default:
+                    break;
             }
-                else
-                {
-                    double dauer = RallyEnd;
-                    TimeSpan dauer_ts = TimeSpan.FromMilliseconds(dauer + 1500);
-                    stopTimer.Interval = dauer_ts - myMediaElement.Position;
-                    stopTimer.Start();
-                }
-
-
-            //}
         }
-        
+
+        private void HandlePlaySpeed(Media.Speed speed)
+        {
+            switch (speed)
+            {
+                case Media.Speed.Quarter:
+                    myMediaElement.SpeedRatio = 0.25;
+                    Slow50PercentButton.IsChecked = false;
+                    Slow75PercentButton.IsChecked = false;
+                    break;
+                case Media.Speed.Half:
+                    myMediaElement.SpeedRatio = 0.50;
+                    Slow25PercentButton.IsChecked = false;
+                    Slow75PercentButton.IsChecked = false;
+                    break;
+                case Media.Speed.Third:
+                    myMediaElement.SpeedRatio = 0.75;
+                    Slow25PercentButton.IsChecked = false;
+                    Slow50PercentButton.IsChecked = false;
+                    break;
+                case Media.Speed.Full:
+                    myMediaElement.SpeedRatio = 1;
+                    Slow25PercentButton.IsChecked = false;
+                    Slow50PercentButton.IsChecked = false;
+                    Slow75PercentButton.IsChecked = false;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        #endregion
     }
 }
