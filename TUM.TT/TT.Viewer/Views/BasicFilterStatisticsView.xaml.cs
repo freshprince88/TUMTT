@@ -20,7 +20,9 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für BasicFilterStatisticsView.xaml
     /// </summary>
-    public partial class BasicFilterStatisticsView : UserControl, IHandle<MatchInformationEvent>
+    public partial class BasicFilterStatisticsView : UserControl, 
+        IHandle<MatchInformationEvent>,
+        IHandle<StatisticDetailChangedEvent>
     {
         public IEventAggregator Events { get; set; }
 
@@ -38,6 +40,14 @@ namespace TT.Viewer.Views
                 FilterPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0];
                 FilterPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0];
             }
+        }
+
+        public void Handle(StatisticDetailChangedEvent message)
+        {
+            bool isChecked = message.DetailChecked;
+            bool percent = message.Percent;
+
+            //TODO: Enable Radios
         }
     }
 }
