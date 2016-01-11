@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TT.Viewer.Events;
+using TT.Lib.Events;
+using TT.Lib.Util.Enums;
 using TT.Viewer.ViewModels;
 
 namespace TT.Viewer.Views
@@ -39,11 +40,11 @@ namespace TT.Viewer.Views
         {
             switch (message.Mode)
             {
-                case TableServiceViewModel.ViewMode.Top:
+                case ViewMode.Position.Top:
                     TopField.Visibility = Visibility.Visible;
                     BottomField.Visibility = Visibility.Hidden;
                     break;
-                case TableServiceViewModel.ViewMode.Bottom:
+                case ViewMode.Position.Bottom:
                     TopField.Visibility = Visibility.Hidden;
                     BottomField.Visibility = Visibility.Visible;
                     break;

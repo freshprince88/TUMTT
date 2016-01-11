@@ -3,7 +3,7 @@ using System.Windows;
 using System.Reflection;
 using TT.Lib.Results;
 using TT.Lib.Util;
-using TT.Viewer.Events;
+using TT.Lib.Events;
 using System.Collections.Generic;
 using TT.Lib.Models;
 using System.IO;
@@ -116,7 +116,7 @@ namespace TT.Viewer.ViewModels
             SaveFileName = dialog.Result;
             Match = deserialization.Result;
 
-            this.Events.PublishOnUIThread(new MatchOpenedEvent(Match, deserialization.FileName));
+            this.Events.PublishOnUIThread(new MatchOpenedEvent(Match));
 
             if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
             {

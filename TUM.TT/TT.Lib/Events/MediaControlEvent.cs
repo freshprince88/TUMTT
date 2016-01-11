@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TT.Lib.Util.Enums;
 
-namespace TT.Viewer.Events
+namespace TT.Lib.Events
 {
     public class MediaControlEvent
     {

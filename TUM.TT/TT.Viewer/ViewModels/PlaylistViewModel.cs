@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using TT.Viewer.Events;
+using TT.Lib.Events;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 

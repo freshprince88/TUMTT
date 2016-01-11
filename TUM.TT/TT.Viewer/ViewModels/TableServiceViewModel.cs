@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
-using TT.Viewer.Events;
+using TT.Lib.Util.Enums;
+using TT.Lib.Events;
 
 namespace TT.Viewer.ViewModels
 {
@@ -13,45 +14,15 @@ namespace TT.Viewer.ViewModels
     {
 
         private IEventAggregator events;
-        public HashSet<ETablePosition> SelectedPositions { get; set; }
-        public HashSet<EServerPosition> SelectedServerPositions { get; set; }
+        public HashSet<Positions.Table> SelectedPositions { get; set; }
+        public HashSet<Positions.Server> SelectedServerPositions { get; set; }       
 
-        public enum ViewMode
-        {
-            Top,
-            Bottom
-        }
-
-        #region Enums
-
-        public enum ETablePosition
-        {
-            TopLeft = 1,
-            TopMid,
-            TopRight,
-            MidLeft,
-            MidMid,
-            MidRight,
-            BotLeft,
-            BotMid,
-            BotRight,
-            None
-        }
-
-        public enum EServerPosition
-        {
-            Left = 1,
-            HalfLeft,
-            Mid,
-            HalfRight,
-            Right,
-            None
-        }
+        #region Enums       
 
         #endregion
 
-        private ViewMode _mode;
-        public ViewMode Mode
+        private ViewMode.Position _mode;
+        public ViewMode.Position Mode
         {
             get
             {
@@ -70,23 +41,23 @@ namespace TT.Viewer.ViewModels
         public TableServiceViewModel(IEventAggregator eventAggregator)
         {
             events = eventAggregator;
-            SelectedServerPositions = new HashSet<EServerPosition>();
-            SelectedPositions = new HashSet<ETablePosition>();
+            SelectedServerPositions = new HashSet<Positions.Server>();
+            SelectedPositions = new HashSet<Positions.Table>();
         }
 
         #region View Methods
 
         public void TablePositionClicked(ToggleButton toggle)
         {
-            ETablePosition pos = GetTablePositionFromName(toggle.Name);
+            Positions.Table pos = GetTablePositionFromName(toggle.Name);
             if (toggle.IsChecked.Value)
             {
-                if(pos != ETablePosition.None)
+                if (pos != Positions.Table.None)
                     SelectedPositions.Add(pos);
             }
             else
             {
-                if (pos != ETablePosition.None)
+                if (pos != Positions.Table.None)
                     SelectedPositions.Remove(pos);
             }
             this.events.PublishOnUIThread(new TableViewSelectionChangedEvent(SelectedPositions, SelectedServerPositions));
@@ -94,15 +65,15 @@ namespace TT.Viewer.ViewModels
 
         public void ServerPositionClicked(ToggleButton toggle)
         {
-            EServerPosition pos = GetServePositionFromName(toggle.Name);
+            Positions.Server pos = GetServePositionFromName(toggle.Name);
             if (toggle.IsChecked.Value)
             {
-                if (pos != EServerPosition.None)
+                if (pos != Positions.Server.None)
                     SelectedServerPositions.Add(pos);
             }
             else
             {
-                if (pos != EServerPosition.None)
+                if (pos != Positions.Server.None)
                     SelectedServerPositions.Remove(pos);
             }
             this.events.PublishOnUIThread(new TableViewSelectionChangedEvent(SelectedPositions, SelectedServerPositions));
@@ -133,44 +104,44 @@ namespace TT.Viewer.ViewModels
 
         #region Helper Methods
 
-        private ETablePosition GetTablePositionFromName(string name)
+        private Positions.Table GetTablePositionFromName(string name)
         {
             if (name.Contains("9"))
-                return ETablePosition.BotRight;
+                return Positions.Table.BotRight;
             else if (name.Contains("8"))
-                return ETablePosition.BotMid;
+                return Positions.Table.BotMid;
             else if (name.Contains("7"))
-                return ETablePosition.BotLeft;
+                return Positions.Table.BotLeft;
             else if (name.Contains("6"))
-                return ETablePosition.MidRight;
+                return Positions.Table.MidRight;
             else if (name.Contains("5"))
-                return ETablePosition.MidMid;
+                return Positions.Table.MidMid;
             else if (name.Contains("4"))
-                return ETablePosition.MidLeft;
+                return Positions.Table.MidLeft;
             else if (name.Contains("3"))
-                return ETablePosition.TopRight;
+                return Positions.Table.TopRight;
             else if (name.Contains("2"))
-                return ETablePosition.TopMid;
+                return Positions.Table.TopMid;
             else if (name.Contains("1"))
-                return ETablePosition.TopLeft;
+                return Positions.Table.TopLeft;
             else
-                return ETablePosition.None;
+                return Positions.Table.None;
         }
 
-        private EServerPosition GetServePositionFromName(string name)
+        private Positions.Server GetServePositionFromName(string name)
         {
             if (name.Contains("1"))
-                return EServerPosition.Left;
+                return Positions.Server.Left;
             else if (name.Contains("2"))
-                return EServerPosition.HalfLeft;
+                return Positions.Server.HalfLeft;
             else if (name.Contains("3"))
-                return EServerPosition.Mid;
+                return Positions.Server.Mid;
             else if (name.Contains("4"))
-                return EServerPosition.HalfRight;
+                return Positions.Server.HalfRight;
             else if (name.Contains("5"))
-                return EServerPosition.Right;
+                return Positions.Server.Right;
             else
-                return EServerPosition.None;
+                return Positions.Server.None;
         }
 
 

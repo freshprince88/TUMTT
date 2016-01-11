@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TT.Lib.Models;
 
-namespace TT.Viewer.Events
+namespace TT.Lib.Events
 {
     public class VideoPlayEvent
     {

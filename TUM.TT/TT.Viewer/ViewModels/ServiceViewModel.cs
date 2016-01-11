@@ -7,7 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
-using TT.Viewer.Events;
+using TT.Lib.Events;
+using TT.Lib.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {
@@ -24,55 +25,17 @@ namespace TT.Viewer.ViewModels
         public TableServiceViewModel TableView { get; private set; }
         public List<Rally> SelectedRallies { get; private set; }
         public Playlist RallyList { get; private set; }
-        public List<SpinControlViewModel.Spins> SelectedSpins { get; private set; }
-        public EHand Hand { get; private set; }       
-        public EQuality Quality { get; private set; }
-        public ESpecials Specials { get; private set; }
+        public List<Stroke.Spin> SelectedSpins { get; private set; }
+        public Stroke.Hand Hand { get; private set; }       
+        public Stroke.Quality Quality { get; private set; }
+        public Stroke.Specials Specials { get; private set; }
 
-        public HashSet<Services> SelectedServices { get; private set; }
-        public HashSet<TableServiceViewModel.ETablePosition> SelectedTablePositions { get; set; }
-        public HashSet<TableServiceViewModel.EServerPosition> SelectedServerPositions { get; set; }
-
-        #endregion
-
-        #region Enums
-
-        public enum EHand
-        {
-            Fore,
-            Back,
-            None,
-            Both
-        }
-
-        
-
-        public enum EQuality
-        {
-            Bad,
-            Good,
-            None,
-            Both
-        }
-
-        public enum ESpecials
-        {
-            EdgeTable,
-            EdgeRacket,
-            None,
-            Both
-        }
-
-       
-        public enum Services
-        {
-            Pendulum,
-            Reverse,
-            Tomahawk,
-            Special
-        }
+        public HashSet<Stroke.Services> SelectedServices { get; private set; }
+        public HashSet<Positions.Table> SelectedTablePositions { get; set; }
+        public HashSet<Positions.Server> SelectedServerPositions { get; set; }
 
         #endregion
+
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -83,14 +46,14 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();
-            SelectedSpins = new List<SpinControlViewModel.Spins>();
+            SelectedSpins = new List<Stroke.Spin>();
             RallyList = new Playlist();
-            Hand = EHand.None;       
-            Quality = EQuality.None;
-            Specials = ESpecials.None;          
-            SelectedServices = new HashSet<Services>();
-            SelectedServerPositions = new HashSet<TableServiceViewModel.EServerPosition>();
-            SelectedTablePositions = new HashSet<TableServiceViewModel.ETablePosition>();
+            Hand = Stroke.Hand.None;       
+            Quality = Stroke.Quality.None;
+            Specials = Stroke.Specials.None;          
+            SelectedServices = new HashSet<Stroke.Services>();
+            SelectedServerPositions = new HashSet<Positions.Server>();
+            SelectedTablePositions = new HashSet<Positions.Table>();
             SpinControl = new SpinControlViewModel(events);
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
@@ -110,44 +73,44 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Services.Pendulum);
+                    SelectedServices.Add(Stroke.Services.Pendulum);
                 }
                 else
                 {
-                    SelectedServices.Remove(Services.Pendulum);
+                    SelectedServices.Remove(Stroke.Services.Pendulum);
                 }
             }
             else if (source.Name.ToLower().Contains("reverse"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Services.Reverse);
+                    SelectedServices.Add(Stroke.Services.Reverse);
                 }
                 else
                 {
-                    SelectedServices.Remove(Services.Reverse);
+                    SelectedServices.Remove(Stroke.Services.Reverse);
                 }
             }
             else if (source.Name.ToLower().Contains("tomahawk"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Services.Tomahawk);
+                    SelectedServices.Add(Stroke.Services.Tomahawk);
                 }
                 else
                 {
-                    SelectedServices.Remove(Services.Tomahawk);
+                    SelectedServices.Remove(Stroke.Services.Tomahawk);
                 }
             }
             else if (source.Name.ToLower().Contains("special"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Services.Special);
+                    SelectedServices.Add(Stroke.Services.Special);
                 }
                 else
                 {
-                    SelectedServices.Remove(Services.Special);
+                    SelectedServices.Remove(Stroke.Services.Special);
                 }
             }
             UpdateSelection();
@@ -158,11 +121,11 @@ namespace TT.Viewer.ViewModels
         {
             if (check)
             {
-                TableView.Mode = TableServiceViewModel.ViewMode.Top;
+                TableView.Mode = ViewMode.Position.Top;
             }
             else
             {
-                TableView.Mode = TableServiceViewModel.ViewMode.Bottom;
+                TableView.Mode = ViewMode.Position.Bottom;
             }
         }
        
@@ -172,34 +135,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == EHand.None)
-                        Hand = EHand.Fore;
-                    else if (Hand == EHand.Back)
-                        Hand = EHand.Both;
+                    if (Hand == Stroke.Hand.None)
+                        Hand = Stroke.Hand.Fore;
+                    else if (Hand == Stroke.Hand.Back)
+                        Hand = Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == EHand.Fore)
-                        Hand = EHand.None;
-                    else if (Hand == EHand.Both)
-                        Hand = EHand.Back;
+                    if (Hand == Stroke.Hand.Fore)
+                        Hand = Stroke.Hand.None;
+                    else if (Hand == Stroke.Hand.Both)
+                        Hand = Stroke.Hand.Back;
                 }
             }
             else if (source.Name.ToLower().Contains("backhand"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == EHand.None)
-                        Hand = EHand.Back;
-                    else if (Hand == EHand.Fore)
-                        Hand = EHand.Both;
+                    if (Hand == Stroke.Hand.None)
+                        Hand = Stroke.Hand.Back;
+                    else if (Hand == Stroke.Hand.Fore)
+                        Hand = Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == EHand.Back)
-                        Hand = EHand.None;
-                    else if (Hand == EHand.Both)
-                        Hand = EHand.Fore;
+                    if (Hand == Stroke.Hand.Back)
+                        Hand = Stroke.Hand.None;
+                    else if (Hand == Stroke.Hand.Both)
+                        Hand = Stroke.Hand.Fore;
                 }
             }
             UpdateSelection();
@@ -211,34 +174,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == EQuality.None)
-                        Quality = EQuality.Good;
-                    else if (Quality == EQuality.Bad)
-                        Quality = EQuality.Both;
+                    if (Quality == Stroke.Quality.None)
+                        Quality = Stroke.Quality.Good;
+                    else if (Quality == Stroke.Quality.Bad)
+                        Quality = Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == EQuality.Good)
-                        Quality = EQuality.None;
-                    else if (Quality == EQuality.Both)
-                        Quality = EQuality.Bad;
+                    if (Quality == Stroke.Quality.Good)
+                        Quality = Stroke.Quality.None;
+                    else if (Quality == Stroke.Quality.Both)
+                        Quality = Stroke.Quality.Bad;
                 }
             }
             else if (source.Name.ToLower().Contains("badq"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == EQuality.None)
-                        Quality = EQuality.Bad;
-                    else if (Quality == EQuality.Good)
-                        Quality = EQuality.Both;
+                    if (Quality == Stroke.Quality.None)
+                        Quality = Stroke.Quality.Bad;
+                    else if (Quality == Stroke.Quality.Good)
+                        Quality = Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == EQuality.Bad)
-                        Quality = EQuality.None;
-                    else if (Quality == EQuality.Both)
-                        Quality = EQuality.Good;
+                    if (Quality == Stroke.Quality.Bad)
+                        Quality = Stroke.Quality.None;
+                    else if (Quality == Stroke.Quality.Both)
+                        Quality = Stroke.Quality.Good;
                 }
             }
             UpdateSelection();
@@ -250,34 +213,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == ESpecials.None)
-                        Specials = ESpecials.EdgeTable;
-                    else if (Specials == ESpecials.EdgeRacket)
-                        Specials = ESpecials.Both;
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeTable;
+                    else if (Specials == Stroke.Specials.EdgeRacket)
+                        Specials = Stroke.Specials.Both;
                 }
                 else
                 {
-                    if (Specials == ESpecials.EdgeTable)
-                        Specials = ESpecials.None;
-                    else if (Specials == ESpecials.Both)
-                        Specials = ESpecials.EdgeRacket;
+                    if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeRacket;
                 }
             }
             else if (source.Name.ToLower().Contains("edgeracket"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == ESpecials.None)
-                        Specials = ESpecials.EdgeRacket;
-                    else if (Specials == ESpecials.EdgeTable)
-                        Specials = ESpecials.Both;
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeRacket;
+                    else if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.Both;
                 }
                 else
                 {
-                    if (Specials == ESpecials.EdgeRacket)
-                        Specials = ESpecials.None;
-                    else if (Specials == ESpecials.Both)
-                        Specials = ESpecials.EdgeTable;
+                    if (Specials == Stroke.Specials.EdgeRacket)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeTable;
                 }
             }
             UpdateSelection();
@@ -368,34 +331,34 @@ namespace TT.Viewer.ViewModels
             {
                 switch (spin)
                 {
-                    case SpinControlViewModel.Spins.Hidden:
+                    case Stroke.Spin.Hidden:
                         ORresults.Add(service.Spin.ÜS == "" || service.Spin.SL == "" || service.Spin.SR == "" || service.Spin.US=="" || service.Spin.No=="" );
                         break;
-                    case SpinControlViewModel.Spins.ÜS:
+                    case Stroke.Spin.ÜS:
                         ORresults.Add(service.Spin.ÜS == "1" && service.Spin.SL == "0" && service.Spin.SR == "0");
                         break;
-                    case SpinControlViewModel.Spins.SR:
+                    case Stroke.Spin.SR:
                         ORresults.Add(service.Spin.SR == "1" && service.Spin.ÜS == "0" && service.Spin.US == "0");
                         break;
-                    case SpinControlViewModel.Spins.No:
+                    case Stroke.Spin.No:
                         ORresults.Add(service.Spin.No == "1" && service.Spin.SL == "0" && service.Spin.SR == "0" && service.Spin.ÜS == "0" && service.Spin.US == "0");
                         break;
-                    case SpinControlViewModel.Spins.SL:
+                    case Stroke.Spin.SL:
                         ORresults.Add(service.Spin.SL == "1" && service.Spin.ÜS == "0" && service.Spin.US == "0");
                         break;
-                    case SpinControlViewModel.Spins.US:
+                    case Stroke.Spin.US:
                         ORresults.Add(service.Spin.US == "1" && service.Spin.SL == "0" && service.Spin.SR == "0");
                         break;
-                    case SpinControlViewModel.Spins.USSL:
+                    case Stroke.Spin.USSL:
                         ORresults.Add(service.Spin.US == "1" && service.Spin.SL == "1");
                         break;
-                    case SpinControlViewModel.Spins.USSR:
+                    case Stroke.Spin.USSR:
                         ORresults.Add(service.Spin.US == "1" && service.Spin.SR == "1");
                         break;
-                    case SpinControlViewModel.Spins.ÜSSL:
+                    case Stroke.Spin.ÜSSL:
                         ORresults.Add(service.Spin.ÜS == "1" && service.Spin.SL == "1");
                         break;
-                    case SpinControlViewModel.Spins.ÜSSR:
+                    case Stroke.Spin.ÜSSR:
                         ORresults.Add(service.Spin.ÜS == "1" && service.Spin.SR == "1");
                         break;
                     default:
@@ -414,16 +377,16 @@ namespace TT.Viewer.ViewModels
             {
                 switch (service)
                 {
-                    case Services.Pendulum:
+                    case Stroke.Services.Pendulum:
                         ORresults.Add(r.Schlag[0].Aufschlagart=="Pendulum");
                         break;
-                    case Services.Reverse:
+                    case Stroke.Services.Reverse:
                         ORresults.Add(r.Schlag[0].Aufschlagart == "Gegenläufer");
                         break;
-                    case Services.Tomahawk:
+                    case Stroke.Services.Tomahawk:
                         ORresults.Add(r.Schlag[0].Aufschlagart == "Tomahawk");
                         break;
-                    case Services.Special:
+                    case Stroke.Services.Special:
                         ORresults.Add(r.Schlag[0].Aufschlagart == "Spezial");
                         break;
                     default:
@@ -439,13 +402,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Hand)
             {
-                case EHand.Fore:
+                case Stroke.Hand.Fore:
                     return r.Schlag[0].Schlägerseite == "Vorhand";
-                case EHand.Back:
+                case Stroke.Hand.Back:
                     return r.Schlag[0].Schlägerseite == "Rückhand";
-                case EHand.None:
+                case Stroke.Hand.None:
                     return true;
-                case EHand.Both:
+                case Stroke.Hand.Both:
                     return true;
                 default:
                     return false;
@@ -457,13 +420,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Quality)
             {
-                case EQuality.Good:
+                case Stroke.Quality.Good:
                     return r.Schlag[0].Qualität == "gut";  
-                case EQuality.Bad:
+                case Stroke.Quality.Bad:
                     return r.Schlag[0].Qualität == "schlecht"; 
-                case EQuality.None:
+                case Stroke.Quality.None:
                     return true;
-                case EQuality.Both:
+                case Stroke.Quality.Both:
                     return r.Schlag[0].Qualität == "gut" || r.Schlag[0].Qualität == "schlecht";
                 default:
                     return false;
@@ -474,13 +437,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Specials)
             {
-                case ESpecials.EdgeTable:
+                case Stroke.Specials.EdgeTable:
                     return r.Schlag[0].Besonderes == "Tischkante";  
-                case ESpecials.EdgeRacket:
+                case Stroke.Specials.EdgeRacket:
                     return r.Schlag[0].Besonderes == "Schlägerkante"; 
-                case ESpecials.None:
+                case Stroke.Specials.None:
                     return true;
-                case ESpecials.Both:
+                case Stroke.Specials.Both:
                     return r.Schlag[0].Besonderes == "Tischkante" || r.Schlag[0].Besonderes == "Schlägerkante";
                 default:
                     return false;
@@ -496,31 +459,31 @@ namespace TT.Viewer.ViewModels
             {
                 switch (sel)
                 {
-                    case TableServiceViewModel.ETablePosition.TopLeft:
+                    case Positions.Table.TopLeft:
                         ORresults.Add(service.IsTopLeft());
                         break;
-                    case TableServiceViewModel.ETablePosition.TopMid:
+                    case Positions.Table.TopMid:
                         ORresults.Add(service.IsTopMid());
                         break;
-                    case TableServiceViewModel.ETablePosition.TopRight:
+                    case Positions.Table.TopRight:
                         ORresults.Add(service.IsTopRight());
                         break;
-                    case TableServiceViewModel.ETablePosition.MidLeft:
+                    case Positions.Table.MidLeft:
                         ORresults.Add(service.IsMidLeft());
                         break;
-                    case TableServiceViewModel.ETablePosition.MidMid:
+                    case Positions.Table.MidMid:
                         ORresults.Add(service.IsMidMid());
                         break;
-                    case TableServiceViewModel.ETablePosition.MidRight:
+                    case Positions.Table.MidRight:
                         ORresults.Add(service.IsMidRight());
                         break;
-                    case TableServiceViewModel.ETablePosition.BotLeft:
+                    case Positions.Table.BotLeft:
                         ORresults.Add(service.IsBotLeft());
                         break;
-                    case TableServiceViewModel.ETablePosition.BotMid:
+                    case Positions.Table.BotMid:
                         ORresults.Add(service.IsBotMid());
                         break;
-                    case TableServiceViewModel.ETablePosition.BotRight:
+                    case Positions.Table.BotRight:
                         ORresults.Add(service.IsBotRight());
                         break;
                     default:
@@ -549,19 +512,19 @@ namespace TT.Viewer.ViewModels
             {
                 switch (sel)
                 {
-                    case TableServiceViewModel.EServerPosition.Left:
+                    case Positions.Server.Left:
                         ORresults.Add(0 <=X && X <= 30.5);
                         break;
-                    case TableServiceViewModel.EServerPosition.HalfLeft:
+                    case Positions.Server.HalfLeft:
                         ORresults.Add(30.5 < X && X <= 61);
                         break;
-                    case TableServiceViewModel.EServerPosition.Mid:
+                    case Positions.Server.Mid:
                         ORresults.Add(61 < X && X <= 91.5);
                         break;
-                    case TableServiceViewModel.EServerPosition.HalfRight:
+                    case Positions.Server.HalfRight:
                         ORresults.Add(91.5 < X && X <= 122);
                         break;
-                    case TableServiceViewModel.EServerPosition.Right:
+                    case Positions.Server.Right:
                         ORresults.Add(122 < X && X <= 152.5);
                         break;
                     default:

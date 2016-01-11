@@ -7,7 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
-using TT.Viewer.Events;
+using TT.Lib.Events;
+using TT.Lib.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {
@@ -21,8 +22,8 @@ namespace TT.Viewer.ViewModels
         public List<Rally> SelectedRallies { get; private set; }
         public Playlist ActivePlaylist { get; private set; }
         public EHand Hand { get; private set; }       
-        public HashSet<TableStandardViewModel.EStrokeLength> SelectedStrokeLengths { get; set; }
-        public HashSet<TableStandardViewModel.ETablePosition> SelectedTablePositions { get; set; }
+        public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
+        public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public EQuality Quality { get; private set; }
 
         public EStepAround StepAround { get; private set; }
@@ -94,8 +95,8 @@ namespace TT.Viewer.ViewModels
             SelectedRallies = new List<Rally>();
             ActivePlaylist = new Playlist();
             Hand = EHand.None;
-            SelectedStrokeLengths = new HashSet<TableStandardViewModel.EStrokeLength>();
-            SelectedTablePositions = new HashSet<TableStandardViewModel.ETablePosition>();
+            SelectedStrokeLengths = new HashSet<Positions.Length>();
+            SelectedTablePositions = new HashSet<Positions.Table>();
             Quality = EQuality.None;
             SelectedStrokeTec = new HashSet<StrokeTec>();
             StepAround = EStepAround.Not;
@@ -113,11 +114,11 @@ namespace TT.Viewer.ViewModels
         {
             if (check)
             {
-                TableView.Mode = TableStandardViewModel.ViewMode.Top;
+                TableView.Mode = ViewMode.Position.Top;
             }
             else
             {
-                TableView.Mode = TableStandardViewModel.ViewMode.Bottom;
+                TableView.Mode = ViewMode.Position.Bottom;
             }
         }
        
@@ -566,31 +567,31 @@ namespace TT.Viewer.ViewModels
             {
                 switch (sel)
                 {
-                    case TableStandardViewModel.ETablePosition.TopLeft:
+                    case Positions.Table.TopLeft:
                         ORresults.Add(stroke.IsTopLeft());
                         break;
-                    case TableStandardViewModel.ETablePosition.TopMid:
+                    case Positions.Table.TopMid:
                         ORresults.Add(stroke.IsTopMid());
                         break;
-                    case TableStandardViewModel.ETablePosition.TopRight:
+                    case Positions.Table.TopRight:
                         ORresults.Add(stroke.IsTopRight());
                         break;
-                    case TableStandardViewModel.ETablePosition.MidLeft:
+                    case Positions.Table.MidLeft:
                         ORresults.Add(stroke.IsMidLeft());
                         break;
-                    case TableStandardViewModel.ETablePosition.MidMid:
+                    case Positions.Table.MidMid:
                         ORresults.Add(stroke.IsMidMid());
                         break;
-                    case TableStandardViewModel.ETablePosition.MidRight:
+                    case Positions.Table.MidRight:
                         ORresults.Add(stroke.IsMidRight());
                         break;
-                    case TableStandardViewModel.ETablePosition.BotLeft:
+                    case Positions.Table.BotLeft:
                         ORresults.Add(stroke.IsBotLeft());
                         break;
-                    case TableStandardViewModel.ETablePosition.BotMid:
+                    case Positions.Table.BotMid:
                         ORresults.Add(stroke.IsBotMid());
                         break;
-                    case TableStandardViewModel.ETablePosition.BotRight:
+                    case Positions.Table.BotRight:
                         ORresults.Add(stroke.IsBotRight());
                         break;
                     default:
@@ -609,13 +610,13 @@ namespace TT.Viewer.ViewModels
             {
                 switch (sel)
                 {
-                    case TableStandardViewModel.EStrokeLength.Short:
+                    case Positions.Length.Short:
                         ORresults.Add(stroke.IsShort());
                         break;                        
-                    case TableStandardViewModel.EStrokeLength.Half:
+                    case Positions.Length.Half:
                         ORresults.Add(stroke.IsHalf());
                         break;
-                    case TableStandardViewModel.EStrokeLength.Long:
+                    case Positions.Length.Long:
                         ORresults.Add(stroke.IsLong());
                         break;
                     default:

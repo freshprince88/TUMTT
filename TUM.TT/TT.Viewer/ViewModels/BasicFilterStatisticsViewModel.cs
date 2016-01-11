@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
-using TT.Viewer.Events;
+using TT.Lib.Events;
 
 namespace TT.Viewer.ViewModels
 {

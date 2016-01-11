@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Viewer.Events
+namespace TT.Lib.Events
 {
     using TT.Lib.Models;
 
@@ -18,15 +18,11 @@ namespace TT.Viewer.Events
         /// </summary>
         /// <param name="match">The match.</param>
         /// <param name="fileName">The file name the match was opened from</param>
-        public MatchOpenedEvent(Match match, string fileName = null)
+        public MatchOpenedEvent(Match match)
             : base(match)
         {
-            this.FileName = fileName;
+
         }
 
-        /// <summary>
-        /// Gets the name of the file this match was opened from.
-        /// </summary>
-        public string FileName { get; private set; }
     }
 }

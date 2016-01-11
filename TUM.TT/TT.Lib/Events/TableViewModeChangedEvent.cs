@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TT.Viewer.ViewModels;
+using TT.Lib.Util.Enums;
 
-namespace TT.Viewer.Events
+namespace TT.Lib.Events
 {
     public class TableViewModeChangedEvent
     {
-        public TableViewModeChangedEvent(TableServiceViewModel.ViewMode mode)
+        public TableViewModeChangedEvent(ViewMode.Position mode)
         {
             Mode = mode;
         }
 
-        public TableServiceViewModel.ViewMode Mode { get; set; }
+        public ViewMode.Position Mode { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using TT.Viewer.Events;
+using TT.Lib.Events;
 using TT.Viewer.ViewModels;
 using TT.Lib.Util.Enums;
 using System.Windows.Controls.Primitives;

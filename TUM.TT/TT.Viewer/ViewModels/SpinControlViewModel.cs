@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using Xceed.Wpf.Toolkit;
-using TT.Viewer.Events;
+using TT.Lib.Events;
+using TT.Lib.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {
@@ -14,22 +15,10 @@ namespace TT.Viewer.ViewModels
     {
         private IEventAggregator events;
 
-        public enum Spins
-        {
-            ÜS,
-            SR,
-            No,
-            SL,
-            US,
-            ÜSSR,
-            USSR,
-            USSL,
-            ÜSSL,
-            Hidden
-        }
+        
 
-        private HashSet<Spins> _spins;
-        public HashSet<Spins> Selected
+        private HashSet<Stroke.Spin> _spins;
+        public HashSet<Stroke.Spin> Selected
         {
             get
             {
@@ -44,7 +33,7 @@ namespace TT.Viewer.ViewModels
         public SpinControlViewModel(IEventAggregator e)
         {
             events = e;
-            Selected = new HashSet<Spins>();
+            Selected = new HashSet<Stroke.Spin>();
         }
 
 
@@ -52,13 +41,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.ÜS))
-                    Selected.Add(Spins.ÜS);
+                if (!Selected.Contains(Stroke.Spin.ÜS))
+                    Selected.Add(Stroke.Spin.ÜS);
             }
             else
             {
-                if (Selected.Contains(Spins.ÜS))
-                    Selected.Remove(Spins.ÜS);
+                if (Selected.Contains(Stroke.Spin.ÜS))
+                    Selected.Remove(Stroke.Spin.ÜS);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -67,13 +56,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.SL))
-                    Selected.Add(Spins.SL);
+                if (!Selected.Contains(Stroke.Spin.SL))
+                    Selected.Add(Stroke.Spin.SL);
             }
             else
             {
-                if (Selected.Contains(Spins.SL))
-                    Selected.Remove(Spins.SL);
+                if (Selected.Contains(Stroke.Spin.SL))
+                    Selected.Remove(Stroke.Spin.SL);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -82,13 +71,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.No))
-                    Selected.Add(Spins.No);
+                if (!Selected.Contains(Stroke.Spin.No))
+                    Selected.Add(Stroke.Spin.No);
             }
             else
             {
-                if (Selected.Contains(Spins.No))
-                    Selected.Remove(Spins.No);
+                if (Selected.Contains(Stroke.Spin.No))
+                    Selected.Remove(Stroke.Spin.No);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -97,13 +86,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.SR))
-                    Selected.Add(Spins.SR);
+                if (!Selected.Contains(Stroke.Spin.SR))
+                    Selected.Add(Stroke.Spin.SR);
             }
             else
             {
-                if (Selected.Contains(Spins.SR))
-                    Selected.Remove(Spins.SR);
+                if (Selected.Contains(Stroke.Spin.SR))
+                    Selected.Remove(Stroke.Spin.SR);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -112,13 +101,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.US))
-                    Selected.Add(Spins.US);
+                if (!Selected.Contains(Stroke.Spin.US))
+                    Selected.Add(Stroke.Spin.US);
             }
             else
             {
-                if (Selected.Contains(Spins.US))
-                    Selected.Remove(Spins.US);
+                if (Selected.Contains(Stroke.Spin.US))
+                    Selected.Remove(Stroke.Spin.US);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -127,13 +116,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.USSR))
-                    Selected.Add(Spins.USSR);
+                if (!Selected.Contains(Stroke.Spin.USSR))
+                    Selected.Add(Stroke.Spin.USSR);
             }
             else
             {
-                if (Selected.Contains(Spins.USSR))
-                    Selected.Remove(Spins.USSR);
+                if (Selected.Contains(Stroke.Spin.USSR))
+                    Selected.Remove(Stroke.Spin.USSR);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -142,13 +131,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.USSL))
-                    Selected.Add(Spins.USSL);
+                if (!Selected.Contains(Stroke.Spin.USSL))
+                    Selected.Add(Stroke.Spin.USSL);
             }
             else
             {
-                if (Selected.Contains(Spins.USSL))
-                    Selected.Remove(Spins.USSL);
+                if (Selected.Contains(Stroke.Spin.USSL))
+                    Selected.Remove(Stroke.Spin.USSL);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -157,13 +146,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.ÜSSL))
-                    Selected.Add(Spins.ÜSSL);
+                if (!Selected.Contains(Stroke.Spin.ÜSSL))
+                    Selected.Add(Stroke.Spin.ÜSSL);
             }
             else
             {
-                if (Selected.Contains(Spins.ÜSSL))
-                    Selected.Remove(Spins.ÜSSL);
+                if (Selected.Contains(Stroke.Spin.ÜSSL))
+                    Selected.Remove(Stroke.Spin.ÜSSL);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -172,13 +161,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.ÜSSR))
-                    Selected.Add(Spins.ÜSSR);
+                if (!Selected.Contains(Stroke.Spin.ÜSSR))
+                    Selected.Add(Stroke.Spin.ÜSSR);
             }
             else
             {
-                if (Selected.Contains(Spins.ÜSSR))
-                    Selected.Remove(Spins.ÜSSR);
+                if (Selected.Contains(Stroke.Spin.ÜSSR))
+                    Selected.Remove(Stroke.Spin.ÜSSR);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
@@ -186,13 +175,13 @@ namespace TT.Viewer.ViewModels
         {
             if (source.IsChecked.Value)
             {
-                if (!Selected.Contains(Spins.Hidden))
-                    Selected.Add(Spins.Hidden);
+                if (!Selected.Contains(Stroke.Spin.Hidden))
+                    Selected.Add(Stroke.Spin.Hidden);
             }
             else
             {
-                if (Selected.Contains(Spins.Hidden))
-                    Selected.Remove(Spins.Hidden);
+                if (Selected.Contains(Stroke.Spin.Hidden))
+                    Selected.Remove(Stroke.Spin.Hidden);
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }

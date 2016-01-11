@@ -7,7 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
-using TT.Viewer.Events;
+using TT.Lib.Events;
+using TT.Lib.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {
@@ -25,12 +26,12 @@ namespace TT.Viewer.ViewModels
         public List<Rally> SelectedRallies { get; private set; }
 
         public Playlist RallyList { get; private set; }
-        public List<SpinControlViewModel.Spins> SelectedSpins { get; private set; }
+        public List<Stroke.Spin> SelectedSpins { get; private set; }
         
-        public EPoint Point { get; private set; }
-        public EServer Server { get; private set; }
+        public Stroke.Point Point { get; private set; }
+        public Stroke.Server Server { get; private set; }
        
-        public ECrunch Crunch { get; private set; }
+        public Stroke.Crunch Crunch { get; private set; }
 
         public HashSet<int> SelectedSets { get; private set; }
         public HashSet<int> SelectedRallyLengths { get; private set; }
@@ -40,43 +41,8 @@ namespace TT.Viewer.ViewModels
 
         public String PlayerLabel { get; set; }
 
-
-
         #endregion
 
-        #region Enums
-
-
-
-        public enum EPoint
-
-        {
-            Player1,
-            Player2,
-            None,
-            Both
-        }
-
-        public enum EServer
-
-        {
-            Player1,
-            Player2,
-            None,
-            Both
-        }
-
-       
-
-        public enum ECrunch
-        {
-            CrunchTime,
-            Not
-        }
-
-       
-
-        #endregion
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -88,9 +54,9 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             SelectedRallies = new List<Rally>();            
             RallyList = new Playlist();            
-            Point = EPoint.None;
-            Server = EServer.None;           
-            Crunch = ECrunch.Not;
+            Point = Stroke.Point.None;
+            Server = Stroke.Server.None;           
+            Crunch = Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
             FilterPointPlayer1Button = "Spieler 1";
@@ -309,11 +275,11 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    Crunch = ECrunch.CrunchTime;
+                    Crunch = Stroke.Crunch.CrunchTime;
                 }
                 else
                 {
-                    Crunch = ECrunch.Not;
+                    Crunch = Stroke.Crunch.Not;
                 }
             }
             UpdateSelection();
@@ -326,34 +292,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Point == EPoint.None)
-                        Point = EPoint.Player1;
-                    else if (Point == EPoint.Player2)
-                        Point = EPoint.Both;
+                    if (Point == Stroke.Point.None)
+                        Point = Stroke.Point.Player1;
+                    else if (Point == Stroke.Point.Player2)
+                        Point = Stroke.Point.Both;
                 }
                 else
                 {
-                    if (Point == EPoint.Player1)
-                        Point = EPoint.None;
-                    else if (Point == EPoint.Both)
-                        Point = EPoint.Player2;
+                    if (Point == Stroke.Point.Player1)
+                        Point = Stroke.Point.None;
+                    else if (Point == Stroke.Point.Both)
+                        Point = Stroke.Point.Player2;
                 }
             }
             else if (source.Name.ToLower().Contains("player2"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Point == EPoint.None)
-                        Point = EPoint.Player2;
-                    else if (Point == EPoint.Player1)
-                        Point = EPoint.Both;
+                    if (Point == Stroke.Point.None)
+                        Point = Stroke.Point.Player2;
+                    else if (Point == Stroke.Point.Player1)
+                        Point = Stroke.Point.Both;
                 }
                 else
                 {
-                    if (Point == EPoint.Player2)
-                        Point = EPoint.None;
-                    else if (Point == EPoint.Both)
-                        Point = EPoint.Player1;
+                    if (Point == Stroke.Point.Player2)
+                        Point = Stroke.Point.None;
+                    else if (Point == Stroke.Point.Both)
+                        Point = Stroke.Point.Player1;
                 }
             }
             UpdateSelection();
@@ -365,34 +331,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Server == EServer.None)
-                        Server = EServer.Player1;
-                    else if (Server == EServer.Player2)
-                        Server = EServer.Both;
+                    if (Server == Stroke.Server.None)
+                        Server = Stroke.Server.Player1;
+                    else if (Server == Stroke.Server.Player2)
+                        Server = Stroke.Server.Both;
                 }
                 else
                 {
-                    if (Server == EServer.Player1)
-                        Server = EServer.None;
-                    else if (Server == EServer.Both)
-                        Server = EServer.Player2;
+                    if (Server == Stroke.Server.Player1)
+                        Server = Stroke.Server.None;
+                    else if (Server == Stroke.Server.Both)
+                        Server = Stroke.Server.Player2;
                 }
             }
             else if (source.Name.ToLower().Contains("player2"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Server == EServer.None)
-                        Server = EServer.Player2;
-                    else if (Server == EServer.Player1)
-                        Server = EServer.Both;
+                    if (Server == Stroke.Server.None)
+                        Server = Stroke.Server.Player2;
+                    else if (Server == Stroke.Server.Player1)
+                        Server = Stroke.Server.Both;
                 }
                 else
                 {
-                    if (Server == EServer.Player2)
-                        Server = EServer.None;
-                    else if (Server == EServer.Both)
-                        Server = EServer.Player1;
+                    if (Server == Stroke.Server.Player2)
+                        Server = Stroke.Server.None;
+                    else if (Server == Stroke.Server.Both)
+                        Server = Stroke.Server.Player1;
                 }
             }
             UpdateSelection();
@@ -463,13 +429,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Point)
             {
-                case EPoint.Player1:
+                case Stroke.Point.Player1:
                     return r.Winner == "First";  //TODO Name der Spieler dynamisch????
-                case EPoint.Player2:
+                case Stroke.Point.Player2:
                     return r.Winner == "Second"; //TODO Name der Spieler dynamisch????
-                case EPoint.None:
+                case Stroke.Point.None:
                     return true;
-                case EPoint.Both:
+                case Stroke.Point.Both:
                     return true;
                 default:
                     return false;
@@ -480,13 +446,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Server)
             {
-                case EServer.Player1:
+                case Stroke.Server.Player1:
                     return r.Schlag[StrokeNumber].Spieler == "First";  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
-                case EServer.Player2:
+                case Stroke.Server.Player2:
                     return r.Schlag[StrokeNumber].Spieler == "Second"; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
-                case EServer.None:
+                case Stroke.Server.None:
                     return true;
-                case EServer.Both:
+                case Stroke.Server.Both:
                     return true;
                 default:
                     return false;
@@ -532,9 +498,9 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Crunch)
             {
-                case ECrunch.CrunchTime:
+                case Stroke.Crunch.CrunchTime:
                     return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
-                case ECrunch.Not:
+                case Stroke.Crunch.Not:
                     return true;
                 default:
                     return false;

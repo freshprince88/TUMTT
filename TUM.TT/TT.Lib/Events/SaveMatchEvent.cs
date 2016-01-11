@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TT.Viewer.Events
+namespace TT.Lib.Events
 {
-    public class FilterSwitchedEvent : PlaylistEvent
+    public class SaveMatchEvent: MatchEvent
     {
-        public FilterSwitchedEvent(Playlist list)
-            : base(list)
+        public SaveMatchEvent(Match match)
+            : base(match)
         {
 
         }
