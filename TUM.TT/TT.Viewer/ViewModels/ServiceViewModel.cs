@@ -9,11 +9,11 @@ using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
 using TT.Lib.Util.Enums;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class ServiceViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>,
         IHandle<TableViewSelectionChangedEvent>,
         IHandle<SpinControlSelectionChangedEvent>,
         IHandle<FilterSelectionChangedEvent>
@@ -24,7 +24,6 @@ namespace TT.Viewer.ViewModels
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
         public List<Rally> SelectedRallies { get; private set; }
-        public Playlist RallyList { get; private set; }
         public List<Stroke.Spin> SelectedSpins { get; private set; }
         public Stroke.Hand Hand { get; private set; }       
         public Stroke.Quality Quality { get; private set; }
@@ -41,13 +40,14 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public ServiceViewModel(IEventAggregator eventAggregator)
+        public ServiceViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            Manager = man;
             SelectedRallies = new List<Rally>();
             SelectedSpins = new List<Stroke.Spin>();
-            RallyList = new Playlist();
             Hand = Stroke.Hand.None;       
             Quality = Stroke.Quality.None;
             Specials = Stroke.Specials.None;          
@@ -67,6 +67,7 @@ namespace TT.Viewer.ViewModels
         }
 
         #region View Methods
+
         public void SelectService(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("pendulum"))
@@ -113,7 +114,7 @@ namespace TT.Viewer.ViewModels
                     SelectedServices.Remove(Stroke.Services.Special);
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
 
         }
 
@@ -165,7 +166,7 @@ namespace TT.Viewer.ViewModels
                         Hand = Stroke.Hand.Fore;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void GoodBadQuality(ToggleButton source)
@@ -204,7 +205,7 @@ namespace TT.Viewer.ViewModels
                         Quality = Stroke.Quality.Good;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void EdgeSpecials(ToggleButton source)
@@ -243,7 +244,7 @@ namespace TT.Viewer.ViewModels
                         Specials = Stroke.Specials.EdgeTable;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
@@ -267,6 +268,8 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(SpinControl);
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
+
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -287,35 +290,29 @@ namespace TT.Viewer.ViewModels
         //Get SelectedRallies and apply own filters
         public void Handle(FilterSelectionChangedEvent message)
         {
-            UpdateSelection();
-        }
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.RallyList = message.Playlist;
-
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void Handle(TableViewSelectionChangedEvent message)
         {
             SelectedServerPositions = message.PlayerPositions;
             SelectedTablePositions = message.Positions;
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void Handle(SpinControlSelectionChangedEvent message)
         {
             SelectedSpins = message.Selected;
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
 
         #region Helper Methods
 
-        private void UpdateSelection()
+        private void UpdateSelection(Playlist list)
         {
-            if (this.RallyList.Rallies != null)
+            if (list.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasSpins(r) && HasHand(r) && HasServices(r)  && HasQuality(r) && HasSpecials(r) && HasTablePosition(r) && HasServerPosition(r)).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));

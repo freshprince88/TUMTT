@@ -82,7 +82,7 @@ namespace TT.Viewer.Views
 
         public void Handle(VideoLoadedEvent message)
         {
-            this.myMediaElement.Source = new Uri(message.VideoFile);
+            this.myMediaElement.Source = message.VideoFile != null ? new Uri(message.VideoFile) : myMediaElement.Source;
         }
 
         public void Handle(VideoControlEvent message)

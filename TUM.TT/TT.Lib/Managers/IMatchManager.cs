@@ -1,13 +1,29 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TT.Lib.Events;
 
 namespace TT.Lib.Managers
 {
-    public interface IMatchManager
+    public interface IMatchManager 
     {
-        Match Match { get; set; }
+        Match Match { get; }
+
+        Playlist ActivePlaylist { get; }
+
+        string FileName { get;  }
+
+        bool MatchModified { get; }
+
+        void OpenMatch();
+
+        void SaveMatch();
+
+        //void CreateMatch();
+
+        //void AddRally();
     }
 }

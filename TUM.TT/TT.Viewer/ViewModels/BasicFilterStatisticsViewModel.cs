@@ -8,79 +8,43 @@ using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
+using TT.Lib.Util.Enums;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class BasicFilterStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>,
         IHandle<MatchOpenedEvent>
     {
         #region Properties
 
         public string FilterPointPlayer1Button { get; set; }
         public string FilterPointPlayer2Button { get; set; }
-
-       
-        public List<Rally> SelectedRallies { get; private set; }
-
-        public Playlist RallyList { get; private set; }
-
       
-        public EPlayer Player { get; private set; }
-
-        public ECrunch Crunch { get; private set; }
-
-        public HashSet<int> SelectedSets { get; private set; }
-        
+        public List<Rally> SelectedRallies { get; private set; }
+        public Stroke.Player Player { get; private set; }
+        public Stroke.Crunch Crunch { get; private set; }
+        public HashSet<int> SelectedSets { get; private set; }       
         public int MinRallyLength { get; set; }
         public bool LastStroke { get; set; }
         public int StrokeNumber { get; set; }
 
-       
-
-
-
         #endregion
 
-        #region Enums
-
-
-
-       
-
-        public enum EPlayer
-
-        {
-            Player1,
-            Player2,
-            None,
-            Both
-        }
-
-
-
-        public enum ECrunch
-        {
-            CrunchTime,
-            Not
-        }
-
-
-
-        #endregion
 
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public BasicFilterStatisticsViewModel(IEventAggregator eventAggregator)
+        public BasicFilterStatisticsViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            Manager = man;
             SelectedRallies = new List<Rally>();
-            RallyList = new Playlist();
-            Player = EPlayer.None;
-            Crunch = ECrunch.Not;
+            Player = Stroke.Player.None;
+            Crunch = Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
            
             FilterPointPlayer1Button = "Spieler 1";
@@ -197,7 +161,7 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(7);
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void CrunchOrNot(ToggleButton source)
@@ -206,14 +170,14 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    Crunch = ECrunch.CrunchTime;
+                    Crunch = Stroke.Crunch.CrunchTime;
                 }
                 else
                 {
-                    Crunch = ECrunch.Not;
+                    Crunch = Stroke.Crunch.Not;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }     
 
         public void P1P2(ToggleButton source)
@@ -222,37 +186,37 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Player == EPlayer.None)
-                        Player = EPlayer.Player1;
-                    else if (Player == EPlayer.Player2)
-                        Player = EPlayer.Both;
+                    if (Player == Stroke.Player.None)
+                        Player = Stroke.Player.Player1;
+                    else if (Player == Stroke.Player.Player2)
+                        Player = Stroke.Player.Both;
                 }
                 else
                 {
-                    if (Player == EPlayer.Player1)
-                        Player = EPlayer.None;
-                    else if (Player == EPlayer.Both)
-                        Player = EPlayer.Player2;
+                    if (Player == Stroke.Player.Player1)
+                        Player = Stroke.Player.None;
+                    else if (Player == Stroke.Player.Both)
+                        Player = Stroke.Player.Player2;
                 }
             }
             else if (source.Name.ToLower().Contains("player2"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Player == EPlayer.None)
-                        Player = EPlayer.Player2;
-                    else if (Player == EPlayer.Player1)
-                        Player = EPlayer.Both;
+                    if (Player == Stroke.Player.None)
+                        Player = Stroke.Player.Player2;
+                    else if (Player == Stroke.Player.Player1)
+                        Player = Stroke.Player.Both;
                 }
                 else
                 {
-                    if (Player == EPlayer.Player2)
-                        Player = EPlayer.None;
-                    else if (Player == EPlayer.Both)
-                        Player = EPlayer.Player1;
+                    if (Player == Stroke.Player.Player2)
+                        Player = Stroke.Player.None;
+                    else if (Player == Stroke.Player.Both)
+                        Player = Stroke.Player.Player1;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void DetailsChecked(bool radio_percent_checked)
@@ -282,7 +246,7 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -296,55 +260,44 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.RallyList = message.Playlist;
-
-            UpdateSelection();
-        }
-
-        public void Handle(MatchOpenedEvent message)
-        {
-            if (message.Match.FirstPlayer != null && message.Match.SecondPlayer != null)
-            {
-                FilterPointPlayer1Button = message.Match.FirstPlayer.Name.Split(' ')[0];
-                FilterPointPlayer2Button = message.Match.SecondPlayer.Name.Split(' ')[0];
-            }
-        }
+        //public void Handle(MatchOpenedEvent message)
+        //{
+        //    if (message.Match.FirstPlayer != null && message.Match.SecondPlayer != null)
+        //    {
+        //        FilterPointPlayer1Button = message.Match.FirstPlayer.Name.Split(' ')[0];
+        //        FilterPointPlayer2Button = message.Match.SecondPlayer.Name.Split(' ')[0];
+        //    }
+        //}
 
         #endregion
 
         #region Helper Methods
 
-        public void UpdateSelection()
+        public void UpdateSelection(Playlist list)
         {
-            if (this.RallyList.Rallies != null)
+            if (list.Rallies != null)
             {
-                SelectedRallies = this.RallyList.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasCrunchTime(r) && HasPlayer(r)).ToList();
+                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasCrunchTime(r) && HasPlayer(r)).ToList();
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }
-
-
-       
 
         private bool HasPlayer(Rally r)
         {
             switch (this.Player)
             {
-                case EPlayer.Player1:
+                case Stroke.Player.Player1:
                     return r.Schlag[StrokeNumber].Spieler == "First";  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
-                case EPlayer.Player2:
+                case Stroke.Player.Player2:
                     return r.Schlag[StrokeNumber].Spieler == "Second"; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
-                case EPlayer.None:
+                case Stroke.Player.None:
                     return true;
-                case EPlayer.Both:
+                case Stroke.Player.Both:
                     return true;
                 default:
                     return false;
             }
         }
-
 
         private bool HasSet(Rally r)
         {
@@ -357,16 +310,14 @@ namespace TT.Viewer.ViewModels
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
-
-      
-
+     
         private bool HasCrunchTime(Rally r)
         {
             switch (this.Crunch)
             {
-                case ECrunch.CrunchTime:
+                case Stroke.Crunch.CrunchTime:
                     return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
-                case ECrunch.Not:
+                case Stroke.Crunch.Not:
                     return true;
                 default:
                     return false;

@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using TT.Lib.Events;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
@@ -19,8 +20,7 @@ namespace TT.Viewer.ViewModels
         IHandle<PlaylistNamedEvent>
     {
         private IEventAggregator events;
-
-        public Match Match { get; private set; }
+        private IMatchManager Manager;
 
         private PlaylistItem _selected;
         public PlaylistItem SelectedItemView
@@ -37,9 +37,10 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public PlaylistViewModel(IEventAggregator e)
+        public PlaylistViewModel(IEventAggregator e, IMatchManager man)
         {
             events = e;
+            Manager = man;
         }
 
         #region View Methods
@@ -61,7 +62,7 @@ namespace TT.Viewer.ViewModels
 
         public void Save()
         {
-            this.events.PublishOnUIThread(new SaveMatchEvent(this.Match));
+            
         }
 
         public void ShowSettings()
@@ -92,8 +93,6 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MatchOpenedEvent message)
         {
-            this.Match = message.Match;
-            this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
             this.Items.Clear();
 
             foreach (var playlist in message.Match.Playlists)
@@ -119,7 +118,7 @@ namespace TT.Viewer.ViewModels
             Playlist p = new Playlist();
             p.Name = name;
             p.Rallies = new List<Rally>();
-            this.Match.Playlists.Add(p);
+            Manager.Match.Playlists.Add(p);
 
             this.ActivateItem(new PlaylistItem()
             {
@@ -127,7 +126,6 @@ namespace TT.Viewer.ViewModels
                 Count = p.Rallies.Count()
             });
 
-            this.events.PublishOnUIThread(new MatchEditedEvent(this.Match));
         }
 
         public void DragOver(IDropInfo dropInfo)
@@ -147,7 +145,7 @@ namespace TT.Viewer.ViewModels
             var sourceItem = dropInfo.Data as ResultListItem;
             var targetItem = dropInfo.TargetItem as PlaylistItem;
 
-            Playlist list = this.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
+            Playlist list = Manager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
 
             if (!list.Rallies.Contains(sourceItem.Rally))
             {

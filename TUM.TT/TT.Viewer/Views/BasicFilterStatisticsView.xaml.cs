@@ -21,7 +21,6 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für BasicFilterStatisticsView.xaml
     /// </summary>
     public partial class BasicFilterStatisticsView : UserControl, 
-        IHandle<MatchInformationEvent>,
         IHandle<StatisticDetailChangedEvent>
     {
         public IEventAggregator Events { get; set; }
@@ -33,14 +32,14 @@ namespace TT.Viewer.Views
             Events.Subscribe(this);
         }
 
-        public void Handle(MatchInformationEvent message)
-        {
-            if (message.Match != null)
-            {
-                FilterPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0];
-                FilterPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0];
-            }
-        }
+        //public void Handle(MatchInformationEvent message)
+        //{
+        //    if (message.Match != null)
+        //    {
+        //        FilterPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0];
+        //        FilterPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0];
+        //    }
+        //}
 
         public void Handle(StatisticDetailChangedEvent message)
         {

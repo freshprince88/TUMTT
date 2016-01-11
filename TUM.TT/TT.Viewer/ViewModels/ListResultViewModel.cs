@@ -12,7 +12,7 @@ using TT.Lib.Events;
 namespace TT.Viewer.ViewModels
 {
     public class ListResultViewModel : Conductor<ResultListItem>.Collection.AllActive, IResultViewTabItem,
-        IHandle<ResultsChangedEvent>,IHandle<MatchInformationEvent>
+        IHandle<ResultsChangedEvent>
     {
         public Match Match { get; set; }
         private IEventAggregator events;
@@ -65,11 +65,6 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-        }
-
-        public void Handle(MatchInformationEvent message)
-        {
-            this.Match = message.Match;
         }
         #endregion
     }

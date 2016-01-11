@@ -9,12 +9,12 @@ using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
 using TT.Lib.Util.Enums;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class LastBallViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
-        IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
@@ -26,14 +26,9 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
         public Stroke.WinnerOrNetOut Winner { get; private set; }
-
         public Stroke.StepAround StepAround { get; private set; }
-
-
-       
-
+     
         private HashSet<Stroke.Technique> _strokeTec;
-
         public HashSet<Stroke.Technique> SelectedStrokeTec
         {
             get
@@ -51,10 +46,12 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public LastBallViewModel(IEventAggregator eventAggregator)
+        public LastBallViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            Manager = man;
             SelectedRallies = new List<Rally>();
             ActivePlaylist = new Playlist();
             Hand = Stroke.Hand.None;
@@ -87,6 +84,7 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = ViewMode.Position.Bottom;
             }
         }
+
         public void WinnerOrNetOut(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("winner"))
@@ -123,7 +121,7 @@ namespace TT.Viewer.ViewModels
                         Winner = Stroke.WinnerOrNetOut.Winner;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void ForBackHand(ToggleButton source)
@@ -162,7 +160,7 @@ namespace TT.Viewer.ViewModels
                         Hand = Stroke.Hand.Fore;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void StepAroundOrNot(ToggleButton source)
@@ -178,7 +176,7 @@ namespace TT.Viewer.ViewModels
                     StepAround = Stroke.StepAround.Not;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void SelectStrokeTec(ToggleButton source)
@@ -349,7 +347,7 @@ namespace TT.Viewer.ViewModels
                 }
             }
 
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
 
         }
 
@@ -389,7 +387,7 @@ namespace TT.Viewer.ViewModels
                         Quality = Stroke.Quality.Good;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
@@ -410,6 +408,8 @@ namespace TT.Viewer.ViewModels
             this.events.Subscribe(this);
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
+
+            UpdateSelection(Manager.ActivePlaylist);
         }
         protected override void OnDeactivate(bool close)
         {
@@ -427,33 +427,23 @@ namespace TT.Viewer.ViewModels
         //Get SelectedRallies and apply own filters
         public void Handle(FilterSelectionChangedEvent message)
         {
-            UpdateSelection();
-        }
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.ActivePlaylist = message.Playlist;
-            //if (this.Match.Rallies != null)
-            //{
-            //    SelectedRallies = this.Match.Rallies.Where(r => r.Schlag.Length > BasicFilterView.MinRallyLength).ToList();
-            //    this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
-            //}
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void Handle(TableStdViewSelectionChangedEvent message)
         {
             SelectedStrokeLengths = message.StrokeLengths;
             SelectedTablePositions = message.Positions;
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
 
         #region Helper Methods
 
-        private void UpdateSelection()
+        private void UpdateSelection(Playlist list)
         {
-            if (this.ActivePlaylist.Rallies != null)
+            if (list.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasWinner(r) && HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));

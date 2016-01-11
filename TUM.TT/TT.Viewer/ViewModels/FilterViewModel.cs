@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class FilterViewModel : Conductor<IScreen>.Collection.OneActive,
-        IHandle<FilterSwitchedEvent>, IHandle<MatchInformationEvent>
+    public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public ServiceViewModel ServiceView { get; set; }
         public ReceiveViewModel ReceiveView { get; set; }
@@ -19,18 +19,17 @@ namespace TT.Viewer.ViewModels
         public LastBallViewModel LastBallView { get; set; }
         public TotalMatchViewModel TotalMatchView { get; set; }
         public CombiViewModel CombiView { get; set; }
-        private Playlist ActivePlaylist { get; set; }
-        private Match Match { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public FilterViewModel(IEventAggregator eventAggregator)
+        public FilterViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
-            this.ActivePlaylist = new Playlist();
+            this.Manager = man;
         }
 
         /// <summary>
@@ -42,13 +41,13 @@ namespace TT.Viewer.ViewModels
 
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            LastBallView = new LastBallViewModel(this.events);
-            FourthBallView = new FourthBallViewModel(this.events);
-            ThirdBallView = new ThirdBallViewModel(this.events);
-            ReceiveView = new ReceiveViewModel(this.events);
-            ServiceView = new ServiceViewModel(this.events);
-            TotalMatchView = new TotalMatchViewModel(this.events);
-            CombiView = new CombiViewModel(this.events);
+            LastBallView = new LastBallViewModel(this.events, Manager);
+            FourthBallView = new FourthBallViewModel(this.events, Manager);
+            ThirdBallView = new ThirdBallViewModel(this.events, Manager);
+            ReceiveView = new ReceiveViewModel(this.events, Manager);
+            ServiceView = new ServiceViewModel(this.events, Manager);
+            TotalMatchView = new TotalMatchViewModel(this.events, Manager);
+            CombiView = new CombiViewModel(this.events, Manager);
 
             // Activate the welcome model
             if (this.ActiveItem == null)
@@ -65,59 +64,35 @@ namespace TT.Viewer.ViewModels
             {
                 case "ServiceFilterTabHeader":
                     this.ActivateItem(ServiceView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ReceiveFilterTabHeader":
                     this.ActivateItem(ReceiveView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ThirdFilterTabHeader":
                     this.ActivateItem(ThirdBallView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "FourthFilterTabHeader":
                     this.ActivateItem(FourthBallView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "LastFilterTabHeader":
                     this.ActivateItem(LastBallView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "TotalMatchFilterTabHeader":
                     this.ActivateItem(TotalMatchView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "KombiFilterTabHeader":
                     this.ActivateItem(CombiView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 default:
                     break;
             }
-        }
-
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.ActivePlaylist = message.Playlist;
-        }
-
-        public void Handle(MatchInformationEvent message)
-        {
-            this.Match = message.Match;
         }
     }
 }

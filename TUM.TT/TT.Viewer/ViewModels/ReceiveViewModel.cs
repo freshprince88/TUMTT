@@ -9,56 +9,26 @@ using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
 using TT.Lib.Util.Enums;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class ReceiveViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
-        IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
         public Playlist ActivePlaylist { get; private set; }
-        public EHand Hand { get; private set; }       
+        public Stroke.Hand Hand { get; private set; }       
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
-        public EQuality Quality { get; private set; }
+        public Stroke.Quality Quality { get; private set; }
+        public Stroke.StepAround StepAround { get; private set; }
 
-        public EStepAround StepAround { get; private set; }
-
-        public enum EHand
-        {
-            Fore,
-            Back,
-            None,
-            Both
-        }
-        
-
-        public enum StrokeTec
-        {
-            Push,
-            PushAggressive,
-            Flip,
-            Banana,
-            Topspin,
-            TopspinSpin,
-            TopspinTempo,
-            Block,
-            BlockTempo,
-            BlockChop,
-            Counter,
-            Smash,
-            Lob,
-            Chop,
-            Special
-        }
-
-        private HashSet<StrokeTec> _strokeTec;
-
-        public HashSet<StrokeTec> SelectedStrokeTec
+        private HashSet<Stroke.Technique> _strokeTec;
+        public HashSet<Stroke.Technique> SelectedStrokeTec
         {
             get
             {
@@ -70,36 +40,25 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public enum EQuality
-        {
-            Bad,
-            Good,
-            None,
-            Both
-        }
-        public enum EStepAround
-        {
-            StepAround,
-            Not
-        }
-
 
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public ReceiveViewModel(IEventAggregator eventAggregator)
+        public ReceiveViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            Manager = man;
             SelectedRallies = new List<Rally>();
             ActivePlaylist = new Playlist();
-            Hand = EHand.None;
+            Hand = Stroke.Hand.None;
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
-            Quality = EQuality.None;
-            SelectedStrokeTec = new HashSet<StrokeTec>();
-            StepAround = EStepAround.Not;
+            Quality = Stroke.Quality.None;
+            SelectedStrokeTec = new HashSet<Stroke.Technique>();
+            StepAround = Stroke.StepAround.Not;
             BasicFilterView = new BasicFilterViewModel(this.events)
             {
                 MinRallyLength = 1,
@@ -128,37 +87,37 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == EHand.None)
-                        Hand = EHand.Fore;
-                    else if (Hand == EHand.Back)
-                        Hand = EHand.Both;
+                    if (Hand == Stroke.Hand.None)
+                        Hand = Stroke.Hand.Fore;
+                    else if (Hand == Stroke.Hand.Back)
+                        Hand = Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == EHand.Fore)
-                        Hand = EHand.None;
-                    else if (Hand == EHand.Both)
-                        Hand = EHand.Back;
+                    if (Hand == Stroke.Hand.Fore)
+                        Hand = Stroke.Hand.None;
+                    else if (Hand == Stroke.Hand.Both)
+                        Hand = Stroke.Hand.Back;
                 }
             }
             else if (source.Name.ToLower().Contains("backhand"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == EHand.None)
-                        Hand = EHand.Back;
-                    else if (Hand == EHand.Fore)
-                        Hand = EHand.Both;
+                    if (Hand == Stroke.Hand.None)
+                        Hand = Stroke.Hand.Back;
+                    else if (Hand == Stroke.Hand.Fore)
+                        Hand = Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == EHand.Back)
-                        Hand = EHand.None;
-                    else if (Hand == EHand.Both)
-                        Hand = EHand.Fore;
+                    if (Hand == Stroke.Hand.Back)
+                        Hand = Stroke.Hand.None;
+                    else if (Hand == Stroke.Hand.Both)
+                        Hand = Stroke.Hand.Fore;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void StepAroundOrNot(ToggleButton source)
@@ -167,14 +126,14 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    StepAround = EStepAround.StepAround;
+                    StepAround = Stroke.StepAround.StepAround;
                 }
                 else
                 {
-                    StepAround = EStepAround.Not;
+                    StepAround = Stroke.StepAround.Not;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void SelectStrokeTec(ToggleButton source)
@@ -183,169 +142,169 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Push);
+                    SelectedStrokeTec.Add(Stroke.Technique.Push);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Push);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Push);
                 }
             }
             else if (source.Name.ToLower().Contains("tecpushaggressivebutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.PushAggressive);
+                    SelectedStrokeTec.Add(Stroke.Technique.PushAggressive);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.PushAggressive);
+                    SelectedStrokeTec.Remove(Stroke.Technique.PushAggressive);
                 }
             }
             else if (source.Name.ToLower().Contains("tecflipbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Flip);
+                    SelectedStrokeTec.Add(Stroke.Technique.Flip);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Flip);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Flip);
                 }
             }
             else if (source.Name.ToLower().Contains("tecflipbananabutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Banana);
+                    SelectedStrokeTec.Add(Stroke.Technique.Banana);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Banana);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Banana);
                 }
             }
             else if (source.Name.ToLower().Contains("tectopspinbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Topspin);
+                    SelectedStrokeTec.Add(Stroke.Technique.Topspin);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Topspin);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Topspin);
                 }
             }
             else if (source.Name.ToLower().Contains("tectopspinspinbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.TopspinSpin);
+                    SelectedStrokeTec.Add(Stroke.Technique.TopspinSpin);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.TopspinSpin);
+                    SelectedStrokeTec.Remove(Stroke.Technique.TopspinSpin);
                 }
             }
             else if (source.Name.ToLower().Contains("tectopspintempobutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.TopspinTempo);
+                    SelectedStrokeTec.Add(Stroke.Technique.TopspinTempo);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.TopspinTempo);
+                    SelectedStrokeTec.Remove(Stroke.Technique.TopspinTempo);
                 }
             }
             else if (source.Name.ToLower().Contains("tecblockbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Block);
+                    SelectedStrokeTec.Add(Stroke.Technique.Block);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Block);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Block);
                 }
             }
             else if (source.Name.ToLower().Contains("tecblocktempobutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.BlockTempo);
+                    SelectedStrokeTec.Add(Stroke.Technique.BlockTempo);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.BlockTempo);
+                    SelectedStrokeTec.Remove(Stroke.Technique.BlockTempo);
                 }
             }
             else if (source.Name.ToLower().Contains("tecblockchopbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.BlockChop);
+                    SelectedStrokeTec.Add(Stroke.Technique.BlockChop);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.BlockChop);
+                    SelectedStrokeTec.Remove(Stroke.Technique.BlockChop);
                 }
             }
             else if (source.Name.ToLower().Contains("teccounterbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Counter);
+                    SelectedStrokeTec.Add(Stroke.Technique.Counter);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Counter);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Counter);
                 }
             }
             else if (source.Name.ToLower().Contains("tecsmashbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Smash);
+                    SelectedStrokeTec.Add(Stroke.Technique.Smash);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Smash);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Smash);
                 }
             }
             else if (source.Name.ToLower().Contains("teclobbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Lob);
+                    SelectedStrokeTec.Add(Stroke.Technique.Lob);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Lob);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Lob);
                 }
             }
             else if (source.Name.ToLower().Contains("tecchopbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Chop);
+                    SelectedStrokeTec.Add(Stroke.Technique.Chop);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Chop);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Chop);
                 }
             }
             else if (source.Name.ToLower().Contains("tecspecialbutton"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(StrokeTec.Special);
+                    SelectedStrokeTec.Add(Stroke.Technique.Special);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(StrokeTec.Special);
+                    SelectedStrokeTec.Remove(Stroke.Technique.Special);
                 }
             }
             
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
 
         }
 
@@ -355,37 +314,37 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == EQuality.None)
-                        Quality = EQuality.Good;
-                    else if (Quality == EQuality.Bad)
-                        Quality = EQuality.Both;
+                    if (Quality == Stroke.Quality.None)
+                        Quality = Stroke.Quality.Good;
+                    else if (Quality == Stroke.Quality.Bad)
+                        Quality = Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == EQuality.Good)
-                        Quality = EQuality.None;
-                    else if (Quality == EQuality.Both)
-                        Quality = EQuality.Bad;
+                    if (Quality == Stroke.Quality.Good)
+                        Quality = Stroke.Quality.None;
+                    else if (Quality == Stroke.Quality.Both)
+                        Quality = Stroke.Quality.Bad;
                 }
             }
             else if (source.Name.ToLower().Contains("badq"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == EQuality.None)
-                        Quality = EQuality.Bad;
-                    else if (Quality == EQuality.Good)
-                        Quality = EQuality.Both;
+                    if (Quality == Stroke.Quality.None)
+                        Quality = Stroke.Quality.Bad;
+                    else if (Quality == Stroke.Quality.Good)
+                        Quality = Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == EQuality.Bad)
-                        Quality = EQuality.None;
-                    else if (Quality == EQuality.Both)
-                        Quality = EQuality.Good;
+                    if (Quality == Stroke.Quality.Bad)
+                        Quality = Stroke.Quality.None;
+                    else if (Quality == Stroke.Quality.Both)
+                        Quality = Stroke.Quality.Good;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
@@ -406,6 +365,8 @@ namespace TT.Viewer.ViewModels
             this.events.Subscribe(this);
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
+
+            UpdateSelection(Manager.ActivePlaylist);
         }
         protected override void OnDeactivate(bool close)
         {
@@ -418,33 +379,28 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Event Handlers
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.ActivePlaylist = message.Playlist;
-            UpdateSelection();
-        }
 
         public void Handle(TableStdViewSelectionChangedEvent message)
         {
             SelectedStrokeLengths = message.StrokeLengths;
             SelectedTablePositions = message.Positions;
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         //FilterSelection in BasicFilter Changed
         //Get SelectedRallies and apply own filters
         public void Handle(FilterSelectionChangedEvent message)
         {
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
 
         #region Helper Methods
 
-        private void UpdateSelection()
+        private void UpdateSelection(Playlist list)
         {
-            if (this.ActivePlaylist.Rallies != null)
+            if (list.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
@@ -456,13 +412,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Hand)
             {
-                case EHand.Fore:
+                case Stroke.Hand.Fore:
                     return r.Schlag[1].Schlägerseite == "Vorhand";
-                case EHand.Back:
+                case Stroke.Hand.Back:
                     return r.Schlag[1].Schlägerseite == "Rückhand";
-                case EHand.None:
+                case Stroke.Hand.None:
                     return true;
-                case EHand.Both:
+                case Stroke.Hand.Both:
                     return true;
                 default:
                     return false;
@@ -473,9 +429,9 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.StepAround)
             {
-                case EStepAround.StepAround:
+                case Stroke.StepAround.StepAround:
                     return r.Schlag[1].Umlaufen == "ja";
-                case EStepAround.Not:
+                case Stroke.StepAround.Not:
                     return true;
                 default:
                     return false;
@@ -486,53 +442,53 @@ namespace TT.Viewer.ViewModels
         {
             List<bool> ORresults = new List<bool>();
 
-            foreach (var stroketec in SelectedStrokeTec)
+            foreach (var tec in SelectedStrokeTec)
             {
-                switch (stroketec)
+                switch (tec)
                 {
-                    case StrokeTec.Push:
+                    case Stroke.Technique.Push:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art=="Schupf");
                         break;
-                    case StrokeTec.PushAggressive:
+                    case Stroke.Technique.PushAggressive:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Schlagtechnik.Option=="aggressiv");
                         break;
-                    case StrokeTec.Flip:
+                    case Stroke.Technique.Flip:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip");
                         break;
-                    case StrokeTec.Banana:
+                    case Stroke.Technique.Banana:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Schlagtechnik.Option == "Banane");
                         break;
-                    case StrokeTec.Topspin:
+                    case Stroke.Technique.Topspin:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin");
                         break;
-                    case StrokeTec.TopspinSpin:
+                    case Stroke.Technique.TopspinSpin:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Spin");
                         break;
-                    case StrokeTec.TopspinTempo:
+                    case Stroke.Technique.TopspinTempo:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
                         break;
-                    case StrokeTec.Block:
+                    case Stroke.Technique.Block:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block");
                         break;
-                    case StrokeTec.BlockTempo:
+                    case Stroke.Technique.BlockTempo:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Tempo");
                         break;
-                    case StrokeTec.BlockChop:
+                    case Stroke.Technique.BlockChop:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Block" && r.Schlag[1].Schlagtechnik.Option == "Chop");
                         break;
-                    case StrokeTec.Counter:
+                    case Stroke.Technique.Counter:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Konter");
                         break;
-                    case StrokeTec.Smash:
+                    case Stroke.Technique.Smash:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schuss");
                         break;
-                    case StrokeTec.Lob:
+                    case Stroke.Technique.Lob:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Ballonabwehr");
                         break;
-                    case StrokeTec.Chop:
+                    case Stroke.Technique.Chop:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Schnittabwehr");
                         break;
-                    case StrokeTec.Special:
+                    case Stroke.Technique.Special:
                         ORresults.Add(r.Schlag[1].Schlagtechnik.Art == "Sonstige");
                         break;
                     default:
@@ -546,13 +502,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Quality)
             {
-                case EQuality.Good:
+                case Stroke.Quality.Good:
                     return r.Schlag[1].Qualität == "gut";
-                case EQuality.Bad:
+                case Stroke.Quality.Bad:
                     return r.Schlag[1].Qualität == "schlecht";
-                case EQuality.None:
+                case Stroke.Quality.None:
                     return true;
-                case EQuality.Both:
+                case Stroke.Quality.Both:
                     return r.Schlag[1].Qualität == "gut" || r.Schlag[1].Qualität == "schlecht";
                 default:
                     return false;

@@ -94,10 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\FilterSelectionChangedEvent.cs" />
-    <Compile Include="Events\FilterSwitchedEvent.cs" />
     <Compile Include="Events\MatchEditedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
-    <Compile Include="Events\MatchInformationEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="Events\MediaControlEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
@@ -107,7 +105,6 @@
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
-    <Compile Include="Events\SaveMatchEvent.cs" />
     <Compile Include="Events\ShowInputDialogEvent.cs" />
     <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />

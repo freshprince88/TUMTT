@@ -9,11 +9,11 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class ServiceStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
 
@@ -21,27 +21,20 @@ namespace TT.Viewer.ViewModels
 
         public BasicFilterStatisticsViewModel BasicFilterStatisticsView { get; set; }     
         public List<Rally> SelectedRallies { get; private set; }
-        public Playlist ActivePlaylist { get; private set; }
-
-
         #endregion
 
-        #region Enums
-
-
-
-        #endregion
 
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public ServiceStatisticsViewModel(IEventAggregator eventAggregator)
+        public ServiceStatisticsViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            Manager = man;
             SelectedRallies = new List<Rally>();
-            ActivePlaylist = new Playlist();
            
             BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events)
             {
@@ -50,9 +43,6 @@ namespace TT.Viewer.ViewModels
                 StrokeNumber = 0
 
             };
-
-
-
         }
 
         #region View Methods
@@ -83,7 +73,8 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            this.ActivateItem(BasicFilterStatisticsView);            
+            this.ActivateItem(BasicFilterStatisticsView);
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -104,21 +95,15 @@ namespace TT.Viewer.ViewModels
         //Get SelectedRallies and apply own filters
         public void Handle(FilterSelectionChangedEvent message)
         {
-            UpdateSelection();
-        }
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.ActivePlaylist = message.Playlist;
-
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
 
         #region Helper Methods
-        private void UpdateSelection()
+        private void UpdateSelection(Playlist list)
         {
-            if (this.ActivePlaylist.Rallies != null)
+            if (list.Rallies != null)
             {
                 SelectedRallies = BasicFilterStatisticsView.SelectedRallies;
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));

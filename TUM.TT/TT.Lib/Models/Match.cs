@@ -69,7 +69,6 @@ public partial class Rank
 [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
 public partial class Match
 {
-
     private FirstPlayer firstPlayerField;
 
     private SecondPlayer secondPlayerField;

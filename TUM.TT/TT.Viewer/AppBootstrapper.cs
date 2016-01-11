@@ -22,7 +22,7 @@ namespace TT.Viewer {
             container.Singleton<IEventAggregator, EventAggregator>();
             container.Singleton<IMatchSerializer, XmlMatchSerializer>();
             container.Singleton<IMatchManager, MatchManager>();
-            container.PerRequest<IShell, ShellViewModel>();
+            container.Singleton<IShell, ShellViewModel>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
         }
 
