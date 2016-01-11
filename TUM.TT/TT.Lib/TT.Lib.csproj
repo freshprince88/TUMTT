@@ -94,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\FilterSelectionChangedEvent.cs" />
-    <Compile Include="Events\MatchEditedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="Events\MediaControlEvent.cs" />
