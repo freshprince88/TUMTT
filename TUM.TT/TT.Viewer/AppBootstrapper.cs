@@ -4,6 +4,7 @@ using Caliburn.Micro;
 using TT.Viewer.ViewModels;
 using System.Reflection;
 using TT.Lib.Models.Serialization;
+using TT.Lib.Managers;
 
 namespace TT.Viewer {
 
@@ -20,6 +21,7 @@ namespace TT.Viewer {
             container.Singleton<IWindowManager, WindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
             container.Singleton<IMatchSerializer, XmlMatchSerializer>();
+            container.Singleton<IMatchManager, MatchManager>();
             container.PerRequest<IShell, ShellViewModel>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
         }

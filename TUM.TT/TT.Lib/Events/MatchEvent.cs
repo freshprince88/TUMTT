@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Viewer.Events
+namespace TT.Lib.Events
 {
     using TT.Lib.Models;
 

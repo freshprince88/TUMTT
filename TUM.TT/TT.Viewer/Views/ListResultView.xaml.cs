@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Util.Enums;
-using TT.Viewer.Events;
+using TT.Lib.Events;
 using TT.Viewer.ViewModels;
 
 namespace TT.Viewer.Views

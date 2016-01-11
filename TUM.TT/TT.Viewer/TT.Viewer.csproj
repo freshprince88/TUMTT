@@ -109,30 +109,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Events\FilterSelectionChangedEvent.cs" />
-    <Compile Include="Events\MatchInformationEvent.cs" />
-    <Compile Include="Events\MediaControlEvent.cs" />
-    <Compile Include="Events\PlaylistChangedEvent.cs" />
-    <Compile Include="Events\MatchEditedEvent.cs" />
-    <Compile Include="Events\PlaylistNamedEvent.cs" />
-    <Compile Include="Events\ResultListControlEvent.cs" />
-    <Compile Include="Events\ResultsChangedEvent.cs" />
-    <Compile Include="Events\FilterSwitchedEvent.cs" />
-    <Compile Include="Events\MatchEvent.cs" />
-    <Compile Include="Events\MatchOpenedEvent.cs" />
-    <Compile Include="Events\RalliesEvent.cs" />
-    <Compile Include="Events\RallyLengthChangedEvent.cs" />
-    <Compile Include="Events\SaveMatchEvent.cs" />
-    <Compile Include="Events\ShowInputDialogEvent.cs" />
-    <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
-    <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
-    <Compile Include="Events\TableKombiViewSelectionChangedEvent.cs" />
-    <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
-    <Compile Include="Events\TableViewModeChangedEvent.cs" />
-    <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
-    <Compile Include="Events\VideoControlEvent.cs" />
-    <Compile Include="Events\VideoLoadedEvent.cs" />
-    <Compile Include="Events\VideoPlayEvent.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="ViewModels\BasicFilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
@@ -152,7 +128,6 @@
     <Compile Include="ViewModels\ListResultViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
-    <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="ViewModels\ReceiveViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />

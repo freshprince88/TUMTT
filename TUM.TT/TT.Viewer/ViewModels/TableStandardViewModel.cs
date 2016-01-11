@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
-using TT.Viewer.Events;
+using TT.Lib.Util.Enums;
+using TT.Lib.Events;
 
 namespace TT.Viewer.ViewModels
 {
@@ -13,44 +14,12 @@ namespace TT.Viewer.ViewModels
     {
 
         private IEventAggregator events;
-        public HashSet<ETablePosition> SelectedPositions { get; set; }
-        public HashSet<EStrokeLength> SelectedStrokeLength { get; set; }
-        public int StrokeNumber { get; set; }
-      
-        #region Enums
+        public HashSet<Positions.Table> SelectedPositions { get; set; }
+        public HashSet<Positions.Length> SelectedStrokeLength { get; set; }
+        public int StrokeNumber { get; set; }   
 
-        public enum ViewMode
-        {
-            Top,
-            Bottom
-        }
-
-        public enum EStrokeLength
-        {
-            Short,
-            Half,
-            Long,
-            None
-        }
-
-        public enum ETablePosition
-        {
-            TopLeft = 1,
-            TopMid,
-            TopRight,
-            MidLeft,
-            MidMid,
-            MidRight,
-            BotLeft,
-            BotMid,
-            BotRight,
-            None
-        }
-
-        #endregion
-
-        private ViewMode _mode;
-        public ViewMode Mode
+        private ViewMode.Position _mode;
+        public ViewMode.Position Mode
         {
             get
             {
@@ -70,23 +39,23 @@ namespace TT.Viewer.ViewModels
         {
             StrokeNumber = 0;
             events = eventAggregator;
-            SelectedStrokeLength = new HashSet<EStrokeLength>();
-            SelectedPositions = new HashSet<ETablePosition>();
+            SelectedStrokeLength = new HashSet<Positions.Length>();
+            SelectedPositions = new HashSet<Positions.Table>();
         }
 
         #region View Methods
 
         public void TablePositionClicked(ToggleButton toggle)
         {
-            ETablePosition pos = GetTablePositionFromName(toggle.Name);
+            Positions.Table pos = GetTablePositionFromName(toggle.Name);
             if (toggle.IsChecked.Value)
             {
-                if(pos != ETablePosition.None)
+                if (pos != Positions.Table.None)
                     SelectedPositions.Add(pos);
             }
             else
             {
-                if (pos != ETablePosition.None)
+                if (pos != Positions.Table.None)
                     SelectedPositions.Remove(pos);
             }
             this.events.PublishOnUIThread(new TableStdViewSelectionChangedEvent(SelectedPositions, SelectedStrokeLength));
@@ -94,15 +63,15 @@ namespace TT.Viewer.ViewModels
 
         public void StrokeLengthClicked(ToggleButton toggle)
         {
-            EStrokeLength pos = GetStrokeLengthFromName(toggle.Name);
+            Positions.Length pos = GetStrokeLengthFromName(toggle.Name);
             if (toggle.IsChecked.Value)
             {
-                if (pos != EStrokeLength.None)
+                if (pos != Positions.Length.None)
                     SelectedStrokeLength.Add(pos);
             }
             else
             {
-                if (pos != EStrokeLength.None)
+                if (pos != Positions.Length.None)
                     SelectedStrokeLength.Remove(pos);
             }
             this.events.PublishOnUIThread(new TableStdViewSelectionChangedEvent(SelectedPositions, SelectedStrokeLength));
@@ -133,40 +102,40 @@ namespace TT.Viewer.ViewModels
 
         #region Helper Methods
 
-        private ETablePosition GetTablePositionFromName(string name)
+        private Positions.Table GetTablePositionFromName(string name)
         {
             if (name.Contains("9"))
-                return ETablePosition.BotRight;
+                return Positions.Table.BotRight;
             else if (name.Contains("8"))
-                return ETablePosition.BotMid;
+                return Positions.Table.BotMid;
             else if (name.Contains("7"))
-                return ETablePosition.BotLeft;
+                return Positions.Table.BotLeft;
             else if (name.Contains("6"))
-                return ETablePosition.MidRight;
+                return Positions.Table.MidRight;
             else if (name.Contains("5"))
-                return ETablePosition.MidMid;
+                return Positions.Table.MidMid;
             else if (name.Contains("4"))
-                return ETablePosition.MidLeft;
+                return Positions.Table.MidLeft;
             else if (name.Contains("3"))
-                return ETablePosition.TopRight;
+                return Positions.Table.TopRight;
             else if (name.Contains("2"))
-                return ETablePosition.TopMid;
+                return Positions.Table.TopMid;
             else if (name.Contains("1"))
-                return ETablePosition.TopLeft;
+                return Positions.Table.TopLeft;
             else
-                return ETablePosition.None;
+                return Positions.Table.None;
         }
 
-        private EStrokeLength GetStrokeLengthFromName(string name)
+        private Positions.Length GetStrokeLengthFromName(string name)
         {
             if (name.Contains("1"))
-                return EStrokeLength.Short;
+                return Positions.Length.Short;
             else if (name.Contains("2"))
-                return EStrokeLength.Half;
+                return Positions.Length.Half;
             else if (name.Contains("3"))
-                return EStrokeLength.Long;
+                return Positions.Length.Long;
             else
-                return EStrokeLength.None;
+                return Positions.Length.None;
         }
 
 

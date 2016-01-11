@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TT.Viewer.ViewModels;
+using TT.Lib.Util.Enums;
 
-namespace TT.Viewer.Events
+namespace TT.Lib.Events
 {
     public class SpinControlSelectionChangedEvent
     {
-        public SpinControlSelectionChangedEvent(List<SpinControlViewModel.Spins> selected)
+        public SpinControlSelectionChangedEvent(List<Stroke.Spin> selected)
         {
             Selected = selected;
         }
 
-        public List<SpinControlViewModel.Spins> Selected { get; private set; }
+        public List<Stroke.Spin> Selected { get; private set; }
     }
 }

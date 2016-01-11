@@ -13,8 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TT.Viewer.ViewModels;
-using TT.Viewer.Events;
+using TT.Lib.Events;
 
 namespace TT.Viewer.Views
 {
