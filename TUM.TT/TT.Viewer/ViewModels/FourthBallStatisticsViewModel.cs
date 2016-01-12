@@ -34,7 +34,7 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             Manager = man;
             SelectedRallies = new List<Rally>();
-            BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events)
+            BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events, Manager)
             {
                 MinRallyLength = 3,
                 LastStroke = false,

@@ -22,6 +22,10 @@ namespace TT.Lib.Managers
 
         void SaveMatch();
 
+        IEnumerable<IResult> SaveMatchAction();
+
+        IEnumerable<IResult> OpenMatchAction();
+
         //void CreateMatch();
 
         //void AddRally();

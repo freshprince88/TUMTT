@@ -37,7 +37,7 @@ namespace TT.Viewer.ViewModels
             FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);
             MediaView = new MediaViewModel(Events);
             ResultView = new ResultViewModel(resultTabs);
-            PlaylistView = new PlaylistViewModel(Events);
+            PlaylistView = new PlaylistViewModel(Events, Manager);
         }
 
         #region Caliburn hooks
@@ -98,13 +98,13 @@ namespace TT.Viewer.ViewModels
 
         public IEnumerable<IResult> OpenNewMatch()
         {
-            return Manager.OpenNewMatch();
+            return Manager.OpenMatchAction();
         }
 
 
         public IEnumerable<IResult> SaveMatch()
         {
-            return Manager.SaveMatch();
+            return Manager.SaveMatchAction();
         }
         
         #endregion

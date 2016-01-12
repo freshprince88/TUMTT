@@ -152,7 +152,6 @@ namespace TT.Viewer.ViewModels
                 list.Rallies.Add(sourceItem.Rally);
                 targetItem.Count++;
                 this.Items.Refresh();
-                this.events.PublishOnUIThread(new MatchEditedEvent(this.Match));
             }            
         }
 

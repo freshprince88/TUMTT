@@ -41,7 +41,7 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             this.Manager = man;
             SelectedRallies = new List<Rally>();
-            BasicFilterView = new BasicFilterViewModel(this.events)
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength= 0,
                 PlayerLabel = "Aufschlag:"

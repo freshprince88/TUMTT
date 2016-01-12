@@ -55,7 +55,7 @@ namespace TT.Viewer.ViewModels
             SelectedServerPositions = new HashSet<Positions.Server>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             SpinControl = new SpinControlViewModel(events);
-            BasicFilterView = new BasicFilterViewModel(this.events)
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 0,
                 PlayerLabel = "Aufschlag:",
@@ -269,7 +269,8 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
 
-            UpdateSelection(Manager.ActivePlaylist);
+            if(Manager.Match != null)
+                UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)

@@ -36,7 +36,7 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
             FilterView = new FilterViewModel(this.events, Manager);
-            StatisticsView = new StatisticsViewModel(this.events);
+            StatisticsView = new StatisticsViewModel(this.events, Manager);
             // Activate the Filter model
             if (this.ActiveItem == null)
             {

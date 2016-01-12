@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 using TT.Lib.Util.Enums;
 using TT.Viewer.ViewModels;
 
@@ -23,17 +24,20 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für TableView.xaml
     /// </summary>
     public partial class TableServiceView : UserControl,
-        IHandle<TableViewModeChangedEvent>,
-        IHandle<FilterSwitchedEvent>
+        IHandle<TableViewModeChangedEvent>
     {
         public IEventAggregator Events { get; set; }
+        private IMatchManager Manager;
         private List<Rally> rallies { get; set; }
 
         public TableServiceView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
+            Manager = IoC.Get<IMatchManager>();
             Events.Subscribe(this);
+
+            this.Loaded += FillButtons;
         }
 
         public void Handle(TableViewModeChangedEvent message)
@@ -53,11 +57,11 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(FilterSwitchedEvent message)
+        public void FillButtons(Object sender, RoutedEventArgs e)
         {
-            if (message.Playlist.Rallies != null)
+            if (Manager.ActivePlaylist != null)
             {
-                rallies = message.Playlist.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
+                rallies = Manager.ActivePlaylist.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
                 int topLeft = rallies.Where(r => r.Schlag[0].IsTopLeft()).Count();
                 int topMid = rallies.Where(r => r.Schlag[0].IsTopMid()).Count();
                 int topRight = rallies.Where(r => r.Schlag[0].IsTopRight()).Count();

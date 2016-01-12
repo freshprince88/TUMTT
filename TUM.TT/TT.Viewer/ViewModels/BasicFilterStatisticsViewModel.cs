@@ -13,8 +13,7 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class BasicFilterStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<MatchOpenedEvent>
+    public class BasicFilterStatisticsViewModel : Conductor<IScreen>.Collection.AllActive
     {
         #region Properties
 
@@ -246,6 +245,9 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+            FilterPointPlayer1Button = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            FilterPointPlayer2Button = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+
             UpdateSelection(Manager.ActivePlaylist);
         }
 
@@ -259,15 +261,6 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Event Handlers
-
-        //public void Handle(MatchOpenedEvent message)
-        //{
-        //    if (message.Match.FirstPlayer != null && message.Match.SecondPlayer != null)
-        //    {
-        //        FilterPointPlayer1Button = message.Match.FirstPlayer.Name.Split(' ')[0];
-        //        FilterPointPlayer2Button = message.Match.SecondPlayer.Name.Split(' ')[0];
-        //    }
-        //}
 
         #endregion
 

@@ -61,7 +61,7 @@ namespace TT.Viewer.ViewModels
             SelectedStrokeTec = new HashSet<Stroke.Technique>();
             StepAround = Stroke.StepAround.Not;
             Winner = Stroke.WinnerOrNetOut.None;
-            BasicFilterView = new BasicFilterViewModel(this.events)
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 1,
                 PlayerLabel = "Aufschlag:",

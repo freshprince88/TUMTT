@@ -59,7 +59,7 @@ namespace TT.Viewer.ViewModels
             Quality = Stroke.Quality.None;
             SelectedStrokeTec = new HashSet<Stroke.Technique>();
             StepAround = Stroke.StepAround.Not;
-            BasicFilterView = new BasicFilterViewModel(this.events)
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 2,
                 PlayerLabel="3.Schlag:"
@@ -117,7 +117,7 @@ namespace TT.Viewer.ViewModels
                         Hand = Stroke.Hand.Fore;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void StepAroundOrNot(ToggleButton source)
@@ -133,7 +133,7 @@ namespace TT.Viewer.ViewModels
                     StepAround = Stroke.StepAround.Not;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void SelectStrokeTec(ToggleButton source)
@@ -304,7 +304,7 @@ namespace TT.Viewer.ViewModels
                 }
             }
 
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
 
         }
 
@@ -344,7 +344,7 @@ namespace TT.Viewer.ViewModels
                         Quality = Stroke.Quality.Good;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion

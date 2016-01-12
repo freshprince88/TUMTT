@@ -51,7 +51,7 @@ namespace TT.Lib.Managers
 
         public void OpenMatch()
         {
-            Coroutine.BeginExecute(OpenNewMatch().GetEnumerator());
+            Coroutine.BeginExecute(OpenMatchAction().GetEnumerator());
         }
 
         public void SaveMatch()
@@ -59,7 +59,7 @@ namespace TT.Lib.Managers
             Coroutine.BeginExecute(SaveMatchAction().GetEnumerator());
         }
 
-        private IEnumerable<IResult> SaveMatchAction()
+        public IEnumerable<IResult> SaveMatchAction()
         {
             var fileName = this.FileName;
             if (fileName == null)
@@ -86,7 +86,7 @@ namespace TT.Lib.Managers
 
         }
 
-        private IEnumerable<IResult> OpenNewMatch()
+        public IEnumerable<IResult> OpenMatchAction()
         {
             var dialog = new OpenFileDialogResult()
             {
