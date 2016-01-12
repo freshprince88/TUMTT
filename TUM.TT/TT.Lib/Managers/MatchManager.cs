@@ -35,7 +35,7 @@ namespace TT.Lib.Managers
             }
         }
 
-        public bool MatchModified { get; private set; }
+        public bool MatchModified { get; set; }
 
         public Playlist ActivePlaylist { get; private set; }
 

@@ -16,7 +16,7 @@ namespace TT.Lib.Managers
 
         string FileName { get;  }
 
-        bool MatchModified { get; }
+        bool MatchModified { get; set; }
 
         void OpenMatch();
 

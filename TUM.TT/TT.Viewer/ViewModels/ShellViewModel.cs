@@ -21,19 +21,21 @@ namespace TT.Viewer.ViewModels
         public ResultViewModel ResultView { get; private set; }
         public PlaylistViewModel PlaylistView { get; private set; }
         public string SaveFileName { get; private set; }
-        public bool IsModified { get; private set; }
-        private IMatchManager Manager;
+        
 
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         public IEventAggregator Events { get; private set; }
+        private IMatchManager Manager;
+        private IDialogCoordinator DialogCoordinator;
 
-        public ShellViewModel(IEventAggregator eventAggregator, IEnumerable<IResultViewTabItem> resultTabs, IMatchManager manager)
+        public ShellViewModel(IEventAggregator eventAggregator, IEnumerable<IResultViewTabItem> resultTabs, IMatchManager manager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             Manager = manager;
+            DialogCoordinator = coordinator;
             FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);
             MediaView = new MediaViewModel(Events);
             ResultView = new ResultViewModel(resultTabs);
@@ -68,27 +70,27 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(PlaylistView);
         }
 
-        protected override void OnDeactivate(bool close)
+        protected override async void OnDeactivate(bool close)
         {
-            if (IsModified)
+            if (Manager.MatchModified)
             {
-                //var mySettings = new MetroDialogSettings()
-                //{
-                //    AffirmativeButtonText = "Save and Quit",
-                //    NegativeButtonText = "Cancel",
-                //    FirstAuxiliaryButtonText = "Quit Without Saving",
-                //    AnimateShow = true,
-                //    AnimateHide = false
-                //};
+                var mySettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = "Save and Quit",
+                    NegativeButtonText = "Cancel",
+                    FirstAuxiliaryButtonText = "Quit Without Saving",
+                    AnimateShow = true,
+                    AnimateHide = false
+                };
 
-                //var result = await DialogManager.ShowMessageAsync(this, "Quit application?",
-                //    "Sure you want to quit application?",
-                //    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+                var result = await DialogCoordinator.ShowMessageAsync(this, "Quit application?",
+                    "Sure you want to quit application?",
+                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
-                //bool _shutdown = result == MessageDialogResult.Affirmative;
+                bool _shutdown = result == MessageDialogResult.Affirmative;
 
-                //if (_shutdown)
-                //    Application.Current.Shutdown();
+                if (_shutdown)
+                    Application.Current.Shutdown();
             }
         }
 

@@ -119,7 +119,7 @@ namespace TT.Viewer.ViewModels
             p.Name = name;
             p.Rallies = new List<Rally>();
             Manager.Match.Playlists.Add(p);
-
+            Manager.MatchModified = true;
             this.ActivateItem(new PlaylistItem()
             {
                 Name = name,
@@ -150,6 +150,7 @@ namespace TT.Viewer.ViewModels
             if (!list.Rallies.Contains(sourceItem.Rally))
             {
                 list.Rallies.Add(sourceItem.Rally);
+                Manager.MatchModified = true;
                 targetItem.Count++;
                 this.Items.Refresh();
             }            
