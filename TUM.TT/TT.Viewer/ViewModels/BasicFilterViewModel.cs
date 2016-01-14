@@ -13,8 +13,7 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<MatchOpenedEvent>
+    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive
     {
         #region Properties
 
@@ -25,7 +24,6 @@ namespace TT.Viewer.ViewModels
         public TableServiceViewModel TableView { get; private set; }
         public List<Rally> SelectedRallies { get; private set; }
 
-        public Playlist RallyList { get; private set; }
         public List<Stroke.Spin> SelectedSpins { get; private set; }
         
         public Stroke.Point Point { get; private set; }
@@ -54,8 +52,7 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            SelectedRallies = new List<Rally>();            
-            RallyList = new Playlist();            
+            SelectedRallies = new List<Rally>();                       
             Point = Stroke.Point.None;
             Server = Stroke.Server.None;           
             Crunch = Stroke.Crunch.Not;
@@ -401,15 +398,6 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-        public void Handle(MatchOpenedEvent message)
-        {
-            if (Manager.Match != null)
-            {
-                FilterPointPlayer1Button = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-                FilterPointPlayer2Button = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-            }
-        }
-
         #endregion
 
         #region Helper Methods
@@ -418,7 +406,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = this.RallyList.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
+                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }

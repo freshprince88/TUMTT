@@ -22,13 +22,13 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für ListResultView.xaml
     /// </summary>
-    public partial class ListResultView : UserControl,
+    public partial class ResultListView : UserControl,
         IHandle<ResultListControlEvent>
     {
 
         public IEventAggregator Events { get; private set; }
 
-        public ListResultView()
+        public ResultListView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();

@@ -1,28 +1,20 @@
-using Caliburn.Micro;
-using System.Windows;
-using System.Reflection;
-using TT.Lib.Results;
-using TT.Lib.Util;
-using TT.Lib.Events;
-using System.Collections.Generic;
-using TT.Lib.Models;
-using System.IO;
+﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using TT.Lib.Events;
 using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
-        IShell
+    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
+        IShell,
+        IHandle<MatchOpenedEvent>
     {
-        public MediaViewModel MediaView { get; private set; }
-        public FilterStatisticsViewModel FilterStatisticsView { get; private set; }
-        public ResultViewModel ResultView { get; private set; }
-        public PlaylistViewModel PlaylistView { get; private set; }
-        public string SaveFileName { get; private set; }
-        
-
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
@@ -30,16 +22,12 @@ namespace TT.Viewer.ViewModels
         private IMatchManager Manager;
         private IDialogCoordinator DialogCoordinator;
 
-        public ShellViewModel(IEventAggregator eventAggregator, IEnumerable<IResultViewTabItem> resultTabs, IMatchManager manager, IDialogCoordinator coordinator)
+        public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             Manager = manager;
             DialogCoordinator = coordinator;
-            FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);
-            MediaView = new MediaViewModel(Events);
-            ResultView = new ResultViewModel(resultTabs);
-            PlaylistView = new PlaylistViewModel(Events, Manager);
         }
 
         #region Caliburn hooks
@@ -64,14 +52,16 @@ namespace TT.Viewer.ViewModels
         {
             base.OnActivate();
             Events.Subscribe(this);
-            this.ActivateItem(FilterStatisticsView);
-            this.ActivateItem(MediaView);
-            this.ActivateItem(ResultView);
-            this.ActivateItem(PlaylistView);
+
+            if (this.ActiveItem == null)
+            {
+                ActivateItem(new WelcomeViewModel(Manager));
+            }
         }
 
         protected override async void OnDeactivate(bool close)
         {
+            Events.Unsubscribe(this);
             if (Manager.MatchModified)
             {
                 var mySettings = new MetroDialogSettings()
@@ -90,25 +80,23 @@ namespace TT.Viewer.ViewModels
                 bool _shutdown = result == MessageDialogResult.Affirmative;
 
                 if (_shutdown)
+                {
+                    Manager.SaveMatch();
                     Application.Current.Shutdown();
+                }
             }
         }
 
         #endregion
 
-        #region Methods
+        #region Events
 
-        public IEnumerable<IResult> OpenNewMatch()
+        public void Handle(MatchOpenedEvent message)
         {
-            return Manager.OpenMatchAction();
+            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), Manager));
         }
-
-
-        public IEnumerable<IResult> SaveMatch()
-        {
-            return Manager.SaveMatchAction();
-        }
-        
         #endregion
+
+
     }
 }

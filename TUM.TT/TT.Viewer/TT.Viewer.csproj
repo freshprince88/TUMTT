@@ -64,6 +64,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -125,18 +127,19 @@
     <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ResultListItem.cs" />
     <Compile Include="ViewModels\LastBallViewModel.cs" />
-    <Compile Include="ViewModels\ListResultViewModel.cs" />
+    <Compile Include="ViewModels\ResultListViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\ReceiveViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
-    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\MatchViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\TableKombiViewModel.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="ViewModels\ThirdBallViewModel.cs" />
     <Compile Include="ViewModels\TotalMatchStatisticsViewModel.cs" />
     <Compile Include="ViewModels\TotalMatchViewModel.cs" />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" />
     <Compile Include="Views\BasicFilterStatisticsView.xaml.cs">
       <DependentUpon>BasicFilterStatisticsView.xaml</DependentUpon>
     </Compile>
@@ -194,8 +198,8 @@
     <Compile Include="Views\ServiceView.xaml.cs">
       <DependentUpon>ServiceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ListResultView.xaml.cs">
-      <DependentUpon>ListResultView.xaml</DependentUpon>
+    <Compile Include="Views\ResultListView.xaml.cs">
+      <DependentUpon>ResultListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
@@ -226,6 +230,9 @@
     </Compile>
     <Compile Include="Views\TotalMatchView.xaml.cs">
       <DependentUpon>TotalMatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomeView.xaml.cs">
+      <DependentUpon>WelcomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
@@ -268,7 +275,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ListResultView.xaml">
+    <Page Include="Views\ResultListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,9 +315,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ShellView.xaml">
+    <Page Include="Views\MatchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SpinControlView.xaml">
       <SubType>Designer</SubType>
@@ -345,6 +356,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TotalMatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WelcomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

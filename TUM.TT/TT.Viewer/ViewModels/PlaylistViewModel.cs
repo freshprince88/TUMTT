@@ -16,7 +16,6 @@ namespace TT.Viewer.ViewModels
 {
     public class PlaylistViewModel : Conductor<PlaylistItem>.Collection.AllActive,
         IDropTarget,
-        IHandle<MatchOpenedEvent>,
         IHandle<PlaylistNamedEvent>
     {
         private IEventAggregator events;
@@ -62,7 +61,7 @@ namespace TT.Viewer.ViewModels
 
         public void Save()
         {
-            
+            Manager.SaveMatch();
         }
 
         public void ShowSettings()
@@ -79,6 +78,19 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+
+            this.Items.Clear();
+
+            foreach (var playlist in Manager.Match.Playlists)
+            {
+                string name = playlist.Name;
+
+                this.ActivateItem(new PlaylistItem()
+                {
+                    Name = name,
+                    Count = playlist.Rallies.Count()
+                });
+            }
         }
 
         protected override void OnDeactivate(bool close)
@@ -90,22 +102,6 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Events
-
-        public void Handle(MatchOpenedEvent message)
-        {
-            this.Items.Clear();
-
-            foreach (var playlist in message.Match.Playlists)
-            {
-                string name = playlist.Name;
-
-                this.ActivateItem(new PlaylistItem()
-                {
-                    Name = name,
-                    Count = playlist.Rallies.Count()
-                });
-            }
-        }
 
         public void Handle(PlaylistNamedEvent message)
         {

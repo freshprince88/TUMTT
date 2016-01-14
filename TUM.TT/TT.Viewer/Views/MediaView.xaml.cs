@@ -44,7 +44,7 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
-            myMediaElement.ScrubbingEnabled = true;
+            myMediaElement.ScrubbingEnabled = true;         
             stopTimer = new DispatcherTimer();
             stopTimer.Tick += new EventHandler(StopTimerTick);
             slider_tick = 100;
@@ -55,6 +55,11 @@ namespace TT.Viewer.Views
             End = 0;
             mediaIsPaused = true;
             isDragging = false;
+
+            myMediaElement.MediaOpened += (s, args) =>
+            {
+                var test = myMediaElement.Position;
+            };
         }
 
         #region Event Handlers
@@ -267,21 +272,25 @@ namespace TT.Viewer.Views
             {
                 case Media.Speed.Quarter:
                     myMediaElement.SpeedRatio = 0.25;
+                    sliderTimer.Interval = TimeSpan.FromMilliseconds(0.25 * slider_tick);
                     Slow50PercentButton.IsChecked = false;
                     Slow75PercentButton.IsChecked = false;
                     break;
                 case Media.Speed.Half:
                     myMediaElement.SpeedRatio = 0.50;
+                    sliderTimer.Interval = TimeSpan.FromMilliseconds(0.50 * slider_tick);
                     Slow25PercentButton.IsChecked = false;
                     Slow75PercentButton.IsChecked = false;
                     break;
                 case Media.Speed.Third:
                     myMediaElement.SpeedRatio = 0.75;
+                    sliderTimer.Interval = TimeSpan.FromMilliseconds(0.75 * slider_tick);
                     Slow25PercentButton.IsChecked = false;
                     Slow50PercentButton.IsChecked = false;
                     break;
                 case Media.Speed.Full:
                     myMediaElement.SpeedRatio = 1;
+                    sliderTimer.Interval = TimeSpan.FromMilliseconds(slider_tick);
                     Slow25PercentButton.IsChecked = false;
                     Slow50PercentButton.IsChecked = false;
                     Slow75PercentButton.IsChecked = false;
@@ -289,7 +298,6 @@ namespace TT.Viewer.Views
                 default:
                     break;
             }
-
         }
 
         #endregion

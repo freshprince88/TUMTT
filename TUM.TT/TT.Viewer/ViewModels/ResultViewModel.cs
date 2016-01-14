@@ -11,7 +11,15 @@ namespace TT.Viewer.ViewModels
     {
         public ResultViewModel(IEnumerable<IResultViewTabItem> tabs)
         {
-            Items.AddRange(tabs);
+            Items.AddRange(tabs);            
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            // Subscribe ourself to the event bus
+            if (Items.Count() > 0)
+                ActivateItem(Items[0]);
         }
     }
 }
