@@ -47,7 +47,17 @@ namespace TT.Viewer.Views
             bool isChecked = message.DetailChecked;
             bool percent = message.Percent;
 
-            //TODO: Enable Radios
+            if (isChecked == true)
+            {
+                radio_count.IsEnabled = true;
+                radio_percent.IsEnabled = true;
+            }
+            if (isChecked == false)
+            {
+                radio_count.IsEnabled = false;
+                radio_percent.IsEnabled = false;
+            }
+
         }
     }
 }

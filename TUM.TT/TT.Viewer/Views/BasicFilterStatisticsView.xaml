@@ -80,9 +80,39 @@
             <ToggleButton  x:Name="FilterPlayer1Button" Content="Player 1" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  cal:Message.Attach="[Event Click] = [Action P1P2($source]"/>
             <ToggleButton x:Name="FilterPlayer2Button" Content="Player 2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" cal:Message.Attach="[Event Click] = [Action P1P2($source)]"/>
             <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Extras:"/>
-            <ToggleButton x:Name="FilterDetailInformationButton" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Content="Details" /> <!--cal:Message.Attach="[Event Click] = [Action DetailInformation($source)]"-->
-            <RadioButton x:Name="radio_count" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Anzahl" HorizontalAlignment="Center" IsChecked="True" IsEnabled="False"/>
-            <RadioButton x:Name="radio_percent" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Content="Prozent" HorizontalAlignment="Center" IsEnabled="False"/>
+            <ToggleButton x:Name="FilterDetailInformationButton" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" IsChecked="True" Content="Details">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <cal:ActionMessage MethodName="DetailsChecked">                            
+                            <cal:Parameter Value="{Binding ElementName=radio_percent, Path=IsChecked}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unchecked">
+                        <cal:ActionMessage MethodName="DetailsUnchecked">
+                            <cal:Parameter Value="{Binding ElementName=radio_percent, Path=IsChecked}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                
+            </ToggleButton>
+            <RadioButton x:Name="radio_count" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Anzahl" HorizontalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <cal:ActionMessage MethodName="DetailsChecked">
+                            <cal:Parameter Value="{Binding ElementName=radio_percent, Path=IsChecked}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </RadioButton>
+            <RadioButton x:Name="radio_percent" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Content="Prozent" HorizontalAlignment="Center" IsChecked="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <cal:ActionMessage MethodName="DetailsChecked">
+                            <cal:Parameter Value="{Binding ElementName=radio_percent, Path=IsChecked}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </RadioButton>
 
         </Grid>
     </Grid>
