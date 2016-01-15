@@ -381,7 +381,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleAllPointsLostnButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleAllPointsLostButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -432,7 +432,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleLongPointsLostnButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -473,7 +473,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleHalflongirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleHalfLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -483,7 +483,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostnButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -534,7 +534,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleShortPointsLostnButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleShortPointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -948,7 +948,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PositionForhandTotalButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="$">
+                                <ToggleButton x:Name="PositionLeftTotalButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="$">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -958,7 +958,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PositionForhandPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
+                                <ToggleButton x:Name="PositionLeftPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -968,7 +968,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PositiontForhandDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
+                                <ToggleButton x:Name="PositionLeftDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -978,7 +978,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PositionForhandPointsLostButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PositionLeftPointsLostButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1019,7 +1019,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PositiontMiddleDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
+                                <ToggleButton x:Name="PositionMiddleDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1050,7 +1050,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PositionBackhandTotalButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="$">
+                                <ToggleButton x:Name="PositionRightTotalButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="$">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1060,7 +1060,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PositionBackhandPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
+                                <ToggleButton x:Name="PositionRightPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1070,7 +1070,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PositiontBackhandDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
+                                <ToggleButton x:Name="PositionRightDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1080,7 +1080,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PositionBackhandPointsLostButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PositionRightPointsLostButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1867,7 +1867,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllServiceTotalButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="$">
+                                <ToggleButton x:Name="AllServicesTotalButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   Content="$">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1877,7 +1877,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllServicePointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
+                                <ToggleButton x:Name="AllServicesPointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1887,7 +1887,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllServiceDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
+                                <ToggleButton x:Name="AllServicesDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1897,7 +1897,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllServicePointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="AllServicesPointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
