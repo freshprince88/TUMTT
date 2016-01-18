@@ -272,19 +272,19 @@ namespace TT.Viewer.Views
             {
                 case Media.Speed.Quarter:
                     myMediaElement.SpeedRatio = 0.25;
-                    sliderTimer.Interval = TimeSpan.FromMilliseconds(0.25 * slider_tick);
+                    sliderTimer.Interval = TimeSpan.FromMilliseconds(4 * slider_tick);
                     Slow50PercentButton.IsChecked = false;
                     Slow75PercentButton.IsChecked = false;
                     break;
                 case Media.Speed.Half:
                     myMediaElement.SpeedRatio = 0.50;
-                    sliderTimer.Interval = TimeSpan.FromMilliseconds(0.50 * slider_tick);
+                    sliderTimer.Interval = TimeSpan.FromMilliseconds(2 * slider_tick);
                     Slow25PercentButton.IsChecked = false;
                     Slow75PercentButton.IsChecked = false;
                     break;
                 case Media.Speed.Third:
                     myMediaElement.SpeedRatio = 0.75;
-                    sliderTimer.Interval = TimeSpan.FromMilliseconds(0.75 * slider_tick);
+                    sliderTimer.Interval = TimeSpan.FromMilliseconds(1.33 * slider_tick);
                     Slow25PercentButton.IsChecked = false;
                     Slow50PercentButton.IsChecked = false;
                     break;
