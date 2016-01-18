@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
@@ -42,7 +43,14 @@ namespace TT.Viewer.ViewModels
 
         #region View Methods
 
-
+        public void StatButtonClick(Grid parent, string btnName)
+        {
+            foreach (ToggleButton btn in parent.FindChildren<ToggleButton>())
+            {
+                if (btn.Name != btnName)
+                    btn.IsChecked = false;
+            }
+        }
         #endregion
 
         #region Caliburn Hooks
