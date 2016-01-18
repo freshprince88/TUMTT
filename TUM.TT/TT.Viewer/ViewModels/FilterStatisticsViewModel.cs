@@ -26,22 +26,27 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             this.Manager = man;
 
-        }
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-            // Subscribe ourself to the event bus
-            this.events.Subscribe(this);
             FilterView = new FilterViewModel(this.events, Manager);
             StatisticsView = new StatisticsViewModel(this.events, Manager);
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            // Subscribe ourself to the event bus
+            this.events.Subscribe(this);
             // Activate the Filter model
             if (this.ActiveItem == null)
             {
                 this.ActivateItem(FilterView);
             }
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            // Subscribe ourself to the event bus
+            this.events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
 
         public void FilterStatisticsSelected(SelectionChangedEventArgs args)

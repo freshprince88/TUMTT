@@ -60,20 +60,17 @@ namespace TT.Viewer.ViewModels
 
         #region Caliburn Hooks
 
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-        }
-
         protected override void OnActivate()
         {
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            this.ActivateItem(BasicFilterStatisticsView);
+            this.ActivateItem(BasicFilterStatisticsView);            
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
             UpdateSelection(Manager.ActivePlaylist);
         }
 

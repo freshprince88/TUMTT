@@ -32,31 +32,33 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             Manager = man;
             this.ActivePlaylist = new Playlist();
-        }
 
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            // Subscribe ourself to the event bus
-            this.events.Subscribe(this);            
             ServiceStatisticsView = new ServiceStatisticsViewModel(this.events, Manager);
             ReceiveStatisticsView = new ReceiveStatisticsViewModel(this.events, Manager);
             ThirdBallStatisticsView = new ThirdBallStatisticsViewModel(this.events, Manager);
             FourthBallStatisticsView = new FourthBallStatisticsViewModel(this.events, Manager);
             LastBallStatisticsView = new LastBallStatisticsViewModel(this.events, Manager);
             TotalMatchStatisticsView = new TotalMatchStatisticsViewModel(this.events, Manager);
+        }
 
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            // Subscribe ourself to the event bus
+            this.events.Subscribe(this);
             // Activate the welcome model
             if (this.ActiveItem == null)
             {
                 this.ActivateItem(ServiceStatisticsView);
             }
         }
-       
+
+        protected override void OnDeactivate(bool close)
+        {
+            this.events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
 
         public void FilterSelected(SelectionChangedEventArgs args)
         {

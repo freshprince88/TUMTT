@@ -46,7 +46,6 @@ namespace TT.Lib.Managers
             Events = aggregator;
         }
 
-
         #region Business Logic
 
         public void OpenMatch()
