@@ -1,44 +1,33 @@
-using Caliburn.Micro;
-using System.Windows;
-using System.Reflection;
-using TT.Lib.Results;
-using TT.Lib.Util;
-using TT.Lib.Events;
-using System.Collections.Generic;
-using TT.Lib.Models;
-using System.IO;
-using TTA.Results;
+﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<MatchEditedEvent>,
-        IHandle<SaveMatchEvent>,
-        IShell
+    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
+        IShell,
+        IHandle<MatchOpenedEvent>
     {
-        public MediaViewModel MediaView { get; private set; }
-        public FilterStatisticsViewModel FilterStatisticsView { get; private set; }
-        public ResultViewModel ResultView { get; private set; }
-        public PlaylistViewModel PlaylistView { get; private set; }
-        public string SaveFileName { get; private set; }
-        public Match Match { get; private set; }
-        public bool IsModified { get; private set; }
-
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         public IEventAggregator Events { get; private set; }
+        private IMatchManager Manager;
+        private IDialogCoordinator DialogCoordinator;
 
-        public ShellViewModel(IEventAggregator eventAggregator, IEnumerable<IResultViewTabItem> resultTabs)
+        public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
-            FilterStatisticsView = new FilterStatisticsViewModel(Events);
-            MediaView = new MediaViewModel(Events);
-            ResultView = new ResultViewModel(resultTabs);
-            PlaylistView = new PlaylistViewModel(Events);
+            Manager = manager;
+            DialogCoordinator = coordinator;
         }
 
         #region Caliburn hooks
@@ -63,122 +52,51 @@ namespace TT.Viewer.ViewModels
         {
             base.OnActivate();
             Events.Subscribe(this);
-            this.ActivateItem(FilterStatisticsView);
-            this.ActivateItem(MediaView);
-            this.ActivateItem(ResultView);
-            this.ActivateItem(PlaylistView);
+
+            if (this.ActiveItem == null)
+            {
+                ActivateItem(new WelcomeViewModel(Manager));
+            }
         }
 
-        protected override void OnDeactivate(bool close)
+        protected override async void OnDeactivate(bool close)
         {
-            if (IsModified)
+            Events.Unsubscribe(this);
+            if (Manager.MatchModified)
             {
-                //var mySettings = new MetroDialogSettings()
-                //{
-                //    AffirmativeButtonText = "Save and Quit",
-                //    NegativeButtonText = "Cancel",
-                //    FirstAuxiliaryButtonText = "Quit Without Saving",
-                //    AnimateShow = true,
-                //    AnimateHide = false
-                //};
+                var mySettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = "Save and Quit",
+                    NegativeButtonText = "Cancel",
+                    FirstAuxiliaryButtonText = "Quit Without Saving",
+                    AnimateShow = true,
+                    AnimateHide = false
+                };
 
-                //var result = await DialogManager.ShowMessageAsync(this, "Quit application?",
-                //    "Sure you want to quit application?",
-                //    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+                var result = await DialogCoordinator.ShowMessageAsync(this, "Quit application?",
+                    "Sure you want to quit application?",
+                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
-                //bool _shutdown = result == MessageDialogResult.Affirmative;
+                bool _shutdown = result == MessageDialogResult.Affirmative;
 
-                //if (_shutdown)
-                //    Application.Current.Shutdown();
+                if (_shutdown)
+                {
+                    Manager.SaveMatch();
+                    Application.Current.Shutdown();
+                }
             }
         }
 
         #endregion
 
-        #region Methods
+        #region Events
 
-        public IEnumerable<IResult> OpenNewMatch()
+        public void Handle(MatchOpenedEvent message)
         {
-            var dialog = new OpenFileDialogResult()
-            {
-                Title = "Open match...",
-                Filter = Format.XML.DialogFilter,
-            };
-            yield return dialog;
-
-            var deserialization = new DeserializeMatchResult(dialog.Result, Format.XML.Serializer);
-            yield return deserialization
-                .IsBusy("Loading")
-                .Rescue()
-                .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
-                .Propagate(); // Reraise the error to abort the coroutine
-
-            SaveFileName = dialog.Result;
-            Match = deserialization.Result;
-
-            this.Events.PublishOnUIThread(new MatchOpenedEvent(Match));
-
-            if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
-            {
-                var videoDialog = new OpenFileDialogResult()
-                {
-                    Title = "Open video file...",
-                    Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
-                };
-                yield return videoDialog;
-
-                Match.VideoFile = videoDialog.Result;                
-            }
-            this.Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), Manager));
         }
-
-        public IEnumerable<IResult> SaveMatch()
-        {
-            var fileName = this.SaveFileName;
-            if (fileName == null)
-            {
-                var dialog = new SaveFileDialogResult()
-                {
-                    Title = string.Format("Save match \"{0}\"...", this.Match.Title()),
-                    Filter = Format.XML.DialogFilter,
-                    DefaultFileName = this.Match.DefaultFilename(),
-                };
-                yield return dialog;
-                fileName = dialog.Result;
-            }
-
-            var serialization = new SerializeMatchResult(this.Match, fileName, Format.XML.Serializer);
-            yield return serialization
-                .IsBusy("Saving")
-                .Rescue()
-                .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", fileName))
-                .Propagate(); // Reraise the error to abort the coroutine
-
-            this.SaveFileName = fileName;
-            this.IsModified = false;
-
-        }
-
         #endregion
 
-        #region Event Handlers
 
-        public void Handle(MatchEditedEvent message)
-        {
-            IsModified = true;
-            this.Match = message.Match;
-        }
-
-        public void Handle(SaveMatchEvent message)
-        {
-            if (IsModified)
-            {
-                //this.Match = message.Match;
-                Coroutine.BeginExecute(SaveMatch().GetEnumerator(), 
-                    new CoroutineExecutionContext() { View = this.GetView(), Target = this });
-            }
-        }
-
-        #endregion       
     }
 }

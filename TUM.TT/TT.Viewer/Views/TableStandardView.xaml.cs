@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.Views
 {
@@ -21,13 +22,12 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für TableView.xaml
     /// </summary>
     public partial class TableStandardView : UserControl,
-       IHandle<FilterSwitchedEvent>,
        IHandle<RallyLengthChangedEvent>
     {
         #region Properties
 
         public IEventAggregator Events { get; set; }
-        private List<Rally> rallies { get; set; }
+        private IMatchManager Manager;
         #endregion
 
 
@@ -35,65 +35,62 @@ namespace TT.Viewer.Views
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
+            Manager = IoC.Get<IMatchManager>();
             Events.Subscribe(this);
         }
-        public void Handle(FilterSwitchedEvent message)
-        {
-            if (message.Playlist.Rallies != null)
-            {
-                rallies = message.Playlist.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
-            }
-        }
+
         public void Handle(RallyLengthChangedEvent message)
         {
-            switch(message)
+            var rallies = Manager.ActivePlaylist.Rallies;
+            switch (message)
             {
                 case 1:
                     break;
                 case 2:
-                    if (rallies != null) { 
-                    int topLeft = rallies.Where(r => Convert.ToInt32(r.Length)>1 && r.Schlag[1].IsTopLeft()).Count();
-                    int topMid = rallies.Where(r => Convert.ToInt32(r.Length) >1 && r.Schlag[1].IsTopMid()).Count();
-                    int topRight = rallies.Where(r => Convert.ToInt32(r.Length) >1 && r.Schlag[1].IsTopRight()).Count();
+                    if (rallies != null)
+                    {
+                        int topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopLeft()).Count();
+                        int topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopMid()).Count();
+                        int topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopRight()).Count();
 
-                    int midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidLeft()).Count();
-                    int midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidMid()).Count();
-                    int midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidRight()).Count();
+                        int midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidLeft()).Count();
+                        int midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidMid()).Count();
+                        int midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidRight()).Count();
 
-                    int botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotLeft()).Count();
-                    int botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotMid()).Count();
-                    int botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotRight()).Count();
+                        int botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotLeft()).Count();
+                        int botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotMid()).Count();
+                        int botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotRight()).Count();
 
-                    this.Btn1_bot.Content = topLeft;
-                    this.Btn1_top.Content = topLeft;
+                        this.Btn1_bot.Content = topLeft;
+                        this.Btn1_top.Content = topLeft;
 
-                    this.Btn2_bot.Content = topMid;
-                    this.Btn2_top.Content = topMid;
+                        this.Btn2_bot.Content = topMid;
+                        this.Btn2_top.Content = topMid;
 
-                    this.Btn3_bot.Content = topRight;
-                    this.Btn3_top.Content = topRight;
+                        this.Btn3_bot.Content = topRight;
+                        this.Btn3_top.Content = topRight;
 
-                    this.Btn4_bot.Content = midLeft;
-                    this.Btn4_top.Content = midLeft;
+                        this.Btn4_bot.Content = midLeft;
+                        this.Btn4_top.Content = midLeft;
 
-                    this.Btn5_bot.Content = midMid;
-                    this.Btn5_top.Content = midMid;
+                        this.Btn5_bot.Content = midMid;
+                        this.Btn5_top.Content = midMid;
 
-                    this.Btn6_bot.Content = midRight;
-                    this.Btn6_top.Content = midRight;
+                        this.Btn6_bot.Content = midRight;
+                        this.Btn6_top.Content = midRight;
 
-                    this.Btn7_bot.Content = botLeft;
-                    this.Btn7_top.Content = botLeft;
+                        this.Btn7_bot.Content = botLeft;
+                        this.Btn7_top.Content = botLeft;
 
-                    this.Btn8_bot.Content = botMid;
-                    this.Btn8_top.Content = botMid;
+                        this.Btn8_bot.Content = botMid;
+                        this.Btn8_top.Content = botMid;
 
-                    this.Btn9_bot.Content = botRight;
-                    this.Btn9_top.Content = botRight;
+                        this.Btn9_bot.Content = botRight;
+                        this.Btn9_top.Content = botRight;
                     }
-                   
+
                     break;
-           
+
                 case 3:
                     if (rallies != null)
                     {
@@ -179,7 +176,7 @@ namespace TT.Viewer.Views
                         this.Btn9_bot.Content = botRight;
                         this.Btn9_top.Content = botRight;
                     }
-                        break;
+                    break;
                 case 5: //TODO funktioniert noch nicht richtig!!!
                     if (rallies != null)
                     {
@@ -229,57 +226,9 @@ namespace TT.Viewer.Views
         }
 
         #region HelperMethods
-        
+       
         #endregion
 
-        //public void Handle(FilterSwitchedEvent message)
-        //{
-
-        //    if (message.Match.Rallies != null)
-        //    {
-        //        rallies = message.Match.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
-        //        int topLeft = rallies.Where(r => r.Schlag[].IsTopLeft()).Count();
-        //        int topMid = rallies.Where(r => r.Schlag[1].IsTopMid()).Count();
-        //        int topRight = rallies.Where(r => r.Schlag[1].IsTopRight()).Count();
-
-        //        int midLeft = rallies.Where(r => r.Schlag[1].IsMidLeft()).Count();
-        //        int midMid = rallies.Where(r => r.Schlag[1].IsMidMid()).Count();
-        //        int midRight = rallies.Where(r => r.Schlag[1].IsMidRight()).Count();
-
-        //        int botLeft = rallies.Where(r => r.Schlag[1].IsBotLeft()).Count();
-        //        int botMid = rallies.Where(r => r.Schlag[1].IsBotMid()).Count();
-        //        int botRight = rallies.Where(r => r.Schlag[1].IsBotRight()).Count();
-
-        //        this.Btn1_bot.Content = topLeft;
-        //        this.Btn1_top.Content = topLeft;
-
-        //        this.Btn2_bot.Content = topMid;
-        //        this.Btn2_top.Content = topMid;
-
-        //        this.Btn3_bot.Content = topRight;
-        //        this.Btn3_top.Content = topRight;
-
-        //        this.Btn4_bot.Content = midLeft;
-        //        this.Btn4_top.Content = midLeft;
-
-        //        this.Btn5_bot.Content = midMid;
-        //        this.Btn5_top.Content = midMid;
-
-        //        this.Btn6_bot.Content = midRight;
-        //        this.Btn6_top.Content = midRight;
-
-        //        this.Btn7_bot.Content = botLeft;
-        //        this.Btn7_top.Content = botLeft;
-
-        //        this.Btn8_bot.Content = botMid;
-        //        this.Btn8_top.Content = botMid;
-
-        //        this.Btn9_bot.Content = botRight;
-        //        this.Btn9_top.Content = botRight;
-        //    }
-
-
-        //}
     }
 
 }

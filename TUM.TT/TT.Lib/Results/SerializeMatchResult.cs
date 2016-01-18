@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TTA.Results
+namespace TT.Lib.Results
 {
     using System;
     using System.IO;

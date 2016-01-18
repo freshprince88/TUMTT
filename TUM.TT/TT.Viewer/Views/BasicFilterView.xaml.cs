@@ -20,7 +20,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für BasicFilterView.xaml
     /// </summary>
-    public partial class BasicFilterView : UserControl, IHandle<RallyLengthChangedEvent>, IHandle<MatchInformationEvent>
+    public partial class BasicFilterView : UserControl, IHandle<RallyLengthChangedEvent>
     {
         public IEventAggregator Events { get; set; }
 
@@ -29,8 +29,6 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
-
-
         }
 
         public void Handle(RallyLengthChangedEvent message)
@@ -69,15 +67,15 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(MatchInformationEvent message)
-        {
-            if (message.Match != null)
-            {
-                FilterPointPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0]; 
-                FilterPointPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0]; 
-                FilterServerPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0]; 
-                FilterServerPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0]; 
-            }
-        }
+        //public void Handle(MatchInformationEvent message)
+        //{
+        //    if (message.Match != null)
+        //    {
+        //        FilterPointPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0]; 
+        //        FilterPointPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0]; 
+        //        FilterServerPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0]; 
+        //        FilterServerPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0]; 
+        //    }
+        //}
     }
 }

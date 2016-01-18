@@ -5,6 +5,7 @@ using TT.Viewer.ViewModels;
 using System.Reflection;
 using TT.Lib.Models.Serialization;
 using TT.Lib.Managers;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace TT.Viewer {
 
@@ -22,7 +23,8 @@ namespace TT.Viewer {
             container.Singleton<IEventAggregator, EventAggregator>();
             container.Singleton<IMatchSerializer, XmlMatchSerializer>();
             container.Singleton<IMatchManager, MatchManager>();
-            container.PerRequest<IShell, ShellViewModel>();
+            container.Singleton<IShell, ShellViewModel>();
+            container.Singleton<IDialogCoordinator, DialogCoordinator>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
         }
 

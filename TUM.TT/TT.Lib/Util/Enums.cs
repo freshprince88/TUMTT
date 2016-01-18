@@ -80,6 +80,13 @@ namespace TT.Lib.Util.Enums
 
     public static class Stroke
     {
+        public enum Player
+        {
+            Player1,
+            Player2,
+            None,
+            Both
+        }
 
         public enum Point
         {

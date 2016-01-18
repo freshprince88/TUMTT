@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class TotalMatchStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
 
@@ -34,10 +34,12 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public TotalMatchStatisticsViewModel(IEventAggregator eventAggregator)
+        public TotalMatchStatisticsViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            Manager = man;
             SelectedRallies = new List<Rally>();
             ActivePlaylist = new Playlist();
 
@@ -64,7 +66,7 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
 
-
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -83,21 +85,15 @@ namespace TT.Viewer.ViewModels
         //Get SelectedRallies and apply own filters
         public void Handle(FilterSelectionChangedEvent message)
         {
-            UpdateSelection();
-        }
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.ActivePlaylist = message.Playlist;
-
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
 
         #region Helper Methods
-        private void UpdateSelection()
+        private void UpdateSelection(Playlist list)
         {
-            if (this.ActivePlaylist.Rallies != null)
+            if (list.Rallies != null)
             {
                 SelectedRallies = this.ActivePlaylist.Rallies;
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));

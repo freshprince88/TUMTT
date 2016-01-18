@@ -8,22 +8,21 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Lib.Util.Enums;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ListResultViewModel : Conductor<ResultListItem>.Collection.AllActive, IResultViewTabItem,
-        IHandle<ResultsChangedEvent>,IHandle<MatchInformationEvent>
+    public class ResultListViewModel : Conductor<ResultListItem>.Collection.AllActive, IResultViewTabItem,
+        IHandle<ResultsChangedEvent>
     {
         public Match Match { get; set; }
         private IEventAggregator events;
-        private bool blockEvents;
 
 
-        public ListResultViewModel(IEventAggregator e)
+        public ResultListViewModel(IEventAggregator e)
         {
             this.DisplayName = "Hitlist";
             events = e;
-            blockEvents = true;
         }
 
         #region View Methods
@@ -32,15 +31,13 @@ namespace TT.Viewer.ViewModels
         {
             ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
 
-            if (item != null && !blockEvents)
+            if (item != null)
             {
                 this.events.PublishOnUIThread(new VideoPlayEvent()
                 {
                     Current = item.Rally
                 });
-            }
-
-            blockEvents = false;
+            }           
         }
         #endregion
 
@@ -65,11 +62,6 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-        }
-
-        public void Handle(MatchInformationEvent message)
-        {
-            this.Match = message.Match;
         }
         #endregion
     }

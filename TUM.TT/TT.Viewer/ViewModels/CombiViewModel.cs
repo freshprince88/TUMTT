@@ -8,18 +8,17 @@ using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class CombiViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
 
     {
         #region Properties
         public BasicFilterViewModel BasicFilterView { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
-        public Playlist ActivePlaylist { get; private set; } 
 
         public TableKombiViewModel TableKombi { get; private set; } 
 
@@ -35,13 +34,14 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public CombiViewModel(IEventAggregator eventAggregator)
+        public CombiViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            this.Manager = man;
             SelectedRallies = new List<Rally>();
-            ActivePlaylist = new Playlist();
-            BasicFilterView = new BasicFilterViewModel(this.events)
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength= 0,
                 PlayerLabel = "Aufschlag:"
@@ -76,7 +76,7 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
 
-           
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -95,22 +95,17 @@ namespace TT.Viewer.ViewModels
         //Get SelectedRallies and apply own filters
         public void Handle(FilterSelectionChangedEvent message)
         {
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.ActivePlaylist = message.Playlist;
 
-            UpdateSelection();
-        }
 
         #endregion
 
         #region Helper Methods
 
-        private void UpdateSelection()
+        private void UpdateSelection(Playlist list)
         {
-            if (this.ActivePlaylist.Rallies != null)
+            if (list.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies; 
                 // .Where().ToList();

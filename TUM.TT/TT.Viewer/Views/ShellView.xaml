@@ -1,45 +1,21 @@
-<Controls:MetroWindow x:Class="TT.Viewer.Views.ShellView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:lib="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
-        xmlns:cal="http://www.caliburnproject.org" 
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                   
-        Width="1024"
-        Height="768"         
-        EnableDWMDropShadow="True"
-        ResizeMode="CanResizeWithGrip"
-        WindowTransitionsEnabled="False"
-        WindowStartupLocation="CenterScreen"            
-        Title="TUM-TT">
-
-
+﻿<Controls:MetroWindow x:Class="TT.Viewer.Views.ShellView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:cal="http://www.caliburnproject.org"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      Dialog:DialogParticipation.Register="{Binding}"
+                      ResizeMode="CanResizeWithGrip"
+                      Width="1024"
+                      Height="768"         
+                      EnableDWMDropShadow="True"
+                      WindowTransitionsEnabled="False"
+                      WindowStartupLocation="CenterScreen"            
+                      Title="TUM.TT">
     <Window.Resources>
-        <ResourceDictionary>
-            <lib:Visibility2BoolConverter x:Key="bvc2" />
-            <lib:Column2TabConverter x:Key="c2tc" />
-            <lib:TabSizeConverter x:Key="tabSizeConverter" />
-
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Icons.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-
-        <!--<Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="{x:Type TabItem}">
-            <Setter Property="Height">
-                <Setter.Value>
-                    <MultiBinding Converter="{StaticResource tabSizeConverter}">
-                        <Binding ElementName="HeaderTabControl" Path="ActualHeight" />
-                        <Binding ElementName="HeaderTabControl" Path="Items" />
-                    </MultiBinding>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
+        <ResourceDictionary Source="/Resources/Icons.xaml" />
     </Window.Resources>
-
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
@@ -57,42 +33,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
-
     <xctk:BusyIndicator>
-        <Controls:MetroContentControl>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <!--<ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=FilterView, Converter={StaticResource c2tc}}"/>-->
-                    <ColumnDefinition x:Name="Column1" Width="*" MinWidth="270" MaxWidth="400"/>
-                    <ColumnDefinition x:Name="Column2" Width="*"/>
-                    <ColumnDefinition x:Name="Column3" Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <ContentControl x:Name="FilterStatisticsView" Grid.Column="0"/>
-                </Border>
-                <Border Grid.Column="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <ContentControl x:Name="ResultView" Grid.Column="1"/>
-                    </Border>
-
-                    <Grid Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Border Grid.Row="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <ContentControl x:Name="MediaView"/>
-                    </Border>
-                    <Border Grid.Row="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <ContentControl x:Name="PlaylistView" />
-                    </Border>
-                    <Border Grid.Row="2" BorderThickness="1 0 0 0 " BorderBrush="{DynamicResource AccentColorBrush}" />
-                </Grid>
-            </Grid>
-        </Controls:MetroContentControl>
+        <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="Down"/>
     </xctk:BusyIndicator>
-
 </Controls:MetroWindow>
-    
-    

@@ -25,7 +25,6 @@ namespace TT.Viewer.Views
     public partial class ServiceStatisticsView : UserControl,
         IHandle<StatisticDetailChangedEvent>,
         IHandle<ResultsChangedEvent>,
-        IHandle<FilterSwitchedEvent>,
         IHandle<FilterSelectionChangedEvent>
     {
         #region Properties
@@ -71,17 +70,13 @@ namespace TT.Viewer.Views
 
         public void Handle(ResultsChangedEvent message)
         {
-
-        }
-
-        public void Handle(FilterSwitchedEvent message)
-        {
-
+            this.SelectedRallies = message.Rallies.ToList();
+            UpdateButtonContent();
         }
 
         public void Handle(FilterSelectionChangedEvent message)
         {
-            this.SelectedRallies = message.Rallies.Cast<Rally>().ToList();
+            this.SelectedRallies = message.Rallies.ToList();
             UpdateButtonContent();
         }
 
@@ -91,8 +86,6 @@ namespace TT.Viewer.Views
             UpdateButtonContentPosition();
             UpdateButtonContentTechnique();
             UpdateButtonContentSpin();
-
-
         }
 
         

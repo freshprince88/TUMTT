@@ -10,17 +10,16 @@ using System.Windows.Controls;
 using TT.Lib.Events;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
     public class PlaylistViewModel : Conductor<PlaylistItem>.Collection.AllActive,
         IDropTarget,
-        IHandle<MatchOpenedEvent>,
         IHandle<PlaylistNamedEvent>
     {
         private IEventAggregator events;
-
-        public Match Match { get; private set; }
+        private IMatchManager Manager;
 
         private PlaylistItem _selected;
         public PlaylistItem SelectedItemView
@@ -37,9 +36,10 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public PlaylistViewModel(IEventAggregator e)
+        public PlaylistViewModel(IEventAggregator e, IMatchManager man)
         {
             events = e;
+            Manager = man;
         }
 
         #region View Methods
@@ -61,7 +61,7 @@ namespace TT.Viewer.ViewModels
 
         public void Save()
         {
-            this.events.PublishOnUIThread(new SaveMatchEvent(this.Match));
+            Manager.SaveMatch();
         }
 
         public void ShowSettings()
@@ -78,6 +78,19 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+
+            this.Items.Clear();
+
+            foreach (var playlist in Manager.Match.Playlists)
+            {
+                string name = playlist.Name;
+
+                this.ActivateItem(new PlaylistItem()
+                {
+                    Name = name,
+                    Count = playlist.Rallies.Count()
+                });
+            }
         }
 
         protected override void OnDeactivate(bool close)
@@ -90,24 +103,6 @@ namespace TT.Viewer.ViewModels
 
         #region Events
 
-        public void Handle(MatchOpenedEvent message)
-        {
-            this.Match = message.Match;
-            this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
-            this.Items.Clear();
-
-            foreach (var playlist in message.Match.Playlists)
-            {
-                string name = playlist.Name;
-
-                this.ActivateItem(new PlaylistItem()
-                {
-                    Name = name,
-                    Count = playlist.Rallies.Count()
-                });
-            }
-        }
-
         public void Handle(PlaylistNamedEvent message)
         {
             string name = message.Name;
@@ -119,15 +114,14 @@ namespace TT.Viewer.ViewModels
             Playlist p = new Playlist();
             p.Name = name;
             p.Rallies = new List<Rally>();
-            this.Match.Playlists.Add(p);
-
+            Manager.Match.Playlists.Add(p);
+            Manager.MatchModified = true;
             this.ActivateItem(new PlaylistItem()
             {
                 Name = name,
                 Count = p.Rallies.Count()
             });
 
-            this.events.PublishOnUIThread(new MatchEditedEvent(this.Match));
         }
 
         public void DragOver(IDropInfo dropInfo)
@@ -147,14 +141,14 @@ namespace TT.Viewer.ViewModels
             var sourceItem = dropInfo.Data as ResultListItem;
             var targetItem = dropInfo.TargetItem as PlaylistItem;
 
-            Playlist list = this.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
+            Playlist list = Manager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
 
             if (!list.Rallies.Contains(sourceItem.Rally))
             {
                 list.Rallies.Add(sourceItem.Rally);
+                Manager.MatchModified = true;
                 targetItem.Count++;
                 this.Items.Refresh();
-                this.events.PublishOnUIThread(new MatchEditedEvent(this.Match));
             }            
         }
 

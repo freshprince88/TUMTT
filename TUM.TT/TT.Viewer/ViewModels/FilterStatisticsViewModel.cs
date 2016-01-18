@@ -6,43 +6,47 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class FilterStatisticsViewModel : Conductor<IScreen>.Collection.OneActive,
-        IHandle<MatchOpenedEvent>,
-        IHandle<PlaylistChangedEvent>
+    public class FilterStatisticsViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public FilterViewModel FilterView { get; set; }
         public StatisticsViewModel StatisticsView { get; set; }
-        private Playlist ActivePlaylist { get; set; }
-        private Match match;
+
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public FilterStatisticsViewModel(IEventAggregator eventAggregator)
+        public FilterStatisticsViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
-            this.ActivePlaylist = new Playlist();
+            this.Manager = man;
 
+            FilterView = new FilterViewModel(this.events, Manager);
+            StatisticsView = new StatisticsViewModel(this.events, Manager);
         }
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
+
+        protected override void OnActivate()
         {
-            base.OnInitialize();
+            base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            FilterView = new FilterViewModel(this.events);
-            StatisticsView = new StatisticsViewModel(this.events);
-            // Activate the welcome model
+            // Activate the Filter model
             if (this.ActiveItem == null)
             {
                 this.ActivateItem(FilterView);
             }
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            // Subscribe ourself to the event bus
+            this.events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
 
         public void FilterStatisticsSelected(SelectionChangedEventArgs args)
@@ -52,32 +56,12 @@ namespace TT.Viewer.ViewModels
             { //wie kann ich zwischen den 2 TabControls unterscheiden?
 
                 case "FilterTab":
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.match));
-                    this.ActivateItem(FilterView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-                    
+                    this.ActivateItem(FilterView);                  
                     break;
-
                 case "StatisticsTab":
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.match));
-                    this.ActivateItem(StatisticsView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-                    
+                    this.ActivateItem(StatisticsView);                  
                     break;
             }
-        }
-        public void Handle(MatchOpenedEvent message)
-        {
-            this.match = message.Match;
-            this.events.BeginPublishOnUIThread(new MatchInformationEvent(this.match));
-            this.ActivePlaylist = message.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
-        }
-
-        public void Handle(PlaylistChangedEvent message)
-        {
-            this.ActivePlaylist = this.match.Playlists.Where(p => p.Name == message.PlaylistName).FirstOrDefault();
-            this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
         }
     }
 }

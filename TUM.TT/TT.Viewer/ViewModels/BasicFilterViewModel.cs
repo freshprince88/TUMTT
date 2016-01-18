@@ -9,12 +9,11 @@ using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
 using TT.Lib.Events;
 using TT.Lib.Util.Enums;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<FilterSwitchedEvent>,
-        IHandle<MatchOpenedEvent>
+    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive
     {
         #region Properties
 
@@ -25,7 +24,6 @@ namespace TT.Viewer.ViewModels
         public TableServiceViewModel TableView { get; private set; }
         public List<Rally> SelectedRallies { get; private set; }
 
-        public Playlist RallyList { get; private set; }
         public List<Stroke.Spin> SelectedSpins { get; private set; }
         
         public Stroke.Point Point { get; private set; }
@@ -48,12 +46,13 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public BasicFilterViewModel(IEventAggregator eventAggregator)
+        public BasicFilterViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
-            SelectedRallies = new List<Rally>();            
-            RallyList = new Playlist();            
+            Manager = man;
+            SelectedRallies = new List<Rally>();                       
             Point = Stroke.Point.None;
             Server = Stroke.Server.None;           
             Crunch = Stroke.Crunch.Not;
@@ -65,8 +64,6 @@ namespace TT.Viewer.ViewModels
             PlayerLabel = "";
             LastStroke = false;
             StrokeNumber = 0;
-
-
         }
 
         #region View Methods
@@ -174,7 +171,7 @@ namespace TT.Viewer.ViewModels
                     SelectedSets.Remove(7);
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void RallyLengthFilter(ToggleButton source)
@@ -266,7 +263,7 @@ namespace TT.Viewer.ViewModels
                     SelectedRallyLengths.Remove(6);
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void CrunchOrNot(ToggleButton source)
@@ -282,7 +279,7 @@ namespace TT.Viewer.ViewModels
                     Crunch = Stroke.Crunch.Not;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
 
@@ -322,7 +319,7 @@ namespace TT.Viewer.ViewModels
                         Point = Stroke.Point.Player1;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void P1P2Server(ToggleButton source)
@@ -361,7 +358,7 @@ namespace TT.Viewer.ViewModels
                         Server = Stroke.Server.Player1;
                 }
             }
-            UpdateSelection();
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion
@@ -381,7 +378,13 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-
+            if (Manager.Match != null)
+            {
+                FilterPointPlayer1Button = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+                FilterPointPlayer2Button = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+                UpdateSelection(Manager.ActivePlaylist);
+            }
+            
         }
 
         protected override void OnDeactivate(bool close)
@@ -395,31 +398,15 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.RallyList = message.Playlist;
-
-            UpdateSelection();
-        }
-
-        public void Handle(MatchOpenedEvent message)
-        {
-            if (message.Match.FirstPlayer != null && message.Match.SecondPlayer != null)
-            {
-                FilterPointPlayer1Button = message.Match.FirstPlayer.Name.Split(' ')[0];
-                FilterPointPlayer2Button = message.Match.SecondPlayer.Name.Split(' ')[0];
-            }
-        }
-
         #endregion
 
         #region Helper Methods
 
-        public void UpdateSelection()
+        public void UpdateSelection(Playlist list)
         {
-            if (this.RallyList.Rallies != null)
+            if (list.Rallies != null)
             {
-                SelectedRallies = this.RallyList.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
+                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
                 this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
             }
         }

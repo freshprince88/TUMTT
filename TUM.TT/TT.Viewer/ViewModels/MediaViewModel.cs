@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using TT.Lib;
 using TT.Lib.Util.Enums;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
@@ -18,6 +19,7 @@ namespace TT.Viewer.ViewModels
         IHandle<MediaControlEvent>
     {
         private IEventAggregator events;
+        private IMatchManager Manager;
 
         public LinkedList<Rally> Playlist { get; set; }
         public LinkedListNode<Rally> CurrentRally { get; set; }
@@ -68,9 +70,10 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public MediaViewModel(IEventAggregator eventAggregator)
+        public MediaViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             events = eventAggregator;
+            Manager = man;
             _speed = Media.Speed.Full;
             _muted = Media.Mute.Unmute;
             _mode = Media.Control.Stop;
@@ -255,8 +258,13 @@ namespace TT.Viewer.ViewModels
         /// Initializes this view model.
         /// </summary>
         protected override void OnInitialize()
-        {
+        {            
             base.OnInitialize();
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
             events.Subscribe(this);
         }
 
@@ -309,9 +317,7 @@ namespace TT.Viewer.ViewModels
 
         #region Helper Methods
 
-        private void InitVideo()
-        {
-
+        private void InitVideo() { 
         }
 
         #endregion

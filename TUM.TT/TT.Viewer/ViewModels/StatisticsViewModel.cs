@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class StatisticsViewModel : Conductor<IScreen>.Collection.OneActive,
-        IHandle<FilterSwitchedEvent>,IHandle<MatchInformationEvent>
+    public class StatisticsViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public ServiceStatisticsViewModel ServiceStatisticsView { get; set; }
         public ReceiveStatisticsViewModel ReceiveStatisticsView { get; set; }
@@ -25,36 +25,40 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
+        private IMatchManager Manager;
 
-        public StatisticsViewModel(IEventAggregator eventAggregator)
+        public StatisticsViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
+            Manager = man;
             this.ActivePlaylist = new Playlist();
+
+            ServiceStatisticsView = new ServiceStatisticsViewModel(this.events, Manager);
+            ReceiveStatisticsView = new ReceiveStatisticsViewModel(this.events, Manager);
+            ThirdBallStatisticsView = new ThirdBallStatisticsViewModel(this.events, Manager);
+            FourthBallStatisticsView = new FourthBallStatisticsViewModel(this.events, Manager);
+            LastBallStatisticsView = new LastBallStatisticsViewModel(this.events, Manager);
+            TotalMatchStatisticsView = new TotalMatchStatisticsViewModel(this.events, Manager);
         }
 
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
+        protected override void OnActivate()
         {
-            base.OnInitialize();
-
+            base.OnActivate();
             // Subscribe ourself to the event bus
-            this.events.Subscribe(this);            
-            ServiceStatisticsView = new ServiceStatisticsViewModel(this.events);
-            ReceiveStatisticsView = new ReceiveStatisticsViewModel(this.events);
-            ThirdBallStatisticsView = new ThirdBallStatisticsViewModel(this.events);
-            FourthBallStatisticsView = new FourthBallStatisticsViewModel(this.events);
-            LastBallStatisticsView = new LastBallStatisticsViewModel(this.events);
-            TotalMatchStatisticsView = new TotalMatchStatisticsViewModel(this.events);
-
+            this.events.Subscribe(this);
             // Activate the welcome model
             if (this.ActiveItem == null)
             {
                 this.ActivateItem(ServiceStatisticsView);
             }
         }
-       
+
+        protected override void OnDeactivate(bool close)
+        {
+            this.events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
 
         public void FilterSelected(SelectionChangedEventArgs args)
         {
@@ -62,55 +66,32 @@ namespace TT.Viewer.ViewModels
             switch (selected.Name)
             {
                 case "ServiceStatisticsTabHeader":
-                    this.ActivateItem(ServiceStatisticsView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.ActivateItem(ServiceStatisticsView);                  
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ReceiveStatisticsTabHeader":
-                    this.ActivateItem(ReceiveStatisticsView); 
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
+                    this.ActivateItem(ReceiveStatisticsView);                     
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "ThirdStatisticsTabHeader":
                     this.ActivateItem(ThirdBallStatisticsView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "FourthStatisticsTabHeader":
                     this.ActivateItem(FourthBallStatisticsView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "LastStatisticsTabHeader":
                     this.ActivateItem(LastBallStatisticsView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
                 case "TotalMatchStatisticsTabHeader":
                     this.ActivateItem(TotalMatchStatisticsView);
-                    this.events.PublishOnUIThread(new FilterSwitchedEvent(this.ActivePlaylist));
                     this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-                    this.events.PublishOnUIThread(new MatchInformationEvent(this.Match));
                     break;
-
-
                 default:
                     break;
             }
-        }
-
-        public void Handle(FilterSwitchedEvent message)
-        {
-            this.ActivePlaylist = message.Playlist;
-        }
-        public void Handle(MatchInformationEvent message)
-        {
-            this.Match = message.Match;
         }
     }
 }
