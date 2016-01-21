@@ -15,7 +15,7 @@ namespace TT.Viewer.ViewModels
 {
     public class FourthBallViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
-        IHandle<FilterSelectionChangedEvent>
+        IHandle<BasicFilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
@@ -382,7 +382,7 @@ namespace TT.Viewer.ViewModels
 
         //FilterSelection in BasicFilter Changed
         //Get SelectedRallies and apply own filters
-        public void Handle(FilterSelectionChangedEvent message)
+        public void Handle(BasicFilterSelectionChangedEvent message)
         {
             UpdateSelection(Manager.ActivePlaylist);
         }

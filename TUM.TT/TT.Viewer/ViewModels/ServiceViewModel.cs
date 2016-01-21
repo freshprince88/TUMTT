@@ -16,7 +16,7 @@ namespace TT.Viewer.ViewModels
     public class ServiceViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableViewSelectionChangedEvent>,
         IHandle<SpinControlSelectionChangedEvent>,
-        IHandle<FilterSelectionChangedEvent>
+        IHandle<BasicFilterSelectionChangedEvent>
     {
 
         #region Properties
@@ -289,7 +289,7 @@ namespace TT.Viewer.ViewModels
 
         //FilterSelection in BasicFilter Changed
         //Get SelectedRallies and apply own filters
-        public void Handle(FilterSelectionChangedEvent message)
+        public void Handle(BasicFilterSelectionChangedEvent message)
         {
             UpdateSelection(Manager.ActivePlaylist);
         }

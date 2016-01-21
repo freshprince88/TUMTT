@@ -50,6 +50,7 @@ namespace TT.Viewer.ViewModels
             if (this.ActiveItem == null)
             {
                 this.ActivateItem(ServiceStatisticsView);
+                
             }
         }
 

@@ -95,7 +95,13 @@ namespace TT.Lib.Util.Enums
             None,
             Both
         }
-
+        public enum Success
+        {
+            Total,
+            PointWon,
+            DirectPointWon,
+            PointLost
+        }
         public enum Server
         {
             Player1,

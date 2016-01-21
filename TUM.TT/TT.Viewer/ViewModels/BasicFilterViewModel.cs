@@ -407,7 +407,7 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                this.events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
 
