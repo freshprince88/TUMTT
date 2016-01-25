@@ -22,43 +22,11 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaction logic for PlaylistView.xaml
     /// </summary>
-    public partial class PlaylistView : UserControl,
-        IHandle<ShowInputDialogEvent>,
-        IHandle<ShowPlaylistSettingsEvent>
+    public partial class PlaylistView : UserControl
     {
-        public IEventAggregator Events { get; private set; }
-
         public PlaylistView()
         {
             InitializeComponent();
-            Events = IoC.Get<IEventAggregator>();
-            Events.Subscribe(this);
         }
-
-
-        #region Events
-
-        public async void Handle(ShowInputDialogEvent message)
-        {
-            var metroWindow = System.Windows.Application.Current.Windows.OfType<ShellView>().FirstOrDefault();
-            var result = await metroWindow.ShowInputAsync(message.Header, message.Content);
-
-            //user pressed cancel
-            if (result == null)
-            {
-                this.Events.PublishOnUIThread(new PlaylistNamedEvent(string.Empty));
-            }
-            else
-            {
-                this.Events.PublishOnUIThread(new PlaylistNamedEvent(result));
-            }                
-        }
-
-        public void Handle(ShowPlaylistSettingsEvent message)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
     }
 }

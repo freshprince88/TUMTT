@@ -147,7 +147,6 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
             this.ActivateItem(BasicFilterStatisticsView);
-
         }
 
         protected override void OnViewReady(object view)
@@ -163,7 +162,6 @@ namespace TT.Viewer.ViewModels
 
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
-
         }
 
         #endregion

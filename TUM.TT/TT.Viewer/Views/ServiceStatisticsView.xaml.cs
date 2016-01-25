@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.Views
 {
@@ -24,11 +25,11 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class ServiceStatisticsView : UserControl,
         IHandle<StatisticDetailChangedEvent>,
-        IHandle<ResultsChangedEvent>,
         IHandle<BasicFilterSelectionChangedEvent>
     {
         #region Properties
         public IEventAggregator Events { get; set; }
+        public IMatchManager Manager { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
 
         #endregion
@@ -38,6 +39,7 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
+            Manager = IoC.Get<IMatchManager>();
         }
 
         public void Handle(StatisticDetailChangedEvent message)
@@ -68,11 +70,7 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(ResultsChangedEvent message) //Contents werden falsch aktualisiert, wenn bei diesem Event die Contents geupdated werden
-        {
-           // this.SelectedRallies = message.Rallies.ToList();
-           // UpdateButtonContent();
-        }
+
         
 
         public void Handle(BasicFilterSelectionChangedEvent message)

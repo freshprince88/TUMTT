@@ -15,11 +15,11 @@ using TT.Lib.Managers;
 namespace TT.Viewer.ViewModels
 {
     public class PlaylistViewModel : Conductor<PlaylistItem>.Collection.AllActive,
-        IDropTarget,
-        IHandle<PlaylistNamedEvent>
+        IDropTarget
     {
         private IEventAggregator events;
         private IMatchManager Manager;
+        private IDialogCoordinator Dialogs;
 
         private PlaylistItem _selected;
         public PlaylistItem SelectedItemView
@@ -36,10 +36,11 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public PlaylistViewModel(IEventAggregator e, IMatchManager man)
+        public PlaylistViewModel(IEventAggregator e, IMatchManager man, IDialogCoordinator dc)
         {
             events = e;
             Manager = man;
+            Dialogs = dc;            
         }
 
         #region View Methods
@@ -55,9 +56,24 @@ namespace TT.Viewer.ViewModels
             }           
         }
 
-        public void Add()
+        public async void Add()
         {
-            this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist"));                
+            var name = await Dialogs.ShowInputAsync(this, "New Playlist", "Please enter a name for the playlist");
+            //this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist")); 
+            if(name != null && name != string.Empty)
+            {
+                Playlist p = new Playlist();
+                p.Name = name;
+                p.Rallies = new List<Rally>();
+                Manager.Match.Playlists.Add(p);
+                Manager.MatchModified = true;
+                this.ActivateItem(new PlaylistItem()
+                {
+                    Name = name,
+                    Count = p.Rallies.Count(),
+                    List = p
+                });
+            }               
         }
 
         public void Save()
@@ -104,27 +120,6 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Events
-
-        public void Handle(PlaylistNamedEvent message)
-        {
-            string name = message.Name;
-
-            if (name == string.Empty)
-                return;
-
-
-            Playlist p = new Playlist();
-            p.Name = name;
-            p.Rallies = new List<Rally>();
-            Manager.Match.Playlists.Add(p);
-            Manager.MatchModified = true;
-            this.ActivateItem(new PlaylistItem()
-            {
-                Name = name,
-                Count = p.Rallies.Count()
-            });
-
-        }
 
         public void DragOver(IDropInfo dropInfo)
         {

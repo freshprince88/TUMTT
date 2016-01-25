@@ -18,9 +18,6 @@ namespace TT.Viewer.ViewModels
     {
         #region Properties
 
-        public string FilterPointPlayer1Button { get; set; }
-        public string FilterPointPlayer2Button { get; set; }
-
         public List<Rally> SelectedRallies { get; private set; }
         public Stroke.Player Player { get; private set; }
         public Stroke.Crunch Crunch { get; private set; }
@@ -28,6 +25,8 @@ namespace TT.Viewer.ViewModels
         public int MinRallyLength { get; set; }
         public bool LastStroke { get; set; }
         public int StrokeNumber { get; set; }
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
 
         #endregion
 
@@ -47,14 +46,12 @@ namespace TT.Viewer.ViewModels
             Crunch = Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
 
-            FilterPointPlayer1Button = "Spieler 1";
-            FilterPointPlayer2Button = "Spieler 2";
+            Player1 = "Spieler 1";
+            Player2 = "Spieler 2";
             MinRallyLength = 0;
 
             LastStroke = false;
             StrokeNumber = 0;
-
-
         }
 
         #region View Methods
@@ -246,8 +243,13 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            FilterPointPlayer1Button = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-            FilterPointPlayer2Button = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
 
             UpdateSelection(Manager.ActivePlaylist);
         }
