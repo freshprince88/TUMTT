@@ -33,7 +33,5 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
-    <xctk:BusyIndicator>
-        <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="Down"/>
-    </xctk:BusyIndicator>
+    <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="LeftReplace"/>
 </Controls:MetroWindow>

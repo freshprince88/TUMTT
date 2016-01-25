@@ -13,7 +13,8 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive
+    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<PlaylistChangedEvent>
     {
         #region Properties
 
@@ -40,7 +41,6 @@ namespace TT.Viewer.ViewModels
         public String PlayerLabel { get; set; }
 
         #endregion
-
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -397,6 +397,11 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Event Handlers
+
+        public void Handle(PlaylistChangedEvent message)
+        {
+            UpdateSelection(Manager.ActivePlaylist);
+        }
 
         #endregion
 

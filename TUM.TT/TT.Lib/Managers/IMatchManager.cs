@@ -12,7 +12,7 @@ namespace TT.Lib.Managers
     {
         Match Match { get; }
 
-        Playlist ActivePlaylist { get; }
+        Playlist ActivePlaylist { get; set; }
 
         string FileName { get;  }
 

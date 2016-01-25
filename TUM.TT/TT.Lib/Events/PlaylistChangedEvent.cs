@@ -10,6 +10,11 @@ namespace TT.Lib.Events
     {
         public string PlaylistName { get; set; }
 
+        public PlaylistChangedEvent()
+        {
+            PlaylistName = String.Empty;
+        }
+
         public PlaylistChangedEvent(string listName)            
         {
             PlaylistName = listName;

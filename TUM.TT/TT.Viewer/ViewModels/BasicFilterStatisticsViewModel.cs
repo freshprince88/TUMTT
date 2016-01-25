@@ -13,17 +13,18 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class BasicFilterStatisticsViewModel : Conductor<IScreen>.Collection.AllActive
+    public class BasicFilterStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<PlaylistChangedEvent>
     {
         #region Properties
 
         public string FilterPointPlayer1Button { get; set; }
         public string FilterPointPlayer2Button { get; set; }
-      
+
         public List<Rally> SelectedRallies { get; private set; }
         public Stroke.Player Player { get; private set; }
         public Stroke.Crunch Crunch { get; private set; }
-        public HashSet<int> SelectedSets { get; private set; }       
+        public HashSet<int> SelectedSets { get; private set; }
         public int MinRallyLength { get; set; }
         public bool LastStroke { get; set; }
         public int StrokeNumber { get; set; }
@@ -45,11 +46,11 @@ namespace TT.Viewer.ViewModels
             Player = Stroke.Player.None;
             Crunch = Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
-           
+
             FilterPointPlayer1Button = "Spieler 1";
             FilterPointPlayer2Button = "Spieler 2";
             MinRallyLength = 0;
-            
+
             LastStroke = false;
             StrokeNumber = 0;
 
@@ -177,7 +178,7 @@ namespace TT.Viewer.ViewModels
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
-        }     
+        }
 
         public void P1P2(ToggleButton source)
         {
@@ -262,6 +263,11 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
+        public void Handle(PlaylistChangedEvent message)
+        {
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
         #endregion
 
         #region Helper Methods
@@ -303,7 +309,7 @@ namespace TT.Viewer.ViewModels
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
-     
+
         private bool HasCrunchTime(Rally r)
         {
             switch (this.Crunch)

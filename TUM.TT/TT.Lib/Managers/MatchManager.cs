@@ -37,7 +37,19 @@ namespace TT.Lib.Managers
 
         public bool MatchModified { get; set; }
 
-        public Playlist ActivePlaylist { get; private set; }
+        private Playlist _activeList;
+        public Playlist ActivePlaylist
+        {
+            get { return _activeList; }
+            set
+            {
+                if (_activeList != value)
+                {
+                    _activeList = value;
+                    Events.PublishOnUIThread(new PlaylistChangedEvent());
+                }
+            }
+        }
 
         #endregion
 
@@ -75,7 +87,6 @@ namespace TT.Lib.Managers
 
             var serialization = new SerializeMatchResult(Match, fileName, Format.XML.Serializer);
             yield return serialization
-                .IsBusy("Saving")
                 .Rescue()
                 .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", fileName))
                 .Propagate(); // Reraise the error to abort the coroutine
@@ -96,7 +107,6 @@ namespace TT.Lib.Managers
 
             var deserialization = new DeserializeMatchResult(dialog.Result, Format.XML.Serializer);
             yield return deserialization
-                .IsBusy("Loading")
                 .Rescue()
                 .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
                 .Propagate(); // Reraise the error to abort the coroutine

@@ -50,7 +50,8 @@ namespace TT.Viewer.ViewModels
 
             if (item != null)
             {
-                this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
+                //this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
+                Manager.ActivePlaylist = item.List;
             }           
         }
 
@@ -88,7 +89,8 @@ namespace TT.Viewer.ViewModels
                 this.ActivateItem(new PlaylistItem()
                 {
                     Name = name,
-                    Count = playlist.Rallies.Count()
+                    Count = playlist.Rallies.Count(),
+                    List = playlist
                 });
             }
         }
