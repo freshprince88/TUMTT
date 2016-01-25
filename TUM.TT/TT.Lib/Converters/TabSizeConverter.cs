@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace TT.Lib.Util
+namespace TT.Lib.Converters
 {
-    public class TabSizeConverter : IMultiValueConverter
+    public class TabSizeConverter : BaseConverter, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

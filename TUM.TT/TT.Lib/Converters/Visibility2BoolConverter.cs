@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Lib.Util
+namespace TT.Lib.Converters
 {
-    public class Visibility2BoolConverter : IMultiValueConverter
+    public class Visibility2BoolConverter : BaseConverter, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

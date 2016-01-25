@@ -110,8 +110,6 @@ namespace TT.Lib.Util.Enums
             Both
         }
 
-
-
         public enum Crunch
         {
             CrunchTime,

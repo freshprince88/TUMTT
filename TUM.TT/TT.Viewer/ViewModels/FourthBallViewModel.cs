@@ -20,8 +20,35 @@ namespace TT.Viewer.ViewModels
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
-        public Playlist ActivePlaylist { get; private set; }
-        public Stroke.Hand Hand { get; private set; }
+
+        private Stroke.Hand _fore;
+        public Stroke.Hand ForeHand
+        {
+            get { return _fore; }
+            set
+            {
+                if (_fore != value)
+                {
+                    _fore = value;
+                    UpdateSelection(Manager.ActivePlaylist);
+                }
+            }
+        }
+
+        private Stroke.Hand _back;
+        public Stroke.Hand BackHand
+        {
+            get { return _back; }
+            set
+            {
+                if (_back != value)
+                {
+                    _back = value;
+                    UpdateSelection(Manager.ActivePlaylist);
+                }
+            }
+        }
+
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
@@ -51,21 +78,24 @@ namespace TT.Viewer.ViewModels
         public FourthBallViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
-            Manager = man;      
-            SelectedRallies = new List<Rally>();
-            ActivePlaylist = new Playlist();
-            Hand = Stroke.Hand.None;
-            SelectedStrokeLengths = new HashSet<Positions.Length>();
-            SelectedTablePositions = new HashSet<Positions.Table>();
-            Quality = Stroke.Quality.None;
-            SelectedStrokeTec = new HashSet<Stroke.Technique>();
-            StepAround = Stroke.StepAround.Not;
+            Manager = man;
+
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 3,
                 PlayerLabel = "4.Schlag:"
             };
+
             TableView = new TableStandardViewModel(this.events);
+
+            SelectedRallies = new List<Rally>();
+            ForeHand = Stroke.Hand.None;
+            BackHand = Stroke.Hand.None;
+            SelectedStrokeLengths = new HashSet<Positions.Length>();
+            SelectedTablePositions = new HashSet<Positions.Table>();
+            Quality = Stroke.Quality.None;
+            SelectedStrokeTec = new HashSet<Stroke.Technique>();
+            StepAround = Stroke.StepAround.Not;
         }
 
 
@@ -80,45 +110,6 @@ namespace TT.Viewer.ViewModels
             {
                 TableView.Mode = ViewMode.Position.Bottom;
             }
-        }
-        
-        public void ForBackHand(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("forhand"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Fore;
-                    else if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.Both;
-                }
-                else
-                {
-                    if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Back;
-                }
-            }
-            else if (source.Name.ToLower().Contains("backhand"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Back;
-                    else if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.Both;
-                }
-                else
-                {
-                    if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Fore;
-                }
-            }
-            UpdateSelection(Manager.ActivePlaylist);
         }
 
         public void StepAroundOrNot(ToggleButton source)
@@ -408,23 +399,14 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        
-
         private bool HasHand(Rally r)
         {
-            switch (this.Hand)
-            {
-                case Stroke.Hand.Fore:
-                    return r.Schlag[3].Schlägerseite == "Vorhand";
-                case Stroke.Hand.Back:
-                    return r.Schlag[3].Schlägerseite == "Rückhand";
-                case Stroke.Hand.None:
-                    return true;
-                case Stroke.Hand.Both:
-                    return true;
-                default:
-                    return false;
-            }
+            if (ForeHand == Stroke.Hand.Fore && BackHand == Stroke.Hand.Back || ForeHand == BackHand)
+                return true;
+            else if (ForeHand == Stroke.Hand.Fore)
+                return r.Schlag[3].Schlägerseite == "Vorhand";
+            else
+                return r.Schlag[3].Schlägerseite == "Rückhand";
         }
 
         private bool HasStepAround(Rally r)

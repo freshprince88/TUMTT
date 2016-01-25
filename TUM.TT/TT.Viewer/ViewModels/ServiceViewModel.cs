@@ -46,6 +46,17 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
+
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
+            {
+                MinRallyLength = 0,
+                PlayerLabel = "Aufschlag:",
+                LastStroke = false,
+                StrokeNumber = 0
+
+            };
+            TableView = new TableServiceViewModel(events);
+
             SelectedRallies = new List<Rally>();
             SelectedSpins = new List<Stroke.Spin>();
             Hand = Stroke.Hand.None;       
@@ -55,15 +66,6 @@ namespace TT.Viewer.ViewModels
             SelectedServerPositions = new HashSet<Positions.Server>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             SpinControl = new SpinControlViewModel(events);
-            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
-            {
-                MinRallyLength = 0,
-                PlayerLabel = "Aufschlag:",
-                LastStroke = false,
-                StrokeNumber=0
-                
-            };
-            TableView = new TableServiceViewModel(events);
         }
 
         #region View Methods
@@ -115,7 +117,6 @@ namespace TT.Viewer.ViewModels
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
-
         }
 
         public void SwitchTable(bool check)

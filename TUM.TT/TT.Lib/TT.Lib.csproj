@@ -93,6 +93,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BaseConverter.cs" />
+    <Compile Include="Converters\ForeHandToBoolConverter.cs" />
+    <Compile Include="Converters\BackHandToBoolConverter.cs" />
+    <Compile Include="Converters\ServiceToBoolConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
@@ -133,17 +137,17 @@
     <Compile Include="Templates\CircleBorder.xaml.cs">
       <DependentUpon>CircleBorder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\CircleMarginConverter .cs" />
-    <Compile Include="Util\Column2TabConverter.cs" />
+    <Compile Include="Converters\CircleMarginConverter .cs" />
+    <Compile Include="Converters\Column2TabConverter.cs" />
     <Compile Include="Util\Enums.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\FrameworkElementExtension.cs" />
     <Compile Include="Util\GridViewSort.cs" />
     <Compile Include="Util\MatchExtensions.cs" />
-    <Compile Include="Util\MathConverter.cs" />
+    <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Util\TabSizeConverter.cs" />
-    <Compile Include="Util\Visibility2BoolConverter.cs" />
+    <Compile Include="Converters\TabSizeConverter.cs" />
+    <Compile Include="Converters\Visibility2BoolConverter.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
