@@ -22,6 +22,8 @@ namespace TT.Viewer.ViewModels
         public BasicFilterStatisticsViewModel BasicFilterStatisticsView { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
         public string X { get; private set; }
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
 
         #endregion
 
@@ -38,6 +40,8 @@ namespace TT.Viewer.ViewModels
             Manager = man;
             SelectedRallies = new List<Rally>();
             X = "";
+            Player1 = "Spieler 1";
+            Player2 = "Spieler 2";
 
             BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events, Manager)
             {
@@ -147,6 +151,8 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
             this.ActivateItem(BasicFilterStatisticsView);
+            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
         }
 
         protected override void OnViewReady(object view)

@@ -63,8 +63,8 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Anzahl:"/>
                 <Label Grid.Row="1" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
-                <Label x:Name="BasisInformationLabelPlayer1"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 1:"/>
-                <Label x:Name="BasisInformationLabelPlayer2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 2:"/>
+                <Label x:Name="BasisInformationLabelPlayer1"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player1}"/>
+                <Label x:Name="BasisInformationLabelPlayer2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player2}"/>
                 <ToggleButton x:Name="TotalServicesCount" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"  Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="$">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
