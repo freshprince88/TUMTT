@@ -97,6 +97,7 @@
     <Compile Include="Converters\ForeHandToBoolConverter.cs" />
     <Compile Include="Converters\BackHandToBoolConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
+    <Compile Include="Converters\SpinToCheckedConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />

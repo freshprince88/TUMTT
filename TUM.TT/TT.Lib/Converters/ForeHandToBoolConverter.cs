@@ -11,12 +11,12 @@ namespace TT.Lib.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Stroke.Hand hand = (Stroke.Hand)value;
-            return hand == Stroke.Hand.Back;
+            return hand == Stroke.Hand.Fore || hand == Stroke.Hand.Both;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? Stroke.Hand.Back : Stroke.Hand.None;
+            throw new NotSupportedException();
         }
     }
 }

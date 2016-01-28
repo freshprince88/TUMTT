@@ -57,11 +57,11 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Technik:"/>
             <ToggleButton x:Name="FilterForhandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]">
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:ForeHandToBoolConverter}, Mode=OneWay}">
                 <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
             </ToggleButton>
             <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]">
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:BackHandToBoolConverter}, Mode=OneWay}">
                 <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
             </ToggleButton>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
