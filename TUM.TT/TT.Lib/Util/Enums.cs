@@ -67,6 +67,58 @@ namespace TT.Lib.Util.Enums
             Long,
             None
         }
+
+        public static Positions.Table GetTablePositionFromName(string name)
+        {
+            if (name.Contains("BotRight"))
+                return Positions.Table.BotRight;
+            else if (name.Contains("BotMid"))
+                return Positions.Table.BotMid;
+            else if (name.Contains("BotLeft"))
+                return Positions.Table.BotLeft;
+            else if (name.Contains("MidRight"))
+                return Positions.Table.MidRight;
+            else if (name.Contains("MidMid"))
+                return Positions.Table.MidMid;
+            else if (name.Contains("MidLeft"))
+                return Positions.Table.MidLeft;
+            else if (name.Contains("TopRight"))
+                return Positions.Table.TopRight;
+            else if (name.Contains("TopMid"))
+                return Positions.Table.TopMid;
+            else if (name.Contains("TopLeft"))
+                return Positions.Table.TopLeft;
+            else
+                return Positions.Table.None;
+        }
+
+        public static Positions.Server GetServePositionFromName(string name)
+        {
+            if (name.Contains("HalfLeft"))
+                return Positions.Server.HalfLeft;           
+            else if (name.Contains("HalfRight"))
+                return Positions.Server.HalfRight;
+            else if (name.Contains("Right"))
+                return Positions.Server.Right;
+            else if (name.Contains("Left"))
+                return Positions.Server.Left;
+            else if (name.Contains("Mid"))
+                return Positions.Server.Mid;
+            else
+                return Positions.Server.None;
+        }
+
+        public static Positions.Length GetStrokeLengthFromName(string name)
+        {
+            if (name.Contains("Short"))
+                return Positions.Length.Short;
+            else if (name.Contains("Half"))
+                return Positions.Length.Half;
+            else if (name.Contains("Long"))
+                return Positions.Length.Long;
+            else
+                return Positions.Length.None;
+        }
     }
 
     public static class ViewMode

@@ -96,8 +96,11 @@
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\ForeHandToBoolConverter.cs" />
     <Compile Include="Converters\BackHandToBoolConverter.cs" />
+    <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
+    <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
+    <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
