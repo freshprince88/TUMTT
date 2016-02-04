@@ -10,6 +10,17 @@
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Delete from current Playlist" cal:Message.Attach="[Event Click] = [Action DeleteRally()]"/>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
 
     <ListView x:Name="Items"
             Margin="0"
@@ -20,7 +31,8 @@
             util:GridViewSort.AutoSort="True"
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="False"
-            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]">
+            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]; 
+              [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding Score}"

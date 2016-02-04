@@ -413,8 +413,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
-
-       
+      
         private bool HasQuality(Rally r)
         {
             switch (this.Quality)
@@ -448,7 +447,6 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
-
 
         private bool HasTablePosition(Rally r)
         {

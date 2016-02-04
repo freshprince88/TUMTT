@@ -22,6 +22,10 @@ namespace TT.Lib.Managers
 
         void SaveMatch();
 
+        void DeleteRally(Rally r);
+
+        void RenamePlaylist(string oldName, string newName);
+
         IEnumerable<IResult> SaveMatchAction();
 
         IEnumerable<IResult> OpenMatchAction();

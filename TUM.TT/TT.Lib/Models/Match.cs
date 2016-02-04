@@ -503,7 +503,7 @@ public partial class Rally
 
     private string winnerField;
 
-    private string lengthField;
+    private int lengthField;
 
     private string serverField;
 
@@ -585,7 +585,7 @@ public partial class Rally
 
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Length
+    public int Length
     {
         get
         {
@@ -971,7 +971,7 @@ public partial class Schlag
         }
     }
 
-    public bool IsTopLeft()
+    public Boolean IsTopLeft()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
@@ -979,7 +979,7 @@ public partial class Schlag
         return (X >= 0 && X < 50.5 && Y >= 0 && Y <= 46) || (X <= 152.5 && X > 102 && Y <= 274 && Y >= 228);
     }
 
-    public bool IsTopMid()
+    public Boolean IsTopMid()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
@@ -987,7 +987,7 @@ public partial class Schlag
         return (X >= 50.5 && X <= 102 && Y >= 0 && Y <= 46) || (X >= 50.5 && X <= 102 && Y >= 228 && Y <= 274);
     }
 
-    public bool IsTopRight()
+    public Boolean IsTopRight()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
@@ -995,21 +995,21 @@ public partial class Schlag
         return (X <= 152.5 && X > 102 && Y >= 0 && Y <= 46) || (X >= 0 && X < 50.5 && Y >= 228 && Y <= 274);
     }
 
-    public bool IsMidLeft()
+    public Boolean IsMidLeft()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
 
         return (X >= 0 && X < 50.5 && Y <= 92 && Y > 46) || (X <= 152.5 && X > 102 && Y < 228 && Y >= 182);
     }
-    public bool IsMidMid()
+    public Boolean IsMidMid()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
 
         return (X >= 50.5 && X <= 102 && Y <= 92 && Y > 46) || (X >= 50.5 && X <= 102 && Y < 228 && Y >= 182);
     }
-    public bool IsMidRight()
+    public Boolean IsMidRight()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
@@ -1017,21 +1017,21 @@ public partial class Schlag
         return (X <= 152.5 && X > 102 && Y <= 92 && Y > 46) || (X >= 0 && X < 50.5 && Y < 228 && Y >= 182);
     }
 
-    public bool IsBotLeft()
+    public Boolean IsBotLeft()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
 
         return (X >= 0 && X < 50.5 && Y < 137 && Y > 92) || (X <= 152.5 && X > 102 && Y >= 137 && Y < 182);
     }
-    public bool IsBotMid()
+    public Boolean IsBotMid()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
 
         return (X >= 50.5 && X <= 102 && Y < 137 && Y > 92) || (X >= 50.5 && X <= 102 && Y >= 137 && Y < 182);
     }
-    public bool IsBotRight()
+    public Boolean IsBotRight()
     {
         double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
         double Y = this.Platzierung.WY == "" ? -1 : Convert.ToDouble(this.Platzierung.WY);
@@ -1039,17 +1039,17 @@ public partial class Schlag
         return (X <= 152.5 && X > 102 && Y < 137 && Y > 92) || (X >= 0 && X < 50.5 && Y >= 137 && Y < 182);
     }
 
-    public bool IsShort()
+    public Boolean IsShort()
     {
         return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "über";
     }
 
-    public bool IsHalf()
+    public Boolean IsHalf()
     {
         return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "hinter";
     }
 
-    public bool IsLong()
+    public Boolean IsLong()
     {
         return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "halbdistanz";
     }

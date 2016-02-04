@@ -15,26 +15,12 @@ using TT.Lib.Managers;
 namespace TT.Viewer.ViewModels
 {
     public class PlaylistViewModel : Conductor<PlaylistItem>.Collection.AllActive,
-        IDropTarget
+        IDropTarget,
+        IHandle<PlaylistChangedEvent>
     {
         private IEventAggregator events;
         private IMatchManager Manager;
         private IDialogCoordinator Dialogs;
-
-        private PlaylistItem _selected;
-        public PlaylistItem SelectedItemView
-        {
-            get
-            {
-                return _selected;
-            }
-            set
-            {
-                if (_selected == value) return;
-                _selected = value;
-                NotifyOfPropertyChange("SelectedItemView");
-            }
-        }
 
         public PlaylistViewModel(IEventAggregator e, IMatchManager man, IDialogCoordinator dc)
         {
@@ -96,19 +82,7 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
 
-            this.Items.Clear();
-
-            foreach (var playlist in Manager.Match.Playlists)
-            {
-                string name = playlist.Name;
-
-                this.ActivateItem(new PlaylistItem()
-                {
-                    Name = name,
-                    Count = playlist.Rallies.Count(),
-                    List = playlist
-                });
-            }
+            LoadPlaylists();
         }
 
         protected override void OnDeactivate(bool close)
@@ -117,6 +91,7 @@ namespace TT.Viewer.ViewModels
             this.events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
+
         #endregion
 
         #region Events
@@ -140,13 +115,45 @@ namespace TT.Viewer.ViewModels
 
             Playlist list = Manager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
 
-            if (!list.Rallies.Contains(sourceItem.Rally))
+            if (list != null && !list.Rallies.Contains(sourceItem.Rally))
             {
                 list.Rallies.Add(sourceItem.Rally);
                 Manager.MatchModified = true;
                 targetItem.Count++;
                 this.Items.Refresh();
             }            
+        }
+
+        public void Handle(PlaylistChangedEvent message)
+        {
+            var selected = this.Items.Where(p => p.Name == message.List.Name).FirstOrDefault();
+
+            if(selected != null)
+            {
+                selected.Count = message.List.Rallies.Count;
+                this.Items.Refresh();
+            }
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void LoadPlaylists()
+        {
+            this.Items.Clear();
+
+            foreach (var playlist in Manager.Match.Playlists)
+            {
+                string name = playlist.Name;
+
+                this.ActivateItem(new PlaylistItem()
+                {
+                    Name = name,
+                    Count = playlist.Rallies.Count(),
+                    List = playlist
+                });
+            }
         }
 
         #endregion

@@ -46,7 +46,7 @@ namespace TT.Lib.Managers
                 if (_activeList != value)
                 {
                     _activeList = value;
-                    Events.PublishOnUIThread(new PlaylistChangedEvent());
+                    Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 }
             }
         }
@@ -130,6 +130,30 @@ namespace TT.Lib.Managers
 
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+        }
+
+        public void DeleteRally(Rally r)
+        {
+            if (ActivePlaylist.Name != "Alle")
+            {
+                ActivePlaylist.Rallies.Remove(r);
+                Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
+                Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
+            }
+        }
+
+        public void RenamePlaylist(string oldName, string newName)
+        {
+            if(oldName != "Alle")
+            {
+                Playlist list = Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault();
+
+                if(list != null)
+                {
+                    list.Name = newName;
+                    Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
+                }
+            }
         }
 
         #endregion

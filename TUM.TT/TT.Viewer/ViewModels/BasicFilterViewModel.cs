@@ -14,7 +14,7 @@ using TT.Lib.Managers;
 namespace TT.Viewer.ViewModels
 {
     public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<PlaylistChangedEvent>
+        IHandle<PlaylistSelectionChangedEvent>
     {
         #region Properties
 
@@ -67,7 +67,6 @@ namespace TT.Viewer.ViewModels
         }
 
         #region View Methods
-
 
         public void SetFilter(ToggleButton source)
         {
@@ -282,7 +281,6 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
-
         public void P1P2Point(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("player1"))
@@ -400,7 +398,7 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-        public void Handle(PlaylistChangedEvent message)
+        public void Handle(PlaylistSelectionChangedEvent message)
         {
             UpdateSelection(Manager.ActivePlaylist);
         }
@@ -417,7 +415,6 @@ namespace TT.Viewer.ViewModels
                 this.events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
-
 
         private bool HasPoint(Rally r)
         {
@@ -452,7 +449,6 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
-
 
         private bool HasSet(Rally r)
         {

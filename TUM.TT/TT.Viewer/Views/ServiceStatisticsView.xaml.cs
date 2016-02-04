@@ -91,14 +91,14 @@ namespace TT.Viewer.Views
         
         private void UpdateButtonContentBasisInformation()
         {
-            TotalServicesCount.Content = SelectedRallies.Where(r => Convert.ToInt32(r.Length) >=1 ).Count();
+            //TotalServicesCount.Content = SelectedRallies.Where(r => Convert.ToInt32(r.Length) >=1 ).Count();
             TotalServicesCountPointPlayer1.Content = SelectedRallies.Where(r => Convert.ToInt32(r.Length) >= 1 && r.Winner=="First").Count();
             TotalServicesCountPointPlayer2.Content = SelectedRallies.Where(r => Convert.ToInt32(r.Length) >= 1 && r.Winner == "Second").Count();
         }
         private void UpdateButtonContentPlacement()
         {
             #region ForhandAll
-            PlacementForhandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()).Count();
+            //PlacementForhandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()).Count();
             PlacementForhandAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner).Count();
             PlacementForhandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
             PlacementForhandAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler != r.Winner).Count();
@@ -192,7 +192,7 @@ namespace TT.Viewer.Views
             #endregion
 
             #region ServiceErrors
-            PlacementAllServiceErrorsTotalButton.Content = SelectedRallies.Where(r => (r.Server != r.Winner && r.Length == "1")).Count();
+            PlacementAllServiceErrorsTotalButton.Content = SelectedRallies.Where(r => (r.Server != r.Winner && r.Length == 1)).Count();
             #endregion
 
         }

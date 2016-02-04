@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace TT.Lib.Events
 {
-    public class PlaylistChangedEvent
+    public class PlaylistChangedEvent : PlaylistEvent
     {
-        public string PlaylistName { get; set; }
-
-        public PlaylistChangedEvent()
+        public PlaylistChangedEvent(Playlist list) : base(list)
         {
-            PlaylistName = String.Empty;
-        }
 
-        public PlaylistChangedEvent(string listName)            
-        {
-            PlaylistName = listName;
         }
     }
 }

@@ -36,6 +36,7 @@ namespace TT.Viewer.ViewModels
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
+
             Rally = null;
             Score = String.Empty;
             Sets = String.Empty;
@@ -48,10 +49,10 @@ namespace TT.Viewer.ViewModels
         }
 
         public ResultListItem(Rally rally) //TODO: Wenn Server = First -> Name von Player 1 usw.
-
         {
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
+            Manager = IoC.Get<IMatchManager>();
             string test = this.Player1Name;
 
             Rally = rally;
@@ -75,9 +76,14 @@ namespace TT.Viewer.ViewModels
 
             Server = rally.Server;
             Point = rally.Winner;
-            Length = rally.Length;
+            Length = rally.Length.ToString();
             RallyStart = Convert.ToInt32(rally.Anfang);
             RallyEnd = Convert.ToInt32(rally.Ende);
+        }
+
+        public void DeleteRally()
+        {
+            Manager.DeleteRally(Rally);            
         }
     }
 }
