@@ -33,8 +33,8 @@ namespace TT.Lib.Util
         /// <returns>The default file name.</returns>
         public static string DefaultFilename(this Match match)
         {
-            var first = match.FirstPlayer ?? new FirstPlayer();
-            var second = match.SecondPlayer ?? new SecondPlayer();
+            var first = match.FirstPlayer ?? new Player();
+            var second = match.SecondPlayer ?? new Player();
             return string.Format(
                 "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4}",
                 match.DateTime,

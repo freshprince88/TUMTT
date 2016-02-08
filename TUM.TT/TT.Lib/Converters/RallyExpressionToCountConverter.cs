@@ -5,6 +5,7 @@ using System.Windows.Data;
 using Zhucai.LambdaParser;
 using Zhucai.LambdaParser.ObjectDynamicExtension;
 using System.Linq;
+using TT.Lib.Models;
 
 namespace TT.Lib.Converters
 {

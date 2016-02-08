@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Models;
 using TT.Lib.Util.Enums;
 using TT.Viewer.ViewModels;
 

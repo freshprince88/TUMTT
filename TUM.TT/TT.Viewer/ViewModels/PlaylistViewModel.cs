@@ -11,6 +11,7 @@ using TT.Lib.Events;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
+using TT.Lib.Models;
 
 namespace TT.Viewer.ViewModels
 {

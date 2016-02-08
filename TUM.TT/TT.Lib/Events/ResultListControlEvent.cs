@@ -1,4 +1,6 @@
 ﻿
+using TT.Lib.Models;
+
 namespace TT.Lib.Events
 {
     public class ResultListControlEvent

@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TT.Lib.Events;
+using TT.Lib.Models;
 using TT.Lib.Results;
 using TT.Lib.Util;
 
@@ -154,6 +153,14 @@ namespace TT.Lib.Managers
                     Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                 }
             }
+        }
+
+        public void CreateNewMatch()
+        {
+            this.Match = new Match();
+            this.ActivePlaylist = null;
+            this.FileName = String.Empty;
+            this.MatchModified = false;
         }
 
         #endregion

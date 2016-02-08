@@ -131,6 +131,12 @@
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
     <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Playlist.cs" />
+    <Compile Include="Models\Rally.cs" />
+    <Compile Include="Models\Rank.cs" />
+    <Compile Include="Models\Schlag.cs" />
+    <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Serialization\IMatchSerializer.cs" />
     <Compile Include="Models\Serialization\XmlMatchSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

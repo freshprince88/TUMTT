@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TT.Lib.Events;
+using TT.Lib.Models;
 
 namespace TT.Lib.Managers
 {
@@ -30,7 +31,7 @@ namespace TT.Lib.Managers
 
         IEnumerable<IResult> OpenMatchAction();
 
-        //void CreateMatch();
+        void CreateNewMatch();
 
         //void AddRally();
     }

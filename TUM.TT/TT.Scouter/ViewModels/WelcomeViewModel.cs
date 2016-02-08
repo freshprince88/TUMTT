@@ -12,22 +12,23 @@ namespace TT.Scouter.ViewModels
     public class WelcomeViewModel : Screen
     {
         private IEventAggregator Events;
+        private IMatchManager MatchManager;
 
-        public WelcomeViewModel(IEventAggregator ev)
+        public WelcomeViewModel(IEventAggregator ev, IMatchManager man)
         {
             Events = ev;
+            MatchManager = man;
         }
 
         #region View Methods
 
-        public void OpenLiveView()
+        public void OpenNewMatch()
         {
-            var liveViewModel = new LiveViewModel();
-            IoC.BuildUp(liveViewModel);
-            Events.PublishOnUIThread(new SetShellContentEvent(liveViewModel));
+            var newMatch = new NewMatchViewModel(Events, MatchManager);
+            Events.PublishOnUIThread(new SetShellContentEvent(newMatch));
         }
 
-        public void OpenDetailView()
+        public void OpenMatch()
         {
             //TODO: Open DetailView in Shell
         }

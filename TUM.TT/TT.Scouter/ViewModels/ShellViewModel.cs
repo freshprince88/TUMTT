@@ -15,14 +15,14 @@ namespace TT.Scouter
         /// Gets the event bus of this shell.
         /// </summary>
         public IEventAggregator Events { get; private set; }
-        private IMatchManager Manager;
+        private IMatchManager MatchManager;
         private IDialogCoordinator DialogCoordinator;
 
         public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
-            Manager = manager;
+            MatchManager = manager;
             DialogCoordinator = coordinator;
         }
 
@@ -51,14 +51,14 @@ namespace TT.Scouter
 
             if (this.ActiveItem == null)
             {
-                ActivateItem(new WelcomeViewModel(Events));
+                ActivateItem(new WelcomeViewModel(Events, MatchManager));
             }
         }
 
         protected override async void OnDeactivate(bool close)
         {
             Events.Unsubscribe(this);
-            if (Manager.MatchModified)
+            if (MatchManager.MatchModified)
             {
                 var mySettings = new MetroDialogSettings()
                 {
@@ -77,7 +77,7 @@ namespace TT.Scouter
 
                 if (_shutdown)
                 {
-                    Manager.SaveMatch();
+                    MatchManager.SaveMatch();
                     Application.Current.Shutdown();
                 }
             }
