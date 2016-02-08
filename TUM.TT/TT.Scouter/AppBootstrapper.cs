@@ -2,6 +2,8 @@ namespace TT.Scouter {
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
+    using TT.Lib.Models.Serialization;
+    using TT.Lib.Managers;
 
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
@@ -15,6 +17,8 @@ namespace TT.Scouter {
 
             container.Singleton<IWindowManager, WindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
+            container.Singleton<IMatchSerializer, XmlMatchSerializer>();
+            container.Singleton<IMatchManager, MatchManager>();
             container.PerRequest<IShell, ShellViewModel>();
         }
 

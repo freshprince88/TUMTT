@@ -187,7 +187,7 @@ namespace TT.Viewer.Views
             #endregion
 
             #region ServiceErrors
-            PlacementAllServiceErrorsTotalButton.Content = SelectedRallies.Where(r => (r.Server != r.Winner && r.Length == "2")).Count();
+            PlacementAllServiceErrorsTotalButton.Content = SelectedRallies.Where(r => (r.Server != r.Winner && r.Length == 2)).Count();
             #endregion
 
         }

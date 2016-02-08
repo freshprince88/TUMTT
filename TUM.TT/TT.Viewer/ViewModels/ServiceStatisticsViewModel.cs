@@ -24,8 +24,6 @@ namespace TT.Viewer.ViewModels
         public string X { get; private set; }
         public string Player1 { get; set; }
         public string Player2 { get; set; }
-        public string Test { get; set; }
-        public string Test2 { get; set; }
 
         #endregion
 
@@ -44,9 +42,6 @@ namespace TT.Viewer.ViewModels
             X = "";
             Player1 = "Spieler 1";
             Player2 = "Spieler 2";
-            //Test = "Convert.ToInt32(Length) >= 1 && Winner==\"First\"";
-            Test = "r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()";
-            Test2 = "r => r.Length >=1 ";
 
             BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events, Manager)
             {

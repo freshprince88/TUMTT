@@ -117,6 +117,7 @@
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
+    <Compile Include="Events\SetShellContentEvent.cs" />
     <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\StatisticDetailChangedEvent.cs" />

@@ -1,12 +1,15 @@
-<Window x:Class="TT.Scouter.ShellView"
+<Controls:MetroWindow x:Class="TT.Scouter.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        ResizeMode="CanResizeWithGrip"
+        Width="1024"
+        Height="768"         
+        EnableDWMDropShadow="True"
+        WindowTransitionsEnabled="False"
+        WindowStartupLocation="CenterScreen"            
+        Title="TUM.TT Scouter">
 
-    <Grid Background="White">
-        <TextBlock Text="Hello Caliburn Micro!"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   FontSize="20" />
-    </Grid>
+    <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="LeftReplace"/>
 
-</Window>
+</Controls:MetroWindow>

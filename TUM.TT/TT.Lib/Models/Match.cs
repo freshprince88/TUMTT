@@ -499,7 +499,7 @@ public partial class Rally
 
     private List<Schlag> schlagField;
 
-    private string nummerField;
+    private int nummerField;
 
     private string winnerField;
 
@@ -507,9 +507,9 @@ public partial class Rally
 
     private string serverField;
 
-    private string anfangField;
+    private double anfangField;
 
-    private string endeField;
+    private double endeField;
 
     private string kommentarField;
 
@@ -557,7 +557,7 @@ public partial class Rally
 
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Nummer
+    public int Nummer
     {
         get
         {
@@ -613,7 +613,7 @@ public partial class Rally
 
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Anfang
+    public double Anfang
     {
         get
         {
@@ -627,7 +627,7 @@ public partial class Rally
 
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Ende
+    public double Ende
     {
         get
         {

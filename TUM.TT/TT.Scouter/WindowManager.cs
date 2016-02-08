@@ -61,6 +61,7 @@ namespace TT.Scouter
                 settings.Top = window.Top;
                 settings.Height = window.Height;
                 settings.Width = window.Width;
+                settings.Save();
             }
         }
     }

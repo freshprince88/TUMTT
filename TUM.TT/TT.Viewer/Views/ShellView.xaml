@@ -12,7 +12,7 @@
                       EnableDWMDropShadow="True"
                       WindowTransitionsEnabled="False"
                       WindowStartupLocation="CenterScreen"            
-                      Title="TUM.TT">
+                      Title="TUM.TT Viewer">
     <Window.Resources>
         <ResourceDictionary Source="/Resources/Icons.xaml" />
     </Window.Resources>
