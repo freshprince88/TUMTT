@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.ServiceStatisticsView"
              mc:Ignorable="d" 
@@ -49,50 +50,63 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" x:Name="BasisInformation" Margin="0 0 10 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="70"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition MinWidth="70" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Anzahl:"/>
-                <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="∑:"/>
-                <Label Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 1:"/>
-                <Label Grid.Row="0" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 2:"/>
-                <ToggleButton x:Name="TotalServicesCountAllPlayer" Grid.Row="0" Grid.Column="2" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="50">
+                <Label Grid.Row="0" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Anzahl:"/>
+                <Label Grid.Row="1" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
+                <Label x:Name="BasisInformationLabelPlayer1"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player1}"/>
+                <Label x:Name="BasisInformationLabelPlayer2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player2}"/>
+                <ToggleButton x:Name="TotalServicesCount" Tag="r => r.Length >=1" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"  Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountAllPlayer, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalServicesCount, Path=Name}" />
+                            </cal:ActionMessage>
+                            <cal:ActionMessage MethodName="SelectBasisInformation">
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ToggleButton.Content>
+                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                            <Binding Path="SelectedRallies" />
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
+                        </MultiBinding>
+                    </ToggleButton.Content>
+                </ToggleButton>
+                <ToggleButton x:Name="TotalServicesCountPointPlayer1" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="$">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="StatButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPointPlayer1, Path=Name}" />
+                            </cal:ActionMessage>
+                            <cal:ActionMessage MethodName="SelectBasisInformation">
+                                <cal:Parameter Value="$source" />
                             </cal:ActionMessage>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="TotalServicesCountPlayer1" Grid.Row="0" Grid.Column="5" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="26">
+                <ToggleButton x:Name="TotalServicesCountPointPlayer2"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="$">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPlayer1, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPointPlayer2, Path=Name}" />
                             </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ToggleButton>
-                <ToggleButton x:Name="TotalServicesCountPlayer2"  Grid.Row="0" Grid.Column="8" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="24">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="StatButtonClick">
-                                <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPlayer2, Path=Name}" />
+                            <cal:ActionMessage MethodName="SelectBasisInformation">
+                                <cal:Parameter Value="$source" />
                             </cal:ActionMessage>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -147,15 +161,24 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForhandAllTotalButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40" Content="$">
+                                <ToggleButton x:Name="PlacementForhandAllTotalButton" Tag="r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                                 <ToggleButton x:Name="PlacementForhandAllPointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
                                     <i:Interaction.Triggers>
@@ -163,6 +186,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -174,6 +200,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -183,6 +212,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -205,6 +237,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -214,6 +249,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandLongPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -225,6 +263,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -234,6 +275,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -256,6 +300,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -265,6 +312,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -276,6 +326,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -285,6 +338,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -307,6 +363,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandShortTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -316,6 +375,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandShortPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -327,6 +389,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandShortDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -336,6 +401,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementForhandShortPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -358,6 +426,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -367,6 +438,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -378,6 +452,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -386,7 +463,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleAllPointsLostnButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -409,6 +489,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -418,6 +501,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleLongPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -429,6 +515,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -437,7 +526,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleLongPointsLostnButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -460,6 +552,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleHalfLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -470,6 +565,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleHalfLongPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -478,7 +576,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleHalflongirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleHalfLongDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -488,7 +589,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleHalfLongPointsLostnButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleHalfLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -511,6 +615,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleShortTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -520,6 +627,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleShortPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -531,6 +641,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementMiddleShortDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -539,7 +652,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleShortPointsLostnButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementMiddleShortPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -562,6 +678,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -571,6 +690,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -582,6 +704,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -591,6 +716,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -613,6 +741,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -622,6 +753,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandLongPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -633,6 +767,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -642,6 +779,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -664,6 +804,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandHalfLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -673,6 +816,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandHalfLongPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -684,6 +830,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandHalfLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -693,6 +842,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandHalfLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -715,6 +867,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandShortTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -724,6 +879,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandShortPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -735,6 +893,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandShortDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -744,6 +905,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementBackhandShortPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -766,6 +930,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -775,6 +942,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllLongPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -786,6 +956,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -795,6 +968,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -817,6 +993,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllHalfLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -826,6 +1005,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllHalfLongPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -837,6 +1019,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllHalfLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -846,6 +1031,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllHalfLongPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -868,6 +1056,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllShortTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -877,6 +1068,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllShortPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -888,6 +1082,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllShortDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -897,6 +1094,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PlacementAllShortPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPlacement">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -909,6 +1109,9 @@
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=PlacementAllServiceErrorsTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectPlacement">
+                                            <cal:Parameter Value="$source" />
                                         </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
@@ -953,7 +1156,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositionForhandTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionLeftTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -963,7 +1169,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositionForhandPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionLeftPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -973,7 +1182,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositiontForhandDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionLeftDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -983,7 +1195,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositionForhandPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionLeftPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1004,9 +1219,12 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                    <cal:Parameter Value="{Binding ElementName=PositionMiddleTotalButton, Path=Name}" />
-                                    </cal:ActionMessage>
-                                    </i:EventTrigger>
+                                                <cal:Parameter Value="{Binding ElementName=PositionMiddleTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
+                                        </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
                                 <ToggleButton x:Name="PositionMiddlePointsWonButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"   Content="a%" Visibility="Visible">
@@ -1016,6 +1234,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PositionMiddlePointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1024,7 +1245,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositiontMiddleDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionMiddleDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1035,6 +1259,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=PositionMiddlePointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1055,7 +1282,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositionBackhandTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionRightTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1065,7 +1295,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositionBackhandPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionRightPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1075,7 +1308,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositiontBackhandDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionRightDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1085,7 +1321,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PositionBackhandPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PositionRightPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectPosition">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1160,6 +1399,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandPendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1169,6 +1411,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandPendulumPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1180,6 +1425,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandPendulumDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1189,6 +1437,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandPendulumPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1211,6 +1462,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandPendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1220,6 +1474,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandPendulumPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1231,6 +1488,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandPendulumDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1240,6 +1500,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandPendulumPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1262,6 +1525,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllPendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1271,6 +1537,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllPendulumPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1282,6 +1551,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllPendulumDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1291,6 +1563,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllPendulumPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1313,6 +1588,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1322,6 +1600,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1333,6 +1614,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1342,6 +1626,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1364,6 +1651,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandReversePendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1374,6 +1664,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandReversePendulumPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1383,6 +1676,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandReversePendulumDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1415,6 +1711,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllReversePendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1424,6 +1723,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllReversePendulumPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1435,6 +1737,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllReversePendulumDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1444,6 +1749,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllReversePendulumPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1466,6 +1774,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandTomahawkTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1475,6 +1786,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandTomahawkPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1486,6 +1800,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandTomahawkDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1495,6 +1812,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandTomahawkPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1517,6 +1837,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandTomahawkTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1526,6 +1849,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandTomahawkPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1537,6 +1863,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandTomahawkDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1546,6 +1875,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandTomahawkPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1568,6 +1900,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllTomahawkTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1577,6 +1912,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllTomahawkPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1588,6 +1926,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllTomahawkDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1597,6 +1938,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllTomahawkPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1619,6 +1963,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandSpecialTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1628,6 +1975,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandSpecialPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1639,6 +1989,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandSpecialDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1648,6 +2001,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandSpecialPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1670,6 +2026,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandSpecialTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1679,6 +2038,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandSpecialPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1690,6 +2052,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandSpecialDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1699,6 +2064,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandSpecialPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1721,6 +2089,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpecialTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1730,6 +2101,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpecialPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1741,6 +2115,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpecialDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1750,6 +2127,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpecialPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1772,6 +2152,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1781,6 +2164,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1792,6 +2178,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1801,6 +2190,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=ForhandAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1823,6 +2215,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1832,6 +2227,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1843,6 +2241,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1852,6 +2253,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=BackhandAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1872,7 +2276,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllServiceTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllServicesTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1882,7 +2289,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllServicePointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllServicesPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1892,7 +2302,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllServiceDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllServicesDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1902,7 +2315,10 @@
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllServicePointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllServicesPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectService">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1973,6 +2389,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideLeftTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -1982,6 +2401,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideLeftPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -1993,6 +2415,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideLeftDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2002,6 +2427,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideLeftPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2024,6 +2452,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2033,6 +2464,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2044,6 +2478,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2053,6 +2490,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2075,6 +2515,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideRightTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2084,6 +2527,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideRightPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2095,6 +2541,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideRightDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2104,6 +2553,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpSideRightPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2126,6 +2578,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2135,6 +2590,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2146,6 +2604,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2155,6 +2616,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=UpAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2177,6 +2641,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2186,6 +2653,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2197,6 +2667,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2206,6 +2679,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2228,6 +2704,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSpinTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2237,6 +2716,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSpinPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2248,6 +2730,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSpinDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2257,6 +2742,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSpinPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2279,6 +2767,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2288,6 +2779,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2299,6 +2793,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2308,6 +2805,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2330,6 +2830,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoUpDownAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2339,6 +2842,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoUpDownAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2350,6 +2856,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoUpDownAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2359,6 +2868,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoUpDownAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2381,6 +2893,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideLeftTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2390,6 +2905,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideLeftPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2401,6 +2919,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideLeftDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2410,6 +2931,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideLeftPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2432,6 +2956,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2441,6 +2968,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2452,6 +2982,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2461,6 +2994,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2483,6 +3019,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideRightTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2492,6 +3031,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideRightPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2503,6 +3045,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideRightDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2512,6 +3057,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownSideRightPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2534,6 +3082,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2543,6 +3094,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2554,6 +3108,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2563,6 +3120,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=DownAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2585,6 +3145,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2594,6 +3157,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2605,6 +3171,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2614,6 +3183,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideLeftAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2636,6 +3208,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSideAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2645,6 +3220,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSideAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2656,6 +3234,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSideAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2665,6 +3246,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=NoSideAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2687,6 +3271,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2696,6 +3283,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2707,6 +3297,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2716,6 +3309,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=SideRightAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2738,6 +3334,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpinTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2747,6 +3346,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpinPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -2758,6 +3360,9 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpinDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
@@ -2767,6 +3372,9 @@
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AllSpinPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>   
+                                            <cal:ActionMessage MethodName="SelectSpin">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>

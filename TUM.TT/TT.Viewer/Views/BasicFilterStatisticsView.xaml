@@ -77,8 +77,8 @@
                 <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" cal:Message.Attach="[Event Click] = [Action CrunchOrNot($source)]" />
             </Grid>
             <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Spieler:"/>
-            <ToggleButton  x:Name="FilterPlayer1Button" Content="Player 1" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  cal:Message.Attach="[Event Click] = [Action P1P2($source]"/>
-            <ToggleButton x:Name="FilterPlayer2Button" Content="Player 2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" cal:Message.Attach="[Event Click] = [Action P1P2($source)]"/>
+            <ToggleButton x:Name="FilterPlayer1Button" Content="{Binding Path=Player1}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  cal:Message.Attach="[Event Click] = [Action P1P2($source]"/>
+            <ToggleButton x:Name="FilterPlayer2Button" Content="{Binding Path=Player2}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" cal:Message.Attach="[Event Click] = [Action P1P2($source)]"/>
             <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Extras:"/>
             <ToggleButton x:Name="FilterDetailInformationButton" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" IsChecked="True" Content="Details">
                 <i:Interaction.Triggers>

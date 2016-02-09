@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Lib.Util
+namespace TT.Lib.Converters
 {
-    class CircleMarginConverter : IMultiValueConverter
+    public class CircleMarginConverter : BaseConverter, IMultiValueConverter
     {
 
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)

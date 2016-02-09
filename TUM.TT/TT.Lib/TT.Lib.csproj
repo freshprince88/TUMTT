@@ -91,20 +91,33 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="Zhucai.LambdaParser, Version=1.1.5876.30393, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Zhucai.LambdaParser.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\FilterSelectionChangedEvent.cs" />
+    <Compile Include="Converters\BaseConverter.cs" />
+    <Compile Include="Converters\ForeHandToBoolConverter.cs" />
+    <Compile Include="Converters\BackHandToBoolConverter.cs" />
+    <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
+    <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
+    <Compile Include="Converters\ServiceToBoolConverter.cs" />
+    <Compile Include="Converters\SpinToCheckedConverter.cs" />
+    <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
+    <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
+    <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="Events\MediaControlEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
-    <Compile Include="Events\PlaylistNamedEvent.cs" />
+    <Compile Include="Events\PlaylistSelectionChangedEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
-    <Compile Include="Events\ShowInputDialogEvent.cs" />
+    <Compile Include="Events\SetShellContentEvent.cs" />
     <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\StatisticDetailChangedEvent.cs" />
@@ -118,6 +131,12 @@
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
     <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Playlist.cs" />
+    <Compile Include="Models\Rally.cs" />
+    <Compile Include="Models\Rank.cs" />
+    <Compile Include="Models\Schlag.cs" />
+    <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Serialization\IMatchSerializer.cs" />
     <Compile Include="Models\Serialization\XmlMatchSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,16 +154,18 @@
     <Compile Include="Templates\CircleBorder.xaml.cs">
       <DependentUpon>CircleBorder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\CircleMarginConverter .cs" />
-    <Compile Include="Util\Column2TabConverter.cs" />
+    <Compile Include="Converters\CircleMarginConverter .cs" />
+    <Compile Include="Converters\Column2TabConverter.cs" />
+    <Compile Include="Util\Dynamic.cs" />
     <Compile Include="Util\Enums.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\FrameworkElementExtension.cs" />
+    <Compile Include="Util\GridViewSort.cs" />
     <Compile Include="Util\MatchExtensions.cs" />
-    <Compile Include="Util\MathConverter.cs" />
+    <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Util\TabSizeConverter.cs" />
-    <Compile Include="Util\Visibility2BoolConverter.cs" />
+    <Compile Include="Converters\TabSizeConverter.cs" />
+    <Compile Include="Converters\Visibility2BoolConverter.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -153,6 +174,7 @@
     <None Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Libs\Zhucai.LambdaParser.dll" />
     <Content Include="Models\Test.xml" />
     <Content Include="Resources\Entypo-license.txt" />
     <Content Include="Resources\WindowsIcons-license.txt" />

@@ -11,35 +11,23 @@ using TT.Lib.Events;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
+using TT.Lib.Models;
 
 namespace TT.Viewer.ViewModels
 {
     public class PlaylistViewModel : Conductor<PlaylistItem>.Collection.AllActive,
         IDropTarget,
-        IHandle<PlaylistNamedEvent>
+        IHandle<PlaylistChangedEvent>
     {
         private IEventAggregator events;
         private IMatchManager Manager;
+        private IDialogCoordinator Dialogs;
 
-        private PlaylistItem _selected;
-        public PlaylistItem SelectedItemView
-        {
-            get
-            {
-                return _selected;
-            }
-            set
-            {
-                if (_selected == value) return;
-                _selected = value;
-                NotifyOfPropertyChange("SelectedItemView");
-            }
-        }
-
-        public PlaylistViewModel(IEventAggregator e, IMatchManager man)
+        public PlaylistViewModel(IEventAggregator e, IMatchManager man, IDialogCoordinator dc)
         {
             events = e;
             Manager = man;
+            Dialogs = dc;            
         }
 
         #region View Methods
@@ -50,13 +38,29 @@ namespace TT.Viewer.ViewModels
 
             if (item != null)
             {
-                this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
+                //this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
+                Manager.ActivePlaylist = item.List;
             }           
         }
 
-        public void Add()
+        public async void Add()
         {
-            this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist"));                
+            var name = await Dialogs.ShowInputAsync(this, "New Playlist", "Please enter a name for the playlist");
+            //this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist")); 
+            if(name != null && name != string.Empty)
+            {
+                Playlist p = new Playlist();
+                p.Name = name;
+                p.Rallies = new List<Rally>();
+                Manager.Match.Playlists.Add(p);
+                Manager.MatchModified = true;
+                this.ActivateItem(new PlaylistItem()
+                {
+                    Name = name,
+                    Count = p.Rallies.Count(),
+                    List = p
+                });
+            }               
         }
 
         public void Save()
@@ -79,18 +83,7 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
 
-            this.Items.Clear();
-
-            foreach (var playlist in Manager.Match.Playlists)
-            {
-                string name = playlist.Name;
-
-                this.ActivateItem(new PlaylistItem()
-                {
-                    Name = name,
-                    Count = playlist.Rallies.Count()
-                });
-            }
+            LoadPlaylists();
         }
 
         protected override void OnDeactivate(bool close)
@@ -99,30 +92,10 @@ namespace TT.Viewer.ViewModels
             this.events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
+
         #endregion
 
         #region Events
-
-        public void Handle(PlaylistNamedEvent message)
-        {
-            string name = message.Name;
-
-            if (name == string.Empty)
-                return;
-
-
-            Playlist p = new Playlist();
-            p.Name = name;
-            p.Rallies = new List<Rally>();
-            Manager.Match.Playlists.Add(p);
-            Manager.MatchModified = true;
-            this.ActivateItem(new PlaylistItem()
-            {
-                Name = name,
-                Count = p.Rallies.Count()
-            });
-
-        }
 
         public void DragOver(IDropInfo dropInfo)
         {
@@ -143,13 +116,45 @@ namespace TT.Viewer.ViewModels
 
             Playlist list = Manager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
 
-            if (!list.Rallies.Contains(sourceItem.Rally))
+            if (list != null && !list.Rallies.Contains(sourceItem.Rally))
             {
                 list.Rallies.Add(sourceItem.Rally);
                 Manager.MatchModified = true;
                 targetItem.Count++;
                 this.Items.Refresh();
             }            
+        }
+
+        public void Handle(PlaylistChangedEvent message)
+        {
+            var selected = this.Items.Where(p => p.Name == message.List.Name).FirstOrDefault();
+
+            if(selected != null)
+            {
+                selected.Count = message.List.Rallies.Count;
+                this.Items.Refresh();
+            }
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void LoadPlaylists()
+        {
+            this.Items.Clear();
+
+            foreach (var playlist in Manager.Match.Playlists)
+            {
+                string name = playlist.Name;
+
+                this.ActivateItem(new PlaylistItem()
+                {
+                    Name = name,
+                    Count = playlist.Rallies.Count(),
+                    List = playlist
+                });
+            }
         }
 
         #endregion

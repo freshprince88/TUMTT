@@ -10,6 +10,7 @@ using TT.Lib;
 using TT.Lib.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Models;
 
 namespace TT.Viewer.ViewModels
 {

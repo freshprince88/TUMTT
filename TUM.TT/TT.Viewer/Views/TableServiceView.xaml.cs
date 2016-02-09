@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Models;
 using TT.Lib.Util.Enums;
 using TT.Viewer.ViewModels;
 
@@ -74,32 +75,32 @@ namespace TT.Viewer.Views
                 int botMid = rallies.Where(r => r.Schlag[0].IsBotMid()).Count();
                 int botRight = rallies.Where(r => r.Schlag[0].IsBotRight()).Count();
 
-                this.Btn1_bot.Content = topLeft;
-                this.Btn1_top.Content = topLeft;
+                this.TopLeft_bot.Content = topLeft;
+                this.TopLeft_top.Content = topLeft;
 
-                this.Btn2_bot.Content = topMid;
-                this.Btn2_top.Content = topMid;
+                this.TopMid_bot.Content = topMid;
+                this.TopMid_top.Content = topMid;
 
-                this.Btn3_bot.Content = topRight;
-                this.Btn3_top.Content = topRight;
+                this.TopRight_bot.Content = topRight;
+                this.TopRight_top.Content = topRight;
 
-                this.Btn4_bot.Content = midLeft;
-                this.Btn4_top.Content = midLeft;
+                this.MidLeft_bot.Content = midLeft;
+                this.MidLeft_top.Content = midLeft;
 
-                this.Btn5_bot.Content = midMid;
-                this.Btn5_top.Content = midMid;
+                this.MidMid_bot.Content = midMid;
+                this.MidMid_top.Content = midMid;
 
-                this.Btn6_bot.Content = midRight;
-                this.Btn6_top.Content = midRight;
+                this.MidRight_bot.Content = midRight;
+                this.MidRight_top.Content = midRight;
 
-                this.Btn7_bot.Content = botLeft;
-                this.Btn7_top.Content = botLeft;
+                this.BotLeft_bot.Content = botLeft;
+                this.BotLeft_top.Content = botLeft;
 
-                this.Btn8_bot.Content = botMid;
-                this.Btn8_top.Content = botMid;
+                this.BotMid_bot.Content = botMid;
+                this.BotMid_top.Content = botMid;
 
-                this.Btn9_bot.Content = botRight;
-                this.Btn9_top.Content = botRight;
+                this.BotRight_bot.Content = botRight;
+                this.BotRight_top.Content = botRight;
             }
         }
     }

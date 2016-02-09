@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
+using TT.Lib.Managers;
+using TT.Lib.Models;
 
 namespace TT.Viewer.Views
 {
@@ -24,11 +26,11 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class ServiceStatisticsView : UserControl,
         IHandle<StatisticDetailChangedEvent>,
-        IHandle<ResultsChangedEvent>,
-        IHandle<FilterSelectionChangedEvent>
+        IHandle<BasicFilterSelectionChangedEvent>
     {
         #region Properties
         public IEventAggregator Events { get; set; }
+        public IMatchManager Manager { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
 
         #endregion
@@ -38,6 +40,7 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
+            Manager = IoC.Get<IMatchManager>();
         }
 
         public void Handle(StatisticDetailChangedEvent message)
@@ -68,13 +71,10 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(ResultsChangedEvent message)
-        {
-            this.SelectedRallies = message.Rallies.ToList();
-            UpdateButtonContent();
-        }
 
-        public void Handle(FilterSelectionChangedEvent message)
+        
+
+        public void Handle(BasicFilterSelectionChangedEvent message)
         {
             this.SelectedRallies = message.Rallies.ToList();
             UpdateButtonContent();
@@ -82,6 +82,7 @@ namespace TT.Viewer.Views
 
         private void UpdateButtonContent()
         {
+            UpdateButtonContentBasisInformation();
             UpdateButtonContentPlacement();
             UpdateButtonContentPosition();
             UpdateButtonContentTechnique();
@@ -89,11 +90,16 @@ namespace TT.Viewer.Views
         }
 
         
-
+        private void UpdateButtonContentBasisInformation()
+        {
+            //TotalServicesCount.Content = SelectedRallies.Where(r => Convert.ToInt32(r.Length) >=1 ).Count();
+            TotalServicesCountPointPlayer1.Content = SelectedRallies.Where(r => Convert.ToInt32(r.Length) >= 1 && r.Winner=="First").Count();
+            TotalServicesCountPointPlayer2.Content = SelectedRallies.Where(r => Convert.ToInt32(r.Length) >= 1 && r.Winner == "Second").Count();
+        }
         private void UpdateButtonContentPlacement()
         {
             #region ForhandAll
-            PlacementForhandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()).Count();
+            //PlacementForhandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()).Count();
             PlacementForhandAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner).Count();
             PlacementForhandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
             PlacementForhandAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler != r.Winner).Count();
@@ -187,7 +193,7 @@ namespace TT.Viewer.Views
             #endregion
 
             #region ServiceErrors
-            PlacementAllServiceErrorsTotalButton.Content = SelectedRallies.Where(r => (r.Server != r.Winner && r.Length == "1")).Count();
+            PlacementAllServiceErrorsTotalButton.Content = SelectedRallies.Where(r => (r.Server != r.Winner && r.Length == 1)).Count();
             #endregion
 
         }
@@ -198,7 +204,7 @@ namespace TT.Viewer.Views
             #region Position Left
             PositionLeftTotalButton.Content = SelectedRallies.Where(r => (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5)).Count();
             PositionLeftPointsWonButton.Content = SelectedRallies.Where(r => (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5) && r.Schlag[0].Spieler == r.Winner).Count();
-            PositionLeftDirectPointsWonButton.Content = SelectedRallies.Where(r => (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) > 3).Count();
+            PositionLeftDirectPointsWonButton.Content = SelectedRallies.Where(r => (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
             PositionLeftPointsLostButton.Content = SelectedRallies.Where(r => (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5) && r.Schlag[0].Spieler != r.Winner).Count();
             #endregion
             #region Position Middle
@@ -385,9 +391,9 @@ namespace TT.Viewer.Views
             SideRightPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[0].Spin.SR == "1" && r.Schlag[0].Spin.ÜS == "0" && r.Schlag[0].Spin.US == "0") && r.Schlag[0].Spieler != r.Winner).Count();
 
             NoUpDownAllTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[0].Spin.ÜS == "0" && r.Schlag[0].Spin.US == "0")).Count();
-            NoUpDownAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].Spin.ÜS == "1" && r.Schlag[0].Spin.US == "0") && r.Schlag[0].Spieler == r.Winner).Count();
-            NoUpDownAllDirectPointsWonButton.Content = SelectedRallies.Where(r =>( r.Schlag[0].Spin.ÜS == "1" && r.Schlag[0].Spin.US == "0") && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            NoUpDownAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[0].Spin.ÜS == "1" && r.Schlag[0].Spin.US == "0") && r.Schlag[0].Spieler != r.Winner).Count();
+            NoUpDownAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].Spin.ÜS == "0" && r.Schlag[0].Spin.US == "0") && r.Schlag[0].Spieler == r.Winner).Count();
+            NoUpDownAllDirectPointsWonButton.Content = SelectedRallies.Where(r =>( r.Schlag[0].Spin.ÜS == "0" && r.Schlag[0].Spin.US == "0") && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            NoUpDownAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[0].Spin.ÜS == "0" && r.Schlag[0].Spin.US == "0") && r.Schlag[0].Spieler != r.Winner).Count();
 
             #endregion
 
@@ -456,5 +462,6 @@ namespace TT.Viewer.Views
 
         }
 
+        
     }
 }

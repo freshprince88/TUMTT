@@ -42,6 +42,18 @@ namespace TT.Viewer.Views
         public void Handle(RallyLengthChangedEvent message)
         {
             var rallies = Manager.ActivePlaylist.Rallies;
+            int topLeft = 0;
+            int topMid = 0;
+            int topRight = 0;
+
+            int midLeft = 0;
+            int midMid = 0;
+            int midRight = 0;
+
+            int botLeft = 0;
+            int botMid = 0;
+            int botRight = 0;
+
             switch (message)
             {
                 case 1:
@@ -49,44 +61,17 @@ namespace TT.Viewer.Views
                 case 2:
                     if (rallies != null)
                     {
-                        int topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopLeft()).Count();
-                        int topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopMid()).Count();
-                        int topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopMid()).Count();
+                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopRight()).Count();
 
-                        int midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidLeft()).Count();
-                        int midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidMid()).Count();
-                        int midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidMid()).Count();
+                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidRight()).Count();
 
-                        int botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotLeft()).Count();
-                        int botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotMid()).Count();
-                        int botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotRight()).Count();
-
-                        this.Btn1_bot.Content = topLeft;
-                        this.Btn1_top.Content = topLeft;
-
-                        this.Btn2_bot.Content = topMid;
-                        this.Btn2_top.Content = topMid;
-
-                        this.Btn3_bot.Content = topRight;
-                        this.Btn3_top.Content = topRight;
-
-                        this.Btn4_bot.Content = midLeft;
-                        this.Btn4_top.Content = midLeft;
-
-                        this.Btn5_bot.Content = midMid;
-                        this.Btn5_top.Content = midMid;
-
-                        this.Btn6_bot.Content = midRight;
-                        this.Btn6_top.Content = midRight;
-
-                        this.Btn7_bot.Content = botLeft;
-                        this.Btn7_top.Content = botLeft;
-
-                        this.Btn8_bot.Content = botMid;
-                        this.Btn8_top.Content = botMid;
-
-                        this.Btn9_bot.Content = botRight;
-                        this.Btn9_top.Content = botRight;
+                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotMid()).Count();
+                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotRight()).Count();
                     }
 
                     break;
@@ -94,139 +79,85 @@ namespace TT.Viewer.Views
                 case 3:
                     if (rallies != null)
                     {
-                        int topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopLeft()).Count();
-                        int topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopMid()).Count();
-                        int topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopMid()).Count();
+                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopRight()).Count();
 
-                        int midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidLeft()).Count();
-                        int midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidMid()).Count();
-                        int midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidMid()).Count();
+                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidRight()).Count();
 
-                        int botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotLeft()).Count();
-                        int botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotMid()).Count();
-                        int botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotRight()).Count();
-
-                        this.Btn1_bot.Content = topLeft;
-                        this.Btn1_top.Content = topLeft;
-
-                        this.Btn2_bot.Content = topMid;
-                        this.Btn2_top.Content = topMid;
-
-                        this.Btn3_bot.Content = topRight;
-                        this.Btn3_top.Content = topRight;
-
-                        this.Btn4_bot.Content = midLeft;
-                        this.Btn4_top.Content = midLeft;
-
-                        this.Btn5_bot.Content = midMid;
-                        this.Btn5_top.Content = midMid;
-
-                        this.Btn6_bot.Content = midRight;
-                        this.Btn6_top.Content = midRight;
-
-                        this.Btn7_bot.Content = botLeft;
-                        this.Btn7_top.Content = botLeft;
-
-                        this.Btn8_bot.Content = botMid;
-                        this.Btn8_top.Content = botMid;
-
-                        this.Btn9_bot.Content = botRight;
-                        this.Btn9_top.Content = botRight;
+                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotMid()).Count();
+                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotRight()).Count();
                     }
                     break;
                 case 4:
                     if (rallies != null)
                     {
-                        int topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopLeft()).Count();
-                        int topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopMid()).Count();
-                        int topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopMid()).Count();
+                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopRight()).Count();
 
-                        int midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidLeft()).Count();
-                        int midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidMid()).Count();
-                        int midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidMid()).Count();
+                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidRight()).Count();
 
-                        int botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotLeft()).Count();
-                        int botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotMid()).Count();
-                        int botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotRight()).Count();
-
-                        this.Btn1_bot.Content = topLeft;
-                        this.Btn1_top.Content = topLeft;
-
-                        this.Btn2_bot.Content = topMid;
-                        this.Btn2_top.Content = topMid;
-
-                        this.Btn3_bot.Content = topRight;
-                        this.Btn3_top.Content = topRight;
-
-                        this.Btn4_bot.Content = midLeft;
-                        this.Btn4_top.Content = midLeft;
-
-                        this.Btn5_bot.Content = midMid;
-                        this.Btn5_top.Content = midMid;
-
-                        this.Btn6_bot.Content = midRight;
-                        this.Btn6_top.Content = midRight;
-
-                        this.Btn7_bot.Content = botLeft;
-                        this.Btn7_top.Content = botLeft;
-
-                        this.Btn8_bot.Content = botMid;
-                        this.Btn8_top.Content = botMid;
-
-                        this.Btn9_bot.Content = botRight;
-                        this.Btn9_top.Content = botRight;
+                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotMid()).Count();
+                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotRight()).Count();
                     }
                     break;
                 case 5: //TODO funktioniert noch nicht richtig!!!
                     if (rallies != null)
                     {
-                        int topLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopLeft()).Count();
-                        int topMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopMid()).Count();
-                        int topRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopMid()).Count();
+                        topRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopRight()).Count();
 
-                        int midLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidLeft()).Count();
-                        int midMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidMid()).Count();
-                        int midRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidMid()).Count();
+                        midRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidRight()).Count();
 
-                        int botLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotLeft()).Count();
-                        int botMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotMid()).Count();
-                        int botRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotRight()).Count();
-
-                        this.Btn1_bot.Content = topLeft;
-                        this.Btn1_top.Content = topLeft;
-
-                        this.Btn2_bot.Content = topMid;
-                        this.Btn2_top.Content = topMid;
-
-                        this.Btn3_bot.Content = topRight;
-                        this.Btn3_top.Content = topRight;
-
-                        this.Btn4_bot.Content = midLeft;
-                        this.Btn4_top.Content = midLeft;
-
-                        this.Btn5_bot.Content = midMid;
-                        this.Btn5_top.Content = midMid;
-
-                        this.Btn6_bot.Content = midRight;
-                        this.Btn6_top.Content = midRight;
-
-                        this.Btn7_bot.Content = botLeft;
-                        this.Btn7_top.Content = botLeft;
-
-                        this.Btn8_bot.Content = botMid;
-                        this.Btn8_top.Content = botMid;
-
-                        this.Btn9_bot.Content = botRight;
-                        this.Btn9_top.Content = botRight;
+                        botLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotMid()).Count();
+                        botRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotRight()).Count();
                     }
                     break;
                 default:
                     break;
             }
+
+            this.TopLeft_bot.Content = topLeft;
+            this.TopLeft_top.Content = topLeft;
+
+            this.TopMid_bot.Content = topMid;
+            this.TopMid_top.Content = topMid;
+
+            this.TopRight_bot.Content = topRight;
+            this.TopRight_top.Content = topRight;
+
+            this.MidLeft_bot.Content = midLeft;
+            this.MidLeft_top.Content = midLeft;
+
+            this.MidMid_bot.Content = midMid;
+            this.MidMid_top.Content = midMid;
+
+            this.MidRight_bot.Content = midRight;
+            this.MidRight_top.Content = midRight;
+
+            this.BotLeft_bot.Content = botLeft;
+            this.BotLeft_top.Content = botLeft;
+
+            this.BotMid_bot.Content = botMid;
+            this.BotMid_top.Content = botMid;
+
+            this.BotRight_bot.Content = botRight;
+            this.BotRight_top.Content = botRight;
         }
 
         #region HelperMethods
-       
+
         #endregion
 
     }

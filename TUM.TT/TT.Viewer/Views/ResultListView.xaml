@@ -6,34 +6,54 @@
              xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:util="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Delete from current Playlist" cal:Message.Attach="[Event Click] = [Action DeleteRally()]"/>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
 
     <ListView x:Name="Items"
             Margin="0"
             BorderThickness="0"
             SelectedIndex="0"            
             ctrl:ListViewLayoutManager.Enabled="true" 
+            util:GridViewSort.ShowSortGlyph="False"
+            util:GridViewSort.AutoSort="True"
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="False"
-            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]">
+            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]; 
+              [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding Score}"
                                             Header="Punkte" 
+                                util:GridViewSort.PropertyName="Score"
                                 ctrl:ProportionalColumn.Width="2"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Sets}"
                                             Header="Sätze" 
+                                util:GridViewSort.PropertyName="Sets"
                                 ctrl:ProportionalColumn.Width="2"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Server}"
                                             Header="Aufschlag" 
+                                util:GridViewSort.PropertyName="Server"
                                 ctrl:ProportionalColumn.Width="3"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Point}"
                                             Header="Punkt" 
+                                util:GridViewSort.PropertyName="Point"
                                 ctrl:ProportionalColumn.Width="3"/>
                 <GridViewColumn DisplayMemberBinding="{Binding Length}"
                                             Header="Länge" 
+                                util:GridViewSort.PropertyName="Length"
                                 ctrl:ProportionalColumn.Width="2"/>
             </GridView>
         </ListView.View>

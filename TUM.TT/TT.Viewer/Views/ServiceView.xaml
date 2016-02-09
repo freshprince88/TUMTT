@@ -6,6 +6,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.ServiceView"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
@@ -56,18 +57,46 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Technik:"/>
             <ToggleButton x:Name="FilterForhandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]">
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:ForeHandToBoolConverter}, Mode=OneWay}">
                 <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
             </ToggleButton>
             <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]">
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:BackHandToBoolConverter}, Mode=OneWay}">
                 <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
             </ToggleButton>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
-                <ToggleButton x:Name="FilterPendulumServiceButton" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Pendulum" Grid.Row="0" Grid.Column="0" MinWidth="90"   cal:Message.Attach="[Event Click] = [Action SelectService($source)]"/>
-                <ToggleButton  x:Name="FilterReverseServiceButton" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Gegenläufer" Grid.Row="0" Grid.Column="1" MinWidth="90"   cal:Message.Attach="[Event Click] = [Action SelectService($source)]"/>
-                <ToggleButton  x:Name="FilterTomahawkServiceButton" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Tomahawk" Grid.Row="1" Grid.Column="0" MinWidth="90"  cal:Message.Attach="[Event Click] = [Action SelectService($source)]"/>
-                <ToggleButton x:Name="FilterSpecialServiceButton" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Spezial" Grid.Row="1" Grid.Column="1" MinWidth="90"  cal:Message.Attach="[Event Click] = [Action SelectService($source)]"/>
+                <ToggleButton x:Name="Pendulum" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Pendulum" Grid.Row="0" Grid.Column="0" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedServices" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                </ToggleButton>
+                <ToggleButton  x:Name="Reverse" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Gegenläufer" Grid.Row="0" Grid.Column="1" MinWidth="90"   cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedServices" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                </ToggleButton>
+                <ToggleButton  x:Name="Tomahawk" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Tomahawk" Grid.Row="1" Grid.Column="0" MinWidth="90"  cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedServices" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                </ToggleButton>
+                <ToggleButton x:Name="Special" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Spezial" Grid.Row="1" Grid.Column="1" MinWidth="90"  cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedServices" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                </ToggleButton>
             </WrapPanel>
         </Grid>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="5" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>

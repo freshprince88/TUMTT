@@ -47,7 +47,7 @@ namespace TT.Viewer.ViewModels
 
         public void TablePositionClicked(ToggleButton toggle)
         {
-            Positions.Table pos = GetTablePositionFromName(toggle.Name);
+            Positions.Table pos = Positions.GetTablePositionFromName(toggle.Name);
             if (toggle.IsChecked.Value)
             {
                 if (pos != Positions.Table.None)
@@ -63,7 +63,7 @@ namespace TT.Viewer.ViewModels
 
         public void StrokeLengthClicked(ToggleButton toggle)
         {
-            Positions.Length pos = GetStrokeLengthFromName(toggle.Name);
+            Positions.Length pos = Positions.GetStrokeLengthFromName(toggle.Name);
             if (toggle.IsChecked.Value)
             {
                 if (pos != Positions.Length.None)
@@ -100,43 +100,7 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
-        #region Helper Methods
-
-        private Positions.Table GetTablePositionFromName(string name)
-        {
-            if (name.Contains("9"))
-                return Positions.Table.BotRight;
-            else if (name.Contains("8"))
-                return Positions.Table.BotMid;
-            else if (name.Contains("7"))
-                return Positions.Table.BotLeft;
-            else if (name.Contains("6"))
-                return Positions.Table.MidRight;
-            else if (name.Contains("5"))
-                return Positions.Table.MidMid;
-            else if (name.Contains("4"))
-                return Positions.Table.MidLeft;
-            else if (name.Contains("3"))
-                return Positions.Table.TopRight;
-            else if (name.Contains("2"))
-                return Positions.Table.TopMid;
-            else if (name.Contains("1"))
-                return Positions.Table.TopLeft;
-            else
-                return Positions.Table.None;
-        }
-
-        private Positions.Length GetStrokeLengthFromName(string name)
-        {
-            if (name.Contains("1"))
-                return Positions.Length.Short;
-            else if (name.Contains("2"))
-                return Positions.Length.Half;
-            else if (name.Contains("3"))
-                return Positions.Length.Long;
-            else
-                return Positions.Length.None;
-        }
+        #region Helper Methods       
 
 
         #endregion

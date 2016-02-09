@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TT.Lib.Models;
 
 namespace TT.Lib.Events
 {
     public class PlaylistEvent
     {
-
-        public Playlist Playlist { get; set; }
+        public Playlist List { get; set; }
 
         public PlaylistEvent(Playlist list)
         {
-            this.Playlist = list;
+            this.List = list;
         }
     }
 }

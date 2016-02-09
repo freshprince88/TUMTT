@@ -16,7 +16,7 @@ namespace TT.Viewer.ViewModels
     public class ServiceViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableViewSelectionChangedEvent>,
         IHandle<SpinControlSelectionChangedEvent>,
-        IHandle<FilterSelectionChangedEvent>
+        IHandle<BasicFilterSelectionChangedEvent>
     {
 
         #region Properties
@@ -46,6 +46,17 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
+
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
+            {
+                MinRallyLength = 0,
+                PlayerLabel = "Aufschlag:",
+                LastStroke = false,
+                StrokeNumber = 0
+
+            };
+            TableView = new TableServiceViewModel(events);
+
             SelectedRallies = new List<Rally>();
             SelectedSpins = new List<Stroke.Spin>();
             Hand = Stroke.Hand.None;       
@@ -55,15 +66,6 @@ namespace TT.Viewer.ViewModels
             SelectedServerPositions = new HashSet<Positions.Server>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             SpinControl = new SpinControlViewModel(events);
-            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
-            {
-                MinRallyLength = 0,
-                PlayerLabel = "Aufschlag:",
-                LastStroke = false,
-                StrokeNumber=0
-                
-            };
-            TableView = new TableServiceViewModel(events);
         }
 
         #region View Methods
@@ -115,7 +117,6 @@ namespace TT.Viewer.ViewModels
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
-
         }
 
         public void SwitchTable(bool check)
@@ -289,7 +290,7 @@ namespace TT.Viewer.ViewModels
 
         //FilterSelection in BasicFilter Changed
         //Get SelectedRallies and apply own filters
-        public void Handle(FilterSelectionChangedEvent message)
+        public void Handle(BasicFilterSelectionChangedEvent message)
         {
             UpdateSelection(Manager.ActivePlaylist);
         }
@@ -412,8 +413,7 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
-
-       
+      
         private bool HasQuality(Rally r)
         {
             switch (this.Quality)
@@ -447,7 +447,6 @@ namespace TT.Viewer.ViewModels
                     return false;
             }
         }
-
 
         private bool HasTablePosition(Rally r)
         {

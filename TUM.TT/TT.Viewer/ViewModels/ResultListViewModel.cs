@@ -9,20 +9,25 @@ using System.Windows.Controls;
 using TT.Lib.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace TT.Viewer.ViewModels
 {
     public class ResultListViewModel : Conductor<ResultListItem>.Collection.AllActive, IResultViewTabItem,
         IHandle<ResultsChangedEvent>
     {
-        public Match Match { get; set; }
         private IEventAggregator events;
+        private IDialogCoordinator dialogs;
+        private IMatchManager manager;
 
 
-        public ResultListViewModel(IEventAggregator e)
+        public ResultListViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
             this.DisplayName = "Hitlist";
             events = e;
+            dialogs = c;
+            manager = man;
         }
 
         #region View Methods
@@ -30,7 +35,6 @@ namespace TT.Viewer.ViewModels
         public void ListItemSelected(SelectionChangedEventArgs e)
         {
             ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
-
             if (item != null)
             {
                 this.events.PublishOnUIThread(new VideoPlayEvent()
@@ -39,6 +43,12 @@ namespace TT.Viewer.ViewModels
                 });
             }           
         }
+
+        public void RightMouseDown(MouseButtonEventArgs e)
+        {
+            //e.Handled = true;
+        }
+
         #endregion
 
         #region Event Handlers
@@ -46,11 +56,16 @@ namespace TT.Viewer.ViewModels
         public void Handle(ResultsChangedEvent message)
         {
 
-            this.Items.Clear();
+            for (int i = Items.Count - 1; i >= 0; i--)
+            {
+                this.DeactivateItem(Items[i], true);
+            }
+
             foreach (var rally in message.Rallies)
             {
                 this.ActivateItem(new ResultListItem(rally));
             }
+            this.Items.Refresh();
         }
 
         #endregion

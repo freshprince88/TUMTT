@@ -171,6 +171,7 @@ namespace TT.Viewer.ViewModels
             }
             this.events.PublishOnUIThread(new SpinControlSelectionChangedEvent(this.Selected.ToList()));
         }
+
         public void SelectHidden(ToggleButton source)
         {
             if (source.IsChecked.Value)

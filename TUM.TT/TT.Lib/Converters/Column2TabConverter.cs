@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Lib.Util
+namespace TT.Lib.Converters
 {
-    public class Column2TabConverter : IValueConverter
+    public class Column2TabConverter : BaseConverter, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

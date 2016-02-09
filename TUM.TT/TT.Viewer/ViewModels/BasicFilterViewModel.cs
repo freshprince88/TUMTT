@@ -13,22 +13,23 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive
+    public class BasicFilterViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<PlaylistSelectionChangedEvent>
     {
         #region Properties
 
-        public string FilterPointPlayer1Button { get; set; }
-        public string FilterPointPlayer2Button { get; set; }
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
 
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
         public List<Rally> SelectedRallies { get; private set; }
 
         public List<Stroke.Spin> SelectedSpins { get; private set; }
-        
+
         public Stroke.Point Point { get; private set; }
         public Stroke.Server Server { get; private set; }
-       
+
         public Stroke.Crunch Crunch { get; private set; }
 
         public HashSet<int> SelectedSets { get; private set; }
@@ -41,7 +42,6 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
-
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
@@ -52,14 +52,14 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            SelectedRallies = new List<Rally>();                       
+            SelectedRallies = new List<Rally>();
             Point = Stroke.Point.None;
-            Server = Stroke.Server.None;           
+            Server = Stroke.Server.None;
             Crunch = Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
-            FilterPointPlayer1Button = "Spieler 1";
-            FilterPointPlayer2Button = "Spieler 2";
+            Player1 = "Spieler 1";
+            Player2 = "Spieler 2";
             MinRallyLength = 0;
             PlayerLabel = "";
             LastStroke = false;
@@ -67,7 +67,6 @@ namespace TT.Viewer.ViewModels
         }
 
         #region View Methods
-       
 
         public void SetFilter(ToggleButton source)
         {
@@ -282,7 +281,6 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
-
         public void P1P2Point(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("player1"))
@@ -378,13 +376,15 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            if (Manager.Match != null)
-            {
-                FilterPointPlayer1Button = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-                FilterPointPlayer2Button = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-                UpdateSelection(Manager.ActivePlaylist);
-            }
-            
+
+            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -398,6 +398,11 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
+        public void Handle(PlaylistSelectionChangedEvent message)
+        {
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
         #endregion
 
         #region Helper Methods
@@ -406,11 +411,10 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();              
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();
+                this.events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
-
 
         private bool HasPoint(Rally r)
         {
@@ -446,7 +450,6 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-       
         private bool HasSet(Rally r)
         {
             List<bool> ORresults = new List<bool>();

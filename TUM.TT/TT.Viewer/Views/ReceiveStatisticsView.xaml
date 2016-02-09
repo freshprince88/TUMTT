@@ -49,52 +49,60 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+ 
             <Grid Grid.Row="0" x:Name="BasisInformation" Margin="0 0 10 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="70"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition MinWidth="70" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Anzahl:"/>
-                <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="∑:"/>
-                <Label Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 1:"/>
-                <Label Grid.Row="0" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spieler 2:"/>
-                <ToggleButton x:Name="TotalServicesCountAllPlayer" Grid.Row="0" Grid.Column="2" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="50">
+                <Label Grid.Row="0" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Anzahl:"/>
+                <Label Grid.Row="1" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
+                <Label x:Name="BasisInformationLabelPlayer1"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player1}"/>
+                <Label x:Name="BasisInformationLabelPlayer2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player2}"/>
+                <ToggleButton x:Name="TotalReceivesCount" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"  Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="$">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountAllPlayer, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalServicesCount, Path=Name}" />
+                            </cal:ActionMessage>
+                            <cal:ActionMessage MethodName="SelectBasisInformation">
+                                <cal:Parameter Value="$source" />
                             </cal:ActionMessage>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="TotalServicesCountPlayer1" Grid.Row="0" Grid.Column="5" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="26">
+                <ToggleButton x:Name="TotalReceivesCountPointPlayer1" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="$">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPlayer1, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPointPlayer1, Path=Name}" />
+                            </cal:ActionMessage>
+                            <cal:ActionMessage MethodName="SelectBasisInformation">
+                                <cal:Parameter Value="$source" />
                             </cal:ActionMessage>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="TotalServicesCountPlayer2"  Grid.Row="0" Grid.Column="8" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="24">
+                <ToggleButton x:Name="TotalReceivesCountPointPlayer2"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" Content="$">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPlayer2, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPointPlayer2, Path=Name}" />
+                            </cal:ActionMessage>
+                            <cal:ActionMessage MethodName="SelectBasisInformation">
+                                <cal:Parameter Value="$source" />
                             </cal:ActionMessage>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -381,7 +389,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleAllPointsLostnButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleAllPointsLostButton" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -432,7 +440,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleLongPointsLostnButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -473,7 +481,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleHalflongirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleHalfLongDirectPointsWonButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"    Content="(b%)" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -483,7 +491,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostnButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -534,7 +542,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleShortPointsLostnButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleShortPointsLostButton" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"   Content="c%" Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">

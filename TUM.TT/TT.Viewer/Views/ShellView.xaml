@@ -12,7 +12,7 @@
                       EnableDWMDropShadow="True"
                       WindowTransitionsEnabled="False"
                       WindowStartupLocation="CenterScreen"            
-                      Title="TUM.TT">
+                      Title="TUM.TT Viewer">
     <Window.Resources>
         <ResourceDictionary Source="/Resources/Icons.xaml" />
     </Window.Resources>
@@ -33,7 +33,5 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
-    <xctk:BusyIndicator>
-        <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="Down"/>
-    </xctk:BusyIndicator>
+    <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="LeftReplace"/>
 </Controls:MetroWindow>

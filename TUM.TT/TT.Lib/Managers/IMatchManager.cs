@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TT.Lib.Events;
+using TT.Lib.Models;
 
 namespace TT.Lib.Managers
 {
@@ -12,7 +13,7 @@ namespace TT.Lib.Managers
     {
         Match Match { get; }
 
-        Playlist ActivePlaylist { get; }
+        Playlist ActivePlaylist { get; set; }
 
         string FileName { get;  }
 
@@ -22,11 +23,15 @@ namespace TT.Lib.Managers
 
         void SaveMatch();
 
+        void DeleteRally(Rally r);
+
+        void RenamePlaylist(string oldName, string newName);
+
         IEnumerable<IResult> SaveMatchAction();
 
         IEnumerable<IResult> OpenMatchAction();
 
-        //void CreateMatch();
+        void CreateNewMatch();
 
         //void AddRally();
     }

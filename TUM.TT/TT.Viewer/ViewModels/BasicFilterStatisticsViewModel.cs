@@ -13,20 +13,20 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class BasicFilterStatisticsViewModel : Conductor<IScreen>.Collection.AllActive
+    public class BasicFilterStatisticsViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<PlaylistSelectionChangedEvent>
     {
         #region Properties
 
-        public string FilterPointPlayer1Button { get; set; }
-        public string FilterPointPlayer2Button { get; set; }
-      
         public List<Rally> SelectedRallies { get; private set; }
         public Stroke.Player Player { get; private set; }
         public Stroke.Crunch Crunch { get; private set; }
-        public HashSet<int> SelectedSets { get; private set; }       
+        public HashSet<int> SelectedSets { get; private set; }
         public int MinRallyLength { get; set; }
         public bool LastStroke { get; set; }
         public int StrokeNumber { get; set; }
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
 
         #endregion
 
@@ -45,15 +45,13 @@ namespace TT.Viewer.ViewModels
             Player = Stroke.Player.None;
             Crunch = Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
-           
-            FilterPointPlayer1Button = "Spieler 1";
-            FilterPointPlayer2Button = "Spieler 2";
+
+            Player1 = "Spieler 1";
+            Player2 = "Spieler 2";
             MinRallyLength = 0;
-            
+
             LastStroke = false;
             StrokeNumber = 0;
-
-
         }
 
         #region View Methods
@@ -177,7 +175,7 @@ namespace TT.Viewer.ViewModels
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
-        }     
+        }
 
         public void P1P2(ToggleButton source)
         {
@@ -245,8 +243,13 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            FilterPointPlayer1Button = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-            FilterPointPlayer2Button = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
 
             UpdateSelection(Manager.ActivePlaylist);
         }
@@ -262,6 +265,11 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
+        public void Handle(PlaylistSelectionChangedEvent message)
+        {
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
         #endregion
 
         #region Helper Methods
@@ -271,7 +279,7 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasCrunchTime(r) && HasPlayer(r)).ToList();
-                this.events.PublishOnUIThread(new FilterSelectionChangedEvent(SelectedRallies));
+                this.events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
 
@@ -303,7 +311,7 @@ namespace TT.Viewer.ViewModels
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
-     
+
         private bool HasCrunchTime(Rally r)
         {
             switch (this.Crunch)

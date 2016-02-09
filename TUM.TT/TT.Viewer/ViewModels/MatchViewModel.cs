@@ -26,13 +26,13 @@ namespace TT.Viewer.ViewModels
         public IEventAggregator Events { get; private set; }
         private IMatchManager Manager;
 
-        public MatchViewModel(IEventAggregator eventAggregator, IEnumerable<IResultViewTabItem> resultTabs, IMatchManager manager)
+        public MatchViewModel(IEventAggregator eventAggregator, IEnumerable<IResultViewTabItem> resultTabs, IMatchManager manager, IDialogCoordinator dc)
         {
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             Manager = manager;
             ResultView = new ResultViewModel(resultTabs);
-            PlaylistView = new PlaylistViewModel(Events, Manager);
+            PlaylistView = new PlaylistViewModel(Events, Manager, dc);
             MediaView = new MediaViewModel(Events, Manager);
             FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);                     
         }
