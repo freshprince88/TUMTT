@@ -50,7 +50,7 @@ namespace TT.Lib.Models
             }
             set
             {
-                this.firstPlayerField = value;
+                this.firstPlayerField = value;                
             }
         }
 

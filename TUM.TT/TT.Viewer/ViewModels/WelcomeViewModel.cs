@@ -20,7 +20,7 @@ namespace TT.Viewer.ViewModels
 
         public IEnumerable<IResult> OpenMatch()
         {
-            return Manager.OpenMatchAction();
+            return Manager.OpenMatch();
         }
     }
 }

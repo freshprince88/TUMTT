@@ -174,5 +174,37 @@ namespace TT.Lib.Models
                 this.kommentarField = value;
             }
         }
+
+        public string RallyNumLong
+        {
+            get
+            {
+                return string.Format("Rally #{0}", Nummer);
+            }
+        }
+
+        public string RallyNumShort
+        {
+            get
+            {
+                return string.Format("#{0}", Nummer);
+            }
+        }
+
+        public Rally NextRally(int winner)
+        {
+            //TODO: SetScore und RallyScore verknüpfen, damit Increment Methoden auch Setscore updaten und umgekehrt
+            switch (winner)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                default:
+                    return null;
+            }
+
+            return null;
+        }
     }
 }

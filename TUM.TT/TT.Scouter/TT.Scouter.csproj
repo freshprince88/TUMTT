@@ -95,7 +95,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="IShell.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
     <Compile Include="ViewModels\NewMatchViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -103,12 +102,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\VideoSourceViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
     <Compile Include="Views\LiveView.xaml.cs">
       <DependentUpon>LiveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewMatchView.xaml.cs">
       <DependentUpon>NewMatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VideoSourceView.xaml.cs">
+      <DependentUpon>VideoSourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WelcomeView.xaml.cs">
       <DependentUpon>WelcomeView.xaml</DependentUpon>
@@ -129,6 +132,10 @@
     <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VideoSourceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WelcomeView.xaml">
       <SubType>Designer</SubType>

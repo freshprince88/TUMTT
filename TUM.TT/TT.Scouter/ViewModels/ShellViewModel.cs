@@ -1,6 +1,7 @@
 using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
+using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Scouter.ViewModels;
@@ -8,8 +9,7 @@ using TT.Scouter.ViewModels;
 namespace TT.Scouter
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, 
-        IShell,
-        IHandle<SetShellContentEvent>
+        IShell
     {
         /// <summary>
         /// Gets the event bus of this shell.
@@ -87,10 +87,6 @@ namespace TT.Scouter
 
         #region Events
 
-        public void Handle(SetShellContentEvent message)
-        {
-            this.ActivateItem(message.ViewModel);
-        }
         #endregion
     }
 }

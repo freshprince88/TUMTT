@@ -15,13 +15,13 @@ namespace TT.Lib.Models
     public partial class Score
     {
 
-        private string firstField;
+        private int firstField;
 
-        private string secondField;
+        private int secondField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string First
+        public int First
         {
             get
             {
@@ -35,7 +35,7 @@ namespace TT.Lib.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Second
+        public int Second
         {
             get
             {
@@ -45,6 +45,29 @@ namespace TT.Lib.Models
             {
                 this.secondField = value;
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} : {1}", First, Second);
+        }
+
+        public Score AddFirst(int add = 1)
+        {
+            return new Score()
+            {
+                First = this.First + add,
+                Second = this.Second
+            };
+        }
+
+        public Score AddSecond(int add = 1)
+        {
+            return new Score()
+            {
+                First = this.First,
+                Second = this.Second + add
+            };
         }
     }
 }

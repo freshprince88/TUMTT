@@ -1,11 +1,7 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 
@@ -81,7 +77,7 @@ namespace TT.Viewer.ViewModels
 
                 if (_shutdown)
                 {
-                    Manager.SaveMatch();
+                    Coroutine.BeginExecute(Manager.SaveMatch().GetEnumerator(), new CoroutineExecutionContext() { View = this.GetView() });
                     Application.Current.Shutdown();
                 }
             }
