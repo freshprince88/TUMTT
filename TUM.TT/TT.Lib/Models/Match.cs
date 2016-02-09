@@ -24,6 +24,19 @@ namespace TT.Lib.Models
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public partial class Match
     {
+        public Match()
+        {
+            FirstPlayer = new Player();
+            SecondPlayer = new Player();
+
+            Playlists = new List<Playlist>();
+            Tournament = string.Empty;
+            Round = string.Empty;
+            Mode = string.Empty;
+            DateTime = string.Empty;
+            VideoFile = string.Empty;
+        }
+
         private Player firstPlayerField;
 
         private Player secondPlayerField;

@@ -14,6 +14,16 @@ namespace TT.Lib.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public partial class Player
     {
+        public Player()
+        {
+            Rank = new Rank();
+            Name = string.Empty;
+            Nationality = string.Empty;
+            Spielsystem = string.Empty;
+            Händigkeit = string.Empty;
+            Griffhaltung = string.Empty;
+            Material = string.Empty;
+        }
 
         private Rank rankField;
 

@@ -14,6 +14,11 @@ namespace TT.Lib.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public partial class Score
     {
+        public Score()
+        {
+            First = 0;
+            Second = 0;
+        }
 
         private int firstField;
 

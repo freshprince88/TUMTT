@@ -14,6 +14,11 @@ namespace TT.Lib.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public partial class Playlist
     {
+        public Playlist()
+        {
+            Rallies = new List<Rally>();
+            Name = string.Empty;
+        }
 
         private List<Rally> ralliesField;
 

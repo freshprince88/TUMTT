@@ -71,25 +71,25 @@
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <Label Content="Rally Länge:" VerticalAlignment="Center" FontSize="20" Margin="0 0 10 0"/>
-                <ToggleButton Content="1" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <ToggleButton Content="2" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <ToggleButton Content="3" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <ToggleButton Content="4" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <ToggleButton Content="5" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <ToggleButton Content="6" Width="35" Margin="0 0 10 0" FontSize="16"/>
+                <RadioButton GroupName="RallyLength" Content="1" Width="35" Margin="0 0 10 0" FontSize="16"/>
+                <RadioButton GroupName="RallyLength" Content="2" Width="35" Margin="0 0 10 0" FontSize="16"/>
+                <RadioButton GroupName="RallyLength" Content="3" Width="35" Margin="0 0 10 0" FontSize="16"/>
+                <RadioButton GroupName="RallyLength" Content="4" Width="35" Margin="0 0 10 0" FontSize="16"/>
+                <RadioButton GroupName="RallyLength" Content="5" Width="35" Margin="0 0 10 0" FontSize="16"/>
+                <RadioButton GroupName="RallyLength" Content="6" Width="35" Margin="0 0 10 0" FontSize="16"/>
                 <AdornerDecorator>
-                    <TextBox Width="60" Margin="0 0 10 0" AcceptsReturn="True">
+                    <TextBox Width="60" Margin="0 0 10 0">
                         <styles:WatermarkService.Watermark>
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray">Nummer</TextBlock>
                         </styles:WatermarkService.Watermark>
                     </TextBox>
                 </AdornerDecorator>
-                <ToggleButton Content="n.a." FontSize="16"/>
+                <RadioButton GroupName="RallyLength" Content="n.a." FontSize="16" IsChecked="True"/>
             </StackPanel>
 
-            <ToggleButton Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action RallyWon(1)]"/>
+            <Button Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action RallyWon(1)]"/>
             <Label Content="--- Winner --- " VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" FontSize="25"/>
-            <ToggleButton Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action RallyWon(2)]"/>
+            <Button Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action RallyWon(2)]"/>
 
         </Grid>
 

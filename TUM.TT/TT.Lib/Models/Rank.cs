@@ -15,14 +15,19 @@ namespace TT.Lib.Models
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public partial class Rank
     {
+        public Rank()
+        {
+            Position = 0;
+            Date = string.Empty;
+        }
 
-        private string positionField;
+        private int positionField;
 
         private string dateField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Position
+        public int Position
         {
             get
             {

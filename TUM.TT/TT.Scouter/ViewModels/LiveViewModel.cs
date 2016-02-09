@@ -24,7 +24,7 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             MatchManager = man;
-            CurrentRally = r;
+            CurrentRally = r == null ? new Rally() : r;
             Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
         }
@@ -37,9 +37,14 @@ namespace TT.Scouter.ViewModels
             //   -> Neuen View mit nächster Rally einladen (Oder reicht es CurrentRally neu zu setzen wegen Bindings??)
             switch (player)
             {
+                //TODO: Keine UI Updates, weil kein NotifyPropertyChanged in den Modeldingsbums;
                 case 1:
+                    CurrentRally = CurrentRally.NextRally(player);
+                    NotifyOfPropertyChange("CurrentRally");
                     break;
                 case 2:
+                    CurrentRally = CurrentRally.NextRally(player);
+                    NotifyOfPropertyChange("CurrentRally");
                     break;
                 default:
                     break;

@@ -14,6 +14,20 @@ namespace TT.Lib.Models
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public partial class Rally
     {
+        public Rally()
+        {
+            CurrentRallyScore = new Score();
+            CurrentSetScore = new Score();
+            Schlag = new List<Schlag>();
+
+            Length = 0;
+            Nummer = 1;
+            Winner = string.Empty;
+            Server = string.Empty;
+            Anfang = 0;
+            Ende = 0;
+            Kommentar = string.Empty;
+        }
 
         private Score currentRallyScoreField;
 
@@ -197,14 +211,20 @@ namespace TT.Lib.Models
             switch (winner)
             {
                 case 1:
-                    break;
+                    return new Rally()
+                    {
+                        CurrentSetScore = this.CurrentSetScore,
+                        CurrentRallyScore = this.CurrentRallyScore.AddFirst()
+                    };
                 case 2:
-                    break;
+                    return new Rally()
+                    {
+                        CurrentSetScore = this.CurrentSetScore,
+                        CurrentRallyScore = this.CurrentRallyScore.AddSecond()
+                    };
                 default:
                     return null;
             }
-
-            return null;
         }
     }
 }
