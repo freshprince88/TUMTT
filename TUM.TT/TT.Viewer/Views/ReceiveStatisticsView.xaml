@@ -83,7 +83,7 @@
                     </i:Interaction.Triggers>
                     <ToggleButton.Content>
                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                            <Binding Path="SelectedRallies" />
+                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
                         </MultiBinding>
                     </ToggleButton.Content>
@@ -102,7 +102,7 @@
                     </i:Interaction.Triggers>
                     <ToggleButton.Content>
                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                            <Binding Path="SelectedRallies" />
+                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                         </MultiBinding>
                     </ToggleButton.Content>
@@ -121,7 +121,7 @@
                     </i:Interaction.Triggers>
                     <ToggleButton.Content>
                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                            <Binding Path="SelectedRallies" />
+                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                         </MultiBinding>
                     </ToggleButton.Content>
@@ -190,7 +190,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -209,7 +209,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -228,7 +228,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -247,7 +247,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -277,7 +277,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -296,7 +296,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -315,7 +315,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -334,7 +334,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -364,7 +364,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -383,7 +383,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -402,7 +402,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -421,7 +421,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -451,7 +451,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -470,7 +470,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -489,7 +489,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -508,7 +508,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -538,7 +538,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -557,7 +557,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -576,7 +576,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -595,7 +595,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -625,7 +625,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -644,7 +644,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -663,7 +663,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -682,7 +682,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -712,7 +712,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -731,7 +731,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -750,7 +750,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -769,7 +769,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -799,7 +799,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -818,7 +818,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -837,7 +837,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -856,7 +856,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -886,7 +886,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -905,7 +905,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -924,7 +924,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -943,7 +943,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -973,7 +973,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -992,7 +992,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1011,7 +1011,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1030,7 +1030,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1060,7 +1060,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1079,7 +1079,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1098,7 +1098,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1117,7 +1117,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1147,7 +1147,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1166,7 +1166,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1185,7 +1185,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1204,7 +1204,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1234,7 +1234,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1253,7 +1253,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1272,7 +1272,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1291,7 +1291,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1321,7 +1321,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1340,7 +1340,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1359,7 +1359,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1378,7 +1378,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1408,7 +1408,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1427,7 +1427,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1446,7 +1446,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1465,7 +1465,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1486,7 +1486,7 @@
                                 </i:Interaction.Triggers>
                                 <ToggleButton.Content>
                                     <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                        <Binding Path="SelectedRallies" />
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                         <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                     </MultiBinding>
                                 </ToggleButton.Content>
@@ -1577,11 +1577,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=OverTheTableTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1593,11 +1596,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=OverTheTablePointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1609,11 +1615,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=OverTheTableDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1625,11 +1634,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=OverTheTablePointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1652,11 +1664,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AtTheTableTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1668,11 +1683,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AtTheTablePointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1684,11 +1702,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AtTheTableDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1700,11 +1721,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=AtTheTablePointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1727,11 +1751,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=HalfDistanceTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1743,11 +1770,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=HalfDistancePointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1759,11 +1789,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=HalfDistanceDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1775,11 +1808,14 @@
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                 <cal:Parameter Value="{Binding ElementName=HalfDistancePointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectContactPosition">
+                                                <cal:Parameter Value="$source" />
+                                            </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1877,11 +1913,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandFlipTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -1893,11 +1932,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandFlipPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -1909,11 +1951,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandFlipDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -1925,11 +1970,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandFlipPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -1952,11 +2000,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandFlipTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -1968,11 +2019,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandFlipPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -1984,11 +2038,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandFlipDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2000,11 +2057,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandFlipPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2027,11 +2087,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllFlipTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2043,11 +2106,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllFlipPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2059,11 +2125,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllFlipDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2075,11 +2144,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllFlipPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2102,11 +2174,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushShortTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2118,11 +2193,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushShortPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2134,11 +2212,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushShortDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2150,11 +2231,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushShortPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2177,11 +2261,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushShortTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2193,11 +2280,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushShortPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2209,11 +2299,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushShortDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2225,11 +2318,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushShortPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2252,11 +2348,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushShortTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2268,11 +2367,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushShortPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2284,11 +2386,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushShortDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2300,11 +2405,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushShortPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2327,11 +2435,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushHalfLongTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2343,11 +2454,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushHalfLongPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2359,11 +2473,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushHalfLongDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2375,11 +2492,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushHalfLongPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2402,11 +2522,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushHalfLongTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2418,11 +2541,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushHalfLongPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2434,11 +2560,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushHalfLongDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2450,11 +2579,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushHalfLongPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2477,11 +2609,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushHalfLongTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2493,11 +2628,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushHalfLongPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2509,11 +2647,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushHalfLongDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2525,11 +2666,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushHalfLongPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2552,11 +2696,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushLongTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2568,11 +2715,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushLongPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2584,11 +2734,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushLongDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2600,11 +2753,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=ForhandPushLongPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2627,11 +2783,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushLongTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2643,11 +2802,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushLongPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2659,11 +2821,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushLongDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2675,11 +2840,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=BackhandPushLongPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2702,11 +2870,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushLongTotalButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2718,11 +2889,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushLongPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2734,11 +2908,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushLongDirectPointsWonButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2750,11 +2927,14 @@
                                                     <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                                     <cal:Parameter Value="{Binding ElementName=AllPushLongPointsLostButton, Path=Name}" />
                                                 </cal:ActionMessage>
+                                                <cal:ActionMessage MethodName="SelectTechnique">
+                                                    <cal:Parameter Value="$source" />
+                                                </cal:ActionMessage>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2832,7 +3012,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2848,7 +3028,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2864,7 +3044,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2880,7 +3060,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2907,7 +3087,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2923,7 +3103,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2939,7 +3119,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2955,7 +3135,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2982,7 +3162,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -2998,7 +3178,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -3014,7 +3194,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>
@@ -3030,7 +3210,7 @@
                                         </i:Interaction.Triggers>
                                         <ToggleButton.Content>
                                             <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                                <Binding Path="SelectedRallies" />
+                                                <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                                 <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                             </MultiBinding>
                                         </ToggleButton.Content>

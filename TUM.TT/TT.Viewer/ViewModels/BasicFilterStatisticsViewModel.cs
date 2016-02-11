@@ -18,7 +18,19 @@ namespace TT.Viewer.ViewModels
     {
         #region Properties
 
-        public List<Rally> SelectedRallies { get; private set; }
+        private List<Rally> _selRallies;
+        public List<Rally> SelectedRallies
+        {
+            get
+            {
+                return _selRallies;
+            }
+            private set
+            {
+                _selRallies = value;
+                NotifyOfPropertyChange("SelectedRallies");
+            }
+        }
         public Stroke.Player Player { get; private set; }
         public Stroke.Crunch Crunch { get; private set; }
         public HashSet<int> SelectedSets { get; private set; }

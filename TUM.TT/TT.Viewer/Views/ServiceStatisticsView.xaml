@@ -80,7 +80,7 @@
                     </i:Interaction.Triggers>
                     <ToggleButton.Content>
                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                            <Binding Path="SelectedRallies" />
+                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
                         </MultiBinding>
                     </ToggleButton.Content>
@@ -99,7 +99,7 @@
                     </i:Interaction.Triggers>
                     <ToggleButton.Content>
                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                            <Binding Path="SelectedRallies" />
+                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                         </MultiBinding>
                     </ToggleButton.Content>
@@ -118,7 +118,7 @@
                     </i:Interaction.Triggers>
                     <ToggleButton.Content>
                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                            <Binding Path="SelectedRallies" />
+                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                         </MultiBinding>
                     </ToggleButton.Content>
@@ -187,7 +187,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -206,7 +206,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -225,7 +225,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -244,7 +244,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -274,7 +274,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -293,7 +293,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -312,7 +312,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -331,7 +331,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -361,7 +361,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -380,7 +380,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -399,7 +399,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -418,7 +418,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -448,7 +448,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -467,7 +467,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -486,7 +486,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -505,7 +505,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -535,7 +535,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -554,7 +554,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -573,7 +573,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -592,7 +592,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -622,7 +622,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -641,7 +641,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -660,7 +660,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -679,7 +679,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -709,7 +709,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -728,7 +728,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -747,7 +747,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -766,7 +766,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -796,7 +796,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -815,7 +815,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -834,7 +834,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -853,7 +853,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -883,7 +883,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -902,7 +902,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -921,7 +921,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -940,7 +940,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -970,7 +970,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -989,7 +989,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1008,7 +1008,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1027,7 +1027,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1057,7 +1057,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1076,7 +1076,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1095,7 +1095,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1114,7 +1114,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1144,7 +1144,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1163,7 +1163,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1182,7 +1182,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1201,7 +1201,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1231,7 +1231,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1250,7 +1250,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1269,7 +1269,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1288,7 +1288,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1318,7 +1318,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1337,7 +1337,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1356,7 +1356,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1375,7 +1375,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1405,7 +1405,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1424,7 +1424,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1443,7 +1443,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1462,7 +1462,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1483,7 +1483,7 @@
                                 </i:Interaction.Triggers>
                                 <ToggleButton.Content>
                                     <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                        <Binding Path="SelectedRallies" />
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                         <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                     </MultiBinding>
                                 </ToggleButton.Content>
@@ -1535,7 +1535,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1554,7 +1554,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1573,7 +1573,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1592,7 +1592,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1622,7 +1622,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1641,7 +1641,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1660,7 +1660,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1679,7 +1679,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1709,7 +1709,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1728,7 +1728,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1747,7 +1747,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1766,7 +1766,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1848,7 +1848,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1867,7 +1867,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1886,7 +1886,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1905,7 +1905,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1935,7 +1935,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1954,7 +1954,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1973,7 +1973,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -1992,7 +1992,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2022,7 +2022,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2041,7 +2041,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2060,7 +2060,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2079,7 +2079,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2109,7 +2109,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2128,7 +2128,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2147,7 +2147,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2166,7 +2166,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2196,7 +2196,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2215,7 +2215,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2234,7 +2234,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2250,7 +2250,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2280,7 +2280,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2299,7 +2299,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2318,7 +2318,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2337,7 +2337,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2367,7 +2367,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2386,7 +2386,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2405,7 +2405,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2424,7 +2424,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2454,7 +2454,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2473,7 +2473,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2492,7 +2492,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2511,7 +2511,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2541,7 +2541,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2560,7 +2560,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2579,7 +2579,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2598,7 +2598,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2628,7 +2628,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2647,7 +2647,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2666,7 +2666,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2685,7 +2685,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2715,7 +2715,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2734,7 +2734,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2753,7 +2753,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2772,7 +2772,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2802,7 +2802,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2821,7 +2821,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2840,7 +2840,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2859,7 +2859,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2889,7 +2889,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2908,7 +2908,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2927,7 +2927,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2946,7 +2946,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2976,7 +2976,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -2995,7 +2995,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3014,7 +3014,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3033,7 +3033,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3063,7 +3063,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3082,7 +3082,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3101,7 +3101,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3120,7 +3120,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3198,7 +3198,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3217,7 +3217,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3236,7 +3236,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3255,7 +3255,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3285,7 +3285,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3304,7 +3304,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3323,7 +3323,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3342,7 +3342,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3372,7 +3372,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3391,7 +3391,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3410,7 +3410,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3429,7 +3429,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3459,7 +3459,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3478,7 +3478,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3497,7 +3497,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3516,7 +3516,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3546,7 +3546,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3565,7 +3565,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3584,7 +3584,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3603,7 +3603,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3633,7 +3633,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3652,7 +3652,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3671,7 +3671,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3690,7 +3690,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3720,7 +3720,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3739,7 +3739,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3758,7 +3758,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3777,7 +3777,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3807,7 +3807,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3826,7 +3826,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3845,7 +3845,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3864,7 +3864,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3894,7 +3894,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3913,7 +3913,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3932,7 +3932,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3951,7 +3951,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -3981,7 +3981,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4000,7 +4000,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4019,7 +4019,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4038,7 +4038,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4068,7 +4068,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4087,7 +4087,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4106,7 +4106,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4125,7 +4125,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4155,7 +4155,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4174,7 +4174,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4193,7 +4193,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4212,7 +4212,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4242,7 +4242,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4261,7 +4261,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4280,7 +4280,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4299,7 +4299,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4329,7 +4329,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4348,7 +4348,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4367,7 +4367,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4386,7 +4386,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4416,7 +4416,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4435,7 +4435,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4454,7 +4454,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4473,7 +4473,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4503,7 +4503,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4522,7 +4522,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4541,7 +4541,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>
@@ -4560,7 +4560,7 @@
                                     </i:Interaction.Triggers>
                                     <ToggleButton.Content>
                                         <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
-                                            <Binding Path="SelectedRallies" />
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
                                             <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                         </MultiBinding>
                                     </ToggleButton.Content>

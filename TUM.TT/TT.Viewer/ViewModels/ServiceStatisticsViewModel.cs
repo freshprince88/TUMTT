@@ -20,7 +20,7 @@ namespace TT.Viewer.ViewModels
         #region Properties
 
         public BasicFilterStatisticsViewModel BasicFilterStatisticsView { get; set; }
-        public List<Rally> SelectedRallies { get; private set; }
+        
         public string X { get; private set; }
         public string Player1 { get; set; }
         public string Player2 { get; set; }
@@ -38,7 +38,6 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            SelectedRallies = new List<Rally>();
             X = "";
             Player1 = "Spieler 1";
             Player2 = "Spieler 2";
@@ -188,8 +187,8 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterStatisticsView.SelectedRallies.Where(r => HasServices(r) && HasPlacement(r) && HasPosition(r) && HasSpin(r) && HasBasisInformation(r)).ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
+                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => HasServices(r) && HasPlacement(r) && HasPosition(r) && HasSpin(r) && HasBasisInformation(r)).ToList();
+                this.events.PublishOnUIThread(new ResultsChangedEvent(results));
             }
         }
 
@@ -199,8 +198,6 @@ namespace TT.Viewer.ViewModels
             {
                 case "":
                     return true;
-
-
                 case "TotalServicesCount":
                     return Convert.ToInt32(r.Length) >= 1;
                 case "TotalServicesCountPointPlayer1":
@@ -393,33 +390,33 @@ namespace TT.Viewer.ViewModels
 
                 #region Position Left
                 case "PositionLeftTotalButton":
-                    return (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5);
+                    return r.Schlag[0].IsLeftServicePosition();
                 case "PositionLeftPointsWonButton":
-                    return (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5) && r.Schlag[0].Spieler == r.Winner;
+                    return r.Schlag[0].IsLeftServicePosition() && r.Schlag[0].Spieler == r.Winner;
                 case "PositionLeftDirectPointsWonButton":
-                    return (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return r.Schlag[0].IsLeftServicePosition() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
                 case "PositionLeftPointsLostButton":
-                    return (0 <= AufschlagPosition(r) && AufschlagPosition(r) < 50.5) && r.Schlag[0].Spieler != r.Winner;
+                    return r.Schlag[0].IsLeftServicePosition() && r.Schlag[0].Spieler != r.Winner;
                 #endregion
                 #region Position Middle
                 case "PositionMiddleTotalButton":
-                    return (50.5 <= AufschlagPosition(r) && AufschlagPosition(r) <= 102);
+                    return r.Schlag[0].IsMiddleServicePosition();
                 case "PositionMiddlePointsWonButton":
-                    return (50.5 <= AufschlagPosition(r) && AufschlagPosition(r) <= 102) && r.Schlag[0].Spieler == r.Winner;
+                    return r.Schlag[0].IsMiddleServicePosition() && r.Schlag[0].Spieler == r.Winner;
                 case "PositionMiddleDirectPointsWonButton":
-                    return (50.5 <= AufschlagPosition(r) && AufschlagPosition(r) <= 102) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return r.Schlag[0].IsMiddleServicePosition() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
                 case "PositionMiddlePointsLostButton":
-                    return (50.5 <= AufschlagPosition(r) && AufschlagPosition(r) <= 102) && r.Schlag[0].Spieler != r.Winner;
+                    return r.Schlag[0].IsMiddleServicePosition() && r.Schlag[0].Spieler != r.Winner;
                 #endregion
                 #region Position Right
                 case "PositionRightTotalButton":
-                    return (102 < AufschlagPosition(r) && AufschlagPosition(r) <= 152.5);
+                    return r.Schlag[0].IsRightServicePosition();
                 case "PositionRightPointsWonButton":
-                    return (102 < AufschlagPosition(r) && AufschlagPosition(r) <= 152.5) && r.Schlag[0].Spieler == r.Winner;
+                    return r.Schlag[0].IsRightServicePosition() && r.Schlag[0].Spieler == r.Winner;
                 case "PositionRightDirectPointsWonButton":
-                    return (102 < AufschlagPosition(r) && AufschlagPosition(r) <= 152.5) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return r.Schlag[0].IsRightServicePosition() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
                 case "PositionRightPointsLostButton":
-                    return (102 < AufschlagPosition(r) && AufschlagPosition(r) <= 152.5) && r.Schlag[0].Spieler != r.Winner;
+                    return r.Schlag[0].IsRightServicePosition() && r.Schlag[0].Spieler != r.Winner;
                 #endregion
 
                 default:
