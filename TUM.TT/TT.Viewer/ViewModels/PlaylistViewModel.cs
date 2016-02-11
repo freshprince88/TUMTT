@@ -51,7 +51,6 @@ namespace TT.Viewer.ViewModels
             {
                 Playlist p = new Playlist();
                 p.Name = name;
-                p.Rallies = new List<Rally>();
                 Manager.Match.Playlists.Add(p);
                 Manager.MatchModified = true;
                 this.ActivateItem(new PlaylistItem()

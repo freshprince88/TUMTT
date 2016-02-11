@@ -1,13 +1,6 @@
 ﻿using Caliburn.Micro;
-using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 using TT.Lib.Models;
-using TT.Lib.Events;
 using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
@@ -53,7 +46,6 @@ namespace TT.Viewer.ViewModels
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
-            string test = this.Player1Name;
 
             Rally = rally;
 
@@ -62,20 +54,16 @@ namespace TT.Viewer.ViewModels
 
             Score = score;
             Sets = sets;
-            if (test != null)
+
+            if (rally.Server == MatchPlayer.First)
             {
-                if (rally.Server == "First")
-                {
-                    Server = Manager.Match.FirstPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
-                }
-                if (rally.Server == "Second")
-                {
-                    Server = Manager.Match.SecondPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
-                }
+                Server = Manager.Match.FirstPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
+            }
+            if (rally.Server == MatchPlayer.Second)
+            {
+                Server = Manager.Match.SecondPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
             }
 
-            Server = rally.Server;
-            Point = rally.Winner;
             Length = rally.Length.ToString();
             RallyStart = Convert.ToInt32(rally.Anfang);
             RallyEnd = Convert.ToInt32(rally.Ende);
@@ -83,7 +71,7 @@ namespace TT.Viewer.ViewModels
 
         public void DeleteRally()
         {
-            Manager.DeleteRally(Rally);            
+            Manager.DeleteRally(Rally);
         }
     }
 }

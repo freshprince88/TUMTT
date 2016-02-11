@@ -61,17 +61,17 @@ namespace TT.Viewer.Views
                 case 2:
                     if (rallies != null)
                     {
-                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopLeft()).Count();
-                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopMid()).Count();
-                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsTopMid()).Count();
+                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsTopRight()).Count();
 
-                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidLeft()).Count();
-                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidMid()).Count();
-                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsMidMid()).Count();
+                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsMidRight()).Count();
 
-                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotLeft()).Count();
-                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotMid()).Count();
-                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schlag[1].IsBotRight()).Count();
+                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsBotMid()).Count();
+                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.Schläge[1].IsBotRight()).Count();
                     }
 
                     break;
@@ -79,49 +79,49 @@ namespace TT.Viewer.Views
                 case 3:
                     if (rallies != null)
                     {
-                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopLeft()).Count();
-                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopMid()).Count();
-                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsTopMid()).Count();
+                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsTopRight()).Count();
 
-                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidLeft()).Count();
-                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidMid()).Count();
-                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsMidMid()).Count();
+                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsMidRight()).Count();
 
-                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotLeft()).Count();
-                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotMid()).Count();
-                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schlag[2].IsBotRight()).Count();
+                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsBotMid()).Count();
+                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 2 && r.Schläge[2].IsBotRight()).Count();
                     }
                     break;
                 case 4:
                     if (rallies != null)
                     {
-                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopLeft()).Count();
-                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopMid()).Count();
-                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsTopMid()).Count();
+                        topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsTopRight()).Count();
 
-                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidLeft()).Count();
-                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidMid()).Count();
-                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsMidMid()).Count();
+                        midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsMidRight()).Count();
 
-                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotLeft()).Count();
-                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotMid()).Count();
-                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schlag[3].IsBotRight()).Count();
+                        botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsBotMid()).Count();
+                        botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.Schläge[3].IsBotRight()).Count();
                     }
                     break;
                 case 5: //TODO funktioniert noch nicht richtig!!!
                     if (rallies != null)
                     {
-                        topLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopLeft()).Count();
-                        topMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopMid()).Count();
-                        topRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsTopRight()).Count();
+                        topLeft = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsTopLeft()).Count();
+                        topMid = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsTopMid()).Count();
+                        topRight = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsTopRight()).Count();
 
-                        midLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidLeft()).Count();
-                        midMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidMid()).Count();
-                        midRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsMidRight()).Count();
+                        midLeft = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsMidLeft()).Count();
+                        midMid = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsMidMid()).Count();
+                        midRight = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsMidRight()).Count();
 
-                        botLeft = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotLeft()).Count();
-                        botMid = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotMid()).Count();
-                        botRight = rallies.Where(r => r.Schlag[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schlag[Convert.ToInt32(r.Length) - 1].IsBotRight()).Count();
+                        botLeft = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsBotLeft()).Count();
+                        botMid = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsBotMid()).Count();
+                        botRight = rallies.Where(r => r.Schläge[Convert.ToInt32(r.Length) - 1].Spieler == r.Winner && Convert.ToInt32(r.Length) > 1 && r.Schläge[Convert.ToInt32(r.Length) - 1].IsBotRight()).Count();
                     }
                     break;
                 default:

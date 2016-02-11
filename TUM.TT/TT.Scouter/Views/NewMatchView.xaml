@@ -50,7 +50,7 @@
         <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="25" Text="{Binding Path=Match.Mode}"/>
 
         <Label Content="Datum" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="25" VerticalAlignment="Center"/>
-        <DatePickerTextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" Text="{Binding Path=Match.Mode}"/>
+        <DatePickerTextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" Text="{Binding Path=Match.DateTime}"/>
 
         <Grid Grid.Row="10" Grid.ColumnSpan="5">
             <Grid.ColumnDefinitions>

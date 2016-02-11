@@ -12,7 +12,25 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager MatchManager;
         public Match Match { get { return MatchManager.Match; } }
-        public Rally CurrentRally { get; set; }
+
+        private Rally _currentRally;
+        public Rally CurrentRally
+        {
+            get { return _currentRally; }
+            set
+            {
+                _currentRally = value;
+                NotifyOfPropertyChange("CurrentRally");
+
+                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
+                bool mark = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
+                
+                if(mark != Markiert)
+                {
+                    Markiert = mark;
+                }            
+            }
+        }
         public bool Markiert { get; set; }
 
 
@@ -31,25 +49,11 @@ namespace TT.Scouter.ViewModels
 
         #region View Methods
 
-        public IEnumerable<IResult> RallyWon(int player)
+        public void RallyWon(int player)
         {
             //TODO: Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
-            //   -> Neuen View mit nächster Rally einladen (Oder reicht es CurrentRally neu zu setzen wegen Bindings??)
-            switch (player)
-            {
-                //TODO: Keine UI Updates, weil kein NotifyPropertyChanged in den Modeldingsbums;
-                case 1:
-                    CurrentRally = CurrentRally.NextRally(player);
-                    NotifyOfPropertyChange("CurrentRally");
-                    break;
-                case 2:
-                    CurrentRally = CurrentRally.NextRally(player);
-                    NotifyOfPropertyChange("CurrentRally");
-                    break;
-                default:
-                    break;
-            }
-            return null;
+            //   -> CurrentRally neu setzen mit Bindings
+            // NextRally Methode vielleicht im MatchManager, dann sind alle Infos des Spiels verfügbar
         }
 
         #endregion

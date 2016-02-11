@@ -55,15 +55,13 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Technik:</Label>
-            <ToggleButton x:Name="FilterForhandButton" IsChecked="{Binding Path=ForeHand, Converter={conv:ForeHandToBoolConverter}}" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16">
-                    FH
-                </TextBlock>
+            <ToggleButton x:Name="FilterForhandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:ForeHandToBoolConverter}, Mode=OneWay}">
+                <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="FilterBackhandButton" IsChecked="{Binding Path=BackHand, Converter={conv:BackHandToBoolConverter}}" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16">
-                    RH
-                </TextBlock>
+            <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:BackHandToBoolConverter}, Mode=OneWay}">
+                <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
             </ToggleButton>
             <ToggleButton x:Name="FilterStepAroundButton" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30"   Margin="0 0 0 0" HorizontalAlignment="Stretch" Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action StepAroundOrNot($source)]">
