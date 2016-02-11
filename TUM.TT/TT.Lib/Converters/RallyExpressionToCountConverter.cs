@@ -21,11 +21,20 @@ namespace TT.Lib.Converters
             //var test = rallies.ToArray().AsQueryable().Where(expression, null).Count();
             var test = rallies.Where(func).Count();
             return test;
+
+            //TODO
+            // Basic Filter wird nicht berücksichtigt!!
+
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
+
+       
+
+
+
     }
 }

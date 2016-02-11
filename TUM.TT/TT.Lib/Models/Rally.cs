@@ -174,5 +174,22 @@ namespace TT.Lib.Models
                 this.kommentarField = value;
             }
         }
+
+        public Boolean IsDiagonal(int i)
+        {
+            if (i <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                int now = i;
+                int prev = i - 1;
+
+                return Math.Abs(Convert.ToInt32(this.Schlag[prev].Platzierung.WX) - Convert.ToInt32(this.Schlag[now].Platzierung.WX)) > 100;
+            }
+            
+        }
+
     }
 }

@@ -321,6 +321,63 @@ namespace TT.Lib.Models
         {
             return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "halbdistanz";
         }
+
+        public Boolean IsLeftServicePosition()
+        {
+            double aufschlagPosition;
+            double seite = this.Platzierung.WY == "" ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            if (seite >= 137)
+            {
+                aufschlagPosition = 152.5 - (this.Spielerposition == "" ? 999 : Convert.ToDouble(this.Spielerposition));
+            }
+            else
+            {
+                aufschlagPosition = this.Spielerposition == "" ? 999 : Convert.ToDouble(this.Spielerposition);
+            }
+
+
+            return (0 <= aufschlagPosition && aufschlagPosition < 50.5);
+
+        }
+
+        public Boolean IsMiddleServicePosition()
+        {
+            double aufschlagPosition;
+            double seite = this.Platzierung.WY == "" ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            if (seite >= 137)
+            {
+                aufschlagPosition = 152.5 - (this.Spielerposition == "" ? 999 : Convert.ToDouble(this.Spielerposition));
+            }
+            else
+            {
+                aufschlagPosition = this.Spielerposition == "" ? 999 : Convert.ToDouble(this.Spielerposition);
+            }
+
+
+            return (50.5 <= aufschlagPosition && aufschlagPosition <= 102);
+
+        }
+
+        public Boolean IsRightServicePosition()
+        {
+            double aufschlagPosition;
+            double seite = this.Platzierung.WY == "" ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            if (seite >= 137)
+            {
+                aufschlagPosition = 152.5 - (this.Spielerposition == "" ? 999 : Convert.ToDouble(this.Spielerposition));
+            }
+            else
+            {
+                aufschlagPosition = this.Spielerposition == "" ? 999 : Convert.ToDouble(this.Spielerposition);
+            }
+
+
+            return (102 < aufschlagPosition && aufschlagPosition <= 152.5);
+
+        }
+
+        
+
     }
 
 
