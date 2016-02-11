@@ -74,7 +74,7 @@
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCount, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalReceivesCount, Path=Name}" />
                             </cal:ActionMessage>
                             <cal:ActionMessage MethodName="SelectBasisInformation">
                                 <cal:Parameter Value="$source" />
@@ -93,7 +93,7 @@
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPointPlayer1, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalReceivesCountPointPlayer1, Path=Name}" />
                             </cal:ActionMessage>
                             <cal:ActionMessage MethodName="SelectBasisInformation">
                                 <cal:Parameter Value="$source" />
@@ -112,7 +112,7 @@
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                <cal:Parameter Value="{Binding ElementName=TotalServicesCountPointPlayer2, Path=Name}" />
+                                <cal:Parameter Value="{Binding ElementName=TotalReceivesCountPointPlayer2, Path=Name}" />
                             </cal:ActionMessage>
                             <cal:ActionMessage MethodName="SelectBasisInformation">
                                 <cal:Parameter Value="$source" />

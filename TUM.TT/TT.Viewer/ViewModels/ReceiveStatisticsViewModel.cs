@@ -186,11 +186,11 @@ namespace TT.Viewer.ViewModels
             {
                 case "":
                     return true;
-                case "TotalServicesCount":
+                case "TotalReceivesCount":
                     return Convert.ToInt32(r.Length) >= 2;
-                case "TotalServicesCountPointPlayer1":
+                case "TotalReceivesCountPointPlayer1":
                     return Convert.ToInt32(r.Length) >= 2 && r.Winner == "First";
-                case "TotalServicesCountPointPlayer2":
+                case "TotalReceivesCountPointPlayer2":
                     return Convert.ToInt32(r.Length) >= 2 && r.Winner == "Second";
                 default:
                     return true;

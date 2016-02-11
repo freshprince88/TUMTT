@@ -62,20 +62,25 @@ namespace TT.Viewer.ViewModels
 
             Score = score;
             Sets = sets;
-            if (test != null)
+            if (rally.Server == "First")
+                {
+                    Server = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+                }
+            if (rally.Server == "Second")
+                {
+                    Server = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+                }
+            if (rally.Winner == "First")
             {
-                if (rally.Server == "First")
-                {
-                    Server = Manager.Match.FirstPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
-                }
-                if (rally.Server == "Second")
-                {
-                    Server = Manager.Match.SecondPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
-                }
+                Point = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            }
+            if (rally.Winner == "Second")
+            {
+                Point = Manager.Match.SecondPlayer.Name.Split(' ')[0];
             }
 
-            Server = rally.Server;
-            Point = rally.Winner;
+            // Server = rally.Server;
+            // Point = rally.Winner;
             Length = rally.Length.ToString();
             RallyStart = Convert.ToInt32(rally.Anfang);
             RallyEnd = Convert.ToInt32(rally.Ende);
