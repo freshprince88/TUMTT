@@ -191,5 +191,37 @@ namespace TT.Lib.Models
             
         }
 
+        public Boolean IsMiddle(int i)
+        {
+            if (i <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                int now = i;
+                int prev = i - 1;
+
+                return this.Schlag[now].IsBotMid() || this.Schlag[now].IsMidMid() || this.Schlag[now].IsTopMid();
+            }
+
+        }
+
+        public Boolean IsParallel(int i)
+        {
+            if (i <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                int now = i;
+                int prev = i - 1;
+
+                return Math.Abs(Convert.ToInt32(this.Schlag[prev].Platzierung.WX) - Convert.ToInt32(this.Schlag[now].Platzierung.WX)) <= 100;
+            }
+
+        }
+
     }
 }
