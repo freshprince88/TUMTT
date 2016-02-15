@@ -27,7 +27,7 @@ namespace TT.Viewer.ViewModels
         public Stroke.Quality Quality { get; private set; }
         public Stroke.WinnerOrNetOut Winner { get; private set; }
         public Stroke.StepAround StepAround { get; private set; }
-     
+
         private HashSet<Stroke.Technique> _strokeTec;
         public HashSet<Stroke.Technique> SelectedStrokeTec
         {
@@ -126,7 +126,7 @@ namespace TT.Viewer.ViewModels
 
         public void ForBackHand(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("forhand"))
+            if (source.Name.ToLower().Contains("Forehand"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -445,7 +445,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => r.Schläge[r.Length-1].HasWinner(this.Winner) && 
+                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => r.Schläge[r.Length-1].HasWinner(this.Winner) &&
                     r.LastWinnerStroke().HasHand(this.Hand) &&
                     r.LastWinnerStroke().HasStepAround(this.StepAround) &&
                     r.LastWinnerStroke().HasStrokeTec(this.SelectedStrokeTec) &&
@@ -456,7 +456,6 @@ namespace TT.Viewer.ViewModels
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }
-
         #endregion
     }
 }

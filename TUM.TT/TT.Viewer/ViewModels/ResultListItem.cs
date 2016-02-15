@@ -63,6 +63,14 @@ namespace TT.Viewer.ViewModels
             {
                 Server = Manager.Match.SecondPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
             }
+            if (rally.Winner == MatchPlayer.First)
+            {
+                Point = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            }
+            if (rally.Winner == MatchPlayer.Second)
+            {
+                Point = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+            }
 
             Length = rally.Length.ToString();
             RallyStart = Convert.ToInt32(rally.Anfang);

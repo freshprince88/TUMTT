@@ -108,6 +108,9 @@
     <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
     <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
+    <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
+    <Compile Include="Converters\TechniqueCountToRankingRowConverter.cs" />
+    <Compile Include="Converters\TechniqueCountToRankingColumnConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />

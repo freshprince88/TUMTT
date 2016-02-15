@@ -241,6 +241,7 @@ namespace TT.Lib.Models
                 RaiseAndSetIfChanged(ref aggressivität, value);
             }
         }
+        #region 9 Fields
 
         public bool IsTopLeft()
         {
@@ -313,18 +314,56 @@ namespace TT.Lib.Models
 
             return (X <= 152.5 && X > 102 && Y < 137 && Y > 92) || (X >= 0 && X < 50.5 && Y >= 137 && Y < 182);
         }
+        #endregion
 
-        public bool IsShort()
+        #region Short , HalfLong, Long
+
+        public Boolean IsShort()
         {
-            return Balltreffpunkt == null ? false : Balltreffpunkt.ToLower() == "über";
+            return this.IsBotLeft() || this.IsBotMid() || this.IsBotRight();
         }
 
-        public bool IsHalf()
+        public Boolean IsHalfLong()
+        {
+            return this.IsMidLeft() || this.IsMidMid() || this.IsMidRight();
+        }
+
+        public Boolean IsLong()
+        {
+            return this.IsTopLeft() || this.IsTopMid() || this.IsTopRight();
+        }
+        #endregion
+        #region Forehand Side, Middle, Backhand Side
+
+        public Boolean IsForehandSide()
+        {
+            return this.IsBotLeft() || this.IsMidLeft() || this.IsTopLeft();
+        }
+
+        public Boolean IsBackhandSide()
+        {
+            return this.IsBotRight() || this.IsMidRight() || this.IsTopRight();
+        }
+
+        public Boolean IsMiddle()
+        {
+            return this.IsBotMid() || this.IsMidMid() || this.IsTopMid();
+        }
+
+        #endregion
+
+
+        public Boolean IsOverTheTable()
+        {
+            return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "über";
+        }
+
+        public bool IsAtTheTable()
         {
             return Balltreffpunkt == null ? false : Balltreffpunkt.ToLower() == "hinter";
         }
 
-        public bool IsLong()
+        public bool IsHalfDistance()
         {
             return Balltreffpunkt == null ? false : Balltreffpunkt.ToLower() == "halbdistanz";
         }
@@ -500,14 +539,14 @@ namespace TT.Lib.Models
             {
                 switch (sel)
                 {
-                    case Positions.Length.Short:
-                        ORresults.Add(IsShort());
+                    case Positions.Length.OverTheTable:
+                        ORresults.Add(IsOverTheTable());
                         break;
-                    case Positions.Length.Half:
-                        ORresults.Add(IsHalf());
+                    case Positions.Length.AtTheTable:
+                        ORresults.Add(IsAtTheTable());
                         break;
-                    case Positions.Length.Long:
-                        ORresults.Add(IsLong());
+                    case Positions.Length.HalfDistance:
+                        ORresults.Add(IsHalfDistance());
                         break;
                     default:
                         break;
@@ -561,7 +600,7 @@ namespace TT.Lib.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasServices(IEnumerable<Stroke.Services> services) 
+        public bool HasServices(IEnumerable<Stroke.Services> services)
         {
             List<bool> ORresults = new List<bool>();
 
@@ -642,6 +681,54 @@ namespace TT.Lib.Models
             }
 
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+        public Boolean IsLeftServicePosition()
+        {
+            double aufschlagPosition;
+            double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            if (seite >= 137)
+            {
+                aufschlagPosition = 152.5 - (this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition));
+            }
+            else
+            {
+                aufschlagPosition = this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition);
+            }
+
+            return (0 <= aufschlagPosition && aufschlagPosition < 50.5);
+        }
+
+        public Boolean IsMiddleServicePosition()
+        {
+            double aufschlagPosition;
+            double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            if (seite >= 137)
+            {
+                aufschlagPosition = 152.5 - (this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition));
+            }
+            else
+            {
+                aufschlagPosition = this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition);
+            }
+
+            return (50.5 <= aufschlagPosition && aufschlagPosition <= 102);
+        }
+
+        public Boolean IsRightServicePosition()
+        {
+            double aufschlagPosition;
+            double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            if (seite >= 137)
+            {
+                aufschlagPosition = 152.5 - (this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition));
+            }
+            else
+            {
+                aufschlagPosition = this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition);
+            }
+
+            return (102 < aufschlagPosition && aufschlagPosition <= 152.5);
         }
     }
 

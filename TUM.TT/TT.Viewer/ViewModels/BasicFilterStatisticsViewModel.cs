@@ -18,7 +18,19 @@ namespace TT.Viewer.ViewModels
     {
         #region Properties
 
-        public List<Rally> SelectedRallies { get; private set; }
+        private List<Rally> _selRallies;
+        public List<Rally> SelectedRallies
+        {
+            get
+            {
+                return _selRallies;
+            }
+            private set
+            {
+                _selRallies = value;
+                NotifyOfPropertyChange("SelectedRallies");
+            }
+        }
         public Stroke.Player Player { get; private set; }
         public Stroke.Crunch Crunch { get; private set; }
         public HashSet<int> SelectedSets { get; private set; }
@@ -288,9 +300,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Player)
             {
                 case Stroke.Player.Player1:
-                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.First;  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
+                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.First;
                 case Stroke.Player.Player2:
-                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.Second; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
+                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.Second;
                 case Stroke.Player.None:
                     return true;
                 case Stroke.Player.Both:

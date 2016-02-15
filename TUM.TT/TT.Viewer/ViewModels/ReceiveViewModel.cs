@@ -21,7 +21,7 @@ namespace TT.Viewer.ViewModels
         public TableStandardViewModel TableView { get; set; }
         public List<Rally> SelectedRallies { get; private set; }
         public Playlist ActivePlaylist { get; private set; }
-        public Stroke.Hand Hand { get; private set; }       
+        public Stroke.Hand Hand { get; private set; }
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
@@ -62,7 +62,8 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 1,
-                PlayerLabel = "Rückschlag:"
+                PlayerLabel = "Rückschlag:",
+                StrokeNumber = 1
             };
 
             TableView = new TableStandardViewModel(this.events);
@@ -80,10 +81,10 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = ViewMode.Position.Bottom;
             }
         }
-       
+
         public void ForBackHand(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("forhand"))
+            if (source.Name.ToLower().Contains("forehand"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -303,7 +304,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Special);
                 }
             }
-            
+
             UpdateSelection(Manager.ActivePlaylist);
 
         }
@@ -374,7 +375,7 @@ namespace TT.Viewer.ViewModels
             this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
-            base.OnDeactivate(close);            
+            base.OnDeactivate(close);
         }
         #endregion
 

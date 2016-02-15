@@ -20,7 +20,7 @@ namespace TT.Viewer.ViewModels
         #region Properties
 
         public BasicFilterStatisticsViewModel BasicFilterStatisticsView { get; set; }
-        public List<Rally> SelectedRallies { get; private set; }
+
         public string X { get; private set; }
         public string Player1 { get; set; }
         public string Player2 { get; set; }
@@ -38,7 +38,6 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            SelectedRallies = new List<Rally>();
             X = "";
             Player1 = "Spieler 1";
             Player2 = "Spieler 2";
@@ -190,8 +189,8 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterStatisticsView.SelectedRallies.Where(r => HasServices(r) && HasPlacement(r) && HasPosition(r) && HasSpin(r) && HasBasisInformation(r)).ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
+                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => HasServices(r) && HasPlacement(r) && HasPosition(r) && HasSpin(r) && HasBasisInformation(r)).ToList();
+                this.events.PublishOnUIThread(new ResultsChangedEvent(results));
             }
         }
 
@@ -201,7 +200,6 @@ namespace TT.Viewer.ViewModels
             {
                 case "":
                     return true;
-
                 case "TotalServicesCount":
                     return r.Length >= 1;
                 case "TotalServicesCountPointPlayer1":
@@ -221,46 +219,47 @@ namespace TT.Viewer.ViewModels
                 case "":
                     return true;
 
-                #region ForhandAll
-                case "PlacementForhandAllTotalButton":
+                #region ForehandAll
+                case "PlacementForehandAllTotalButton":
                     return r.Schläge[0].IsTopLeft() || r.Schläge[0].IsMidLeft() || r.Schläge[0].IsBotLeft();
-                case "PlacementForhandAllPointsWonButton":
+                case "PlacementForehandAllPointsWonButton":
                     return (r.Schläge[0].IsTopLeft() || r.Schläge[0].IsMidLeft() || r.Schläge[0].IsBotLeft()) && r.Schläge[0].Spieler == r.Winner;
-                case "PlacementForhandAllDirectPointsWonButton":
-                    return (r.Schläge[0].IsTopLeft() || r.Schläge[0].IsMidLeft() || r.Schläge[0].IsBotLeft()) && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "PlacementForhandAllPointsLostButton":
+                case "PlacementForehandAllDirectPointsWonButton":
+                    return (r.Schläge[0].IsTopLeft() || r.Schläge[0].IsMidLeft() || r.Schläge[0].IsBotLeft()) && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
+                case "PlacementForehandAllPointsLostButton":
                     return (r.Schläge[0].IsTopLeft() || r.Schläge[0].IsMidLeft() || r.Schläge[0].IsBotLeft()) && r.Schläge[0].Spieler != r.Winner;
                 #endregion
-                #region ForhandLong
-                case "PlacementForhandLongTotalButton":
+                #region ForehandLong
+                case "PlacementForehandLongTotalButton":
                     return r.Schläge[0].IsTopLeft();
-                case "PlacementForhandLongPointsWonButton":
+                case "PlacementForehandLongPointsWonButton":
                     return r.Schläge[0].IsTopLeft() && r.Schläge[0].Spieler == r.Winner;
-                case "PlacementForhandLongDirectPointsWonButton":
-                    return r.Schläge[0].IsTopLeft() && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "PlacementForhandLongPointsLostButton":
+                case "PlacementForehandLongDirectPointsWonButton":
+                    return r.Schläge[0].IsTopLeft() && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
+                case "PlacementForehandLongPointsLostButton":
                     return r.Schläge[0].IsTopLeft() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
-                #region ForhandHalfLong
-                case "PlacementForhandHalfLongTotalButton":
+                #region ForehandHalfLong
+                case "PlacementForehandHalfLongTotalButton":
                     return r.Schläge[0].IsMidLeft();
-                case "PlacementForhandHalfLongPointsWonButton":
+                case "PlacementForehandHalfLongPointsWonButton":
                     return r.Schläge[0].IsMidLeft() && r.Schläge[0].Spieler == r.Winner;
-                case "PlacementForhandHalfLongDirectPointsWonButton":
-                    return r.Schläge[0].IsMidLeft() && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "PlacementForhandHalfLongPointsLostButton":
+                case "PlacementForehandHalfLongDirectPointsWonButton":
+                    return r.Schläge[0].IsMidLeft() && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
+                case "PlacementForehandHalfLongPointsLostButton":
                     return r.Schläge[0].IsMidLeft() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
-                #region ForhandShort
-                case "PlacementForhandShortTotalButton":
+                #region ForehandShort
+                case "PlacementForehandShortTotalButton":
                     return r.Schläge[0].IsBotLeft();
-                case "PlacementForhandShortPointsWonButton":
+                case "PlacementForehandShortPointsWonButton":
                     return r.Schläge[0].IsBotLeft() && r.Schläge[0].Spieler == r.Winner;
-                case "PlacementForhandShortDirectPointsWonButton":
-                    return r.Schläge[0].IsBotLeft() && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "PlacementForhandShortPointsLostButton":
+                case "PlacementForehandShortDirectPointsWonButton":
+                    return r.Schläge[0].IsBotLeft() && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
+                case "PlacementForehandShortPointsLostButton":
                     return r.Schläge[0].IsBotLeft() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region MiddleAll
                 case "PlacementMiddleAllTotalButton":
                     return r.Schläge[0].IsTopMid() || r.Schläge[0].IsMidMid() || r.Schläge[0].IsBotMid();
@@ -271,6 +270,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementMiddleAllPointsLostButton":
                     return (r.Schläge[0].IsTopMid() || r.Schläge[0].IsMidMid() || r.Schläge[0].IsBotMid()) && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region MiddleLong
                 case "PlacementMiddleLongTotalButton":
                     return r.Schläge[0].IsTopMid();
@@ -281,6 +281,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementMiddleLongPointsLostButton":
                     return r.Schläge[0].IsTopMid() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region MiddleHalfLong
                 case "PlacementMiddleHalfLongTotalButton":
                     return r.Schläge[0].IsMidMid();
@@ -291,6 +292,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementMiddleHalfLongPointsLostButton":
                     return r.Schläge[0].IsMidMid() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region MiddleShort
                 case "PlacementMiddleShortTotalButton":
                     return r.Schläge[0].IsBotMid();
@@ -301,6 +303,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementMiddleShortPointsLostButton":
                     return r.Schläge[0].IsBotMid() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region BackhandAll
                 case "PlacementBackhandAllTotalButton":
                     return r.Schläge[0].IsTopRight() || r.Schläge[0].IsMidRight() || r.Schläge[0].IsBotRight();
@@ -311,6 +314,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementBackhandAllPointsLostButton":
                     return (r.Schläge[0].IsTopRight() || r.Schläge[0].IsMidRight() || r.Schläge[0].IsBotRight()) && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region BackhandLong
                 case "PlacementBackhandLongTotalButton":
                     return r.Schläge[0].IsTopRight();
@@ -321,6 +325,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementBackhandLongPointsLostButton":
                     return r.Schläge[0].IsTopRight() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region BackhandHalfLong
                 case "PlacementBackhandHalfLongTotalButton":
                     return r.Schläge[0].IsMidRight();
@@ -331,6 +336,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementBackhandHalfLongPointsLostButton":
                     return r.Schläge[0].IsMidRight() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region BackhandShort
                 case "PlacementBackhandShortTotalButton":
                     return r.Schläge[0].IsBotRight();
@@ -341,6 +347,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementBackhandShortPointsLostButton":
                     return r.Schläge[0].IsBotRight() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region AllLong
                 case "PlacementAllLongTotalButton":
                     return (r.Schläge[0].IsTopLeft() || r.Schläge[0].IsTopMid() || r.Schläge[0].IsTopRight());
@@ -351,6 +358,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementAllLongPointsLostButton":
                     return (r.Schläge[0].IsTopLeft() || r.Schläge[0].IsTopMid() || r.Schläge[0].IsTopRight()) && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region AllHalfLong
                 case "PlacementAllHalfLongTotalButton":
                     return (r.Schläge[0].IsMidLeft() || r.Schläge[0].IsMidMid() || r.Schläge[0].IsMidRight());
@@ -361,6 +369,7 @@ namespace TT.Viewer.ViewModels
                 case "PlacementAllHalfLongPointsLostButton":
                     return (r.Schläge[0].IsMidLeft() || r.Schläge[0].IsMidMid() || r.Schläge[0].IsMidRight()) && r.Schläge[0].Spieler != r.Winner;
                 #endregion
+
                 #region AllShort
                 case "PlacementAllShortTotalButton":
                     return (r.Schläge[0].IsBotLeft() || r.Schläge[0].IsBotMid() || r.Schläge[0].IsBotRight());
@@ -394,33 +403,33 @@ namespace TT.Viewer.ViewModels
 
                 #region Position Left
                 case "PositionLeftTotalButton":
-                    return (0 <= AufSchlägePosition(r) && AufSchlägePosition(r) < 50.5);
+                    return r.Schläge[0].IsLeftServicePosition();
                 case "PositionLeftPointsWonButton":
-                    return (0 <= AufSchlägePosition(r) && AufSchlägePosition(r) < 50.5) && r.Schläge[0].Spieler == r.Winner;
+                    return r.Schläge[0].IsLeftServicePosition() && r.Schläge[0].Spieler == r.Winner;
                 case "PositionLeftDirectPointsWonButton":
-                    return (0 <= AufSchlägePosition(r) && AufSchlägePosition(r) < 50.5) && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return r.Schläge[0].IsLeftServicePosition() && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
                 case "PositionLeftPointsLostButton":
-                    return (0 <= AufSchlägePosition(r) && AufSchlägePosition(r) < 50.5) && r.Schläge[0].Spieler != r.Winner;
+                    return r.Schläge[0].IsLeftServicePosition() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
                 #region Position Middle
                 case "PositionMiddleTotalButton":
-                    return (50.5 <= AufSchlägePosition(r) && AufSchlägePosition(r) <= 102);
+                    return r.Schläge[0].IsMiddleServicePosition();
                 case "PositionMiddlePointsWonButton":
-                    return (50.5 <= AufSchlägePosition(r) && AufSchlägePosition(r) <= 102) && r.Schläge[0].Spieler == r.Winner;
+                    return r.Schläge[0].IsMiddleServicePosition() && r.Schläge[0].Spieler == r.Winner;
                 case "PositionMiddleDirectPointsWonButton":
-                    return (50.5 <= AufSchlägePosition(r) && AufSchlägePosition(r) <= 102) && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return r.Schläge[0].IsMiddleServicePosition() && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
                 case "PositionMiddlePointsLostButton":
-                    return (50.5 <= AufSchlägePosition(r) && AufSchlägePosition(r) <= 102) && r.Schläge[0].Spieler != r.Winner;
+                    return r.Schläge[0].IsMiddleServicePosition() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
                 #region Position Right
                 case "PositionRightTotalButton":
-                    return (102 < AufSchlägePosition(r) && AufSchlägePosition(r) <= 152.5);
+                    return r.Schläge[0].IsRightServicePosition();
                 case "PositionRightPointsWonButton":
-                    return (102 < AufSchlägePosition(r) && AufSchlägePosition(r) <= 152.5) && r.Schläge[0].Spieler == r.Winner;
+                    return r.Schläge[0].IsRightServicePosition() && r.Schläge[0].Spieler == r.Winner;
                 case "PositionRightDirectPointsWonButton":
-                    return (102 < AufSchlägePosition(r) && AufSchlägePosition(r) <= 152.5) && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return r.Schläge[0].IsRightServicePosition() && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
                 case "PositionRightPointsLostButton":
-                    return (102 < AufSchlägePosition(r) && AufSchlägePosition(r) <= 152.5) && r.Schläge[0].Spieler != r.Winner;
+                    return r.Schläge[0].IsRightServicePosition() && r.Schläge[0].Spieler != r.Winner;
                 #endregion
 
                 default:
@@ -436,15 +445,14 @@ namespace TT.Viewer.ViewModels
             {
                 case "":
                     return true;
-                #region Pendulum 
-
-                case "ForhandPendulumTotalButton":
+                #region Pendulum
+                case "ForehandPendulumTotalButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Pendulum";
-                case "ForhandPendulumPointsWonButton":
+                case "ForehandPendulumPointsWonButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Pendulum" && r.Schläge[0].Spieler == r.Winner;
-                case "ForhandPendulumDirectPointsWonButton":
-                    return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Pendulum" && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "ForhandPendulumPointsLostButton":
+                case "ForehandPendulumDirectPointsWonButton":
+                    return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Pendulum" && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
+                case "ForehandPendulumPointsLostButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Pendulum" && r.Schläge[0].Spieler != r.Winner;
                 case "BackhandPendulumTotalButton":
                     return r.Schläge[0].Schlägerseite == "Rückhand" && r.Schläge[0].Aufschlagart == "Pendulum";
@@ -465,15 +473,14 @@ namespace TT.Viewer.ViewModels
 
                 #endregion
 
-                #region ReversePendulum 
-
-                case "ForhandReversePendulumTotalButton":
+                #region ReversePendulum
+                case "ForehandReversePendulumTotalButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Gegenläufer";
-                case "ForhandReversePendulumPointsWonButton":
+                case "ForehandReversePendulumPointsWonButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Gegenläufer" && r.Schläge[0].Spieler == r.Winner;
-                case "ForhandReversePendulumDirectPointsWonButton":
-                    return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Gegenläufer" && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "ForhandReversePendulumPointsLostButton":
+                case "ForehandReversePendulumDirectPointsWonButton":
+                    return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Gegenläufer" && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
+                case "ForehandReversePendulumPointsLostButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Gegenläufer" && r.Schläge[0].Spieler != r.Winner;
                 case "BackhandReversePendulumTotalButton":
                     return r.Schläge[0].Schlägerseite == "Rückhand" && r.Schläge[0].Aufschlagart == "Gegenläufer";
@@ -493,15 +500,15 @@ namespace TT.Viewer.ViewModels
                     return (r.Schläge[0].Schlägerseite == "Vorhand" || r.Schläge[0].Schlägerseite == "Rückhand") && r.Schläge[0].Aufschlagart == "Gegenläufer" && r.Schläge[0].Spieler != r.Winner;
 
                 #endregion
-                #region Tomahawk 
 
-                case "ForhandTomahawkTotalButton":
+                #region Tomahawk
+                case "ForehandTomahawkTotalButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Tomahawk";
-                case "ForhandTomahawkPointsWonButton":
+                case "ForehandTomahawkPointsWonButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Tomahawk" && r.Schläge[0].Spieler == r.Winner;
-                case "ForhandTomahawkDirectPointsWonButton":
-                    return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Tomahawk" && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "ForhandTomahawkPointsLostButton":
+                case "ForehandTomahawkDirectPointsWonButton":
+                    return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Tomahawk" && r.Schläge[0].Spieler == r.Winner && r.Length < 3;
+                case "ForehandTomahawkPointsLostButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Tomahawk" && r.Schläge[0].Spieler != r.Winner;
                 case "BackhandTomahawkTotalButton":
                     return r.Schläge[0].Schlägerseite == "Rückhand" && r.Schläge[0].Aufschlagart == "Tomahawk";
@@ -522,15 +529,14 @@ namespace TT.Viewer.ViewModels
 
                 #endregion
 
-                #region Special 
-
-                case "ForhandSpecialTotalButton":
+                #region Special
+                case "ForehandSpecialTotalButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Spezial";
-                case "ForhandSpecialPointsWonButton":
+                case "ForehandSpecialPointsWonButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Spezial" && r.Schläge[0].Spieler == r.Winner;
-                case "ForhandSpecialDirectPointsWonButton":
+                case "ForehandSpecialDirectPointsWonButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Spezial" && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "ForhandSpecialPointsLostButton":
+                case "ForehandSpecialPointsLostButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && r.Schläge[0].Aufschlagart == "Spezial" && r.Schläge[0].Spieler != r.Winner;
                 case "BackhandSpecialTotalButton":
                     return r.Schläge[0].Schlägerseite == "Rückhand" && r.Schläge[0].Aufschlagart == "Spezial";
@@ -551,14 +557,14 @@ namespace TT.Viewer.ViewModels
 
                 #endregion
 
-                #region All Forhand Services
-                case "ForhandAllTotalButton":
+                #region All Forehand Services
+                case "ForehandAllTotalButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && (r.Schläge[0].Aufschlagart == "Pendulum" || r.Schläge[0].Aufschlagart == "Gegenläufer" || r.Schläge[0].Aufschlagart == "Tomahawk" || r.Schläge[0].Aufschlagart == "Spezial");
-                case "ForhandAllPointsWonButton":
+                case "ForehandAllPointsWonButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && (r.Schläge[0].Aufschlagart == "Pendulum" || r.Schläge[0].Aufschlagart == "Gegenläufer" || r.Schläge[0].Aufschlagart == "Tomahawk" || r.Schläge[0].Aufschlagart == "Spezial") && r.Schläge[0].Spieler == r.Winner;
-                case "ForhandAllDirectPointsWonButton":
+                case "ForehandAllDirectPointsWonButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && (r.Schläge[0].Aufschlagart == "Pendulum" || r.Schläge[0].Aufschlagart == "Gegenläufer" || r.Schläge[0].Aufschlagart == "Tomahawk" || r.Schläge[0].Aufschlagart == "Spezial") && r.Schläge[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3;
-                case "ForhandAllPointsLostButton":
+                case "ForehandAllPointsLostButton":
                     return r.Schläge[0].Schlägerseite == "Vorhand" && (r.Schläge[0].Aufschlagart == "Pendulum" || r.Schläge[0].Aufschlagart == "Gegenläufer" || r.Schläge[0].Aufschlagart == "Tomahawk" || r.Schläge[0].Aufschlagart == "Spezial") && r.Schläge[0].Spieler != r.Winner;
                 #endregion
 

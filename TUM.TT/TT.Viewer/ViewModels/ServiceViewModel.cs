@@ -133,7 +133,7 @@ namespace TT.Viewer.ViewModels
        
         public void ForBackHand(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("forhand"))
+            if (source.Name.ToLower().Contains("forehand"))
             {
                 if (source.IsChecked.Value)
                 {

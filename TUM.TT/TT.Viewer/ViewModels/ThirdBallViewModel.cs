@@ -25,7 +25,7 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
-        public Stroke.StepAround StepAround { get; private set; }     
+        public Stroke.StepAround StepAround { get; private set; }
 
         private HashSet<Stroke.Technique> _strokeTec;
 
@@ -52,7 +52,7 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             Manager = man;
             SelectedRallies = new List<Rally>();
-            ActivePlaylist = new Playlist();           
+            ActivePlaylist = new Playlist();
             Hand = Stroke.Hand.None;
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
@@ -62,7 +62,8 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 2,
-                PlayerLabel="3.Schlag:"
+                PlayerLabel="3.Schlag:",
+                StrokeNumber = 2
             };
             TableView = new TableStandardViewModel(this.events);
         }
@@ -80,10 +81,10 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = ViewMode.Position.Bottom;
             }
         }
-       
+
         public void ForBackHand(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("forhand"))
+            if (source.Name.ToLower().Contains("forehand"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -402,7 +403,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => 
+                SelectedRallies = BasicFilterView.SelectedRallies.Where(r =>
                     r.Schläge[2].HasHand(this.Hand) &&
                     r.Schläge[2].HasStepAround(this.StepAround) &&
                     r.Schläge[2].HasStrokeTec(this.SelectedStrokeTec) &&

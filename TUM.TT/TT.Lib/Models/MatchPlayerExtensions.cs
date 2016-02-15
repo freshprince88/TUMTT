@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace TT.Lib.Models
 {
     /// <summary>
@@ -24,30 +26,35 @@ namespace TT.Lib.Models
         /// <summary>
         /// Refers to the <see cref="Match.SecondPlayer"/> in a match.
         /// </summary>
-        Second = 2,
+        Second = 2
+}
+
+/// <summary>
+/// Extensions for <see cref="MatchPlayer"/>.
+/// </summary>
+public static class MatchPlayerExtensions
+{
+    /// <summary>
+    /// Gets the other player.
+    /// </summary>
+    /// <param name="self">This player.</param>
+    /// <returns>The other player.</returns>
+    public static MatchPlayer Other(this MatchPlayer self)
+    {
+        switch (self)
+        {
+            case MatchPlayer.First:
+                return MatchPlayer.Second;
+            case MatchPlayer.Second:
+                return MatchPlayer.First;
+            default:
+                return MatchPlayer.None;
+        }
     }
 
-    /// <summary>
-    /// Extensions for <see cref="MatchPlayer"/>.
-    /// </summary>
-    public static class MatchPlayerExtensions
-    {
-        /// <summary>
-        /// Gets the other player.
-        /// </summary>
-        /// <param name="self">This player.</param>
-        /// <returns>The other player.</returns>
-        public static MatchPlayer Other(this MatchPlayer self)
+        public static bool Equals(this MatchPlayer self, int i)
         {
-            switch (self)
-            {
-                case MatchPlayer.First:
-                    return MatchPlayer.Second;
-                case MatchPlayer.Second:
-                    return MatchPlayer.First;
-                default:
-                    return MatchPlayer.None;
-            }
+            return self.Equals(Enum.GetName(typeof(MatchPlayer), i));
         }
     }
 }

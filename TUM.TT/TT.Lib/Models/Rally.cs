@@ -361,5 +361,313 @@ namespace TT.Lib.Models
             }
             return Schläge[StrokeNumber];
         }
+
+        #region Helper Methods
+        public Boolean IsDiagonal(int i)
+        {
+            if (i <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                int now = i;
+                int prev = i - 1;
+
+                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) > 100;
+            }
+            
+        }
+
+        public Boolean IsMiddle(int i)
+        {
+            if (i <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                int now = i;
+                int prev = i - 1;
+
+                return this.Schläge[now].IsBotMid() || this.Schläge[now].IsMidMid() || this.Schläge[now].IsTopMid();
+            }
+
+        }
+
+        public Boolean IsParallel(int i)
+        {
+            if (i <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                int now = i;
+                int prev = i - 1;
+
+                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) <= 100;
+            }
+
+        }
+        #region Helper Methods Statistics
+
+        public Boolean HasBasisInformationStatistics(int minlegth, string name)
+        {
+            switch (name)
+            {
+                case "":
+                    return true;
+                case "TotalReceivesCount":
+                    return Convert.ToInt32(this.Length) >= minlegth;
+                case "TotalReceivesCountPointPlayer1":
+                    return Convert.ToInt32(this.Length) >= minlegth && this.Winner == MatchPlayer.First;
+                case "TotalReceivesCountPointPlayer2":
+                    return Convert.ToInt32(this.Length) >= minlegth && this.Winner == MatchPlayer.Second;
+                default:
+                    return true;
+
+            }
+        }
+
+        public Boolean HasTechniqueStatistics(int stroke, string name)
+        {
+            switch (name)
+            {
+                case "":
+                    return true;
+
+                #region Flip 
+                case "ForehandFlipTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip";
+                case "ForehandFlipPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandFlipDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "ForehandFlipPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandFlipTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip";
+                case "BackhandFlipPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandFlipDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "BackhandFlipPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllFlipTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].Schlagtechnik.Art == "Flip";
+                case "AllFlipPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllFlipDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "AllFlipPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].Schlagtechnik.Art == "Flip" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region Push short
+
+                case "ForehandPushShortTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort();
+                case "ForehandPushShortPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandPushShortDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "ForehandPushShortPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandPushShortTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort();
+                case "BackhandPushShortPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandPushShortDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "BackhandPushShortPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllPushShortTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf";
+                case "AllPushShortPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllPushShortDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "AllPushShortPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsShort() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region Push halflong
+
+                case "ForehandPushHalfLongTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong();
+                case "ForehandPushHalfLongPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandPushHalfLongDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "ForehandPushHalfLongPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandPushHalfLongTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong();
+                case "BackhandPushHalfLongPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandPushHalfLongDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "BackhandPushHalfLongPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllPushHalfLongTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf";
+                case "AllPushHalfLongPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllPushHalfLongDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "AllPushHalfLongPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler != this.Winner;
+
+
+                #endregion
+
+                #region Push long
+
+                case "ForehandPushLongTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong();
+                case "ForehandPushLongPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandPushLongDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "ForehandPushLongPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandPushLongTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong();
+                case "BackhandPushLongPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandPushLongDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "BackhandPushLongPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllPushLongTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf";
+                case "AllPushLongPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllPushLongDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "AllPushLongPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.Schläge[stroke].IsLong() && this.Schläge[stroke].Schlagtechnik.Art == "Schupf" && this.Schläge[stroke].Spieler != this.Winner;
+
+
+                #endregion
+
+                #region Topspin diagonal
+
+                case "ForehandTopspinDiagonalTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1);
+                case "ForehandTopspinDiagonalPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1) && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandTopspinDiagonalDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "ForehandTopspinDiagonalPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandTopspinDiagonalTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1);
+                case "BackhandTopspinDiagonalPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1) && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandTopspinDiagonalDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "BackhandTopspinDiagonalPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsDiagonal(1) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllTopspinDiagonalTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin";
+                case "AllTopspinDiagonalPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllTopspinDiagonalDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "AllTopspinDiagonalPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region Topspin Middle
+
+                case "ForehandTopspinMiddleTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1);
+                case "ForehandTopspinMiddlePointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1) && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandTopspinMiddleDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "ForehandTopspinMiddlePointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandTopspinMiddleTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1);
+                case "BackhandTopspinMiddlePointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1) && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandTopspinMiddleDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "BackhandTopspinMiddlePointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsMiddle(1) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllTopspinMiddleTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin";
+                case "AllTopspinMiddlePointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllTopspinMiddleDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "AllTopspinMiddlePointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region Topspin parallel
+
+                case "ForehandTopspinParallelTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1);
+                case "ForehandTopspinParallelPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1) && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandTopspinParallelDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "ForehandTopspinParallelPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandTopspinParallelTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1);
+                case "BackhandTopspinParallelPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1) && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandTopspinParallelDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "BackhandTopspinParallelPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.IsParallel(1) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllTopspinParallelTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin";
+                case "AllTopspinParallelPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllTopspinParallelDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < 4;
+                case "AllTopspinParallelPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(1) && this.Schläge[stroke].Schlagtechnik.Art == "Topspin" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+
+
+
+
+                default:
+                    return true;
+            }
+
+        }
+
+
+
+        #endregion
+        #endregion
     }
 }
