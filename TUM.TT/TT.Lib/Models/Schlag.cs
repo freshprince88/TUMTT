@@ -239,6 +239,8 @@ namespace TT.Lib.Models
             }
         }
 
+        #region 9 Fields
+
         public Boolean IsTopLeft()
         {
             double X = this.Platzierung.WX == "" ? -1 : Convert.ToDouble(this.Platzierung.WX);
@@ -307,17 +309,56 @@ namespace TT.Lib.Models
             return (X <= 152.5 && X > 102 && Y < 137 && Y > 92) || (X >= 0 && X < 50.5 && Y >= 137 && Y < 182);
         }
 
+        #endregion
+
+        #region Short , HalfLong, Long
+
         public Boolean IsShort()
+        {
+            return this.IsBotLeft() || this.IsBotMid() || this.IsBotRight();
+        }
+
+        public Boolean IsHalfLong()
+        {
+            return this.IsMidLeft() || this.IsMidMid() || this.IsMidRight();
+        }
+
+        public Boolean IsLong()
+        {
+            return this.IsTopLeft() || this.IsTopMid() || this.IsTopRight();
+        }
+        #endregion
+        #region Forehand Side, Middle, Backhand Side
+
+        public Boolean IsForehandSide()
+        {
+            return this.IsBotLeft() || this.IsMidLeft() || this.IsTopLeft();
+        }
+
+        public Boolean IsBackhandSide()
+        {
+            return this.IsBotRight() || this.IsMidRight() || this.IsTopRight();
+        }
+
+        public Boolean IsMiddle()
+        {
+            return this.IsBotMid() || this.IsMidMid() || this.IsTopMid();
+        }
+
+        #endregion
+
+
+        public Boolean IsOverTheTable()
         {
             return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "über";
         }
 
-        public Boolean IsHalf()
+        public Boolean IsAtTheTable()
         {
             return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "hinter";
         }
 
-        public Boolean IsLong()
+        public Boolean IsHalfDistance()
         {
             return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "halbdistanz";
         }

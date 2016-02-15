@@ -187,44 +187,44 @@ namespace TT.Viewer.ViewModels
                 case "":
                     return true;
 
-                #region ForhandAll
-                case "PlacementForhandAllTotalButton":
+                #region ForehandAll
+                case "PlacementForehandAllTotalButton":
                     return r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft();
-                case "PlacementForhandAllPointsWonButton":
+                case "PlacementForehandAllPointsWonButton":
                     return (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft()) && r.Schlag[3].Spieler == r.Winner;
-                case "PlacementForhandAllDirectPointsWonButton":
+                case "PlacementForehandAllDirectPointsWonButton":
                     return (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft()) && r.Schlag[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForhandAllPointsLostButton":
+                case "PlacementForehandAllPointsLostButton":
                     return (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft()) && r.Schlag[3].Spieler != r.Winner;
                 #endregion
-                #region ForhandLong
-                case "PlacementForhandLongTotalButton":
+                #region ForehandLong
+                case "PlacementForehandLongTotalButton":
                     return r.Schlag[3].IsTopLeft();
-                case "PlacementForhandLongPointsWonButton":
+                case "PlacementForehandLongPointsWonButton":
                     return r.Schlag[3].IsTopLeft() && r.Schlag[3].Spieler == r.Winner;
-                case "PlacementForhandLongDirectPointsWonButton":
+                case "PlacementForehandLongDirectPointsWonButton":
                     return r.Schlag[3].IsTopLeft() && r.Schlag[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForhandLongPointsLostButton":
+                case "PlacementForehandLongPointsLostButton":
                     return r.Schlag[3].IsTopLeft() && r.Schlag[3].Spieler != r.Winner;
                 #endregion
-                #region ForhandHalfLong
-                case "PlacementForhandHalfLongTotalButton":
+                #region ForehandHalfLong
+                case "PlacementForehandHalfLongTotalButton":
                     return r.Schlag[3].IsMidLeft();
-                case "PlacementForhandHalfLongPointsWonButton":
+                case "PlacementForehandHalfLongPointsWonButton":
                     return r.Schlag[3].IsMidLeft() && r.Schlag[3].Spieler == r.Winner;
-                case "PlacementForhandHalfLongDirectPointsWonButton":
+                case "PlacementForehandHalfLongDirectPointsWonButton":
                     return r.Schlag[3].IsMidLeft() && r.Schlag[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForhandHalfLongPointsLostButton":
+                case "PlacementForehandHalfLongPointsLostButton":
                     return r.Schlag[3].IsMidLeft() && r.Schlag[3].Spieler != r.Winner;
                 #endregion
-                #region ForhandShort
-                case "PlacementForhandShortTotalButton":
+                #region ForehandShort
+                case "PlacementForehandShortTotalButton":
                     return r.Schlag[3].IsBotLeft();
-                case "PlacementForhandShortPointsWonButton":
+                case "PlacementForehandShortPointsWonButton":
                     return r.Schlag[3].IsBotLeft() && r.Schlag[3].Spieler == r.Winner;
-                case "PlacementForhandShortDirectPointsWonButton":
+                case "PlacementForehandShortDirectPointsWonButton":
                     return r.Schlag[3].IsBotLeft() && r.Schlag[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForhandShortPointsLostButton":
+                case "PlacementForehandShortPointsLostButton":
                     return r.Schlag[3].IsBotLeft() && r.Schlag[3].Spieler != r.Winner;
                 #endregion
                 #region MiddleAll

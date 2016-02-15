@@ -173,12 +173,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForhandAllTotalButton" Tag="r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
+                                <ToggleButton x:Name="PlacementForehandAllTotalButton" Tag="r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandAllTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -192,12 +192,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandAllPointsWonButton" Tag="r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) &amp;&amp; r.Schlag[0].Spieler == r.Winner"  Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandAllPointsWonButton" Tag="r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) &amp;&amp; r.Schlag[0].Spieler == r.Winner"  Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandAllPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandAllPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -211,12 +211,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandAllDirectPointsWonButton" Tag="r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandAllDirectPointsWonButton" Tag="r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandAllDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -230,12 +230,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandAllPointsLostButton" Tag="r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandAllPointsLostButton" Tag="r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandAllPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandAllPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -260,12 +260,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForhandLongTotalButton" Tag="r => r.Schlag[0].IsTopLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementForehandLongTotalButton" Tag="r => r.Schlag[0].IsTopLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandLongTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -279,12 +279,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandLongPointsWonButton" Tag="r => r.Schlag[0].IsTopLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandLongPointsWonButton" Tag="r => r.Schlag[0].IsTopLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandLongPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandLongPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -298,12 +298,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandLongDirectPointsWonButton" Tag="r => r.Schlag[0].IsTopLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandLongDirectPointsWonButton" Tag="r => r.Schlag[0].IsTopLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandLongDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -317,12 +317,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandLongPointsLostButton" Tag="r => r.Schlag[0].IsTopLeft() &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandLongPointsLostButton" Tag="r => r.Schlag[0].IsTopLeft() &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandLongPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandLongPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -347,12 +347,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForhandHalfLongTotalButton" Tag="r => r.Schlag[0].IsMidLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementForehandHalfLongTotalButton" Tag="r => r.Schlag[0].IsMidLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandHalfLongTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -366,12 +366,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandHalfLongPointsWonButton" Tag="r => (r.Schlag[0].IsMidLeft()) &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandHalfLongPointsWonButton" Tag="r => (r.Schlag[0].IsMidLeft()) &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandHalfLongPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -385,12 +385,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandHalfLongDirectPointsWonButton" Tag="r => r.Schlag[0].IsMidLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandHalfLongDirectPointsWonButton" Tag="r => r.Schlag[0].IsMidLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandHalfLongDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -404,12 +404,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandHalfLongPointsLostButton" Tag="r => r.Schlag[0].IsMidLeft() &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandHalfLongPointsLostButton" Tag="r => r.Schlag[0].IsMidLeft() &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandHalfLongPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandHalfLongPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -434,12 +434,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForhandShortTotalButton" Tag="r => r.Schlag[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementForehandShortTotalButton" Tag="r => r.Schlag[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandShortTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandShortTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -453,12 +453,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandShortPointsWonButton" Tag="r => r.Schlag[0].IsBotLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandShortPointsWonButton" Tag="r => r.Schlag[0].IsBotLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandShortPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandShortPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -472,12 +472,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandShortDirectPointsWonButton" Tag="r => r.Schlag[0].IsBotLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandShortDirectPointsWonButton" Tag="r => r.Schlag[0].IsBotLeft() &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandShortDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandShortDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -491,12 +491,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForhandShortPointsLostButton" Tag="r => r.Schlag[0].IsBotLeft() &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandShortPointsLostButton" Tag="r => r.Schlag[0].IsBotLeft() &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=PlacementForhandShortPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=PlacementForehandShortPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectPlacement">
                                                 <cal:Parameter Value="$source" />
@@ -1834,12 +1834,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForhandPendulumTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandPendulumTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandPendulumTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandPendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -1853,12 +1853,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandPendulumPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandPendulumPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandPendulumPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandPendulumPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -1872,12 +1872,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandPendulumDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandPendulumDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandPendulumDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandPendulumDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -1891,12 +1891,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandPendulumPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandPendulumPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandPendulumPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandPendulumPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2095,12 +2095,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForhandReversePendulumTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandReversePendulumTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandReversePendulumTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2114,12 +2114,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandReversePendulumPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandReversePendulumPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandReversePendulumPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2133,12 +2133,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandReversePendulumDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandReversePendulumDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandReversePendulumDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2152,12 +2152,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandReversePendulumPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandReversePendulumPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandReversePendulumPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandReversePendulumPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2353,12 +2353,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForhandTomahawkTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandTomahawkTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandTomahawkTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandTomahawkTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2372,12 +2372,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandTomahawkPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandTomahawkPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandTomahawkPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandTomahawkPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2391,12 +2391,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandTomahawkDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandTomahawkDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandTomahawkDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandTomahawkDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2410,12 +2410,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandTomahawkPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandTomahawkPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandTomahawkPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandTomahawkPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2614,12 +2614,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForhandSpecialTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandSpecialTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandSpecialTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandSpecialTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2633,12 +2633,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandSpecialPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandSpecialPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandSpecialPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandSpecialPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2652,12 +2652,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandSpecialDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandSpecialDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandSpecialDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandSpecialDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2671,12 +2671,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandSpecialPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandSpecialPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schlag[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandSpecialPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandSpecialPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2875,12 +2875,12 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForhandAllTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandAllTotalButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandAllTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandAllTotalButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2894,12 +2894,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandAllPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandAllPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schlag[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandAllPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandAllPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2913,12 +2913,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandAllDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandAllDirectPointsWonButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schlag[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandAllDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandAllDirectPointsWonButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />
@@ -2932,12 +2932,12 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForhandAllPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandAllPointsLostButton" Tag="r => r.Schlag[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schlag[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForhandAllPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandAllPointsLostButton, Path=Name}" />
                                             </cal:ActionMessage>
                                             <cal:ActionMessage MethodName="SelectService">
                                                 <cal:Parameter Value="$source" />

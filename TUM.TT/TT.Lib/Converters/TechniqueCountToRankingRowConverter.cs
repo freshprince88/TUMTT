@@ -78,39 +78,39 @@ namespace TT.Lib.Converters
 
                 case "Flip":
                     if (unranked.IndexOf(flip) < 4)
-                        return unranked.IndexOf(flip) + 1;
+                        return 3;
                     else
-                        return unranked.IndexOf(flip) - 3;
+                        return 8;
                 case "PushShort":
                     if (unranked.IndexOf(pushShort) < 4)
-                        return unranked.IndexOf(pushShort) + 1;
+                        return 3;
                     else
-                        return unranked.IndexOf(pushShort) - 3;
+                        return 8;
                 case "PushHalfLong":
                     if (unranked.IndexOf(pushHalfLong) < 4)
-                        return unranked.IndexOf(pushHalfLong) + 1;
+                        return 3;
                     else
-                        return unranked.IndexOf(pushHalfLong) - 3;
+                        return 8;
                 case "PushLong":
                     if (unranked.IndexOf(pushLong) < 4)
-                        return unranked.IndexOf(pushLong) + 1;
+                        return 3;
                     else
-                        return unranked.IndexOf(pushLong) - 3;
+                        return 8;
                 case "TopspinDiagonal":
                     if (unranked.IndexOf(topspinDiagonal) < 4)
-                        return unranked.IndexOf(topspinDiagonal) + 1;
+                        return 3;
                     else
-                        return unranked.IndexOf(topspinDiagonal) - 3;
+                        return 8;
                 case "TopspinMiddle":
                     if (unranked.IndexOf(topspinMiddle) < 4)
-                        return unranked.IndexOf(topspinMiddle) + 1;
+                        return 3;
                     else
-                        return unranked.IndexOf(topspinMiddle) - 3;
+                        return 8;
                 case "TopspinParallel":
                     if (unranked.IndexOf(topspinParallel) < 4)
-                        return unranked.IndexOf(topspinParallel) + 1;
+                        return 3;
                     else
-                        return unranked.IndexOf(topspinParallel) - 3;
+                        return 8;
                 default:
                     return 0;
             }

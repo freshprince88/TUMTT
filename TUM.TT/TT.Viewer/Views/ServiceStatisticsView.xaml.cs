@@ -98,29 +98,29 @@ namespace TT.Viewer.Views
         }
         private void UpdateButtonContentPlacement()
         {
-            #region ForhandAll
-            //PlacementForhandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()).Count();
-            //PlacementForhandAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner).Count();
-            //PlacementForhandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //PlacementForhandAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler != r.Winner).Count();
+            #region ForehandAll
+            //PlacementForehandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()).Count();
+            //PlacementForehandAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner).Count();
+            //PlacementForehandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //PlacementForehandAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()) && r.Schlag[0].Spieler != r.Winner).Count();
             #endregion
-            #region ForhandLong
-            //PlacementForhandLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft()).Count();
-            //PlacementForhandLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() && r.Schlag[0].Spieler == r.Winner).Count();
-            //PlacementForhandLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //PlacementForhandLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() && r.Schlag[0].Spieler != r.Winner).Count();
+            #region ForehandLong
+            //PlacementForehandLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft()).Count();
+            //PlacementForehandLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() && r.Schlag[0].Spieler == r.Winner).Count();
+            //PlacementForehandLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //PlacementForehandLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsTopLeft() && r.Schlag[0].Spieler != r.Winner).Count();
             #endregion
-            #region ForhandHalfLong
-            //PlacementForhandHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsMidLeft()).Count();
-            //PlacementForhandHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsMidLeft()) && r.Schlag[0].Spieler == r.Winner).Count();
-            //PlacementForhandHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsMidLeft() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //PlacementForhandHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsMidLeft() && r.Schlag[0].Spieler != r.Winner).Count();
+            #region ForehandHalfLong
+            //PlacementForehandHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsMidLeft()).Count();
+            //PlacementForehandHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[0].IsMidLeft()) && r.Schlag[0].Spieler == r.Winner).Count();
+            //PlacementForehandHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsMidLeft() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //PlacementForehandHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsMidLeft() && r.Schlag[0].Spieler != r.Winner).Count();
             #endregion
-            #region ForhandShort
-            //PlacementForhandShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft()).Count();
-            //PlacementForhandShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft() && r.Schlag[0].Spieler == r.Winner).Count();
-            //PlacementForhandShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //PlacementForhandShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft() && r.Schlag[0].Spieler != r.Winner).Count();
+            #region ForehandShort
+            //PlacementForehandShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft()).Count();
+            //PlacementForehandShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft() && r.Schlag[0].Spieler == r.Winner).Count();
+            //PlacementForehandShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft() && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //PlacementForehandShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].IsBotLeft() && r.Schlag[0].Spieler != r.Winner).Count();
             #endregion
 
             #region MiddleAll
@@ -245,10 +245,10 @@ namespace TT.Viewer.Views
         {
             //#region Pendulum
 
-            //ForhandPendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite=="Vorhand" && r.Schlag[0].Aufschlagart=="Pendulum").Count();
-            //ForhandPendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Pendulum" && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandPendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Pendulum" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandPendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Pendulum" && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandPendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite=="Vorhand" && r.Schlag[0].Aufschlagart=="Pendulum").Count();
+            //ForehandPendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Pendulum" && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandPendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Pendulum" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandPendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Pendulum" && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandPendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Pendulum").Count();
             //BackhandPendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Pendulum" && r.Schlag[0].Spieler == r.Winner).Count();
@@ -264,10 +264,10 @@ namespace TT.Viewer.Views
 
             //#region ReversePendulum
 
-            //ForhandReversePendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer").Count();
-            //ForhandReversePendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer" && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandReversePendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandReversePendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer" && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandReversePendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer").Count();
+            //ForehandReversePendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer" && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandReversePendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandReversePendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Gegenläufer" && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandReversePendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Gegenläufer").Count();
             //BackhandReversePendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Gegenläufer" && r.Schlag[0].Spieler == r.Winner).Count();
@@ -283,10 +283,10 @@ namespace TT.Viewer.Views
 
             //#region Tomahawk
 
-            //ForhandTomahawkTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk").Count();
-            //ForhandTomahawkPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk" && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandTomahawkDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandTomahawkPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk" && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandTomahawkTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk").Count();
+            //ForehandTomahawkPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk" && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandTomahawkDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandTomahawkPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Tomahawk" && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandTomahawkTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Tomahawk").Count();
             //BackhandTomahawkPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Tomahawk" && r.Schlag[0].Spieler == r.Winner).Count();
@@ -301,10 +301,10 @@ namespace TT.Viewer.Views
             //#endregion
             //#region Special
 
-            //ForhandSpecialTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial").Count();
-            //ForhandSpecialPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial" && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandSpecialDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandSpecialPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial" && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandSpecialTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial").Count();
+            //ForehandSpecialPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial" && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandSpecialDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial" && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandSpecialPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && r.Schlag[0].Aufschlagart == "Spezial" && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandSpecialTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Spezial").Count();
             //BackhandSpecialPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Rückhand" && r.Schlag[0].Aufschlagart == "Spezial" && r.Schlag[0].Spieler == r.Winner).Count();
@@ -318,12 +318,12 @@ namespace TT.Viewer.Views
 
             //#endregion
 
-            //#region All Forhand Services
+            //#region All Forehand Services
 
-            //ForhandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial")).Count();
-            //ForhandAllPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial") && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial") && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandAllPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial") && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial")).Count();
+            //ForehandAllPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial") && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial") && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandAllPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == "Vorhand" && (r.Schlag[0].Aufschlagart == "Pendulum" || r.Schlag[0].Aufschlagart == "Gegenläufer" || r.Schlag[0].Aufschlagart == "Tomahawk" || r.Schlag[0].Aufschlagart == "Spezial") && r.Schlag[0].Spieler != r.Winner).Count();
 
             //#endregion
 
@@ -353,10 +353,10 @@ namespace TT.Viewer.Views
             //LINIE
 
             #region Pendulum
-            //ForhandPendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum').Count();
-            //ForhandPendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum' && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandPendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandPendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum' && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandPendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum').Count();
+            //ForehandPendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum' && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandPendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandPendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Pendulum' && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandPendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Pendulum').Count();
             //BackhandPendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Pendulum' && r.Schlag[0].Spieler == r.Winner).Count();
@@ -373,10 +373,10 @@ namespace TT.Viewer.Views
 
             #region ReversePendulum
 
-            //ForhandReversePendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer').Count();
-            //ForhandReversePendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer' && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandReversePendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandReversePendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer' && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandReversePendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer').Count();
+            //ForehandReversePendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer' && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandReversePendulumDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandReversePendulumPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer' && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandReversePendulumTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer').Count();
             //BackhandReversePendulumPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Gegenläufer' && r.Schlag[0].Spieler == r.Winner).Count();
@@ -392,10 +392,10 @@ namespace TT.Viewer.Views
 
             #region Tomahawk
 
-            //ForhandTomahawkTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk').Count();
-            //ForhandTomahawkPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk' && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandTomahawkDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandTomahawkPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk' && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandTomahawkTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk').Count();
+            //ForehandTomahawkPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk' && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandTomahawkDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandTomahawkPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Tomahawk' && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandTomahawkTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Tomahawk').Count();
             //BackhandTomahawkPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Tomahawk' && r.Schlag[0].Spieler == r.Winner).Count();
@@ -410,10 +410,10 @@ namespace TT.Viewer.Views
             #endregion
             #region Special
 
-            //ForhandSpecialTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial').Count();
-            //ForhandSpecialPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial' && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandSpecialDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandSpecialPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial' && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandSpecialTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial').Count();
+            //ForehandSpecialPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial' && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandSpecialDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial' && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandSpecialPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && r.Schlag[0].Aufschlagart == 'Spezial' && r.Schlag[0].Spieler != r.Winner).Count();
 
             //BackhandSpecialTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Spezial').Count();
             //BackhandSpecialPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Rückhand' && r.Schlag[0].Aufschlagart == 'Spezial' && r.Schlag[0].Spieler == r.Winner).Count();
@@ -427,12 +427,12 @@ namespace TT.Viewer.Views
 
             #endregion
 
-            #region All Forhand Services
+            #region All Forehand Services
 
-            //ForhandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial')).Count();
-            //ForhandAllPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') && r.Schlag[0].Spieler == r.Winner).Count();
-            //ForhandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
-            //ForhandAllPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') && r.Schlag[0].Spieler != r.Winner).Count();
+            //ForehandAllTotalButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial')).Count();
+            //ForehandAllPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') && r.Schlag[0].Spieler == r.Winner).Count();
+            //ForehandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') && r.Schlag[0].Spieler == r.Winner && Convert.ToInt32(r.Length) < 3).Count();
+            //ForehandAllPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[0].Schlägerseite == 'Vorhand' && (r.Schlag[0].Aufschlagart == 'Pendulum' || r.Schlag[0].Aufschlagart == 'Gegenläufer' || r.Schlag[0].Aufschlagart == 'Tomahawk' || r.Schlag[0].Aufschlagart == 'Spezial') && r.Schlag[0].Spieler != r.Winner).Count();
 
             #endregion
 

@@ -300,9 +300,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Player)
             {
                 case Stroke.Player.Player1:
-                    return r.Schlag[StrokeNumber].Spieler == "First";  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
+                    return r.Schlag[StrokeNumber].Spieler == "First"; 
                 case Stroke.Player.Player2:
-                    return r.Schlag[StrokeNumber].Spieler == "Second"; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
+                    return r.Schlag[StrokeNumber].Spieler == "Second";
                 case Stroke.Player.None:
                     return true;
                 case Stroke.Player.Both:

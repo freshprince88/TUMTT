@@ -106,7 +106,7 @@
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
     <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
     <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
-    <Compile Include="Converters\LabelBackhandForhandRowConverter.cs" />
+    <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingColumnConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />

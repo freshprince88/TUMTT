@@ -62,7 +62,8 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 2,
-                PlayerLabel="3.Schlag:"
+                PlayerLabel="3.Schlag:",
+                StrokeNumber = 2
             };
             TableView = new TableStandardViewModel(this.events);
         }
@@ -83,7 +84,7 @@ namespace TT.Viewer.ViewModels
        
         public void ForBackHand(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("forhand"))
+            if (source.Name.ToLower().Contains("forehand"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -564,14 +565,14 @@ namespace TT.Viewer.ViewModels
             {
                 switch (sel)
                 {
-                    case Positions.Length.Short:
-                        ORresults.Add(stroke.IsShort());
+                    case Positions.Length.OverTheTable:
+                        ORresults.Add(stroke.IsOverTheTable());
                         break;
-                    case Positions.Length.Half:
-                        ORresults.Add(stroke.IsHalf());
+                    case Positions.Length.AtTheTable:
+                        ORresults.Add(stroke.IsAtTheTable());
                         break;
-                    case Positions.Length.Long:
-                        ORresults.Add(stroke.IsLong());
+                    case Positions.Length.HalfDistance:
+                        ORresults.Add(stroke.IsHalfDistance());
                         break;
                     default:
                         break;

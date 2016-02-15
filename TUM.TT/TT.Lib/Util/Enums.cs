@@ -62,9 +62,9 @@ namespace TT.Lib.Util.Enums
 
         public enum Length
         {
-            Short,
-            Half,
-            Long,
+            OverTheTable,
+            AtTheTable,
+            HalfDistance,
             None
         }
 
@@ -111,11 +111,11 @@ namespace TT.Lib.Util.Enums
         public static Positions.Length GetStrokeLengthFromName(string name)
         {
             if (name.Contains("Short"))
-                return Positions.Length.Short;
+                return Positions.Length.OverTheTable;
             else if (name.Contains("Half"))
-                return Positions.Length.Half;
+                return Positions.Length.AtTheTable;
             else if (name.Contains("Long"))
-                return Positions.Length.Long;
+                return Positions.Length.HalfDistance;
             else
                 return Positions.Length.None;
         }

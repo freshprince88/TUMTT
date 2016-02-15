@@ -93,29 +93,29 @@ namespace TT.Viewer.Views
         }
         private void UpdateButtonContentPlacement()
         {
-            //#region ForhandAll
-            //PlacementForhandAllTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft())).Count();
-            //PlacementForhandAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //PlacementForhandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //PlacementForhandAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //#region ForehandAll
+            //PlacementForehandAllTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft())).Count();
+            //PlacementForehandAllPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler == r.Winner).Count();
+            //PlacementForehandAllDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //PlacementForehandAllPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler != r.Winner).Count();
             //#endregion
-            //#region ForhandLong
-            //PlacementForhandLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft()).Count();
-            //PlacementForhandLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler == r.Winner).Count();
-            //PlacementForhandLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //PlacementForhandLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler != r.Winner).Count();
+            //#region ForehandLong
+            //PlacementForehandLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft()).Count();
+            //PlacementForehandLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler == r.Winner).Count();
+            //PlacementForehandLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //PlacementForehandLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler != r.Winner).Count();
             //#endregion
-            //#region ForhandHalfLong
-            //PlacementForhandHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsMidLeft()).Count();
-            //PlacementForhandHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsMidLeft()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //PlacementForhandHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsMidLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //PlacementForhandHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsMidLeft() && r.Schlag[1].Spieler != r.Winner).Count();
+            //#region ForehandHalfLong
+            //PlacementForehandHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsMidLeft()).Count();
+            //PlacementForehandHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsMidLeft()) && r.Schlag[1].Spieler == r.Winner).Count();
+            //PlacementForehandHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsMidLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //PlacementForehandHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsMidLeft() && r.Schlag[1].Spieler != r.Winner).Count();
             //#endregion
-            //#region ForhandShort
-            //PlacementForhandShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft()).Count();
-            //PlacementForhandShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler == r.Winner).Count();
-            //PlacementForhandShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //PlacementForhandShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler != r.Winner).Count();
+            //#region ForehandShort
+            //PlacementForehandShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft()).Count();
+            //PlacementForehandShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler == r.Winner).Count();
+            //PlacementForehandShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //PlacementForehandShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler != r.Winner).Count();
             //#endregion
 
             //#region MiddleAll
@@ -169,22 +169,22 @@ namespace TT.Viewer.Views
             //#endregion
 
             //#region AllLong
-            //PlacementAllLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight())).Count();
-            //PlacementAllLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //PlacementAllLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //PlacementAllLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //PlacementAllLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsLong()).Count();
+            //PlacementAllLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //PlacementAllLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //PlacementAllLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner).Count();
             //#endregion
             //#region AllHalfLong
-            //PlacementAllHalfLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight())).Count();
-            //PlacementAllHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //PlacementAllHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //PlacementAllHalfLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //PlacementAllHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsHalfLong()).Count();
+            //PlacementAllHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //PlacementAllHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //PlacementAllHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner).Count();
             //#endregion
             //#region AllShort
-            //PlacementAllShortTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight())).Count();
-            //PlacementAllShortPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //PlacementAllShortDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //PlacementAllShortPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //PlacementAllShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsShort()).Count();
+            //PlacementAllShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner).Count();
+            //PlacementAllShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //PlacementAllShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner).Count();
             //#endregion
 
             //#region ServiceErrors
@@ -221,10 +221,10 @@ namespace TT.Viewer.Views
         private void UpdateButtonContentTechnique()
         {
             // #region Flip
-            // ForhandFlipTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip").Count();
-            // ForhandFlipPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner).Count();
-            // ForhandFlipDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // ForhandFlipPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler != r.Winner).Count();
+            // ForehandFlipTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip").Count();
+            // ForehandFlipPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner).Count();
+            // ForehandFlipDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // ForehandFlipPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler != r.Winner).Count();
 
             // BackhandFlipTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Flip").Count();
             // BackhandFlipPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner).Count();
@@ -240,69 +240,69 @@ namespace TT.Viewer.Views
 
             // #region Push short
 
-            // ForhandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight())).Count();
-            //ForhandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // ForhandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // ForhandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // ForehandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort()).Count();
+            //ForehandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner).Count();
+            // ForehandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // ForehandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            // BackhandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight())).Count();
-            // BackhandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // BackhandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // BackhandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // BackhandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort()).Count();
+            // BackhandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner).Count();
+            // BackhandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // BackhandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            // AllPushShortTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight())).Count();
-            // AllPushShortPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // AllPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // AllPushShortPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // AllPushShortTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort()).Count();
+            // AllPushShortPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner).Count();
+            // AllPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // AllPushShortPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner).Count();
 
             // #endregion
 
             // #region Push halflong
 
-            // ForhandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight())).Count();
-            // ForhandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // ForhandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // ForhandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // ForehandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong()).Count();
+            // ForehandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            // ForehandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // ForehandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            // BackhandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight())).Count();
-            // BackhandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // BackhandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // BackhandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // BackhandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong()).Count();
+            // BackhandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            // BackhandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // BackhandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            // AllPushHalfLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight())).Count();
-            // AllPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // AllPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // AllPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // AllPushHalfLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong()).Count();
+            // AllPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            // AllPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // AllPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
             // #endregion
 
             // #region Push long
 
-            // ForhandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight())).Count();
-            // ForhandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // ForhandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // ForhandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // ForehandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong()).Count();
+            // ForehandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            // ForehandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // ForehandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            // BackhandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight())).Count();
-            // BackhandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // BackhandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // BackhandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // BackhandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong()).Count();
+            // BackhandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            // BackhandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // BackhandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            // AllPushLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight())).Count();
-            // AllPushLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // AllPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // AllPushLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // AllPushLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong()).Count();
+            // AllPushLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            // AllPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // AllPushLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
             // #endregion
 
-            // #region Forhand Topspin diagonal
+            // #region Forehand Topspin diagonal
 
             // //was ist Diagonal ??
 
-            // ForhandTopspinDiagonalTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX))>100).Count();
-            // ForhandTopspinDiagonalPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100 && r.Schlag[1].Spieler == r.Winner).Count();
-            // ForhandTopspinDiagonalDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100 && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // ForhandTopspinDiagonalPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100 && r.Schlag[1].Spieler != r.Winner).Count();
+            // ForehandTopspinDiagonalTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX))>100).Count();
+            // ForehandTopspinDiagonalPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100 && r.Schlag[1].Spieler == r.Winner).Count();
+            // ForehandTopspinDiagonalDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100 && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // ForehandTopspinDiagonalPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100 && r.Schlag[1].Spieler != r.Winner).Count();
 
             // BackhandTopspinDiagonalTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100).Count();
             // BackhandTopspinDiagonalPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && Math.Abs(Convert.ToInt32(r.Schlag[0].Platzierung.WX) - Convert.ToInt32(r.Schlag[1].Platzierung.WX)) > 100 && r.Schlag[1].Spieler == r.Winner).Count();
@@ -316,14 +316,14 @@ namespace TT.Viewer.Views
 
             // #endregion
 
-            // #region Forhand Topspin Middle
+            // #region Forehand Topspin Middle
 
             // //was ist Mitte ??
 
-            // ForhandTopspinMiddleTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid())).Count();
-            // ForhandTopspinMiddlePointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner).Count();
-            // ForhandTopspinMiddleDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            // ForhandTopspinMiddlePointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler != r.Winner).Count();
+            // ForehandTopspinMiddleTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid())).Count();
+            // ForehandTopspinMiddlePointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner).Count();
+            // ForehandTopspinMiddleDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            // ForehandTopspinMiddlePointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler != r.Winner).Count();
 
             // BackhandTopspinMiddleTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid())).Count();
             // BackhandTopspinMiddlePointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner).Count();
@@ -338,10 +338,10 @@ namespace TT.Viewer.Views
             // #endregion
 
             #region Flip
-            //ForhandFlipTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip').Count();
-            //ForhandFlipPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip' && r.Schlag[1].Spieler == r.Winner).Count();
-            //ForhandFlipDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip' && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //ForhandFlipPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip' && r.Schlag[1].Spieler != r.Winner).Count();
+            //ForehandFlipTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip').Count();
+            //ForehandFlipPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip' && r.Schlag[1].Spieler == r.Winner).Count();
+            //ForehandFlipDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip' && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //ForehandFlipPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip' && r.Schlag[1].Spieler != r.Winner).Count();
 
             //BackhandFlipTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip').Count();
             //BackhandFlipPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Flip' && r.Schlag[1].Spieler == r.Winner).Count();
@@ -357,69 +357,69 @@ namespace TT.Viewer.Views
 
             #region Push short
 
-            //ForhandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight())).Count();
-            //ForhandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //ForhandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //ForhandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //ForehandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort()).Count();
+            //ForehandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner).Count();
+            //ForehandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //ForehandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            //BackhandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight())).Count();
-            //BackhandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //BackhandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //BackhandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //BackhandPushShortTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort()).Count();
+            //BackhandPushShortPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner).Count();
+            //BackhandPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //BackhandPushShortPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            //AllPushShortTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight())).Count();
-            //AllPushShortPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //AllPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //AllPushShortPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsBotLeft() || r.Schlag[1].IsBotMid() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //AllPushShortTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort()).Count();
+            //AllPushShortPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner).Count();
+            //AllPushShortDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //AllPushShortPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner).Count();
 
             #endregion
 
             #region Push halflong
 
-            //ForhandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight())).Count();
-            //ForhandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //ForhandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //ForhandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //ForehandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong()).Count();
+            //ForehandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //ForehandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //ForehandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            //BackhandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight())).Count();
-            //BackhandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //BackhandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //BackhandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //BackhandPushHalfLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong()).Count();
+            //BackhandPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //BackhandPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //BackhandPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            //AllPushHalfLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight())).Count();
-            //AllPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //AllPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //AllPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsMidLeft() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsMidRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //AllPushHalfLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong()).Count();
+            //AllPushHalfLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //AllPushHalfLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //AllPushHalfLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
             #endregion
 
             #region Push long
 
-            //ForhandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight())).Count();
-            //ForhandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //ForhandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //ForhandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //ForehandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong()).Count();
+            //ForehandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //ForehandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //ForehandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            //BackhandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight())).Count();
-            //BackhandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //BackhandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //BackhandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //BackhandPushLongTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong()).Count();
+            //BackhandPushLongPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //BackhandPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //BackhandPushLongPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
-            //AllPushLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight())).Count();
-            //AllPushLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //AllPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //AllPushLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsTopMid() || r.Schlag[1].IsTopRight()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //AllPushLongTotalButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong()).Count();
+            //AllPushLongPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner).Count();
+            //AllPushLongDirectPointsWonButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //AllPushLongPointsLostButton.Content = SelectedRallies.Where(r => (r.Schlag[1].Schlägerseite == 'Vorhand' || r.Schlag[1].Schlägerseite == 'Rückhand') && r.Schlag[1].Schlagtechnik.Art == 'Schupf' && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner).Count();
 
             #endregion
 
-            #region Forhand Topspin diagonal
+            #region Forehand Topspin diagonal
 
             //was ist Diagonal ??
 
-            //ForhandTopspinDiagonalTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1)).Count();
-            //ForhandTopspinDiagonalPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner).Count();
-            //ForhandTopspinDiagonalDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //ForhandTopspinDiagonalPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1) && r.Schlag[1].Spieler != r.Winner).Count();
+            //ForehandTopspinDiagonalTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1)).Count();
+            //ForehandTopspinDiagonalPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner).Count();
+            //ForehandTopspinDiagonalDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //ForehandTopspinDiagonalPointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1) && r.Schlag[1].Spieler != r.Winner).Count();
 
             //BackhandTopspinDiagonalTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1)).Count();
             //BackhandTopspinDiagonalPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner).Count();
@@ -433,14 +433,14 @@ namespace TT.Viewer.Views
 
             #endregion
 
-            #region Forhand Topspin Middle
+            #region Forehand Topspin Middle
 
             //was ist Mitte ??
 
-            //ForhandTopspinMiddleTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid())).Count();
-            //ForhandTopspinMiddlePointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner).Count();
-            //ForhandTopspinMiddleDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
-            //ForhandTopspinMiddlePointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler != r.Winner).Count();
+            //ForehandTopspinMiddleTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid())).Count();
+            //ForehandTopspinMiddlePointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner).Count();
+            //ForehandTopspinMiddleDirectPointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4).Count();
+            //ForehandTopspinMiddlePointsLostButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Vorhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler != r.Winner).Count();
 
             //BackhandTopspinMiddleTotalButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid())).Count();
             //BackhandTopspinMiddlePointsWonButton.Content = SelectedRallies.Where(r => r.Schlag[1].Schlägerseite == 'Rückhand' && r.Schlag[1].Schlagtechnik.Art == 'Topspin' && (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner).Count();

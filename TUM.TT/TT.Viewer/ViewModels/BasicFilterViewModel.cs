@@ -28,7 +28,7 @@ namespace TT.Viewer.ViewModels
         public List<Stroke.Spin> SelectedSpins { get; private set; }
 
         public Stroke.Point Point { get; private set; }
-        public Stroke.Server Server { get; private set; }
+        public Stroke.Player Player { get; private set; }
 
         public Stroke.Crunch Crunch { get; private set; }
 
@@ -54,7 +54,7 @@ namespace TT.Viewer.ViewModels
             Manager = man;
             SelectedRallies = new List<Rally>();
             Point = Stroke.Point.None;
-            Server = Stroke.Server.None;
+            Player = Stroke.Player.None;
             Crunch = Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
             SelectedRallyLengths = new HashSet<int>();
@@ -320,45 +320,44 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
-        public void P1P2Server(ToggleButton source)
+        public void P1P2(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("player1"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Server == Stroke.Server.None)
-                        Server = Stroke.Server.Player1;
-                    else if (Server == Stroke.Server.Player2)
-                        Server = Stroke.Server.Both;
+                    if (Player == Stroke.Player.None)
+                        Player = Stroke.Player.Player1;
+                    else if (Player == Stroke.Player.Player2)
+                        Player = Stroke.Player.Both;
                 }
                 else
                 {
-                    if (Server == Stroke.Server.Player1)
-                        Server = Stroke.Server.None;
-                    else if (Server == Stroke.Server.Both)
-                        Server = Stroke.Server.Player2;
+                    if (Player == Stroke.Player.Player1)
+                        Player = Stroke.Player.None;
+                    else if (Player == Stroke.Player.Both)
+                        Player = Stroke.Player.Player2;
                 }
             }
             else if (source.Name.ToLower().Contains("player2"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Server == Stroke.Server.None)
-                        Server = Stroke.Server.Player2;
-                    else if (Server == Stroke.Server.Player1)
-                        Server = Stroke.Server.Both;
+                    if (Player == Stroke.Player.None)
+                        Player = Stroke.Player.Player2;
+                    else if (Player == Stroke.Player.Player1)
+                        Player = Stroke.Player.Both;
                 }
                 else
                 {
-                    if (Server == Stroke.Server.Player2)
-                        Server = Stroke.Server.None;
-                    else if (Server == Stroke.Server.Both)
-                        Server = Stroke.Server.Player1;
+                    if (Player == Stroke.Player.Player2)
+                        Player = Stroke.Player.None;
+                    else if (Player == Stroke.Player.Both)
+                        Player = Stroke.Player.Player1;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
-
         #endregion
 
         #region Caliburn Hooks
@@ -411,7 +410,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasServer(r)).ToList();
+                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasPlayer(r)).ToList();
                 this.events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -421,9 +420,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Point)
             {
                 case Stroke.Point.Player1:
-                    return r.Winner == "First";  //TODO Name der Spieler dynamisch????
+                    return r.Winner == "First";  
                 case Stroke.Point.Player2:
-                    return r.Winner == "Second"; //TODO Name der Spieler dynamisch????
+                    return r.Winner == "Second"; 
                 case Stroke.Point.None:
                     return true;
                 case Stroke.Point.Both:
@@ -433,17 +432,17 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private bool HasServer(Rally r)
+        private bool HasPlayer(Rally r)
         {
-            switch (this.Server)
+            switch (this.Player)
             {
-                case Stroke.Server.Player1:
-                    return r.Schlag[StrokeNumber].Spieler == "First";  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
-                case Stroke.Server.Player2:
-                    return r.Schlag[StrokeNumber].Spieler == "Second"; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
-                case Stroke.Server.None:
+                case Stroke.Player.Player1:
+                    return r.Schlag[StrokeNumber].Spieler == "First";
+                case Stroke.Player.Player2:
+                    return r.Schlag[StrokeNumber].Spieler == "Second";
+                case Stroke.Player.None:
                     return true;
-                case Stroke.Server.Both:
+                case Stroke.Player.Both:
                     return true;
                 default:
                     return false;
