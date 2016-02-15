@@ -161,7 +161,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForhandAllTotalButton" Tag="r => r.Schlag[0].IsTopLeft() || r.Schlag[0].IsMidLeft() || r.Schlag[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
+                                <ToggleButton x:Name="PlacementForhandAllTotalButton" Tag="r => r.Schläge[0].IsTopLeft() || r.Schläge[0].IsMidLeft() || r.Schläge[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">

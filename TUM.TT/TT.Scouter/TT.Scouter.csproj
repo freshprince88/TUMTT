@@ -95,8 +95,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
     <Compile Include="ViewModels\NewMatchViewModel.cs" />
+    <Compile Include="ViewModels\RemoteSchlagViewModel.cs" />
+    <Compile Include="ViewModels\RemoteViewModel.cs" />
+    <Compile Include="ViewModels\SchlagDetailViewModel.cs" />
+    <Compile Include="ViewModels\ServiceDetailViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -109,6 +114,18 @@
     </Compile>
     <Compile Include="Views\NewMatchView.xaml.cs">
       <DependentUpon>NewMatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemoteSchlagView.xaml.cs">
+      <DependentUpon>RemoteSchlagView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemoteView.xaml.cs">
+      <DependentUpon>RemoteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SchlagDetailView.xaml.cs">
+      <DependentUpon>SchlagDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceDetailView.xaml.cs">
+      <DependentUpon>ServiceDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VideoSourceView.xaml.cs">
       <DependentUpon>VideoSourceView.xaml</DependentUpon>
@@ -126,6 +143,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewMatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RemoteSchlagView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RemoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SchlagDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ServiceDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

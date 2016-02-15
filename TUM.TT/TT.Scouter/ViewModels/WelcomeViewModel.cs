@@ -29,9 +29,12 @@ namespace TT.Scouter.ViewModels
             yield return next;
         }
 
-        public void OpenMatch()
+        public IEnumerable<IResult> OpenMatch()
         {
-            //TODO: Open DetailView in Shell
+            //TODO: Load Match
+            //      Open RemoteView in Shell
+            var next = ShowScreenResult.Of<RemoteViewModel>();
+            yield return next;
         }
 
         #endregion
