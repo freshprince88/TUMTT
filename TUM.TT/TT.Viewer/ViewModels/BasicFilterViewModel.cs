@@ -420,9 +420,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Point)
             {
                 case Stroke.Point.Player1:
-                    return r.Winner == "First";  
+                    return r.Winner == MatchPlayer.First;  //TODO Name der Spieler dynamisch????
                 case Stroke.Point.Player2:
-                    return r.Winner == "Second"; 
+                    return r.Winner == MatchPlayer.Second; //TODO Name der Spieler dynamisch????
                 case Stroke.Point.None:
                     return true;
                 case Stroke.Point.Both:
@@ -437,9 +437,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Player)
             {
                 case Stroke.Player.Player1:
-                    return r.Schlag[StrokeNumber].Spieler == "First";
+                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.First;  //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
                 case Stroke.Player.Player2:
-                    return r.Schlag[StrokeNumber].Spieler == "Second";
+                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.Second; //TODO Name der Spieler dynamisch???? && Letzter Schlag funktioniert so nicht...
                 case Stroke.Player.None:
                     return true;
                 case Stroke.Player.Both:

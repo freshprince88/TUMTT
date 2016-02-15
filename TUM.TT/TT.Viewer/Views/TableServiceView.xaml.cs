@@ -63,17 +63,17 @@ namespace TT.Viewer.Views
             if (Manager.ActivePlaylist != null)
             {
                 rallies = Manager.ActivePlaylist.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
-                int topLeft = rallies.Where(r => r.Schlag[0].IsTopLeft()).Count();
-                int topMid = rallies.Where(r => r.Schlag[0].IsTopMid()).Count();
-                int topRight = rallies.Where(r => r.Schlag[0].IsTopRight()).Count();
+                int topLeft = rallies.Where(r => r.Schläge[0].IsTopLeft()).Count();
+                int topMid = rallies.Where(r => r.Schläge[0].IsTopMid()).Count();
+                int topRight = rallies.Where(r => r.Schläge[0].IsTopRight()).Count();
 
-                int midLeft = rallies.Where(r => r.Schlag[0].IsMidLeft()).Count();
-                int midMid = rallies.Where(r => r.Schlag[0].IsMidMid()).Count();
-                int midRight = rallies.Where(r => r.Schlag[0].IsMidRight()).Count();
+                int midLeft = rallies.Where(r => r.Schläge[0].IsMidLeft()).Count();
+                int midMid = rallies.Where(r => r.Schläge[0].IsMidMid()).Count();
+                int midRight = rallies.Where(r => r.Schläge[0].IsMidRight()).Count();
 
-                int botLeft = rallies.Where(r => r.Schlag[0].IsBotLeft()).Count();
-                int botMid = rallies.Where(r => r.Schlag[0].IsBotMid()).Count();
-                int botRight = rallies.Where(r => r.Schlag[0].IsBotRight()).Count();
+                int botLeft = rallies.Where(r => r.Schläge[0].IsBotLeft()).Count();
+                int botMid = rallies.Where(r => r.Schläge[0].IsBotMid()).Count();
+                int botRight = rallies.Where(r => r.Schläge[0].IsBotRight()).Count();
 
                 this.TopLeft_bot.Content = topLeft;
                 this.TopLeft_top.Content = topLeft;

@@ -4,7 +4,9 @@ namespace TT.Scouter {
     using Caliburn.Micro;
     using TT.Lib.Models.Serialization;
     using TT.Lib.Managers;
-
+    using Lib;
+    using ViewModels;
+    using MahApps.Metro.Controls.Dialogs;
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
 
@@ -19,7 +21,11 @@ namespace TT.Scouter {
             container.Singleton<IEventAggregator, EventAggregator>();
             container.Singleton<IMatchSerializer, XmlMatchSerializer>();
             container.Singleton<IMatchManager, MatchManager>();
-            container.PerRequest<IShell, ShellViewModel>();
+            container.Singleton<IShell, ShellViewModel>();
+            container.Singleton<IDialogCoordinator, DialogCoordinator>();
+            container.PerRequest<NewMatchViewModel>("NewMatchViewModel");
+            container.PerRequest<VideoSourceViewModel>("VideoSourceViewModel");
+            container.PerRequest<LiveViewModel>("LiveViewModel");
         }
 
         protected override object GetInstance(Type service, string key) {

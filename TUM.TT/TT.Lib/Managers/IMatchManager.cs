@@ -6,30 +6,29 @@ using System.Text;
 using System.Threading.Tasks;
 using TT.Lib.Events;
 using TT.Lib.Models;
+using TT.Lib.Results;
 
 namespace TT.Lib.Managers
 {
     public interface IMatchManager 
     {
-        Match Match { get; }
+        Match Match { get; set; }
 
         Playlist ActivePlaylist { get; set; }
 
-        string FileName { get;  }
+        string FileName { get; set; }
 
         bool MatchModified { get; set; }
-
-        void OpenMatch();
-
-        void SaveMatch();
 
         void DeleteRally(Rally r);
 
         void RenamePlaylist(string oldName, string newName);
 
-        IEnumerable<IResult> SaveMatchAction();
+        IEnumerable<IResult> SaveMatch();
 
-        IEnumerable<IResult> OpenMatchAction();
+        IEnumerable<IResult> OpenMatch();
+
+        OpenFileDialogResult LoadVideo();
 
         void CreateNewMatch();
 

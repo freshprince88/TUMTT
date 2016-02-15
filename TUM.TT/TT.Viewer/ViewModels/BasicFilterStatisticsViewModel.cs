@@ -300,9 +300,9 @@ namespace TT.Viewer.ViewModels
             switch (this.Player)
             {
                 case Stroke.Player.Player1:
-                    return r.Schlag[StrokeNumber].Spieler == "First"; 
+                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.First;
                 case Stroke.Player.Player2:
-                    return r.Schlag[StrokeNumber].Spieler == "Second";
+                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.Second;
                 case Stroke.Player.None:
                     return true;
                 case Stroke.Player.Both:

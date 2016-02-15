@@ -18,13 +18,13 @@ namespace TT.Lib.Managers
         /// </summary>
         private IEventAggregator Events { get; set; }
 
-        public string FileName { get; private set; }
+        public string FileName { get; set; }
 
         private Match _match;
         public Match Match
         {
             get { return _match; }
-            private set
+            set
             {
                 if (_match != value)
                 {
@@ -59,17 +59,7 @@ namespace TT.Lib.Managers
 
         #region Business Logic
 
-        public void OpenMatch()
-        {
-            Coroutine.BeginExecute(OpenMatchAction().GetEnumerator());
-        }
-
-        public void SaveMatch()
-        {
-            Coroutine.BeginExecute(SaveMatchAction().GetEnumerator());
-        }
-
-        public IEnumerable<IResult> SaveMatchAction()
+        public IEnumerable<IResult> SaveMatch()
         {
             var fileName = this.FileName;
             if (fileName == null)
@@ -95,7 +85,7 @@ namespace TT.Lib.Managers
 
         }
 
-        public IEnumerable<IResult> OpenMatchAction()
+        public IEnumerable<IResult> OpenMatch()
         {
             var dialog = new OpenFileDialogResult()
             {
@@ -122,7 +112,6 @@ namespace TT.Lib.Managers
                     Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
                 };
                 yield return videoDialog;
-
 
                 Match.VideoFile = videoDialog.Result;
             }
@@ -161,6 +150,16 @@ namespace TT.Lib.Managers
             this.ActivePlaylist = null;
             this.FileName = String.Empty;
             this.MatchModified = false;
+        }
+
+        public OpenFileDialogResult LoadVideo()
+        {
+            var videoDialog = new OpenFileDialogResult()
+            {
+                Title = "Open video file...",
+                Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
+            };
+            return videoDialog;            
         }
 
         #endregion

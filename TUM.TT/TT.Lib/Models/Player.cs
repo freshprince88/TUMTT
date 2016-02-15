@@ -1,129 +1,255 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Player.cs" company="Fakultät für Sport- und Gesundheitswissenschaft">
+//    Copyright © 2013, 2014 Fakultät für Sport- und Gesundheitswissenschaft
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace TT.Lib.Models
 {
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class Player
+    using System;
+    using System.Xml.Serialization;
+
+    /// <summary>
+    /// A player participating in a <see cref="Match"/>.
+    /// </summary>
+    public class Player : PropertyChangedBase
     {
+        /// <summary>
+        /// Backs the <see cref="Name"/> property.
+        /// </summary>
+        private string name;
 
-        private Rank rankField;
+        /// <summary>
+        /// Backs the <see cref="Nationality"/> property.
+        /// </summary>
+        private string nationality;
 
-        private string nameField;
+        /// <summary>
+        /// Backs the <see cref="Rank"/> property.
+        /// </summary>
+        private Rank rank;
 
-        private string nationalityField;
+        /// <summary>
+        /// Backs the <see cref="Spielsystem"/> property.
+        /// </summary>
+        private string spielsystem;
 
-        private string spielsystemField;
+        /// <summary>
+        /// Backs the <see cref="Händigkeit"/> property.
+        /// </summary>
+        private string händigkeit;
 
-        private string händigkeitField;
+        /// <summary>
+        /// Backs the <see cref="Griffhaltung"/> property.
+        /// </summary>
+        private string griffhaltung;
 
-        private string griffhaltungField;
+        /// <summary>
+        /// Backs the <see cref="Material"/> property.
+        /// </summary>
+        private string material;
 
-        private string materialField;
-
-        /// <remarks/>
-        public Rank Rank
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// </summary>
+        public Player()
         {
-            get
-            {
-                return this.rankField;
-            }
-            set
-            {
-                this.rankField = value;
-            }
+            this.rank = new Rank(0, DateTime.Today);
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// </summary>
+        /// <param name="name">The name of the player.</param>
+        public Player(string name)
+            : this(name, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// </summary>
+        /// <param name="name">The name of the player.</param>
+        /// <param name="nationality">The nationality of the player.</param>
+        public Player(string name, string nationality)
+        {
+            this.Name = name;
+            this.Nationality = nationality;
+        }
+
+        /// <summary>
+        /// Gets or sets the last name of this player.
+        /// </summary>
+        [XmlAttribute]
         public string Name
         {
             get
             {
-                return this.nameField;
+                return this.name;
             }
+
             set
             {
-                this.nameField = value;
+                if (this.name != value)
+                {
+                    this.name = value;
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("FullName");
+                }
             }
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string Nationality
-        {
-            get
-            {
-                return this.nationalityField;
-            }
-            set
-            {
-                this.nationalityField = value;
-            }
-        }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        /// <summary>
+        /// Gets or sets the Spielsystem of this player.
+        /// </summary>
+        [XmlAttribute]
         public string Spielsystem
         {
             get
             {
-                return this.spielsystemField;
+                return this.spielsystem;
             }
+
             set
             {
-                this.spielsystemField = value;
+                if (this.spielsystem != value)
+                {
+                    this.spielsystem = value;
+                    this.NotifyPropertyChanged();
+                }
             }
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        /// <summary>
+        /// Gets or sets the Händigkeit of this player.
+        /// </summary>
+        [XmlAttribute]
         public string Händigkeit
         {
             get
             {
-                return this.händigkeitField;
+                return this.händigkeit;
             }
+
             set
             {
-                this.händigkeitField = value;
+                if (this.händigkeit != value)
+                {
+                    this.händigkeit = value;
+                    this.NotifyPropertyChanged();
+                }
             }
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        /// <summary>
+        /// Gets or sets the Griffhaltung of this player.
+        /// </summary>
+        [XmlAttribute]
         public string Griffhaltung
         {
             get
             {
-                return this.griffhaltungField;
+                return this.griffhaltung;
             }
+
             set
             {
-                this.griffhaltungField = value;
+                if (this.griffhaltung != value)
+                {
+                    this.griffhaltung = value;
+                    this.NotifyPropertyChanged();
+                }
             }
         }
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        /// <summary>
+        /// Gets or sets the Material of this player.
+        /// </summary>
+        [XmlAttribute]
         public string Material
         {
             get
             {
-                return this.materialField;
+                return this.material;
             }
+
             set
             {
-                this.materialField = value;
+                if (this.material != value)
+                {
+                    this.material = value;
+                    this.NotifyPropertyChanged();
+                }
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the nationality of this player.
+        /// </summary>
+        [XmlAttribute]
+        public string Nationality
+        {
+            get
+            {
+                return this.nationality;
+            }
+
+            set
+            {
+                if (this.nationality != value)
+                {
+                    this.nationality = value;
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("FullName");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the rank of this player.
+        /// </summary>
+        public Rank Rank
+        {
+            get
+            {
+                return this.rank;
+            }
+
+            set
+            {
+                if (this.rank != value)
+                {
+                    this.rank = value;
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("FullName");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a human-readable name of the player, including nationality and rank.
+        /// </summary>
+        [XmlIgnore]
+        public string FullName
+        {
+            get
+            {
+                var nationality = !string.IsNullOrEmpty(this.Nationality) ?
+                    this.Nationality : "unknown nationality";
+                var rank = this.Rank != null && this.Rank.Position > 0 ?
+                    this.Rank.ToString() : "no ranking";
+                return string.Format("{0} ({1}, {2})", this.Name, nationality, rank);
+            }
+        }
+
+        /// <summary>
+        /// Gets a human-readable string representation of this player.
+        /// </summary>
+        /// <returns>A string representation of this player.</returns>
+        public override string ToString()
+        {
+            return this.FullName;
         }
     }
 }

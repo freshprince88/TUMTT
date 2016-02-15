@@ -85,7 +85,7 @@
                         </MultiBinding>
                     </ToggleButton.Content>
                 </ToggleButton>
-                <ToggleButton x:Name="TotalFourthBallsCountPointPlayer1" Tag="r => r.Length >=4 &amp;&amp; r.Winner=='First'" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"   Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" >
+                <ToggleButton x:Name="TotalFourthBallsCountPointPlayer1" Tag="r => r.Length >=4 &amp;&amp; r.Winner==MatchPlayer.First" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"   Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -104,7 +104,7 @@
                         </MultiBinding>
                     </ToggleButton.Content>
                 </ToggleButton>
-                <ToggleButton x:Name="TotalFourthBallsCountPointPlayer2" Tag="r => r.Length >=4 &amp;&amp; r.Winner=='Second'" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" >
+                <ToggleButton x:Name="TotalFourthBallsCountPointPlayer2" Tag="r => r.Length >=4 &amp;&amp; r.Winner==MatchPlayer.Second" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -173,7 +173,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForehandAllTotalButton" Tag="r => r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
+                                <ToggleButton x:Name="PlacementForehandAllTotalButton" Tag="r => r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -192,7 +192,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandAllPointsWonButton" Tag="r => (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft()) &amp;&amp; r.Schlag[3].Spieler == r.Winner"  Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandAllPointsWonButton" Tag="r => (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft()) &amp;&amp; r.Schläge[3].Spieler == r.Winner"  Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -211,7 +211,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandAllDirectPointsWonButton" Tag="r => (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft()) &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandAllDirectPointsWonButton" Tag="r => (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft()) &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -230,7 +230,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandAllPointsLostButton" Tag="r => (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsMidLeft() || r.Schlag[3].IsBotLeft()) &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandAllPointsLostButton" Tag="r => (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft()) &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -260,7 +260,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForehandLongTotalButton" Tag="r => r.Schlag[3].IsTopLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementForehandLongTotalButton" Tag="r => r.Schläge[3].IsTopLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -279,7 +279,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandLongPointsWonButton" Tag="r => r.Schlag[3].IsTopLeft() &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandLongPointsWonButton" Tag="r => r.Schläge[3].IsTopLeft() &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -298,7 +298,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandLongDirectPointsWonButton" Tag="r => r.Schlag[3].IsTopLeft() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandLongDirectPointsWonButton" Tag="r => r.Schläge[3].IsTopLeft() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -317,7 +317,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandLongPointsLostButton" Tag="r => r.Schlag[3].IsTopLeft() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandLongPointsLostButton" Tag="r => r.Schläge[3].IsTopLeft() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -347,7 +347,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForehandHalfLongTotalButton" Tag="r => r.Schlag[3].IsMidLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementForehandHalfLongTotalButton" Tag="r => r.Schläge[3].IsMidLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -366,7 +366,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandHalfLongPointsWonButton" Tag="r => (r.Schlag[3].IsMidLeft()) &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandHalfLongPointsWonButton" Tag="r => (r.Schläge[3].IsMidLeft()) &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -385,7 +385,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandHalfLongDirectPointsWonButton" Tag="r => r.Schlag[3].IsMidLeft() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandHalfLongDirectPointsWonButton" Tag="r => r.Schläge[3].IsMidLeft() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -404,7 +404,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandHalfLongPointsLostButton" Tag="r => r.Schlag[3].IsMidLeft() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandHalfLongPointsLostButton" Tag="r => r.Schläge[3].IsMidLeft() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -434,7 +434,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementForehandShortTotalButton" Tag="r => r.Schlag[3].IsBotLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementForehandShortTotalButton" Tag="r => r.Schläge[3].IsBotLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -453,7 +453,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandShortPointsWonButton" Tag="r => r.Schlag[3].IsBotLeft() &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandShortPointsWonButton" Tag="r => r.Schläge[3].IsBotLeft() &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -472,7 +472,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandShortDirectPointsWonButton" Tag="r => r.Schlag[3].IsBotLeft() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandShortDirectPointsWonButton" Tag="r => r.Schläge[3].IsBotLeft() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -491,7 +491,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementForehandShortPointsLostButton" Tag="r => r.Schlag[3].IsBotLeft() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementForehandShortPointsLostButton" Tag="r => r.Schläge[3].IsBotLeft() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -521,7 +521,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementMiddleAllTotalButton" Tag="r => r.Schlag[3].IsTopMid() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsBotMid()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementMiddleAllTotalButton" Tag="r => r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -540,7 +540,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleAllPointsWonButton" Tag="r => (r.Schlag[3].IsTopMid() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsBotMid()) &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleAllPointsWonButton" Tag="r => (r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid()) &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -559,7 +559,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleAllDirectPointsWonButton" Tag="r => (r.Schlag[3].IsTopMid() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsBotMid()) &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
+                                <ToggleButton x:Name="PlacementMiddleAllDirectPointsWonButton" Tag="r => (r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid()) &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -578,7 +578,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleAllPointsLostButton" Tag="r => (r.Schlag[3].IsTopMid() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsBotMid()) &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleAllPointsLostButton" Tag="r => (r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid()) &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -608,7 +608,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementMiddleLongTotalButton" Tag="r => r.Schlag[3].IsTopMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementMiddleLongTotalButton" Tag="r => r.Schläge[3].IsTopMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -627,7 +627,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleLongPointsWonButton" Tag="r => r.Schlag[3].IsTopMid() &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleLongPointsWonButton" Tag="r => r.Schläge[3].IsTopMid() &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -646,7 +646,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleLongDirectPointsWonButton" Tag="r => r.Schlag[3].IsTopMid() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleLongDirectPointsWonButton" Tag="r => r.Schläge[3].IsTopMid() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -665,7 +665,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleLongPointsLostButton" Tag="r => r.Schlag[3].IsTopMid() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleLongPointsLostButton" Tag="r => r.Schläge[3].IsTopMid() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -695,7 +695,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementMiddleHalfLongTotalButton" Tag="r => r.Schlag[3].IsMidMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementMiddleHalfLongTotalButton" Tag="r => r.Schläge[3].IsMidMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -714,7 +714,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsWonButton" Tag="r => r.Schlag[3].IsMidMid() &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsWonButton" Tag="r => r.Schläge[3].IsMidMid() &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -733,7 +733,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleHalfLongDirectPointsWonButton" Tag="r => r.Schlag[3].IsMidMid() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleHalfLongDirectPointsWonButton" Tag="r => r.Schläge[3].IsMidMid() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -752,7 +752,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostButton" Tag="r => r.Schlag[3].IsMidMid() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostButton" Tag="r => r.Schläge[3].IsMidMid() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -782,7 +782,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementMiddleShortTotalButton" Tag="r => r.Schlag[3].IsBotMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementMiddleShortTotalButton" Tag="r => r.Schläge[3].IsBotMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -801,7 +801,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleShortPointsWonButton" Tag="r => r.Schlag[3].IsBotMid() &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleShortPointsWonButton" Tag="r => r.Schläge[3].IsBotMid() &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -820,7 +820,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleShortDirectPointsWonButton" Tag="r => r.Schlag[3].IsBotMid() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleShortDirectPointsWonButton" Tag="r => r.Schläge[3].IsBotMid() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -839,7 +839,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementMiddleShortPointsLostButton" Tag="r => r.Schlag[3].IsBotMid() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementMiddleShortPointsLostButton" Tag="r => r.Schläge[3].IsBotMid() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -869,7 +869,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementBackhandAllTotalButton" Tag="r => r.Schlag[3].IsTopRight() || r.Schlag[3].IsMidRight() || r.Schlag[3].IsBotRight()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementBackhandAllTotalButton" Tag="r => r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -888,7 +888,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandAllPointsWonButton" Tag="r => (r.Schlag[3].IsTopRight() || r.Schlag[3].IsMidRight() || r.Schlag[3].IsBotRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandAllPointsWonButton" Tag="r => (r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -907,7 +907,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandAllDirectPointsWonButton" Tag="r => (r.Schlag[3].IsTopRight() || r.Schlag[3].IsMidRight() || r.Schlag[3].IsBotRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandAllDirectPointsWonButton" Tag="r => (r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -926,7 +926,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandAllPointsLostButton" Tag="r => (r.Schlag[3].IsTopRight() || r.Schlag[3].IsMidRight() || r.Schlag[3].IsBotRight()) &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandAllPointsLostButton" Tag="r => (r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight()) &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -956,7 +956,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementBackhandLongTotalButton" Tag="r => r.Schlag[3].IsTopRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementBackhandLongTotalButton" Tag="r => r.Schläge[3].IsTopRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -975,7 +975,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandLongPointsWonButton" Tag="r => r.Schlag[3].IsTopRight() &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandLongPointsWonButton" Tag="r => r.Schläge[3].IsTopRight() &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -994,7 +994,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandLongDirectPointsWonButton" Tag="r => r.Schlag[3].IsTopRight() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandLongDirectPointsWonButton" Tag="r => r.Schläge[3].IsTopRight() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1013,7 +1013,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandLongPointsLostButton" Tag="r => r.Schlag[3].IsTopRight() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandLongPointsLostButton" Tag="r => r.Schläge[3].IsTopRight() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1043,7 +1043,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementBackhandHalfLongTotalButton" Tag="r => r.Schlag[3].IsMidRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementBackhandHalfLongTotalButton" Tag="r => r.Schläge[3].IsMidRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1062,7 +1062,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandHalfLongPointsWonButton" Tag="r => (r.Schlag[3].IsMidRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandHalfLongPointsWonButton" Tag="r => (r.Schläge[3].IsMidRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1081,7 +1081,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandHalfLongDirectPointsWonButton" Tag="r => r.Schlag[3].IsMidRight() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandHalfLongDirectPointsWonButton" Tag="r => r.Schläge[3].IsMidRight() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1100,7 +1100,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandHalfLongPointsLostButton" Tag="r => r.Schlag[3].IsMidRight() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandHalfLongPointsLostButton" Tag="r => r.Schläge[3].IsMidRight() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1130,7 +1130,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementBackhandShortTotalButton" Tag="r => r.Schlag[3].IsBotRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementBackhandShortTotalButton" Tag="r => r.Schläge[3].IsBotRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1149,7 +1149,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandShortPointsWonButton" Tag="r => r.Schlag[3].IsBotRight() &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandShortPointsWonButton" Tag="r => r.Schläge[3].IsBotRight() &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1168,7 +1168,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandShortDirectPointsWonButton" Tag="r => r.Schlag[3].IsBotRight() &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandShortDirectPointsWonButton" Tag="r => r.Schläge[3].IsBotRight() &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1187,7 +1187,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementBackhandShortPointsLostButton" Tag="r => r.Schlag[3].IsBotRight() &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementBackhandShortPointsLostButton" Tag="r => r.Schläge[3].IsBotRight() &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1217,7 +1217,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementAllLongTotalButton"  Tag="r => (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsTopMid() || r.Schlag[3].IsTopRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementAllLongTotalButton"  Tag="r => (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1236,7 +1236,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllLongPointsWonButton" Tag="r => (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsTopMid() || r.Schlag[3].IsTopRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllLongPointsWonButton" Tag="r => (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1255,7 +1255,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllLongDirectPointsWonButton" Tag="r => (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsTopMid() || r.Schlag[3].IsTopRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllLongDirectPointsWonButton" Tag="r => (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1274,7 +1274,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllLongPointsLostButton" Tag="r => (r.Schlag[3].IsTopLeft() || r.Schlag[3].IsTopMid() || r.Schlag[3].IsTopRight()) &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllLongPointsLostButton" Tag="r => (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight()) &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1304,7 +1304,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementAllHalfLongTotalButton"  Tag="r => (r.Schlag[3].IsMidLeft() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsMidRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementAllHalfLongTotalButton"  Tag="r => (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1323,7 +1323,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllHalfLongPointsWonButton" Tag="r => (r.Schlag[3].IsMidLeft() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsMidRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllHalfLongPointsWonButton" Tag="r => (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1342,7 +1342,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllHalfLongDirectPointsWonButton" Tag="r => (r.Schlag[3].IsMidLeft() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsMidRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllHalfLongDirectPointsWonButton" Tag="r => (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1361,7 +1361,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllHalfLongPointsLostButton" Tag="r => (r.Schlag[3].IsMidLeft() || r.Schlag[3].IsMidMid() || r.Schlag[3].IsMidRight()) &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllHalfLongPointsLostButton" Tag="r => (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight()) &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1391,7 +1391,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="PlacementAllShortTotalButton" Tag="r => (r.Schlag[3].IsBotLeft() || r.Schlag[3].IsBotMid() || r.Schlag[3].IsBotRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="PlacementAllShortTotalButton" Tag="r => (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1410,7 +1410,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllShortPointsWonButton" Tag="r => (r.Schlag[3].IsBotLeft() || r.Schlag[3].IsBotMid() || r.Schlag[3].IsBotRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllShortPointsWonButton" Tag="r => (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1429,7 +1429,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllShortDirectPointsWonButton"  Tag="r => (r.Schlag[3].IsBotLeft() || r.Schlag[3].IsBotMid() || r.Schlag[3].IsBotRight()) &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllShortDirectPointsWonButton"  Tag="r => (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight()) &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1448,7 +1448,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlacementAllShortPointsLostButton" Tag="r => (r.Schlag[3].IsBotLeft() || r.Schlag[3].IsBotMid() || r.Schlag[3].IsBotRight()) &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+                                <ToggleButton x:Name="PlacementAllShortPointsLostButton" Tag="r => (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight()) &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1567,7 +1567,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="OverTheTableTotalButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'über'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="OverTheTableTotalButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'über'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1586,7 +1586,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="OverTheTablePointsWonButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'über' &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="OverTheTablePointsWonButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'über' &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1605,7 +1605,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="OverTheTableDirectPointsWonButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'über' &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="OverTheTableDirectPointsWonButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'über' &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1624,7 +1624,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="OverTheTablePointsLostButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'über' &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="OverTheTablePointsLostButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'über' &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1654,7 +1654,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AtTheTableTotalButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'hinter'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="AtTheTableTotalButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'hinter'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1673,7 +1673,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AtTheTablePointsWonButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'hinter' &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AtTheTablePointsWonButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'hinter' &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1692,7 +1692,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AtTheTableDirectPointsWonButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'hinter' &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AtTheTableDirectPointsWonButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'hinter' &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1711,7 +1711,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AtTheTablePointsLostButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'hinter' &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AtTheTablePointsLostButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'hinter' &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1741,7 +1741,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="HalfDistanceTotalButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'Halbdistanz'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="HalfDistanceTotalButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'Halbdistanz'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1760,7 +1760,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="HalfDistancePointsWonButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'Halbdistanz' &amp;&amp; r.Schlag[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="HalfDistancePointsWonButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'Halbdistanz' &amp;&amp; r.Schläge[3].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1779,7 +1779,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="HalfDistanceDirectPointsWonButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'Halbdistanz' &amp;&amp; r.Schlag[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="HalfDistanceDirectPointsWonButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'Halbdistanz' &amp;&amp; r.Schläge[3].Spieler == r.Winner &amp;&amp; r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1798,7 +1798,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="HalfDistancePointsLostButton" Tag="r => r.Schlag[3].Balltreffpunkt == 'Halbdistanz' &amp;&amp; r.Schlag[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="HalfDistancePointsLostButton" Tag="r => r.Schläge[3].Balltreffpunkt == 'Halbdistanz' &amp;&amp; r.Schläge[3].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">

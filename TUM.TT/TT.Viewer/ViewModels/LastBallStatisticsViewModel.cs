@@ -86,7 +86,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = Manager.ActivePlaylist.Rallies;
+                SelectedRallies = Manager.ActivePlaylist.Rallies.ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
         }

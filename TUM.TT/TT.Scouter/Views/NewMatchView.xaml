@@ -4,9 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:TT.Scouter.Views"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -32,15 +41,61 @@
         <Label Content="Match Details" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="50" FontWeight="Bold" VerticalAlignment="Center"/>
 
         <Label Content="Turnier" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="2" FontSize="25" VerticalAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="25" Text="{Binding Path=MatchManager.Match.Tournament}"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="25" Text="{Binding Path=Match.Tournament}"/>
 
         <Label Content="Runde" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="25" VerticalAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="25" Text="{Binding Path=MatchManager.Match.Round}"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="25" Text="{Binding Path=Match.Round}"/>
 
         <Label Content="Modus" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="25" VerticalAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="25" Text="{Binding Path=MatchManager.Match.Mode}"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="25" Text="{Binding Path=Match.Mode}"/>
 
         <Label Content="Datum" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="25" VerticalAlignment="Center"/>
-        <DatePickerTextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" Text="{Binding Path=MatchManager.Match.Mode}"/>
+        <DatePickerTextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" Text="{Binding Path=Match.DateTime}"/>
+
+        <Grid Grid.Row="10" Grid.ColumnSpan="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0"/>
+                <Button Name="AddPlayer1" Width="40" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddNewPlayer(1)]}">
+                    <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_add}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </Grid>
+
+            <Label Content="versus" FontSize="18" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0"/>
+                <Button Name="AddPlayer2" Width="40" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action AddNewPlayer(2)]}">
+                    <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_add}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </Grid>
+        </Grid>
+        
+        <Button Content="OK" FontSize="18" Grid.Row="11" Grid.ColumnSpan="5" Width="100" HorizontalAlignment="Center" cal:Message.Attach="[Event Click] = [Action SaveMatchDetails()]"/>
     </Grid>
 </UserControl>

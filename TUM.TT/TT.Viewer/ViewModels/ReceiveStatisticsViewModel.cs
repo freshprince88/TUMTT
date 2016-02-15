@@ -207,153 +207,153 @@ namespace TT.Viewer.ViewModels
 
                 #region ForehandAll
                 case "PlacementForehandAllTotalButton":
-                    return r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft();
+                    return r.Schläge[1].IsTopLeft() || r.Schläge[1].IsMidLeft() || r.Schläge[1].IsBotLeft();
                 case "PlacementForehandAllPointsWonButton":
-                    return (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler == r.Winner;
+                    return (r.Schläge[1].IsTopLeft() || r.Schläge[1].IsMidLeft() || r.Schläge[1].IsBotLeft()) && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementForehandAllDirectPointsWonButton":
-                    return (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return (r.Schläge[1].IsTopLeft() || r.Schläge[1].IsMidLeft() || r.Schläge[1].IsBotLeft()) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementForehandAllPointsLostButton":
-                    return (r.Schlag[1].IsTopLeft() || r.Schlag[1].IsMidLeft() || r.Schlag[1].IsBotLeft()) && r.Schlag[1].Spieler != r.Winner;
+                    return (r.Schläge[1].IsTopLeft() || r.Schläge[1].IsMidLeft() || r.Schläge[1].IsBotLeft()) && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region ForehandLong
                 case "PlacementForehandLongTotalButton":
-                    return r.Schlag[1].IsTopLeft();
+                    return r.Schläge[1].IsTopLeft();
                 case "PlacementForehandLongPointsWonButton":
-                    return r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsTopLeft() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementForehandLongDirectPointsWonButton":
-                    return r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsTopLeft() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementForehandLongPointsLostButton":
-                    return r.Schlag[1].IsTopLeft() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsTopLeft() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region ForehandHalfLong
                 case "PlacementForehandHalfLongTotalButton":
-                    return r.Schlag[1].IsMidLeft();
+                    return r.Schläge[1].IsMidLeft();
                 case "PlacementForehandHalfLongPointsWonButton":
-                    return r.Schlag[1].IsMidLeft() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsMidLeft() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementForehandHalfLongDirectPointsWonButton":
-                    return r.Schlag[1].IsMidLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsMidLeft() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementForehandHalfLongPointsLostButton":
-                    return r.Schlag[1].IsMidLeft() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsMidLeft() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region ForehandShort
                 case "PlacementForehandShortTotalButton":
-                    return r.Schlag[1].IsBotLeft();
+                    return r.Schläge[1].IsBotLeft();
                 case "PlacementForehandShortPointsWonButton":
-                    return r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsBotLeft() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementForehandShortDirectPointsWonButton":
-                    return r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsBotLeft() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementForehandShortPointsLostButton":
-                    return r.Schlag[1].IsBotLeft() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsBotLeft() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region MiddleAll
                 case "PlacementMiddleAllTotalButton":
-                    return r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid();
+                    return r.Schläge[1].IsTopMid() || r.Schläge[1].IsMidMid() || r.Schläge[1].IsBotMid();
                 case "PlacementMiddleAllPointsWonButton":
-                    return (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner;
+                    return (r.Schläge[1].IsTopMid() || r.Schläge[1].IsMidMid() || r.Schläge[1].IsBotMid()) && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementMiddleAllDirectPointsWonButton":
-                    return (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return (r.Schläge[1].IsTopMid() || r.Schläge[1].IsMidMid() || r.Schläge[1].IsBotMid()) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementMiddleAllPointsLostButton":
-                    return (r.Schlag[1].IsTopMid() || r.Schlag[1].IsMidMid() || r.Schlag[1].IsBotMid()) && r.Schlag[1].Spieler != r.Winner;
+                    return (r.Schläge[1].IsTopMid() || r.Schläge[1].IsMidMid() || r.Schläge[1].IsBotMid()) && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region MiddleLong
                 case "PlacementMiddleLongTotalButton":
-                    return r.Schlag[1].IsTopMid();
+                    return r.Schläge[1].IsTopMid();
                 case "PlacementMiddleLongPointsWonButton":
-                    return r.Schlag[1].IsTopMid() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsTopMid() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementMiddleLongDirectPointsWonButton":
-                    return r.Schlag[1].IsTopMid() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsTopMid() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementMiddleLongPointsLostButton":
-                    return r.Schlag[1].IsTopMid() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsTopMid() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region MiddleHalfLong
                 case "PlacementMiddleHalfLongTotalButton":
-                    return r.Schlag[1].IsMidMid();
+                    return r.Schläge[1].IsMidMid();
                 case "PlacementMiddleHalfLongPointsWonButton":
-                    return r.Schlag[1].IsMidMid() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsMidMid() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementMiddleHalfLongDirectPointsWonButton":
-                    return r.Schlag[1].IsMidMid() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsMidMid() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementMiddleHalfLongPointsLostButton":
-                    return r.Schlag[1].IsMidMid() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsMidMid() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region MiddleShort
                 case "PlacementMiddleShortTotalButton":
-                    return r.Schlag[1].IsBotMid();
+                    return r.Schläge[1].IsBotMid();
                 case "PlacementMiddleShortPointsWonButton":
-                    return r.Schlag[1].IsBotMid() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsBotMid() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementMiddleShortDirectPointsWonButton":
-                    return r.Schlag[1].IsBotMid() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsBotMid() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementMiddleShortPointsLostButton":
-                    return r.Schlag[1].IsBotMid() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsBotMid() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region BackhandAll
                 case "PlacementBackhandAllTotalButton":
-                    return r.Schlag[1].IsTopRight() || r.Schlag[1].IsMidRight() || r.Schlag[1].IsBotRight();
+                    return r.Schläge[1].IsTopRight() || r.Schläge[1].IsMidRight() || r.Schläge[1].IsBotRight();
                 case "PlacementBackhandAllPointsWonButton":
-                    return (r.Schlag[1].IsTopRight() || r.Schlag[1].IsMidRight() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner;
+                    return (r.Schläge[1].IsTopRight() || r.Schläge[1].IsMidRight() || r.Schläge[1].IsBotRight()) && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementBackhandAllDirectPointsWonButton":
-                    return (r.Schlag[1].IsTopRight() || r.Schlag[1].IsMidRight() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return (r.Schläge[1].IsTopRight() || r.Schläge[1].IsMidRight() || r.Schläge[1].IsBotRight()) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementBackhandAllPointsLostButton":
-                    return (r.Schlag[1].IsTopRight() || r.Schlag[1].IsMidRight() || r.Schlag[1].IsBotRight()) && r.Schlag[1].Spieler != r.Winner;
+                    return (r.Schläge[1].IsTopRight() || r.Schläge[1].IsMidRight() || r.Schläge[1].IsBotRight()) && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region BackhandLong
                 case "PlacementBackhandLongTotalButton":
-                    return r.Schlag[1].IsTopRight();
+                    return r.Schläge[1].IsTopRight();
                 case "PlacementBackhandLongPointsWonButton":
-                    return r.Schlag[1].IsTopRight() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsTopRight() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementBackhandLongDirectPointsWonButton":
-                    return r.Schlag[1].IsTopRight() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsTopRight() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementBackhandLongPointsLostButton":
-                    return r.Schlag[1].IsTopRight() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsTopRight() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region BackhandHalfLong
                 case "PlacementBackhandHalfLongTotalButton":
-                    return r.Schlag[1].IsMidRight();
+                    return r.Schläge[1].IsMidRight();
                 case "PlacementBackhandHalfLongPointsWonButton":
-                    return r.Schlag[1].IsMidRight() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsMidRight() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementBackhandHalfLongDirectPointsWonButton":
-                    return r.Schlag[1].IsMidRight() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsMidRight() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementBackhandHalfLongPointsLostButton":
-                    return r.Schlag[1].IsMidRight() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsMidRight() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region BackhandShort
                 case "PlacementBackhandShortTotalButton":
-                    return r.Schlag[1].IsBotRight();
+                    return r.Schläge[1].IsBotRight();
                 case "PlacementBackhandShortPointsWonButton":
-                    return r.Schlag[1].IsBotRight() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsBotRight() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementBackhandShortDirectPointsWonButton":
-                    return r.Schlag[1].IsBotRight() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsBotRight() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementBackhandShortPointsLostButton":
-                    return r.Schlag[1].IsBotRight() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsBotRight() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region AllLong
                 case "PlacementAllLongTotalButton":
-                    return r.Schlag[1].IsLong();
+                    return r.Schläge[1].IsLong();
                 case "PlacementAllLongPointsWonButton":
-                    return r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsLong() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementAllLongDirectPointsWonButton":
-                    return r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsLong() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementAllLongPointsLostButton":
-                    return r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsLong() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region AllHalfLong
                 case "PlacementAllHalfLongTotalButton":
-                    return r.Schlag[1].IsHalfLong();
+                    return r.Schläge[1].IsHalfLong();
                 case "PlacementAllHalfLongPointsWonButton":
-                    return r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementAllHalfLongDirectPointsWonButton":
-                    return r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementAllHalfLongPointsLostButton":
-                    return r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
                 #region AllShort
                 case "PlacementAllShortTotalButton":
-                    return r.Schlag[1].IsShort();
+                    return r.Schläge[1].IsShort();
                 case "PlacementAllShortPointsWonButton":
-                    return r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].IsShort() && r.Schläge[1].Spieler == r.Winner;
                 case "PlacementAllShortDirectPointsWonButton":
-                    return r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].IsShort() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "PlacementAllShortPointsLostButton":
-                    return r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].IsShort() && r.Schläge[1].Spieler != r.Winner;
                 #endregion
 
                 #region ReceiveErrors
@@ -378,37 +378,37 @@ namespace TT.Viewer.ViewModels
 
                 #region Over the table
                 case "OverTheTableTotalButton":
-                    return r.Schlag[1].Balltreffpunkt == "über";
+                    return r.Schläge[1].Balltreffpunkt == "über";
                 case "OverTheTablePointsWonButton":
-                    return r.Schlag[1].Balltreffpunkt == "über" && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].Balltreffpunkt == "über" && r.Schläge[1].Spieler == r.Winner;
                 case "OverTheTableDirectPointsWonButton":
-                    return r.Schlag[1].Balltreffpunkt == "über" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].Balltreffpunkt == "über" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "OverTheTablePointsLostButton":
-                    return r.Schlag[1].Balltreffpunkt == "über" && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].Balltreffpunkt == "über" && r.Schläge[1].Spieler != r.Winner;
 
                 #endregion
 
                 #region at the table
                 case "AtTheTableTotalButton":
-                    return r.Schlag[1].Balltreffpunkt == "hinter";
+                    return r.Schläge[1].Balltreffpunkt == "hinter";
                 case "AtTheTablePointsWonButton":
-                    return r.Schlag[1].Balltreffpunkt == "hinter" && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].Balltreffpunkt == "hinter" && r.Schläge[1].Spieler == r.Winner;
                 case "AtTheTableDirectPointsWonButton":
-                    return r.Schlag[1].Balltreffpunkt == "hinter" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].Balltreffpunkt == "hinter" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "AtTheTablePointsLostButton":
-                    return r.Schlag[1].Balltreffpunkt == "hinter" && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].Balltreffpunkt == "hinter" && r.Schläge[1].Spieler != r.Winner;
 
                 #endregion
 
                 #region half distance
                 case "HaldDistanceTotalButton":
-                    return r.Schlag[1].Balltreffpunkt == "Halbdistanz";
+                    return r.Schläge[1].Balltreffpunkt == "Halbdistanz";
                 case "HaldDistancePointsWonButton":
-                    return r.Schlag[1].Balltreffpunkt == "Halbdistanz" && r.Schlag[1].Spieler == r.Winner;
+                    return r.Schläge[1].Balltreffpunkt == "Halbdistanz" && r.Schläge[1].Spieler == r.Winner;
                 case "HaldDistanceDirectPointsWonButton":
-                    return r.Schlag[1].Balltreffpunkt == "Halbdistanz" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+                    return r.Schläge[1].Balltreffpunkt == "Halbdistanz" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
                 case "HaldDistancePointsLostButton":
-                    return r.Schlag[1].Balltreffpunkt == "Halbdistanz" && r.Schlag[1].Spieler != r.Winner;
+                    return r.Schläge[1].Balltreffpunkt == "Halbdistanz" && r.Schläge[1].Spieler != r.Winner;
 
                 #endregion
 
@@ -433,93 +433,93 @@ namespace TT.Viewer.ViewModels
 
         //        #region Flip 
         //        case "ForehandFlipTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip";
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Flip";
         //        case "ForehandFlipPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler == r.Winner;
         //        case "ForehandFlipDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "ForehandFlipPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler != r.Winner;
 
         //        case "BackhandFlipTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Flip";
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Flip";
         //        case "BackhandFlipPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler == r.Winner;
         //        case "BackhandFlipDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "BackhandFlipPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler != r.Winner;
 
         //        case "AllFlipTotalButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand")  && r.Schlag[1].Schlagtechnik.Art == "Flip";
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand")  && r.Schläge[1].Schlagtechnik.Art == "Flip";
         //        case "AllFlipPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler == r.Winner;
         //        case "AllFlipDirectPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "AllFlipPointsLostButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].Schlagtechnik.Art == "Flip" && r.Schlag[1].Spieler != r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].Schlagtechnik.Art == "Flip" && r.Schläge[1].Spieler != r.Winner;
 
         //        #endregion
 
         //        #region Push short
 
         //        case "ForehandPushShortTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort();
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort();
         //        case "ForehandPushShortPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort() && r.Schläge[1].Spieler == r.Winner;
         //        case "ForehandPushShortDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "ForehandPushShortPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort() && r.Schläge[1].Spieler != r.Winner;
 
         //        case "BackhandPushShortTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort();
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort();
         //        case "BackhandPushShortPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort() && r.Schläge[1].Spieler == r.Winner;
         //        case "BackhandPushShortDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "BackhandPushShortPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsShort() && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsShort() && r.Schläge[1].Spieler != r.Winner;
 
         //        case "AllPushShortTotalButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsShort() && r.Schlag[1].Schlagtechnik.Art == "Schupf";
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsShort() && r.Schläge[1].Schlagtechnik.Art == "Schupf";
         //        case "AllPushShortPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsShort() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler == r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsShort() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler == r.Winner;
         //        case "AllPushShortDirectPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsShort() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsShort() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "AllPushShortPointsLostButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsShort() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler != r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsShort() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler != r.Winner;
 
         //        #endregion
 
         //        #region Push halflong
 
         //        case "ForehandPushHalfLongTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong();
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong();
         //        case "ForehandPushHalfLongPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler == r.Winner;
         //        case "ForehandPushHalfLongDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "ForehandPushHalfLongPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler != r.Winner;
 
         //        case "BackhandPushHalfLongTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong();
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong();
         //        case "BackhandPushHalfLongPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler == r.Winner;
         //        case "BackhandPushHalfLongDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "BackhandPushHalfLongPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsHalfLong() && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsHalfLong() && r.Schläge[1].Spieler != r.Winner;
 
         //        case "AllPushHalfLongTotalButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsHalfLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf";
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsHalfLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf";
         //        case "AllPushHalfLongPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsHalfLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler == r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsHalfLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler == r.Winner;
         //        case "AllPushHalfLongDirectPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsHalfLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsHalfLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "AllPushHalfLongPointsLostButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsHalfLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler != r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsHalfLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler != r.Winner;
 
 
         //        #endregion
@@ -527,31 +527,31 @@ namespace TT.Viewer.ViewModels
         //        #region Push long
 
         //        case "ForehandPushLongTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong();
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong();
         //        case "ForehandPushLongPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong() && r.Schläge[1].Spieler == r.Winner;
         //        case "ForehandPushLongDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "ForehandPushLongPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong() && r.Schläge[1].Spieler != r.Winner;
 
         //        case "BackhandPushLongTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong();
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong();
         //        case "BackhandPushLongPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong() && r.Schläge[1].Spieler == r.Winner;
         //        case "BackhandPushLongDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong() && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "BackhandPushLongPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].IsLong() && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].IsLong() && r.Schläge[1].Spieler != r.Winner;
 
         //        case "AllPushLongTotalButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf";
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf";
         //        case "AllPushLongPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler == r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler == r.Winner;
         //        case "AllPushLongDirectPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "AllPushLongPointsLostButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.Schlag[1].IsLong() && r.Schlag[1].Schlagtechnik.Art == "Schupf" && r.Schlag[1].Spieler != r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.Schläge[1].IsLong() && r.Schläge[1].Schlagtechnik.Art == "Schupf" && r.Schläge[1].Spieler != r.Winner;
 
 
         //        #endregion
@@ -559,93 +559,93 @@ namespace TT.Viewer.ViewModels
         //        #region Topspin diagonal
 
         //        case "ForehandTopspinDiagonalTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1);
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1);
         //        case "ForehandTopspinDiagonalPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schläge[1].Spieler == r.Winner;
         //        case "ForehandTopspinDiagonalDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "ForehandTopspinDiagonalPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schläge[1].Spieler != r.Winner;
 
         //        case "BackhandTopspinDiagonalTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1);
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1);
         //        case "BackhandTopspinDiagonalPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schläge[1].Spieler == r.Winner;
         //        case "BackhandTopspinDiagonalDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "BackhandTopspinDiagonalPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsDiagonal(1) && r.Schläge[1].Spieler != r.Winner;
 
         //        case "AllTopspinDiagonalTotalButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin";
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin";
         //        case "AllTopspinDiagonalPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler == r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler == r.Winner;
         //        case "AllTopspinDiagonalDirectPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "AllTopspinDiagonalPointsLostButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler != r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsDiagonal(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler != r.Winner;
 
         //        #endregion
 
         //        #region Topspin Middle
 
         //        case "ForehandTopspinMiddleTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1);
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1);
         //        case "ForehandTopspinMiddlePointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schläge[1].Spieler == r.Winner;
         //        case "ForehandTopspinMiddleDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "ForehandTopspinMiddlePointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schläge[1].Spieler != r.Winner;
 
         //        case "BackhandTopspinMiddleTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1);
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1);
         //        case "BackhandTopspinMiddlePointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schläge[1].Spieler == r.Winner;
         //        case "BackhandTopspinMiddleDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "BackhandTopspinMiddlePointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsMiddle(1) && r.Schläge[1].Spieler != r.Winner;
 
         //        case "AllTopspinMiddleTotalButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin";
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin";
         //        case "AllTopspinMiddlePointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler == r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler == r.Winner;
         //        case "AllTopspinMiddleDirectPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "AllTopspinMiddlePointsLostButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler != r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsMiddle(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler != r.Winner;
 
         //        #endregion
 
         //        #region Topspin parallel
 
         //        case "ForehandTopspinParallelTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1);
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1);
         //        case "ForehandTopspinParallelPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schläge[1].Spieler == r.Winner;
         //        case "ForehandTopspinParallelDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "ForehandTopspinParallelPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Vorhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Vorhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schläge[1].Spieler != r.Winner;
 
         //        case "BackhandTopspinParallelTotalButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1);
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1);
         //        case "BackhandTopspinParallelPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schlag[1].Spieler == r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schläge[1].Spieler == r.Winner;
         //        case "BackhandTopspinParallelDirectPointsWonButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "BackhandTopspinParallelPointsLostButton":
-        //            return r.Schlag[1].Schlägerseite == "Rückhand" && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schlag[1].Spieler != r.Winner;
+        //            return r.Schläge[1].Schlägerseite == "Rückhand" && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.IsParallel(1) && r.Schläge[1].Spieler != r.Winner;
 
         //        case "AllTopspinParallelTotalButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin";
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin";
         //        case "AllTopspinParallelPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler == r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler == r.Winner;
         //        case "AllTopspinParallelDirectPointsWonButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler == r.Winner && Convert.ToInt32(r.Length) < 4;
         //        case "AllTopspinParallelPointsLostButton":
-        //            return (r.Schlag[1].Schlägerseite == "Vorhand" || r.Schlag[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schlag[1].Schlagtechnik.Art == "Topspin" && r.Schlag[1].Spieler != r.Winner;
+        //            return (r.Schläge[1].Schlägerseite == "Vorhand" || r.Schläge[1].Schlägerseite == "Rückhand") && r.IsParallel(1) && r.Schläge[1].Schlagtechnik.Art == "Topspin" && r.Schläge[1].Spieler != r.Winner;
 
         //        #endregion
 

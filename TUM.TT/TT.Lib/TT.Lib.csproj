@@ -101,9 +101,11 @@
     <Compile Include="Converters\ForeHandToBoolConverter.cs" />
     <Compile Include="Converters\BackHandToBoolConverter.cs" />
     <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
+    <Compile Include="Converters\NumToPrevVisibleConverter.cs" />
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
+    <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
     <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
     <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
@@ -120,7 +122,6 @@
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
-    <Compile Include="Events\SetShellContentEvent.cs" />
     <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\StatisticDetailChangedEvent.cs" />
@@ -131,17 +132,21 @@
     <Compile Include="Events\VideoControlEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
+    <Compile Include="IShell.cs" />
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
-    <Compile Include="Models\Match.cs" />
-    <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Playlist.cs" />
-    <Compile Include="Models\Rally.cs" />
-    <Compile Include="Models\Rank.cs" />
     <Compile Include="Models\Schlag.cs" />
-    <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Serialization\IMatchSerializer.cs" />
     <Compile Include="Models\Serialization\XmlMatchSerializer.cs" />
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\MatchModeExtensions.cs" />
+    <Compile Include="Models\MatchPlayerExtensions.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\PropertyChangedBase.cs" />
+    <Compile Include="Models\Rally.cs" />
+    <Compile Include="Models\Rank.cs" />
+    <Compile Include="Models\Score.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\BusyIndicatorResult.cs" />
     <Compile Include="Results\DeserializeMatchResult.cs" />
@@ -154,6 +159,9 @@
     <Compile Include="Results\ResultExtensions.cs" />
     <Compile Include="Results\SaveFileDialogResult.cs" />
     <Compile Include="Results\SerializeMatchResult.cs" />
+    <Compile Include="Results\ShowScreenResult.cs" />
+    <Compile Include="Styles\WatermarkAdorner.cs" />
+    <Compile Include="Styles\WatermarkService.cs" />
     <Compile Include="Templates\CircleBorder.xaml.cs">
       <DependentUpon>CircleBorder.xaml</DependentUpon>
     </Compile>
@@ -178,7 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Zhucai.LambdaParser.dll" />
-    <Content Include="Models\Test.xml" />
     <Content Include="Resources\Entypo-license.txt" />
     <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>

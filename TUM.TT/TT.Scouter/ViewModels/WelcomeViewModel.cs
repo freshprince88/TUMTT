@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Results;
 
 namespace TT.Scouter.ViewModels
 {
@@ -22,15 +23,18 @@ namespace TT.Scouter.ViewModels
 
         #region View Methods
 
-        public void OpenNewMatch()
+        public IEnumerable<IResult> OpenNewMatch()
         {
-            var newMatch = new NewMatchViewModel(Events, MatchManager);
-            Events.PublishOnUIThread(new SetShellContentEvent(newMatch));
+            var next = ShowScreenResult.Of<NewMatchViewModel>();
+            yield return next;
         }
 
-        public void OpenMatch()
+        public IEnumerable<IResult> OpenMatch()
         {
-            //TODO: Open DetailView in Shell
+            //TODO: Load Match
+            //      Open RemoteView in Shell
+            var next = ShowScreenResult.Of<RemoteViewModel>();
+            yield return next;
         }
 
         #endregion

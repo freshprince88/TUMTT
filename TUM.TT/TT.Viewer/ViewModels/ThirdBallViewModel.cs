@@ -25,7 +25,7 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
-        public Stroke.StepAround StepAround { get; private set; }     
+        public Stroke.StepAround StepAround { get; private set; }
 
         private HashSet<Stroke.Technique> _strokeTec;
 
@@ -52,7 +52,7 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             Manager = man;
             SelectedRallies = new List<Rally>();
-            ActivePlaylist = new Playlist();           
+            ActivePlaylist = new Playlist();
             Hand = Stroke.Hand.None;
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
@@ -81,7 +81,7 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = ViewMode.Position.Bottom;
             }
         }
-       
+
         public void ForBackHand(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("forehand"))
@@ -403,183 +403,16 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => HasHand(r) && HasStepAround(r) && HasStrokeTec(r) && HasQuality(r) && HasTablePosition(r) && HasStrokeLength(r)).ToList();
+                SelectedRallies = BasicFilterView.SelectedRallies.Where(r =>
+                    r.Schläge[2].HasHand(this.Hand) &&
+                    r.Schläge[2].HasStepAround(this.StepAround) &&
+                    r.Schläge[2].HasStrokeTec(this.SelectedStrokeTec) &&
+                    r.Schläge[2].HasQuality(this.Quality) &&
+                    r.Schläge[2].HasTablePosition(this.SelectedTablePositions) &&
+                    r.Schläge[2].HasStrokeLength(this.SelectedStrokeLengths)).
+                    ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }
-        }
-       
-        private bool HasHand(Rally r)
-        {
-            switch (this.Hand)
-            {
-                case Stroke.Hand.Fore:
-                    return r.Schlag[2].Schlägerseite == "Vorhand";
-                case Stroke.Hand.Back:
-                    return r.Schlag[2].Schlägerseite == "Rückhand";
-                case Stroke.Hand.None:
-                    return true;
-                case Stroke.Hand.Both:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool HasStepAround(Rally r)
-        {
-            switch (this.StepAround)
-            {
-                case Stroke.StepAround.StepAround:
-                    return r.Schlag[2].Umlaufen == "ja";
-                case Stroke.StepAround.Not:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool HasStrokeTec(Rally r)
-        {
-            List<bool> ORresults = new List<bool>();
-
-            foreach (var tec in SelectedStrokeTec)
-            {
-                switch (tec)
-                {
-                    case Stroke.Technique.Push:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schupf");
-                        break;
-                    case Stroke.Technique.PushAggressive:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schupf" && r.Schlag[2].Schlagtechnik.Option == "aggressiv");
-                        break;
-                    case Stroke.Technique.Flip:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Flip");
-                        break;
-                    case Stroke.Technique.Banana:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Flip" && r.Schlag[2].Schlagtechnik.Option == "Banane");
-                        break;
-                    case Stroke.Technique.Topspin:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Topspin");
-                        break;
-                    case Stroke.Technique.TopspinSpin:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Topspin" && r.Schlag[2].Schlagtechnik.Option == "Spin");
-                        break;
-                    case Stroke.Technique.TopspinTempo:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Topspin" && r.Schlag[2].Schlagtechnik.Option == "Tempo");
-                        break;
-                    case Stroke.Technique.Block:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Block");
-                        break;
-                    case Stroke.Technique.BlockTempo:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Block" && r.Schlag[2].Schlagtechnik.Option == "Tempo");
-                        break;
-                    case Stroke.Technique.BlockChop:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Block" && r.Schlag[2].Schlagtechnik.Option == "Chop");
-                        break;
-                    case Stroke.Technique.Counter:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Konter");
-                        break;
-                    case Stroke.Technique.Smash:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schuss");
-                        break;
-                    case Stroke.Technique.Lob:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Ballonabwehr");
-                        break;
-                    case Stroke.Technique.Chop:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Schnittabwehr");
-                        break;
-                    case Stroke.Technique.Special:
-                        ORresults.Add(r.Schlag[2].Schlagtechnik.Art == "Sonstige");
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
-        }
-
-        private bool HasQuality(Rally r)
-        {
-            switch (this.Quality)
-            {
-                case Stroke.Quality.Good:
-                    return r.Schlag[2].Qualität == "gut";
-                case Stroke.Quality.Bad:
-                    return r.Schlag[2].Qualität == "schlecht";
-                case Stroke.Quality.None:
-                    return true;
-                case Stroke.Quality.Both:
-                    return r.Schlag[2].Qualität == "gut" || r.Schlag[2].Qualität == "schlecht";
-                default:
-                    return false;
-            }
-        }
-        private bool HasTablePosition(Rally r)
-        {
-            List<bool> ORresults = new List<bool>();
-            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
-            foreach (var sel in SelectedTablePositions)
-            {
-                switch (sel)
-                {
-                    case Positions.Table.TopLeft:
-                        ORresults.Add(stroke.IsTopLeft());
-                        break;
-                    case Positions.Table.TopMid:
-                        ORresults.Add(stroke.IsTopMid());
-                        break;
-                    case Positions.Table.TopRight:
-                        ORresults.Add(stroke.IsTopRight());
-                        break;
-                    case Positions.Table.MidLeft:
-                        ORresults.Add(stroke.IsMidLeft());
-                        break;
-                    case Positions.Table.MidMid:
-                        ORresults.Add(stroke.IsMidMid());
-                        break;
-                    case Positions.Table.MidRight:
-                        ORresults.Add(stroke.IsMidRight());
-                        break;
-                    case Positions.Table.BotLeft:
-                        ORresults.Add(stroke.IsBotLeft());
-                        break;
-                    case Positions.Table.BotMid:
-                        ORresults.Add(stroke.IsBotMid());
-                        break;
-                    case Positions.Table.BotRight:
-                        ORresults.Add(stroke.IsBotRight());
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
-        }
-
-        private bool HasStrokeLength(Rally r)
-        {
-            List<bool> ORresults = new List<bool>();
-            Schlag stroke = r.Schlag.Where(s => Convert.ToInt32(s.Nummer) == 3).FirstOrDefault();
-
-            foreach (var sel in SelectedStrokeLengths)
-            {
-                switch (sel)
-                {
-                    case Positions.Length.OverTheTable:
-                        ORresults.Add(stroke.IsOverTheTable());
-                        break;
-                    case Positions.Length.AtTheTable:
-                        ORresults.Add(stroke.IsAtTheTable());
-                        break;
-                    case Positions.Length.HalfDistance:
-                        ORresults.Add(stroke.IsHalfDistance());
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
         #endregion
     }

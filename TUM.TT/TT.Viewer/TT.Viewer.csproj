@@ -111,7 +111,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="IShell.cs" />
     <Compile Include="ViewModels\BasicFilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />

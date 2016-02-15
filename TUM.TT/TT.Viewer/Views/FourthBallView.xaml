@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="TT.Viewer.Views.FourthBallView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -55,15 +55,13 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Technik:</Label>
-            <ToggleButton x:Name="FilterForehandButton" IsChecked="{Binding Path=ForeHand, Converter={conv:ForeHandToBoolConverter}, Mode=OneWay}" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16">
-                    FH
-                </TextBlock>
+            <ToggleButton x:Name="FilterForehandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                          cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:ForeHandToBoolConverter}, Mode=OneWay}">
+                <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="FilterBackhandButton" IsChecked="{Binding Path=BackHand, Converter={conv:BackHandToBoolConverter}, Mode=OneWay}" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16">
-                    RH
-                </TextBlock>
+            <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                          cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:BackHandToBoolConverter}, Mode=OneWay}">
+                <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
             </ToggleButton>
             <ToggleButton x:Name="FilterStepAroundButton" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30"   Margin="0 0 0 0" HorizontalAlignment="Stretch" Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action StepAroundOrNot($source)]">
@@ -111,7 +109,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}" 
+                            <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                             cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                                 Schupf
                             </ToggleButton>
@@ -149,8 +147,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
-                                       
+                        <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
+
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]" >
                             Topspin
                         </ToggleButton>
@@ -174,11 +172,11 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                        <ToggleButton  x:Name="FilterStrokeTecBlockButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Block
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockTempoButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                        <ToggleButton  x:Name="FilterStrokeTecBlockTempoButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             Tempo
                         </ToggleButton>
@@ -295,5 +293,3 @@
         </Grid>
     </Grid>
 </UserControl>
-
-

@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="TT.Scouter.Views.RemoteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:local="clr-namespace:TT.Scouter.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1024">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border BorderThickness="0 0 1 1" BorderBrush="{DynamicResource AccentColor}" />
+            <StackPanel Background="{DynamicResource AccentColorBrush2}">
+                <Label Content="Rallies" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left"/>
+                <ListBox ItemsSource="{Binding Path=Rallies}" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding RallyNumShort}" />
+                                <Label Content="{Binding CurrentRallyScore}" FontWeight="Bold"/>
+                                <Label Content="{Binding CurrentSetScore, StringFormat=({0})}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+
+            <MediaElement Grid.Column="1">
+
+            </MediaElement>
+        </Grid>
+
+        <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush3}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+        </Grid>
+
+        <Grid Background="{DynamicResource AccentColorBrush4}" Grid.Column="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ContentControl x:Name="RemoteSchlagView" Grid.ColumnSpan="3"/>
+
+            <Button Grid.Row="1" Visibility="{Binding Path=CurrentStroke.Nummer, Converter={conv:NumToPrevVisibleConverter}, Mode=OneWay}">
+                <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_navigate_previous}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="2">
+                <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_navigate_next}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <Button.Visibility>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                        <Binding Path="CurrentStroke.Nummer" />
+                        <Binding Path="CurrentRally.Length" />
+                    </MultiBinding>
+                </Button.Visibility>
+            </Button>
+        </Grid>
+
+    </Grid>
+
+</UserControl>
