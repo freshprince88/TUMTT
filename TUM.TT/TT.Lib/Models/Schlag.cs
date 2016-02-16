@@ -318,34 +318,34 @@ namespace TT.Lib.Models
 
         #region Short , HalfLong, Long
 
-        public Boolean IsShort()
+        public bool IsShort()
         {
             return this.IsBotLeft() || this.IsBotMid() || this.IsBotRight();
         }
 
-        public Boolean IsHalfLong()
+        public bool IsHalfLong()
         {
             return this.IsMidLeft() || this.IsMidMid() || this.IsMidRight();
         }
 
-        public Boolean IsLong()
+        public bool IsLong()
         {
             return this.IsTopLeft() || this.IsTopMid() || this.IsTopRight();
         }
         #endregion
         #region Forehand Side, Middle, Backhand Side
 
-        public Boolean IsForehandSide()
+        public bool IsForehandSide()
         {
             return this.IsBotLeft() || this.IsMidLeft() || this.IsTopLeft();
         }
 
-        public Boolean IsBackhandSide()
+        public bool IsBackhandSide()
         {
             return this.IsBotRight() || this.IsMidRight() || this.IsTopRight();
         }
 
-        public Boolean IsMiddle()
+        public bool IsMiddle()
         {
             return this.IsBotMid() || this.IsMidMid() || this.IsTopMid();
         }
@@ -353,7 +353,7 @@ namespace TT.Lib.Models
         #endregion
 
 
-        public Boolean IsOverTheTable()
+        public bool IsOverTheTable()
         {
             return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "über";
         }
