@@ -71,20 +71,24 @@ namespace TT.Lib.Results
         /// <param name="context">The execution context</param>
         public void Execute(CoroutineExecutionContext context)
         {
-            var dialog = this.CreateDialog();
-            dialog.Title = this.Title;
-            dialog.Filter = this.Filter;
-            dialog.FileName = this.DefaultFileName;
-
-            this.Result = dialog.ShowDialog(Window.GetWindow(context.View as FrameworkElement)) == true ?
-                dialog.FileName : null;
-
-            var args = new ResultCompletionEventArgs()
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                WasCancelled = this.Cancelled,
-                Error = null,
-            };
-            this.Completed(this, args);
+                var dialog = this.CreateDialog();
+                dialog.Title = this.Title;
+                dialog.Filter = this.Filter;
+                dialog.FileName = this.DefaultFileName;
+                var test1 = context.View as FrameworkElement;
+                var test2 = Window.GetWindow(test1);
+                this.Result = dialog.ShowDialog(test2) == true ?
+                             dialog.FileName : null;
+
+                var args = new ResultCompletionEventArgs()
+                {
+                    WasCancelled = this.Cancelled,
+                    Error = null,
+                };
+                this.Completed(this, args);
+            });
         }
 
         /// <summary>
