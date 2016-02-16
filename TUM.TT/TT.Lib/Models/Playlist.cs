@@ -147,35 +147,35 @@ namespace TT.Lib.Models
         /// <param name="args">The event arguments.</param>
         private void OnRalliesChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (args.NewItems != null)
-            {
-                foreach (var rally in args.NewItems.Cast<Rally>())
-                {
-                    // Connect to each new rally, and update its data.
-                    rally.Playlist = this;
-                    rally.PropertyChanged += this.OnRallyChanged;
-                    rally.UpdateServerAndScore();
-                }
-            }
+            //if (args.NewItems != null)
+            //{
+            //    foreach (var rally in args.NewItems.Cast<Rally>())
+            //    {
+            //        // Connect to each new rally, and update its data.
+            //        rally.Playlist = this;
+            //        rally.PropertyChanged += this.OnRallyChanged;
+            //        rally.UpdateServerAndScore();
+            //    }
+            //}
 
-            // Update the rally after the new one
-            this.rallies[args.NewStartingIndex].UpdateServerAndScore();
+            //// Update the rally after the new one
+            //this.rallies[args.NewStartingIndex].UpdateServerAndScore();
 
-            if (args.OldItems != null)
-            {
-                foreach (var rally in args.OldItems.Cast<Rally>())
-                {
-                    // Disconnect from each removed rally.
-                    rally.Playlist = null;
-                    rally.PropertyChanged -= this.OnRallyChanged;
-                }
+            //if (args.OldItems != null)
+            //{
+            //    foreach (var rally in args.OldItems.Cast<Rally>())
+            //    {
+            //        // Disconnect from each removed rally.
+            //        rally.Playlist = null;
+            //        rally.PropertyChanged -= this.OnRallyChanged;
+            //    }
 
-                // Update the rally after the removed one.
-                if (args.OldStartingIndex < this.rallies.Count)
-                {
-                    this.rallies[args.OldStartingIndex].UpdateServerAndScore();
-                }
-            }
+            //    // Update the rally after the removed one.
+            //    if (args.OldStartingIndex < this.rallies.Count)
+            //    {
+            //        this.rallies[args.OldStartingIndex].UpdateServerAndScore();
+            //    }
+            //}
         }
 
         /// <summary>
