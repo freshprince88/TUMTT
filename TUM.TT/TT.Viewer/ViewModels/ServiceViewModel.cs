@@ -316,13 +316,16 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r => r.Schläge.First().HasHand(this.Hand) &&
-                    r.Schläge.First().HasQuality(this.Quality) &&
-                    r.Schläge.First().HasSpins(this.SelectedSpins) &&
-                    r.Schläge.First().HasServices(this.SelectedServices) &&
-                    r.Schläge.First().HasSpecials(this.Specials) &&
-                    r.Schläge.First().HasServerPosition(this.SelectedServerPositions) &&
-                    r.Schläge.First().HasTablePosition(this.SelectedTablePositions))
+                SelectedRallies = BasicFilterView.SelectedRallies
+                    .Where(r =>
+                    r.Schläge[0].HasHand(this.Hand) &&
+                    r.Schläge[0].HasQuality(this.Quality) &&
+                    r.Schläge[0].HasSpins(this.SelectedSpins) &&
+                    r.Schläge[0].HasServices(this.SelectedServices) &&
+                    r.Schläge[0].HasSpecials(this.Specials) &&
+                    r.Schläge[0].HasServerPosition(this.SelectedServerPositions) &&
+                    r.Schläge[0].HasTablePosition(this.SelectedTablePositions)
+                    )
                     .ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }

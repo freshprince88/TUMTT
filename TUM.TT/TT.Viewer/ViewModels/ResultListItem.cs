@@ -41,7 +41,7 @@ namespace TT.Viewer.ViewModels
 
         }
 
-        public ResultListItem(Rally rally) //TODO: Wenn Server = First -> Name von Player 1 usw.
+        public ResultListItem(Rally rally)
         {
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
@@ -49,19 +49,18 @@ namespace TT.Viewer.ViewModels
 
             Rally = rally;
 
-            string score = String.Format("{0} : {1}", rally.CurrentRallyScore.First, rally.CurrentRallyScore.Second);
-            string sets = String.Format("({0} : {1})", rally.CurrentSetScore.First, rally.CurrentSetScore.Second);
+            Score= String.Format("{0} : {1}", rally.CurrentRallyScore.First, rally.CurrentRallyScore.Second);
+            Sets = String.Format("({0} : {1})", rally.CurrentSetScore.First, rally.CurrentSetScore.Second);
 
-            Score = score;
-            Sets = sets;
+           
 
             if (rally.Server == MatchPlayer.First)
             {
-                Server = Manager.Match.FirstPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
+                Server = Manager.Match.FirstPlayer.Name.Split(' ')[0]; 
             }
             if (rally.Server == MatchPlayer.Second)
             {
-                Server = Manager.Match.SecondPlayer.Name.Split(' ')[0]; // ist immer null...aber ka wieso
+                Server = Manager.Match.SecondPlayer.Name.Split(' ')[0];
             }
             if (rally.Winner == MatchPlayer.First)
             {
