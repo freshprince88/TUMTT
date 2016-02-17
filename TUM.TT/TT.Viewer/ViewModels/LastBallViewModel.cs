@@ -126,7 +126,7 @@ namespace TT.Viewer.ViewModels
 
         public void ForBackHand(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("Forehand"))
+            if (source.Name.ToLower().Contains("forehand"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -446,6 +446,7 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => r.Schläge[r.Length-1].HasWinner(this.Winner) &&
+                    r.LastWinnerStroke().Nummer>1 &&
                     r.LastWinnerStroke().HasHand(this.Hand) &&
                     r.LastWinnerStroke().HasStepAround(this.StepAround) &&
                     r.LastWinnerStroke().HasStrokeTec(this.SelectedStrokeTec) &&

@@ -32,6 +32,11 @@ namespace TT.Lib.Util.Enums
             Play,
             None
         }
+        public enum Fullscreen
+        {
+            On,
+            Off
+        }
     }
 
     public static class Positions

@@ -39,19 +39,19 @@
         </Grid>
         <Grid Grid.Row="2" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*"  />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+                <ColumnDefinition Width="4*" MaxWidth="60" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30"  />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
                 <Rectangle Width="15" Height="15" 
@@ -179,19 +179,19 @@
         </Grid>
         <Grid Grid.Row="3" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*"  />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+                <ColumnDefinition Width="4*" MaxWidth="60" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30"  />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
+                <ColumnDefinition Width="2*" MaxWidth="30" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <ToggleButton x:Name="Slow75PercentButton" Style="{StaticResource MetroAccentFlatToggle}"  Grid.Column="2" cal:Message.Attach="[Event Click] = [Action Slow75Percent(Slow75PercentButton.IsChecked)]">
@@ -265,22 +265,15 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <Button x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="11" >
+            <ToggleButton x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="11"  cal:Message.Attach="[Event Click] = [Action toFullscreen(FullscreenButton.IsChecked)]" >
                 <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                           Visual="{DynamicResource appbar_fullscreen}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Fullscreen">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
-                        </cal:ActionMessage>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
+            </ToggleButton>
         </Grid>
 
     </Grid>
