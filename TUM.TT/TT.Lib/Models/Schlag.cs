@@ -370,6 +370,9 @@ namespace TT.Lib.Models
             return Balltreffpunkt == null ? false : Balltreffpunkt.ToLower() == "halbdistanz";
         }
 
+
+        #region Filter Methods
+
         public bool HasHand(Stroke.Hand h)
         {
             switch (h)
@@ -758,6 +761,14 @@ namespace TT.Lib.Models
 
             return (102 < aufschlagPosition && aufschlagPosition <= 152.5);
         }
+
+        #endregion
+
+        #region Statistic Methods
+
+        
+
+        #endregion
 
 
 

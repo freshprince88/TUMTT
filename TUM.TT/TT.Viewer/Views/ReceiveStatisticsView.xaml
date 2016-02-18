@@ -1846,6 +1846,7 @@
                             <ColumnDefinition Width="*" MinWidth="50"/>
                             <ColumnDefinition Width="*" MinWidth="50"/>
                             <ColumnDefinition Width="*" MinWidth="50"/>
+                            <ColumnDefinition Width="0"/>
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4"  Background="{DynamicResource GrayBrush5}"/>
@@ -1911,6 +1912,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Column>
@@ -1924,6 +1929,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Row>
@@ -2224,6 +2233,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Column>
@@ -2237,6 +2250,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Row>
@@ -2536,6 +2553,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Column>
@@ -2549,6 +2570,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Row>
@@ -2847,6 +2872,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Column>
@@ -2860,6 +2889,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Row>
@@ -3160,6 +3193,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Column>
@@ -3173,6 +3210,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Row>
@@ -3473,6 +3514,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Column>
@@ -3486,6 +3531,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Row>
@@ -3788,6 +3837,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Column>
@@ -3801,6 +3854,10 @@
                                     <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
                                     <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
                                     <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
                                 </MultiBinding>
                             </Grid.Row>
@@ -4078,8 +4135,1283 @@
                                 </ToggleButton.Content>
                             </ToggleButton>
                         </Grid>
-                        
 
+                        <Grid x:Name="AllBlockDiagonalGrid" Tag="BlockDiagonal" Margin="1 2 1 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Column>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingColumnConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Column>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingRowConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="AllBlockDiagonalTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockDiagonalTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockDiagonalPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockDiagonalPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockDiagonalDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockDiagonalDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockDiagonalPointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockDiagonalPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Label  Grid.Column="{Binding ElementName=AllBlockDiagonalGrid, Path=Column}" Tag="Label"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10">
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockDiagonalGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <TextBlock TextAlignment="Center">
+                                Block<LineBreak/>(diagonal)
+                            </TextBlock>
+                        </Label>
+                        <Grid Grid.Column="{Binding ElementName=AllBlockDiagonalGrid, Path=Column}" Tag="Forehand" Margin="1 1 1 1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockDiagonalGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="ForehandBlockDiagonalTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockDiagonalTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockDiagonalPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockDiagonalPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockDiagonalDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockDiagonalDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockDiagonalPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockDiagonalPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Grid Grid.Column="{Binding ElementName=AllBlockDiagonalGrid, Path=Column}" Tag="Backhand" Margin="1 1 1 1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockDiagonalGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="BackhandBlockDiagonalTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockDiagonalTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockDiagonalPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockDiagonalPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockDiagonalDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockDiagonalDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockDiagonalPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsDiagonal(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockDiagonalPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+
+                        <Grid x:Name="AllBlockParallelGrid" Tag="BlockParallel" Margin="1 2 1 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Column>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingColumnConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Column>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingRowConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="AllBlockParallelTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockParallelTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockParallelPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockParallelPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockParallelDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockParallelDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockParallelPointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockParallelPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Label  Grid.Column="{Binding ElementName=AllBlockParallelGrid, Path=Column}" Tag="Label"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10">
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockParallelGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <TextBlock TextAlignment="Center">
+                                Block<LineBreak/>(parallel)
+                            </TextBlock>
+                        </Label>
+                        <Grid Grid.Column="{Binding ElementName=AllBlockParallelGrid, Path=Column}" Tag="Forehand" Margin="1 1 1 1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockParallelGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="ForehandBlockParallelTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockParallelTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockParallelPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockParallelPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockParallelDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockParallelDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockParallelPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockParallelPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Grid Grid.Column="{Binding ElementName=AllBlockParallelGrid, Path=Column}" Tag="Backhand" Margin="1 1 1 1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockParallelGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="BackhandBlockParallelTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockParallelTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockParallelPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockParallelPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockParallelDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockParallelDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockParallelPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsParallel(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockParallelPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        
+                        <Grid x:Name="AllBlockMiddleGrid" Tag="BlockMiddle" Margin="1 2 1 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Column>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingColumnConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Column>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingRowConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="AllBlockMiddleTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockMiddleTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockMiddlePointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockMiddlePointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockMiddleDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockMiddleDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllBlockMiddlePointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllBlockMiddlePointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Label  Grid.Column="{Binding ElementName=AllBlockMiddleGrid, Path=Column}" Tag="Label"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10">
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockMiddleGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <TextBlock TextAlignment="Center">
+                                Block<LineBreak/>(Mitte)
+                            </TextBlock>
+                        </Label>
+                        <Grid Grid.Column="{Binding ElementName=AllBlockMiddleGrid, Path=Column}" Tag="Forehand" Margin="1 1 1 1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockMiddleGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="ForehandBlockMiddleTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockMiddleTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockMiddlePointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockMiddlePointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockMiddleDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockMiddleDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandBlockMiddlePointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandBlockMiddlePointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Grid Grid.Column="{Binding ElementName=AllBlockMiddleGrid, Path=Column}" Tag="Backhand" Margin="1 1 1 1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="AllBlockMiddleGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="BackhandBlockMiddleTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockMiddleTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockMiddlePointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockMiddlePointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockMiddleDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockMiddleDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandBlockMiddlePointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Block' &amp;&amp; r.IsMiddle(1) &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandBlockMiddlePointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        
+                        
+                        <Grid  x:Name="ChopTotalGrid" Tag="Chop"  Margin="1 2 1 0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Column>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingColumnConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Column>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:TechniqueCountToRankingRowConverter}" Mode="TwoWay">
+                                    <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                    <Binding ElementName="AllFlipTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushShortTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushHalfLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllPushLongTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllTopspinParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockDiagonalTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockParallelTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllBlockMiddleTotalButton" Path="Tag"/>
+                                    <Binding ElementName="AllChopTotalButton" Path="Tag"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="AllChopTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllChopTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllChopPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllChopPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllChopDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllChopDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="AllChopPointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=AllChopPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Label Grid.Column="{Binding ElementName=ChopTotalGrid, Path=Column}" Tag="Label"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10">
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="OneWay">
+                                    <Binding ElementName="ChopTotalGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <TextBlock TextAlignment="Center">
+                                Abwehr<LineBreak/>
+                            </TextBlock>
+                        </Label>
+                        <Grid Grid.Column="{Binding ElementName=ChopTotalGrid, Path=Column}" Tag="Forehand" Margin="1 1 1 1" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="ChopTotalGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="ForehandChopTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandChopTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandChopPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandChopPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandChopDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandChopDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandChopPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandChopPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
+                        <Grid  Grid.Column="{Binding ElementName=ChopTotalGrid, Path=Column}" Tag="Backhand" Margin="1 1 1 1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Row>
+                                <MultiBinding Converter="{conv:LabelBackhandForehandRowConverter}" Mode="TwoWay">
+                                    <Binding ElementName="ChopTotalGrid" Path="Row"/>
+                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                </MultiBinding>
+                            </Grid.Row>
+                            <ToggleButton x:Name="BackhandChopTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandChopTotalButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandChopPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandChopPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandChopDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandChopDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="BackhandChopPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Schlagtechnik.Art == 'Schnittabwehr' &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=BackhandChopPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </Grid>
 
 
 
@@ -4093,45 +5425,81 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="ForehandReceiveAllTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40" Content="$$"  >
+                            <ToggleButton x:Name="ForehandReceiveAllTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' " Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=ForehandReceiveAllTotalButton, Path=Name}" />
                                         </cal:ActionMessage>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ToggleButton>
-                            <ToggleButton x:Name="ForehandReceiveAllWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold" Visibility="Visible">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <cal:ActionMessage MethodName="StatButtonClick">
-                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                            <cal:Parameter Value="{Binding ElementName=ForehandReceiveAllWonButton, Path=Name}" />
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
                                         </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="ForehandReceiveAllPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="ForehandReceiveAllPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold" Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=ForehandReceiveAllPointsWonButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="ForehandReceiveAllLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="ForehandReceiveAllDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                            <cal:Parameter Value="{Binding ElementName=ForehandReceiveAllLostButton, Path=Name}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandReceiveAllDirectPointsWonButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
                                         </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton x:Name="ForehandReceiveAllPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="StatButtonClick">
+                                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                                            <cal:Parameter Value="{Binding ElementName=ForehandReceiveAllPointsLostButton, Path=Name}" />
+                                        </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
                         </Grid>
                         <Grid Grid.Row="7" Grid.Column="4" Margin="2 1 0 1" >
@@ -4144,45 +5512,81 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="BackhandReceiveAllTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40" Content="$$" >
+                            <ToggleButton x:Name="BackhandReceiveAllTotalButton" Tag="r =>r.Schläge[1].Schlägerseite == 'Rückhand'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=BackhandReceiveAllTotalButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="BackhandReceiveAllPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="BackhandReceiveAllPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=BackhandReceiveAllPointsWonButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="BackhandReceiveAllDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="BackhandReceiveAllDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=BackhandReceiveAllDirectPointsWonButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="BackhandReceiveAllPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="BackhandReceiveAllPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Spieler != r.Winner " Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=BackhandReceiveAllPointsLostButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
                         </Grid>
                         <Grid Grid.Row="8" Grid.Column="4" Margin="2 2 0 0" >
@@ -4195,45 +5599,81 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="AllReceiveAllTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40" Content="$$" >
+                            <ToggleButton x:Name="AllReceiveAllTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand')" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=AllReceiveAllTotalButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AllReceiveAllPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="AllReceiveAllPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=AllReceiveAllPointsWonButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AllReceiveAllDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="AllReceiveAllDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=AllReceiveAllDirectPointsWonButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AllReceiveAllPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="AllReceiveAllPointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
                                             <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
                                             <cal:Parameter Value="{Binding ElementName=AllReceiveAllPointsLostButton, Path=Name}" />
                                         </cal:ActionMessage>
+                                        <cal:ActionMessage MethodName="SelectTechnique">
+                                            <cal:Parameter Value="$source" />
+                                        </cal:ActionMessage>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="TwoWay">
+                                        <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
                         </Grid>
                     </Grid>
