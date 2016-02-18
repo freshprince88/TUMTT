@@ -27,6 +27,8 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             MatchManager = man;
+            CurrentRally = man.ActivePlaylist.Rallies.First();
+            CurrentStroke = CurrentRally.Schläge.First();
             RemoteSchlagView = new RemoteSchlagViewModel();            
         }
 

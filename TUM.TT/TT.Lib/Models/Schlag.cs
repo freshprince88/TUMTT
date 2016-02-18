@@ -241,6 +241,7 @@ namespace TT.Lib.Models
                 RaiseAndSetIfChanged(ref aggressivität, value);
             }
         }
+
         #region 9 Fields
 
         public bool IsTopLeft()
@@ -333,6 +334,7 @@ namespace TT.Lib.Models
             return this.IsTopLeft() || this.IsTopMid() || this.IsTopRight();
         }
         #endregion
+
         #region Forehand Side, Middle, Backhand Side
 
         public bool IsForehandSide()

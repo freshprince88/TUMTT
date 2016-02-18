@@ -30,8 +30,19 @@ namespace TT.Viewer.Views
         {
             var newSelection = Items.Items.Cast<ResultListItem>().Where(i => i.Rally == msg.SelectedRally).FirstOrDefault();
 
-            if (newSelection != null)
+            if (newSelection != null && Items.SelectedItem != newSelection)
                 Items.SelectedItem = newSelection;
+            else
+            {
+                if (newSelection != null)
+                {
+                    Events.PublishOnUIThread(new VideoPlayEvent()
+                    {
+                        Current = newSelection.Rally
+                    });
+                }
+            }
+
         }
         public void Handle(FullscreenEvent message)
         {
