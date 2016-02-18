@@ -390,13 +390,13 @@ namespace TT.Viewer.ViewModels
                 #endregion
 
                 #region half distance
-                case "HaldDistanceTotalButton":
+                case "HalfDistanceTotalButton":
                     return r.Schläge[2].Balltreffpunkt == "Halbdistanz";
-                case "HaldDistancePointsWonButton":
+                case "HalfDistancePointsWonButton":
                     return r.Schläge[2].Balltreffpunkt == "Halbdistanz" && r.Schläge[2].Spieler == r.Winner;
-                case "HaldDistanceDirectPointsWonButton":
+                case "HalfDistanceDirectPointsWonButton":
                     return r.Schläge[2].Balltreffpunkt == "Halbdistanz" && r.Schläge[2].Spieler == r.Winner && Convert.ToInt32(r.Length) < 5;
-                case "HaldDistancePointsLostButton":
+                case "HalfDistancePointsLostButton":
                     return r.Schläge[2].Balltreffpunkt == "Halbdistanz" && r.Schläge[2].Spieler != r.Winner;
 
                 #endregion

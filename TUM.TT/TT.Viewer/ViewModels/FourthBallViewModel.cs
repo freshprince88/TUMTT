@@ -19,8 +19,8 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
+        public Stroke.Specials Specials { get; private set; }
         public Stroke.StepAround StepAround { get; private set; }
-
         private HashSet<Stroke.Technique> _strokeTec;
         public Stroke.Hand Hand { get; private set; }
         public HashSet<Stroke.Technique> SelectedStrokeTec
@@ -51,6 +51,7 @@ namespace TT.Viewer.ViewModels
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             Quality = Stroke.Quality.None;
+            Specials = Stroke.Specials.None;
             SelectedStrokeTec = new HashSet<Stroke.Technique>();
             StepAround = Stroke.StepAround.Not;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
@@ -339,44 +340,45 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
-        public void ForBackHand(ToggleButton source)
+        public void EdgeSpecials(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("forhand"))
+            if (source.Name.ToLower().Contains("edgetable"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Fore;
-                    else if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.Both;
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeTable;
+                    else if (Specials == Stroke.Specials.EdgeNet)
+                        Specials = Stroke.Specials.Both;
                 }
                 else
                 {
-                    if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Back;
+                    if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeNet;
                 }
             }
-            else if (source.Name.ToLower().Contains("backhand"))
+            else if (source.Name.ToLower().Contains("edgenet"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Back;
-                    else if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.Both;
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeNet;
+                    else if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.Both;
                 }
                 else
                 {
-                    if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Fore;
+                    if (Specials == Stroke.Specials.EdgeNet)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeTable;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
+
 
         #endregion
 
@@ -440,7 +442,8 @@ namespace TT.Viewer.ViewModels
                     r.Schläge[3].HasStrokeTec(this.SelectedStrokeTec) &&
                     r.Schläge[3].HasQuality(this.Quality) &&
                     r.Schläge[3].HasTablePosition(this.SelectedTablePositions) &&
-                    r.Schläge[3].HasStrokeLength(this.SelectedStrokeLengths)).
+                    r.Schläge[3].HasStrokeLength(this.SelectedStrokeLengths) &&
+                    r.Schläge[3].HasSpecials(this.Specials)).
                     ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }

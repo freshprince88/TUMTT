@@ -217,7 +217,7 @@ namespace TT.Viewer.ViewModels
                 {
                     if (Specials == Stroke.Specials.None)
                         Specials = Stroke.Specials.EdgeTable;
-                    else if (Specials == Stroke.Specials.EdgeRacket)
+                    else if (Specials == Stroke.Specials.EdgeNet)
                         Specials = Stroke.Specials.Both;
                 }
                 else
@@ -225,21 +225,21 @@ namespace TT.Viewer.ViewModels
                     if (Specials == Stroke.Specials.EdgeTable)
                         Specials = Stroke.Specials.None;
                     else if (Specials == Stroke.Specials.Both)
-                        Specials = Stroke.Specials.EdgeRacket;
+                        Specials = Stroke.Specials.EdgeNet;
                 }
             }
-            else if (source.Name.ToLower().Contains("edgeracket"))
+            else if (source.Name.ToLower().Contains("edgenet"))
             {
                 if (source.IsChecked.Value)
                 {
                     if (Specials == Stroke.Specials.None)
-                        Specials = Stroke.Specials.EdgeRacket;
+                        Specials = Stroke.Specials.EdgeNet;
                     else if (Specials == Stroke.Specials.EdgeTable)
                         Specials = Stroke.Specials.Both;
                 }
                 else
                 {
-                    if (Specials == Stroke.Specials.EdgeRacket)
+                    if (Specials == Stroke.Specials.EdgeNet)
                         Specials = Stroke.Specials.None;
                     else if (Specials == Stroke.Specials.Both)
                         Specials = Stroke.Specials.EdgeTable;

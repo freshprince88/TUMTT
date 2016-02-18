@@ -629,6 +629,32 @@ namespace TT.Lib.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
+        public bool HasServiceWinners(IEnumerable<Stroke.ServiceWinner> serviceWinner)
+        {
+            List<bool> ORresults = new List<bool>();
+
+            foreach (var service in serviceWinner)
+            {
+                switch (service)
+                {
+                    case Stroke.ServiceWinner.All:
+                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Gegenläufer" || Aufschlagart == "Tomahawk" || Aufschlagart == "Spezial"));
+                        break;
+                    case Stroke.ServiceWinner.Short:
+                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Gegenläufer" || Aufschlagart == "Tomahawk" || Aufschlagart == "Spezial") && this.IsShort());
+                        break;
+                    case Stroke.ServiceWinner.Long:
+                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Gegenläufer" || Aufschlagart == "Tomahawk" || Aufschlagart == "Spezial") && this.IsLong());
+                        break;
+                    default:
+                        break;
+
+                }
+
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
         public bool HasSpecials(Stroke.Specials specials)
         {
             switch (specials)
@@ -683,7 +709,7 @@ namespace TT.Lib.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public Boolean IsLeftServicePosition()
+        public bool IsLeftServicePosition()
         {
             double aufschlagPosition;
             double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
@@ -699,7 +725,7 @@ namespace TT.Lib.Models
             return (0 <= aufschlagPosition && aufschlagPosition < 50.5);
         }
 
-        public Boolean IsMiddleServicePosition()
+        public bool IsMiddleServicePosition()
         {
             double aufschlagPosition;
             double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
@@ -715,7 +741,7 @@ namespace TT.Lib.Models
             return (50.5 <= aufschlagPosition && aufschlagPosition <= 102);
         }
 
-        public Boolean IsRightServicePosition()
+        public bool IsRightServicePosition()
         {
             double aufschlagPosition;
             double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
@@ -730,6 +756,9 @@ namespace TT.Lib.Models
 
             return (102 < aufschlagPosition && aufschlagPosition <= 152.5);
         }
+
+
+
     }
 
 
