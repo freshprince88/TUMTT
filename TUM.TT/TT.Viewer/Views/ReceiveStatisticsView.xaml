@@ -5751,45 +5751,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandInsideOutTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandStepAroundInsideOutTotalButton"  Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandInsideOutTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundInsideOutTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandInsideOutPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundInsideOutPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandInsideOutPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundInsideOutPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandInsideOutDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundInsideOutDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandInsideOutDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundInsideOutDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandInsideOutPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundInsideOutPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandInsideOutPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundInsideOutPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="2" Grid.Column="1" Margin="0 0 0 0" >
@@ -5802,45 +5838,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandInsideOutTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="BackhandStepAroundInsideOutTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandInsideOutTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundInsideOutTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandInsideOutPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundInsideOutPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandInsideOutPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundInsideOutPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandInsideOutDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundInsideOutDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandInsideOutDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundInsideOutDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandInsideOutPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundInsideOutPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandInsideOutPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundInsideOutPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="3" Grid.Column="1" Margin="0 2 0 0" >
@@ -5853,45 +5925,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllInsideOutTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="AllStepAroundInsideOutTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllInsideOutTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundInsideOutTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllInsideOutPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible" >
+                                <ToggleButton x:Name="AllStepAroundInsideOutPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible" >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllInsideOutPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundInsideOutPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllInsideOutDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
+                                <ToggleButton x:Name="AllStepAroundInsideOutDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllInsideOutDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundInsideOutDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllInsideOutPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundInsideOutPointsLostButton" Tag="r =>  (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsDiagonal(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllInsideOutPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundInsideOutPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2" Margin="1 0 0 1" >
@@ -5904,45 +6012,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandParallelTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"     >
+                                <ToggleButton x:Name="ForehandStepAroundParallelTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"     >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandParallelTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundParallelTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandParallelPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible" >
+                                <ToggleButton x:Name="ForehandStepAroundParallelPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible" >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandParallelPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundParallelPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandParallelDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
+                                <ToggleButton x:Name="ForehandStepAroundParallelDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandParallelDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundParallelDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandParallelPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundParallelPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandParallelPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundParallelPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="2" Grid.Column="2" Margin="1 0 0 0" >
@@ -5955,45 +6099,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandParallelTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"    >
+                                <ToggleButton x:Name="BackhandStepAroundParallelTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"    >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandParallelTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundParallelTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandParallelPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundParallelPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandParallelPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundParallelPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandParallelDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundParallelDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandParallelDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundParallelDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandParallelPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundParallelPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandParallelPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundParallelPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="3" Grid.Column="2" Margin=" 1 2 0 0" >
@@ -6006,45 +6186,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllParallelTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="AllStepAroundParallelTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllParallelTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundParallelTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllParallelPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundParallelPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllParallelPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundParallelPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllParallelDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundParallelDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllParallelDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundParallelDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllParallelPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundParallelPointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsParallel(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllParallelPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundParallelPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="3" Margin="1 0 0 1" >
@@ -6057,45 +6273,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandMiddleTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandStepAroundMiddleTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandMiddleTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundMiddleTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandMiddlePointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundMiddlePointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandMiddlePointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundMiddlePointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandMiddleDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundMiddleDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandMiddleDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundMiddleDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandMiddlePointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundMiddlePointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandMiddlePointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundMiddlePointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="2" Grid.Column="3" Margin="1 0 0 0" >
@@ -6108,45 +6360,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandMiddleTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="BackhandStepAroundMiddleTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandMiddleTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundMiddleTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandMiddlePointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundMiddlePointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandMiddlePointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundMiddlePointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandMiddleDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundMiddleDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandMiddleDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundMiddleDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandMiddlePointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundMiddlePointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandMiddlePointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundMiddlePointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="3" Grid.Column="3" Margin="1 2 0 0" >
@@ -6159,45 +6447,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllMiddleTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="AllStepAroundMiddleTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllMiddleTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundMiddleTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllMiddlePointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundMiddlePointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllMiddlePointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundMiddlePointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllMiddleDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundMiddleDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllMiddleDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundMiddleDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllMiddlePointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundMiddlePointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.IsMiddle(1)  &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllMiddlePointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundMiddlePointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="4" Margin="2 0 0 1" >
@@ -6210,45 +6534,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandStepAroundTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="ForehandStepAroundAllTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundAllTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandStepAroundPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundAllPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandStepAroundDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundAllDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundAllDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandStepAroundPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandStepAroundAllPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=ForehandStepAroundAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="2" Grid.Column="4" Margin="2 0 0 0" >
@@ -6261,45 +6621,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandStepAroundTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="BackhandStepAroundAllTotalButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundAllTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandStepAroundPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundAllPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandStepAroundDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundAllDirectPointsWonButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundAllDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandStepAroundPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandStepAroundAllPointsLostButton" Tag="r => r.Schläge[1].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=BackhandStepAroundAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                             <Grid Grid.Row="3" Grid.Column="4" Margin="2 2 0 0" >
@@ -6312,45 +6708,81 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllStepAroundTotalButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                                <ToggleButton x:Name="AllStepAroundAllTotalButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' " Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundTotalButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundAllTotalButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllStepAroundPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundAllPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundAllPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllStepAroundDirectPointsWonButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundAllDirectPointsWonButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler == r.Winner &amp;&amp; r.Length &lt; 4" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundDirectPointsWonButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundAllDirectPointsWonButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllStepAroundPointsLostButton" Tag="" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllStepAroundAllPointsLostButton" Tag="r => (r.Schläge[1].Schlägerseite == 'Vorhand' || r.Schläge[1].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[1].Umlaufen=='ja' &amp;&amp; r.Schläge[1].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
                                                 <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
-                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundPointsLostButton, Path=Name}" />
+                                                <cal:Parameter Value="{Binding ElementName=AllStepAroundAllPointsLostButton, Path=Name}" />
+                                            </cal:ActionMessage>
+                                            <cal:ActionMessage MethodName="SelectStepAround">
+                                                <cal:Parameter Value="$source" />
                                             </cal:ActionMessage>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
+                                    <ToggleButton.Content>
+                                        <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay">
+                                            <Binding Path="BasicFilterStatisticsView.SelectedRallies" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                        </MultiBinding>
+                                    </ToggleButton.Content>
                                 </ToggleButton>
                             </Grid>
                         </Grid>

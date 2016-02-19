@@ -106,6 +106,35 @@ namespace TT.Viewer.ViewModels
 
         }
 
+        public void SelectTechnique(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                X = source.Name;
+
+            }
+            else
+            {
+                X = "";
+            }
+
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void SelectStepAround(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                X = source.Name;
+
+            }
+            else
+            {
+                X = "";
+            }
+
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
         #endregion
 
         #region Caliburn Hooks
@@ -157,253 +186,12 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 3 && HasPlacement(r) && HasBasisInformation(r) && HasContactPosition(r)).ToList();
+                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.HasPlacementStatistics(3, X) && r.HasBasisInformationStatistics(4, X) && r.HasContactPositionStatistics(3, X) && r.HasTechniqueStatistics(3, X) && r.HasStepAroundStatistics(3, X)).ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(results));
             }
         }
 
-        public bool HasBasisInformation(Rally r)
-        {
-            switch (X)
-            {
-                case "":
-                    return true;
-                case "TotalFourthBallsCount":
-                    return Convert.ToInt32(r.Length) >= 4;
-                case "TotalFourthBallsCountPointPlayer1":
-                    return Convert.ToInt32(r.Length) >= 4 && r.Winner == MatchPlayer.First;
-                case "TotalFourthBallsCountPointPlayer2":
-                    return Convert.ToInt32(r.Length) >= 4 && r.Winner == MatchPlayer.Second;
-                default:
-                    return true;
-
-            }
-        }
-
-        public bool HasPlacement(Rally r)
-        {
-            switch (X)
-            {
-                case "":
-                    return true;
-
-                #region ForehandAll
-                case "PlacementForehandAllTotalButton":
-                    return r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft();
-                case "PlacementForehandAllPointsWonButton":
-                    return (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft()) && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementForehandAllDirectPointsWonButton":
-                    return (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft()) && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForehandAllPointsLostButton":
-                    return (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsMidLeft() || r.Schläge[3].IsBotLeft()) && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region ForehandLong
-                case "PlacementForehandLongTotalButton":
-                    return r.Schläge[3].IsTopLeft();
-                case "PlacementForehandLongPointsWonButton":
-                    return r.Schläge[3].IsTopLeft() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementForehandLongDirectPointsWonButton":
-                    return r.Schläge[3].IsTopLeft() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForehandLongPointsLostButton":
-                    return r.Schläge[3].IsTopLeft() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region ForehandHalfLong
-                case "PlacementForehandHalfLongTotalButton":
-                    return r.Schläge[3].IsMidLeft();
-                case "PlacementForehandHalfLongPointsWonButton":
-                    return r.Schläge[3].IsMidLeft() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementForehandHalfLongDirectPointsWonButton":
-                    return r.Schläge[3].IsMidLeft() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForehandHalfLongPointsLostButton":
-                    return r.Schläge[3].IsMidLeft() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region ForehandShort
-                case "PlacementForehandShortTotalButton":
-                    return r.Schläge[3].IsBotLeft();
-                case "PlacementForehandShortPointsWonButton":
-                    return r.Schläge[3].IsBotLeft() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementForehandShortDirectPointsWonButton":
-                    return r.Schläge[3].IsBotLeft() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementForehandShortPointsLostButton":
-                    return r.Schläge[3].IsBotLeft() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region MiddleAll
-                case "PlacementMiddleAllTotalButton":
-                    return r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid();
-                case "PlacementMiddleAllPointsWonButton":
-                    return (r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid()) && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementMiddleAllDirectPointsWonButton":
-                    return (r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid()) && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementMiddleAllPointsLostButton":
-                    return (r.Schläge[3].IsTopMid() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsBotMid()) && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region MiddleLong
-                case "PlacementMiddleLongTotalButton":
-                    return r.Schläge[3].IsTopMid();
-                case "PlacementMiddleLongPointsWonButton":
-                    return r.Schläge[3].IsTopMid() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementMiddleLongDirectPointsWonButton":
-                    return r.Schläge[3].IsTopMid() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementMiddleLongPointsLostButton":
-                    return r.Schläge[3].IsTopMid() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region MiddleHalfLong
-                case "PlacementMiddleHalfLongTotalButton":
-                    return r.Schläge[3].IsMidMid();
-                case "PlacementMiddleHalfLongPointsWonButton":
-                    return r.Schläge[3].IsMidMid() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementMiddleHalfLongDirectPointsWonButton":
-                    return r.Schläge[3].IsMidMid() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementMiddleHalfLongPointsLostButton":
-                    return r.Schläge[3].IsMidMid() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region MiddleShort
-                case "PlacementMiddleShortTotalButton":
-                    return r.Schläge[3].IsBotMid();
-                case "PlacementMiddleShortPointsWonButton":
-                    return r.Schläge[3].IsBotMid() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementMiddleShortDirectPointsWonButton":
-                    return r.Schläge[3].IsBotMid() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementMiddleShortPointsLostButton":
-                    return r.Schläge[3].IsBotMid() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region BackhandAll
-                case "PlacementBackhandAllTotalButton":
-                    return r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight();
-                case "PlacementBackhandAllPointsWonButton":
-                    return (r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight()) && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementBackhandAllDirectPointsWonButton":
-                    return (r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight()) && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementBackhandAllPointsLostButton":
-                    return (r.Schläge[3].IsTopRight() || r.Schläge[3].IsMidRight() || r.Schläge[3].IsBotRight()) && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region BackhandLong
-                case "PlacementBackhandLongTotalButton":
-                    return r.Schläge[3].IsTopRight();
-                case "PlacementBackhandLongPointsWonButton":
-                    return r.Schläge[3].IsTopRight() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementBackhandLongDirectPointsWonButton":
-                    return r.Schläge[3].IsTopRight() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementBackhandLongPointsLostButton":
-                    return r.Schläge[3].IsTopRight() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region BackhandHalfLong
-                case "PlacementBackhandHalfLongTotalButton":
-                    return r.Schläge[3].IsMidRight();
-                case "PlacementBackhandHalfLongPointsWonButton":
-                    return r.Schläge[3].IsMidRight() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementBackhandHalfLongDirectPointsWonButton":
-                    return r.Schläge[3].IsMidRight() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementBackhandHalfLongPointsLostButton":
-                    return r.Schläge[3].IsMidRight() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region BackhandShort
-                case "PlacementBackhandShortTotalButton":
-                    return r.Schläge[3].IsBotRight();
-                case "PlacementBackhandShortPointsWonButton":
-                    return r.Schläge[3].IsBotRight() && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementBackhandShortDirectPointsWonButton":
-                    return r.Schläge[3].IsBotRight() && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementBackhandShortPointsLostButton":
-                    return r.Schläge[3].IsBotRight() && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region AllLong
-                case "PlacementAllLongTotalButton":
-                    return (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight());
-                case "PlacementAllLongPointsWonButton":
-                    return (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight()) && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementAllLongDirectPointsWonButton":
-                    return (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight()) && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementAllLongPointsLostButton":
-                    return (r.Schläge[3].IsTopLeft() || r.Schläge[3].IsTopMid() || r.Schläge[3].IsTopRight()) && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region AllHalfLong
-                case "PlacementAllHalfLongTotalButton":
-                    return (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight());
-                case "PlacementAllHalfLongPointsWonButton":
-                    return (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight()) && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementAllHalfLongDirectPointsWonButton":
-                    return (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight()) && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementAllHalfLongPointsLostButton":
-                    return (r.Schläge[3].IsMidLeft() || r.Schläge[3].IsMidMid() || r.Schläge[3].IsMidRight()) && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-                #region AllShort
-                case "PlacementAllShortTotalButton":
-                    return (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight());
-                case "PlacementAllShortPointsWonButton":
-                    return (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight()) && r.Schläge[3].Spieler == r.Winner;
-                case "PlacementAllShortDirectPointsWonButton":
-                    return (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight()) && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "PlacementAllShortPointsLostButton":
-                    return (r.Schläge[3].IsBotLeft() || r.Schläge[3].IsBotMid() || r.Schläge[3].IsBotRight()) && r.Schläge[3].Spieler != r.Winner;
-                #endregion
-
-                #region ReceiveErrors
-                case "PlacementAllServiceErrorsTotalButton":
-                    return r.Server == r.Winner && r.Length == 4;
-                #endregion
-                default:
-                    return true;
-
-
-            }
-
-
-        }
-
-        public bool HasContactPosition(Rally r)
-        {
-            switch (X)
-            {
-                case "":
-                    return true;
-
-                #region Over the table
-                case "OverTheTableTotalButton":
-                    return r.Schläge[3].Balltreffpunkt == "über";
-                case "OverTheTablePointsWonButton":
-                    return r.Schläge[3].Balltreffpunkt == "über" && r.Schläge[3].Spieler == r.Winner;
-                case "OverTheTableDirectPointsWonButton":
-                    return r.Schläge[3].Balltreffpunkt == "über" && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "OverTheTablePointsLostButton":
-                    return r.Schläge[3].Balltreffpunkt == "über" && r.Schläge[3].Spieler != r.Winner;
-
-                #endregion
-
-                #region at the table
-                case "AtTheTableTotalButton":
-                    return r.Schläge[3].Balltreffpunkt == "hinter";
-                case "AtTheTablePointsWonButton":
-                    return r.Schläge[3].Balltreffpunkt == "hinter" && r.Schläge[3].Spieler == r.Winner;
-                case "AtTheTableDirectPointsWonButton":
-                    return r.Schläge[3].Balltreffpunkt == "hinter" && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "AtTheTablePointsLostButton":
-                    return r.Schläge[3].Balltreffpunkt == "hinter" && r.Schläge[3].Spieler != r.Winner;
-
-                #endregion
-
-                #region half distance
-                case "HaldDistanceTotalButton":
-                    return r.Schläge[3].Balltreffpunkt == "Halbdistanz";
-                case "HaldDistancePointsWonButton":
-                    return r.Schläge[3].Balltreffpunkt == "Halbdistanz" && r.Schläge[3].Spieler == r.Winner;
-                case "HaldDistanceDirectPointsWonButton":
-                    return r.Schläge[3].Balltreffpunkt == "Halbdistanz" && r.Schläge[3].Spieler == r.Winner && Convert.ToInt32(r.Length) < 6;
-                case "HaldDistancePointsLostButton":
-                    return r.Schläge[3].Balltreffpunkt == "Halbdistanz" && r.Schläge[3].Spieler != r.Winner;
-
-                #endregion
-
-                default:
-                    return true;
-
-            }
-
-
-
-
-
-        }
+       
 
 
         #endregion

@@ -406,13 +406,14 @@ namespace TT.Lib.Models
                 int now = i;
                 int prev = i - 1;
 
-                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) <= 100;
+                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) <= 50;
             }
 
         }
+        #endregion
         #region Helper Methods Statistics
 
-        public Boolean HasBasisInformationStatistics(int minlegth, string name)
+        public bool HasBasisInformationStatistics(int minlegth, string name)
         {
             switch (name)
             {
@@ -430,7 +431,7 @@ namespace TT.Lib.Models
             }
         }
 
-        public Boolean HasTechniqueStatistics(int stroke, string name)
+        public bool HasTechniqueStatistics(int stroke, string name)
         {
             switch (name)
             {
@@ -812,10 +813,342 @@ namespace TT.Lib.Models
 
         }
 
+        public bool HasContactPositionStatistics(int stroke, string name)
+        {
+            switch (name)
+            {
+                case "":
+                    return true;
+
+                #region Over the table
+                case "OverTheTableTotalButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "über";
+                case "OverTheTablePointsWonButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "über" && this.Schläge[stroke].Spieler == this.Winner;
+                case "OverTheTableDirectPointsWonButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "über" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "OverTheTablePointsLostButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "über" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region at the table
+                case "AtTheTableTotalButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "hinter";
+                case "AtTheTablePointsWonButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "hinter" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AtTheTableDirectPointsWonButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "hinter" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "AtTheTablePointsLostButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "hinter" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region half distance
+                case "HalfDistanceTotalButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "Halbdistanz";
+                case "HalfDistancePointsWonButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "Halbdistanz" && this.Schläge[stroke].Spieler == this.Winner;
+                case "HalfDistanceDirectPointsWonButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "Halbdistanz" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "HalfDistancePointsLostButton":
+                    return this.Schläge[stroke].Balltreffpunkt == "Halbdistanz" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                default:
+                    return true;
+
+            }
+
+        }
+
+        public bool HasPlacementStatistics(int stroke, string name)
+        {
+            switch (name)
+            {
+                case "":
+                    return true;
+
+                #region ForehandAll
+                case "PlacementForehandAllTotalButton":
+                    return this.Schläge[stroke].IsTopLeft() || this.Schläge[stroke].IsMidLeft() || this.Schläge[stroke].IsBotLeft();
+                case "PlacementForehandAllPointsWonButton":
+                    return (this.Schläge[stroke].IsTopLeft() || this.Schläge[stroke].IsMidLeft() || this.Schläge[stroke].IsBotLeft()) && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementForehandAllDirectPointsWonButton":
+                    return (this.Schläge[stroke].IsTopLeft() || this.Schläge[stroke].IsMidLeft() || this.Schläge[stroke].IsBotLeft()) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementForehandAllPointsLostButton":
+                    return (this.Schläge[stroke].IsTopLeft() || this.Schläge[stroke].IsMidLeft() || this.Schläge[stroke].IsBotLeft()) && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region ForehandLong
+                case "PlacementForehandLongTotalButton":
+                    return this.Schläge[stroke].IsTopLeft();
+                case "PlacementForehandLongPointsWonButton":
+                    return this.Schläge[stroke].IsTopLeft() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementForehandLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsTopLeft() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementForehandLongPointsLostButton":
+                    return this.Schläge[stroke].IsTopLeft() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region ForehandHalfLong
+                case "PlacementForehandHalfLongTotalButton":
+                    return this.Schläge[stroke].IsMidLeft();
+                case "PlacementForehandHalfLongPointsWonButton":
+                    return this.Schläge[stroke].IsMidLeft() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementForehandHalfLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsMidLeft() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementForehandHalfLongPointsLostButton":
+                    return this.Schläge[stroke].IsMidLeft() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region ForehandShort
+                case "PlacementForehandShortTotalButton":
+                    return this.Schläge[stroke].IsBotLeft();
+                case "PlacementForehandShortPointsWonButton":
+                    return this.Schläge[stroke].IsBotLeft() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementForehandShortDirectPointsWonButton":
+                    return this.Schläge[stroke].IsBotLeft() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementForehandShortPointsLostButton":
+                    return this.Schläge[stroke].IsBotLeft() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region MiddleAll
+                case "PlacementMiddleAllTotalButton":
+                    return this.Schläge[stroke].IsTopMid() || this.Schläge[stroke].IsMidMid() || this.Schläge[stroke].IsBotMid();
+                case "PlacementMiddleAllPointsWonButton":
+                    return (this.Schläge[stroke].IsTopMid() || this.Schläge[stroke].IsMidMid() || this.Schläge[stroke].IsBotMid()) && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementMiddleAllDirectPointsWonButton":
+                    return (this.Schläge[stroke].IsTopMid() || this.Schläge[stroke].IsMidMid() || this.Schläge[stroke].IsBotMid()) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementMiddleAllPointsLostButton":
+                    return (this.Schläge[stroke].IsTopMid() || this.Schläge[stroke].IsMidMid() || this.Schläge[stroke].IsBotMid()) && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region MiddleLong
+                case "PlacementMiddleLongTotalButton":
+                    return this.Schläge[stroke].IsTopMid();
+                case "PlacementMiddleLongPointsWonButton":
+                    return this.Schläge[stroke].IsTopMid() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementMiddleLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsTopMid() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementMiddleLongPointsLostButton":
+                    return this.Schläge[stroke].IsTopMid() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region MiddleHalfLong
+                case "PlacementMiddleHalfLongTotalButton":
+                    return this.Schläge[stroke].IsMidMid();
+                case "PlacementMiddleHalfLongPointsWonButton":
+                    return this.Schläge[stroke].IsMidMid() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementMiddleHalfLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsMidMid() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementMiddleHalfLongPointsLostButton":
+                    return this.Schläge[stroke].IsMidMid() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region MiddleShort
+                case "PlacementMiddleShortTotalButton":
+                    return this.Schläge[stroke].IsBotMid();
+                case "PlacementMiddleShortPointsWonButton":
+                    return this.Schläge[stroke].IsBotMid() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementMiddleShortDirectPointsWonButton":
+                    return this.Schläge[stroke].IsBotMid() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementMiddleShortPointsLostButton":
+                    return this.Schläge[stroke].IsBotMid() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region BackhandAll
+                case "PlacementBackhandAllTotalButton":
+                    return this.Schläge[stroke].IsTopRight() || this.Schläge[stroke].IsMidRight() || this.Schläge[stroke].IsBotRight();
+                case "PlacementBackhandAllPointsWonButton":
+                    return (this.Schläge[stroke].IsTopRight() || this.Schläge[stroke].IsMidRight() || this.Schläge[stroke].IsBotRight()) && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementBackhandAllDirectPointsWonButton":
+                    return (this.Schläge[stroke].IsTopRight() || this.Schläge[stroke].IsMidRight() || this.Schläge[stroke].IsBotRight()) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementBackhandAllPointsLostButton":
+                    return (this.Schläge[stroke].IsTopRight() || this.Schläge[stroke].IsMidRight() || this.Schläge[stroke].IsBotRight()) && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region BackhandLong
+                case "PlacementBackhandLongTotalButton":
+                    return this.Schläge[stroke].IsTopRight();
+                case "PlacementBackhandLongPointsWonButton":
+                    return this.Schläge[stroke].IsTopRight() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementBackhandLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsTopRight() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementBackhandLongPointsLostButton":
+                    return this.Schläge[stroke].IsTopRight() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region BackhandHalfLong
+                case "PlacementBackhandHalfLongTotalButton":
+                    return this.Schläge[stroke].IsMidRight();
+                case "PlacementBackhandHalfLongPointsWonButton":
+                    return this.Schläge[stroke].IsMidRight() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementBackhandHalfLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsMidRight() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementBackhandHalfLongPointsLostButton":
+                    return this.Schläge[stroke].IsMidRight() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region BackhandShort
+                case "PlacementBackhandShortTotalButton":
+                    return this.Schläge[stroke].IsBotRight();
+                case "PlacementBackhandShortPointsWonButton":
+                    return this.Schläge[stroke].IsBotRight() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementBackhandShortDirectPointsWonButton":
+                    return this.Schläge[stroke].IsBotRight() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementBackhandShortPointsLostButton":
+                    return this.Schläge[stroke].IsBotRight() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region AllLong
+                case "PlacementAllLongTotalButton":
+                    return this.Schläge[stroke].IsLong();
+                case "PlacementAllLongPointsWonButton":
+                    return this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementAllLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementAllLongPointsLostButton":
+                    return this.Schläge[stroke].IsLong() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region AllHalfLong
+                case "PlacementAllHalfLongTotalButton":
+                    return this.Schläge[stroke].IsHalfLong();
+                case "PlacementAllHalfLongPointsWonButton":
+                    return this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementAllHalfLongDirectPointsWonButton":
+                    return this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementAllHalfLongPointsLostButton":
+                    return this.Schläge[stroke].IsHalfLong() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+                #region AllShort
+                case "PlacementAllShortTotalButton":
+                    return this.Schläge[stroke].IsShort();
+                case "PlacementAllShortPointsWonButton":
+                    return this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler == this.Winner;
+                case "PlacementAllShortDirectPointsWonButton":
+                    return this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke+3);
+                case "PlacementAllShortPointsLostButton":
+                    return this.Schläge[stroke].IsShort() && this.Schläge[stroke].Spieler != this.Winner;
+                #endregion
+
+                #region ReceiveErrors
+                case "PlacementAllServiceErrorsTotalButton":
+                    if ((stroke+1) % 2 == 1)
+                    {
+                        return this.Server != this.Winner && this.Length == (stroke+1);
+                    }
+                    else if ((stroke + 1) % 2 == 0)
+                    {
+                        return this.Server == this.Winner && this.Length == (stroke+1);
+                    }
+                    else
+                        return true;
+                #endregion
+                default:
+                    return true;
+            }
+        }
+
+        public bool HasStepAroundStatistics(int stroke, string name)
+        {
+            switch (name)
+            {
+                case "":
+                    return true;
 
 
+                    #region StepAround Inside-Out
+                    
+
+                case "ForehandStepAroundInsideOutTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke);
+                case "ForehandStepAroundInsideOutPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandStepAroundInsideOutDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "ForehandStepAroundInsideOutPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandStepAroundInsideOutTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke);
+                case "BackhandStepAroundInsideOutPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandStepAroundInsideOutDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "BackhandStepAroundInsideOutPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllStepAroundInsideOutTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja";
+                case "AllStepAroundInsideOutPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllStepAroundInsideOutDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "AllStepAroundInsideOutPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region StepAround Middle
+
+                case "ForehandStepAroundMiddleTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke);
+                case "ForehandStepAroundMiddlePointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandStepAroundMiddleDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "ForehandStepAroundMiddlePointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandStepAroundMiddleTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke);
+                case "BackhandStepAroundMiddlePointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandStepAroundMiddleDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "BackhandStepAroundMiddlePointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllStepAroundMiddleTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja";
+                case "AllStepAroundMiddlePointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllStepAroundMiddleDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "AllStepAroundMiddlePointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                #region StepAround parallel
+
+                case "ForehandStepAroundParallelTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke);
+                case "ForehandStepAroundParallelPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                case "ForehandStepAroundParallelDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "ForehandStepAroundParallelPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "BackhandStepAroundParallelTotalButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke);
+                case "BackhandStepAroundParallelPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                case "BackhandStepAroundParallelDirectPointsWonButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "BackhandStepAroundParallelPointsLostButton":
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+
+                case "AllStepAroundParallelTotalButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja";
+                case "AllStepAroundParallelPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner;
+                case "AllStepAroundParallelDirectPointsWonButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                case "AllStepAroundParallelPointsLostButton":
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler != this.Winner;
+
+                #endregion
+
+                default:
+                    return true;
+            }
+
+        }
 
         #endregion
-        #endregion
+
+
     }
 }

@@ -95,7 +95,7 @@
                 </i:Interaction.Triggers>
                 
             </ToggleButton>
-            <RadioButton x:Name="radio_count" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Anzahl" HorizontalAlignment="Center">
+            <RadioButton x:Name="radio_count" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Anzahl" HorizontalAlignment="Center" IsChecked="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Checked">
                         <cal:ActionMessage MethodName="DetailsChecked">
@@ -104,7 +104,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </RadioButton>
-            <RadioButton x:Name="radio_percent" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Content="Prozent" HorizontalAlignment="Center" IsChecked="True">
+            <RadioButton x:Name="radio_percent" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Content="Prozent" HorizontalAlignment="Center" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Checked">
                         <cal:ActionMessage MethodName="DetailsChecked">
