@@ -1,9 +1,6 @@
 ﻿using Caliburn.Micro;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Lib.Managers;
 using TT.Lib.Models;
@@ -16,6 +13,7 @@ namespace TT.Scouter.ViewModels
         private IMatchManager MatchManager;
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
+        public int RallyCount { get { return Rallies.Count(); } }
 
         private Rally _rally;
         public Rally CurrentRally
@@ -57,7 +55,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             CurrentStroke = CurrentRally.Schläge.First();
-            RemoteSchlagView = new RemoteSchlagViewModel();
+            RemoteSchlagView = new RemoteSchlagViewModel();           
         }
 
         protected override void OnActivate()

@@ -37,6 +37,11 @@ namespace TT.Lib.Models
 
         private string aggressivität;
 
+        public Schlag()
+        {
+
+        }
+
         public Schlagtechnik Schlagtechnik
         {
             get
@@ -73,11 +78,6 @@ namespace TT.Lib.Models
             }
         }
 
-        public Schlag()
-        {
-
-        }
-
         /// <remarks/>
         [XmlAttribute]
         public int Nummer
@@ -103,6 +103,16 @@ namespace TT.Lib.Models
             set
             {
                 RaiseAndSetIfChanged(ref spieler, value);
+            }
+        }
+
+        /// <remarks/>
+        [XmlIgnore]
+        public string SpielerString
+        {
+            get
+            {
+                return Spieler.ToString();
             }
         }
 
