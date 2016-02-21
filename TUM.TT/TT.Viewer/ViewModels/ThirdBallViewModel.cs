@@ -25,6 +25,7 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
+        public Stroke.Specials Specials { get; private set; }
         public Stroke.StepAround StepAround { get; private set; }
 
         private HashSet<Stroke.Technique> _strokeTec;
@@ -57,6 +58,7 @@ namespace TT.Viewer.ViewModels
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             Quality = Stroke.Quality.None;
+            Specials = Stroke.Specials.None;
             SelectedStrokeTec = new HashSet<Stroke.Technique>();
             StepAround = Stroke.StepAround.Not;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
@@ -348,6 +350,44 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
+        public void EdgeSpecials(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("edgetable"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeTable;
+                    else if (Specials == Stroke.Specials.EdgeNet)
+                        Specials = Stroke.Specials.Both;
+                }
+                else
+                {
+                    if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeNet;
+                }
+            }
+            else if (source.Name.ToLower().Contains("edgenet"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeNet;
+                    else if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.Both;
+                }
+                else
+                {
+                    if (Specials == Stroke.Specials.EdgeNet)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeTable;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
         #endregion
 
         #region Caliburn Hooks
@@ -409,7 +449,8 @@ namespace TT.Viewer.ViewModels
                     r.Schläge[2].HasStrokeTec(this.SelectedStrokeTec) &&
                     r.Schläge[2].HasQuality(this.Quality) &&
                     r.Schläge[2].HasTablePosition(this.SelectedTablePositions) &&
-                    r.Schläge[2].HasStrokeLength(this.SelectedStrokeLengths)).
+                    r.Schläge[2].HasStrokeLength(this.SelectedStrokeLengths) &&
+                    r.Schläge[2].HasSpecials(this.Specials)).
                     ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }

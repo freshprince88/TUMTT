@@ -70,6 +70,18 @@ namespace TT.Viewer.ViewModels
                 _mode = value;
             }
         }
+        private Media.Fullscreen _fullscreen;
+        public Media.Fullscreen Fullscreen
+        {
+            get
+            {
+                return _fullscreen;
+            }
+            set
+            {
+                _fullscreen = value;
+            }
+        }
 
         public MediaViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
@@ -245,11 +257,18 @@ namespace TT.Viewer.ViewModels
             events.PublishOnUIThread(this.Muted);
         }
 
-        public void Fullscreen(MediaElement myMediaElement)
+        public void toFullscreen(bool isChecked) //Todo
         {
+            if (isChecked == true)
+                events.PublishOnUIThread(new FullscreenEvent(true));
+
+
+            if (isChecked == false)
+                events.PublishOnUIThread(new FullscreenEvent(false));
+
         }
 
-        
+
 
         #endregion
 
@@ -259,7 +278,7 @@ namespace TT.Viewer.ViewModels
         /// Initializes this view model.
         /// </summary>
         protected override void OnInitialize()
-        {            
+        {
             base.OnInitialize();
         }
 
@@ -318,7 +337,8 @@ namespace TT.Viewer.ViewModels
 
         #region Helper Methods
 
-        private void InitVideo() { 
+        private void InitVideo()
+        {
         }
 
         #endregion

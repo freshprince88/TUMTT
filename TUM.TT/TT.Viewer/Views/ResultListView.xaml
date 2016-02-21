@@ -34,24 +34,28 @@
             cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]; 
               [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
         <ListView.View>
-            <GridView>
-                <GridViewColumn DisplayMemberBinding="{Binding Score}"
-                                            Header="Punkte" 
+            <GridView x:Name="HitlistGrid">
+                <GridViewColumn x:Name="Column0" DisplayMemberBinding="{Binding Number}"
+                                            Header="#"
+                                util:GridViewSort.PropertyName="Number"
+                                ctrl:ProportionalColumn.Width="1"/>
+                <GridViewColumn x:Name="Column1" DisplayMemberBinding="{Binding Score}"
+                                            Header="Punkte"
                                 util:GridViewSort.PropertyName="Score"
                                 ctrl:ProportionalColumn.Width="2"/>
-                <GridViewColumn DisplayMemberBinding="{Binding Sets}"
+                <GridViewColumn x:Name="Column2" DisplayMemberBinding="{Binding Sets}"
                                             Header="Sätze" 
                                 util:GridViewSort.PropertyName="Sets"
                                 ctrl:ProportionalColumn.Width="2"/>
-                <GridViewColumn DisplayMemberBinding="{Binding Server}"
+                <GridViewColumn x:Name="Column3" DisplayMemberBinding="{Binding Server}"
                                             Header="Aufschlag" 
                                 util:GridViewSort.PropertyName="Server"
                                 ctrl:ProportionalColumn.Width="3"/>
-                <GridViewColumn DisplayMemberBinding="{Binding Point}"
+                <GridViewColumn x:Name="Column4" DisplayMemberBinding="{Binding Point}"
                                             Header="Punkt" 
                                 util:GridViewSort.PropertyName="Point"
                                 ctrl:ProportionalColumn.Width="3"/>
-                <GridViewColumn DisplayMemberBinding="{Binding Length}"
+                <GridViewColumn x:Name="Column5" DisplayMemberBinding="{Binding Length}"
                                             Header="Länge" 
                                 util:GridViewSort.PropertyName="Length"
                                 ctrl:ProportionalColumn.Width="2"/>

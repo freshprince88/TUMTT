@@ -278,21 +278,21 @@
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="11" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
         <Grid Grid.Row="12">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="70" Width="3*" />
+                <ColumnDefinition MinWidth="70"/>
                 <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="4*"/>
+
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Besonderes:</Label>
-            <ToggleButton  Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" >
+            <ToggleButton x:Name="FilterEdgeTableButton"  Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
                 Tischkante
             </ToggleButton>
-            <ToggleButton  Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" >
+            <ToggleButton x:Name="FilterEdgeNetButton"  Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
                 Netzkante
             </ToggleButton>
-            <ToggleButton  Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >
+            <!--<ToggleButton x:Name="FilterEdgeRacketButton"  Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >
                 Schlägerkante
-            </ToggleButton>
+            </ToggleButton>-->
         </Grid>
     </Grid>
 </UserControl>

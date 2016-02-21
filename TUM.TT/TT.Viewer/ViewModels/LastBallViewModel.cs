@@ -27,6 +27,7 @@ namespace TT.Viewer.ViewModels
         public Stroke.Quality Quality { get; private set; }
         public Stroke.WinnerOrNetOut Winner { get; private set; }
         public Stroke.StepAround StepAround { get; private set; }
+        public Stroke.Specials Specials { get; private set; }
 
         private HashSet<Stroke.Technique> _strokeTec;
         public HashSet<Stroke.Technique> SelectedStrokeTec
@@ -59,6 +60,7 @@ namespace TT.Viewer.ViewModels
             SelectedTablePositions = new HashSet<Positions.Table>();
             Quality = Stroke.Quality.None;
             SelectedStrokeTec = new HashSet<Stroke.Technique>();
+            Specials = Stroke.Specials.None;
             StepAround = Stroke.StepAround.Not;
             Winner = Stroke.WinnerOrNetOut.None;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
@@ -126,7 +128,7 @@ namespace TT.Viewer.ViewModels
 
         public void ForBackHand(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("Forehand"))
+            if (source.Name.ToLower().Contains("forehand"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -389,6 +391,44 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
+        public void EdgeSpecials(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("edgetable"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeTable;
+                    else if (Specials == Stroke.Specials.EdgeNet)
+                        Specials = Stroke.Specials.Both;
+                }
+                else
+                {
+                    if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeNet;
+                }
+            }
+            else if (source.Name.ToLower().Contains("edgenet"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Specials == Stroke.Specials.None)
+                        Specials = Stroke.Specials.EdgeNet;
+                    else if (Specials == Stroke.Specials.EdgeTable)
+                        Specials = Stroke.Specials.Both;
+                }
+                else
+                {
+                    if (Specials == Stroke.Specials.EdgeNet)
+                        Specials = Stroke.Specials.None;
+                    else if (Specials == Stroke.Specials.Both)
+                        Specials = Stroke.Specials.EdgeTable;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
 
         #endregion
 
@@ -446,12 +486,14 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 SelectedRallies = BasicFilterView.SelectedRallies.Where(r => r.Schläge[r.Length-1].HasWinner(this.Winner) &&
+                    r.LastWinnerStroke().Nummer>1 &&
                     r.LastWinnerStroke().HasHand(this.Hand) &&
-                    r.LastWinnerStroke().HasStepAround(this.StepAround) &&
+                    r.LastWinnerStroke().HasStepAround(this.StepAround) && 
                     r.LastWinnerStroke().HasStrokeTec(this.SelectedStrokeTec) &&
                     r.LastWinnerStroke().HasQuality(this.Quality) &&
                     r.LastWinnerStroke().HasTablePosition(this.SelectedTablePositions) &&
-                    r.LastWinnerStroke().HasStrokeLength(this.SelectedStrokeLengths)).
+                    r.LastWinnerStroke().HasStrokeLength(this.SelectedStrokeLengths) &&
+                    r.LastWinnerStroke().HasSpecials(this.Specials)).
                     ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
             }

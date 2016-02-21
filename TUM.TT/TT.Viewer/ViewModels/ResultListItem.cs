@@ -7,6 +7,7 @@ namespace TT.Viewer.ViewModels
 {
     public class ResultListItem : Screen
     {
+        public int Number { get; set; }
         public string Score { get; set; }
         public string Sets { get; set; }
         public string Server { get; set; }
@@ -31,6 +32,7 @@ namespace TT.Viewer.ViewModels
             Manager = IoC.Get<IMatchManager>();
 
             Rally = null;
+            Number = 0;
             Score = String.Empty;
             Sets = String.Empty;
             Server = String.Empty;
@@ -49,6 +51,7 @@ namespace TT.Viewer.ViewModels
 
             Rally = rally;
 
+            Number = rally.Nummer;
             Score= String.Format("{0} : {1}", rally.CurrentRallyScore.First, rally.CurrentRallyScore.Second);
             Sets = String.Format("({0} : {1})", rally.CurrentSetScore.First, rally.CurrentSetScore.Second);
 

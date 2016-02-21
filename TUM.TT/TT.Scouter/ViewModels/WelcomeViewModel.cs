@@ -31,8 +31,12 @@ namespace TT.Scouter.ViewModels
 
         public IEnumerable<IResult> OpenMatch()
         {
-            //TODO: Load Match
+            //      Load Match
             //      Open RemoteView in Shell
+            foreach (IResult result in MatchManager.OpenMatch())
+            {
+                yield return result;
+            }
             var next = ShowScreenResult.Of<RemoteViewModel>();
             yield return next;
         }

@@ -173,6 +173,9 @@
     <Compile Include="Views\LastBallStatisticsView.xaml.cs">
       <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MatchView.xaml.cs">
+      <DependentUpon>MatchView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
       <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ResultListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -313,10 +320,6 @@
     <Page Include="Views\ServiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MatchView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>

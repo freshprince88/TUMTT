@@ -9,11 +9,14 @@ using TT.Lib.Models;
 using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
+using TT.Lib.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {
 
     public class MatchViewModel : Conductor<IScreen>.Collection.AllActive
+        
+        
     {
         public MediaViewModel MediaView { get; private set; }
         public FilterStatisticsViewModel FilterStatisticsView { get; private set; }
@@ -68,7 +71,11 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Methods
-        
+       
+
+
         #endregion
     }
 }
+
+

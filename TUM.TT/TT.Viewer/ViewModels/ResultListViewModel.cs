@@ -15,7 +15,8 @@ using MahApps.Metro.Controls.Dialogs;
 namespace TT.Viewer.ViewModels
 {
     public class ResultListViewModel : Conductor<ResultListItem>.Collection.AllActive, IResultViewTabItem,
-        IHandle<ResultsChangedEvent>
+        IHandle<ResultsChangedEvent>,
+        IHandle<FullscreenEvent>
     {
         private IEventAggregator events;
         private IDialogCoordinator dialogs;
@@ -66,6 +67,21 @@ namespace TT.Viewer.ViewModels
                 this.ActivateItem(new ResultListItem(rally));
             }
             this.Items.Refresh();
+        }
+
+        public void Handle(FullscreenEvent message)
+        {
+            switch (message.Fullscreen)
+            {
+                case true:
+                    this.DisplayName = "R";
+                    break;
+                case false:
+                    this.DisplayName = "Hitlist";
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion

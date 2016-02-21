@@ -32,6 +32,11 @@ namespace TT.Lib.Util.Enums
             Play,
             None
         }
+        public enum Fullscreen
+        {
+            On,
+            Off
+        }
     }
 
     public static class Positions
@@ -172,6 +177,7 @@ namespace TT.Lib.Util.Enums
         {
             EdgeTable,
             EdgeRacket,
+            EdgeNet,
             None,
             Both
         }
@@ -243,6 +249,13 @@ namespace TT.Lib.Util.Enums
             Back,
             None,
             Both
+        }
+
+        public enum ServiceWinner
+        {
+            All,
+            Short,
+            Long
         }
     }
 }
