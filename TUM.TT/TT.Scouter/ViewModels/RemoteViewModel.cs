@@ -61,6 +61,7 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            this.ActivateItem(RemoteSchlagView);
             RemoteSchlagView.ActivateItem(new ServiceDetailViewModel(CurrentStroke));
         }
 
