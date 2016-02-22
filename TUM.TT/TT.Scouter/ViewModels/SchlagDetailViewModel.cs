@@ -7,11 +7,14 @@ namespace TT.Scouter.ViewModels
     {
         public Schlag Stroke { get; set; }
 
+        public StrokePositionTableViewModel TableControl { get; set; }
+
         public string Title { get { return GetTitleFromStroke(); } }
 
         public SchlagDetailViewModel(Schlag s)
         {
             Stroke = s;
+            TableControl = new StrokePositionTableViewModel();
         }
 
         protected override void OnActivate()

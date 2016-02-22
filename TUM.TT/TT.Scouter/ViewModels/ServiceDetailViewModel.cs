@@ -7,9 +7,12 @@ namespace TT.Scouter.ViewModels
     {
         public Schlag Stroke { get; set; }
 
+        public ServicePositionTableViewModel TableControl { get; set; }
+
         public ServiceDetailViewModel(Schlag s)
         {
             Stroke = s;
+            TableControl = new ServicePositionTableViewModel();
         }
 
         protected override void OnActivate()

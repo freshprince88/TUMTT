@@ -106,7 +106,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Platzierungen" HorizontalAlignment="Center"/>
-            <ContentControl x:Name="TableControl" />
+            <ContentControl x:Name="TableControl" Grid.Row="1"/>
             <Line Grid.Row="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
 
