@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Models;
 
@@ -24,6 +25,7 @@ namespace TT.Scouter.ViewModels
                 if (_rally != value)
                 {
                     _rally = value;
+                    CurrentStroke = _rally.Schläge.First();
                     NotifyOfPropertyChange("CurrentRally");
                 }
             }
@@ -39,11 +41,20 @@ namespace TT.Scouter.ViewModels
                 {
                     _stroke = value;
                     NotifyOfPropertyChange("CurrentStroke");
+
+                    if (_stroke.Nummer == 1)
+                    {
+                        SchlagView.ActivateItem(new ServiceDetailViewModel(CurrentStroke));
+                    }
+                    else
+                    {
+                        SchlagView.ActivateItem(new SchlagDetailViewModel(CurrentStroke));
+                    }
                 }
             }
         }
 
-        public RemoteSchlagViewModel RemoteSchlagView;
+        public RemoteSchlagViewModel SchlagView { get; set; }
 
         public RemoteViewModel() : this(null, null)
         {
@@ -53,16 +64,14 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             MatchManager = man;
+            SchlagView = new RemoteSchlagViewModel();
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
-            CurrentStroke = CurrentRally.Schläge.First();
-            RemoteSchlagView = new RemoteSchlagViewModel();           
         }
 
         protected override void OnActivate()
         {
             base.OnActivate();
-            this.ActivateItem(RemoteSchlagView);
-            RemoteSchlagView.ActivateItem(new ServiceDetailViewModel(CurrentStroke));
+            this.ActivateItem(SchlagView);
         }
 
         #region View Methods
@@ -75,6 +84,31 @@ namespace TT.Scouter.ViewModels
             {
                 CurrentRally = item;
             }
+        }
+
+        public void NextStroke()
+        {
+            CurrentStroke = CurrentRally.Schläge[CurrentStroke.Nummer];
+        }
+
+        public void PreviousStroke()
+        {
+            var idx = CurrentStroke.Nummer - 1;
+            CurrentStroke = CurrentRally.Schläge[idx - 1];
+        }
+
+        public void NextRally()
+        {
+            var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer + 1).FirstOrDefault();
+            Events.PublishOnUIThread(new ResultListControlEvent(rally));
+            CurrentRally = rally;
+        }
+
+        public void PreviousRally()
+        {
+            var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer - 1).FirstOrDefault();
+            Events.PublishOnUIThread(new ResultListControlEvent(rally));
+            CurrentRally = rally;
         }
 
         #endregion

@@ -1,28 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Caliburn.Micro;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TT.Lib.Events;
+using TT.Lib.Models;
 
 namespace TT.Scouter.Views
 {
     /// <summary>
     /// Interaction logic for RemoteView.xaml
     /// </summary>
-    public partial class RemoteView : UserControl
+    public partial class RemoteView : UserControl,
+        IHandle<ResultListControlEvent>
     {
+        public IEventAggregator Events { get; private set; }
+
         public RemoteView()
         {
             InitializeComponent();
+            Events = IoC.Get<IEventAggregator>();
+            Events.Subscribe(this);
+        }
+
+
+        public void Handle(ResultListControlEvent msg)
+        {
+            var newSelection = Items.Items.Cast<Rally>().Where(i => i.Equals(msg.SelectedRally)).FirstOrDefault();
+
+            if (newSelection != null && Items.SelectedItem != newSelection)
+                Items.SelectedItem = newSelection;
+            else
+            {
+                if (newSelection != null)
+                {
+                    Events.PublishOnUIThread(new VideoPlayEvent()
+                    {
+                        Current = newSelection
+                    });
+                }
+            }
+
         }
     }
 }

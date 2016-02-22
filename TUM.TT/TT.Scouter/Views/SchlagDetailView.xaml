@@ -30,7 +30,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Aufschlag" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+        <Label Content="{Binding Path=Title}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
 
         <Grid Grid.Row="1">

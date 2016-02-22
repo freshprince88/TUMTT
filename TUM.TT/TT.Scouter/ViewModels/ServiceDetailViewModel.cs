@@ -11,5 +11,10 @@ namespace TT.Scouter.ViewModels
         {
             Stroke = s;
         }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+        }
     }
 }
