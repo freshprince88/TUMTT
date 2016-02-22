@@ -172,9 +172,6 @@ namespace TT.Lib.Models
             }
         }
 
-        [XmlIgnore]
-        public double MyInt { get; set; }
-
         [XmlAttribute("Spielerposition")]
         public string SpielerpositionString
         {
