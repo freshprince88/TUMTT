@@ -108,6 +108,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\SpinRadioViewModel.cs" />
     <Compile Include="ViewModels\StrokePositionTableViewModel.cs" />
     <Compile Include="ViewModels\VideoSourceViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
@@ -131,6 +132,9 @@
     </Compile>
     <Compile Include="Views\ServicePositionTableView.xaml.cs">
       <DependentUpon>ServicePositionTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpinRadioView.xaml.cs">
+      <DependentUpon>SpinRadioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StrokePositionTableView.xaml.cs">
       <DependentUpon>StrokePositionTableView.xaml</DependentUpon>
@@ -177,6 +181,10 @@
     <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SpinRadioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StrokePositionTableView.xaml">
       <SubType>Designer</SubType>
