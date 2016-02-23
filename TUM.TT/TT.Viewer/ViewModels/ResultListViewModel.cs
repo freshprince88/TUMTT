@@ -21,6 +21,7 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IDialogCoordinator dialogs;
         private IMatchManager manager;
+        private int count;
 
 
         public ResultListViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
@@ -29,6 +30,7 @@ namespace TT.Viewer.ViewModels
             events = e;
             dialogs = c;
             manager = man;
+            count = 0;
         }
 
         #region View Methods
@@ -66,6 +68,8 @@ namespace TT.Viewer.ViewModels
             {
                 this.ActivateItem(new ResultListItem(rally));
             }
+            count=this.Items.Count();
+            this.DisplayName = "Hitlist (" + count + ")";
             this.Items.Refresh();
         }
 
@@ -74,10 +78,10 @@ namespace TT.Viewer.ViewModels
             switch (message.Fullscreen)
             {
                 case true:
-                    this.DisplayName = "R";
+                    this.DisplayName = "R(" + count + ")";
                     break;
                 case false:
-                    this.DisplayName = "Hitlist";
+                    this.DisplayName = "Hitlist (" + count + ")";
                     break;
                 default:
                     break;

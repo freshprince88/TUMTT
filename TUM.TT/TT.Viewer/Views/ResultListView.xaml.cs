@@ -51,6 +51,8 @@ namespace TT.Viewer.Views
                 case true:
                     //Column1.Header = "P";
                     //Column2.Header = "S";    
+                    
+                    ProportionalColumn.ApplyWidth(Column0, 2);
                     ProportionalColumn.ApplyWidth(Column1, 0);
                     ProportionalColumn.ApplyWidth(Column2, 0);
                     ProportionalColumn.ApplyWidth(Column3, 0);
@@ -60,6 +62,7 @@ namespace TT.Viewer.Views
                 case false:
                     //Column1.Header = "Punkte";
                     //Column2.Header = "Sätze";
+                    ProportionalColumn.ApplyWidth(Column0, 1);
                     ProportionalColumn.ApplyWidth(Column1, 2);
                     ProportionalColumn.ApplyWidth(Column2, 2);
                     ProportionalColumn.ApplyWidth(Column3, 3);
