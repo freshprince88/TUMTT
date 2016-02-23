@@ -33,9 +33,16 @@ namespace TT.Lib.Models
 
         private string verlauf;
 
-        private string umlaufen;
+        private bool umlaufen;
 
         private string aggressivität;
+
+        private bool eröffnung;
+
+        public Schlag()
+        {
+
+        }
 
         public Schlagtechnik Schlagtechnik
         {
@@ -73,9 +80,18 @@ namespace TT.Lib.Models
             }
         }
 
-        public Schlag()
+        /// <remarks/>
+        [XmlAttribute]
+        public bool Eröffnung
         {
-
+            get
+            {
+                return eröffnung;
+            }
+            set
+            {
+                RaiseAndSetIfChanged(ref eröffnung, value);
+            }
         }
 
         /// <remarks/>
@@ -103,6 +119,16 @@ namespace TT.Lib.Models
             set
             {
                 RaiseAndSetIfChanged(ref spieler, value);
+            }
+        }
+
+        /// <remarks/>
+        [XmlIgnore]
+        public string SpielerString
+        {
+            get
+            {
+                return Spieler.ToString();
             }
         }
 
@@ -162,9 +188,6 @@ namespace TT.Lib.Models
             }
         }
 
-        [XmlIgnore]
-        public double MyInt { get; set; }
-
         [XmlAttribute("Spielerposition")]
         public string SpielerpositionString
         {
@@ -216,7 +239,7 @@ namespace TT.Lib.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string Umlaufen
+        public bool Umlaufen
         {
             get
             {
@@ -395,7 +418,7 @@ namespace TT.Lib.Models
             switch (s)
             {
                 case Stroke.StepAround.StepAround:
-                    return Umlaufen == "ja";
+                    return Umlaufen;
                 case Stroke.StepAround.Not:
                     return true;
                 default:

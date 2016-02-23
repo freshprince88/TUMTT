@@ -1,9 +1,4 @@
 ﻿using Caliburn.Micro;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TT.Lib.Models;
 
 namespace TT.Scouter.ViewModels
@@ -12,9 +7,19 @@ namespace TT.Scouter.ViewModels
     {
         public Schlag Stroke { get; set; }
 
+        public ServicePositionTableViewModel TableControl { get; set; }
+        public SpinRadioViewModel SpinControl { get; set; }
+
         public ServiceDetailViewModel(Schlag s)
         {
             Stroke = s;
+            TableControl = new ServicePositionTableViewModel();
+            SpinControl = new SpinRadioViewModel();
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
         }
     }
 }

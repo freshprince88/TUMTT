@@ -100,6 +100,7 @@
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\ForeHandToBoolConverter.cs" />
     <Compile Include="Converters\BackHandToBoolConverter.cs" />
+    <Compile Include="Converters\MSToTimeConverter.cs" />
     <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
     <Compile Include="Converters\NumToPrevVisibleConverter.cs" />
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
@@ -195,11 +196,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\AccentRadioButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\AccentToggleButtons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\SpinToggleButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\SpinRadioButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

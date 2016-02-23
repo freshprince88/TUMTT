@@ -1051,93 +1051,93 @@ namespace TT.Lib.Models
                     
 
                 case "ForehandStepAroundInsideOutTotalButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke);
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke);
                 case "ForehandStepAroundInsideOutPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner;
                 case "ForehandStepAroundInsideOutDirectPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "ForehandStepAroundInsideOutPointsLostButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler != this.Winner;
 
                 case "BackhandStepAroundInsideOutTotalButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke);
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke);
                 case "BackhandStepAroundInsideOutPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner;
                 case "BackhandStepAroundInsideOutDirectPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "BackhandStepAroundInsideOutPointsLostButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsDiagonal(stroke) && this.Schläge[stroke].Spieler != this.Winner;
 
                 case "AllStepAroundInsideOutTotalButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja";
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen;
                 case "AllStepAroundInsideOutPointsWonButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner;
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler == this.Winner;
                 case "AllStepAroundInsideOutDirectPointsWonButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "AllStepAroundInsideOutPointsLostButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler != this.Winner;
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsDiagonal(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler != this.Winner;
 
                 #endregion
 
                 #region StepAround Middle
 
                 case "ForehandStepAroundMiddleTotalButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke);
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke);
                 case "ForehandStepAroundMiddlePointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner;
                 case "ForehandStepAroundMiddleDirectPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "ForehandStepAroundMiddlePointsLostButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler != this.Winner;
 
                 case "BackhandStepAroundMiddleTotalButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke);
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke);
                 case "BackhandStepAroundMiddlePointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner;
                 case "BackhandStepAroundMiddleDirectPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "BackhandStepAroundMiddlePointsLostButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsMiddle(stroke) && this.Schläge[stroke].Spieler != this.Winner;
 
                 case "AllStepAroundMiddleTotalButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja";
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen;
                 case "AllStepAroundMiddlePointsWonButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner;
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler == this.Winner;
                 case "AllStepAroundMiddleDirectPointsWonButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "AllStepAroundMiddlePointsLostButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler != this.Winner;
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsMiddle(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler != this.Winner;
 
                 #endregion
 
                 #region StepAround parallel
 
                 case "ForehandStepAroundParallelTotalButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke);
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke);
                 case "ForehandStepAroundParallelPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner;
                 case "ForehandStepAroundParallelDirectPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "ForehandStepAroundParallelPointsLostButton":
-                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Vorhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke) && this.Schläge[stroke].Spieler != this.Winner;
 
                 case "BackhandStepAroundParallelTotalButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke);
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke);
                 case "BackhandStepAroundParallelPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner;
                 case "BackhandStepAroundParallelDirectPointsWonButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke) && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "BackhandStepAroundParallelPointsLostButton":
-                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen=="ja" && this.IsParallel(stroke) && this.Schläge[stroke].Spieler != this.Winner;
+                    return this.Schläge[stroke].Schlägerseite == "Rückhand" && this.Schläge[stroke].Umlaufen && this.IsParallel(stroke) && this.Schläge[stroke].Spieler != this.Winner;
 
                 case "AllStepAroundParallelTotalButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja";
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen;
                 case "AllStepAroundParallelPointsWonButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner;
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler == this.Winner;
                 case "AllStepAroundParallelDirectPointsWonButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler == this.Winner && Convert.ToInt32(this.Length) < (stroke + 3);
                 case "AllStepAroundParallelPointsLostButton":
-                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen=="ja" && this.Schläge[stroke].Spieler != this.Winner;
+                    return (this.Schläge[stroke].Schlägerseite == "Vorhand" || this.Schläge[stroke].Schlägerseite == "Rückhand") && this.IsParallel(stroke) && this.Schläge[stroke].Umlaufen && this.Schläge[stroke].Spieler != this.Winner;
 
                 #endregion
 

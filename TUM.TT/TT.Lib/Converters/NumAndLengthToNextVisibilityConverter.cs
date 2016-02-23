@@ -19,7 +19,7 @@ namespace TT.Lib.Converters
             if (num == length)
                 return Visibility.Hidden;
             else
-                return Visibility.Hidden;
+                return Visibility.Visible;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
