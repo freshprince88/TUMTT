@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using TT.Lib.Managers;
 using TT.Lib.Models;
@@ -21,15 +22,27 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
-
-            MatchManager.CreateNewMatch();
         }
 
         #region View Methods
 
-        public void AddNewPlayer(int num)
+        public IEnumerable<IResult> AddNewPlayer(string s)
         {
-            //TODO: Show new Player Screen, afterwards come back here
+            // Show new Player Screen
+            int num = Convert.ToInt32(s);
+            var nextScreen = ShowScreenResult.Of<NewPlayerViewModel>();
+            switch (num)
+            {
+                case 1:
+                    nextScreen.Properties.Add("Player", Match.FirstPlayer);
+                    break;
+                case 2:
+                    nextScreen.Properties.Add("Player", Match.SecondPlayer);
+                    break;
+                default:
+                    break;
+            }
+            yield return nextScreen;
         }
 
         public IEnumerable<IResult> SaveMatchDetails()

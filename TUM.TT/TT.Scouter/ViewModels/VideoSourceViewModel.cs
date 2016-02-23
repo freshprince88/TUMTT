@@ -21,7 +21,7 @@ namespace TT.Scouter.ViewModels
         //Load Video File and go to next scene
         public IEnumerable<IResult> WithVideo()
         {
-            OpenFileDialogResult videoDialog = MatchManager.LoadVideo();
+            IResult<string> videoDialog = MatchManager.LoadVideo();
             yield return videoDialog;
             MatchManager.Match.VideoFile = videoDialog.Result;
 

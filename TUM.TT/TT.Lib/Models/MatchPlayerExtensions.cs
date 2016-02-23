@@ -27,30 +27,57 @@ namespace TT.Lib.Models
         /// Refers to the <see cref="Match.SecondPlayer"/> in a match.
         /// </summary>
         Second = 2
-}
-
-/// <summary>
-/// Extensions for <see cref="MatchPlayer"/>.
-/// </summary>
-public static class MatchPlayerExtensions
-{
-    /// <summary>
-    /// Gets the other player.
-    /// </summary>
-    /// <param name="self">This player.</param>
-    /// <returns>The other player.</returns>
-    public static MatchPlayer Other(this MatchPlayer self)
-    {
-        switch (self)
-        {
-            case MatchPlayer.First:
-                return MatchPlayer.Second;
-            case MatchPlayer.Second:
-                return MatchPlayer.First;
-            default:
-                return MatchPlayer.None;
-        }
     }
+
+    public enum Händigkeit
+    {
+        None = 0,
+
+        Rechts = 1,
+
+        Links = 2
+    }
+
+    public enum Griffhaltung
+    {
+        None = 0,
+
+        Penholder = 1,
+
+        Shakehand = 2
+    }
+
+    public enum Spielsystem
+    {
+        None = 0,
+
+        Offensiv = 1,
+
+        Defensiv = 2
+    }
+
+    /// <summary>
+    /// Extensions for <see cref="MatchPlayer"/>.
+    /// </summary>
+    public static class MatchPlayerExtensions
+    {
+        /// <summary>
+        /// Gets the other player.
+        /// </summary>
+        /// <param name="self">This player.</param>
+        /// <returns>The other player.</returns>
+        public static MatchPlayer Other(this MatchPlayer self)
+        {
+            switch (self)
+            {
+                case MatchPlayer.First:
+                    return MatchPlayer.Second;
+                case MatchPlayer.Second:
+                    return MatchPlayer.First;
+                default:
+                    return MatchPlayer.None;
+            }
+        }
 
         public static bool Equals(this MatchPlayer self, int i)
         {

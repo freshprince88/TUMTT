@@ -98,6 +98,7 @@
     <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
     <Compile Include="ViewModels\NewMatchViewModel.cs" />
+    <Compile Include="ViewModels\NewPlayerViewModel.cs" />
     <Compile Include="ViewModels\RemoteSchlagViewModel.cs" />
     <Compile Include="ViewModels\RemoteViewModel.cs" />
     <Compile Include="ViewModels\SchlagDetailViewModel.cs" />
@@ -117,6 +118,9 @@
     </Compile>
     <Compile Include="Views\NewMatchView.xaml.cs">
       <DependentUpon>NewMatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewPlayerView.xaml.cs">
+      <DependentUpon>NewPlayerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RemoteSchlagView.xaml.cs">
       <DependentUpon>RemoteSchlagView.xaml</DependentUpon>
@@ -155,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewMatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewPlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

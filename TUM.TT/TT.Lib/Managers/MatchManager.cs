@@ -152,7 +152,7 @@ namespace TT.Lib.Managers
             this.MatchModified = false;
         }
 
-        public OpenFileDialogResult LoadVideo()
+        public IResult<string> LoadVideo()
         {
             var videoDialog = new OpenFileDialogResult()
             {

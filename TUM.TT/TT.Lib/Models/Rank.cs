@@ -39,12 +39,12 @@ namespace TT.Lib.Models
         /// <summary>
         /// Gets the position in the ranking.
         /// </summary>
-        public int Position { get; private set; }
+        public int Position { get; set; }
 
         /// <summary>
         /// Gets the date of the ranking.
         /// </summary>
-        public DateTime Date { get; private set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Determines whether this rank is equal to an object.

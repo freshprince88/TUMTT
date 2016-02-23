@@ -1,12 +1,6 @@
 ﻿using Caliburn.Micro;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TT.Lib.Events;
 using TT.Lib.Models;
-using TT.Lib.Results;
 
 namespace TT.Lib.Managers
 {
@@ -28,7 +22,7 @@ namespace TT.Lib.Managers
 
         IEnumerable<IResult> OpenMatch();
 
-        OpenFileDialogResult LoadVideo();
+        IResult<string> LoadVideo();
 
         void CreateNewMatch();
 
