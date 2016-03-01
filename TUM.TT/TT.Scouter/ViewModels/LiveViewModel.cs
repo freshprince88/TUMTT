@@ -2,6 +2,8 @@
 using Caliburn.Micro;
 using TT.Lib.Managers;
 using TT.Lib.Models;
+using System.Collections.ObjectModel;
+using System;
 
 namespace TT.Scouter.ViewModels
 {
@@ -10,6 +12,7 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager MatchManager;
         public Match Match { get { return MatchManager.Match; } }
+        public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
 
         private Rally _currentRally;
         public Rally CurrentRally
@@ -26,6 +29,7 @@ namespace TT.Scouter.ViewModels
                 if(mark != Markiert)
                 {
                     Markiert = mark;
+                    NotifyOfPropertyChange("Markiert");
                 }            
             }
         }
@@ -42,6 +46,9 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;
             CurrentRally = r == null ? new Rally() : r;
+            CurrentRally.Server = MatchPlayer.First;
+            Rallies.Add(CurrentRally);
+            CurrentRally.UpdateServerAndScore();                                 
             Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
         }
@@ -50,9 +57,29 @@ namespace TT.Scouter.ViewModels
 
         public void RallyWon(int player)
         {
-            //TODO: Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
+            // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
             //   -> CurrentRally neu setzen mit Bindings
-            // NextRally Methode vielleicht im MatchManager, dann sind alle Infos des Spiels verfügbar
+            if (player == 1)
+                CurrentRally.Winner = MatchPlayer.First;
+            else
+                CurrentRally.Winner = MatchPlayer.Second;            
+
+            if (Markiert)
+            {
+                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
+                marked.Rallies.Add(CurrentRally);             
+            }
+
+            CurrentRally = new Rally();
+            Rallies.Add(CurrentRally);
+            CurrentRally.UpdateServerAndScore();
+            //NotifyOfPropertyChange("CurrentRally");            
+        }
+
+        public void SetRallyLength(int length)
+        {
+            CurrentRally.Length = length;
+            NotifyOfPropertyChange("CurrentRally");
         }
 
         #endregion

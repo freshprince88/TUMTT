@@ -100,6 +100,8 @@
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\ForeHandToBoolConverter.cs" />
     <Compile Include="Converters\BackHandToBoolConverter.cs" />
+    <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
+    <Compile Include="Converters\MatchPlayerToStringConverter.cs" />
     <Compile Include="Converters\MSToTimeConverter.cs" />
     <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
     <Compile Include="Converters\NumToPrevVisibleConverter.cs" />
@@ -134,6 +136,10 @@
     <Compile Include="Events\VideoControlEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
+    <Compile Include="Interactivity\FocusBehavior.cs" />
+    <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
+    <Compile Include="Interactivity\InputBindingTrigger.cs" />
+    <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
@@ -162,6 +168,7 @@
     <Compile Include="Results\SaveFileDialogResult.cs" />
     <Compile Include="Results\SerializeMatchResult.cs" />
     <Compile Include="Results\ShowScreenResult.cs" />
+    <Compile Include="Results\YesNoQuestionResult.cs" />
     <Compile Include="Styles\WatermarkAdorner.cs" />
     <Compile Include="Styles\WatermarkService.cs" />
     <Compile Include="Templates\CircleBorder.xaml.cs">

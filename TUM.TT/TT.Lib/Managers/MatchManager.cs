@@ -60,9 +60,8 @@ namespace TT.Lib.Managers
         #region Business Logic
 
         public IEnumerable<IResult> SaveMatch()
-        {
-            var fileName = this.FileName;
-            if (fileName == null)
+        {           
+            if (FileName == null || FileName == string.Empty)
             {
                 var dialog = new SaveFileDialogResult()
                 {
@@ -71,16 +70,16 @@ namespace TT.Lib.Managers
                     DefaultFileName = Match.DefaultFilename(),
                 };
                 yield return dialog;
-                fileName = dialog.Result;
+                FileName = dialog.Result;
+                Match.VideoFile = FileName;
             }
 
-            var serialization = new SerializeMatchResult(Match, fileName, Format.XML.Serializer);
+            var serialization = new SerializeMatchResult(Match, FileName, Format.XML.Serializer);
             yield return serialization
                 .Rescue()
-                .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", fileName))
+                .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", FileName))
                 .Propagate(); // Reraise the error to abort the coroutine
 
-            FileName = fileName;
             MatchModified = false;
 
         }
@@ -147,7 +146,9 @@ namespace TT.Lib.Managers
         public void CreateNewMatch()
         {
             this.Match = new Match();
-            this.ActivePlaylist = null;
+            Match.Playlists.Add(new Playlist() { Name = "Alle"});
+            Match.Playlists.Add(new Playlist() { Name = "Markiert" });
+            this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.FileName = String.Empty;
             this.MatchModified = false;
         }

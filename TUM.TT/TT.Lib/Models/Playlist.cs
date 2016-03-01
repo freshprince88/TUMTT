@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -147,16 +146,16 @@ namespace TT.Lib.Models
         /// <param name="args">The event arguments.</param>
         private void OnRalliesChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            //if (args.NewItems != null)
-            //{
-            //    foreach (var rally in args.NewItems.Cast<Rally>())
-            //    {
-            //        // Connect to each new rally, and update its data.
-            //        rally.Playlist = this;
-            //        rally.PropertyChanged += this.OnRallyChanged;
-            //        rally.UpdateServerAndScore();
-            //    }
-            //}
+            if (args.NewItems != null)
+            {
+                foreach (var rally in args.NewItems.Cast<Rally>())
+                {
+                    // Connect to each new rally, and update its data.
+                    rally.Playlist = this;
+                    rally.PropertyChanged += this.OnRallyChanged;
+                    //rally.UpdateServerAndScore();
+                }
+            }
 
             //// Update the rally after the new one
             //this.rallies[args.NewStartingIndex].UpdateServerAndScore();
@@ -185,15 +184,15 @@ namespace TT.Lib.Models
         /// <param name="args">The arguments describing the change.</param>
         private void OnRallyChanged(object sender, PropertyChangedEventArgs args)
         {
-            var rally = (Rally)sender;
-            if (this.rallies.Contains(rally))
-            {
-                var nextRally = this.FindNextRally(rally);
-                if (nextRally != null)
-                {
-                    nextRally.UpdateServerAndScore();
-                }
-            }
+            //var rally = (Rally)sender;
+            //if (this.rallies.Contains(rally))
+            //{
+            //    var nextRally = this.FindNextRally(rally);
+            //    if (nextRally != null)
+            //    {
+            //        nextRally.UpdateServerAndScore();
+            //    }
+            //}
         }
     }
 }

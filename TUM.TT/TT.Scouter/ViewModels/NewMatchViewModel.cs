@@ -48,6 +48,7 @@ namespace TT.Scouter.ViewModels
         public IEnumerable<IResult> SaveMatchDetails()
         {
             //TODO: Save Match Details in MatchManager and go to Video Choice
+            MatchManager.MatchModified = true;                        
             var nextScreen = ShowScreenResult.Of<VideoSourceViewModel>();
             yield return nextScreen;
         }

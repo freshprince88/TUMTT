@@ -65,9 +65,6 @@ namespace TT.Lib.Models
         public Match()
         {
             this.playlists.CollectionChanged += this.OnPlaylistsChanged;
-            FirstPlayer = new Player();
-            SecondPlayer = new Player();
-            DateTime = DateTime.Today;
         }
 
         /// <summary>

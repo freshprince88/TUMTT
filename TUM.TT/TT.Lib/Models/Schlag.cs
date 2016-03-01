@@ -8,6 +8,10 @@ namespace TT.Lib.Models
 {
     public class Schlag : PropertyChangedBase
     {
+        /// <summary>
+        /// Backs the <see cref="Rally"/> property.
+        /// </summary>
+        private Rally rally;
 
         private Schlagtechnik schlagtechnikField;
 
@@ -78,6 +82,16 @@ namespace TT.Lib.Models
             {
                 platzierungField = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the match this rally.
+        /// </summary>
+        [XmlIgnore]
+        public Rally Rally
+        {
+            get { return this.rally; }
+            set { this.RaiseAndSetIfChanged(ref this.rally, value); }
         }
 
         /// <remarks/>
@@ -262,6 +276,55 @@ namespace TT.Lib.Models
             set
             {
                 RaiseAndSetIfChanged(ref aggressivität, value);
+            }
+        }
+
+        public void Update()
+        {
+            if (this.Rally == null)
+            {
+                throw new InvalidOperationException("Stroke not part of a Rally");
+            }
+            else
+            {
+                this.UpdateNummer();
+                this.UpdatePlayer();
+            }
+        }
+
+        /// <summary>
+        /// Updates the nummer of this rally.
+        /// </summary>
+        private void UpdateNummer()
+        {
+            Schlag previousStroke = this.Rally.FindPreviousStroke(this);
+
+            // We don't need to update the server if there is no previous rally
+            if (previousStroke != null)
+            {
+                Nummer = previousStroke.Nummer + 1;
+            }
+            else
+            {
+                Nummer = 1;
+            }
+        }
+
+        /// <summary>
+        /// Updates the nummer of this rally.
+        /// </summary>
+        private void UpdatePlayer()
+        {
+            Schlag previousStroke = this.Rally.FindPreviousStroke(this);
+
+            // We don't need to update the server if there is no previous rally
+            if (previousStroke != null)
+            {
+                this.Spieler = previousStroke.Spieler.Other();
+            }
+            else
+            {
+                this.Spieler = Rally.Server;
             }
         }
 
@@ -792,8 +855,6 @@ namespace TT.Lib.Models
         
 
         #endregion
-
-
 
     }
 
