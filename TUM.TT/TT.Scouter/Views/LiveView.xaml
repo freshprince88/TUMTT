@@ -56,7 +56,22 @@
             <Label Name="PointScore2" Content="{Binding Path=CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="5" FontSize="75"/>
         </Grid>
 
-        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}">
+        <Grid x:Name="StartGrid" Grid.Row="2" Visibility="{Binding IsNewRally, Converter={conv:BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="Start Rally" Grid.Column="1" Grid.Row="1" FontSize="18" 
+                    cal:Message.Attach="[Event Click] = [Action StartRally()]"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

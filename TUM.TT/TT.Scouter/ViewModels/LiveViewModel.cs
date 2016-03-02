@@ -36,6 +36,21 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private bool _newRally;
+        public bool IsNewRally
+        {
+            get { return _newRally; }
+            set
+            {
+                if(_newRally != value)
+                {
+                    _newRally = value;
+                    NotifyOfPropertyChange();
+                }
+
+            }
+        }
+
         public bool Markiert { get; set; }
 
 
@@ -49,7 +64,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
 
             MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
-
+            IsNewRally = true;
             CurrentRally = r == null ? new Rally() : r;
             CurrentRally.Server = MatchPlayer.First;
             Rallies.Add(CurrentRally);
@@ -92,6 +107,7 @@ namespace TT.Scouter.ViewModels
             CurrentRally = new Rally();
             Rallies.Add(CurrentRally);
             CurrentRally.UpdateServerAndScore();
+            IsNewRally = true;
             //NotifyOfPropertyChange("CurrentRally");            
         }
 
@@ -99,6 +115,14 @@ namespace TT.Scouter.ViewModels
         {
             CurrentRally.Length = length;
             NotifyOfPropertyChange("CurrentRally");
+        }
+
+        public void StartRally()
+        {
+            //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
+            //      Timer läuft, der die MediaPosition simuliert
+            //CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
+            IsNewRally = false;
         }
 
         #endregion
