@@ -108,8 +108,10 @@
     <Compile Include="Converters\MSToTimeConverter.cs" />
     <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
     <Compile Include="Converters\NumToPrevVisibleConverter.cs" />
+    <Compile Include="Converters\RallyLengthToBoolConverter.cs" />
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
+    <Compile Include="Converters\SetToBoolConverter.cs" />
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
     <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="Converters\TableLengthToCheckedConverter.cs" />

@@ -25,7 +25,7 @@
     <ListView x:Name="Items"
             Margin="0"
             BorderThickness="0"
-            SelectedIndex="0"            
+            SelectedIndex="0"
             ctrl:ListViewLayoutManager.Enabled="true" 
             util:GridViewSort.ShowSortGlyph="False"
             util:GridViewSort.AutoSort="True"
@@ -41,7 +41,7 @@
                                 ctrl:ProportionalColumn.Width="1"/>
                 <GridViewColumn x:Name="Column1" DisplayMemberBinding="{Binding Score}"
                                             Header="Punkte"
-                                util:GridViewSort.PropertyName="Score"
+                                util:GridViewSort.PropertyName="Score"  
                                 ctrl:ProportionalColumn.Width="2"/>
                 <GridViewColumn x:Name="Column2" DisplayMemberBinding="{Binding Sets}"
                                             Header="Sätze" 

@@ -48,7 +48,7 @@ namespace TT.Viewer.Views
             {
                 case true:
                     Column1.Width = new GridLength(0);
-                    Column2.Width = new GridLength(50);
+                    Column2.Width = new GridLength(75);
                     Row2.Height = new GridLength(0);
                     Row3.Height = new GridLength(0);
                     break;
