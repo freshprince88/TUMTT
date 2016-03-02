@@ -23,7 +23,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _currentRally = value;
-                NotifyOfPropertyChange("CurrentRally");
+                NotifyOfPropertyChange();
 
                 Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
                 bool mark = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
@@ -97,6 +97,8 @@ namespace TT.Scouter.ViewModels
             //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
             //      Timer läuft, der die MediaPosition simuliert
             //CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
+            if (CurrentRally.Length == 0)
+                CurrentRally.Length = 1;
 
             if (Markiert)
             {
@@ -114,7 +116,7 @@ namespace TT.Scouter.ViewModels
         public void SetRallyLength(int length)
         {
             CurrentRally.Length = length;
-            NotifyOfPropertyChange("CurrentRally");
+            //NotifyOfPropertyChange("CurrentRally");
         }
 
         public void StartRally()

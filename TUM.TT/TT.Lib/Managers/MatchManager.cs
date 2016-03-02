@@ -71,7 +71,6 @@ namespace TT.Lib.Managers
                 };
                 yield return dialog;
                 FileName = dialog.Result;
-                Match.VideoFile = FileName;
             }
 
             var serialization = new SerializeMatchResult(Match, FileName, Format.XML.Serializer);

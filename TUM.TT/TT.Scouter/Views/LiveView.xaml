@@ -87,41 +87,92 @@
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <Label Content="Rally Länge:" VerticalAlignment="Center" FontSize="20" Margin="0 0 10 0"/>
-                <RadioButton GroupName="RallyLength" Content="1" Width="35" Margin="0 0 10 0" FontSize="16" cal:Message.Attach="[Event Checked] = [Action SetRallyLength(1)]" />
-                <RadioButton GroupName="RallyLength" Content="2" Width="35" Margin="0 0 10 0" FontSize="16" cal:Message.Attach="[Event Checked] = [Action SetRallyLength(2)]" />
-                <RadioButton GroupName="RallyLength" Content="3" Width="35" Margin="0 0 10 0" FontSize="16" cal:Message.Attach="[Event Checked] = [Action SetRallyLength(3)]" />
-                <RadioButton GroupName="RallyLength" Content="4" Width="35" Margin="0 0 10 0" FontSize="16" cal:Message.Attach="[Event Checked] = [Action SetRallyLength(4)]" />
-                <RadioButton GroupName="RallyLength" Content="5" Width="35" Margin="0 0 10 0" FontSize="16" cal:Message.Attach="[Event Checked] = [Action SetRallyLength(5)]" />
-                <RadioButton GroupName="RallyLength" Content="6" Width="35" Margin="0 0 10 0" FontSize="16" cal:Message.Attach="[Event Checked] = [Action SetRallyLength(6)]" />
-                <AdornerDecorator>
-                    <TextBox Width="60" Margin="0 0 10 0" Text="{Binding Path=CurrentRally.Length}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18">
-                        <styles:WatermarkService.Watermark>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray">Nummer</TextBlock>
-                        </styles:WatermarkService.Watermark>
-                        <i:Interaction.Behaviors>
-                            <ob:SelectAllTextOnFocusBehavior />
-                        </i:Interaction.Behaviors>
-                        <i:Interaction.Triggers>
-                            <ob:InputBindingTrigger>
-                                <ob:InputBindingTrigger.InputBinding>
-                                    <KeyBinding Key="Enter" />
-                                </ob:InputBindingTrigger.InputBinding>
-                                <cal:ActionMessage MethodName="SetRallyLength" >
-                                    <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
-                                </cal:ActionMessage>
-                            </ob:InputBindingTrigger>
-                            <ob:InputBindingTrigger>
-                                <ob:InputBindingTrigger.InputBinding>
-                                    <KeyBinding Key="Return" />
-                                </ob:InputBindingTrigger.InputBinding>
-                                <cal:ActionMessage MethodName="SetRallyLength" >
-                                    <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
-                                </cal:ActionMessage>
-                            </ob:InputBindingTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>
-                </AdornerDecorator>
-                <RadioButton GroupName="RallyLength" Content="n.a." FontSize="16" cal:Message.Attach="[Event Checked] = [Action SetRallyLength(0)]" />
+                <RadioButton GroupName="RallyLength" Content="1" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(1)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="2" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(2)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="3" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(3)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="4" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(4)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="5" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(5)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="6" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(6)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <TextBox Width="60" Margin="0 0 10 0" Text="{Binding Path=CurrentRally.Length}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18">
+                    <i:Interaction.Behaviors>
+                        <ob:SelectAllTextOnFocusBehavior />
+                    </i:Interaction.Behaviors>
+                    <i:Interaction.Triggers>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Key="Enter" />
+                            </ob:InputBindingTrigger.InputBinding>
+                            <cal:ActionMessage MethodName="SetRallyLength" >
+                                <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
+                            </cal:ActionMessage>
+                        </ob:InputBindingTrigger>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Key="Return" />
+                            </ob:InputBindingTrigger.InputBinding>
+                            <cal:ActionMessage MethodName="SetRallyLength" >
+                                <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
+                            </cal:ActionMessage>
+                        </ob:InputBindingTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <RadioButton GroupName="RallyLength" Content="n.a." FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(0)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
             </StackPanel>
 
             <Button Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action RallyWon(1)]"/>
