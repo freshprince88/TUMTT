@@ -58,6 +58,11 @@ namespace TT.Lib.Models {
         private int nummer = 1;
 
         /// <summary>
+        /// Backs the <see cref="Length"/> property.
+        /// </summary>
+        private int length;
+
+        /// <summary>
         /// Backs the <see cref="Anfang"/> property.
         /// </summary>
         private double anfang;
@@ -205,31 +210,10 @@ namespace TT.Lib.Models {
         [XmlAttribute]
         public int Length
         {
-            get { return schläge.Count; }
+            get { return length; }
             set
             {
-                var diff = value - schläge.Count();
-                if (schläge.Count < value)
-                {                    
-                    for (int i = 0; i < diff; i++)
-                    {
-                        schläge.Add(new Schlag());
-                    }
-
-                }
-                else if( schläge.Count > value)
-                {
-                    diff = -diff;
-                    for (int i = 0; i < diff; i++)
-                    {
-                        schläge.RemoveAt(schläge.IndexOf(schläge.Last()));
-                    }
-                }
-
-                if(diff != 0)
-                {
-                    this.NotifyPropertyChanged();                    
-                }                             
+                this.RaiseAndSetIfChanged(ref this.length, value);
             }
         }
 
@@ -425,7 +409,6 @@ namespace TT.Lib.Models {
                     schlag.PropertyChanged += this.OnSchlagChanged;
                     schlag.Update();
                 }
-                //this.NotifyPropertyChanged("Schläge");
             }
         }
 
