@@ -32,17 +32,17 @@ namespace TT.Lib.Models
         /// <summary>
         /// Backs the <see cref="Spielsystem"/> property.
         /// </summary>
-        private string spielsystem;
+        private Spielsystem spielsystem = Spielsystem.None;
 
         /// <summary>
         /// Backs the <see cref="Händigkeit"/> property.
         /// </summary>
-        private string händigkeit;
+        private Händigkeit händigkeit = Händigkeit.None;
 
         /// <summary>
         /// Backs the <see cref="Griffhaltung"/> property.
         /// </summary>
-        private string griffhaltung;
+        private Griffhaltung griffhaltung = Griffhaltung.None;
 
         /// <summary>
         /// Backs the <see cref="Material"/> property.
@@ -94,6 +94,7 @@ namespace TT.Lib.Models
                 {
                     this.name = value;
                     this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("Name");
                     this.NotifyPropertyChanged("FullName");
                 }
             }
@@ -104,7 +105,7 @@ namespace TT.Lib.Models
         /// Gets or sets the Spielsystem of this player.
         /// </summary>
         [XmlAttribute]
-        public string Spielsystem
+        public Spielsystem Spielsystem
         {
             get
             {
@@ -125,7 +126,7 @@ namespace TT.Lib.Models
         /// Gets or sets the Händigkeit of this player.
         /// </summary>
         [XmlAttribute]
-        public string Händigkeit
+        public Händigkeit Händigkeit
         {
             get
             {
@@ -146,7 +147,7 @@ namespace TT.Lib.Models
         /// Gets or sets the Griffhaltung of this player.
         /// </summary>
         [XmlAttribute]
-        public string Griffhaltung
+        public Griffhaltung Griffhaltung
         {
             get
             {

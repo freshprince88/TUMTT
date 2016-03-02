@@ -3,12 +3,14 @@
 //    Copyright © 2013, 2014 Fakultät für Sport- und Gesundheitswissenschaft
 // </copyright>
 //-----------------------------------------------------------------------
+using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Xml.Serialization;
 
-namespace TT.Lib.Models
-{
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Xml.Serialization;
+namespace TT.Lib.Models { 
 
     /// <summary>
     /// A rally in a <see cref="Match"/>.
@@ -33,7 +35,7 @@ namespace TT.Lib.Models
         /// <summary>
         /// Backs the <see cref="Length"/> property.
         /// </summary>
-        private int length;
+        //private int length;
 
         /// <summary>
         /// Backs the <see cref="CurrentRallyScore"/> property.
@@ -53,7 +55,7 @@ namespace TT.Lib.Models
         /// <summary>
         /// Backs the <see cref="Nummer"/> property.
         /// </summary>
-        private int nummer;
+        private int nummer = 1;
 
         /// <summary>
         /// Backs the <see cref="Anfang"/> property.
@@ -75,6 +77,7 @@ namespace TT.Lib.Models
         /// </summary>
         public Rally()
         {
+            this.schläge.CollectionChanged += this.OnSchlägeChanged;
         }
 
         /// <summary>
@@ -93,6 +96,7 @@ namespace TT.Lib.Models
         public ObservableCollection<Schlag> Schläge
         {
             get { return this.schläge; }
+            set { this.RaiseAndSetIfChanged(ref this.schläge, value); }
         }
 
         /// <summary>
@@ -201,8 +205,32 @@ namespace TT.Lib.Models
         [XmlAttribute]
         public int Length
         {
-            get { return this.length; }
-            set { this.RaiseAndSetIfChanged(ref this.length, value); }
+            get { return schläge.Count; }
+            set
+            {
+                var diff = value - schläge.Count();
+                if (schläge.Count < value)
+                {                    
+                    for (int i = 0; i < diff; i++)
+                    {
+                        schläge.Add(new Schlag());
+                    }
+
+                }
+                else if( schläge.Count > value)
+                {
+                    diff = -diff;
+                    for (int i = 0; i < diff; i++)
+                    {
+                        schläge.RemoveAt(schläge.IndexOf(schläge.Last()));
+                    }
+                }
+
+                if(diff != 0)
+                {
+                    this.NotifyPropertyChanged();                    
+                }                             
+            }
         }
 
         /// <summary>
@@ -289,6 +317,25 @@ namespace TT.Lib.Models
             {
                 this.UpdateServer();
                 this.UpdateScore();
+                this.UpdateNummer();                
+            }
+        }
+
+        /// <summary>
+        /// Updates the nummer of this rally.
+        /// </summary>
+        private void UpdateNummer()
+        {
+            var previousRally = this.Playlist.FindPreviousRally(this);
+
+            // We don't need to update the server if there is no previous rally
+            if (previousRally != null)
+            {
+                Nummer = previousRally.Nummer + 1;
+            }
+            else
+            {
+                Nummer = 1;
             }
         }
 
@@ -362,6 +409,55 @@ namespace TT.Lib.Models
             return Schläge[StrokeNumber];
         }
 
+        /// <summary>
+        /// Handles changes to the list of rallies.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="args">The event arguments.</param>
+        private void OnSchlägeChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            if (args.NewItems != null)
+            {
+                foreach (var schlag in args.NewItems.Cast<Schlag>())
+                {
+                    // Connect to each new rally, and update its data.
+                    schlag.Rally = this;
+                    schlag.PropertyChanged += this.OnSchlagChanged;
+                    schlag.Update();
+                }
+                //this.NotifyPropertyChanged("Schläge");
+            }
+        }
+
+        /// <summary>
+        /// Handles a change of a rally.
+        /// </summary>
+        /// <param name="sender">The changed rally.</param>
+        /// <param name="args">The arguments describing the change.</param>
+        private void OnSchlagChanged(object sender, PropertyChangedEventArgs args)
+        {
+            //var rally = (Rally)sender;
+            //if (this.rallies.Contains(rally))
+            //{
+            //    var nextRally = this.FindNextRally(rally);
+            //    if (nextRally != null)
+            //    {
+            //        nextRally.UpdateServerAndScore();
+            //    }
+            //}
+        }
+
+        /// <summary>
+        /// Finds the previous stroke.
+        /// </summary>
+        /// <param name="stroke">The next stroke.</param>
+        /// <returns>The previous stroke, or <c>null</c> if there is no previous stroke.</returns>
+        public Schlag FindPreviousStroke(Schlag stroke)
+        {
+            var index = this.schläge.IndexOf(stroke);
+            return index >= 0 ? this.schläge.ElementAtOrDefault(index - 1) : null;
+        }
+
         #region Helper Methods
         public Boolean IsDiagonal(int i)
         {
@@ -424,6 +520,7 @@ namespace TT.Lib.Models
 
         }
         #endregion
+
         #region Helper Methods Statistics
 
         public bool HasBasisInformationStatistics(int minlegth, string name)

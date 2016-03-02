@@ -1,9 +1,11 @@
 using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System.Collections.Generic;
 using System.Windows;
 using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Results;
 using TT.Scouter.ViewModels;
 
 namespace TT.Scouter
@@ -55,30 +57,49 @@ namespace TT.Scouter
             }
         }
 
-        protected override async void OnDeactivate(bool close)
+        /// <summary>
+        /// Determines whether the view model can be closed.
+        /// </summary>
+        /// <param name="callback">Called to perform the closing</param>
+        public override void CanClose(System.Action<bool> callback)
         {
-            Events.Unsubscribe(this);
+            var context = new CoroutineExecutionContext()
+            {
+                Target = this,
+                View = this.GetView() as DependencyObject,
+            };
+
+            Coroutine.BeginExecute(
+                this.PrepareClose().GetEnumerator(),
+                context,
+                (sender, args) =>
+                {
+                    callback(args.WasCancelled != true);
+                });
+        }
+
+        /// <summary>
+        /// Prepare the closing of this view model.
+        /// </summary>
+        /// <returns>The actions to execute before closing</returns>
+        private IEnumerable<IResult> PrepareClose()
+        {
             if (MatchManager.MatchModified)
             {
-                var mySettings = new MetroDialogSettings()
+                var question = new YesNoQuestionResult()
                 {
-                    AffirmativeButtonText = "Save and Quit",
-                    NegativeButtonText = "Cancel",
-                    FirstAuxiliaryButtonText = "Quit Without Saving",
-                    AnimateShow = true,
-                    AnimateHide = false
+                    Title = "Save the match?",
+                    Question = "The match is modified. Save changes?",
+                    AllowCancel = true
                 };
+                yield return question;
 
-                var result = await DialogCoordinator.ShowMessageAsync(this, "Quit application?",
-                    "Sure you want to quit application?",
-                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
-
-                bool _shutdown = result == MessageDialogResult.Affirmative;
-
-                if (_shutdown)
+                if (question.Result)
                 {
-                    MatchManager.SaveMatch();
-                    Application.Current.Shutdown();
+                    foreach (var action in MatchManager.SaveMatch())
+                    {
+                        yield return action;
+                    }
                 }
             }
         }

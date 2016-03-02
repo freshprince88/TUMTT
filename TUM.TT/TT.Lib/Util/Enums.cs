@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TT.Lib.Util.Enums
+﻿namespace TT.Lib.Util.Enums
 {
     public static class Media
     {
@@ -30,6 +24,10 @@ namespace TT.Lib.Util.Enums
             Stop,
             Pause,
             Play,
+            NextF,
+            PrevF,
+            Next5F,
+            Prev5F,
             None
         }
         public enum Fullscreen
@@ -257,5 +255,5 @@ namespace TT.Lib.Util.Enums
             Short,
             Long
         }
-    }
+    }     
 }

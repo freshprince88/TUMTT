@@ -1,12 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Threading;
-using TT.Lib;
 using TT.Lib.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
@@ -309,7 +304,7 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MediaControlEvent message)
         {
-            switch (message.PrevNext)
+            switch (message.Ctrl)
             {
                 case Media.Control.Previous:
                     this.PreviousRally();

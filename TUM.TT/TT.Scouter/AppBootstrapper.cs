@@ -23,10 +23,12 @@ namespace TT.Scouter {
             container.Singleton<IMatchManager, MatchManager>();
             container.Singleton<IShell, ShellViewModel>();
             container.Singleton<IDialogCoordinator, DialogCoordinator>();
+
             container.PerRequest<NewMatchViewModel>("NewMatchViewModel");
             container.PerRequest<VideoSourceViewModel>("VideoSourceViewModel");
             container.PerRequest<LiveViewModel>("LiveViewModel");
             container.PerRequest<RemoteViewModel>("RemoteViewModel");
+            container.PerRequest<NewPlayerViewModel>("NewPlayerViewModel");
         }
 
         protected override object GetInstance(Type service, string key) {

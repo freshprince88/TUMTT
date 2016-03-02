@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:styles="clr-namespace:TT.Lib.Styles;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024"
              Background="{DynamicResource AccentColorBrush4}">
@@ -20,9 +23,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Border BorderThickness="2 2 2 2" BorderBrush="{DynamicResource AccentColorBrush}">
-            <MediaElement Name="Test" />
-        </Border>
+        <ContentControl x:Name="MediaPlayer" />
 
         <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush3}">
             <Grid.ColumnDefinitions>
@@ -55,7 +56,22 @@
             <Label Name="PointScore2" Content="{Binding Path=CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="5" FontSize="75"/>
         </Grid>
 
-        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}">
+        <Grid x:Name="StartGrid" Grid.Row="2" Visibility="{Binding IsNewRally, Converter={conv:BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="Start Rally" Grid.Column="1" Grid.Row="1" FontSize="18" 
+                    cal:Message.Attach="[Event Click] = [Action StartRally()]"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -71,20 +87,92 @@
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                 <Label Content="Rally Länge:" VerticalAlignment="Center" FontSize="20" Margin="0 0 10 0"/>
-                <RadioButton GroupName="RallyLength" Content="1" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <RadioButton GroupName="RallyLength" Content="2" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <RadioButton GroupName="RallyLength" Content="3" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <RadioButton GroupName="RallyLength" Content="4" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <RadioButton GroupName="RallyLength" Content="5" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <RadioButton GroupName="RallyLength" Content="6" Width="35" Margin="0 0 10 0" FontSize="16"/>
-                <AdornerDecorator>
-                    <TextBox Width="60" Margin="0 0 10 0">
-                        <styles:WatermarkService.Watermark>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray">Nummer</TextBlock>
-                        </styles:WatermarkService.Watermark>
-                    </TextBox>
-                </AdornerDecorator>
-                <RadioButton GroupName="RallyLength" Content="n.a." FontSize="16" IsChecked="True"/>
+                <RadioButton GroupName="RallyLength" Content="1" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(1)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="2" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(2)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="3" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(3)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="4" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(4)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="5" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(5)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton GroupName="RallyLength" Content="6" Width="35" Margin="0 0 10 0" FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(6)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <TextBox Width="60" Margin="0 0 10 0" Text="{Binding Path=CurrentRally.Length}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18">
+                    <i:Interaction.Behaviors>
+                        <ob:SelectAllTextOnFocusBehavior />
+                    </i:Interaction.Behaviors>
+                    <i:Interaction.Triggers>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Key="Enter" />
+                            </ob:InputBindingTrigger.InputBinding>
+                            <cal:ActionMessage MethodName="SetRallyLength" >
+                                <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
+                            </cal:ActionMessage>
+                        </ob:InputBindingTrigger>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Key="Return" />
+                            </ob:InputBindingTrigger.InputBinding>
+                            <cal:ActionMessage MethodName="SetRallyLength" >
+                                <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
+                            </cal:ActionMessage>
+                        </ob:InputBindingTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <RadioButton GroupName="RallyLength" Content="n.a." FontSize="16" 
+                             cal:Message.Attach="[Event Checked] = [Action SetRallyLength(0)]" >
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Length"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
             </StackPanel>
 
             <Button Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action RallyWon(1)]"/>
@@ -93,20 +181,26 @@
 
         </Grid>
 
-        <StackPanel Orientation="Vertical" Grid.Column="1">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <Label Content="Rallies" FontSize="20" HorizontalAlignment="Center" Background="{DynamicResource AccentColorBrush3}"/>
-            <ListBox ItemsSource="{Binding Path=Match.Rallies}" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <ListBox ItemsSource="{Binding Path=Rallies}" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"  ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding RallyNumShort}" />
+                            <Label Content="{Binding Nummer}" />
                             <Label Content="{Binding CurrentRallyScore}" FontWeight="Bold"/>
                             <Label Content="{Binding CurrentSetScore, StringFormat=({0})}" />
+                            <Label Content="{Binding Winner, Converter={conv:MatchPlayerToStringConverter}}" />
+                            <Label Content="{Binding Length, StringFormat='Länge {}'}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
+        </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
@@ -115,13 +209,13 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Kommentar" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Grid.Row="1"/>
+            <TextBox AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Grid.Row="1" Text="{Binding Path=CurrentRally.Kommentar}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
                 <CheckBox IsChecked="{Binding Path=Markiert}" VerticalAlignment="Center" />
                 <Label Content="vormerken" FontSize="18" VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>
-        
+
     </Grid>
 </UserControl>

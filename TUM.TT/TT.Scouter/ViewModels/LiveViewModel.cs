@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Caliburn.Micro;
 using TT.Lib.Managers;
 using TT.Lib.Models;
+using System.Collections.ObjectModel;
 
 namespace TT.Scouter.ViewModels
 {
@@ -11,7 +10,11 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+
+        public LiveMediaViewModel MediaPlayer { get; set; }
+
         public Match Match { get { return MatchManager.Match; } }
+        public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
 
         private Rally _currentRally;
         public Rally CurrentRally
@@ -20,7 +23,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _currentRally = value;
-                NotifyOfPropertyChange("CurrentRally");
+                NotifyOfPropertyChange();
 
                 Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
                 bool mark = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
@@ -28,9 +31,26 @@ namespace TT.Scouter.ViewModels
                 if(mark != Markiert)
                 {
                     Markiert = mark;
+                    NotifyOfPropertyChange("Markiert");
                 }            
             }
         }
+
+        private bool _newRally;
+        public bool IsNewRally
+        {
+            get { return _newRally; }
+            set
+            {
+                if(_newRally != value)
+                {
+                    _newRally = value;
+                    NotifyOfPropertyChange();
+                }
+
+            }
+        }
+
         public bool Markiert { get; set; }
 
 
@@ -42,18 +62,69 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             MatchManager = man;
+
+            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+            IsNewRally = true;
             CurrentRally = r == null ? new Rally() : r;
+            CurrentRally.Server = MatchPlayer.First;
+            Rallies.Add(CurrentRally);
+            CurrentRally.UpdateServerAndScore();                                 
             Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-            Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
+            Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);            
         }
+
+        #region Caliburn Hooks
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            this.ActivateItem(MediaPlayer);
+        }
+    
+        #endregion
 
         #region View Methods
 
         public void RallyWon(int player)
         {
-            //TODO: Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
+            // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
             //   -> CurrentRally neu setzen mit Bindings
-            // NextRally Methode vielleicht im MatchManager, dann sind alle Infos des Spiels verfügbar
+            if (player == 1)
+                CurrentRally.Winner = MatchPlayer.First;
+            else
+                CurrentRally.Winner = MatchPlayer.Second;
+
+            //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
+            //      Timer läuft, der die MediaPosition simuliert
+            //CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
+            if (CurrentRally.Length == 0)
+                CurrentRally.Length = 1;
+
+            if (Markiert)
+            {
+                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
+                marked.Rallies.Add(CurrentRally);             
+            }
+
+            CurrentRally = new Rally();
+            Rallies.Add(CurrentRally);
+            CurrentRally.UpdateServerAndScore();
+            IsNewRally = true;
+            //NotifyOfPropertyChange("CurrentRally");            
+        }
+
+        public void SetRallyLength(int length)
+        {
+            CurrentRally.Length = length;
+            //NotifyOfPropertyChange("CurrentRally");
+        }
+
+        public void StartRally()
+        {
+            //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
+            //      Timer läuft, der die MediaPosition simuliert
+            //CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
+            IsNewRally = false;
         }
 
         #endregion

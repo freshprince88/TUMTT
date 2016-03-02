@@ -25,7 +25,7 @@ namespace TT.Scouter.ViewModels
                 if (_rally != value)
                 {
                     _rally = value;
-                    CurrentStroke = _rally.Schläge.First();
+                    CurrentStroke = _rally.Schläge.FirstOrDefault();
                     NotifyOfPropertyChange("CurrentRally");
                 }
             }

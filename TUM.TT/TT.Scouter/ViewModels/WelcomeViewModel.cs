@@ -25,6 +25,7 @@ namespace TT.Scouter.ViewModels
 
         public IEnumerable<IResult> OpenNewMatch()
         {
+            MatchManager.CreateNewMatch();
             var next = ShowScreenResult.Of<NewMatchViewModel>();
             yield return next;
         }
