@@ -103,20 +103,15 @@ namespace TT.Lib.Managers
             Match = deserialization.Result;
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
 
+            Events.PublishOnUIThread(new MatchOpenedEvent(Match));
+
             if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
             {
-                var videoDialog = new OpenFileDialogResult()
+                foreach(var result in LoadVideo())
                 {
-                    Title = "Open video file...",
-                    Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
-                };
-                yield return videoDialog;
-
-                Match.VideoFile = videoDialog.Result;
-            }
-
-            Events.PublishOnUIThread(new MatchOpenedEvent(Match));
-            Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+                    yield return result;
+                }
+            }                        
         }
 
         public void DeleteRally(Rally r)
@@ -146,6 +141,9 @@ namespace TT.Lib.Managers
         public void CreateNewMatch()
         {
             this.Match = new Match();
+            Match.DateTime = DateTime.Now;
+            Match.FirstPlayer = new Player();
+            Match.SecondPlayer = new Player();
             Match.Playlists.Add(new Playlist() { Name = "Alle"});
             Match.Playlists.Add(new Playlist() { Name = "Markiert" });
             this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
@@ -153,14 +151,16 @@ namespace TT.Lib.Managers
             this.MatchModified = false;
         }
 
-        public IResult<string> LoadVideo()
+        public IEnumerable<IResult> LoadVideo()
         {
             var videoDialog = new OpenFileDialogResult()
             {
                 Title = "Open video file...",
                 Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
             };
-            return videoDialog;            
+            yield return videoDialog;
+            Match.VideoFile = videoDialog.Result;
+            Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
         }
 
         #endregion

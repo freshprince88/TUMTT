@@ -24,6 +24,10 @@
             Stop,
             Pause,
             Play,
+            NextF,
+            PrevF,
+            Next5F,
+            Prev5F,
             None
         }
         public enum Fullscreen

@@ -97,6 +97,7 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
+    <Compile Include="ViewModels\LiveMediaViewModel.cs" />
     <Compile Include="ViewModels\NewMatchViewModel.cs" />
     <Compile Include="ViewModels\NewPlayerViewModel.cs" />
     <Compile Include="ViewModels\RemoteSchlagViewModel.cs" />
@@ -113,6 +114,9 @@
     <Compile Include="ViewModels\StrokePositionTableViewModel.cs" />
     <Compile Include="ViewModels\VideoSourceViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="Views\LiveMediaView.xaml.cs">
+      <DependentUpon>LiveMediaView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LiveView.xaml.cs">
       <DependentUpon>LiveView.xaml</DependentUpon>
     </Compile>
@@ -151,6 +155,10 @@
     </Compile>
     <Compile Include="WindowManager.cs" />
     <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LiveMediaView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

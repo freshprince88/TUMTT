@@ -98,6 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BaseConverter.cs" />
+    <Compile Include="Converters\BoolNotConverter.cs" />
+    <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ForeHandToBoolConverter.cs" />
     <Compile Include="Converters\BackHandToBoolConverter.cs" />
     <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
@@ -114,11 +117,14 @@
     <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingColumnConverter.cs" />
+    <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="Events\MediaControlEvent.cs" />
+    <Compile Include="Events\MediaMuteEvent.cs" />
+    <Compile Include="Events\MediaSpeedEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="Events\PlaylistSelectionChangedEvent.cs" />
@@ -143,6 +149,7 @@
     <Compile Include="IShell.cs" />
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
+    <Compile Include="Views\ExtendedMediaElement.cs" />
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Schlag.cs" />
     <Compile Include="Models\Serialization\IMatchSerializer.cs" />

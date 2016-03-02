@@ -23,9 +23,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Border BorderThickness="2 2 2 2" BorderBrush="{DynamicResource AccentColorBrush}">
-            <MediaElement Name="Test" />
-        </Border>
+        <ContentControl x:Name="MediaPlayer" />
 
         <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush3}">
             <Grid.ColumnDefinitions>
@@ -152,6 +150,6 @@
                 <Label Content="vormerken" FontSize="18" VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>
-        
+
     </Grid>
 </UserControl>

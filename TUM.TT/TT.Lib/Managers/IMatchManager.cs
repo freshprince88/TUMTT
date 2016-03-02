@@ -22,7 +22,7 @@ namespace TT.Lib.Managers
 
         IEnumerable<IResult> OpenMatch();
 
-        IResult<string> LoadVideo();
+        IEnumerable<IResult> LoadVideo();
 
         void CreateNewMatch();
 

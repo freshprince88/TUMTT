@@ -3,7 +3,6 @@ using Caliburn.Micro;
 using TT.Lib.Managers;
 using TT.Lib.Models;
 using System.Collections.ObjectModel;
-using System;
 
 namespace TT.Scouter.ViewModels
 {
@@ -11,6 +10,9 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+
+        public LiveMediaViewModel MediaPlayer { get; set; }
+
         public Match Match { get { return MatchManager.Match; } }
         public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
 
@@ -45,13 +47,26 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             MatchManager = man;
+
+            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+
             CurrentRally = r == null ? new Rally() : r;
             CurrentRally.Server = MatchPlayer.First;
             Rallies.Add(CurrentRally);
             CurrentRally.UpdateServerAndScore();                                 
             Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-            Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
+            Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);            
         }
+
+        #region Caliburn Hooks
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            this.ActivateItem(MediaPlayer);
+        }
+    
+        #endregion
 
         #region View Methods
 
@@ -62,7 +77,11 @@ namespace TT.Scouter.ViewModels
             if (player == 1)
                 CurrentRally.Winner = MatchPlayer.First;
             else
-                CurrentRally.Winner = MatchPlayer.Second;            
+                CurrentRally.Winner = MatchPlayer.Second;
+
+            //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
+            //      Timer läuft, der die MediaPosition simuliert
+            //CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
 
             if (Markiert)
             {
