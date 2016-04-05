@@ -97,12 +97,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\AggressionToBoolConverter.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BoolNotConverter.cs" />
     <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converters\ForeHandToBoolConverter.cs" />
-    <Compile Include="Converters\BackHandToBoolConverter.cs" />
+    <Compile Include="Converters\CrunchToBoolConverter.cs" />
+    <Compile Include="Converters\ForeBackHandToBoolConverter.cs" />
+    <Compile Include="Converters\PlayerP1P2ToBoolConverter.cs" />
+    <Compile Include="Converters\PointP1P2ToBoolConverter.cs" />
+    <Compile Include="Converters\QualityToBoolConverter.cs" />
     <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
     <Compile Include="Converters\MatchPlayerToStringConverter.cs" />
     <Compile Include="Converters\MSToTimeConverter.cs" />
@@ -112,13 +116,16 @@
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
     <Compile Include="Converters\SetToBoolConverter.cs" />
+    <Compile Include="Converters\SpecialToBoolConverter.cs" />
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
     <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
+    <Compile Include="Converters\StepAroundToBoolConverter.cs" />
     <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
     <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
     <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingColumnConverter.cs" />
+    <Compile Include="Converters\TechniqueToBoolConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />

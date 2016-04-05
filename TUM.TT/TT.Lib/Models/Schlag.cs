@@ -564,6 +564,28 @@ namespace TT.Lib.Models
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
+        public bool HasAggression(IEnumerable<Stroke.Aggression> aggressions)
+        {
+            List<bool> ORresults = new List<bool>();
+            foreach (var agg in aggressions)
+            {
+                switch (agg)
+                {
+                    case Stroke.Aggression.Aggressive:
+                        ORresults.Add(Aggressivität == "aggressiv");
+                        break;
+                    case Stroke.Aggression.Passive:
+                        ORresults.Add(Aggressivität == "passiv");
+                        break;
+                    case Stroke.Aggression.Control:
+                        ORresults.Add(Aggressivität == "Kontrolle");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
 
         public bool HasQuality(Stroke.Quality q)
         {
@@ -754,10 +776,12 @@ namespace TT.Lib.Models
                     return Besonderes == "Tischkante";
                 case Stroke.Specials.EdgeRacket:
                     return Besonderes == "Schlägerkante";
+                case Stroke.Specials.EdgeNet:
+                    return Besonderes == "Netzkante";
                 case Stroke.Specials.None:
                     return true;
                 case Stroke.Specials.Both:
-                    return Besonderes == "Tischkante" || Besonderes == "Schlägerkante";
+                    return Besonderes == "Tischkante" || Besonderes == "Netzkante";
                 default:
                     return false;
             }

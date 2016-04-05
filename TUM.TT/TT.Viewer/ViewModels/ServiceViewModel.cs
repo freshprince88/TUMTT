@@ -131,7 +131,7 @@ namespace TT.Viewer.ViewModels
             }
         }
        
-        public void ForBackHand(ToggleButton source)
+        public void ForeBackHand(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("forehand"))
             {
