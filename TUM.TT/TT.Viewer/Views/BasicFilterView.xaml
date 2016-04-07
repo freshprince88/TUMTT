@@ -168,6 +168,12 @@
                             <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                         </MultiBinding>
                     </ToggleButton.IsChecked>
+                    <ToggleButton.Visibility>
+                        <MultiBinding Converter="{conv:MinRallyLengthToVisibleConverter}" Mode="OneWay">
+                            <Binding Path="MinRallyLength" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.Visibility>
                 </ToggleButton>   
                 <ToggleButton x:Name="FilterRallyLength2Button"  Grid.Row="0" Grid.Column="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="2" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]">
                     <ToggleButton.IsChecked>
@@ -176,6 +182,12 @@
                             <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                         </MultiBinding>
                     </ToggleButton.IsChecked>
+                    <ToggleButton.Visibility>
+                        <MultiBinding Converter="{conv:MinRallyLengthToVisibleConverter}" Mode="OneWay">
+                            <Binding Path="MinRallyLength" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.Visibility>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterRallyLength3Button"  Grid.Row="0" Grid.Column="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="3" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]">
                     <ToggleButton.IsChecked>
@@ -184,6 +196,12 @@
                             <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                         </MultiBinding>
                     </ToggleButton.IsChecked>
+                    <ToggleButton.Visibility>
+                        <MultiBinding Converter="{conv:MinRallyLengthToVisibleConverter}" Mode="OneWay">
+                            <Binding Path="MinRallyLength" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.Visibility>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterRallyLength4Button"  Grid.Row="0" Grid.Column="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="4" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]">
                     <ToggleButton.IsChecked>
@@ -192,6 +210,12 @@
                             <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                         </MultiBinding>
                     </ToggleButton.IsChecked>
+                    <ToggleButton.Visibility>
+                        <MultiBinding Converter="{conv:MinRallyLengthToVisibleConverter}" Mode="OneWay">
+                            <Binding Path="MinRallyLength" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.Visibility>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterRallyLength5Button"  Grid.Row="0" Grid.Column="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]">
                     <ToggleButton.IsChecked>
@@ -200,6 +224,12 @@
                             <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                         </MultiBinding>
                     </ToggleButton.IsChecked>
+                    <ToggleButton.Visibility>
+                        <MultiBinding Converter="{conv:MinRallyLengthToVisibleConverter}" Mode="OneWay">
+                            <Binding Path="MinRallyLength" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.Visibility>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterRallyLength5UpButton"  Grid.Row="0" Grid.Column="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="5+" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]">
                     <ToggleButton.IsChecked>
@@ -208,6 +238,12 @@
                             <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                         </MultiBinding>
                     </ToggleButton.IsChecked>
+                    <ToggleButton.Visibility>
+                        <MultiBinding Converter="{conv:MinRallyLengthToVisibleConverter}" Mode="OneWay">
+                            <Binding Path="MinRallyLength" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.Visibility>
                 </ToggleButton>
             </WrapPanel>
         </Grid>

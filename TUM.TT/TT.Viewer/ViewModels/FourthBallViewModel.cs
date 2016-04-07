@@ -74,6 +74,7 @@ namespace TT.Viewer.ViewModels
                 StrokeNumber = 3
             };
             TableView = new TableStandardViewModel(this.events);
+                
         }
 
 

@@ -459,7 +459,7 @@ namespace TT.Lib.Models {
                 if (Double.IsNaN(this.Schläge[now].Platzierung.WX))
                     return false;
 
-                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) > 100;
+                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) > 80;
             }
             
         }
@@ -493,12 +493,12 @@ namespace TT.Lib.Models {
             {
                 int now = i;
                 int prev = i - 1;
-                if (this.Schläge[now].Verlauf == "Aus")
+                if (this.Schläge[now].Verlauf == "Aus" || this.Schläge[now].Verlauf == "Netz")
                     return false;
                 if (Double.IsNaN(this.Schläge[now].Platzierung.WX))
                     return false;
 
-                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) <= 50;
+                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) <= 40;
             }
 
         }

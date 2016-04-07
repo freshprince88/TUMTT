@@ -56,15 +56,15 @@ namespace TT.Lib.Converters
             Func<Rally, bool> func8 = ExpressionParser.Compile<Func<Rally, bool>>(blockDiagonalString);
             double blockDiagonal = rallies.Where(func8).Count() + 0.04;
 
-            string blockMiddleString = (string)values[9];
-            blockMiddleString = ReplaceExpression(blockMiddleString);
-            Func<Rally, bool> func9 = ExpressionParser.Compile<Func<Rally, bool>>(blockMiddleString);
-            double blockMiddle = rallies.Where(func9).Count() + 0.03;
-
-            string blockParallelString = (string)values[10];
+            string blockParallelString = (string)values[9];
             blockParallelString = ReplaceExpression(blockParallelString);
-            Func<Rally, bool> func10 = ExpressionParser.Compile<Func<Rally, bool>>(blockParallelString);
-            double blockParallel = rallies.Where(func10).Count() + 0.02;
+            Func<Rally, bool> func9 = ExpressionParser.Compile<Func<Rally, bool>>(blockParallelString);
+            double blockParallel = rallies.Where(func9).Count() + 0.02;
+
+            string blockMiddleString = (string)values[10];
+            blockMiddleString = ReplaceExpression(blockMiddleString);
+            Func<Rally, bool> func10 = ExpressionParser.Compile<Func<Rally, bool>>(blockMiddleString);
+            double blockMiddle = rallies.Where(func10).Count() + 0.03;
 
             string chopString = (string)values[11];
             chopString = ReplaceExpression(chopString);

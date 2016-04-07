@@ -19,6 +19,7 @@ namespace TT.Viewer.ViewModels
         public FourthBallStatisticsViewModel FourthBallStatisticsView { get; set; }
         public LastBallStatisticsViewModel LastBallStatisticsView { get; set; }
         public TotalMatchStatisticsViewModel TotalMatchStatisticsView { get; set; }
+        public int SelectedTab { get; set; }
         public Playlist ActivePlaylist { get; set; }
         private Match Match { get; set; }
 
@@ -40,6 +41,7 @@ namespace TT.Viewer.ViewModels
             FourthBallStatisticsView = new FourthBallStatisticsViewModel(this.events, Manager);
             LastBallStatisticsView = new LastBallStatisticsViewModel(this.events, Manager);
             TotalMatchStatisticsView = new TotalMatchStatisticsViewModel(this.events, Manager);
+            SelectedTab = 0;
         }
 
         protected override void OnActivate()

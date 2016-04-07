@@ -19,6 +19,7 @@ namespace TT.Viewer.ViewModels
         public LastBallViewModel LastBallView { get; set; }
         public TotalMatchViewModel TotalMatchView { get; set; }
         public CombiViewModel CombiView { get; set; }
+        public int SelectedTab { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -30,6 +31,7 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             this.Manager = man;
+            SelectedTab = 0;
         }
 
         /// <summary>
