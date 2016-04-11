@@ -16,6 +16,28 @@ namespace TT.Scouter.ViewModels
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
 
+        public bool HasLength
+        {
+            get
+            {
+                return RallyLength > 0;
+            }
+        }
+
+        public int RallyLength
+        {
+            get { return CurrentRally.Length; }
+            set
+            {
+                if(value != CurrentRally.Length)
+                {
+                    CurrentRally.Length = value;
+                    NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("HasLength");
+                }
+            }
+        }
+
         private Rally _rally;
         public Rally CurrentRally
         {
@@ -26,6 +48,12 @@ namespace TT.Scouter.ViewModels
                 {
                     _rally = value;
                     CurrentStroke = _rally.Schläge.FirstOrDefault();
+
+                    if (SchlagView == null)
+                        SchlagView = new RemoteSchlagViewModel(value.Schläge);
+                    else
+                        SchlagView.Strokes = CurrentRally.Schläge;
+
                     NotifyOfPropertyChange("CurrentRally");
                 }
             }
@@ -64,7 +92,6 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             MatchManager = man;
-            SchlagView = new RemoteSchlagViewModel();
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
         }
 
@@ -84,17 +111,6 @@ namespace TT.Scouter.ViewModels
             {
                 CurrentRally = item;
             }
-        }
-
-        public void NextStroke()
-        {
-            CurrentStroke = CurrentRally.Schläge[CurrentStroke.Nummer];
-        }
-
-        public void PreviousStroke()
-        {
-            var idx = CurrentStroke.Nummer - 1;
-            CurrentStroke = CurrentRally.Schläge[idx - 1];
         }
 
         public void NextRally()

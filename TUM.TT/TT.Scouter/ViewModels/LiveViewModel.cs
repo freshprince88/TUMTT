@@ -96,8 +96,9 @@ namespace TT.Scouter.ViewModels
             //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
             //      Timer läuft, der die MediaPosition simuliert
             //CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
-            if (CurrentRally.Length == 0)
-                CurrentRally.Length = 1;
+
+            //if (CurrentRally.Length == 0)
+            //    CurrentRally.Length = 1;
 
             if (Markiert)
             {
@@ -114,23 +115,23 @@ namespace TT.Scouter.ViewModels
 
         public void SetRallyLength(int length)
         {
-            var diff = length - CurrentRally.Length;
-            if (CurrentRally.Length < length)
-            {
-                for (int i = 0; i < diff; i++)
-                {
-                    CurrentRally.Schläge.Add(new Schlag());
-                }
+            //var diff = length - CurrentRally.Length;
+            //if (CurrentRally.Length < length)
+            //{
+            //    for (int i = 0; i < diff; i++)
+            //    {
+            //        CurrentRally.Schläge.Add(new Schlag());
+            //    }
 
-            }
-            else if (CurrentRally.Length > length)
-            {
-                diff = -diff;
-                for (int i = 0; i < diff; i++)
-                {
-                    CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
-                }
-            }
+            //}
+            //else if (CurrentRally.Length > length)
+            //{
+            //    diff = -diff;
+            //    for (int i = 0; i < diff; i++)
+            //    {
+            //        CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+            //    }
+            //}
 
             CurrentRally.Length = length;
             //NotifyOfPropertyChange("CurrentRally");

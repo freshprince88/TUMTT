@@ -9,13 +9,21 @@ namespace TT.Lib.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            int num = (int)values[0];
-            int length = (int)values[1];
+            try
+            {
+                int num = (int)values[0];
+                int length = (int)values[1];
 
-            if (num == length)
+                if (num == length || length == 0)
+                    return Visibility.Hidden;
+                else
+                    return Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
                 return Visibility.Hidden;
-            else
-                return Visibility.Visible;
+            }
+            
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

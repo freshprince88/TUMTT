@@ -4,7 +4,6 @@ using TT.Lib.Events;
 using System;
 using TT.Lib.Util.Enums;
 using TT.Lib.Managers;
-using System.ComponentModel;
 
 namespace TT.Scouter.Views
 {

@@ -54,9 +54,6 @@ namespace TT.Scouter.ViewModels
             first.Nummer = 1;
             first.Server = MatchPlayer.First;
 
-            Schlag firstStroke = new Schlag();
-            first.Schläge.Add(firstStroke);
-
             MatchManager.ActivePlaylist.Rallies.Add(first);
             first.UpdateServerAndScore();
 
