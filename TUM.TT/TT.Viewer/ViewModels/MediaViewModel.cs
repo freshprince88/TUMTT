@@ -6,6 +6,7 @@ using TT.Lib.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Models;
+using System.Windows.Controls.Primitives;
 
 namespace TT.Viewer.ViewModels
 {
@@ -88,7 +89,15 @@ namespace TT.Viewer.ViewModels
         }
 
         #region View Methods
-
+        public void PlayPause()
+        {
+            if (this.Control == Media.Control.Pause || this.Control == Media.Control.Stop)
+            {
+                Play();
+            }
+            else
+                Pause();
+        }
         public void Play()
         {
             if (CurrentRally != null)
@@ -252,6 +261,11 @@ namespace TT.Viewer.ViewModels
             events.PublishOnUIThread(this.Muted);
         }
 
+      
+        public void toFullscreenHotkey()
+        {
+            
+        }
         public void toFullscreen(bool isChecked) //Todo
         {
             if (isChecked == true)

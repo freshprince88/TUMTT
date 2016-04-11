@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
       xmlns:cal="http://www.caliburnproject.org"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="400">
@@ -65,6 +66,12 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="PreviousRally"/>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="MediaPreviousTrack"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PreviousRally"/>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="3" >
@@ -112,6 +119,12 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="Play" />
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="MediaPlayPause"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayPause"/>
+                    </ob:GlobalInputBindingTrigger>                                      
                 </i:Interaction.Triggers>
             </Button>
             <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="6" Visibility="Hidden">
@@ -126,6 +139,7 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="Pause"/>
                     </i:EventTrigger>
+                    
                 </i:Interaction.Triggers>
             </ToggleButton>
 
@@ -173,6 +187,12 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="NextRally"/>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="MediaNextTrack"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="NextRally"/>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
 
@@ -265,7 +285,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <ToggleButton x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="11"  cal:Message.Attach="[Event Click] = [Action toFullscreen(FullscreenButton.IsChecked)]" >
+            <ToggleButton x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="11"   >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -273,6 +293,20 @@
                           Visual="{DynamicResource appbar_fullscreen}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="toFullscreen">
+                          <cal:Parameter Value="{Binding ElementName=FullscreenButton, Path=IsChecked}"/>
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <!--<ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Windows" Key="F"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="toFullscreenHotkey">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>-->
+                </i:Interaction.Triggers>
             </ToggleButton>
         </Grid>
 

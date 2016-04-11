@@ -247,7 +247,6 @@ namespace TT.Viewer.Views
         #endregion
 
         #region Helper Methods
-
         private void HandlePlayMode(Media.Control mode)
         {
             switch (mode)

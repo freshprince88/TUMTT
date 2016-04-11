@@ -676,7 +676,7 @@ namespace TT.Lib.Models
                 switch (spin)
                 {
                     case Stroke.Spin.Hidden:
-                        ORresults.Add(Spin.ÜS == null || Spin.SL == null || Spin.SR == null || Spin.US == null || Spin.No == null);
+                        ORresults.Add(Spin.ÜS == "" || Spin.SL == "" || Spin.SR == "" || Spin.US == "" || Spin.No == "");
                         break;
                     case Stroke.Spin.ÜS:
                         ORresults.Add(Spin.ÜS == "1" && Spin.SL == "0" && Spin.SR == "0");
