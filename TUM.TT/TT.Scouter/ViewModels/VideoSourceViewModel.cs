@@ -24,14 +24,16 @@ namespace TT.Scouter.ViewModels
             foreach (var result in MatchManager.LoadVideo())
                 yield return result;
 
-            var nextScreen = ShowScreenResult.Of<LiveViewModel>();
+            var nextScreen = ShowScreenResult.Of<MainViewModel>();
+            nextScreen.Properties.Add("SelectedTab", MainViewModel.Tabs.Live);
             yield return nextScreen;
         }
 
         public IEnumerable<IResult> NoVideo()
         {
             //Go to next Scene Without Video
-            var nextScreen = ShowScreenResult.Of<LiveViewModel>();
+            var nextScreen = ShowScreenResult.Of<MainViewModel>();
+            nextScreen.Properties.Add("SelectedTab", MainViewModel.Tabs.Live);
             yield return nextScreen;
         }
 
