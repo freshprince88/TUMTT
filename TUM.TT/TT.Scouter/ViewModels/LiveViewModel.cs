@@ -17,6 +17,9 @@ namespace TT.Scouter.ViewModels
         public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
 
         private Rally _currentRally;
+        /// <summary>
+        /// Currently displayed Rally
+        /// </summary>
         public Rally CurrentRally
         {
             get { return _currentRally; }
@@ -36,7 +39,11 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+
         private bool _newRally;
+        /// <summary>
+        /// Determines whether the "Start Rally" Button is shown
+        /// </summary>
         public bool IsNewRally
         {
             get { return _newRally; }
