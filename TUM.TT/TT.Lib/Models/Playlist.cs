@@ -155,6 +155,7 @@ namespace TT.Lib.Models
                     rally.PropertyChanged += this.OnRallyChanged;
                     //rally.UpdateServerAndScore();
                 }
+                NotifyPropertyChanged("Rallies");
             }
 
             //// Update the rally after the new one

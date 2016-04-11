@@ -53,22 +53,14 @@ namespace TT.Scouter.ViewModels
 
         public bool Markiert { get; set; }
 
-
-        public LiveViewModel() : this(null, null, new Rally())
-        {
-        }
-
-        public LiveViewModel(IEventAggregator ev, IMatchManager man, Rally r)
+        public LiveViewModel(IEventAggregator ev, IMatchManager man)
         {
             Events = ev;
             MatchManager = man;
 
             MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
             IsNewRally = true;
-            CurrentRally = r == null ? new Rally() : r;
-            CurrentRally.Server = MatchPlayer.First;
-            Rallies.Add(CurrentRally);
-            CurrentRally.UpdateServerAndScore();                                 
+            CurrentRally = MatchManager.ActivePlaylist.Rallies.First();                                                      
             Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);            
         }

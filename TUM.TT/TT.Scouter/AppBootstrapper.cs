@@ -29,6 +29,7 @@ namespace TT.Scouter {
             container.PerRequest<LiveViewModel>("LiveViewModel");
             container.PerRequest<RemoteViewModel>("RemoteViewModel");
             container.PerRequest<NewPlayerViewModel>("NewPlayerViewModel");
+            container.PerRequest<MainViewModel>("MainViewModel");
         }
 
         protected override object GetInstance(Type service, string key) {

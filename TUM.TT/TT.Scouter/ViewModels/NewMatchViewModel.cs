@@ -48,7 +48,18 @@ namespace TT.Scouter.ViewModels
         public IEnumerable<IResult> SaveMatchDetails()
         {
             //TODO: Save Match Details in MatchManager and go to Video Choice
-            MatchManager.MatchModified = true;                        
+            MatchManager.MatchModified = true;
+
+            Rally first = new Rally();
+            first.Nummer = 1;
+            first.Server = MatchPlayer.First;
+
+            Schlag firstStroke = new Schlag();
+            first.Schläge.Add(firstStroke);
+
+            MatchManager.ActivePlaylist.Rallies.Add(first);
+            first.UpdateServerAndScore();
+
             var nextScreen = ShowScreenResult.Of<VideoSourceViewModel>();
             yield return nextScreen;
         }

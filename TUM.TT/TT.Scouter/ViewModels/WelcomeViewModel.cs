@@ -38,7 +38,8 @@ namespace TT.Scouter.ViewModels
             {
                 yield return result;
             }
-            var next = ShowScreenResult.Of<RemoteViewModel>();
+            var next = ShowScreenResult.Of<MainViewModel>();
+            next.Properties.Add("SelectedTab", MainViewModel.Tabs.Remote);
             yield return next;
         }
 

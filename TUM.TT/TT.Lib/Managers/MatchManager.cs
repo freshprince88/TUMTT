@@ -36,15 +36,16 @@ namespace TT.Lib.Managers
 
         public bool MatchModified { get; set; }
 
-        private Playlist _activeList;
+        private string _activeList;
         public Playlist ActivePlaylist
         {
-            get { return _activeList; }
+            get { return Match.Playlists.Where(p => p.Name == _activeList).FirstOrDefault(); }
             set
             {
-                if (_activeList != value)
+                string pName = value.Name;
+                if (_activeList != pName)
                 {
-                    _activeList = value;
+                    _activeList = pName;
                     Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 }
             }

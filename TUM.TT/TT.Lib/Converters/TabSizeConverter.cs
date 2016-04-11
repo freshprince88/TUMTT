@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -10,18 +7,19 @@ namespace TT.Lib.Converters
 {
     public class TabSizeConverter : BaseConverter, IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            double actual = (double)values[0];
-            double count = (double)(values[1] as ItemCollection).Count;
-            double height = actual / count;
+            double actualWidth = (double)values[0] > 0 ? (double)values[0] : 100;
+            int count = (int)values[1] > 0 ? (int)values[1] : 1;
+
+            double width = actualWidth / count;
             //Subtract 1, otherwise we could overflow to two rows.
-            return (height <= 1) ? 0 : (height - 1);
+            return (width <= 1) ? 0 : (width - 1);
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotSupportedException();
+            throw new NotImplementedException();
         }
     }
 }
