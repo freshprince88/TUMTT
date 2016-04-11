@@ -5,13 +5,13 @@ using TT.Lib.Util.Enums;
 
 namespace TT.Lib.Converters
 {
-    [ValueConversion(typeof(Stroke.Hand), typeof(bool))]
-    public class ForeHandToBoolConverter : BaseConverter, IValueConverter
+    [ValueConversion(typeof(Stroke.Crunch), typeof(bool))]
+    public class CrunchToBoolConverter : BaseConverter, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Stroke.Hand hand = (Stroke.Hand)value;
-            return hand == Stroke.Hand.Fore || hand == Stroke.Hand.Both;
+            Stroke.Crunch crunch = (Stroke.Crunch)value;
+            return crunch == Stroke.Crunch.CrunchTime;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

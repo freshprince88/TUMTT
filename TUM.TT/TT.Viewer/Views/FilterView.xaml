@@ -9,17 +9,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid x:Name="FilterStatisticsContainer">
-        <Grid.RowDefinitions>
- 
+        <Grid.RowDefinitions>         
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto
-                              "/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
-        <TabControl Grid.Row="0" Grid.Column="0" x:Name="HeaderTabControl"  TabStripPlacement="Left" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
+        </Grid.ColumnDefinitions>           
+        <TabControl Grid.Row="0" Grid.Column="0" x:Name="HeaderTabControl"  TabStripPlacement="Left" SelectedIndex="{Binding SelectedTab, Mode=TwoWay}" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabPanel}">
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
@@ -31,11 +28,8 @@
             <TabItem x:Name="FourthFilterTabHeader" Header="4"/>
             <TabItem x:Name="LastFilterTabHeader" Header="L"/>
             <TabItem x:Name="TotalMatchFilterTabHeader" Header="G"/>
-            <TabItem x:Name="KombiFilterTabHeader" Header="K"/>
-            
-        </TabControl>
-
-
+            <TabItem x:Name="KombiFilterTabHeader" Header="K"/>            
+        </TabControl>                    
         <ScrollViewer Grid.Row="0" Grid.Column="1">
             <ContentControl x:Name="ActiveItem" />
         </ScrollViewer>

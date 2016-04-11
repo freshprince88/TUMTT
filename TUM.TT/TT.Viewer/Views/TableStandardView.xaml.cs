@@ -39,14 +39,15 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Manager = IoC.Get<IMatchManager>();
-            
             Events.Subscribe(this);
+            strokeNumber = 0;
         }
 
         public void Handle(RallyLengthChangedEvent message)
         {
             
             strokeNumber = message;
+
 
         }
         public void Handle (ResultsChangedEvent message) {
@@ -66,7 +67,8 @@ namespace TT.Viewer.Views
             int botMid = 0;
             int botRight = 0;
 
-            switch (strokeNumber)
+
+            switch (strokeNumber) //Statistik-Filter-Wechsel: strokenumber=0; -> Problem
             {
                 case 1:
                     break;
@@ -181,7 +183,7 @@ namespace TT.Viewer.Views
         }
 
         #region HelperMethods
-
+        
         #endregion
 
     }

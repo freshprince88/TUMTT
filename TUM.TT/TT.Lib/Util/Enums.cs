@@ -209,6 +209,12 @@
             None,
             Both
         }
+        public enum Aggression
+        {
+            Aggressive,
+            Control,
+            Passive
+        }
         public enum StepAround
         {
             StepAround,

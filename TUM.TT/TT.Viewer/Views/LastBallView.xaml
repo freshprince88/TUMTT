@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="300">
@@ -73,20 +74,32 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Technik:</Label>
-            <ToggleButton x:Name="FilterForehandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]">
+            <ToggleButton x:Name="Forehand" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                          cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Hand" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 <TextBlock FontSize="16">
                     FH
                 </TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]">
+            <ToggleButton x:Name="Backhand" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+                          cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Hand" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 <TextBlock FontSize="16">
                     RH
                 </TextBlock>
             </ToggleButton>
             <ToggleButton x:Name="FilterStepAroundButton" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30"   Margin="0 0 0 0" HorizontalAlignment="Stretch" Style="{DynamicResource MetroAccentToggle}"
-                          cal:Message.Attach="[Event Click] = [Action StepAroundOrNot($source)]">
+                          cal:Message.Attach="[Event Click] = [Action StepAroundOrNot($source)]" IsChecked="{Binding Path=StepAround, Converter={conv:StepAroundToBoolConverter}, Mode=OneWay}">
                 Umlaufen
             </ToggleButton>
         </Grid>
@@ -115,35 +128,11 @@
             </Label>
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <!--<GroupBox Grid.Row="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterServiceWinnerButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0" Style="{DynamicResource MetroAccentToggle}"
-                                       cal:Message.Attach="[Event Click] = [Action SelectServiceWinner($source]">
-                            Aufschlag
-                        </ToggleButton>
-                        <ToggleButton  x:Name="FilterServiceShortWinnerButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
-                                       cal:Message.Attach="[Event Click] = [Action SelectServiceWinner($source]">
-                            kurz
-                        </ToggleButton>
-                        <ToggleButton  x:Name="FilterServiceLongWinnerButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
-                                       cal:Message.Attach="[Event Click] = [Action SelectServiceWinner($source]">
-                            lang
-                        </ToggleButton>
-                    </Grid>
-                </GroupBox>-->
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -155,12 +144,24 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <ToggleButton  x:Name="FilterStrokeTecPushButton" Grid.Row="0" MinWidth="30"  MinHeight="30" MaxHeight="50" FontSize="10" Style="{DynamicResource MetroAccentToggle}" 
+                            <ToggleButton  x:Name="Push" Grid.Row="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}" 
                                             cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                                <ToggleButton.IsChecked>
+                                    <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                        <Binding Path="SelectedStrokeTec" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.IsChecked>
                                 Schupf
                             </ToggleButton>
-                            <ToggleButton  x:Name="FilterStrokeTecPushAggressiveButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MinHeight="30" MaxHeight="50" FontSize="8"   Style="{DynamicResource MetroAccentToggle}"
+                            <ToggleButton  x:Name="PushAggressive" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="8"   Style="{DynamicResource MetroAccentToggle}"
                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                                <ToggleButton.IsChecked>
+                                    <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                        <Binding Path="SelectedStrokeTec" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.IsChecked>
                                 aggressiv
                             </ToggleButton>
                         </Grid>
@@ -171,12 +172,24 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <ToggleButton  x:Name="FilterStrokeTecFlipButton" Grid.Row="0"  MinWidth="30" MaxWidth="100" MinHeight="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                            <ToggleButton  x:Name="Flip" Grid.Row="0"  MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                                <ToggleButton.IsChecked>
+                                    <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                        <Binding Path="SelectedStrokeTec" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.IsChecked>
                                 Flip
                             </ToggleButton>
-                            <ToggleButton  x:Name="FilterStrokeTecFlipBananaButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" MinHeight="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                            <ToggleButton  x:Name="Banana" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                                <ToggleButton.IsChecked>
+                                    <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                        <Binding Path="SelectedStrokeTec" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.IsChecked>
                                 Banane
                             </ToggleButton>
                         </Grid>
@@ -193,17 +206,35 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecTopspinButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  MinHeight="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                        <ToggleButton  x:Name="Topspin" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
                                        
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]" >
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Topspin
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecTopspinSpinButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  MinHeight="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="TopspinSpin" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Spin
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecTopspinTempoButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" MinHeight="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="TopspinTempo" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Tempo
                         </ToggleButton>
                     </Grid>
@@ -218,40 +249,69 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  MinHeight="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                        <ToggleButton  x:Name="Block" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="60"  Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Block
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockTempoButton" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  MinHeight="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
+                        <ToggleButton  x:Name="BlockTempo" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" 
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Tempo
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecBlockChopButton" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" MinHeight="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="BlockChop" Grid.Row="1" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Chop
                         </ToggleButton>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                <GroupBox Grid.Row="3"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecCounterButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100"  MinHeight="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="Counter" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Konter
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecSmashButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" MinHeight="30" FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="Smash" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Schuss
                         </ToggleButton>
                     </Grid>
                 </GroupBox>
-
             </Grid>
             <ContentControl x:Name="TableView" Grid.Row="1" Grid.RowSpan="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5">
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
@@ -263,19 +323,37 @@
                             <ColumnDefinition/>
 
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  x:Name="FilterStrokeTecLobButton" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="Lob" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Ballonabwehr
                         </ToggleButton>
-                        <ToggleButton  x:Name="FilterStrokeTecChopButton" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="Chop" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                    <Binding Path="SelectedStrokeTec" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             Schnittabwehr
                         </ToggleButton>
                     </Grid>
-                </GroupBox>                
+                </GroupBox>
                 <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
-                    <ToggleButton  x:Name="FilterStrokeTecSpecialButton" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                    <ToggleButton  x:Name="Special" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                <Binding Path="SelectedStrokeTec" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
                         Sonstiges
                     </ToggleButton>
                 </GroupBox>
@@ -290,13 +368,34 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aktivität:</Label>
-            <ToggleButton x:Name="FilteActivityAktiveButton" Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
-                aktiv
+            <ToggleButton x:Name="Aggressive" Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" 
+                          cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]" >
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggression" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
+                aggressiv
             </ToggleButton>
-            <ToggleButton x:Name="FilterActivityControlButton" Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
+            <ToggleButton x:Name="Control" Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}"
+                          cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggression" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 Kontrolle
             </ToggleButton>
-            <ToggleButton x:Name="FilterActivityPassiveButton" Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" >
+            <ToggleButton x:Name="Passive" Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}"
+                          cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggression" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 passiv
             </ToggleButton>
         </Grid>
@@ -310,12 +409,24 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Qualität:</Label>
-            <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
+            <ToggleButton x:Name="BadQuality" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:QualityToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Quality" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 Schlecht
             </ToggleButton>
-            <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
+            <ToggleButton x:Name="GoodQuality" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:QualityToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Quality" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 Gut
             </ToggleButton>
         </Grid>
@@ -328,10 +439,24 @@
                 
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Besonderes:</Label>
-            <ToggleButton x:Name="FilterEdgeTableButton"  Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
+            <ToggleButton x:Name="EdgeTable"  Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  
+                          cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:SpecialToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Specials" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 Tischkante
             </ToggleButton>
-            <ToggleButton x:Name="FilterEdgeNetButton"  Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}" cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
+            <ToggleButton x:Name="EdgeNet"  Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  
+                          cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:SpecialToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Specials" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 Netzkante
             </ToggleButton>
             <!--<ToggleButton x:Name="FilterEdgeRacketButton"  Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >

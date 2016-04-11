@@ -19,7 +19,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TabControl Grid.Row="0" Grid.Column="0" x:Name="HeaderTabControl"  TabStripPlacement="Left" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
+        <TabControl Grid.Row="0" Grid.Column="0" x:Name="HeaderTabControl"  TabStripPlacement="Left" SelectedIndex="{Binding SelectedTab, Mode=TwoWay}" cal:Message.Attach="[Event SelectionChanged] = [Action FilterSelected($eventArgs)]">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabPanel}">
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>

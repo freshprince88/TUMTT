@@ -19,6 +19,7 @@ using TT.Viewer.ViewModels;
 using TT.Lib.Util.Enums;
 using System.Windows.Controls.Primitives;
 using System.Timers;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.Views
 {
@@ -31,6 +32,7 @@ namespace TT.Viewer.Views
         IHandle<VideoLoadedEvent>
     {
         public IEventAggregator Events { get; private set; }
+        private IMatchManager Manager;
         private DispatcherTimer stopTimer;
         private DispatcherTimer sliderTimer;
         private double Start;
@@ -44,6 +46,7 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
+            Manager = IoC.Get<IMatchManager>();
             myMediaElement.ScrubbingEnabled = true;         
             stopTimer = new DispatcherTimer();
             stopTimer.Tick += new EventHandler(StopTimerTick);
@@ -56,10 +59,21 @@ namespace TT.Viewer.Views
             mediaIsPaused = true;
             isDragging = false;
 
+            this.Loaded += MediaView_Loaded;
+
             myMediaElement.MediaOpened += (s, args) =>
             {
                 var test = myMediaElement.Position;
             };
+        }
+
+        private void MediaView_Loaded(object sender, RoutedEventArgs e)
+        {
+            myMediaElement.Stop();
+            myMediaElement.Close();
+            myMediaElement.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : myMediaElement.Source;
+            myMediaElement.Play();
+            myMediaElement.Pause();
         }
 
         #region Event Handlers
@@ -87,7 +101,11 @@ namespace TT.Viewer.Views
 
         public void Handle(VideoLoadedEvent message)
         {
-            this.myMediaElement.Source = message.VideoFile != null ? new Uri(message.VideoFile) : myMediaElement.Source;
+            //myMediaElement.Stop();
+            //myMediaElement.Close();
+            //this.myMediaElement.Source = message.VideoFile != null ? new Uri(message.VideoFile) : myMediaElement.Source;
+            //myMediaElement.Play();
+            //myMediaElement.Pause();
         }
 
         public void Handle(VideoControlEvent message)

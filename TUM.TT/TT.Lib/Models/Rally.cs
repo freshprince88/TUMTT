@@ -58,6 +58,11 @@ namespace TT.Lib.Models {
         private int nummer = 1;
 
         /// <summary>
+        /// Backs the <see cref="Length"/> property.
+        /// </summary>
+        private int length;
+
+        /// <summary>
         /// Backs the <see cref="Anfang"/> property.
         /// </summary>
         private double anfang;
@@ -205,31 +210,10 @@ namespace TT.Lib.Models {
         [XmlAttribute]
         public int Length
         {
-            get { return schläge.Count; }
+            get { return length; }
             set
             {
-                var diff = value - schläge.Count();
-                if (schläge.Count < value)
-                {                    
-                    for (int i = 0; i < diff; i++)
-                    {
-                        schläge.Add(new Schlag());
-                    }
-
-                }
-                else if( schläge.Count > value)
-                {
-                    diff = -diff;
-                    for (int i = 0; i < diff; i++)
-                    {
-                        schläge.RemoveAt(schläge.IndexOf(schläge.Last()));
-                    }
-                }
-
-                if(diff != 0)
-                {
-                    this.NotifyPropertyChanged();                    
-                }                             
+                this.RaiseAndSetIfChanged(ref this.length, value);
             }
         }
 
@@ -425,7 +409,6 @@ namespace TT.Lib.Models {
                     schlag.PropertyChanged += this.OnSchlagChanged;
                     schlag.Update();
                 }
-                //this.NotifyPropertyChanged("Schläge");
             }
         }
 
@@ -476,7 +459,7 @@ namespace TT.Lib.Models {
                 if (Double.IsNaN(this.Schläge[now].Platzierung.WX))
                     return false;
 
-                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) > 100;
+                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) > 80;
             }
             
         }
@@ -510,12 +493,12 @@ namespace TT.Lib.Models {
             {
                 int now = i;
                 int prev = i - 1;
-                if (this.Schläge[now].Verlauf == "Aus")
+                if (this.Schläge[now].Verlauf == "Aus" || this.Schläge[now].Verlauf == "Netz")
                     return false;
                 if (Double.IsNaN(this.Schläge[now].Platzierung.WX))
                     return false;
 
-                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) <= 50;
+                return Math.Abs(Convert.ToInt32(this.Schläge[prev].Platzierung.WX) - Convert.ToInt32(this.Schläge[now].Platzierung.WX)) <= 40;
             }
 
         }

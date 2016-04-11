@@ -56,13 +56,29 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Technik:"/>
-            <ToggleButton x:Name="FilterForehandButton" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:ForeHandToBoolConverter}, Mode=OneWay}">
-                <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
+            <ToggleButton x:Name="Forehand" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                          cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Hand" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
+                <TextBlock FontSize="16">
+                    FH
+                </TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="FilterBackhandButton" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
-                          cal:Message.Attach="[Event Click] = [Action ForBackHand($source)]" IsChecked="{Binding Path=Hand, Converter={conv:BackHandToBoolConverter}, Mode=OneWay}">
-                <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
+            <ToggleButton x:Name="Backhand" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+                          cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Hand" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
+                <TextBlock FontSize="16">
+                    RH
+                </TextBlock>
             </ToggleButton>
             <WrapPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
                 <ToggleButton x:Name="Pendulum" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Pendulum" Grid.Row="0" Grid.Column="0" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
@@ -127,8 +143,24 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <ToggleButton x:Name="FilterBadQualityButton" Grid.Row="0"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Schlecht" cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]" />
-                <ToggleButton x:Name="FilterGoodQualityButton" Grid.Row="1" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Gut" cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]"/>
+                <ToggleButton x:Name="BadQuality" Grid.Row="0"  MinWidth="75" MaxWidth="100"  Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Schlecht" 
+                              cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:QualityToBoolConverter}" Mode="OneWay">
+                            <Binding Path="Quality" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                </ToggleButton>
+                <ToggleButton x:Name="GoodQuality" Grid.Row="1" MinWidth="75" MaxWidth="100" Height="30"  Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Gut" 
+                              cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:QualityToBoolConverter}" Mode="OneWay">
+                            <Binding Path="Quality" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>  
+                </ToggleButton>
             </Grid>
         </Grid>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
@@ -150,7 +182,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Besonderes:</Label>
-            <ToggleButton x:Name="FilterEdgeTableButton" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]" >
+            <ToggleButton x:Name="EdgeTable" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  
+                          cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:SpecialToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Specials" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
                 Tischkante
             </ToggleButton> 
             <!--<ToggleButton x:Name="FilterEdgeRacketButton" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  Width="auto" MinWidth="40" Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">

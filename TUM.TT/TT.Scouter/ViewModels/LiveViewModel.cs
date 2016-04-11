@@ -114,6 +114,24 @@ namespace TT.Scouter.ViewModels
 
         public void SetRallyLength(int length)
         {
+            var diff = length - CurrentRally.Length;
+            if (CurrentRally.Length < length)
+            {
+                for (int i = 0; i < diff; i++)
+                {
+                    CurrentRally.Schläge.Add(new Schlag());
+                }
+
+            }
+            else if (CurrentRally.Length > length)
+            {
+                diff = -diff;
+                for (int i = 0; i < diff; i++)
+                {
+                    CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                }
+            }
+
             CurrentRally.Length = length;
             //NotifyOfPropertyChange("CurrentRally");
         }

@@ -27,6 +27,18 @@ namespace TT.Viewer.ViewModels
         public Stroke.Quality Quality { get; private set; }
         public Stroke.WinnerOrNetOut Winner { get; private set; }
         public Stroke.StepAround StepAround { get; private set; }
+        private HashSet<Stroke.Aggression> _aggression;
+        public HashSet<Stroke.Aggression> SelectedAggression
+        {
+            get
+            {
+                return _aggression;
+            }
+            private set
+            {
+                _aggression = value;
+            }
+        }
         public Stroke.Specials Specials { get; private set; }
 
         private HashSet<Stroke.Technique> _strokeTec;
@@ -59,6 +71,7 @@ namespace TT.Viewer.ViewModels
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             Quality = Stroke.Quality.None;
+            SelectedAggression = new HashSet<Stroke.Aggression>();
             SelectedStrokeTec = new HashSet<Stroke.Technique>();
             Specials = Stroke.Specials.None;
             StepAround = Stroke.StepAround.Not;
@@ -126,7 +139,7 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
-        public void ForBackHand(ToggleButton source)
+        public void ForeBackHand(ToggleButton source)
         {
             if (source.Name.ToLower().Contains("forehand"))
             {
@@ -183,7 +196,7 @@ namespace TT.Viewer.ViewModels
 
         public void SelectStrokeTec(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("tecpushbutton"))
+            if (source.Name.ToLower().Equals("push"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -194,7 +207,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Push);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecpushaggressivebutton"))
+            else if (source.Name.ToLower().Contains("pushaggressive"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -205,7 +218,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.PushAggressive);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecflipbutton"))
+            else if (source.Name.ToLower().Equals("flip"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -216,7 +229,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Flip);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecflipbananabutton"))
+            else if (source.Name.ToLower().Equals("banana"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -227,7 +240,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Banana);
                 }
             }
-            else if (source.Name.ToLower().Contains("tectopspinbutton"))
+            else if (source.Name.ToLower().Equals("topspin"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -238,7 +251,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Topspin);
                 }
             }
-            else if (source.Name.ToLower().Contains("tectopspinspinbutton"))
+            else if (source.Name.ToLower().Equals("topspinspin"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -249,7 +262,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.TopspinSpin);
                 }
             }
-            else if (source.Name.ToLower().Contains("tectopspintempobutton"))
+            else if (source.Name.ToLower().Equals("topspintempo"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -260,7 +273,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.TopspinTempo);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecblockbutton"))
+            else if (source.Name.ToLower().Equals("block"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -271,7 +284,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Block);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecblocktempobutton"))
+            else if (source.Name.ToLower().Equals("blocktempo"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -282,7 +295,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.BlockTempo);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecblockchopbutton"))
+            else if (source.Name.ToLower().Equals("blockchop"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -293,7 +306,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.BlockChop);
                 }
             }
-            else if (source.Name.ToLower().Contains("teccounterbutton"))
+            else if (source.Name.ToLower().Equals("counter"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -304,7 +317,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Counter);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecsmashbutton"))
+            else if (source.Name.ToLower().Equals("smash"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -315,7 +328,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Smash);
                 }
             }
-            else if (source.Name.ToLower().Contains("teclobbutton"))
+            else if (source.Name.ToLower().Equals("lob"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -326,7 +339,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Lob);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecchopbutton"))
+            else if (source.Name.ToLower().Equals("chop"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -337,7 +350,7 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Stroke.Technique.Chop);
                 }
             }
-            else if (source.Name.ToLower().Contains("tecspecialbutton"))
+            else if (source.Name.ToLower().Equals("special"))
             {
                 if (source.IsChecked.Value)
                 {
@@ -387,6 +400,43 @@ namespace TT.Viewer.ViewModels
                         Quality = Stroke.Quality.None;
                     else if (Quality == Stroke.Quality.Both)
                         Quality = Stroke.Quality.Good;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void AggressivePassiveControl(ToggleButton source)
+        {
+            if (source.Name.ToLower().Equals("aggressive"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedAggression.Add(Stroke.Aggression.Aggressive);
+                }
+                else
+                {
+                    SelectedAggression.Remove(Stroke.Aggression.Aggressive);
+                }
+            }
+            else if (source.Name.ToLower().Equals("passive"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedAggression.Add(Stroke.Aggression.Passive);
+                }
+                else
+                {
+                    SelectedAggression.Remove(Stroke.Aggression.Passive);
+                }
+            }
+            else if (source.Name.ToLower().Equals("control"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedAggression.Add(Stroke.Aggression.Control);
+                }
+                else
+                {
+                    SelectedAggression.Remove(Stroke.Aggression.Control);
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -493,6 +543,7 @@ namespace TT.Viewer.ViewModels
                     r.LastWinnerStroke().HasQuality(this.Quality) &&
                     r.LastWinnerStroke().HasTablePosition(this.SelectedTablePositions) &&
                     r.LastWinnerStroke().HasStrokeLength(this.SelectedStrokeLengths) &&
+                    r.LastWinnerStroke().HasAggression(this.SelectedAggression) &&
                     r.LastWinnerStroke().HasSpecials(this.Specials)).
                     ToList();
                 this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));

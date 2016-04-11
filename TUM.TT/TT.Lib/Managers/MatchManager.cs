@@ -61,7 +61,7 @@ namespace TT.Lib.Managers
         #region Business Logic
 
         public IEnumerable<IResult> SaveMatch()
-        {           
+        {
             if (FileName == null || FileName == string.Empty)
             {
                 var dialog = new SaveFileDialogResult()
@@ -99,7 +99,7 @@ namespace TT.Lib.Managers
                 .Rescue()
                 .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
                 .Propagate(); // Reraise the error to abort the coroutine
-            
+
             Match = deserialization.Result;
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
 
@@ -107,11 +107,15 @@ namespace TT.Lib.Managers
 
             if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
             {
-                foreach(var result in LoadVideo())
+                foreach (var result in LoadVideo())
                 {
                     yield return result;
                 }
-            }                        
+            }
+            else
+            {
+                Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+            }
         }
 
         public void DeleteRally(Rally r)
@@ -126,11 +130,11 @@ namespace TT.Lib.Managers
 
         public void RenamePlaylist(string oldName, string newName)
         {
-            if(oldName != "Alle")
+            if (oldName != "Alle")
             {
                 Playlist list = Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault();
 
-                if(list != null)
+                if (list != null)
                 {
                     list.Name = newName;
                     Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
@@ -144,7 +148,7 @@ namespace TT.Lib.Managers
             Match.DateTime = DateTime.Now;
             Match.FirstPlayer = new Player();
             Match.SecondPlayer = new Player();
-            Match.Playlists.Add(new Playlist() { Name = "Alle"});
+            Match.Playlists.Add(new Playlist() { Name = "Alle" });
             Match.Playlists.Add(new Playlist() { Name = "Markiert" });
             this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.FileName = String.Empty;
