@@ -262,16 +262,16 @@ namespace TT.Viewer.ViewModels
 
         protected override void OnActivate()
         {
+
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-
             this.ActivateItem(SpinControl);
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
 
-            if(Manager.Match != null)
-                UpdateSelection(Manager.ActivePlaylist);
+            //if(Manager.Match != null)
+            //UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -282,6 +282,12 @@ namespace TT.Viewer.ViewModels
             this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion

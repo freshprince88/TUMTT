@@ -20,7 +20,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für BasicFilterView.xaml
     /// </summary>
-    public partial class BasicFilterView : UserControl, IHandle<RallyLengthChangedEvent>
+    public partial class BasicFilterView : UserControl
     {
         public IEventAggregator Events { get; set; }
 
@@ -31,51 +31,6 @@ namespace TT.Viewer.Views
             Events.Subscribe(this);
         }
 
-        public void Handle(RallyLengthChangedEvent message)
-        {
-
-            switch (message)
-            {
-                //case 1:
-                //    FilterRallyLength1Button.Visibility = Visibility.Visible;
-                //    FilterRallyLength2Button.Visibility = Visibility.Visible;
-                //    FilterRallyLength3Button.Visibility = Visibility.Visible;
-                //    break;
-                //case 2:
-                //    FilterRallyLength1Button.Visibility = Visibility.Collapsed;
-                //    FilterRallyLength2Button.Visibility = Visibility.Visible;
-                //    FilterRallyLength3Button.Visibility = Visibility.Visible;
-                //    break;
-                //case 3:
-                //    FilterRallyLength1Button.Visibility = Visibility.Collapsed;
-                //    FilterRallyLength2Button.Visibility = Visibility.Collapsed;
-                //    FilterRallyLength3Button.Visibility = Visibility.Visible;
-                //    break;
-                //case 4:
-                //    FilterRallyLength1Button.Visibility = Visibility.Collapsed;
-                //    FilterRallyLength2Button.Visibility = Visibility.Collapsed;
-                //    FilterRallyLength3Button.Visibility = Visibility.Collapsed;
-                //    break;
-                //case 5:
-                //    FilterRallyLength1Button.Visibility = Visibility.Collapsed;
-                //    FilterRallyLength2Button.Visibility = Visibility.Visible;
-                //    FilterRallyLength3Button.Visibility = Visibility.Visible;
-                //    break;
-
-                default:
-                    break;
-            }
-        }
-
-        //public void Handle(MatchInformationEvent message)
-        //{
-        //    if (message.Match != null)
-        //    {
-        //        FilterPointPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0]; 
-        //        FilterPointPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0]; 
-        //        FilterServerPlayer1Button.Content = message.Match.FirstPlayer.Name.Split(' ')[0]; 
-        //        FilterServerPlayer2Button.Content = message.Match.SecondPlayer.Name.Split(' ')[0]; 
-        //    }
-        //}
+       
     }
 }

@@ -25,7 +25,7 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für TableView.xaml
     /// </summary>
     public partial class TableServiceView : UserControl,
-        IHandle<TableViewModeChangedEvent>, IHandle<ResultsChangedEvent>
+        IHandle<TableViewModeChangedEvent>, IHandle<ShowTableNumbersEvent>
     {
         public IEventAggregator Events { get; set; }
         private IMatchManager Manager;
@@ -57,110 +57,19 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(ResultsChangedEvent message)
+        public void Handle(ShowTableNumbersEvent message)
         {
+            Dictionary<string, int> positionKeys = message.Numbers;
+            this.TopLeft_top.Content = positionKeys["TopLeft"];
+            this.TopMid_top.Content = positionKeys["TopMid"];
+            this.TopRight_top.Content = positionKeys["TopRight"];
+            this.MidLeft_top.Content = positionKeys["MidLeft"];
+            this.MidMid_top.Content = positionKeys["MidMid"];
+            this.MidRight_top.Content = positionKeys["MidRight"];
+            this.BotLeft_top.Content = positionKeys["BotLeft"];
+            this.BotMid_top.Content = positionKeys["BotMid"];
+            this.BotRight_top.Content = positionKeys["BotRight"];
 
-
-            var rallies = new LinkedList<Rally>(message.Rallies);
-
-            int topLeft = 0;
-            int topMid = 0;
-            int topRight = 0;
-
-            int midLeft = 0;
-            int midMid = 0;
-            int midRight = 0;
-
-            int botLeft = 0;
-            int botMid = 0;
-            int botRight = 0;
-
-            topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsTopLeft()).Count();
-            topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsTopMid()).Count();
-            topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsTopRight()).Count();
-
-            midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsMidLeft()).Count();
-            midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsMidMid()).Count();
-            midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsMidRight()).Count();
-
-            botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsBotLeft()).Count();
-            botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsBotMid()).Count();
-            botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsBotRight()).Count();
-
-
-            this.TopLeft_bot.Content = topLeft;
-            this.TopLeft_top.Content = topLeft;
-
-            this.TopMid_bot.Content = topMid;
-            this.TopMid_top.Content = topMid;
-
-            this.TopRight_bot.Content = topRight;
-            this.TopRight_top.Content = topRight;
-
-            this.MidLeft_bot.Content = midLeft;
-            this.MidLeft_top.Content = midLeft;
-
-            this.MidMid_bot.Content = midMid;
-            this.MidMid_top.Content = midMid;
-
-            this.MidRight_bot.Content = midRight;
-            this.MidRight_top.Content = midRight;
-
-            this.BotLeft_bot.Content = botLeft;
-            this.BotLeft_top.Content = botLeft;
-
-            this.BotMid_bot.Content = botMid;
-            this.BotMid_top.Content = botMid;
-
-            this.BotRight_bot.Content = botRight;
-            this.BotRight_top.Content = botRight;
         }
-
-
-        //public void FillButtons(Object sender, RoutedEventArgs e)
-        //{
-        //    if (Manager.ActivePlaylist != null)
-        //    {
-        //        rallies = Manager.ActivePlaylist.Rallies.Where(r => Convert.ToInt32(r.Length) > 0).ToList();
-        //        int topLeft = rallies.Where(r => r.Schläge[0].IsTopLeft()).Count();
-        //        int topMid = rallies.Where(r => r.Schläge[0].IsTopMid()).Count();
-        //        int topRight = rallies.Where(r => r.Schläge[0].IsTopRight()).Count();
-
-        //        int midLeft = rallies.Where(r => r.Schläge[0].IsMidLeft()).Count();
-        //        int midMid = rallies.Where(r => r.Schläge[0].IsMidMid()).Count();
-        //        int midRight = rallies.Where(r => r.Schläge[0].IsMidRight()).Count();
-
-        //        int botLeft = rallies.Where(r => r.Schläge[0].IsBotLeft()).Count();
-        //        int botMid = rallies.Where(r => r.Schläge[0].IsBotMid()).Count();
-        //        int botRight = rallies.Where(r => r.Schläge[0].IsBotRight()).Count();
-
-        //        this.TopLeft_bot.Content = topLeft;
-        //        this.TopLeft_top.Content = topLeft;
-
-        //        this.TopMid_bot.Content = topMid;
-        //        this.TopMid_top.Content = topMid;
-
-        //        this.TopRight_bot.Content = topRight;
-        //        this.TopRight_top.Content = topRight;
-
-        //        this.MidLeft_bot.Content = midLeft;
-        //        this.MidLeft_top.Content = midLeft;
-
-        //        this.MidMid_bot.Content = midMid;
-        //        this.MidMid_top.Content = midMid;
-
-        //        this.MidRight_bot.Content = midRight;
-        //        this.MidRight_top.Content = midRight;
-
-        //        this.BotLeft_bot.Content = botLeft;
-        //        this.BotLeft_top.Content = botLeft;
-
-        //        this.BotMid_bot.Content = botMid;
-        //        this.BotMid_top.Content = botMid;
-
-        //        this.BotRight_bot.Content = botRight;
-        //        this.BotRight_top.Content = botRight;
-        //    }
-        //}
     }
 }

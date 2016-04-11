@@ -378,12 +378,8 @@ namespace TT.Viewer.ViewModels
 
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-        }
-
-        protected override void OnViewReady(object view)
-        {
-            base.OnViewReady(view);
-            UpdateSelection(Manager.ActivePlaylist);
+            if (Manager.Match != null)
+                UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
@@ -411,7 +407,7 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasPlayer(r)).ToList();
-                this.events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
+                events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
 
