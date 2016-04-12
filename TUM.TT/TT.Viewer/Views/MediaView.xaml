@@ -88,6 +88,14 @@
                             <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Shift" Key="MediaPreviousTrack"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="Previous5Frames">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="PreviousFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="4">
@@ -173,6 +181,14 @@
                             <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Shift" Key="MediaNextTrack"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="Next5Frames">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="10">
@@ -247,6 +263,19 @@
                           Visual="{DynamicResource appbar_repeat}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="toRepeat">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding  Key="R"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="toRepeat">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
             <ToggleButton x:Name="cbInfinite" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="9" IsChecked="True">
                 <Rectangle Width="15" Height="15" 
@@ -256,6 +285,19 @@
                           Visual="{DynamicResource appbar_infinite}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="toInfinite">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding  Key="I"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="toInfinite">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
                 <Rectangle Width="15" Height="15" 
@@ -267,8 +309,15 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="Mute"/>
+                        <cal:ActionMessage MethodName="Mute">
+                        </cal:ActionMessage>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="M"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="MuteUnmute"/>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="10" Visibility="Hidden">
@@ -296,16 +345,15 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="toFullscreen">
-                          <cal:Parameter Value="{Binding ElementName=FullscreenButton, Path=IsChecked}"/>
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <!--<ob:GlobalInputBindingTrigger>
+                    <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Windows" Key="F"/>
+                            <KeyBinding  Key="F"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="toFullscreenHotkey">
+                        <cal:ActionMessage MethodName="toFullscreen">
                         </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>-->
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
         </Grid>

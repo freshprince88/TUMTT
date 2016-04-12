@@ -2,6 +2,16 @@
 {
     public static class Media
     {
+        public enum Repeat
+        {
+            On,
+            Off
+        }
+        public enum Infinite
+        {
+            On,
+            Off
+        }
         public enum Mute
         {
             Mute,

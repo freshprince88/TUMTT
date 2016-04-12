@@ -78,6 +78,30 @@ namespace TT.Viewer.ViewModels
                 _fullscreen = value;
             }
         }
+        private Media.Repeat _repeat;
+        public Media.Repeat Repeat
+        {
+            get
+            {
+                return _repeat;
+            }
+            set
+            {
+                _repeat = value;
+            }
+        }
+        private Media.Infinite _infinite;
+        public Media.Infinite Infinite
+        {
+            get
+            {
+                return _infinite;
+            }
+            set
+            {
+                _infinite = value;
+            }
+        }
 
         public MediaViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
@@ -86,6 +110,8 @@ namespace TT.Viewer.ViewModels
             _speed = Media.Speed.Full;
             _muted = Media.Mute.Unmute;
             _mode = Media.Control.Stop;
+            _repeat = Media.Repeat.Off;
+            _infinite = Media.Infinite.On;
         }
 
         #region View Methods
@@ -248,6 +274,17 @@ namespace TT.Viewer.ViewModels
                 Restart = this.Control == Media.Control.Play ? true : false
             });
         }
+        public void MuteUnmute()
+        {
+            if (this.Muted == Media.Mute.Unmute)
+            {
+                Mute();
+            }
+            else if (this.Muted == Media.Mute.Mute)
+            {
+                Unmute();
+            }
+        }
 
         public void Mute()
         {
@@ -262,19 +299,43 @@ namespace TT.Viewer.ViewModels
         }
 
       
-        public void toFullscreenHotkey()
+        public void toFullscreen()
         {
-            
-        }
-        public void toFullscreen(bool isChecked) //Todo
-        {
-            if (isChecked == true)
-                events.PublishOnUIThread(new FullscreenEvent(true));
-
-
-            if (isChecked == false)
+            if (this.Fullscreen == Media.Fullscreen.Off)
+            {
+                this.Fullscreen = Media.Fullscreen.On;
                 events.PublishOnUIThread(new FullscreenEvent(false));
-
+            }
+            else if (this.Fullscreen == Media.Fullscreen.On)
+            {
+                this.Fullscreen = Media.Fullscreen.Off;
+                events.PublishOnUIThread(new FullscreenEvent(true));
+            }
+            events.PublishOnUIThread(this.Fullscreen);
+        }
+        public void toRepeat()
+        {
+            if (this.Repeat == Media.Repeat.Off)
+            {
+                this.Repeat = Media.Repeat.On;
+            }
+            else if (this.Repeat == Media.Repeat.On)
+            {
+                this.Repeat = Media.Repeat.Off;
+            }
+            events.PublishOnUIThread(this.Repeat);
+        }
+        public void toInfinite()
+        {
+            if (this.Infinite == Media.Infinite.Off)
+            {
+                this.Infinite = Media.Infinite.On;
+            }
+            else if (this.Infinite == Media.Infinite.On)
+            {
+                this.Infinite = Media.Infinite.Off;
+            }
+            events.PublishOnUIThread(this.Infinite);
         }
 
 
