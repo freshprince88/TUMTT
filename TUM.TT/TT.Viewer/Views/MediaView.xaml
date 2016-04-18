@@ -112,6 +112,14 @@
                             <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Alt" Key="MediaPreviousTrack"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PreviousFrame">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
 
@@ -165,6 +173,14 @@
                             <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Alt" Key="MediaNextTrack"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="NextFrame">
+                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button  x:Name="Next5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="9">

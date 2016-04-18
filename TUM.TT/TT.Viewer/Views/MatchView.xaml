@@ -34,7 +34,9 @@
                 <Border  Grid.Row="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <ContentControl x:Name="PlaylistView" />
                 </Border>
-                <Border Grid.Row="2" BorderThickness="1 0 0 0 " BorderBrush="{DynamicResource AccentColorBrush}" />
+                <Border Grid.Row="2" BorderThickness="1 0 0 0 " BorderBrush="{DynamicResource AccentColorBrush}">
+                       <ContentControl x:Name="CommentView" />
+                </Border>
             </Grid>
         </Grid>
     </Controls:MetroContentControl>
