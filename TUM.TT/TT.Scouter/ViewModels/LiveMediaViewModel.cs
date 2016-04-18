@@ -4,10 +4,11 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Models;
 using TT.Lib.Util.Enums;
+using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
-    public class LiveMediaViewModel : Screen
+    public class LiveMediaViewModel : Screen, IMediaPosition
     {
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength {

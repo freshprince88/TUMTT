@@ -26,6 +26,7 @@ namespace TT.Scouter.ViewModels
 
             var nextScreen = ShowScreenResult.Of<MainViewModel>();
             nextScreen.Properties.Add("SelectedTab", MainViewModel.Tabs.Live);
+            nextScreen.Properties.Add("LiveMode", LiveViewModel.TimeMode.Video);
             yield return nextScreen;
         }
 
@@ -34,6 +35,7 @@ namespace TT.Scouter.ViewModels
             //Go to next Scene Without Video
             var nextScreen = ShowScreenResult.Of<MainViewModel>();
             nextScreen.Properties.Add("SelectedTab", MainViewModel.Tabs.Live);
+            nextScreen.Properties.Add("LiveMode", LiveViewModel.TimeMode.Timer);
             yield return nextScreen;
         }
 

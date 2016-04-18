@@ -3,6 +3,7 @@ using Caliburn.Micro;
 using TT.Lib.Managers;
 using TT.Lib.Models;
 using System.Collections.ObjectModel;
+using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
@@ -11,7 +12,42 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager MatchManager;
 
-        public LiveMediaViewModel MediaPlayer { get; set; }
+        public enum TimeMode
+        {
+            Video,
+            Timer
+        }
+
+        private TimeMode _mode;
+        public TimeMode ViewMode {
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                if(_mode != value)
+                {
+                    this.DeactivateItem(MediaPlayer, true);
+                    _mode = value;
+                    switch (_mode)
+                    {
+                        case TimeMode.Video:
+                            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+                            break;
+                        case TimeMode.Timer:
+                            MediaPlayer = new LiveTimerViewModel();
+                            break;
+                        default:
+                            break;
+                    }
+                    this.ActivateItem(MediaPlayer);
+                    NotifyOfPropertyChange();
+                }
+            }
+        }
+
+        public IMediaPosition MediaPlayer { get; set; }
 
         public Match Match { get { return MatchManager.Match; } }
         public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
@@ -30,12 +66,12 @@ namespace TT.Scouter.ViewModels
 
                 Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
                 bool mark = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
-                
-                if(mark != Markiert)
+
+                if (mark != Markiert)
                 {
                     Markiert = mark;
                     NotifyOfPropertyChange("Markiert");
-                }            
+                }
             }
         }
 
@@ -49,7 +85,7 @@ namespace TT.Scouter.ViewModels
             get { return _newRally; }
             set
             {
-                if(_newRally != value)
+                if (_newRally != value)
                 {
                     _newRally = value;
                     NotifyOfPropertyChange();
@@ -63,13 +99,13 @@ namespace TT.Scouter.ViewModels
         public LiveViewModel(IEventAggregator ev, IMatchManager man)
         {
             Events = ev;
-            MatchManager = man;
+            MatchManager = man;           
+            IsNewRally = true;
+            CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
+            Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
+            Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
 
             MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
-            IsNewRally = true;
-            CurrentRally = MatchManager.ActivePlaylist.Rallies.First();                                                      
-            Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-            Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);            
         }
 
         #region Caliburn Hooks
@@ -77,9 +113,9 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
-            this.ActivateItem(MediaPlayer);
+            this.ActivateItem(MediaPlayer);            
         }
-    
+
         #endregion
 
         #region View Methods
@@ -93,6 +129,8 @@ namespace TT.Scouter.ViewModels
             else
                 CurrentRally.Winner = MatchPlayer.Second;
 
+            CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
+
             //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
             //      Timer läuft, der die MediaPosition simuliert
             //CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
@@ -103,13 +141,14 @@ namespace TT.Scouter.ViewModels
             if (Markiert)
             {
                 Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                marked.Rallies.Add(CurrentRally);             
+                marked.Rallies.Add(CurrentRally);
             }
 
             CurrentRally = new Rally();
             Rallies.Add(CurrentRally);
             CurrentRally.UpdateServerAndScore();
             IsNewRally = true;
+            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
             //NotifyOfPropertyChange("CurrentRally");            
         }
 
@@ -143,6 +182,7 @@ namespace TT.Scouter.ViewModels
             //      Timer läuft, der die MediaPosition simuliert
             //CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
             IsNewRally = false;
+            MediaPlayer.Play();
         }
 
         #endregion

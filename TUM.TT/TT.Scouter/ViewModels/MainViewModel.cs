@@ -1,9 +1,4 @@
 ﻿using Caliburn.Micro;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TT.Lib.Managers;
 
 namespace TT.Scouter.ViewModels
@@ -15,6 +10,8 @@ namespace TT.Scouter.ViewModels
 
         public LiveViewModel LiveView { get; set; }
         public RemoteViewModel RemoteView { get; set; }
+
+        public LiveViewModel.TimeMode LiveMode { get; set; }
 
         public enum Tabs
         {
@@ -50,6 +47,7 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            LiveView.ViewMode = LiveMode;
             this.ActivateItem(LiveView);
             this.ActivateItem(RemoteView);
         }
