@@ -61,6 +61,14 @@ namespace TT.Viewer.ViewModels
             this.events.Subscribe(this);
         }
         #endregion
+        #region Helper Methods
+
+        public void ChangeCommentOnEnter()
+        {
+
+        }
+
+        #endregion
 
 
 

@@ -71,6 +71,10 @@ namespace TT.Viewer.ViewModels
         {
 
         }
+        public  void DeletePlaylist()
+        {
+            Manager.Match.Playlists.Remove(Manager.ActivePlaylist);
+        }
 
         #endregion
 

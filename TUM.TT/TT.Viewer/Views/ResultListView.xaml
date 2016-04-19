@@ -15,7 +15,7 @@
             <Setter Property="ContextMenu">
                 <Setter.Value>
                     <ContextMenu>
-                        <MenuItem Header="Delete from current Playlist" cal:Message.Attach="[Event Click] = [Action DeleteRally()]"/>
+                        <MenuItem Header="Delete from current Playlist" cal:Message.Attach="[Event Click] = [Action DeleteRally($dataContext)]"/>
                     </ContextMenu>
                 </Setter.Value>
             </Setter>

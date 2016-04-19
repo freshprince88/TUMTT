@@ -286,7 +286,7 @@
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding  Key="R"/>
+                            <KeyBinding Modifiers="Alt"  Key="R"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="toRepeat">
                         </cal:ActionMessage>
@@ -308,7 +308,7 @@
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding  Key="I"/>
+                            <KeyBinding Modifiers="Alt" Key="I"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="toInfinite">
                         </cal:ActionMessage>
@@ -330,7 +330,7 @@
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Key="M"/>
+                            <KeyBinding Modifiers="Alt" Key="M"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="MuteUnmute"/>
                     </ob:GlobalInputBindingTrigger>
@@ -365,7 +365,7 @@
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding  Key="F"/>
+                            <KeyBinding Modifiers="Alt"  Key="F"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="toFullscreen">
                         </cal:ActionMessage>
