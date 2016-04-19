@@ -7,10 +7,14 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024"
-             Background="{DynamicResource AccentColorBrush4}">
+             Background="{DynamicResource AccentColorBrush4}"
+             Dialog:DialogParticipation.Register="{Binding}">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>

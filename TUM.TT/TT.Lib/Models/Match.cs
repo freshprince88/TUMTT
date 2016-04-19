@@ -86,6 +86,57 @@ namespace TT.Lib.Models
         }
 
         /// <summary>
+        /// Gets the first serving player.
+        /// </summary>
+        /// <remarks>
+        /// This is simply the server of the first rally.
+        /// </remarks>
+        [XmlIgnore]
+        public MatchPlayer FirstServer
+        {
+            get
+            {
+                return this.Playlists.Where(p => p.Name == "Alle").FirstOrDefault().Rallies
+                    .Select(r => r.Server)
+                    .DefaultIfEmpty(MatchPlayer.None)
+                    .First();
+            }
+        }
+
+        /// <summary>
+        /// Gets the winner of the match.
+        /// </summary>
+        /// <remarks>
+        /// This is simply the last winner of all rallies.
+        /// </remarks>
+        [XmlIgnore]
+        public MatchPlayer Winner
+        {
+            get
+            {
+                return this.Playlists.Where(p => p.Name == "Alle").FirstOrDefault().Rallies
+                    .Reverse()
+                    .Select(r => r.Winner)
+                    .FirstOrDefault(w => w != MatchPlayer.None);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the match is over.
+        /// </summary>
+        [XmlIgnore]
+        public bool IsOver
+        {
+            get
+            {
+                var rally = this.Playlists.Where(p => p.Name == "Alle").FirstOrDefault().Rallies.LastOrDefault();
+                return rally != null ?
+                    rally.FinalSetScore.Highest >= this.Mode.RequiredSets() :
+                    false;
+            }
+        }
+
+        /// <summary>
         /// Gets all playlists of this match.
         /// </summary>
         public ObservableCollection<Playlist> Playlists
@@ -177,7 +228,7 @@ namespace TT.Lib.Models
             foreach(var pl in Playlists)
             {
                 // Swap the server
-                pl.Rallies.First().Server = pl.FirstServer.Other();
+                pl.Rallies.First().Server = FirstServer.Other();
 
                 // Swap the winner of each rally
                 foreach (var rally in pl.Rallies)

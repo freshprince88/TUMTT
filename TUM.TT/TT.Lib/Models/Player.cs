@@ -49,6 +49,8 @@ namespace TT.Lib.Models
         /// </summary>
         private string material;
 
+        private MatchPlayer playerIndex;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
@@ -159,6 +161,27 @@ namespace TT.Lib.Models
                 if (this.griffhaltung != value)
                 {
                     this.griffhaltung = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Griffhaltung of this player.
+        /// </summary>
+        [XmlAttribute]
+        public MatchPlayer PlayerIndex
+        {
+            get
+            {
+                return this.playerIndex;
+            }
+
+            set
+            {
+                if (this.playerIndex != value)
+                {
+                    this.playerIndex = value;
                     this.NotifyPropertyChanged();
                 }
             }

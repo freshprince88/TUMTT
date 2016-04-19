@@ -55,57 +55,6 @@ namespace TT.Lib.Models
         }
 
         /// <summary>
-        /// Gets the first serving player.
-        /// </summary>
-        /// <remarks>
-        /// This is simply the server of the first rally.
-        /// </remarks>
-        [XmlIgnore]
-        public MatchPlayer FirstServer
-        {
-            get
-            {
-                return this.Rallies
-                    .Select(r => r.Server)
-                    .DefaultIfEmpty(MatchPlayer.None)
-                    .First();
-            }
-        }
-
-        /// <summary>
-        /// Gets the winner of the match.
-        /// </summary>
-        /// <remarks>
-        /// This is simply the last winner of all rallies.
-        /// </remarks>
-        [XmlIgnore]
-        public MatchPlayer Winner
-        {
-            get
-            {
-                return this.Rallies
-                    .Reverse()
-                    .Select(r => r.Winner)
-                    .FirstOrDefault(w => w != MatchPlayer.None);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the match is over.
-        /// </summary>
-        [XmlIgnore]
-        public bool IsOver
-        {
-            get
-            {
-                var rally = this.Rallies.LastOrDefault();
-                return rally != null ?
-                    rally.FinalSetScore.Highest >= this.Match.Mode.RequiredSets() :
-                    false;
-            }
-        }
-
-        /// <summary>
         /// Finds the next rally.
         /// </summary>
         /// <param name="rally">The previous rally.</param>

@@ -4,6 +4,11 @@ using TT.Lib.Managers;
 using TT.Lib.Models;
 using System.Collections.ObjectModel;
 using TT.Scouter.Interfaces;
+using MahApps.Metro.Controls.Dialogs;
+using System.Windows.Controls;
+using TT.Lib.Util;
+using TT.Lib.Results;
+using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels
 {
@@ -49,6 +54,8 @@ namespace TT.Scouter.ViewModels
 
         public IMediaPosition MediaPlayer { get; set; }
 
+        public Player Server { get; set; }
+
         public Match Match { get { return MatchManager.Match; } }
         public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
 
@@ -74,7 +81,6 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
-
 
         private bool _newRally;
         /// <summary>
@@ -104,7 +110,6 @@ namespace TT.Scouter.ViewModels
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
-
             MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
         }
 
@@ -113,7 +118,13 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
-            this.ActivateItem(MediaPlayer);            
+            this.ActivateItem(MediaPlayer);
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            CoroutineExecutionContext context = new CoroutineExecutionContext() { Target = this, Source = view, View = view };
+            Coroutine.ExecuteAsync(ShowServer().GetEnumerator(), context);
         }
 
         #endregion
@@ -130,26 +141,7 @@ namespace TT.Scouter.ViewModels
                 CurrentRally.Winner = MatchPlayer.Second;
 
             CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
-
-            //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
-            //      Timer läuft, der die MediaPosition simuliert
-            //CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
-
-            //if (CurrentRally.Length == 0)
-            //    CurrentRally.Length = 1;
-
-            if (Markiert)
-            {
-                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                marked.Rallies.Add(CurrentRally);
-            }
-
-            CurrentRally = new Rally();
-            Rallies.Add(CurrentRally);
-            CurrentRally.UpdateServerAndScore();
             IsNewRally = true;
-            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
-            //NotifyOfPropertyChange("CurrentRally");            
         }
 
         public void SetRallyLength(int length)
@@ -178,13 +170,42 @@ namespace TT.Scouter.ViewModels
 
         public void StartRally()
         {
-            //TODO: Dummy Klasse für MediaPlayer bauen falls kein Video geladen wurde
-            //      Timer läuft, der die MediaPosition simuliert
-            //CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
+            if (Markiert)
+            {
+                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
+                marked.Rallies.Add(CurrentRally);
+            }
+
+            CurrentRally = new Rally();
+            Rallies.Add(CurrentRally);
+            CurrentRally.UpdateServerAndScore();            
+
+            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
             IsNewRally = false;
             MediaPlayer.Play();
+        }
+
+        public IEnumerable<IResult> ShowServer()
+        {
+            var dialog = new CustomClosableComboDialog<Player>();
+            dialog.CloseButton = new Button() { Content = "OK" };
+            dialog.Combo = new ComboBox() { ItemsSource = Match.Players, SelectedIndex = 0, DisplayMemberPath = "Name" };
+            StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };
+            panel.Margin = new System.Windows.Thickness(10);
+            TextBlock message = new TextBlock() { Text = "Bitte Aufschlagspieler Auswählen" };
+            panel.Children.Add(message);
+            panel.Children.Add(dialog.Combo);
+            panel.Children.Add(dialog.CloseButton);
+
+            dialog.Content = panel;
+            var result = new CustomDialogResult<Player>() { Title = "Server", DialogContent = dialog };
+            yield return result;
+
+            this.Server = result.Result;
+            CurrentRally.Server = MatchManager.ConvertPlayer(Server);
         }
 
         #endregion
     }
 }
+ 

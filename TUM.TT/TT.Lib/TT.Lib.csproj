@@ -159,6 +159,9 @@
     <Compile Include="IShell.cs" />
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
+    <Compile Include="Results\CustomDialogResult.cs" />
+    <Compile Include="Results\InputDialogResult.cs" />
+    <Compile Include="Util\CustomClosableComboDialog.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Schlag.cs" />
@@ -204,7 +207,9 @@
     <Compile Include="Converters\TabSizeConverter.cs" />
     <Compile Include="Converters\Visibility2BoolConverter.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Util\Interfaces\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

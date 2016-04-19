@@ -148,8 +148,8 @@ namespace TT.Lib.Managers
             Match.DateTime = DateTime.Now;
             Match.FirstPlayer = new Player();
             Match.SecondPlayer = new Player();
-            Match.Playlists.Add(new Playlist() { Name = "Alle" });
-            Match.Playlists.Add(new Playlist() { Name = "Markiert" });
+            Match.Playlists.Add(new Playlist() { Name = "Alle", Match = Match });
+            Match.Playlists.Add(new Playlist() { Name = "Markiert", Match = Match });
             this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.FileName = String.Empty;
             this.MatchModified = false;
@@ -165,6 +165,11 @@ namespace TT.Lib.Managers
             yield return videoDialog;
             Match.VideoFile = videoDialog.Result;
             Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+        }
+
+        public MatchPlayer ConvertPlayer(Player p)
+        {
+            return p.Name == this.Match.FirstPlayer.Name ? MatchPlayer.First : MatchPlayer.Second;
         }
 
         #endregion

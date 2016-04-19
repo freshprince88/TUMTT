@@ -362,7 +362,7 @@ namespace TT.Lib.Models {
                 {
                     // The server changes on every set, so each two sets the first server in match serves first again.
                     this.Server = (this.CurrentSetScore.Total % 2 == 0) ?
-                        this.Playlist.FirstServer : this.Playlist.FirstServer.Other();
+                        this.Playlist.Match.FirstServer : this.Playlist.Match.FirstServer.Other();
                 }
                 else if (this.CurrentRallyScore.Lowest >= 10)
                 {
