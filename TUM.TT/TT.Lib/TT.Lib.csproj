@@ -104,6 +104,7 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\CrunchToBoolConverter.cs" />
     <Compile Include="Converters\ForeBackHandToBoolConverter.cs" />
+    <Compile Include="Converters\MatchPlayerToVisibilityConverter.cs" />
     <Compile Include="Converters\MinRallyLengthToVisibleConverter.cs" />
     <Compile Include="Converters\PlayerP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\PointP1P2ToBoolConverter.cs" />

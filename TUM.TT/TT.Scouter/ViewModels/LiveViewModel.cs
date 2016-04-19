@@ -54,7 +54,7 @@ namespace TT.Scouter.ViewModels
 
         public IMediaPosition MediaPlayer { get; set; }
 
-        public Player Server { get; set; }
+        public MatchPlayer Server { get; set; }
 
         public Match Match { get { return MatchManager.Match; } }
         public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
@@ -100,6 +100,42 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private bool _rallyEnded;
+        /// <summary>
+        /// Determines whether the "Finish Rally" Button is shown
+        /// </summary>
+        public bool RallyEnded
+        {
+            get { return _rallyEnded; }
+            set
+            {
+                if (_rallyEnded != value)
+                {
+                    _rallyEnded = value;
+                    NotifyOfPropertyChange();
+                }
+
+            }
+        }
+
+        private bool _rallyActive;
+        /// <summary>
+        /// Determines whether the "Start Rally" Button is shown
+        /// </summary>
+        public bool IsRallyActive
+        {
+            get { return _rallyActive; }
+            set
+            {
+                if (_rallyActive != value)
+                {
+                    _rallyActive = value;
+                    NotifyOfPropertyChange();
+                }
+
+            }
+        }
+
         public bool Markiert { get; set; }
 
         public LiveViewModel(IEventAggregator ev, IMatchManager man)
@@ -107,9 +143,10 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;           
             IsNewRally = true;
+            RallyEnded = false;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
-            Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-            Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
+            //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
+            //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
             MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
         }
 
@@ -130,19 +167,6 @@ namespace TT.Scouter.ViewModels
         #endregion
 
         #region View Methods
-
-        public void RallyWon(int player)
-        {
-            // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
-            //   -> CurrentRally neu setzen mit Bindings
-            if (player == 1)
-                CurrentRally.Winner = MatchPlayer.First;
-            else
-                CurrentRally.Winner = MatchPlayer.Second;
-
-            CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
-            IsNewRally = true;
-        }
 
         public void SetRallyLength(int length)
         {
@@ -168,7 +192,34 @@ namespace TT.Scouter.ViewModels
             //NotifyOfPropertyChange("CurrentRally");
         }
 
+        public void RallyWon(int player)
+        {
+            // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
+            //   -> CurrentRally neu setzen mit Bindings
+            if (player == 1)
+                CurrentRally.Winner = MatchPlayer.First;
+            else
+                CurrentRally.Winner = MatchPlayer.Second;
+
+            CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
+
+
+            IsNewRally = false;
+            IsRallyActive = false;
+            RallyEnded = true;
+        }
+
         public void StartRally()
+        {           
+            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
+
+            IsNewRally = false;
+            IsRallyActive = true;
+            RallyEnded = false;
+            MediaPlayer.Play();
+        }
+
+        public void FinishRally()
         {
             if (Markiert)
             {
@@ -178,11 +229,13 @@ namespace TT.Scouter.ViewModels
 
             CurrentRally = new Rally();
             Rallies.Add(CurrentRally);
-            CurrentRally.UpdateServerAndScore();            
+            CurrentRally.UpdateServerAndScore();
+            Server = CurrentRally.Server;
+            NotifyOfPropertyChange("Server");
 
-            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
-            IsNewRally = false;
-            MediaPlayer.Play();
+            IsNewRally = true;
+            IsRallyActive = false;
+            RallyEnded = false;
         }
 
         public IEnumerable<IResult> ShowServer()
@@ -201,8 +254,9 @@ namespace TT.Scouter.ViewModels
             var result = new CustomDialogResult<Player>() { Title = "Server", DialogContent = dialog };
             yield return result;
 
-            this.Server = result.Result;
-            CurrentRally.Server = MatchManager.ConvertPlayer(Server);
+            this.Server = MatchManager.ConvertPlayer(result.Result);
+            CurrentRally.Server = this.Server;
+            NotifyOfPropertyChange("Server");
         }
 
         #endregion

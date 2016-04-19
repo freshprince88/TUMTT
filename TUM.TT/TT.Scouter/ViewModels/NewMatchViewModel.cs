@@ -52,7 +52,6 @@ namespace TT.Scouter.ViewModels
 
             Rally first = new Rally();
             first.Nummer = 1;
-            first.Server = MatchPlayer.First;
 
             MatchManager.ActivePlaylist.Rallies.Add(first);
             first.UpdateServerAndScore();
