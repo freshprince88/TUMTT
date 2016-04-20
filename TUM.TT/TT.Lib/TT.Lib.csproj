@@ -136,6 +136,7 @@
     <Compile Include="Events\MediaMuteEvent.cs" />
     <Compile Include="Events\MediaSpeedEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
+    <Compile Include="Events\PlaylistDeletedEvent.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="Events\PlaylistSelectionChangedEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />

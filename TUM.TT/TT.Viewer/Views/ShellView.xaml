@@ -8,8 +8,9 @@
                       Dialog:DialogParticipation.Register="{Binding}"
                       ResizeMode="CanResizeWithGrip"
                       Width="1024"
-                      Height="768"         
+                      Height="768"                               
                       EnableDWMDropShadow="True"
+                      IgnoreTaskbarOnMaximize="True"
                       WindowTransitionsEnabled="False"
                       WindowStartupLocation="CenterScreen"            
                       Title="TUM.TT Viewer">
@@ -32,6 +33,7 @@
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
+    
 
     <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="LeftReplace"/>
 </Controls:MetroWindow>

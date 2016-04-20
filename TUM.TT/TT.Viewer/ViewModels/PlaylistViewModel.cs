@@ -99,7 +99,8 @@ namespace TT.Viewer.ViewModels
                     this.Items.RemoveAt(i);
                     this.Items.ElementAt(0);
                     this.Items.Refresh();
-                    Manager.ActivePlaylist = Manager.Match.Playlists[0];  //TODO: Playlist in der ListView auswählen
+                    //Manager.ActivePlaylist = Manager.Match.Playlists[0];  //TODO: Playlist in der ListView auswählen
+                    events.PublishOnUIThread(new PlaylistDeletedEvent());
                 }
             }
         }

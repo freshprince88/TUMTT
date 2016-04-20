@@ -11,15 +11,20 @@
     <Grid x:Name="FilterStatisticsContainer">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <TabControl  x:Name="FilterStatisticsSwitch" Grid.Row="0"   Controls:TabControlHelper.IsUnderlined="True" TabStripPlacement="Top" cal:Message.Attach="[Event SelectionChanged] = [Action FilterStatisticsSelected ($eventArgs)]">
+        <Button Grid.Row="0" Style="{StaticResource MetroAccentFlat}">
+            <Button.Content>
+                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Spielerinformationen"/></TextBlock>
+            </Button.Content> 
+        </Button>
+        <TabControl  x:Name="FilterStatisticsSwitch" Grid.Row="1"   Controls:TabControlHelper.IsUnderlined="True" TabStripPlacement="Top" cal:Message.Attach="[Event SelectionChanged] = [Action FilterStatisticsSelected ($eventArgs)]">
             <TabItem x:Name="FilterTab" Header=" Filter"/>
             <TabItem x:Name="StatisticsTab" Header="Statistik"/>
         </TabControl>
 
-        <ContentControl Grid.Row="1" x:Name="ActiveItem" />
+        <ContentControl Grid.Row="2" x:Name="ActiveItem" />
 
     </Grid>
 

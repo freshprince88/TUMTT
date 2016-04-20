@@ -22,11 +22,22 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaction logic for PlaylistView.xaml
     /// </summary>
-    public partial class PlaylistView : UserControl
+    public partial class PlaylistView : UserControl,IHandle<PlaylistDeletedEvent>
     {
+
+        public IEventAggregator Events { get; private set; }
         public PlaylistView()
         {
             InitializeComponent();
+            Events = IoC.Get<IEventAggregator>();
+            Events.Subscribe(this);
         }
+
+        public void Handle(PlaylistDeletedEvent message)
+        {
+            Items.SelectedIndex = 0;
+        }
+
+       
     }
 }
