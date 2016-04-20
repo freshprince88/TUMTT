@@ -55,6 +55,11 @@ namespace TT.Lib.Models
         private string videoFile;
 
         /// <summary>
+        /// Backs the <see cref="Synchro"/> property.
+        /// </summary>
+        private double synchro;
+
+        /// <summary>
         /// Backs the <see cref="Playlists"/> property.
         /// </summary>
         private ObservableCollection<Playlist> playlists = new ObservableCollection<Playlist>();
@@ -212,7 +217,17 @@ namespace TT.Lib.Models
         {
             get { return this.dateTime; }
             set { this.RaiseAndSetIfChanged(ref this.dateTime, value); }
-        }      
+        }
+
+        /// <summary>
+        /// Gets or sets the date and time of the match.
+        /// </summary>
+        [XmlAttribute]
+        public double Synchro
+        {
+            get { return this.synchro; }
+            set { this.RaiseAndSetIfChanged(ref this.synchro, value); }
+        }
 
         /// <summary>
         /// Swaps the players in this match.
