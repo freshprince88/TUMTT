@@ -83,6 +83,10 @@ namespace TT.Scouter.Views
                 case Media.Speed.Full:
                     MediaPlayer.SpeedRatio = 1;
                     break;
+                case Media.Speed.Faster:
+                    MediaPlayer.SpeedRatio = 1.5;
+                    break;
+
                 default:
                     break;
             }

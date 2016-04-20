@@ -34,10 +34,11 @@
         <Grid Grid.Row="2" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"  />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="2*" />
@@ -45,15 +46,17 @@
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="1" IsChecked="True"
+            <RadioButton x:Name="Slow150Button" Content="150%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="1" IsChecked="True"
+                          cal:Message.Attach="[Event Checked] = [Action Slow(150)]"/>
+            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="2" IsChecked="True"
                           cal:Message.Attach="[Event Checked] = [Action Slow(100)]"/>
-            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="2" 
+            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="3" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(75)]"/>
-            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="3" 
+            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(50)]"/>
-            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
+            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="5" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(25)]" />
-            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="6"
+            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="7"
                     Visibility="{Binding IsPlaying, Mode=OneWay, Converter={conv:BoolNotToVisibilityConverter}}"
                     cal:Message.Attach="[Event Click] = [Action Play()]">
                 <Rectangle Width="15" Height="15" 
@@ -64,7 +67,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="6"
+            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="7"
                           Visibility="{Binding IsPlaying, Mode=OneWay, Converter={conv:BoolToVisibilityConverter}}"
                           IsChecked="{Binding IsPlaying, Mode=OneWay}"
                           cal:Message.Attach="[Event Click] = [Action Pause()]">
@@ -88,7 +91,7 @@
                 </Rectangle>
             </Button>
 
-            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Column="9">
+            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Column="10">
                 <Label.Content>
                     <TextBlock FontSize="12">
                         <TextBlock.Text>
@@ -103,7 +106,7 @@
                 </Label.Content>
             </Label>
 
-            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="10"                     
+            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="11"                     
                     cal:Message.Attach="[Event Click] = [Action Mute()]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -113,7 +116,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="10"
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="11"
                           Visibility="{Binding IsMuted, Converter={conv:BoolToVisibilityConverter}}"
                           IsChecked="{Binding IsMuted}"
                           cal:Message.Attach="[Event Click] = [Action UnMute()]">

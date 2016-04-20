@@ -226,7 +226,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button x:Name="DeleteButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Right">
+            <Button x:Name="DeleteButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Right" ToolTip="Delete Last Rally">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
