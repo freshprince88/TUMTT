@@ -259,6 +259,17 @@ namespace TT.Scouter.ViewModels
             NotifyOfPropertyChange("Server");
         }
 
+        public void DeleteLastRally()
+        {
+            if (Rallies.Count > 1)
+            {
+                Rally lastRally = Rallies.Last();
+                Rallies.Remove(lastRally);
+                CurrentRally = Rallies.Last();
+                CurrentRally.UpdateServerAndScore();
+            }
+        }
+
         #endregion
     }
 }
