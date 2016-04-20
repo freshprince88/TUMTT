@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="GlobalInputBindingTrigger.cs" company="Fakultät für Sport- und Gesundheitswissenschaft">
+// <copyright file="GlobalingTrigger.cs" company="Fakultät für Sport- und Gesundheitswissenschaft">
 //    Copyright © 2013, 2014 Fakultät für Sport- und Gesundheitswissenschaft
 // </copyright>
 //-----------------------------------------------------------------------

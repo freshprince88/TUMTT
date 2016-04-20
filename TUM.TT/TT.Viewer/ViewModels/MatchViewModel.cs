@@ -21,7 +21,8 @@ namespace TT.Viewer.ViewModels
         public MediaViewModel MediaView { get; private set; }
         public FilterStatisticsViewModel FilterStatisticsView { get; private set; }
         public ResultViewModel ResultView { get; private set; }
-        public PlaylistViewModel PlaylistView { get; private set; }       
+        public PlaylistViewModel PlaylistView { get; private set; } 
+        public CommentViewModel CommentView { get; private set; }      
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -37,7 +38,8 @@ namespace TT.Viewer.ViewModels
             ResultView = new ResultViewModel(resultTabs);
             PlaylistView = new PlaylistViewModel(Events, Manager, dc);
             MediaView = new MediaViewModel(Events, Manager);
-            FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);                     
+            FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);
+            CommentView = new CommentViewModel(Events, Manager);                  
         }
 
         #region Caliburn hooks
@@ -65,7 +67,8 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(ResultView);
             this.ActivateItem(PlaylistView);
             this.ActivateItem(MediaView);
-            this.ActivateItem(FilterStatisticsView);                                    
+            this.ActivateItem(FilterStatisticsView);
+            this.ActivateItem(CommentView);                              
         }
 
         #endregion

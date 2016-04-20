@@ -71,6 +71,39 @@ namespace TT.Viewer.ViewModels
         {
 
         }
+        public async void DeletePlaylist()
+        {
+            if (Manager.ActivePlaylist.Name != "Alle" && Manager.ActivePlaylist.Name != "Markiert")
+
+            {
+                var mySettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = "Delete",
+                    NegativeButtonText = "Cancel",
+                    AnimateShow = true,
+                    AnimateHide = false
+                };
+
+                var result = await Dialogs.ShowMessageAsync(this, "Delete Playlist  '" + Manager.ActivePlaylist.Name + "' ?",
+                    "Sure?", MessageDialogStyle.AffirmativeAndNegative, mySettings);
+
+                if (result == MessageDialogResult.Negative)
+                {
+                }
+                else
+                {
+                    Playlist p = Manager.ActivePlaylist;
+                    PlaylistItem p1 = this.Items[0];
+                    int i = Manager.Match.Playlists.IndexOf(p);
+                    Manager.Match.Playlists.RemoveAt(i);
+                    this.Items.RemoveAt(i);
+                    this.Items.ElementAt(0);
+                    this.Items.Refresh();
+                    //Manager.ActivePlaylist = Manager.Match.Playlists[0];  //TODO: Playlist in der ListView auswählen
+                    events.PublishOnUIThread(new PlaylistDeletedEvent());
+                }
+            }
+        }
 
         #endregion
 

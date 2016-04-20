@@ -20,10 +20,12 @@ namespace TT.Viewer.ViewModels
 
         public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "TUM.TT";
+            this.DisplayName = "TUM.TT Viewer";
             Events = eventAggregator;
             Manager = manager;
             DialogCoordinator = coordinator;
+            
+            
         }
 
         #region Caliburn hooks
@@ -42,6 +44,7 @@ namespace TT.Viewer.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
+            
         }
 
         protected override void OnActivate()

@@ -137,6 +137,7 @@
     <Compile Include="Events\MediaMuteEvent.cs" />
     <Compile Include="Events\MediaSpeedEvent.cs" />
     <Compile Include="Events\PlaylistChangedEvent.cs" />
+    <Compile Include="Events\PlaylistDeletedEvent.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="Events\PlaylistSelectionChangedEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
     <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />
+    <Compile Include="Events\ShowTableNumbersEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\StatisticDetailChangedEvent.cs" />
     <Compile Include="Events\TableKombiViewSelectionChangedEvent.cs" />

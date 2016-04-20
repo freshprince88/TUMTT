@@ -80,7 +80,9 @@ namespace TT.Viewer.ViewModels
                 PlayerLabel="3.Schlag:",
                 StrokeNumber = 2
             };
-            TableView = new TableStandardViewModel(this.events);
+            TableView = new TableStandardViewModel(this.events,"Third");
+            TableView.StrokeNumber = 2;
+            TableView.lastStroke = false;
         }
 
 
@@ -457,7 +459,7 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
 
-            UpdateSelection(Manager.ActivePlaylist);
+            //UpdateSelection(Manager.ActivePlaylist);
         }
         protected override void OnDeactivate(bool close)
         {
@@ -466,6 +468,11 @@ namespace TT.Viewer.ViewModels
             this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
+        }
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateSelection(Manager.ActivePlaylist);
         }
         #endregion
 

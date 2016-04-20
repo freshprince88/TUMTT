@@ -79,9 +79,10 @@ namespace TT.Viewer.ViewModels
             RallyEnd = Convert.ToInt32(rally.Ende);
         }
 
-        public void DeleteRally()
+        public void DeleteRally(ResultListItem r)
         {
-            Manager.DeleteRally(Rally);
+            
+            Manager.DeleteRally(r.Rally);
         }
     }
 }

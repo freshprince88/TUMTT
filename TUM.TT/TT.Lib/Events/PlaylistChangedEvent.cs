@@ -1,6 +1,4 @@
-﻿
-
-using TT.Lib.Models;
+﻿using TT.Lib.Models;
 
 namespace TT.Lib.Events
 {

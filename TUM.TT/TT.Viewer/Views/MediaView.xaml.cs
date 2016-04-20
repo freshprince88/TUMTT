@@ -29,7 +29,10 @@ namespace TT.Viewer.Views
     public partial class MediaView : UserControl,
         IHandle<VideoControlEvent>,
         IHandle<Media.Mute>,
-        IHandle<VideoLoadedEvent>
+        IHandle<VideoLoadedEvent>,
+        IHandle<Media.Fullscreen>,
+        IHandle<Media.Repeat>,
+        IHandle<Media.Infinite>
     {
         public IEventAggregator Events { get; private set; }
         private IMatchManager Manager;
@@ -93,6 +96,48 @@ namespace TT.Viewer.Views
                     MuteButton.Visibility = Visibility.Visible;
                     UnmuteButton.Visibility = Visibility.Hidden;
                     UnmuteButton.IsChecked = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        public void Handle(Media.Fullscreen message)
+        {
+            switch (message)
+            {
+                case Media.Fullscreen.Off:
+                    FullscreenButton.IsChecked = true;
+                    break;
+                case Media.Fullscreen.On:
+                    FullscreenButton.IsChecked = false;
+                    break;
+                default:
+                    break;               
+            }
+        }
+        public void Handle(Media.Repeat message)
+        {
+            switch (message)
+            {
+                case Media.Repeat.On:
+                    cbRepeat.IsChecked = true;
+                    break;
+                case Media.Repeat.Off:
+                    cbRepeat.IsChecked = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        public void Handle(Media.Infinite message)
+        {
+            switch (message)
+            {
+                case Media.Infinite.On:
+                    cbInfinite.IsChecked = true;
+                    break;
+                case Media.Infinite.Off:
+                    cbInfinite.IsChecked = false;
                     break;
                 default:
                     break;
@@ -247,7 +292,6 @@ namespace TT.Viewer.Views
         #endregion
 
         #region Helper Methods
-
         private void HandlePlayMode(Media.Control mode)
         {
             switch (mode)
@@ -317,6 +361,8 @@ namespace TT.Viewer.Views
                     break;
             }
         }
+
+        
 
         #endregion
     }

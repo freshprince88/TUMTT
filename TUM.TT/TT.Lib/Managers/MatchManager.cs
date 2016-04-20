@@ -118,13 +118,16 @@ namespace TT.Lib.Managers
             }
         }
 
-        public void DeleteRally(Rally r)
+        public void DeleteRally(Rally r) //Immer noch die schon gelöschte Rally als Parameter!!!!
         {
             if (ActivePlaylist.Name != "Alle")
             {
-                ActivePlaylist.Rallies.Remove(r);
+                Boolean test;
+                test = ActivePlaylist.Rallies.Remove(r);
+                Playlist test2 = ActivePlaylist;
                 Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
+
             }
         }
 

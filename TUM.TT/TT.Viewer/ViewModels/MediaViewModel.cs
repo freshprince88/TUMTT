@@ -6,6 +6,7 @@ using TT.Lib.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Models;
+using System.Windows.Controls.Primitives;
 
 namespace TT.Viewer.ViewModels
 {
@@ -77,6 +78,30 @@ namespace TT.Viewer.ViewModels
                 _fullscreen = value;
             }
         }
+        private Media.Repeat _repeat;
+        public Media.Repeat Repeat
+        {
+            get
+            {
+                return _repeat;
+            }
+            set
+            {
+                _repeat = value;
+            }
+        }
+        private Media.Infinite _infinite;
+        public Media.Infinite Infinite
+        {
+            get
+            {
+                return _infinite;
+            }
+            set
+            {
+                _infinite = value;
+            }
+        }
 
         public MediaViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
@@ -85,10 +110,20 @@ namespace TT.Viewer.ViewModels
             _speed = Media.Speed.Full;
             _muted = Media.Mute.Unmute;
             _mode = Media.Control.Stop;
+            _repeat = Media.Repeat.Off;
+            _infinite = Media.Infinite.Off;
         }
 
         #region View Methods
-
+        public void PlayPause()
+        {
+            if (this.Control == Media.Control.Pause || this.Control == Media.Control.Stop)
+            {
+                Play();
+            }
+            else
+                Pause();
+        }
         public void Play()
         {
             if (CurrentRally != null)
@@ -183,9 +218,11 @@ namespace TT.Viewer.ViewModels
 
         public void PreviousRally()
         {
+
             CurrentRally = CurrentRally == Playlist.First ? Playlist.Last : CurrentRally.Previous;
 
             events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
+
         }
 
         public void NextRally()
@@ -193,6 +230,8 @@ namespace TT.Viewer.ViewModels
             CurrentRally = CurrentRally == Playlist.Last ? Playlist.First : CurrentRally.Next;
 
             events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
+
+
         }
 
         public void Slow75Percent(bool isChecked)
@@ -239,6 +278,17 @@ namespace TT.Viewer.ViewModels
                 Restart = this.Control == Media.Control.Play ? true : false
             });
         }
+        public void MuteUnmute()
+        {
+            if (this.Muted == Media.Mute.Unmute)
+            {
+                Mute();
+            }
+            else if (this.Muted == Media.Mute.Mute)
+            {
+                Unmute();
+            }
+        }
 
         public void Mute()
         {
@@ -252,22 +302,51 @@ namespace TT.Viewer.ViewModels
             events.PublishOnUIThread(this.Muted);
         }
 
-        public void toFullscreen(bool isChecked) //Todo
+      
+        public void toFullscreen()
         {
-            if (isChecked == true)
-                events.PublishOnUIThread(new FullscreenEvent(true));
-
-
-            if (isChecked == false)
+            if (this.Fullscreen == Media.Fullscreen.Off)
+            {
+                this.Fullscreen = Media.Fullscreen.On;
                 events.PublishOnUIThread(new FullscreenEvent(false));
-
+            }
+            else if (this.Fullscreen == Media.Fullscreen.On)
+            {
+                this.Fullscreen = Media.Fullscreen.Off;
+                events.PublishOnUIThread(new FullscreenEvent(true));
+            }
+            events.PublishOnUIThread(this.Fullscreen);
+        }
+        public void toRepeat()
+        {
+            if (this.Repeat == Media.Repeat.Off)
+            {
+                this.Repeat = Media.Repeat.On;
+            }
+            else if (this.Repeat == Media.Repeat.On)
+            {
+                this.Repeat = Media.Repeat.Off;
+            }
+            events.PublishOnUIThread(this.Repeat);
+        }
+        public void toInfinite()
+        {
+            if (this.Infinite == Media.Infinite.Off)
+            {
+                this.Infinite = Media.Infinite.On;
+            }
+            else if (this.Infinite == Media.Infinite.On)
+            {
+                this.Infinite = Media.Infinite.Off;
+            }
+            events.PublishOnUIThread(this.Infinite);
         }
 
 
 
-        #endregion
+#endregion
 
-        #region Caliburn Hooks
+            #region Caliburn Hooks
 
         /// <summary>
         /// Initializes this view model.
@@ -292,9 +371,9 @@ namespace TT.Viewer.ViewModels
             events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
-        #endregion
+            #endregion
 
-        #region Event Handlers
+            #region Event Handlers
 
         public void Handle(ResultsChangedEvent message)
         {
@@ -328,14 +407,14 @@ namespace TT.Viewer.ViewModels
             Play();
         }
 
-        #endregion
+            #endregion
 
-        #region Helper Methods
+            #region Helper Methods
 
         private void InitVideo()
         {
         }
 
-        #endregion
+            #endregion
     }
 }

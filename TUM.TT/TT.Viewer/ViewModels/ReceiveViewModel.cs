@@ -81,7 +81,9 @@ namespace TT.Viewer.ViewModels
                 StrokeNumber = 1
             };
 
-            TableView = new TableStandardViewModel(this.events);
+            TableView = new TableStandardViewModel(this.events, "Receive");
+            TableView.StrokeNumber = 1;
+            TableView.lastStroke = false;
         }
 
         #region View Methods
@@ -457,7 +459,7 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
 
-            UpdateSelection(Manager.ActivePlaylist);
+           //UpdateSelection(Manager.ActivePlaylist);
         }
         protected override void OnDeactivate(bool close)
         {
@@ -466,6 +468,11 @@ namespace TT.Viewer.ViewModels
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
             base.OnDeactivate(close);
+        }
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateSelection(Manager.ActivePlaylist);
         }
         #endregion
 
@@ -482,7 +489,7 @@ namespace TT.Viewer.ViewModels
         //Get SelectedRallies and apply own filters
         public void Handle(BasicFilterSelectionChangedEvent message)
         {
-            UpdateSelection(Manager.ActivePlaylist);
+           UpdateSelection(Manager.ActivePlaylist);
         }
 
         #endregion

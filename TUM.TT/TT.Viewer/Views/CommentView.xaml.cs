@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,24 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TT.Lib.Events;
 
 namespace TT.Viewer.Views
 {
     /// <summary>
-    /// Interaktionslogik für BasicFilterView.xaml
+    /// Interaktionslogik für CommentView.xaml
     /// </summary>
-    public partial class BasicFilterView : UserControl
+    public partial class CommentView : UserControl
     {
-        public IEventAggregator Events { get; set; }
-
-        public BasicFilterView()
+        public CommentView()
         {
             InitializeComponent();
-            Events = IoC.Get<IEventAggregator>();
-            Events.Subscribe(this);
         }
 
-       
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
