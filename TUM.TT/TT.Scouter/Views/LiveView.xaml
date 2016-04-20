@@ -14,7 +14,15 @@
              d:DesignHeight="768" d:DesignWidth="1024"
              Background="{DynamicResource AccentColorBrush4}"
              Dialog:DialogParticipation.Register="{Binding}">
-
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -88,22 +96,7 @@
                     cal:Message.Attach="[Event Click] = [Action StartRally()]"/>
         </Grid>
 
-        <Grid x:Name="EndGrid" Grid.Row="2" Visibility="{Binding RallyEnded, Converter={conv:BoolToVisibilityConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button Content="Finish Rally" Grid.Column="1" Grid.Row="1" FontSize="18" 
-                    cal:Message.Attach="[Event Click] = [Action FinishRally()]"/>
-        </Grid>
-
-        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsRallyActive, Converter={conv:BoolToVisibilityConverter}}">
+        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -217,9 +210,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Rallies" FontSize="20" HorizontalAlignment="Center" Background="{DynamicResource AccentColorBrush3}"/>
-            <ListBox ItemsSource="{Binding Path=Rallies}" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"  ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding Path=Rallies}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch"  ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -232,6 +226,20 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Button x:Name="DeleteButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Right">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_close}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="DeleteLastRally" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">

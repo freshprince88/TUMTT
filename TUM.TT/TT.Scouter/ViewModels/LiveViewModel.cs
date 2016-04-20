@@ -100,42 +100,6 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        private bool _rallyEnded;
-        /// <summary>
-        /// Determines whether the "Finish Rally" Button is shown
-        /// </summary>
-        public bool RallyEnded
-        {
-            get { return _rallyEnded; }
-            set
-            {
-                if (_rallyEnded != value)
-                {
-                    _rallyEnded = value;
-                    NotifyOfPropertyChange();
-                }
-
-            }
-        }
-
-        private bool _rallyActive;
-        /// <summary>
-        /// Determines whether the "Start Rally" Button is shown
-        /// </summary>
-        public bool IsRallyActive
-        {
-            get { return _rallyActive; }
-            set
-            {
-                if (_rallyActive != value)
-                {
-                    _rallyActive = value;
-                    NotifyOfPropertyChange();
-                }
-
-            }
-        }
-
         public bool Markiert { get; set; }
 
         public LiveViewModel(IEventAggregator ev, IMatchManager man)
@@ -143,7 +107,6 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;           
             IsNewRally = true;
-            RallyEnded = false;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
@@ -203,24 +166,6 @@ namespace TT.Scouter.ViewModels
 
             CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
 
-
-            IsNewRally = false;
-            IsRallyActive = false;
-            RallyEnded = true;
-        }
-
-        public void StartRally()
-        {           
-            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
-
-            IsNewRally = false;
-            IsRallyActive = true;
-            RallyEnded = false;
-            MediaPlayer.Play();
-        }
-
-        public void FinishRally()
-        {
             if (Markiert)
             {
                 Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
@@ -234,8 +179,14 @@ namespace TT.Scouter.ViewModels
             NotifyOfPropertyChange("Server");
 
             IsNewRally = true;
-            IsRallyActive = false;
-            RallyEnded = false;
+        }
+
+        public void StartRally()
+        {           
+            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+
+            IsNewRally = false;
+            MediaPlayer.Play();
         }
 
         public IEnumerable<IResult> ShowServer()
@@ -257,6 +208,17 @@ namespace TT.Scouter.ViewModels
             this.Server = MatchManager.ConvertPlayer(result.Result);
             CurrentRally.Server = this.Server;
             NotifyOfPropertyChange("Server");
+        }
+
+        public void DeleteLastRally()
+        {
+            if (Rallies.Count > 1)
+            {
+                Rally lastRally = Rallies.Last();
+                Rallies.Remove(lastRally);
+                CurrentRally = Rallies.Last();
+                CurrentRally.UpdateServerAndScore();
+            }
         }
 
         #endregion
