@@ -293,7 +293,7 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <ToggleButton x:Name="cbInfinite" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="9" IsChecked="True">
+            <ToggleButton x:Name="cbInfinite" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="9" IsChecked="False">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>

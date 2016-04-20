@@ -111,7 +111,7 @@ namespace TT.Viewer.ViewModels
             _muted = Media.Mute.Unmute;
             _mode = Media.Control.Stop;
             _repeat = Media.Repeat.Off;
-            _infinite = Media.Infinite.On;
+            _infinite = Media.Infinite.Off;
         }
 
         #region View Methods
@@ -218,9 +218,11 @@ namespace TT.Viewer.ViewModels
 
         public void PreviousRally()
         {
+
             CurrentRally = CurrentRally == Playlist.First ? Playlist.Last : CurrentRally.Previous;
 
             events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
+
         }
 
         public void NextRally()
@@ -228,6 +230,8 @@ namespace TT.Viewer.ViewModels
             CurrentRally = CurrentRally == Playlist.Last ? Playlist.First : CurrentRally.Next;
 
             events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
+
+
         }
 
         public void Slow75Percent(bool isChecked)
@@ -340,9 +344,9 @@ namespace TT.Viewer.ViewModels
 
 
 
-        #endregion
+#endregion
 
-        #region Caliburn Hooks
+            #region Caliburn Hooks
 
         /// <summary>
         /// Initializes this view model.
@@ -367,9 +371,9 @@ namespace TT.Viewer.ViewModels
             events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
-        #endregion
+            #endregion
 
-        #region Event Handlers
+            #region Event Handlers
 
         public void Handle(ResultsChangedEvent message)
         {
@@ -403,14 +407,14 @@ namespace TT.Viewer.ViewModels
             Play();
         }
 
-        #endregion
+            #endregion
 
-        #region Helper Methods
+            #region Helper Methods
 
         private void InitVideo()
         {
         }
 
-        #endregion
+            #endregion
     }
 }
