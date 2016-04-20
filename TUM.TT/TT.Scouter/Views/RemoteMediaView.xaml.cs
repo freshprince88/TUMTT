@@ -1,31 +1,44 @@
 ﻿using Caliburn.Micro;
-using System.Windows.Controls;
-using TT.Lib.Events;
 using System;
-using TT.Lib.Util.Enums;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Util.Enums;
 
 namespace TT.Scouter.Views
 {
     /// <summary>
-    /// Interaction logic for LiveMediaView.xaml
+    /// Interaction logic for RemoteMediaView.xaml
     /// </summary>
-    public partial class LiveMediaView : UserControl,
+    public partial class RemoteMediaView : UserControl,
         IHandle<MediaControlEvent>,
         IHandle<MediaSpeedEvent>,
-        IHandle<MediaMuteEvent>
+        IHandle<MediaMuteEvent>,
+        IHandle<VideoLoadedEvent>
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
 
-        public LiveMediaView()
+        public RemoteMediaView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
-            Events.Subscribe(this);
+            //Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
             this.Loaded += LiveMediaView_Loaded;
-            this.Unloaded += ExtendedMediaView_Unloaded;       
+            this.Unloaded += ExtendedMediaView_Unloaded;
         }
 
 
@@ -45,13 +58,13 @@ namespace TT.Scouter.Views
             switch (message.Ctrl)
             {
                 case Media.Control.Stop:
-                    MediaPlayer.Stop();                    
+                    MediaPlayer.Stop();
                     break;
                 case Media.Control.Pause:
                     MediaPlayer.Pause();
                     break;
                 case Media.Control.Play:
-                    MediaPlayer.Play();                    
+                    MediaPlayer.Play();
                     break;
                 default:
                     break;
@@ -60,11 +73,16 @@ namespace TT.Scouter.Views
 
         private void LiveMediaView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            MediaPlayer.Stop();
-            MediaPlayer.Close();
-            MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
-            MediaPlayer.Play();
-            MediaPlayer.Pause();
+            Events.Subscribe(this);
+
+            if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
+            {
+                MediaPlayer.Stop();
+                MediaPlayer.Close();
+                MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
+                MediaPlayer.Play();
+                MediaPlayer.Pause();
+            }
         }
 
         public void Handle(MediaSpeedEvent message)
@@ -102,6 +120,15 @@ namespace TT.Scouter.Views
                 default:
                     break;
             }
+        }
+
+        public void Handle(VideoLoadedEvent message)
+        {
+            MediaPlayer.Stop();
+            MediaPlayer.Close();
+            MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
+            MediaPlayer.Play();
+            MediaPlayer.Pause();
         }
 
         #endregion

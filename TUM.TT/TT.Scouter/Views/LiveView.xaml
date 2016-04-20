@@ -7,10 +7,14 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024"
-             Background="{DynamicResource AccentColorBrush4}">
+             Background="{DynamicResource AccentColorBrush4}"
+             Dialog:DialogParticipation.Register="{Binding}">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -28,14 +32,12 @@
         <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush3}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -44,16 +46,31 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
-            <Image Grid.Column="1" />
-            <Label Name="Player1" Content="{Binding Path=Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" FontSize="20"/>
+            <Image Name="First" Grid.Column="1" Grid.Row="1" Source="pack://application:,,,/Resources/ping_pong.png">
+                <Image.Visibility>
+                    <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
+                        <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
+                        <Binding Path="Server"/>
+                    </MultiBinding>
+                </Image.Visibility>
+            </Image>
+            
+            <Label Name="Player1" Content="{Binding Path=Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" FontSize="20"/>
 
-            <Label Name="Player2" Content="{Binding Path=Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="7" FontSize="20"/>
-            <Image Grid.Column="8" />
+            <Label Name="Player2" Content="{Binding Path=Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" FontSize="20"/>
+            <Image Name="Second" Grid.Column="6" Grid.Row="1" Source="pack://application:,,,/Resources/ping_pong.png">
+                <Image.Visibility>
+                    <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
+                        <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
+                        <Binding Path="Server"/>
+                    </MultiBinding>
+                </Image.Visibility>
+            </Image>
 
-            <Label Name="SetScore1" Content="{Binding Path=CurrentRally.CurrentSetScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="3" FontSize="30"/>
-            <Label Name="PointScore1" Content="{Binding Path=CurrentRally.CurrentRallyScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="4" FontSize="75"/>
-            <Label Name="SetScore2" Content="{Binding Path=CurrentRally.CurrentSetScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="6" FontSize="30"/>
-            <Label Name="PointScore2" Content="{Binding Path=CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="5" FontSize="75"/>
+            <Label Name="SetScore1" Content="{Binding Path=CurrentRally.CurrentSetScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" FontSize="30"/>
+            <Label Name="PointScore1" Content="{Binding Path=CurrentRally.CurrentRallyScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" FontSize="75"/>
+            <Label Name="SetScore2" Content="{Binding Path=CurrentRally.CurrentSetScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="5" FontSize="30"/>
+            <Label Name="PointScore2" Content="{Binding Path=CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="4" FontSize="75"/>
         </Grid>
 
         <Grid x:Name="StartGrid" Grid.Row="2" Visibility="{Binding IsNewRally, Converter={conv:BoolToVisibilityConverter}}">
@@ -71,7 +88,22 @@
                     cal:Message.Attach="[Event Click] = [Action StartRally()]"/>
         </Grid>
 
-        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
+        <Grid x:Name="EndGrid" Grid.Row="2" Visibility="{Binding RallyEnded, Converter={conv:BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="Finish Rally" Grid.Column="1" Grid.Row="1" FontSize="18" 
+                    cal:Message.Attach="[Event Click] = [Action FinishRally()]"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsRallyActive, Converter={conv:BoolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

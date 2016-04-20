@@ -13,12 +13,13 @@ namespace TT.Lib.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double val = (double)value;
-            return TimeSpan.FromMilliseconds(val);
+            TimeSpan ts = TimeSpan.FromMilliseconds(val);
+            return String.Format("{0:D2}:{1:D2}:{2:D2}", ts.Hours, ts.Minutes, ts.Seconds);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            TimeSpan span = (TimeSpan)value;
+            TimeSpan span = TimeSpan.Parse((string)value);
             return span.TotalMilliseconds;
         }
     }

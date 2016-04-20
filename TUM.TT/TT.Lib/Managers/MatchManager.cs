@@ -36,15 +36,16 @@ namespace TT.Lib.Managers
 
         public bool MatchModified { get; set; }
 
-        private Playlist _activeList;
+        private string _activeList;
         public Playlist ActivePlaylist
         {
-            get { return _activeList; }
+            get { return Match.Playlists.Where(p => p.Name == _activeList).FirstOrDefault(); }
             set
             {
-                if (_activeList != value)
+                string pName = value.Name;
+                if (_activeList != pName)
                 {
-                    _activeList = value;
+                    _activeList = pName;
                     Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 }
             }
@@ -150,8 +151,8 @@ namespace TT.Lib.Managers
             Match.DateTime = DateTime.Now;
             Match.FirstPlayer = new Player();
             Match.SecondPlayer = new Player();
-            Match.Playlists.Add(new Playlist() { Name = "Alle" });
-            Match.Playlists.Add(new Playlist() { Name = "Markiert" });
+            Match.Playlists.Add(new Playlist() { Name = "Alle", Match = Match });
+            Match.Playlists.Add(new Playlist() { Name = "Markiert", Match = Match });
             this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.FileName = String.Empty;
             this.MatchModified = false;
@@ -167,6 +168,11 @@ namespace TT.Lib.Managers
             yield return videoDialog;
             Match.VideoFile = videoDialog.Result;
             Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+        }
+
+        public MatchPlayer ConvertPlayer(Player p)
+        {
+            return p.Name == this.Match.FirstPlayer.Name ? MatchPlayer.First : MatchPlayer.Second;
         }
 
         #endregion

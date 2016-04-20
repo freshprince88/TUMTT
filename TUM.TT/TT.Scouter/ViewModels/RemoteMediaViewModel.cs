@@ -1,17 +1,24 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls.Dialogs;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Models;
+using TT.Lib.Results;
 using TT.Lib.Util.Enums;
 using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
-    public class LiveMediaViewModel : Screen, IMediaPosition
+    public class RemoteMediaViewModel : Screen, IMediaPosition
     {
         private TimeSpan _mediaLength;
-        public TimeSpan MediaLength {
+        public TimeSpan MediaLength
+        {
             get
             {
                 return _mediaLength;
@@ -73,36 +80,26 @@ namespace TT.Scouter.ViewModels
 
         private IEventAggregator Events;
         private IMatchManager Manager;
+        private IDialogCoordinator Dialogs;
 
-        public LiveMediaViewModel(IEventAggregator ev, IMatchManager man)
+        public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
             Manager = man;
             IsPlaying = false;
-        }
-
-        #region  Caliburn Hooks
-
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            MediaPosition = TimeSpan.Zero;
-        }
-
-        #endregion
-
-        #region View Methods
-
-        public void Play()
-        {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play));
-            IsPlaying = true;
+            Dialogs = cor;          
         }
 
         public void Pause()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
             IsPlaying = false;
+        }
+
+        public void Play()
+        {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play));
+            IsPlaying = true;
         }
 
         public void Stop()
@@ -114,11 +111,11 @@ namespace TT.Scouter.ViewModels
 
         public void Slow(int slow)
         {
-            if(slow == 50)
+            if (slow == 50)
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Half));
-            else if(slow == 75)
+            else if (slow == 75)
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Third));
-            else if(slow == 25)
+            else if (slow == 25)
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Quarter));
             else
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Full));
@@ -127,7 +124,7 @@ namespace TT.Scouter.ViewModels
         public void Mute()
         {
             IsMuted = true;
-            Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Mute));            
+            Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Mute));
         }
 
         public void UnMute()
@@ -136,6 +133,24 @@ namespace TT.Scouter.ViewModels
             Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Unmute));
         }
 
-        #endregion
+        public IEnumerable<IResult> Open()
+        {
+            return Manager.LoadVideo();
+        }
+
+        public IEnumerable<IResult> Sync()
+        {
+            //Show Dialog to get Match Synchro
+            InputDialogResult dialog = new InputDialogResult()
+            {
+                Title = "Synchronize Video with Data",
+                Question = "Please set the Offset in seconds! Current offset: " + (Match.Synchro / 1000)
+            };
+
+            yield return dialog;
+
+            double seconds = Convert.ToDouble(dialog.Result);
+            Match.Synchro = seconds * 1000;            
+        }
     }
 }

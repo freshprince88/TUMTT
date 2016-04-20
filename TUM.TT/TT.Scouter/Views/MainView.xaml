@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="TT.Scouter.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TT.Scouter.Views"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1024">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Controls:MetroAnimatedTabControl SelectedIndex="{Binding SelectedTab}">
+            <TabItem Header="Live">
+                <TabItem.Width>
+                    <MultiBinding Converter="{conv:TabSizeConverter}">
+                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}"/>
+                        <Binding Path="Items.Count" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:MetroAnimatedTabControl}}"/>
+                    </MultiBinding>
+                </TabItem.Width>
+                <!--<TabItem.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Rectangle Width="25" Height="25" Fill="{DynamicResource AccentColorBrush2}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_timer}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Live" FontSize="18" Margin="10 0 0 0" Foreground="{DynamicResource AccentColorBrush2}"/>
+                    </StackPanel>
+                </TabItem.Header>-->
+
+                <ContentControl x:Name="LiveView" />
+                
+            </TabItem>
+            <TabItem Header="Remote">
+                <TabItem.Width>
+                    <MultiBinding Converter="{conv:TabSizeConverter}">
+                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}"/>
+                        <Binding Path="Items.Count" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:MetroAnimatedTabControl}}"/>
+                    </MultiBinding>
+                </TabItem.Width>
+                <!--<TabItem.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Rectangle Width="25" Height="25" Fill="{DynamicResource AccentColorBrush2}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_home_variant}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Remote" FontSize="18" Margin="10 0 0 0" Foreground="{DynamicResource AccentColorBrush2}"/>
+                    </StackPanel>
+
+                </TabItem.Header>-->
+
+                <ContentControl x:Name="RemoteView" />
+
+            </TabItem>
+        </Controls:MetroAnimatedTabControl>
+    </Grid>
+</UserControl>

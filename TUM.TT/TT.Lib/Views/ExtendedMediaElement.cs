@@ -9,11 +9,11 @@ namespace TT.Lib.Views
 {
     public class ExtendedMediaElement : MediaElement, INotifyPropertyChangedEx
     {
-        public readonly DependencyProperty MediaLengthProperty = DependencyProperty.Register("MediaLength",
+        public static readonly DependencyProperty MediaLengthProperty = DependencyProperty.Register("MediaLength",
             typeof(TimeSpan),
             typeof(ExtendedMediaElement));
 
-        public readonly DependencyProperty MediaPositionProperty = DependencyProperty.Register("MediaPosition",
+        public static readonly DependencyProperty MediaPositionProperty = DependencyProperty.Register("MediaPosition",
             typeof(TimeSpan),
             typeof(ExtendedMediaElement),
             new PropertyMetadata(MediaPositionChanged));

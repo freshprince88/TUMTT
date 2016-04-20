@@ -212,8 +212,31 @@ namespace TT.Lib.Models {
         {
             get { return length; }
             set
-            {
-                this.RaiseAndSetIfChanged(ref this.length, value);
+            {               
+                var diff = value - schläge.Count();
+                if (schläge.Count < value)
+                {
+                    for (int i = 0; i < diff; i++)
+                    {
+                        schläge.Add(new Schlag());
+                    }
+
+                }
+                else if (schläge.Count > value)
+                {
+                    diff = -diff;
+                    for (int i = 0; i < diff; i++)
+                    {
+                        schläge.Remove(schläge.Last());
+                        //schläge.RemoveAt(schläge.IndexOf(schläge.Last()));
+                    }
+                }
+
+                if (diff != 0)
+                {
+                    RaiseAndSetIfChanged(ref this.length, value);
+                    NotifyPropertyChanged("Schläge");
+                }
             }
         }
 
@@ -339,7 +362,7 @@ namespace TT.Lib.Models {
                 {
                     // The server changes on every set, so each two sets the first server in match serves first again.
                     this.Server = (this.CurrentSetScore.Total % 2 == 0) ?
-                        this.Playlist.FirstServer : this.Playlist.FirstServer.Other();
+                        this.Playlist.Match.FirstServer : this.Playlist.Match.FirstServer.Other();
                 }
                 else if (this.CurrentRallyScore.Lowest >= 10)
                 {

@@ -3,7 +3,6 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Windows;
 using TT.Lib;
-using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Scouter.ViewModels;

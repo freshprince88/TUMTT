@@ -1,10 +1,5 @@
 ﻿using Caliburn.Micro;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 
@@ -38,7 +33,8 @@ namespace TT.Scouter.ViewModels
             {
                 yield return result;
             }
-            var next = ShowScreenResult.Of<RemoteViewModel>();
+            var next = ShowScreenResult.Of<MainViewModel>();
+            next.Properties.Add("SelectedTab", MainViewModel.Tabs.Remote);
             yield return next;
         }
 

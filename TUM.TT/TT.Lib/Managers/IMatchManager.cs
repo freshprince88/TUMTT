@@ -26,6 +26,8 @@ namespace TT.Lib.Managers
 
         void CreateNewMatch();
 
+        MatchPlayer ConvertPlayer(Player p);
+
         //void AddRally();
     }
 }

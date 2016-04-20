@@ -8,9 +8,8 @@
         Width="1024"
         Height="768"         
         EnableDWMDropShadow="True"
-        WindowTransitionsEnabled="False"
-        WindowStartupLocation="CenterScreen"            
-        Title="TUM.TT Scouter">
+        WindowTransitionsEnabled="True"
+        WindowStartupLocation="CenterScreen">
 
     <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="LeftReplace"/>
 
