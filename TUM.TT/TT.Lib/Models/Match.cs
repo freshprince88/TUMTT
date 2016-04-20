@@ -220,13 +220,26 @@ namespace TT.Lib.Models
         }
 
         /// <summary>
-        /// Gets or sets the date and time of the match.
+        /// Gets or sets the video offset in milliseconds.
         /// </summary>
         [XmlAttribute]
         public double Synchro
         {
             get { return this.synchro; }
-            set { this.RaiseAndSetIfChanged(ref this.synchro, value); }
+            set
+            {
+                var diff = this.synchro - value;
+                this.RaiseAndSetIfChanged(ref this.synchro, value);
+
+                foreach(var p in Playlists)
+                {
+                    foreach(var r in p.Rallies)
+                    {
+                        r.Anfang -= diff;
+                        r.Ende -= diff;
+                    }
+                }
+            }
         }
 
         /// <summary>

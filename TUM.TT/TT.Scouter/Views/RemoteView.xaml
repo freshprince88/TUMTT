@@ -50,9 +50,7 @@
                 </ListBox>
             </DockPanel>
 
-            <MediaElement Grid.Column="1">
-
-            </MediaElement>
+            <ContentControl x:Name="MediaPlayer" Grid.Column="1"/>
         </Grid>
 
         <Grid Grid.Row="1" Background="{DynamicResource AccentColorBrush3}">

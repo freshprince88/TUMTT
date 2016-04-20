@@ -44,7 +44,7 @@ namespace TT.Lib.Results
             this.Result = result;
             var args = new ResultCompletionEventArgs()
             {
-                WasCancelled = result == string.Empty
+                WasCancelled = result == string.Empty || result == null
             };
             this.Completed(this, args);
         }

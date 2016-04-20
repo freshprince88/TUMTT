@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
 
 namespace TT.Scouter.ViewModels
@@ -33,12 +34,12 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        public MainViewModel(IEventAggregator ev, IMatchManager man)
+        public MainViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
         {
             Events = ev;
             Manager = man;
             LiveView = new LiveViewModel(Events, Manager);
-            RemoteView = new RemoteViewModel(Events, Manager);
+            RemoteView = new RemoteViewModel(Events, Manager, dia);
         }
 
 

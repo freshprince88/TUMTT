@@ -1,10 +1,12 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Models;
+using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
@@ -12,6 +14,9 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+
+        public IMediaPosition MediaPlayer { get; set; }
+
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
@@ -84,20 +89,18 @@ namespace TT.Scouter.ViewModels
 
         public RemoteSchlagViewModel SchlagView { get; set; }
 
-        public RemoteViewModel() : this(null, null)
-        {
-        }
-
-        public RemoteViewModel(IEventAggregator ev, IMatchManager man)
+        public RemoteViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
         {
             Events = ev;
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
+            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
         }
 
         protected override void OnActivate()
         {
             base.OnActivate();
+            this.ActivateItem(MediaPlayer);
             this.ActivateItem(SchlagView);
         }
 

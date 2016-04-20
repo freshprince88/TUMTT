@@ -201,7 +201,7 @@ namespace TT.Scouter.ViewModels
             else
                 CurrentRally.Winner = MatchPlayer.Second;
 
-            CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds;
+            CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
 
 
             IsNewRally = false;
@@ -211,7 +211,7 @@ namespace TT.Scouter.ViewModels
 
         public void StartRally()
         {           
-            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds;
+            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
 
             IsNewRally = false;
             IsRallyActive = true;
