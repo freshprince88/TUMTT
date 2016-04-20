@@ -332,6 +332,9 @@ namespace TT.Lib.Models
 
         public bool IsTopLeft()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -340,6 +343,9 @@ namespace TT.Lib.Models
 
         public bool IsTopMid()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -348,6 +354,9 @@ namespace TT.Lib.Models
 
         public bool IsTopRight()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -356,6 +365,9 @@ namespace TT.Lib.Models
 
         public bool IsMidLeft()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -364,6 +376,9 @@ namespace TT.Lib.Models
 
         public bool IsMidMid()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -372,6 +387,9 @@ namespace TT.Lib.Models
 
         public bool IsMidRight()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -380,6 +398,9 @@ namespace TT.Lib.Models
 
         public bool IsBotLeft()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -388,6 +409,9 @@ namespace TT.Lib.Models
 
         public bool IsBotMid()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -396,6 +420,9 @@ namespace TT.Lib.Models
 
         public bool IsBotRight()
         {
+            if (Platzierung == null)
+                return true;
+
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
 
@@ -443,17 +470,17 @@ namespace TT.Lib.Models
 
         public bool IsOverTheTable()
         {
-            return this.Balltreffpunkt == "" ? false : this.Balltreffpunkt.ToLower() == "über";
+            return string.IsNullOrWhiteSpace(Balltreffpunkt) ? false : this.Balltreffpunkt.ToLower() == "über";
         }
 
         public bool IsAtTheTable()
         {
-            return Balltreffpunkt == null ? false : Balltreffpunkt.ToLower() == "hinter";
+            return string.IsNullOrWhiteSpace(Balltreffpunkt) ? false : Balltreffpunkt.ToLower() == "hinter";
         }
 
         public bool IsHalfDistance()
         {
-            return Balltreffpunkt == null ? false : Balltreffpunkt.ToLower() == "halbdistanz";
+            return string.IsNullOrWhiteSpace(Balltreffpunkt) ? false : Balltreffpunkt.ToLower() == "halbdistanz";
         }
 
 
@@ -508,6 +535,9 @@ namespace TT.Lib.Models
 
         public bool HasStrokeTec(IEnumerable<Stroke.Technique> tecs)
         {
+            if (Schlagtechnik == null)
+                return false;
+
             List<bool> ORresults = new List<bool>();
             foreach (var stroketec in tecs)
             {
@@ -564,6 +594,7 @@ namespace TT.Lib.Models
             }
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
+
         public bool HasAggression(IEnumerable<Stroke.Aggression> aggressions)
         {
             List<bool> ORresults = new List<bool>();
@@ -670,6 +701,9 @@ namespace TT.Lib.Models
 
         public bool HasSpins(IEnumerable<Stroke.Spin> spins)
         {
+            if (Spin == null)
+                return true;
+
             List<bool> ORresults = new List<bool>();
             foreach (var spin in spins)
             {
@@ -716,7 +750,6 @@ namespace TT.Lib.Models
         public bool HasServices(IEnumerable<Stroke.Services> services)
         {
             List<bool> ORresults = new List<bool>();
-
             foreach (var service in services)
             {
                 switch (service)
@@ -745,7 +778,6 @@ namespace TT.Lib.Models
         public bool HasServiceWinners(IEnumerable<Stroke.ServiceWinner> serviceWinner)
         {
             List<bool> ORresults = new List<bool>();
-
             foreach (var service in serviceWinner)
             {
                 switch (service)
@@ -769,7 +801,7 @@ namespace TT.Lib.Models
         }
 
         public bool HasSpecials(Stroke.Specials specials)
-        {
+        {        
             switch (specials)
             {
                 case Stroke.Specials.EdgeTable:
@@ -789,6 +821,9 @@ namespace TT.Lib.Models
 
         public bool HasServerPosition(IEnumerable<Positions.Server> server)
         {
+            if (Platzierung == null)
+                return true;
+
             List<bool> ORresults = new List<bool>();
             double X;
             double Seite = Platzierung.WY == double.NaN ? 999 : Platzierung.WY;
@@ -826,6 +861,9 @@ namespace TT.Lib.Models
 
         public bool IsLeftServicePosition()
         {
+            if (Platzierung == null)
+                return true;
+
             double aufschlagPosition;
             double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
             if (seite >= 137)
@@ -842,6 +880,9 @@ namespace TT.Lib.Models
 
         public bool IsMiddleServicePosition()
         {
+            if (Platzierung == null)
+                return true;
+
             double aufschlagPosition;
             double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
             if (seite >= 137)
@@ -858,6 +899,9 @@ namespace TT.Lib.Models
 
         public bool IsRightServicePosition()
         {
+            if (Platzierung == null)
+                return true;
+
             double aufschlagPosition;
             double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
             if (seite >= 137)

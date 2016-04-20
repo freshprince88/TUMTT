@@ -19,7 +19,7 @@ namespace TT.Lib.Converters
                 else
                     return Visibility.Visible;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Visibility.Hidden;
             }
