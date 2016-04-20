@@ -66,6 +66,7 @@ namespace TT.Viewer.ViewModels
                 _mode = value;
             }
         }
+
         private Media.Fullscreen _fullscreen;
         public Media.Fullscreen Fullscreen
         {
@@ -78,6 +79,7 @@ namespace TT.Viewer.ViewModels
                 _fullscreen = value;
             }
         }
+
         private Media.Repeat _repeat;
         public Media.Repeat Repeat
         {
@@ -90,6 +92,7 @@ namespace TT.Viewer.ViewModels
                 _repeat = value;
             }
         }
+
         private Media.Infinite _infinite;
         public Media.Infinite Infinite
         {
@@ -221,6 +224,9 @@ namespace TT.Viewer.ViewModels
 
             CurrentRally = CurrentRally == Playlist.First ? Playlist.Last : CurrentRally.Previous;
 
+            if (CurrentRally == null && Playlist.Count == 0)
+                return;
+
             events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
 
         }
@@ -229,9 +235,10 @@ namespace TT.Viewer.ViewModels
         {
             CurrentRally = CurrentRally == Playlist.Last ? Playlist.First : CurrentRally.Next;
 
+            if (CurrentRally == null && Playlist.Count == 0)
+                return;
+
             events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
-
-
         }
 
         public void Slow75Percent(bool isChecked)
@@ -346,7 +353,7 @@ namespace TT.Viewer.ViewModels
 
 #endregion
 
-            #region Caliburn Hooks
+        #region Caliburn Hooks
 
         /// <summary>
         /// Initializes this view model.
@@ -373,7 +380,7 @@ namespace TT.Viewer.ViewModels
         }
             #endregion
 
-            #region Event Handlers
+        #region Event Handlers
 
         public void Handle(ResultsChangedEvent message)
         {
@@ -409,12 +416,8 @@ namespace TT.Viewer.ViewModels
 
             #endregion
 
-            #region Helper Methods
+        #region Helper Methods
 
-        private void InitVideo()
-        {
-        }
-
-            #endregion
+        #endregion
     }
 }
