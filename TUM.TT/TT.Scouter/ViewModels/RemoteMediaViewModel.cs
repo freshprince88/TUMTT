@@ -117,6 +117,8 @@ namespace TT.Scouter.ViewModels
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Third));
             else if (slow == 25)
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Quarter));
+            else if (slow == 150)
+                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Faster));
             else
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Full));
         }
