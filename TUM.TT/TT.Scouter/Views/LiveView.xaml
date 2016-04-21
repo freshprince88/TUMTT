@@ -58,7 +58,7 @@
                 <Image.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
-                        <Binding Path="Server"/>
+                        <Binding  Path="CurrentRally.Server"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
@@ -70,7 +70,7 @@
                 <Image.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
-                        <Binding Path="Server"/>
+                        <Binding Path="CurrentRally.Server"/>
                     </MultiBinding>
                 </Image.Visibility>
             </Image>

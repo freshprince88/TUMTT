@@ -23,7 +23,7 @@ namespace TT.Lib.Models {
         private Playlist playlist;
 
         /// <summary>
-        /// Backs the <see cref="Rallies"/> property.
+        /// Backs the <see cref="Schläge"/> property.
         /// </summary>
         private ObservableCollection<Schlag> schläge = new ObservableCollection<Schlag>();
 
@@ -98,7 +98,8 @@ namespace TT.Lib.Models {
         /// <summary>
         /// Gets all strokes of this rally.
         /// </summary>
-        public ObservableCollection<Schlag> Schläge
+        
+        public ObservableCollection<Schlag> Schläge //Wenn das funktioniert, müsste es klappen... aber geht nicht
         {
             get { return this.schläge; }
             set { this.RaiseAndSetIfChanged(ref this.schläge, value); }
@@ -210,33 +211,38 @@ namespace TT.Lib.Models {
         [XmlAttribute]
         public int Length
         {
-            get { return length; }
+            get { return this.length; }
             set
-            {               
-                var diff = value - schläge.Count();
-                if (schläge.Count < value)
-                {
-                    for (int i = 0; i < diff; i++)
-                    {
-                        schläge.Add(new Schlag());
-                    }
+            {
+                this.RaiseAndSetIfChanged(ref this.length, value);
+                
+                
+                //int diff = value - schläge.Count();
+                
+                //if (schläge.Count < value)
+                //{
+                //    for (int i = 0; i < diff; i++)
+                //    {
+                //        schläge.Add(new Schlag());
+                //    }
 
-                }
-                else if (schläge.Count > value)
-                {
-                    diff = -diff;
-                    for (int i = 0; i < diff; i++)
-                    {
-                        schläge.Remove(schläge.Last());
-                        //schläge.RemoveAt(schläge.IndexOf(schläge.Last()));
-                    }
-                }
+                //}
+                //if (schläge.Count > value)
+                //{
+                //    diff = -diff;
+                //    for (int i = 0; i < diff; i++)
+                //    {
+                //        schläge.Remove(schläge.Last());
+                //        //schläge.RemoveAt(schläge.IndexOf(schläge.Last()));
+                //    }
+                //}
 
-                if (diff != 0)
-                {
-                    RaiseAndSetIfChanged(ref this.length, value);
-                    NotifyPropertyChanged("Schläge");
-                }
+                //if (diff != 0)
+                //{
+                //    this.RaiseAndSetIfChanged(ref this.length, value);
+                //    NotifyPropertyChanged("Schläge");
+
+                //}
             }
         }
 
@@ -351,6 +357,7 @@ namespace TT.Lib.Models {
         /// </summary>
         private void UpdateServer()
         {
+            MatchPlayer FirstServer = this.Playlist.Rallies[0].Server;
             var previousRally = this.Playlist.FindPreviousRally(this);
 
             // We don't need to update the server if there is no previous rally
@@ -360,9 +367,10 @@ namespace TT.Lib.Models {
 
                 if (previousRally.IsEndOfSet)
                 {
+                   
                     // The server changes on every set, so each two sets the first server in match serves first again.
                     this.Server = (this.CurrentSetScore.Total % 2 == 0) ?
-                        this.Playlist.Match.FirstServer : this.Playlist.Match.FirstServer.Other();
+                        FirstServer : FirstServer.Other();
                 }
                 else if (this.CurrentRallyScore.Lowest >= 10)
                 {
@@ -373,6 +381,7 @@ namespace TT.Lib.Models {
                     && previousRally.Server == prePreviousRally.Server
                     && !prePreviousRally.IsEndOfSet)
                 {
+                    MatchPlayer FirstS = this.Playlist.Rallies[0].Server;
                     // If the last two rallies in *this* set were served by the same player, 
                     // change the serving player for this rally
                     this.Server = previousRally.Server.Other();

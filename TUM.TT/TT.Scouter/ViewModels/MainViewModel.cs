@@ -1,6 +1,14 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
+using System.Linq;
+using TT.Lib.Models;
+using System.Collections.ObjectModel;
+using TT.Scouter.Interfaces;
+using System.Windows.Controls;
+using TT.Lib.Util;
+using TT.Lib.Results;
+using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels
 {
@@ -30,6 +38,11 @@ namespace TT.Scouter.ViewModels
                 {
                     _selectedTab = value;
                     NotifyOfPropertyChange("SelectedTab");
+                    if (_selectedTab == 0)
+                    {
+                        Rally lastRally = LiveView.Rallies.Last();
+                        lastRally.UpdateServerAndScore();
+                    }
                 }
             }
         }

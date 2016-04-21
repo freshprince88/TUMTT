@@ -5,12 +5,15 @@ namespace TT.Scouter.Interfaces
 {
     public interface IMediaPosition : IScreen
     {
-        TimeSpan MediaPosition { get; }
+        TimeSpan MediaPosition { get; set; }
 
         void Play();
+        
 
         void Pause();
 
         void Stop();
+
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
@@ -20,6 +21,7 @@ namespace TT.Scouter.ViewModels
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
+        public RemoteSchlagViewModel SchlagView { get; set; }
 
         public bool HasLength
         {
@@ -51,15 +53,18 @@ namespace TT.Scouter.ViewModels
             {
                 if (_rally != value)
                 {
-                    _rally = value;
-                    CurrentStroke = _rally.Schläge.FirstOrDefault();
+                    
 
                     if (SchlagView == null)
                         SchlagView = new RemoteSchlagViewModel(value.Schläge);
-                    else
+                    else { 
                         SchlagView.Strokes = CurrentRally.Schläge;
+                    }
+                    _rally = value;
+                    CurrentStroke = _rally.Schläge.FirstOrDefault();
 
                     NotifyOfPropertyChange("CurrentRally");
+                    NotifyOfPropertyChange("CurrentStroke");
                 }
             }
         }
@@ -87,7 +92,7 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        public RemoteSchlagViewModel SchlagView { get; set; }
+        
 
         public RemoteViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
         {
@@ -95,6 +100,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
+            
         }
 
         protected override void OnActivate()
@@ -113,6 +119,8 @@ namespace TT.Scouter.ViewModels
             if (item != null)
             {
                 CurrentRally = item;
+                TimeSpan t = TimeSpan.FromMilliseconds(item.Anfang);
+                MediaPlayer.MediaPosition = t;
             }
         }
 
