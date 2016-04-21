@@ -62,12 +62,12 @@ namespace TT.Viewer.Views
             mediaIsPaused = true;
             isDragging = false;
 
-            this.Loaded += MediaView_Loaded;
+            //this.Loaded += MediaView_Loaded;
 
-            myMediaElement.MediaOpened += (s, args) =>
-            {
-                var test = myMediaElement.Position;
-            };
+            //myMediaElement.MediaOpened += (s, args) =>
+            //{
+            //    var test = myMediaElement.Position;
+            //};
         }
 
         private void MediaView_Loaded(object sender, RoutedEventArgs e)
@@ -146,11 +146,12 @@ namespace TT.Viewer.Views
 
         public void Handle(VideoLoadedEvent message)
         {
-            //myMediaElement.Stop();
-            //myMediaElement.Close();
-            //this.myMediaElement.Source = message.VideoFile != null ? new Uri(message.VideoFile) : myMediaElement.Source;
-            //myMediaElement.Play();
-            //myMediaElement.Pause();
+            
+            myMediaElement.Stop();
+            myMediaElement.Close();
+            this.myMediaElement.Source = message.VideoFile != null ? new Uri(message.VideoFile) : myMediaElement.Source;
+            myMediaElement.Play();
+            myMediaElement.Pause();
         }
 
         public void Handle(VideoControlEvent message)

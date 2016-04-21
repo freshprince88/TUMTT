@@ -50,12 +50,12 @@
                     <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_navigate_next}" />
                 </Rectangle.OpacityMask>
             </Rectangle>
-            <Button.Visibility>
+            <!--<Button.Visibility>
                 <MultiBinding Converter="{conv:NumAndLengthToNextVisibilityConverter}" Mode="OneWay">
                     <Binding Path="CurrentStroke.Nummer" />
                     <Binding Path="Strokes.Count" />
                 </MultiBinding>
-            </Button.Visibility>
+            </Button.Visibility>-->
         </Button>
     </Grid>
 </UserControl>
