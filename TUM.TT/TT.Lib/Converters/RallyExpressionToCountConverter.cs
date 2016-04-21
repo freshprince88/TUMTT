@@ -17,11 +17,21 @@ namespace TT.Lib.Converters
             List<Rally> rallies = (List<Rally>)values[0];
             string expression = (string)values[1];
             expression = ReplaceExpression(expression);
+
             Func<Rally, bool> func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
+
             //var test = rallies.ToArray().AsQueryable().Where(expression, null).Count();
-            var test = rallies.Where(func).Count();
-            return test;
-            
+
+            try
+            {
+                var test = rallies.Where(func).Count();
+                return test;
+            }
+           catch (NullReferenceException e)
+            {
+                return 0;
+            }
+
 
         }
 
