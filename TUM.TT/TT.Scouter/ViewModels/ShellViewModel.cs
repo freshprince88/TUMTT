@@ -1,9 +1,11 @@
 using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using TT.Lib;
 using TT.Lib.Managers;
+using TT.Lib.Models;
 using TT.Lib.Results;
 using TT.Scouter.ViewModels;
 
@@ -92,6 +94,12 @@ namespace TT.Scouter
                     AllowCancel = true
                 };
                 yield return question;
+
+                var playlist = MatchManager.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
+                var lastRally = playlist.Rallies.LastOrDefault();
+
+                if (lastRally.Winner == MatchPlayer.None)
+                    playlist.Rallies.Remove(lastRally);
 
                 if (question.Result)
                 {
