@@ -31,7 +31,7 @@
         <ContentControl x:Name="ActiveItem" Grid.ColumnSpan="3"/>
 
         <Button Grid.Row="1" Margin="10 0 10 0"
-                    cal:Message.Attach="[Event Click] = [Action PreviousStroke()]">
+                    cal:Message.Attach="[Event Click] = [Action PreviousStroke()]" IsEnabled="False">
             <Button.Visibility>
                 <Binding Path="CurrentStroke.Nummer" Converter="{conv:NumToPrevVisibleConverter}" Mode="OneWay"/>
             </Button.Visibility>
@@ -43,7 +43,7 @@
             </Rectangle>
         </Button>
         <Button Grid.Row="1" Grid.Column="2" Margin="10 0 10 0"
-                    cal:Message.Attach="[Event Click] = [Action NextStroke()]">
+                    cal:Message.Attach="[Event Click] = [Action NextStroke()]" IsEnabled="False">
             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>

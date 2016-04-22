@@ -36,7 +36,7 @@ namespace TT.Scouter.ViewModels
             get { return CurrentRally.Length; }
             set
             {
-                if(value != CurrentRally.Length)
+                if (value != CurrentRally.Length)
                 {
                     CurrentRally.Length = value;
                     NotifyOfPropertyChange();
@@ -53,11 +53,12 @@ namespace TT.Scouter.ViewModels
             {
                 if (_rally != value)
                 {
-                    
+
 
                     if (SchlagView == null)
                         SchlagView = new RemoteSchlagViewModel(value.Schläge);
-                    else { 
+                    else
+                    {
                         SchlagView.Strokes = CurrentRally.Schläge;
                     }
                     _rally = value;
@@ -92,7 +93,7 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        
+
 
         public RemoteViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
         {
@@ -100,7 +101,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
-            
+
         }
 
         protected override void OnActivate()
@@ -137,8 +138,31 @@ namespace TT.Scouter.ViewModels
             Events.PublishOnUIThread(new ResultListControlEvent(rally));
             CurrentRally = rally;
         }
+        public void PlusSecond(int i)
+        {
+            if (i == 1)
+            {
+                CurrentRally.Anfang = CurrentRally.Anfang + 500;
+            }
+            else if (i == 2)
+            {
+                CurrentRally.Ende = CurrentRally.Ende + 500;
+            }
 
-        #endregion
+        }
+        public void MinusSecond(int i)
+        {
+            if (i == 1)
+            {
+                CurrentRally.Anfang = CurrentRally.Anfang - 500;
+            }
+            else if (i == 2)
+            {
+                CurrentRally.Ende = CurrentRally.Ende - 500;
+            }
 
+            #endregion
+
+        }
     }
 }

@@ -17,7 +17,7 @@
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ObjectDataProvider x:Key="ModeFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
+                            ObjectType="{x:Type System:Enum}" >
                 <ObjectDataProvider.MethodParameters>
                     <x:Type TypeName="Models:MatchMode"/>
                 </ObjectDataProvider.MethodParameters>
@@ -59,7 +59,7 @@
         <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedIndex="0" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="20" />
 
         <Label Content="Datum" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="25" VerticalAlignment="Center"/>
-        <DatePicker x:Name="TourneyDate" DisplayDate="{Binding Match.DateTime}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" VerticalContentAlignment="Center"/>
+        <DatePicker x:Name="TourneyDate" DisplayDate="{Binding Path=Match.DateTime}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" VerticalContentAlignment="Center"/>
 
         <Grid Grid.Row="10" Grid.ColumnSpan="5">
             <Grid.ColumnDefinitions>

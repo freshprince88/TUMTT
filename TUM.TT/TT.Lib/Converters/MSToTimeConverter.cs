@@ -14,7 +14,7 @@ namespace TT.Lib.Converters
         {
             double val = (double)value;
             TimeSpan ts = TimeSpan.FromMilliseconds(val);
-            return String.Format("{0:D2}:{1:D2}:{2:D2}", ts.Hours, ts.Minutes, ts.Seconds);
+            return String.Format("{0:D2}:{1:D2}:{2:D2},{3:D2}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

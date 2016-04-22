@@ -1,4 +1,5 @@
-﻿//-----------------------------------------------------------------------
+﻿
+//-----------------------------------------------------------------------
 // <copyright file="MatchModeExtensions.cs" company="Fakultät für Sport- und Gesundheitswissenschaft">
 //    Copyright © 2013, 2014 Fakultät für Sport- und Gesundheitswissenschaft
 // </copyright>
