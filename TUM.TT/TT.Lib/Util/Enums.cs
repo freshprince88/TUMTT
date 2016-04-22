@@ -1,7 +1,14 @@
 ﻿namespace TT.Lib.Util.Enums
-{
+{   
     public static class Media
     {
+        public enum Source
+        {
+            LiveScouter,
+            RemoteScouter,
+            Viewer,
+            None
+        }
         public enum Repeat
         {
             On,

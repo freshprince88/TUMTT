@@ -57,7 +57,7 @@
             <RadioButton x:Name="Slow25Button" Content="25%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="5" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(25)]" />
             <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="7"
-                    Visibility="{Binding IsPlaying, Mode=OneWay, Converter={conv:BoolNotToVisibilityConverter}}"
+                    Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"
                     cal:Message.Attach="[Event Click] = [Action Play()]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -68,7 +68,7 @@
                 </Rectangle>
             </Button>
             <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="7"
-                          Visibility="{Binding IsPlaying, Mode=OneWay, Converter={conv:BoolToVisibilityConverter}}"
+                          Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolToVisibilityConverter}}"
                           IsChecked="{Binding IsPlaying, Mode=OneWay}"
                           cal:Message.Attach="[Event Click] = [Action Pause()]">
                 <Rectangle Width="15" Height="15" 

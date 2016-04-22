@@ -42,29 +42,35 @@ namespace TT.Scouter.Views
 
         public void Handle(MediaControlEvent message)
         {
-            switch (message.Ctrl)
+            if (message.Source == Media.Source.LiveScouter)
             {
-                case Media.Control.Stop:
-                    MediaPlayer.Stop();                    
-                    break;
-                case Media.Control.Pause:
-                    MediaPlayer.Pause();
-                    break;
-                case Media.Control.Play:
-                    MediaPlayer.Play();                    
-                    break;
-                default:
-                    break;
+                switch (message.Ctrl)
+                {
+                    case Media.Control.Stop:
+                        MediaPlayer.Stop();
+                        break;
+                    case Media.Control.Pause:
+                        MediaPlayer.Pause();
+                        break;
+                    case Media.Control.Play:
+                        MediaPlayer.Play();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         private void LiveMediaView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            Events.Subscribe(this);
             MediaPlayer.Stop();
             MediaPlayer.Close();
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
             MediaPlayer.Play();
             MediaPlayer.Pause();
+            PlayButton.Visibility = System.Windows.Visibility.Visible;
+            
         }
 
         public void Handle(MediaSpeedEvent message)

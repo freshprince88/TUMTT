@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using TT.Lib.Events;
+using TT.Lib.Util.Enums;
+using TT.Lib.Managers;
 
 namespace TT.Scouter.Views
 {
@@ -23,6 +27,8 @@ namespace TT.Scouter.Views
         public LiveView()
         {
             InitializeComponent();
+            
         }
+        
     }
 }

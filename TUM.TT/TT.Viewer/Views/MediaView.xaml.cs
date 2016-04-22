@@ -183,7 +183,7 @@ namespace TT.Viewer.Views
                     {
                         stopTimer.Stop();
                         myMediaElement.Pause();
-                        Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next));
+                        Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next, Media.Source.Viewer));
                     }
                 }
                 else
@@ -236,13 +236,13 @@ namespace TT.Viewer.Views
             {
                 stopTimer.Stop();
                 myMediaElement.Pause();
-                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next));
+                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next, Media.Source.Viewer));
             }
             else
             {
                 myMediaElement.Position = TimeSpan.FromMilliseconds(Start);
                 slider_timeline.Value = slider_timeline.Minimum;
-                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             }
         }
 

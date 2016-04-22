@@ -33,6 +33,19 @@ namespace TT.Lib.Interactivity
             set { this.SetValue(HasInitialFocusProperty, value); }
         }
 
+        public static readonly DependencyProperty IsFocusedProperty =
+            DependencyProperty.Register(
+                "IsFocused",
+                typeof(bool),
+                typeof(FocusBehavior),
+                new PropertyMetadata(false, (d, e) => { if ((bool)e.NewValue) ((FocusBehavior)d).AssociatedObject.Focus(); }));
+
+        public bool IsFocused
+        {
+            get { return (bool)GetValue(IsFocusedProperty); }
+            set { SetValue(IsFocusedProperty, value); }
+        }
+
         /// <summary>
         /// Handles attaching of the behavior to the control.
         /// </summary>

@@ -83,11 +83,12 @@ namespace TT.Scouter.ViewModels
 
         #region  Caliburn Hooks
 
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            MediaPosition = TimeSpan.Zero;
-        }
+        //protected override void OnActivate()
+        //{
+        //    base.OnActivate();
+        //    //MediaPosition = TimeSpan.Zero;
+        //}
+        
 
         #endregion
 
@@ -95,19 +96,19 @@ namespace TT.Scouter.ViewModels
 
         public void Play()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play,Media.Source.LiveScouter));
             IsPlaying = true;
         }
 
         public void Pause()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
             IsPlaying = false;
         }
 
         public void Stop()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
             IsPlaying = false;
             MediaPosition = TimeSpan.Zero;
         }

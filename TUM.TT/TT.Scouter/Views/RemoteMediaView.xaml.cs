@@ -30,6 +30,7 @@ namespace TT.Scouter.Views
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
+        TimeSpan currentTime;
 
         public RemoteMediaView()
         {
@@ -37,8 +38,9 @@ namespace TT.Scouter.Views
             Events = IoC.Get<IEventAggregator>();
             //Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
-            this.Loaded += LiveMediaView_Loaded;
+            this.Loaded += RemoteMediaView_Loaded;
             this.Unloaded += ExtendedMediaView_Unloaded;
+            currentTime = TimeSpan.Zero;
         }
 
 
@@ -51,27 +53,32 @@ namespace TT.Scouter.Views
         private void ExtendedMediaView_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
             Events.Unsubscribe(this);
+            currentTime = MediaPlayer.Position;
+
         }
 
         public void Handle(MediaControlEvent message)
         {
-            switch (message.Ctrl)
+            if (message.Source == Media.Source.RemoteScouter)
             {
-                case Media.Control.Stop:
-                    MediaPlayer.Stop();
-                    break;
-                case Media.Control.Pause:
-                    MediaPlayer.Pause();
-                    break;
-                case Media.Control.Play:
-                    MediaPlayer.Play();
-                    break;
-                default:
-                    break;
+                switch (message.Ctrl)
+                {
+                    case Media.Control.Stop:
+                        MediaPlayer.Stop();
+                        break;
+                    case Media.Control.Pause:
+                        MediaPlayer.Pause();
+                        break;
+                    case Media.Control.Play:
+                        MediaPlayer.Play();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
-        private void LiveMediaView_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void RemoteMediaView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             Events.Subscribe(this);
 
@@ -80,8 +87,12 @@ namespace TT.Scouter.Views
                 MediaPlayer.Stop();
                 MediaPlayer.Close();
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
+                MediaPlayer.MediaPosition = currentTime;
                 MediaPlayer.Play();
                 MediaPlayer.Pause();
+                PlayButton.Visibility = System.Windows.Visibility.Visible;
+                
+                
             }
         }
 

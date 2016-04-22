@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
     </UserControl.Resources>
     
     <Grid>
@@ -93,7 +94,17 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button Content="Start Rally" Grid.Column="1" Grid.Row="1" FontSize="18" 
-                    cal:Message.Attach="[Event Click] = [Action StartRally()]"/>
+                    cal:Message.Attach="[Event Click] = [Action StartRally()]">
+                <i:Interaction.Triggers>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="Down"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="StartRally">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
@@ -166,8 +177,9 @@
                         </MultiBinding>
                     </RadioButton.IsChecked>
                 </RadioButton>
-                <TextBox Width="60" Margin="0 0 10 0" Text="{Binding Path=CurrentRally.Length}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18">
+                <TextBox Name="NumberBox" Width="60" Margin="0 0 10 0" Text="{Binding Path=CurrentRally.Length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18"  >
                     <i:Interaction.Behaviors>
+                        <ob:FocusBehavior HasInitialFocus="True" IsFocused="{Binding IsWinnerEnabled, Mode=TwoWay}"/>
                         <ob:SelectAllTextOnFocusBehavior />
                     </i:Interaction.Behaviors>
                     <i:Interaction.Triggers>
@@ -187,6 +199,24 @@
                                 <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
                             </cal:ActionMessage>
                         </ob:InputBindingTrigger>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Key="Left"/>
+                            </ob:InputBindingTrigger.InputBinding>
+                            
+                            <cal:ActionMessage MethodName="RallyWon">
+                                <cal:Parameter Value="1" />
+                            </cal:ActionMessage>
+                        </ob:InputBindingTrigger>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Key="Right"/>
+                            </ob:InputBindingTrigger.InputBinding>
+                            
+                            <cal:ActionMessage MethodName="RallyWon">
+                                <cal:Parameter Value="2" />
+                            </cal:ActionMessage>
+                        </ob:InputBindingTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
                 <RadioButton GroupName="RallyLength" Content="n.a." FontSize="16" 
@@ -200,9 +230,31 @@
                 </RadioButton>
             </StackPanel>
 
-            <Button Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action RallyWon(1)]"/>
+            <Button x:Name="Player1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action RallyWon(1)]" >
+                <i:Interaction.Triggers>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="Left"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="RallyWon">
+                            <cal:Parameter Value="1" />
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
+            </Button>
             <Label Content="--- Winner --- " VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" FontSize="25"/>
-            <Button Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action RallyWon(2)]"/>
+            <Button x:Name="Player2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action RallyWon(2)]">
+                <i:Interaction.Triggers>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="Right"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="RallyWon">
+                            <cal:Parameter Value="2" />
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
+            </Button>
 
         </Grid>
 

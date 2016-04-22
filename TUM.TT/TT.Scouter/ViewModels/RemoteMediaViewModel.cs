@@ -92,19 +92,19 @@ namespace TT.Scouter.ViewModels
 
         public void Pause()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
             IsPlaying = false;
         }
 
         public void Play()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play, Media.Source.RemoteScouter));
             IsPlaying = true;
         }
 
         public void Stop()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
             IsPlaying = false;
             MediaPosition = TimeSpan.Zero;
         }

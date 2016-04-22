@@ -99,6 +99,24 @@ namespace TT.Scouter.ViewModels
 
             }
         }
+        private bool _winnerEnabled;
+        /// <summary>
+        /// Determines whether the "Winner of the Rally" Buttons are shown
+        /// </summary>
+        public bool IsWinnerEnabled
+        {
+            get { return _winnerEnabled; }
+            set
+            {
+                if (_winnerEnabled != value)
+                {
+                    _winnerEnabled = value;
+                    NotifyOfPropertyChange();
+                }
+
+            }
+        }
+
 
         public bool Markiert { get; set; }
 
@@ -107,6 +125,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;           
             IsNewRally = true;
+            IsWinnerEnabled = false;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
@@ -132,7 +151,7 @@ namespace TT.Scouter.ViewModels
         #region View Methods
 
         public void SetRallyLength(int length)
-        {
+            {
             var diff = length - CurrentRally.Length;
             if (CurrentRally.Length < length)
             {
@@ -150,43 +169,53 @@ namespace TT.Scouter.ViewModels
                     CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
                 }
             }
-
+            
             CurrentRally.Length = length;
             NotifyOfPropertyChange("CurrentRally");
         }
 
         public void RallyWon(int player)
         {
-            // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
-            //   -> CurrentRally neu setzen mit Bindings
-            if (player == 1)
-                CurrentRally.Winner = MatchPlayer.First;
-            else
-                CurrentRally.Winner = MatchPlayer.Second;
-
-            CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
-
-            if (Markiert)
+            if (!IsNewRally)
             {
-                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                marked.Rallies.Add(CurrentRally);
+                // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
+                //   -> CurrentRally neu setzen mit Bindings
+                if (player == 1)
+                    CurrentRally.Winner = MatchPlayer.First;
+                else
+                    CurrentRally.Winner = MatchPlayer.Second;
+
+                CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+
+                if (Markiert)
+                {
+                    Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
+                    marked.Rallies.Add(CurrentRally);
+                }
+
+                CurrentRally = new Rally();
+                Rallies.Add(CurrentRally);
+                CurrentRally.UpdateServerAndScore();
+                Server = CurrentRally.Server;
+                NotifyOfPropertyChange("Server");
+
+                IsNewRally = true;
+                IsWinnerEnabled = false;
             }
-
-            CurrentRally = new Rally();
-            Rallies.Add(CurrentRally);
-            CurrentRally.UpdateServerAndScore();
-            Server = CurrentRally.Server;
-            NotifyOfPropertyChange("Server");
-
-            IsNewRally = true;
         }
 
         public void StartRally()
-        {           
-            CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+        {
+            if (IsNewRally)
+            {
+                CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
 
-            IsNewRally = false;
-            MediaPlayer.Play();
+                IsNewRally = false;
+                IsWinnerEnabled = true;
+
+
+                MediaPlayer.Play();
+            }
         }
 
         public IEnumerable<IResult> ShowServer()
