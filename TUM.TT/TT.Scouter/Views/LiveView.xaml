@@ -278,6 +278,34 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Button x:Name="UpdateScoreAndServerButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Left" ToolTip="Update Score">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_refresh}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="UpdateScoreAndServer" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="FinalizeLiveModeButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Center" ToolTip="Update Score">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_film}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="FinalizeLiveMode" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
             <Button x:Name="DeleteButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Right" ToolTip="Delete Last Rally">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">

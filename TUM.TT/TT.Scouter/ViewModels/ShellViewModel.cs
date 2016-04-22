@@ -102,7 +102,7 @@ namespace TT.Scouter
                     playlist.Rallies.Remove(lastRally);
 
                 if (question.Result)
-                {
+                {   
                     foreach (var action in MatchManager.SaveMatch())
                     {
                         yield return action;

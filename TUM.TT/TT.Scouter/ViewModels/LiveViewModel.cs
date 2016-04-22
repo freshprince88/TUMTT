@@ -143,7 +143,9 @@ namespace TT.Scouter.ViewModels
         protected override void OnViewReady(object view)
         {
             CoroutineExecutionContext context = new CoroutineExecutionContext() { Target = this, Source = view, View = view };
+            if (Rallies.Count <2) { 
             Coroutine.ExecuteAsync(ShowServer().GetEnumerator(), context);
+        }
         }
 
         #endregion
@@ -248,6 +250,28 @@ namespace TT.Scouter.ViewModels
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
             }
+        }
+        public void UpdateScoreAndServer()
+        {
+            CurrentRally = Rallies.Last();
+            CurrentRally = new Rally();
+            Rallies.Add(CurrentRally);
+            CurrentRally.UpdateServerAndScore();
+            Server = CurrentRally.Server;
+            NotifyOfPropertyChange("Server");
+            IsNewRally = true;
+            IsWinnerEnabled = false;
+            CurrentRally.UpdateServerAndScore();
+        }
+
+        public void FinalizeLiveMode()
+        {
+            if (Rallies.Last().Winner==MatchPlayer.None && Rallies.Last().Length == 0)
+            {
+                Rallies.Remove(Rallies.Last());
+                Rallies.Last().UpdateServerAndScore();
+            }
+
         }
 
         #endregion
