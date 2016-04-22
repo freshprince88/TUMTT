@@ -43,5 +43,13 @@
                 </Rectangle.OpacityMask>
             </Rectangle>
         </controls:Tile>
+        <controls:Tile Title="Vorlage Öffnen" Grid.Column="2" Margin="10 0 10 0" cal:Message.Attach="[Event Click] = [Action OpenMatchWithoutVideo()]" Background="{DynamicResource AccentColorBrush}">
+            <Rectangle Width="48" Height="48" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Tile}}}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+        </controls:Tile>
     </StackPanel>
 </UserControl>

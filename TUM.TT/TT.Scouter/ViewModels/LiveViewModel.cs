@@ -126,7 +126,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;           
             IsNewRally = true;
             IsWinnerEnabled = false;
-            CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
+            CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
             MediaPlayer = new LiveMediaViewModel(Events, MatchManager);

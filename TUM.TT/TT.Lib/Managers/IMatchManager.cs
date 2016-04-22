@@ -21,6 +21,9 @@ namespace TT.Lib.Managers
         IEnumerable<IResult> SaveMatch();
 
         IEnumerable<IResult> OpenMatch();
+        IEnumerable<IResult> OpenLiveMatch();
+
+
 
         IEnumerable<IResult> LoadVideo();
 

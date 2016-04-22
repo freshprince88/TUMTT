@@ -37,6 +37,15 @@ namespace TT.Scouter.ViewModels
             next.Properties.Add("SelectedTab", MainViewModel.Tabs.Remote);
             yield return next;
         }
+        public IEnumerable<IResult> OpenMatchWithoutVideo()
+        {
+            foreach (IResult result in MatchManager.OpenLiveMatch())
+            {
+                yield return result;
+            }
+            var next = ShowScreenResult.Of<NewMatchViewModel>();
+            yield return next;
+        }
 
         #endregion
     }
