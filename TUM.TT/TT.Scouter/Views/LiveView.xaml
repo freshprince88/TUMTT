@@ -177,18 +177,20 @@
                         </MultiBinding>
                     </RadioButton.IsChecked>
                 </RadioButton>
-                <TextBox Name="NumberBox" Width="60" Margin="0 0 10 0" Text="{Binding Path=CurrentRally.Length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18"  >
+                <TextBox Name="NumberBox" Width="60" Margin="0 0 10 0" Text="{Binding Path=CurrentRally.Length}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18"  >
+                    
                     <i:Interaction.Behaviors>
                         <ob:FocusBehavior HasInitialFocus="True" IsFocused="{Binding IsWinnerEnabled, Mode=TwoWay}"/>
                         <ob:SelectAllTextOnFocusBehavior />
                     </i:Interaction.Behaviors>
                     <i:Interaction.Triggers>
+                        
                         <ob:InputBindingTrigger>
                             <ob:InputBindingTrigger.InputBinding>
                                 <KeyBinding Key="Enter" />
                             </ob:InputBindingTrigger.InputBinding>
                             <cal:ActionMessage MethodName="SetRallyLength" >
-                                <cal:Parameter Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text}" />
+                                <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                             </cal:ActionMessage>
                         </ob:InputBindingTrigger>
                         <ob:InputBindingTrigger>
@@ -206,7 +208,12 @@
                             
                             <cal:ActionMessage MethodName="RallyWon">
                                 <cal:Parameter Value="1" />
+                                <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                             </cal:ActionMessage>
+                            <cal:ActionMessage MethodName="SetRallyLength" >
+                                <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
+                            </cal:ActionMessage>
+
                         </ob:InputBindingTrigger>
                         <ob:InputBindingTrigger>
                             <ob:InputBindingTrigger.InputBinding>
@@ -215,6 +222,10 @@
                             
                             <cal:ActionMessage MethodName="RallyWon">
                                 <cal:Parameter Value="2" />
+                                <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
+                            </cal:ActionMessage>
+                            <cal:ActionMessage MethodName="SetRallyLength" >
+                                <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                             </cal:ActionMessage>
                         </ob:InputBindingTrigger>
                     </i:Interaction.Triggers>
@@ -230,28 +241,49 @@
                 </RadioButton>
             </StackPanel>
 
-            <Button x:Name="Player1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action RallyWon(1)]" >
+            <Button x:Name="Player1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" >
                 <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="RallyWon">
+                            <cal:Parameter Value="1" />
+                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Key="Left"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="SetRallyLength" >
+                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
+                        </cal:ActionMessage>
                         <cal:ActionMessage MethodName="RallyWon">
                             <cal:Parameter Value="1" />
+                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                         </cal:ActionMessage>
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Label Content="--- Winner --- " VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" FontSize="25"/>
-            <Button x:Name="Player2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action RallyWon(2)]">
+            <Button x:Name="Player2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2">
                 <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="RallyWon">
+                            <cal:Parameter Value="2" />
+                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Key="Right"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="SetRallyLength" >
+                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
+                        </cal:ActionMessage>
                         <cal:ActionMessage MethodName="RallyWon">
                             <cal:Parameter Value="2" />
+                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                         </cal:ActionMessage>
+                        
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>

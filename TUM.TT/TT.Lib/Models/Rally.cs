@@ -328,9 +328,9 @@ namespace TT.Lib.Models {
             }
             else
             {
-                this.UpdateServer();
                 this.UpdateScore();
-                this.UpdateNummer();                
+                this.UpdateNummer();
+                this.UpdateServer();
             }
         }
 

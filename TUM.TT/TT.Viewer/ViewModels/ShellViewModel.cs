@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System.Collections.Generic;
 using System.Windows;
 using TT.Lib;
 using TT.Lib.Events;
@@ -95,7 +96,12 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), Manager, DialogCoordinator));
         }
         #endregion
-
+        #region Helper Methods
+        public IEnumerable<IResult> OpenMatch()
+        {
+            return Manager.OpenMatch();
+        }
+        #endregion
 
     }
 }

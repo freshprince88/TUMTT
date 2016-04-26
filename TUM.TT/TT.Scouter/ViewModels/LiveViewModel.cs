@@ -16,6 +16,7 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+        public int lengthHelper { get; set; }
 
         public enum TimeMode
         {
@@ -176,8 +177,9 @@ namespace TT.Scouter.ViewModels
             NotifyOfPropertyChange("CurrentRally");
         }
 
-        public void RallyWon(int player)
+        public void RallyWon(int player,int length)
         {
+            SetRallyLength(length);
             if (!IsNewRally)
             {
                 // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
