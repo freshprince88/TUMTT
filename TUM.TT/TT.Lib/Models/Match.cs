@@ -169,6 +169,9 @@ namespace TT.Lib.Models
             }
         }
 
+       [XmlIgnore]
+       public Playlist DefaultPlaylist { get { return this.Playlists.Where(p => p.Name.Equals("Alle")).FirstOrDefault(); } }
+
         /// <summary>
         /// Gets or sets the tournament the match is part of.
         /// </summary>
@@ -231,9 +234,9 @@ namespace TT.Lib.Models
                 var diff = this.synchro - value;
                 this.RaiseAndSetIfChanged(ref this.synchro, value);
 
-                foreach(var p in Playlists)
+                foreach (var p in Playlists)
                 {
-                    foreach(var r in p.Rallies)
+                    foreach (var r in p.Rallies)
                     {
                         r.Anfang -= diff;
                         r.Ende -= diff;
@@ -253,7 +256,7 @@ namespace TT.Lib.Models
             this.FirstPlayer = second;
             this.SecondPlayer = first;
 
-            foreach(var pl in Playlists)
+            foreach (var pl in Playlists)
             {
                 // Swap the server
                 pl.Rallies.First().Server = FirstServer.Other();
