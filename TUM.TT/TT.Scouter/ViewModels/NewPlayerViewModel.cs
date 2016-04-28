@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
 using System.Collections.Generic;
 using TT.Models;
-using TT.Models.Results;
+using TT.Lib.Results;
 
 namespace TT.Scouter.ViewModels
 {

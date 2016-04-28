@@ -773,20 +773,20 @@ namespace TT.Report.Renderers
             int offset = 0)
         {
             offset += 1; // Take title column into account
-            foreach (var triple in transitions.EnumerateIndexed())
+            foreach (var triple in transitions.EnumerateIndexed(Zeros.AllowSkip))
             {
                 table[triple.Item1 + 1, triple.Item2 + offset]
                     .AddParagraph(format(triple.Item3));
             }
 
             var pointsCol = transitions.ColumnCount + offset;
-            foreach (var pair in points.EnumerateIndexed())
+            foreach (var pair in points.EnumerateIndexed(Zeros.AllowSkip))
             {
                 table[pair.Item1 + 1, pointsCol].AddParagraph(format(pair.Item2));
             }
 
             var errorsCol = pointsCol + 1;
-            foreach (var pair in errors.EnumerateIndexed())
+            foreach (var pair in errors.EnumerateIndexed(Zeros.AllowSkip))
             {
                 table[pair.Item1 + 1, errorsCol].AddParagraph(format(pair.Item2));
             }

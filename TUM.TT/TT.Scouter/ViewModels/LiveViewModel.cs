@@ -6,8 +6,8 @@ using System.Collections.ObjectModel;
 using TT.Scouter.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
-using TT.Models.Util;
-using TT.Models.Results;
+using TT.Lib.Util;
+using TT.Lib.Results;
 using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels

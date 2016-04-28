@@ -4,7 +4,7 @@ namespace TT.Scouter {
     using Caliburn.Micro;
     using TT.Models.Serialization;
     using TT.Lib.Managers;
-    using Models;
+    using Lib;
     using ViewModels;
     using MahApps.Metro.Controls.Dialogs;
     public class AppBootstrapper : BootstrapperBase {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TT.Models.Results
+namespace TT.Lib.Results
 {
     public class InputDialogResult : IResult<string>
     {

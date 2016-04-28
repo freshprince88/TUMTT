@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using TT.Models;
+using TT.Lib;
 using TT.Lib.Managers;
-using TT.Models.Results;
+using TT.Lib.Results;
 using TT.Scouter.ViewModels;
 
 namespace TT.Scouter
@@ -96,9 +97,11 @@ namespace TT.Scouter
 
                 var playlist = MatchManager.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
                 var lastRally = playlist.Rallies.LastOrDefault();
-
-                if (lastRally.Winner == MatchPlayer.None)
+                //TODO
+                if (playlist.Rallies.Any()) { 
+                    if (lastRally.Winner == MatchPlayer.None)
                     playlist.Rallies.Remove(lastRally);
+                }
 
                 if (question.Result)
                 {

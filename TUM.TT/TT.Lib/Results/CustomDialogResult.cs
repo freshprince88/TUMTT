@@ -1,9 +1,9 @@
 ﻿using System;
 using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Models.Util;
+using TT.Lib.Util;
 
-namespace TT.Models.Results
+namespace TT.Lib.Results
 {
     public class CustomDialogResult<T> : IResult<T>
     {

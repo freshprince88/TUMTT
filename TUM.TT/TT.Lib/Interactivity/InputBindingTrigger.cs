@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace TT.Models.Interactivity
+namespace TT.Lib.Interactivity
 {
     public class InputBindingTrigger : TriggerBase<FrameworkElement>, ICommand
     {

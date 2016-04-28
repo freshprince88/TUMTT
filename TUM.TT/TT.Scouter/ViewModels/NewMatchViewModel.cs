@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using TT.Lib.Managers;
 using TT.Models;
-using TT.Models.Results;
+using TT.Lib.Results;
+using TT.Lib;
 
 namespace TT.Scouter.ViewModels
 {

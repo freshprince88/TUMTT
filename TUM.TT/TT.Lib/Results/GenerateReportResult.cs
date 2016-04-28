@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Models.Results
+namespace TT.Lib.Results
 {
     using System;
     using System.Diagnostics;

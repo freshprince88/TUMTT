@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-      xmlns:ob="clr-namespace:TT.Models.Interactivity;assembly=TT.Lib"
+      xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
       xmlns:cal="http://www.caliburnproject.org"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="400">

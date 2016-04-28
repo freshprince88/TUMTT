@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Models.Util.Enums;
-using TT.Models.Events;
+using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 using System.Windows.Controls;

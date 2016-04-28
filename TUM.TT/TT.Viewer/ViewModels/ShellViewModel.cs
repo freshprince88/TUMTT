@@ -3,8 +3,8 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using TT.Models;
-using TT.Models.Events;
+using TT.Lib;
+using TT.Lib.Events;
 using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels

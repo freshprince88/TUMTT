@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TT.Models.Events;
+using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
-using TT.Models.Results;
+using TT.Lib.Results;
 using TT.Models.Util.Enums;
 using TT.Scouter.Interfaces;
 

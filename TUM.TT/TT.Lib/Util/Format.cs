@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Models.Util
+namespace TT.Lib.Util
 {
     using TT.Models.Serialization;
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using TT.Models.Events;
+using TT.Lib.Events;
 using TT.Viewer.ViewModels;
 using Itenso.Windows.Controls.ListViewLayout;
 

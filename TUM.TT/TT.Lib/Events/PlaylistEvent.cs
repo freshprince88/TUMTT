@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TT.Models;
 
-namespace TT.Models.Events
+namespace TT.Lib.Events
 {
     public class PlaylistEvent
     {

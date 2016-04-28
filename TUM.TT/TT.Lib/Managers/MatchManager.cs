@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TT.Models.Events;
+using TT.Lib.Events;
 using TT.Models;
-using TT.Models.Results;
-using TT.Models.Util;
+using TT.Lib.Results;
+using TT.Lib.Util;
 
 namespace TT.Lib.Managers
 {

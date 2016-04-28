@@ -1,6 +1,6 @@
 ﻿using TT.Models;
 
-namespace TT.Models.Events
+namespace TT.Lib.Events
 {
     public class PlaylistDeletedEvent
     {

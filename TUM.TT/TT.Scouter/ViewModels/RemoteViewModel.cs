@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using TT.Models.Events;
+using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 using TT.Scouter.Interfaces;

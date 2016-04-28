@@ -1,9 +1,9 @@
 using Caliburn.Micro;
 using System.Windows;
 using System.Reflection;
-using TT.Models.Results;
+using TT.Lib.Results;
 using TT.Models.Util;
-using TT.Models.Events;
+using TT.Lib.Events;
 using System.Collections.Generic;
 using TT.Models;
 using System.IO;

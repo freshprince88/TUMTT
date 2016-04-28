@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.ComponentModel;
 
-namespace TT.Models.Views
+namespace TT.Lib.Views
 {
     public class ExtendedMediaElement : MediaElement, INotifyPropertyChangedEx
     {
