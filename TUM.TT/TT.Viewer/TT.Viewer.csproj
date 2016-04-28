@@ -423,6 +423,10 @@
       <Project>{bfdd82b6-73a9-4408-a183-4acc3dc7e2c0}</Project>
       <Name>TT.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TT.Report\TT.Report.csproj">
+      <Project>{9f1fd7dd-1706-4327-89f1-722284fbbdb9}</Project>
+      <Name>TT.Report</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />

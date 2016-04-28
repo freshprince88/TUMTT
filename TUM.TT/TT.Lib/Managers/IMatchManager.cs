@@ -18,6 +18,8 @@ namespace TT.Models.Managers
 
         void RenamePlaylist(string oldName, string newName);
 
+        IEnumerable<IResult> GenerateReport();
+
         IEnumerable<IResult> SaveMatch();
 
         IEnumerable<IResult> OpenMatch();

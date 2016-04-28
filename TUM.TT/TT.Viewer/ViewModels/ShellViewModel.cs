@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using TT.Models;
 using TT.Models.Events;
@@ -88,10 +90,32 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
+        #region View Methods
+
+        /// <summary>
+        /// Gets a value indicating whether a report can be generated.
+        /// </summary>
+        public bool CanGenerateReport
+        {
+            get
+            {
+                return  Manager.Match != null && Manager.Match.DefaultPlaylist.FinishedRallies.Any();
+            }
+        }
+
+        public IEnumerable<IResult> GenerateReport()
+        {
+            return Manager.GenerateReport();
+        }
+
+        #endregion
+
         #region Events
 
         public void Handle(MatchOpenedEvent message)
         {
+            // We must reconsider, whether we can generate a report now.            
+            this.NotifyOfPropertyChange(() => this.CanGenerateReport);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), Manager, DialogCoordinator));
         }
         #endregion

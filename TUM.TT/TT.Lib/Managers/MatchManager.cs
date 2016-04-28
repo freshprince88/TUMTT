@@ -175,6 +175,28 @@ namespace TT.Models.Managers
             return p.Name == this.Match.FirstPlayer.Name ? MatchPlayer.First : MatchPlayer.Second;
         }
 
+        /// <summary>
+        /// Generates a PDF report.
+        /// </summary>
+        /// <returns>The actions to generate the report.</returns>
+        public IEnumerable<IResult> GenerateReport()
+        {
+            var dialog = new SaveFileDialogResult()
+            {
+                Title = "Choose a target for PDF report",
+                Filter = "PDF reports|*.pdf",
+                DefaultFileName = this.Match.DefaultFilename(),
+            };
+            yield return dialog;
+
+            var fileName = dialog.Result;
+
+            yield return new GenerateReportResult(this.Match, fileName)
+                .Rescue()
+                .WithMessage("Error generating report", string.Format("Could not save the report to {0}.", fileName))
+                .Propagate();
+        }
+
         #endregion
     }
 }
