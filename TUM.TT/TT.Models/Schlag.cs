@@ -328,7 +328,13 @@ namespace TT.Models
         public bool IsTopLeft()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
+               
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -339,7 +345,12 @@ namespace TT.Models
         public bool IsTopMid()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -350,7 +361,12 @@ namespace TT.Models
         public bool IsTopRight()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -361,7 +377,12 @@ namespace TT.Models
         public bool IsMidLeft()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -372,7 +393,12 @@ namespace TT.Models
         public bool IsMidMid()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -383,7 +409,12 @@ namespace TT.Models
         public bool IsMidRight()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -394,7 +425,12 @@ namespace TT.Models
         public bool IsBotLeft()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -405,7 +441,12 @@ namespace TT.Models
         public bool IsBotMid()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -416,7 +457,12 @@ namespace TT.Models
         public bool IsBotRight()
         {
             if (Platzierung == null)
-                return true;
+            {
+                Platzierung = new Platzierung();
+                Platzierung.WX = -1;
+                Platzierung.WY = -1;
+
+            }
 
             double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
             double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
@@ -531,7 +577,11 @@ namespace TT.Models
         public bool HasStrokeTec(IEnumerable<Stroke.Technique> tecs)
         {
             if (Schlagtechnik == null)
-                return false;
+            {
+                Schlagtechnik = new Schlagtechnik();
+                Schlagtechnik.Art = "";
+                Schlagtechnik.Option = "";
+            }
 
             List<bool> ORresults = new List<bool>();
             foreach (var stroketec in tecs)

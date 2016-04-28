@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Models.Events;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models;
 using TT.Viewer.ViewModels;
 

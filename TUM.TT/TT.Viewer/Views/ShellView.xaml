@@ -21,7 +21,7 @@
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button ToolTip="Open new Match"
-                    cal:Message.Attach="[Event Click] = [Action OpenNewMatch()]">
+                    cal:Message.Attach="[Event Click] = [Action OpenMatch()]">
                 <Rectangle Width="22"
                            Height="22"
                            Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">

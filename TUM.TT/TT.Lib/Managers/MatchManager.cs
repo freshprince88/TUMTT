@@ -8,7 +8,7 @@ using TT.Models;
 using TT.Models.Results;
 using TT.Models.Util;
 
-namespace TT.Models.Managers
+namespace TT.Lib.Managers
 {
     public class MatchManager : IMatchManager
     {
@@ -116,6 +116,29 @@ namespace TT.Models.Managers
             {
                 Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
             }
+        }
+        public IEnumerable<IResult> OpenLiveMatch()
+        {
+            var dialog = new OpenFileDialogResult()
+            {
+                Title = "Open match...",
+                Filter = Format.XML.DialogFilter,
+            };
+            yield return dialog;
+            FileName = dialog.Result;
+
+            var deserialization = new DeserializeMatchResult(FileName, Format.XML.Serializer);
+            yield return deserialization
+                .Rescue()
+                .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
+                .Propagate(); // Reraise the error to abort the coroutine
+
+            Match = deserialization.Result;
+            ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
+
+            Events.PublishOnUIThread(new MatchOpenedEvent(Match));
+
+            
         }
 
         public void DeleteRally(Rally r) //Immer noch die schon gelöschte Rally als Parameter!!!!

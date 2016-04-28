@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(bool), typeof(bool))]
     public class BoolNotConverter : BaseConverter, IValueConverter

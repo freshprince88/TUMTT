@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:views="clr-namespace:TT.Models.Views;assembly=TT.Lib"
-             xmlns:conv="clr-namespace:TT.Models.Converters;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
              xmlns:cal="http://www.caliburnproject.org"
@@ -61,7 +61,7 @@
             <RadioButton x:Name="Slow25Button" Content="25%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(25)]" />
             <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="6" Foreground="White"
-                    Visibility="{Binding IsPlaying, Mode=OneWay, Converter={conv:BoolNotToVisibilityConverter}}"
+                    Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"
                     cal:Message.Attach="[Event Click] = [Action Play()]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -72,7 +72,7 @@
                 </Rectangle>
             </Button>
             <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="6"
-                          Visibility="{Binding IsPlaying, Mode=OneWay, Converter={conv:BoolToVisibilityConverter}}"
+                          Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolToVisibilityConverter}}"
                           IsChecked="{Binding IsPlaying, Mode=OneWay}"
                           cal:Message.Attach="[Event Click] = [Action Pause()]">
                 <Rectangle Width="15" Height="15" 

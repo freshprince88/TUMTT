@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using TT.Models.Util.Enums;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(Stroke.Specials), typeof(bool))]
     public class SpecialToBoolConverter : BaseConverter, IMultiValueConverter

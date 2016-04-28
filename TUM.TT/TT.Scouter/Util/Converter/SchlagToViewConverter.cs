@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Models.Converters;
+using TT.Lib.Converters;
 using TT.Models;
 using TT.Scouter.ViewModels;
 

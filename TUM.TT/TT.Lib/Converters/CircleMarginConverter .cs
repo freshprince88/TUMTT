@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     public class CircleMarginConverter : BaseConverter, IMultiValueConverter
     {

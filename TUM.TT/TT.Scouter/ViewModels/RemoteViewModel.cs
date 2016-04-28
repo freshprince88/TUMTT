@@ -1,10 +1,11 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using TT.Models.Events;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models;
 using TT.Scouter.Interfaces;
 
@@ -20,28 +21,50 @@ namespace TT.Scouter.ViewModels
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
+        public RemoteSchlagViewModel SchlagView { get; set; }
 
         public bool HasLength
         {
             get
             {
-                return RallyLength > 0;
+                return LengthHelper > 0;
             }
         }
-
-        public int RallyLength
+        public int LengthHelper
         {
-            get { return CurrentRally.Length; }
+            get
+            {
+                return CurrentRally.Length;
+            }
             set
             {
-                if(value != CurrentRally.Length)
+                if (CurrentRally.Length != value)
                 {
+                    var diff = value - CurrentRally.Length;
+                    if (CurrentRally.Length < value)
+                    {
+                        for (int i = 0; i < diff; i++)
+                        {
+                            CurrentRally.Schläge.Add(new Schlag());
+                        }
+
+                    }
+                    else if (CurrentRally.Length > value)
+                    {
+                        diff = -diff;
+                        for (int i = 0; i < diff; i++)
+                        {
+                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                        }
+                    }
+
                     CurrentRally.Length = value;
                     NotifyOfPropertyChange();
-                    NotifyOfPropertyChange("HasLength");
+                    NotifyOfPropertyChange("CurrentRally");
                 }
             }
         }
+        
 
         private Rally _rally;
         public Rally CurrentRally
@@ -51,15 +74,24 @@ namespace TT.Scouter.ViewModels
             {
                 if (_rally != value)
                 {
-                    _rally = value;
-                    CurrentStroke = _rally.Schläge.FirstOrDefault();
+
 
                     if (SchlagView == null)
                         SchlagView = new RemoteSchlagViewModel(value.Schläge);
                     else
+                    {
                         SchlagView.Strokes = CurrentRally.Schläge;
+                    }
+                    _rally = value;
+
+                    if(_rally.Length > 0)
+                        CurrentStroke = _rally.Schläge.FirstOrDefault();
 
                     NotifyOfPropertyChange("CurrentRally");
+                    NotifyOfPropertyChange("CurrentStroke");
+                    NotifyOfPropertyChange("LengthHelper");
+
+
                 }
             }
         }
@@ -70,7 +102,7 @@ namespace TT.Scouter.ViewModels
             get { return _stroke; }
             set
             {
-                if (_stroke != value)
+                if (_stroke != value && value != null)
                 {
                     _stroke = value;
                     NotifyOfPropertyChange("CurrentStroke");
@@ -87,7 +119,7 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        public RemoteSchlagViewModel SchlagView { get; set; }
+
 
         public RemoteViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
         {
@@ -95,6 +127,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
+
         }
 
         protected override void OnActivate()
@@ -113,6 +146,13 @@ namespace TT.Scouter.ViewModels
             if (item != null)
             {
                 CurrentRally = item;
+                TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
+                TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
+                MediaPlayer.MediaPosition = anfangRally;
+                MediaPlayer.Play();
+                
+                
+               
             }
         }
 
@@ -129,8 +169,31 @@ namespace TT.Scouter.ViewModels
             Events.PublishOnUIThread(new ResultListControlEvent(rally));
             CurrentRally = rally;
         }
+        public void PlusSecond(int i)
+        {
+            if (i == 1)
+            {
+                CurrentRally.Anfang = CurrentRally.Anfang + 500;
+            }
+            else if (i == 2)
+            {
+                CurrentRally.Ende = CurrentRally.Ende + 500;
+            }
 
-        #endregion
+        }
+        public void MinusSecond(int i)
+        {
+            if (i == 1)
+            {
+                CurrentRally.Anfang = CurrentRally.Anfang - 500;
+            }
+            else if (i == 2)
+            {
+                CurrentRally.Ende = CurrentRally.Ende - 500;
+            }
 
+            #endregion
+
+        }
     }
 }

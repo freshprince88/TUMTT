@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 using System.Collections.Generic;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models.Results;
 
 namespace TT.Scouter.ViewModels
@@ -35,6 +35,15 @@ namespace TT.Scouter.ViewModels
             }
             var next = ShowScreenResult.Of<MainViewModel>();
             next.Properties.Add("SelectedTab", MainViewModel.Tabs.Remote);
+            yield return next;
+        }
+        public IEnumerable<IResult> OpenMatchWithoutVideo()
+        {
+            foreach (IResult result in MatchManager.OpenLiveMatch())
+            {
+                yield return result;
+            }
+            var next = ShowScreenResult.Of<NewMatchViewModel>();
             yield return next;
         }
 

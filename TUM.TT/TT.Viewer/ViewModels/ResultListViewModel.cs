@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using TT.Models.Util.Enums;
 using TT.Models.Events;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 

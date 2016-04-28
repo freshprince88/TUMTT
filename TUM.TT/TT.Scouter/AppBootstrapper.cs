@@ -3,7 +3,7 @@ namespace TT.Scouter {
     using System.Collections.Generic;
     using Caliburn.Micro;
     using TT.Models.Serialization;
-    using TT.Models.Managers;
+    using TT.Lib.Managers;
     using Models;
     using ViewModels;
     using MahApps.Metro.Controls.Dialogs;

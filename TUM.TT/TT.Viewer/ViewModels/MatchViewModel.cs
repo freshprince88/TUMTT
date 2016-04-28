@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using TT.Models;
 using System.IO;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models.Util.Enums;
 
 namespace TT.Viewer.ViewModels

@@ -8,7 +8,7 @@ using System.Linq;
 using TT.Models;
 using System.Windows.Controls;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(object), typeof(int))]
     public class LabelBackhandForehandRowConverter : BaseConverter, IMultiValueConverter

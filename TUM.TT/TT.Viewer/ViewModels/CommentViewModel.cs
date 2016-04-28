@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using TT.Models.Events;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models;
 
 namespace TT.Viewer.ViewModels

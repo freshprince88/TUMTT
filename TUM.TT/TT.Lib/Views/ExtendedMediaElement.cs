@@ -79,6 +79,7 @@ namespace TT.Models.Views
         {
             positionChangedByTimer = true;
             MediaPosition = Position;
+            
         }
 
         public void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

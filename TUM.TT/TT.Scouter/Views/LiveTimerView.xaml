@@ -16,12 +16,12 @@
 
         <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
             <Label.Content>
-                <TextBlock FontSize="48">
+                <TextBlock FontSize="100">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0:D2}:{1:D2}:{2:D2}" Mode="OneWay">
                             <Binding Path="MediaPosition.Hours" />
                             <Binding Path="MediaPosition.Minutes" />
-                            <Binding Path="MediaPosition.Seconds" />
+                            <Binding Path="MediaPosition.Seconds" />                            
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>

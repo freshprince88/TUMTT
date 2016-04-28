@@ -7,7 +7,7 @@ using Zhucai.LambdaParser.ObjectDynamicExtension;
 using System.Linq;
 using TT.Models;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(List<Rally>), typeof(int))]
     public class RallyExpressionToCountConverter : BaseConverter, IMultiValueConverter
@@ -17,11 +17,21 @@ namespace TT.Models.Converters
             List<Rally> rallies = (List<Rally>)values[0];
             string expression = (string)values[1];
             expression = ReplaceExpression(expression);
+
             Func<Rally, bool> func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
+
             //var test = rallies.ToArray().AsQueryable().Where(expression, null).Count();
-            var test = rallies.Where(func).Count();
-            return test;
-            
+
+            try
+            {
+                var test = rallies.Where(func).Count();
+                return test;
+            }
+           catch (NullReferenceException e)
+            {
+                return 0;
+            }
+
 
         }
 

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(int), typeof(Visibility))]
     public class NumToPrevVisibleConverter : BaseConverter, IValueConverter

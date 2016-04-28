@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Data;
 using TT.Models.Util.Enums;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(HashSet<int>), typeof(bool))]
     public class SetToBoolConverter : BaseConverter, IMultiValueConverter

@@ -2,10 +2,10 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(MatchPlayer), typeof(string))]
     public class MatchPlayerToStringConverter : BaseConverter, IValueConverter

@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using TT.Models;
 using TT.Models.Events;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {

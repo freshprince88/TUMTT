@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using TT.Models.Util.Enums;
 using TT.Models.Events;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models;
 
 namespace TT.Viewer.ViewModels

@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models;
 using TT.Models.Results;
 

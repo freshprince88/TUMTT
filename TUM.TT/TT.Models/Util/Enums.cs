@@ -2,6 +2,13 @@
 {
     public static class Media
     {
+        public enum Source
+        {
+            LiveScouter,
+            RemoteScouter,
+            Viewer,
+            None
+        }
         public enum Repeat
         {
             On,
@@ -24,6 +31,7 @@
             Half = 50,
             Third = 33,
             Full = 100,
+            Faster = 150,
             None
         }
 
@@ -108,7 +116,7 @@
         public static Positions.Server GetServePositionFromName(string name)
         {
             if (name.Contains("HalfLeft"))
-                return Positions.Server.HalfLeft;           
+                return Positions.Server.HalfLeft;
             else if (name.Contains("HalfRight"))
                 return Positions.Server.HalfRight;
             else if (name.Contains("Right"))
@@ -271,5 +279,5 @@
             Short,
             Long
         }
-    }     
+    }
 }

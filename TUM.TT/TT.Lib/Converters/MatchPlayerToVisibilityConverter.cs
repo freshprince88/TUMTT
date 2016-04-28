@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using TT.Models;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     public class MatchPlayerToVisibilityConverter : BaseConverter, IMultiValueConverter
     {

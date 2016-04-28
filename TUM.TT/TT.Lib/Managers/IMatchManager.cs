@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TT.Models;
 
-namespace TT.Models.Managers
+namespace TT.Lib.Managers
 {
     public interface IMatchManager 
     {
@@ -23,6 +23,9 @@ namespace TT.Models.Managers
         IEnumerable<IResult> SaveMatch();
 
         IEnumerable<IResult> OpenMatch();
+        IEnumerable<IResult> OpenLiveMatch();
+
+
 
         IEnumerable<IResult> LoadVideo();
 

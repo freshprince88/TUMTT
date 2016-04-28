@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using TT.Models.Events;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using TT.Models;
 using TT.Models.Util.Enums;
 using TT.Scouter.Interfaces;
@@ -83,11 +83,12 @@ namespace TT.Scouter.ViewModels
 
         #region  Caliburn Hooks
 
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            MediaPosition = TimeSpan.Zero;
-        }
+        //protected override void OnActivate()
+        //{
+        //    base.OnActivate();
+        //    //MediaPosition = TimeSpan.Zero;
+        //}
+        
 
         #endregion
 
@@ -95,19 +96,19 @@ namespace TT.Scouter.ViewModels
 
         public void Play()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play,Media.Source.LiveScouter));
             IsPlaying = true;
         }
 
         public void Pause()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
             IsPlaying = false;
         }
 
         public void Stop()
         {
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
             IsPlaying = false;
             MediaPosition = TimeSpan.Zero;
         }
@@ -120,6 +121,8 @@ namespace TT.Scouter.ViewModels
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Third));
             else if(slow == 25)
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Quarter));
+            else if (slow == 150)
+                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Faster));
             else
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Full));
         }

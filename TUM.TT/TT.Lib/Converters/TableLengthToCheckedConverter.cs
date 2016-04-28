@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using TT.Models.Util.Enums;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(HashSet<Positions.Length>), typeof(bool))]
     public class TableLengthToCheckedConverter : BaseConverter, IMultiValueConverter

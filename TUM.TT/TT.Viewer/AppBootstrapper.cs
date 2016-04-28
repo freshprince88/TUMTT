@@ -4,7 +4,7 @@ using Caliburn.Micro;
 using TT.Viewer.ViewModels;
 using System.Reflection;
 using TT.Models.Serialization;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
 using TT.Report.Generators;

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using TT.Models.Events;
 using System;
 using TT.Models.Util.Enums;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 
 namespace TT.Scouter.Views
 {
@@ -42,29 +42,35 @@ namespace TT.Scouter.Views
 
         public void Handle(MediaControlEvent message)
         {
-            switch (message.Ctrl)
+            if (message.Source == Media.Source.LiveScouter)
             {
-                case Media.Control.Stop:
-                    MediaPlayer.Stop();                    
-                    break;
-                case Media.Control.Pause:
-                    MediaPlayer.Pause();
-                    break;
-                case Media.Control.Play:
-                    MediaPlayer.Play();                    
-                    break;
-                default:
-                    break;
+                switch (message.Ctrl)
+                {
+                    case Media.Control.Stop:
+                        MediaPlayer.Stop();
+                        break;
+                    case Media.Control.Pause:
+                        MediaPlayer.Pause();
+                        break;
+                    case Media.Control.Play:
+                        MediaPlayer.Play();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         private void LiveMediaView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            Events.Subscribe(this);
             MediaPlayer.Stop();
             MediaPlayer.Close();
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
             MediaPlayer.Play();
             MediaPlayer.Pause();
+            PlayButton.Visibility = System.Windows.Visibility.Visible;
+            
         }
 
         public void Handle(MediaSpeedEvent message)
@@ -83,6 +89,10 @@ namespace TT.Scouter.Views
                 case Media.Speed.Full:
                     MediaPlayer.SpeedRatio = 1;
                     break;
+                case Media.Speed.Faster:
+                    MediaPlayer.SpeedRatio = 1.5;
+                    break;
+
                 default:
                     break;
             }

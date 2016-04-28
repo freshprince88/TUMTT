@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using TT.Models;
 using TT.Models.Events;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
@@ -26,8 +26,8 @@ namespace TT.Viewer.ViewModels
             Events = eventAggregator;
             Manager = manager;
             DialogCoordinator = coordinator;
-            
-            
+
+
         }
 
         #region Caliburn hooks
@@ -40,13 +40,13 @@ namespace TT.Viewer.ViewModels
             base.OnInitialize();
 
             // Subscribe ourself to the event bus
-            //this.Events.Subscribe(this);        
+            //this.Events.Subscribe(this);
         }
 
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            
+
         }
 
         protected override void OnActivate()
@@ -114,12 +114,17 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MatchOpenedEvent message)
         {
-            // We must reconsider, whether we can generate a report now.            
+            // We must reconsider, whether we can generate a report now.
             this.NotifyOfPropertyChange(() => this.CanGenerateReport);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), Manager, DialogCoordinator));
         }
         #endregion
-
+        #region Helper Methods
+        public IEnumerable<IResult> OpenMatch()
+        {
+            return Manager.OpenMatch();
+        }
+        #endregion
 
     }
 }

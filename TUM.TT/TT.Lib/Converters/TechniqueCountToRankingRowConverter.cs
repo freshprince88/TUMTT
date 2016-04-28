@@ -7,7 +7,7 @@ using Zhucai.LambdaParser.ObjectDynamicExtension;
 using System.Linq;
 using TT.Models;
 
-namespace TT.Models.Converters
+namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(object), typeof(int))]
     public class TechniqueCountToRankingRowConverter : BaseConverter, IMultiValueConverter

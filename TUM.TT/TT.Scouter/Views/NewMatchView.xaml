@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
-             xmlns:Models="clr-namespace:TT.Models;assembly=TT.Lib"
+             xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
@@ -17,7 +17,7 @@
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ObjectDataProvider x:Key="ModeFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
+                            ObjectType="{x:Type System:Enum}" >
                 <ObjectDataProvider.MethodParameters>
                     <x:Type TypeName="Models:MatchMode"/>
                 </ObjectDataProvider.MethodParameters>
@@ -50,16 +50,16 @@
         <Label Content="Match Details" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="50" FontWeight="Bold" VerticalAlignment="Center"/>
 
         <Label Content="Turnier" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="2" FontSize="25" VerticalAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="25" Text="{Binding Path=Match.Tournament}"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="25" Text="{Binding Path=Match.Tournament, Mode=TwoWay}"/>
 
         <Label Content="Runde" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="25" VerticalAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="25" Text="{Binding Path=Match.Round}"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="25" Text="{Binding Path=Match.Round, Mode=TwoWay}"/>
 
         <Label Content="Modus" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="25" VerticalAlignment="Center"/>
-        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedIndex="0" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="20" />
+        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedItem="{Binding Path=Match.Mode}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="20" />
 
         <Label Content="Datum" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="25" VerticalAlignment="Center"/>
-        <DatePicker x:Name="TourneyDate" DisplayDate="{Binding Match.DateTime}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" VerticalContentAlignment="Center"/>
+        <DatePicker x:Name="TourneyDate" SelectedDate="{Binding Path=Match.DateTime, Mode=TwoWay}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="25" VerticalContentAlignment="Center"/>
 
         <Grid Grid.Row="10" Grid.ColumnSpan="5">
             <Grid.ColumnDefinitions>
@@ -73,7 +73,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Margin="5 0 0 0" Text="{Binding Path=Match.FirstPlayer.Name}" VerticalContentAlignment="Center" FontSize="20" IsEnabled="False"/>
+                <TextBox Grid.Column="0" Margin="5 0 0 0" Text="{Binding Path=Match.FirstPlayer.Name, Mode=TwoWay}" VerticalContentAlignment="Center" FontSize="20" IsEnabled="False"/>
                 <Button Name="AddPlayer1" Width="40" Grid.Column="1">
                     <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -99,7 +99,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Text="{Binding Path=Match.SecondPlayer.Name}" VerticalContentAlignment="Center" FontSize="20" IsEnabled="False"/>
+                <TextBox Grid.Column="0" Text="{Binding Path=Match.SecondPlayer.Name, Mode=TwoWay}" VerticalContentAlignment="Center" FontSize="20" IsEnabled="False"/>
                 <Button Name="AddPlayer2" Width="40" Grid.Column="1" Margin="0 0 5 0">
                     <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">

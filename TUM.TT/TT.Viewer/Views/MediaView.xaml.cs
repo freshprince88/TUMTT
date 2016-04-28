@@ -19,7 +19,7 @@ using TT.Viewer.ViewModels;
 using TT.Models.Util.Enums;
 using System.Windows.Controls.Primitives;
 using System.Timers;
-using TT.Models.Managers;
+using TT.Lib.Managers;
 
 namespace TT.Viewer.Views
 {
@@ -62,12 +62,12 @@ namespace TT.Viewer.Views
             mediaIsPaused = true;
             isDragging = false;
 
-            this.Loaded += MediaView_Loaded;
+            //this.Loaded += MediaView_Loaded;
 
-            myMediaElement.MediaOpened += (s, args) =>
-            {
-                var test = myMediaElement.Position;
-            };
+            //myMediaElement.MediaOpened += (s, args) =>
+            //{
+            //    var test = myMediaElement.Position;
+            //};
         }
 
         private void MediaView_Loaded(object sender, RoutedEventArgs e)
@@ -146,11 +146,12 @@ namespace TT.Viewer.Views
 
         public void Handle(VideoLoadedEvent message)
         {
-            //myMediaElement.Stop();
-            //myMediaElement.Close();
-            //this.myMediaElement.Source = message.VideoFile != null ? new Uri(message.VideoFile) : myMediaElement.Source;
-            //myMediaElement.Play();
-            //myMediaElement.Pause();
+            
+            myMediaElement.Stop();
+            myMediaElement.Close();
+            this.myMediaElement.Source = message.VideoFile != null ? new Uri(message.VideoFile) : myMediaElement.Source;
+            myMediaElement.Play();
+            myMediaElement.Pause();
         }
 
         public void Handle(VideoControlEvent message)
@@ -182,7 +183,7 @@ namespace TT.Viewer.Views
                     {
                         stopTimer.Stop();
                         myMediaElement.Pause();
-                        Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next));
+                        Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next, Media.Source.Viewer));
                     }
                 }
                 else
@@ -235,13 +236,13 @@ namespace TT.Viewer.Views
             {
                 stopTimer.Stop();
                 myMediaElement.Pause();
-                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next));
+                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next, Media.Source.Viewer));
             }
             else
             {
                 myMediaElement.Position = TimeSpan.FromMilliseconds(Start);
                 slider_timeline.Value = slider_timeline.Minimum;
-                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause));
+                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             }
         }
 
