@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TT.Lib.Models;
+using TT.Models;
 
-namespace TT.Lib.Events
+namespace TT.Models.Events
 {
     public class BasicFilterSelectionChangedEvent : RalliesEvent
     {

@@ -1,8 +1,8 @@
 ﻿using Caliburn.Micro;
 using System.Linq;
 using System.Windows.Controls;
-using TT.Lib.Events;
-using TT.Lib.Models;
+using TT.Models.Events;
+using TT.Models;
 
 namespace TT.Scouter.Views
 {

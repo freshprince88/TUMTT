@@ -1,4 +1,4 @@
-﻿namespace TT.Lib.Results
+﻿namespace TT.Models.Results
 {
     using System;
     using System.Windows;

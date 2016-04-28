@@ -1,6 +1,6 @@
-﻿using TT.Lib.Util.Enums;
+﻿using TT.Models.Util.Enums;
 
-namespace TT.Lib.Events
+namespace TT.Models.Events
 {
     public class MediaMuteEvent
     {

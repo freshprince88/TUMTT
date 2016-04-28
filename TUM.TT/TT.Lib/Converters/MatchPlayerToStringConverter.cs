@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using TT.Lib.Managers;
-using TT.Lib.Models;
+using TT.Models;
 
 namespace TT.Lib.Converters
 {

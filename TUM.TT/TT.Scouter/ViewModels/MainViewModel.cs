@@ -1,14 +1,8 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Lib.Managers;
 using System.Linq;
-using TT.Lib.Models;
-using System.Collections.ObjectModel;
-using TT.Scouter.Interfaces;
-using System.Windows.Controls;
-using TT.Lib.Util;
-using TT.Lib.Results;
-using System.Collections.Generic;
+using TT.Models;
+using TT.Lib.Managers;
 
 namespace TT.Scouter.ViewModels
 {
@@ -44,7 +38,7 @@ namespace TT.Scouter.ViewModels
                         {
 
                         }
-                        else { 
+                        else {
                         LiveView.CurrentRally = new Rally();
                         LiveView.Rallies.Add(LiveView.CurrentRally);
                         LiveView.CurrentRally.UpdateServerAndScore();

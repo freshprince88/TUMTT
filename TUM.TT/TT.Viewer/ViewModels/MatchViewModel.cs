@@ -1,15 +1,15 @@
 using Caliburn.Micro;
 using System.Windows;
 using System.Reflection;
-using TT.Lib.Results;
-using TT.Lib.Util;
-using TT.Lib.Events;
+using TT.Models.Results;
+using TT.Models.Util;
+using TT.Models.Events;
 using System.Collections.Generic;
-using TT.Lib.Models;
+using TT.Models;
 using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
-using TT.Lib.Util.Enums;
+using TT.Models.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {

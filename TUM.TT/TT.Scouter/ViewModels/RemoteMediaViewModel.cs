@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TT.Lib.Events;
+using TT.Models.Events;
 using TT.Lib.Managers;
-using TT.Lib.Models;
-using TT.Lib.Results;
-using TT.Lib.Util.Enums;
+using TT.Models;
+using TT.Models.Results;
+using TT.Models.Util.Enums;
 using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels

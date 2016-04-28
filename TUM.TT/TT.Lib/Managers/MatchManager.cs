@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TT.Lib.Events;
-using TT.Lib.Models;
-using TT.Lib.Results;
-using TT.Lib.Util;
+using TT.Models.Events;
+using TT.Models;
+using TT.Models.Results;
+using TT.Models.Util;
 
 namespace TT.Lib.Managers
 {
@@ -196,6 +196,28 @@ namespace TT.Lib.Managers
         public MatchPlayer ConvertPlayer(Player p)
         {
             return p.Name == this.Match.FirstPlayer.Name ? MatchPlayer.First : MatchPlayer.Second;
+        }
+
+        /// <summary>
+        /// Generates a PDF report.
+        /// </summary>
+        /// <returns>The actions to generate the report.</returns>
+        public IEnumerable<IResult> GenerateReport()
+        {
+            var dialog = new SaveFileDialogResult()
+            {
+                Title = "Choose a target for PDF report",
+                Filter = "PDF reports|*.pdf",
+                DefaultFileName = this.Match.DefaultFilename(),
+            };
+            yield return dialog;
+
+            var fileName = dialog.Result;
+
+            yield return new GenerateReportResult(this.Match, fileName)
+                .Rescue()
+                .WithMessage("Error generating report", string.Format("Could not save the report to {0}.", fileName))
+                .Propagate();
         }
 
         #endregion

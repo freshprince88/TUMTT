@@ -4,14 +4,14 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Results
+namespace TT.Models.Results
 {
     using System;
     using System.IO;
     using System.Threading.Tasks;
     using Caliburn.Micro;
-    using TT.Lib.Models;
-    using TT.Lib.Models.Serialization;
+    using TT.Models;
+    using TT.Models.Serialization;
 
     /// <summary>
     /// Serializes a match.

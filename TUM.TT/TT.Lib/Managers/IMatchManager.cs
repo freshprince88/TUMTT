@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 using System.Collections.Generic;
-using TT.Lib.Models;
+using TT.Models;
 
 namespace TT.Lib.Managers
 {
@@ -17,6 +17,8 @@ namespace TT.Lib.Managers
         void DeleteRally(Rally r);
 
         void RenamePlaylist(string oldName, string newName);
+
+        IEnumerable<IResult> GenerateReport();
 
         IEnumerable<IResult> SaveMatch();
 

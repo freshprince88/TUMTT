@@ -4,9 +4,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Util
+namespace TT.Models.Util
 {
-    using TT.Lib.Models.Serialization;
+    using TT.Models.Serialization;
 
     /// <summary>
     /// A format to read or write matches.

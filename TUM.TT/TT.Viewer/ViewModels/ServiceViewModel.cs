@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
-using TT.Lib.Models;
-using TT.Lib.Events;
-using TT.Lib.Util.Enums;
+using TT.Models;
+using TT.Models.Events;
+using TT.Models.Util.Enums;
 using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels

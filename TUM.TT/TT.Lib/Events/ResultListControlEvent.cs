@@ -1,7 +1,7 @@
 ﻿
-using TT.Lib.Models;
+using TT.Models;
 
-namespace TT.Lib.Events
+namespace TT.Models.Events
 {
     public class ResultListControlEvent
     {

@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using Caliburn.Micro;
 using TT.Lib.Managers;
-using TT.Lib.Models;
+using TT.Models;
 using System.Collections.ObjectModel;
 using TT.Scouter.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
-using TT.Lib.Util;
-using TT.Lib.Results;
+using TT.Models.Util;
+using TT.Models.Results;
 using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels

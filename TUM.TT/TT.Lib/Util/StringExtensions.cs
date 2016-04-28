@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Util
+namespace TT.Models.Util
 {
     /// <summary>
     /// Extensions for the <see cref="System.String"/> class.

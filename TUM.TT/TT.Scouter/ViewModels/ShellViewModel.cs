@@ -3,15 +3,14 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using TT.Lib;
+using TT.Models;
 using TT.Lib.Managers;
-using TT.Lib.Models;
-using TT.Lib.Results;
+using TT.Models.Results;
 using TT.Scouter.ViewModels;
 
 namespace TT.Scouter
 {
-    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, 
+    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
         IShell
     {
         /// <summary>
@@ -39,7 +38,7 @@ namespace TT.Scouter
             base.OnInitialize();
 
             // Subscribe ourself to the event bus
-            //this.Events.Subscribe(this);        
+            //this.Events.Subscribe(this);
         }
 
         protected override void OnViewLoaded(object view)
@@ -102,7 +101,7 @@ namespace TT.Scouter
                     playlist.Rallies.Remove(lastRally);
 
                 if (question.Result)
-                {   
+                {
                     foreach (var action in MatchManager.SaveMatch())
                     {
                         yield return action;

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
-using TT.Lib.Util.Enums;
-using TT.Lib.Events;
+using TT.Models.Util.Enums;
+using TT.Models.Events;
 using TT.Lib.Managers;
-using TT.Lib.Models;
+using TT.Models;
 using System.Windows.Controls;
 
 namespace TT.Viewer.ViewModels

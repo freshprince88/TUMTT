@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using TT.Lib.Models;
+using TT.Models;
 
 namespace TT.Scouter.ViewModels
 {

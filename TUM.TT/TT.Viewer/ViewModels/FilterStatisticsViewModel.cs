@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using TT.Lib.Events;
+using TT.Models.Events;
 using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels

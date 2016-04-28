@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace TT.Lib.Util
+namespace TT.Models.Util
 {
     public class CustomClosableComboDialog<T> : CustomDialog
     {

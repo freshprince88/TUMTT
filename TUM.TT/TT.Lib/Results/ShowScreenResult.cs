@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TT.Lib.Results
+namespace TT.Models.Results
 {
     public class ShowScreenResult : IResult
     {

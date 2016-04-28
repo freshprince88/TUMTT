@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Caliburn.Micro;
 using TT.Viewer.ViewModels;
 using System.Reflection;
-using TT.Lib.Models.Serialization;
+using TT.Models.Serialization;
 using TT.Lib.Managers;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Lib;
+using TT.Models;
+using TT.Report.Generators;
+using TT.Report.Renderers;
 
 namespace TT.Viewer {
 
@@ -27,6 +29,10 @@ namespace TT.Viewer {
             container.Singleton<IShell, ShellViewModel>();
             container.Singleton<IDialogCoordinator, DialogCoordinator>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
+            // Report generation
+            container.Singleton<IReportGenerator, DefaultReportGenerator>();
+            // Report rendering
+            container.Singleton<IReportRenderer, PdfRenderer>("PDF");
         }
 
         protected override object GetInstance(Type service, string key) {

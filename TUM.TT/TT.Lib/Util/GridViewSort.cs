@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Documents;
 
-namespace TT.Lib.Util
+namespace TT.Models.Util
 {
     public class GridViewSort
     {

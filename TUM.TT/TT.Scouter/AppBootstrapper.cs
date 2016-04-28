@@ -2,9 +2,9 @@ namespace TT.Scouter {
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
-    using TT.Lib.Models.Serialization;
+    using TT.Models.Serialization;
     using TT.Lib.Managers;
-    using Lib;
+    using Models;
     using ViewModels;
     using MahApps.Metro.Controls.Dialogs;
     public class AppBootstrapper : BootstrapperBase {

@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Util
+namespace TT.Models.Util
 {
     using System.Collections.Generic;
     using System.Windows;
