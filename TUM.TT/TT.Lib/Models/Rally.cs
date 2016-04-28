@@ -327,7 +327,7 @@ namespace TT.Lib.Models {
                 throw new InvalidOperationException("Rally not part of a Playlist");
             }
             else
-            {
+            {   
                 this.UpdateScore();
                 this.UpdateNummer();
                 this.UpdateServer();

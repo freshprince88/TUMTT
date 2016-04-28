@@ -84,16 +84,36 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding Path=CurrentRally.Nummer, StringFormat=Rally \#{0:d}}" Grid.ColumnSpan="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
                 <!-- Placeholder for Ball image -->
-                <Button Content="{Binding Path=Match.FirstPlayer.Name}"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
-                <Button Content="{Binding Path=Match.SecondPlayer.Name}"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"/>
-
-                <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.First}" Grid.Row="3" Grid.Column="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.Second}" Grid.Row="3" Grid.Column="5" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding Path=CurrentRally.CurrentRallyScore.First}" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding Path=CurrentRally.CurrentRallyScore.Second}" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
+                <Button x:Name="Player1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{conv:CurrentRallyWinnerToButtonIsEnabledConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Button x:Name="Player2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{conv:CurrentRallyWinnerToButtonIsEnabledConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Viewbox Grid.Row="3" Grid.Column="0">
+                <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.First}"  FontSize="40"   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox Grid.Row="3" Grid.Column="6">
+                <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.Second}"  FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                    <TextBlock Text="{Binding Path=CurrentRally.CurrentRallyScore.First}"  FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+                <Viewbox Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                    <TextBlock Text="{Binding Path=CurrentRally.CurrentRallyScore.Second}" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
                 <Label Content="Länge: " Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-                <TextBox Text="{Binding Path=RallyLength}" FontSize="15" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Margin="0 5 0 5"/>
+                <TextBox Text="{Binding Path=LengthHelper}" FontSize="15" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Margin="0 5 0 5"/>
             </Grid>
 
             <Border Grid.Column="0" BorderThickness="0 0 3 0" BorderBrush="Gray"/>
@@ -114,7 +134,7 @@
                 <Label Grid.Row="0"  Content="Start:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18"/>
                 <Label Grid.Row="1"  Content="Ende:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18"/>
 
-                <TextBox Text="{Binding Path=CurrentRally.Anfang, Converter={conv:MSToTimeConverter}, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Path=CurrentRally.Anfang, Converter={conv:MSToTimeConverter}}" Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center"/>
                 <Grid Grid.Row="0" Grid.Column="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -199,7 +219,7 @@
                         <RowDefinition Height="5*"/>
                     </Grid.RowDefinitions>
                     <Label Content="Kommentar" HorizontalAlignment="Center" FontSize="18"/>
-                    <TextBox Text="{Binding Path=CurrentRally.Kommentar}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    <TextBox Text="{Binding Path=CurrentRally.Kommentar}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0"/>
                 </Grid>
             </Grid>
 

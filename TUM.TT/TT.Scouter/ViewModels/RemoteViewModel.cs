@@ -27,23 +27,44 @@ namespace TT.Scouter.ViewModels
         {
             get
             {
-                return RallyLength > 0;
+                return LengthHelper > 0;
             }
         }
-
-        public int RallyLength
+        public int LengthHelper
         {
-            get { return CurrentRally.Length; }
+            get
+            {
+                return CurrentRally.Length;
+            }
             set
             {
-                if (value != CurrentRally.Length)
+                if (CurrentRally.Length != value)
                 {
+                    var diff = value - CurrentRally.Length;
+                    if (CurrentRally.Length < value)
+                    {
+                        for (int i = 0; i < diff; i++)
+                        {
+                            CurrentRally.Schläge.Add(new Schlag());
+                        }
+
+                    }
+                    else if (CurrentRally.Length > value)
+                    {
+                        diff = -diff;
+                        for (int i = 0; i < diff; i++)
+                        {
+                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                        }
+                    }
+
                     CurrentRally.Length = value;
                     NotifyOfPropertyChange();
-                    NotifyOfPropertyChange("HasLength");
+                    NotifyOfPropertyChange("CurrentRally");
                 }
             }
         }
+        
 
         private Rally _rally;
         public Rally CurrentRally
@@ -62,10 +83,15 @@ namespace TT.Scouter.ViewModels
                         SchlagView.Strokes = CurrentRally.Schläge;
                     }
                     _rally = value;
-                    CurrentStroke = _rally.Schläge.FirstOrDefault();
+
+                    if(_rally.Length > 0)
+                        CurrentStroke = _rally.Schläge.FirstOrDefault();
 
                     NotifyOfPropertyChange("CurrentRally");
                     NotifyOfPropertyChange("CurrentStroke");
+                    NotifyOfPropertyChange("LengthHelper");
+
+
                 }
             }
         }
@@ -76,7 +102,7 @@ namespace TT.Scouter.ViewModels
             get { return _stroke; }
             set
             {
-                if (_stroke != value)
+                if (_stroke != value && value != null)
                 {
                     _stroke = value;
                     NotifyOfPropertyChange("CurrentStroke");
@@ -120,8 +146,13 @@ namespace TT.Scouter.ViewModels
             if (item != null)
             {
                 CurrentRally = item;
-                TimeSpan t = TimeSpan.FromMilliseconds(item.Anfang);
-                MediaPlayer.MediaPosition = t;
+                TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
+                TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
+                MediaPlayer.MediaPosition = anfangRally;
+                MediaPlayer.Play();
+                
+                
+               
             }
         }
 

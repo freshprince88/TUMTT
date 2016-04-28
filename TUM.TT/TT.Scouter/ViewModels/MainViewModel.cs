@@ -40,8 +40,22 @@ namespace TT.Scouter.ViewModels
                     NotifyOfPropertyChange("SelectedTab");
                     if (_selectedTab == 0)
                     {
-                        Rally lastRally = LiveView.Rallies.Last();
-                        lastRally.UpdateServerAndScore();
+                        if (LiveView.Rallies.Last().Winner==MatchPlayer.None)
+                        {
+
+                        }
+                        else { 
+                        LiveView.CurrentRally = new Rally();
+                        LiveView.Rallies.Add(LiveView.CurrentRally);
+                        LiveView.CurrentRally.UpdateServerAndScore();
+                        }
+                    }
+                    if (_selectedTab == 1)
+                    {
+                        if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
+                        {
+                            LiveView.Rallies.Remove(LiveView.Rallies.Last());
+                        }
                     }
                 }
             }

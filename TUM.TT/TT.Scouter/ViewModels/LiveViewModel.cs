@@ -16,7 +16,42 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
-        public int lengthHelper { get; set; }
+       
+        public int LengthHelper
+        {
+            get
+            {
+                return CurrentRally.Length;
+            }
+            set
+            {
+                if (CurrentRally.Length != value)
+                {
+                    var diff = value - CurrentRally.Length;
+                    if (CurrentRally.Length < value)
+                    {
+                        for (int i = 0; i < diff; i++)
+                        {
+                            CurrentRally.Schläge.Add(new Schlag());
+                        }
+
+                    }
+                    else if (CurrentRally.Length > value)
+                    {
+                        diff = -diff;
+                        for (int i = 0; i < diff; i++)
+                        {
+                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                        }
+                    }
+
+                    CurrentRally.Length = value;
+                    NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("CurrentRally");
+                }
+            }
+        }
+
 
         public enum TimeMode
         {
@@ -25,14 +60,15 @@ namespace TT.Scouter.ViewModels
         }
 
         private TimeMode _mode;
-        public TimeMode ViewMode {
+        public TimeMode ViewMode
+        {
             get
             {
                 return _mode;
             }
             set
             {
-                if(_mode != value)
+                if (_mode != value)
                 {
                     this.DeactivateItem(MediaPlayer, true);
                     _mode = value;
@@ -70,7 +106,6 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _currentRally = value;
-                NotifyOfPropertyChange();
 
                 Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
                 bool mark = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
@@ -78,8 +113,11 @@ namespace TT.Scouter.ViewModels
                 if (mark != Markiert)
                 {
                     Markiert = mark;
+                    //NotifyOfPropertyChange();
                     NotifyOfPropertyChange("Markiert");
                 }
+                NotifyOfPropertyChange();
+                NotifyOfPropertyChange("LengthHelper");
             }
         }
 
@@ -123,8 +161,9 @@ namespace TT.Scouter.ViewModels
 
         public LiveViewModel(IEventAggregator ev, IMatchManager man)
         {
+          
             Events = ev;
-            MatchManager = man;           
+            MatchManager = man;
             IsNewRally = true;
             IsWinnerEnabled = false;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
@@ -144,9 +183,10 @@ namespace TT.Scouter.ViewModels
         protected override void OnViewReady(object view)
         {
             CoroutineExecutionContext context = new CoroutineExecutionContext() { Target = this, Source = view, View = view };
-            if (Rallies.Count <2) { 
-            Coroutine.ExecuteAsync(ShowServer().GetEnumerator(), context);
-        }
+            if (Rallies.Count < 2)
+            {
+                Coroutine.ExecuteAsync(ShowServer().GetEnumerator(), context);
+            }
         }
 
         #endregion
@@ -154,32 +194,34 @@ namespace TT.Scouter.ViewModels
         #region View Methods
 
         public void SetRallyLength(int length)
-            {
-            var diff = length - CurrentRally.Length;
-            if (CurrentRally.Length < length)
-            {
-                for (int i = 0; i < diff; i++)
-                {
-                    CurrentRally.Schläge.Add(new Schlag());
-                }
+        {
+            //var diff = length - CurrentRally.Length;
+            //if (CurrentRally.Length < length)
+            //{
+            //    for (int i = 0; i < diff; i++)
+            //    {
+            //        CurrentRally.Schläge.Add(new Schlag());
+            //    }
 
-            }
-            else if (CurrentRally.Length > length)
-            {
-                diff = -diff;
-                for (int i = 0; i < diff; i++)
-                {
-                    CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
-                }
-            }
-            
-            CurrentRally.Length = length;
-            NotifyOfPropertyChange("CurrentRally");
+            //}
+            //else if (CurrentRally.Length > length)
+            //{
+            //    diff = -diff;
+            //    for (int i = 0; i < diff; i++)
+            //    {
+            //        CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+            //    }
+            //}
+
+            //CurrentRally.Length = length;
+            //NotifyOfPropertyChange("CurrentRally");
+            LengthHelper = length;
         }
 
-        public void RallyWon(int player,int length)
+        public void RallyWon(int player, int length)
         {
-            SetRallyLength(length);
+            //SetRallyLength(length);
+            //LengthHelper = length;
             if (!IsNewRally)
             {
                 // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
@@ -201,7 +243,10 @@ namespace TT.Scouter.ViewModels
                 Rallies.Add(CurrentRally);
                 CurrentRally.UpdateServerAndScore();
                 Server = CurrentRally.Server;
+                //LengthHelper = 0;
+                NotifyOfPropertyChange();
                 NotifyOfPropertyChange("Server");
+                               
 
                 IsNewRally = true;
                 IsWinnerEnabled = false;
@@ -248,27 +293,35 @@ namespace TT.Scouter.ViewModels
             if (Rallies.Count > 1)
             {
                 Rally lastRally = Rallies.Last();
+                if (lastRally.Winner == MatchPlayer.None)
+                {
+                    Rallies.Remove(lastRally);
+                    lastRally = Rallies.Last();
+                }
+                
                 Rallies.Remove(lastRally);
+                Rallies.Add(new Rally());
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
             }
         }
-        public void UpdateScoreAndServer()
-        {
-            CurrentRally = Rallies.Last();
-            CurrentRally = new Rally();
-            Rallies.Add(CurrentRally);
-            CurrentRally.UpdateServerAndScore();
-            Server = CurrentRally.Server;
-            NotifyOfPropertyChange("Server");
-            IsNewRally = true;
-            IsWinnerEnabled = false;
-            CurrentRally.UpdateServerAndScore();
-        }
+
+        //public void UpdateScoreAndServer()
+        //{
+        //    CurrentRally = Rallies.Last();
+        //    CurrentRally = new Rally();
+        //    Rallies.Add(CurrentRally);
+        //    CurrentRally.UpdateServerAndScore();
+        //    Server = CurrentRally.Server;
+        //    NotifyOfPropertyChange("Server");
+        //    IsNewRally = true;
+        //    IsWinnerEnabled = false;
+        //    CurrentRally.UpdateServerAndScore();
+        //}
 
         public void FinalizeLiveMode()
         {
-            if (Rallies.Last().Winner==MatchPlayer.None && Rallies.Last().Length == 0)
+            if (Rallies.Last().Winner == MatchPlayer.None && Rallies.Last().Length == 0)
             {
                 Rallies.Remove(Rallies.Last());
                 Rallies.Last().UpdateServerAndScore();
@@ -279,4 +332,3 @@ namespace TT.Scouter.ViewModels
         #endregion
     }
 }
- 

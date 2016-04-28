@@ -16,6 +16,7 @@ using Caliburn.Micro;
 using TT.Lib.Events;
 using TT.Lib.Util.Enums;
 using TT.Lib.Managers;
+using System.ComponentModel;
 
 namespace TT.Scouter.Views
 {
@@ -27,8 +28,12 @@ namespace TT.Scouter.Views
         public LiveView()
         {
             InitializeComponent();
-            
+
+
         }
         
+
     }
+
+    
 }
