@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     public class Column2TabConverter : BaseConverter, IValueConverter
     {

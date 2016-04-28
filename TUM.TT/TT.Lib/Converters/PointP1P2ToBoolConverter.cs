@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Lib.Util.Enums;
+using TT.Models.Util.Enums;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     [ValueConversion(typeof(Stroke.Point), typeof(bool))]
     public class PointP1P2ToBoolConverter : BaseConverter, IMultiValueConverter

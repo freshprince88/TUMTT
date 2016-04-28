@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
-using TT.Lib.Models;
-using TT.Lib.Managers;
+using TT.Models;
+using TT.Models.Managers;
 
 namespace TT.Viewer.ViewModels
 {

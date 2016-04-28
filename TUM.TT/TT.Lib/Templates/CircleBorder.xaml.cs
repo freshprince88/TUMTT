@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TT.Lib.Templates
+namespace TT.Models.Templates
 {
     /// <summary>
     /// Interaktionslogik für CircleBorder.xaml

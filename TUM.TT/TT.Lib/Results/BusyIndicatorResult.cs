@@ -4,13 +4,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Results
+namespace TT.Models.Results
 {
     using System;
     using System.Linq;
     using System.Windows;
     using Caliburn.Micro;
-    using TT.Lib.Util;
+    using TT.Models.Util;
     using Xceed.Wpf.Toolkit;
 
     /// <summary>

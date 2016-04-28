@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Interactivity
+namespace TT.Models.Interactivity
 {
     using System.Windows.Controls;
     using System.Windows.Input;

@@ -9,8 +9,8 @@ namespace TT.ReportGenerator
     using System;
     using System.IO;
     using System.Linq;
-    using TT.Lib.Models;
-    using TT.Lib.Models.Serialization;
+    using TT.Models;
+    using TT.Models.Serialization;
     using TT.Report.Generators;
     using TT.Report.Renderers;
 

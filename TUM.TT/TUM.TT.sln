@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Report", "TT.Report\TT.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.ReportGenerator", "TT.ReportGenerator\TT.ReportGenerator.csproj", "{0954508B-5CEA-418A-B145-FAADF659E181}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Models", "TT.Models\TT.Models.csproj", "{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{0954508B-5CEA-418A-B145-FAADF659E181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0954508B-5CEA-418A-B145-FAADF659E181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0954508B-5CEA-418A-B145-FAADF659E181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

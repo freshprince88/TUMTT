@@ -419,6 +419,10 @@
       <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
       <Name>TT.Lib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TT.Models\TT.Models.csproj">
+      <Project>{bfdd82b6-73a9-4408-a183-4acc3dc7e2c0}</Project>
+      <Name>TT.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />

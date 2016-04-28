@@ -10,8 +10,8 @@ namespace TT.Report.Sections
     using OxyPlot;
     using OxyPlot.Axes;
     using OxyPlot.Series;
-    using TT.Lib.Models;
-    using TT.Lib.Models.Statistics;
+    using TT.Models;
+    using TT.Models.Statistics;
     using TT.Report.Plots;
 
     /// <summary>

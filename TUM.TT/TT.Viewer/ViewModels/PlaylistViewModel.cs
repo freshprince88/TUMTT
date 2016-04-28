@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using TT.Lib.Events;
+using TT.Models.Events;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Lib.Managers;
-using TT.Lib.Models;
+using TT.Models.Managers;
+using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {

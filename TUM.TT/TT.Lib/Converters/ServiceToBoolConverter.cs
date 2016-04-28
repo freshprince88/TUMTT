@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Lib.Util.Enums;
+using TT.Models.Util.Enums;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     [ValueConversion(typeof(HashSet<Stroke.Services>), typeof(bool))]
     public class ServiceToBoolConverter : BaseConverter, IMultiValueConverter

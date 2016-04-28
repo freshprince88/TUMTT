@@ -2,8 +2,8 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Lib.Converters;
-using TT.Lib.Models;
+using TT.Models.Converters;
+using TT.Models;
 using TT.Scouter.ViewModels;
 
 namespace TT.Scouter.Util.Converter

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:lib="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
+             xmlns:lib="clr-namespace:TT.Models.Util;assembly=TT.Lib"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.PlacementStatisticsView"

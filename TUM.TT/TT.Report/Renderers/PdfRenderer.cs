@@ -18,8 +18,8 @@ namespace TT.Report.Renderers
     using MigraDoc.DocumentObjectModel.Tables;
     using MigraDoc.Rendering;
     using OxyPlot.Pdf;
-    using TT.Lib.Models;
-    using TT.Lib.Models.Statistics;
+    using TT.Models;
+    using TT.Models.Statistics;
     using TT.Report.Renderers.Pdf;
     using TT.Report.Sections;
 

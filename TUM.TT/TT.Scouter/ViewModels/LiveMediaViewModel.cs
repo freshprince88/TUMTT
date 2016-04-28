@@ -1,9 +1,9 @@
 ﻿using Caliburn.Micro;
 using System;
-using TT.Lib.Events;
-using TT.Lib.Managers;
-using TT.Lib.Models;
-using TT.Lib.Util.Enums;
+using TT.Models.Events;
+using TT.Models.Managers;
+using TT.Models;
+using TT.Models.Util.Enums;
 using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels

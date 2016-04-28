@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TT.Lib.Events
+namespace TT.Models.Events
 {
     public class PlaylistSelectionChangedEvent
     {

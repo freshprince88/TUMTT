@@ -5,9 +5,9 @@ using System.Windows.Data;
 using Zhucai.LambdaParser;
 using Zhucai.LambdaParser.ObjectDynamicExtension;
 using System.Linq;
-using TT.Lib.Models;
+using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     [ValueConversion(typeof(object), typeof(int))]
     public class TechniqueCountToRankingColumnConverter : BaseConverter, IMultiValueConverter

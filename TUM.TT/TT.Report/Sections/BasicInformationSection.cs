@@ -8,8 +8,8 @@ namespace TT.Report.Sections
 {
     using System.Collections.Generic;
     using System.Linq;
-    using TT.Lib.Models;
-    using TT.Lib.Models.Statistics;
+    using TT.Models;
+    using TT.Models.Statistics;
 
     /// <summary>
     /// A section with basic information about a match.

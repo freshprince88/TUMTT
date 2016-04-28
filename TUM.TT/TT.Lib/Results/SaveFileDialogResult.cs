@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 
-namespace TT.Lib.Results
+namespace TT.Models.Results
 {
     /// <summary>
     /// A result to show a dialog to save a file.

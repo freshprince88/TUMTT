@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
-             xmlns:Models="clr-namespace:TT.Lib.Models;assembly=TT.Lib"
+             xmlns:Models="clr-namespace:TT.Models;assembly=TT.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>

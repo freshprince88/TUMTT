@@ -6,8 +6,8 @@
 
 namespace TT.Report.Sections
 {
-    using TT.Lib.Models;
-    using TT.Lib.Models.Statistics;
+    using TT.Models;
+    using TT.Models.Statistics;
 
     /// <summary>
     /// Section for technical efficiency.

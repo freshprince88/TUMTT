@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using TT.Lib.Events;
-using TT.Lib.Managers;
+using TT.Models.Events;
+using TT.Models.Managers;
 
 namespace TT.Viewer.ViewModels
 {

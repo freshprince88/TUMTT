@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TT.Lib.Events;
-using TT.Lib.Models;
-using TT.Lib.Results;
-using TT.Lib.Util;
+using TT.Models.Events;
+using TT.Models;
+using TT.Models.Results;
+using TT.Models.Util;
 
-namespace TT.Lib.Managers
+namespace TT.Models.Managers
 {
     public class MatchManager : IMatchManager
     {

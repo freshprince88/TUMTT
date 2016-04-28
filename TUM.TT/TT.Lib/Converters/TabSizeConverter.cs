@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     public class TabSizeConverter : BaseConverter, IMultiValueConverter
     {

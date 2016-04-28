@@ -4,9 +4,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Util
+namespace TT.Models.Util
 {
-    using TT.Lib.Models;
+    using TT.Models;
 
     /// <summary>
     /// Extends the match class with some useful additions.

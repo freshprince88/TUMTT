@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Markup;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     public abstract class BaseConverter : MarkupExtension
     {

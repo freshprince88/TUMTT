@@ -1,8 +1,8 @@
 ﻿using Caliburn.Micro;
 using System.Collections.Generic;
-using TT.Lib.Models;
+using TT.Models;
 
-namespace TT.Lib.Managers
+namespace TT.Models.Managers
 {
     public interface IMatchManager 
     {

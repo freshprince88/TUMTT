@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Lib.Managers;
+using TT.Models.Managers;
 
 namespace TT.Scouter.ViewModels
 {

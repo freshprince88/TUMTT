@@ -2,9 +2,9 @@ using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Windows;
-using TT.Lib;
-using TT.Lib.Managers;
-using TT.Lib.Results;
+using TT.Models;
+using TT.Models.Managers;
+using TT.Models.Results;
 using TT.Scouter.ViewModels;
 
 namespace TT.Scouter

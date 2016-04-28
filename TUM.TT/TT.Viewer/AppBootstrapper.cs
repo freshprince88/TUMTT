@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Caliburn.Micro;
 using TT.Viewer.ViewModels;
 using System.Reflection;
-using TT.Lib.Models.Serialization;
-using TT.Lib.Managers;
+using TT.Models.Serialization;
+using TT.Models.Managers;
 using MahApps.Metro.Controls.Dialogs;
-using TT.Lib;
+using TT.Models;
 
 namespace TT.Viewer {
 

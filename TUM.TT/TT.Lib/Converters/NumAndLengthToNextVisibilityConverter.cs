@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     public class NumAndLengthToNextVisibilityConverter : BaseConverter, IMultiValueConverter
     {

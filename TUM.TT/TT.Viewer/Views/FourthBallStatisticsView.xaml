@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Models.Converters;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.FourthBallStatisticsView"
              mc:Ignorable="d" 

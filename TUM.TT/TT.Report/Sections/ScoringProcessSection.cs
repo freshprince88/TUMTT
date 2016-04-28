@@ -11,7 +11,7 @@ namespace TT.Report.Sections
     using OxyPlot.Annotations;
     using OxyPlot.Axes;
     using OxyPlot.Series;
-    using TT.Lib.Models;
+    using TT.Models;
     using TT.Report.Plots;
 
     /// <summary>

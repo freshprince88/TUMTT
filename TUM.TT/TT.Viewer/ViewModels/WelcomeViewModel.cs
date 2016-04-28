@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TT.Lib.Managers;
+using TT.Models.Managers;
 
 namespace TT.Viewer.ViewModels
 {

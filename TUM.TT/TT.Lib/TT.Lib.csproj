@@ -174,34 +174,12 @@
     <Compile Include="IShell.cs" />
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
-    <Compile Include="Models\Statistics\EnumerableExtensions.cs" />
-    <Compile Include="Models\Statistics\IMatchStatistics.cs" />
-    <Compile Include="Models\Statistics\IMatchTransitionStatistics.cs" />
-    <Compile Include="Models\Statistics\Markov.cs" />
-    <Compile Include="Models\Statistics\MatchDynamics.cs" />
-    <Compile Include="Models\Statistics\MatchStatistics.cs" />
-    <Compile Include="Models\Statistics\MatchTransitionStatistics.cs" />
-    <Compile Include="Models\Statistics\PlayerStatistics.cs" />
-    <Compile Include="Models\Statistics\RallyLengthStatistics.cs" />
-    <Compile Include="Models\Statistics\RelevanceOfStroke.cs" />
-    <Compile Include="Models\Statistics\TechnicalEfficiency.cs" />
-    <Compile Include="Models\Statistics\Transitions.cs" />
     <Compile Include="Results\CustomDialogResult.cs" />
+    <Compile Include="Results\GenerateReportResult.cs" />
     <Compile Include="Results\InputDialogResult.cs" />
     <Compile Include="Util\CustomClosableComboDialog.cs" />
+    <Compile Include="Util\MatchExtensions.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
-    <Compile Include="Models\Playlist.cs" />
-    <Compile Include="Models\Schlag.cs" />
-    <Compile Include="Models\Serialization\IMatchSerializer.cs" />
-    <Compile Include="Models\Serialization\XmlMatchSerializer.cs" />
-    <Compile Include="Models\Match.cs" />
-    <Compile Include="Models\MatchModeExtensions.cs" />
-    <Compile Include="Models\MatchPlayerExtensions.cs" />
-    <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\PropertyChangedBase.cs" />
-    <Compile Include="Models\Rally.cs" />
-    <Compile Include="Models\Rank.cs" />
-    <Compile Include="Models\Score.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\BusyIndicatorResult.cs" />
     <Compile Include="Results\DeserializeMatchResult.cs" />
@@ -224,11 +202,9 @@
     <Compile Include="Converters\CircleMarginConverter .cs" />
     <Compile Include="Converters\Column2TabConverter.cs" />
     <Compile Include="Util\Dynamic.cs" />
-    <Compile Include="Util\Enums.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\FrameworkElementExtension.cs" />
     <Compile Include="Util\GridViewSort.cs" />
-    <Compile Include="Util\MatchExtensions.cs" />
     <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Util\StringExtensions.cs" />
     <Compile Include="Converters\TabSizeConverter.cs" />
@@ -276,6 +252,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TT.Models\TT.Models.csproj">
+      <Project>{bfdd82b6-73a9-4408-a183-4acc3dc7e2c0}</Project>
+      <Name>TT.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.Report\TT.Report.csproj">
+      <Project>{9f1fd7dd-1706-4327-89f1-722284fbbdb9}</Project>
+      <Name>TT.Report</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

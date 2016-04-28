@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Results.Helper
+namespace TT.Models.Results.Helper
 {
     using System;
     using System.Collections.Generic;

@@ -3,9 +3,9 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using TT.Lib.Events;
-using TT.Lib.Managers;
-using TT.Lib.Models;
+using TT.Models.Events;
+using TT.Models.Managers;
+using TT.Models;
 using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels

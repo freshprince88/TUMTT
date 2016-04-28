@@ -4,12 +4,12 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Results
+namespace TT.Models.Results
 {
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
-    using TT.Lib.Results.Helper;
+    using TT.Models.Results.Helper;
 
     /// <summary>
     /// Extensions to <see cref="IResult"/>

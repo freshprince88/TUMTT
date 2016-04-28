@@ -13,9 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TT.Lib.Events;
-using TT.Lib.Managers;
-using TT.Lib.Util.Enums;
+using TT.Models.Events;
+using TT.Models.Managers;
+using TT.Models.Util.Enums;
 
 namespace TT.Scouter.Views
 {

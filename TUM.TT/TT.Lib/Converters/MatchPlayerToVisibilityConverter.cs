@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using TT.Lib.Models;
+using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     public class MatchPlayerToVisibilityConverter : BaseConverter, IMultiValueConverter
     {

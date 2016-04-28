@@ -1,9 +1,9 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
-using TT.Lib;
-using TT.Lib.Events;
-using TT.Lib.Managers;
+using TT.Models;
+using TT.Models.Events;
+using TT.Models.Managers;
 
 namespace TT.Viewer.ViewModels
 {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Models.Converters
 {
     public class RallyLengthToCheckedConverter : BaseConverter, IMultiValueConverter
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TT.Lib.Events
+namespace TT.Models.Events
 {
     public class VideoLoadedEvent
     {

@@ -7,7 +7,7 @@
 namespace TT.Report.Generators
 {
     using OxyPlot;
-    using TT.Lib.Models;
+    using TT.Models;
     using TT.Report.Plots;
     using TT.Report.Sections;
 

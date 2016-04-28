@@ -6,7 +6,7 @@
 
 namespace TT.Report.Generators
 {
-    using TT.Lib.Models;
+    using TT.Models;
 
     /// <summary>
     /// Interface for report generators.

@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 
-namespace TT.Lib.Styles
+namespace TT.Models.Styles
 {
     /// <summary>
     /// Class that provides the Watermark attached property

@@ -4,9 +4,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Lib.Events
+namespace TT.Models.Events
 {
-    using TT.Lib.Models;
+    using TT.Models;
 
     /// <summary>
     /// An event on a match.
