@@ -18,9 +18,11 @@ namespace TT.Viewer.ViewModels
         #region Properties
         public string Player1 { get; set; }
         public string Player2 { get; set; }
-        public int PointsPlayer1 { get; set; }
-        public int PointsPlayer2 { get; set; }
-        public int totalRalliesCount { get; set; }
+        public double PointsPlayer1 { get; set; }
+        public double PointsPlayer2 { get; set; }
+        public string PointsPlayer1Percent { get; set; }
+        public string PointsPlayer2Percent { get; set; }
+        public double totalRalliesCount { get; set; }
 
         #endregion
 
@@ -64,10 +66,15 @@ namespace TT.Viewer.ViewModels
             totalRalliesCount = ralliesSelected.Count();
             PointsPlayer1 = ralliesSelected.Where(r => r.Winner == MatchPlayer.First).Count();
             PointsPlayer2 = ralliesSelected.Where(r => r.Winner == MatchPlayer.Second).Count();
+            PointsPlayer1Percent = Math.Round((PointsPlayer1 / totalRalliesCount) * 100,2) + " %";
+            PointsPlayer2Percent = Math.Round((PointsPlayer2 / totalRalliesCount) * 100,2) + " %";
             NotifyOfPropertyChange("PointsPlayer1");
             NotifyOfPropertyChange("PointsPlayer2");
+            NotifyOfPropertyChange("PointsPlayer1Percent");
+            NotifyOfPropertyChange("PointsPlayer2Percent");
             NotifyOfPropertyChange("Player1");
             NotifyOfPropertyChange("Player2");
+
         }
 
         #endregion

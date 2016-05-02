@@ -50,7 +50,8 @@ namespace TT.Viewer.Views
             {
                 case true:
                     //Column1.Header = "P";
-                    //Column2.Header = "S";    
+                    //Column2.Header = "S";
+                    RalliesHeader.Visibility = Visibility.Collapsed;    
                     MiniStatistic.Visibility = Visibility.Collapsed;
                     ProportionalColumn.ApplyWidth(Column0, 2);
                     ProportionalColumn.ApplyWidth(Column1, 0);
@@ -62,6 +63,7 @@ namespace TT.Viewer.Views
                 case false:
                     //Column1.Header = "Punkte";
                     //Column2.Header = "Sätze";
+                    RalliesHeader.Visibility = Visibility.Visible;
                     MiniStatistic.Visibility = Visibility.Visible;
                     ProportionalColumn.ApplyWidth(Column0, 1);
                     ProportionalColumn.ApplyWidth(Column1, 2);
