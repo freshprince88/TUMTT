@@ -13,14 +13,14 @@ namespace TT.Viewer.ViewModels
     public class MediaViewModel : Screen,
         IHandle<ResultsChangedEvent>,
         IHandle<VideoPlayEvent>,
-        IHandle<MediaControlEvent>
+        IHandle<MediaControlEvent>,
+        IHandle<MatchOpenedEvent>
     {
         private IEventAggregator events;
         private IMatchManager Manager;
 
         public LinkedList<Rally> Playlist { get; set; }
         public LinkedListNode<Rally> CurrentRally { get; set; }
-
 
         private Media.Mute _muted;
         public Media.Mute Muted
@@ -299,12 +299,14 @@ namespace TT.Viewer.ViewModels
 
         public void Mute()
         {
+            
             this.Muted = Media.Mute.Mute;
             events.PublishOnUIThread(this.Muted);
         }
 
         public void Unmute()
         {
+            
             this.Muted = Media.Mute.Unmute;
             events.PublishOnUIThread(this.Muted);
         }
@@ -340,10 +342,12 @@ namespace TT.Viewer.ViewModels
         {
             if (this.Infinite == Media.Infinite.Off)
             {
+                
                 this.Infinite = Media.Infinite.On;
             }
             else if (this.Infinite == Media.Infinite.On)
             {
+                
                 this.Infinite = Media.Infinite.Off;
             }
             events.PublishOnUIThread(this.Infinite);
@@ -414,7 +418,21 @@ namespace TT.Viewer.ViewModels
             Play();
         }
 
-            #endregion
+        public void Handle(MatchOpenedEvent message)
+        {
+            this.Speed = Media.Speed.Full;
+            this.Muted = Media.Mute.Unmute;
+            this.Control = Media.Control.Stop;
+            this.Repeat = Media.Repeat.Off;
+            this.Infinite = Media.Infinite.Off;
+            events.PublishOnUIThread(this.Infinite);
+            events.PublishOnUIThread(this.Repeat);
+            events.PublishOnUIThread(this.Muted);
+            events.PublishOnUIThread(this.Speed);
+            events.PublishOnUIThread(this.Control);
+        }
+
+        #endregion
 
         #region Helper Methods
 

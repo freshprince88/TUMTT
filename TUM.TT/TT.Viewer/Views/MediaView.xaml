@@ -293,7 +293,7 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <ToggleButton x:Name="cbInfinite" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="9" IsChecked="False">
+            <ToggleButton x:Name="cbInfinite" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="9" HorizontalAlignment="Left" Width="30" IsChecked="{Binding IsInfinited}">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -336,7 +336,7 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="10" Visibility="Hidden">
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="10" Visibility="Hidden" IsChecked="{Binding IsMuted}">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>

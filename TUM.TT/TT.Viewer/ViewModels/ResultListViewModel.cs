@@ -11,13 +11,23 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ResultListViewModel : Conductor<ResultListItem>.Collection.AllActive, IResultViewTabItem,
+    public class ResultListViewModel : Conductor<IScreen>.Collection.AllActive, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
         IHandle<FullscreenEvent>
     {
+        public string Header { get; set; }
+        public string Player1 {get; set;}
+        public string Player2 { get; set; }
+        public int PointsPlayer1 { get; set; }
+        public int PointsPlayer2 { get; set; }
+        public int totalRalliesCount { get; set; }
+        public ResultMiniStatisticViewModel MiniStatistic { get; set; }
+        
+
         private IEventAggregator events;
         private IDialogCoordinator dialogs;
         private IMatchManager manager;
@@ -27,10 +37,19 @@ namespace TT.Viewer.ViewModels
         public ResultListViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
             this.DisplayName = "Hitlist";
+            Header = "Hitlist (" + count + ")";
             events = e;
             dialogs = c;
             manager = man;
             count = 0;
+            Player1 = "Spieler 1";
+            Player2 = "Spieler 2";
+            PointsPlayer1 = 0;
+            PointsPlayer2 = 0;
+            totalRalliesCount = 0;
+
+            MiniStatistic = new ResultMiniStatisticViewModel(this.events, manager);
+
         }
 
         #region View Methods
@@ -68,9 +87,17 @@ namespace TT.Viewer.ViewModels
             {
                 this.ActivateItem(new ResultListItem(rally));
             }
+            
             count=this.Items.Count();
             this.DisplayName = "Hitlist (" + count + ")";
+            Header = "Hitlist (" + count + ")";
+            NotifyOfPropertyChange("Header");
+
             this.Items.Refresh();
+            
+
+
+
         }
 
         public void Handle(FullscreenEvent message)
@@ -79,9 +106,11 @@ namespace TT.Viewer.ViewModels
             {
                 case true:
                     this.DisplayName = "R(" + count + ")";
+                    Header = "R(" + count + ")";
                     break;
                 case false:
                     this.DisplayName = "Hitlist (" + count + ")";
+                    Header = "Hitlist (" + count + ")";
                     break;
                 default:
                     break;
@@ -97,6 +126,10 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+            Player1 = manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = manager.Match.SecondPlayer.Name.Split(' ')[0];
+            this.ActivateItem(MiniStatistic);
+
         }
         #endregion
     }
