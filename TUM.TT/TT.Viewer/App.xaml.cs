@@ -8,10 +8,13 @@ using System.Windows;
 
 namespace TT.Viewer
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
+    using System.Windows;
+
     public partial class App : Application
     {
+        public App()
+        {
+            InitializeComponent();
+        }
     }
 }

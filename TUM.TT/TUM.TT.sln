@@ -1,9 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Viewer", "TT.Viewer\TT.Viewer.csproj", "{91CCD1DE-DF21-4AEA-B1CD-62274C5F7D90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Scouter", "TT.Scouter\TT.Scouter.csproj", "{399ADDF9-0FDD-47A3-9621-3F34A99E90BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Lib", "TT.Lib\TT.Lib.csproj", "{F24A8ECC-C00E-4AF4-AF20-5292744810A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CA815541-60EC-4294-BCCE-CCF97BF47413}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Report", "TT.Report\TT.Report.csproj", "{9F1FD7DD-1706-4327-89F1-722284FBBDB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.ReportGenerator", "TT.ReportGenerator\TT.ReportGenerator.csproj", "{0954508B-5CEA-418A-B145-FAADF659E181}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Models", "TT.Models\TT.Models.csproj", "{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +32,26 @@ Global
 		{91CCD1DE-DF21-4AEA-B1CD-62274C5F7D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91CCD1DE-DF21-4AEA-B1CD-62274C5F7D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91CCD1DE-DF21-4AEA-B1CD-62274C5F7D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{399ADDF9-0FDD-47A3-9621-3F34A99E90BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{399ADDF9-0FDD-47A3-9621-3F34A99E90BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{399ADDF9-0FDD-47A3-9621-3F34A99E90BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{399ADDF9-0FDD-47A3-9621-3F34A99E90BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F24A8ECC-C00E-4AF4-AF20-5292744810A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24A8ECC-C00E-4AF4-AF20-5292744810A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F24A8ECC-C00E-4AF4-AF20-5292744810A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F24A8ECC-C00E-4AF4-AF20-5292744810A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F1FD7DD-1706-4327-89F1-722284FBBDB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1FD7DD-1706-4327-89F1-722284FBBDB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1FD7DD-1706-4327-89F1-722284FBBDB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1FD7DD-1706-4327-89F1-722284FBBDB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0954508B-5CEA-418A-B145-FAADF659E181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0954508B-5CEA-418A-B145-FAADF659E181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0954508B-5CEA-418A-B145-FAADF659E181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0954508B-5CEA-418A-B145-FAADF659E181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFDD82B6-73A9-4408-A183-4ACC3DC7E2C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

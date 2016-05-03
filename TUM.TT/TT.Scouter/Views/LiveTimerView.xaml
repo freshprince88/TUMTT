@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="TT.Scouter.Views.LiveTimerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TT.Scouter.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <Label Content="Spielzeit" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+
+        <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
+            <Label.Content>
+                <TextBlock FontSize="100">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0:D2}:{1:D2}:{2:D2}" Mode="OneWay">
+                            <Binding Path="MediaPosition.Hours" />
+                            <Binding Path="MediaPosition.Minutes" />
+                            <Binding Path="MediaPosition.Seconds" />                            
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+
+            </Label.Content>
+        </Label>
+
+    </Grid>
+</UserControl>

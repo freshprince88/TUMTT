@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("TT.Scouter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Technische Universität München")]
 [assembly: AssemblyProduct("TT.Scouter")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright © Technische Universität München 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
