@@ -6,11 +6,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
-        <TabControl x:Name="Items">
-            <!--<TabItem x:Name="List" Header="Hitlist"/>
-            <TabItem x:Name="SmallTables" Header="Minitische"/>
-            <TabItem x:Name="BigTable" Header="Tisch"/>-->
-            
-        </TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ContentControl x:Name="MiniStatistic" Grid.Row="0" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+        <ContentControl x:Name="ResultTabView" Grid.Row="1" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
     </Grid>
 </UserControl>

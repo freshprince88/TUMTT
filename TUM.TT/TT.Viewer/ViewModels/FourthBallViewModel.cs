@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls.Primitives;
 using TT.Models;
-using TT.Models.Events;
+using TT.Lib.Events;
 using TT.Models.Util.Enums;
 using TT.Lib.Managers;
 

@@ -6,7 +6,7 @@
              xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:util="clr-namespace:TT.Models.Util;assembly=TT.Lib"
+             xmlns:util="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
@@ -21,8 +21,26 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-
-    <ListView x:Name="Items"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--<Label  FontSize="30" Foreground="{DynamicResource AccentColorBrush}"
+               HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Header}">
+            
+        </Label>-->
+        <!--<ContentControl x:Name="MiniStatistic" Grid.Row="0" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>-->
+        <!--<StackPanel x:Name="RalliesHeader" Grid.Row="1" >
+            <Label  FontSize="24" Foreground="{DynamicResource AccentColorBrush}"
+               HorizontalAlignment="Center" VerticalAlignment="Center">
+                Rallies
+            </Label>
+            <Border Height="2" Background="{DynamicResource AccentColorBrush}" />
+        </StackPanel>-->
+        <ListView x:Name="Items"
+            Grid.Row="2"
             Margin="0"
             BorderThickness="0"
             SelectedIndex="0"
@@ -33,34 +51,35 @@
             dd:DragDrop.IsDropTarget="False"
             cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]; 
               [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
-        <ListView.View>
-            <GridView x:Name="HitlistGrid">
-                <GridViewColumn x:Name="Column0" DisplayMemberBinding="{Binding Number}"
+            <ListView.View>
+                <GridView x:Name="HitlistGrid">
+                    <GridViewColumn x:Name="Column0" DisplayMemberBinding="{Binding Number}"
                                             Header="#"
                                 util:GridViewSort.PropertyName="Number"
                                 ctrl:ProportionalColumn.Width="1"/>
-                <GridViewColumn x:Name="Column1" DisplayMemberBinding="{Binding Score}"
-                                            Header="Punkte"
+                    <GridViewColumn x:Name="Column1" DisplayMemberBinding="{Binding Score}"
+                                            Header="Score"
                                 util:GridViewSort.PropertyName="Score"  
                                 ctrl:ProportionalColumn.Width="2"/>
-                <GridViewColumn x:Name="Column2" DisplayMemberBinding="{Binding Sets}"
+                    <GridViewColumn x:Name="Column2" DisplayMemberBinding="{Binding Sets}"
                                             Header="Sätze" 
                                 util:GridViewSort.PropertyName="Sets"
                                 ctrl:ProportionalColumn.Width="2"/>
-                <GridViewColumn x:Name="Column3" DisplayMemberBinding="{Binding Server}"
+                    <GridViewColumn x:Name="Column3" DisplayMemberBinding="{Binding Server}"
                                             Header="Aufschlag" 
                                 util:GridViewSort.PropertyName="Server"
                                 ctrl:ProportionalColumn.Width="3"/>
-                <GridViewColumn x:Name="Column4" DisplayMemberBinding="{Binding Point}"
+                    <GridViewColumn x:Name="Column4" DisplayMemberBinding="{Binding Point}"
                                             Header="Punkt" 
                                 util:GridViewSort.PropertyName="Point"
                                 ctrl:ProportionalColumn.Width="3"/>
-                <GridViewColumn x:Name="Column5" DisplayMemberBinding="{Binding Length}"
+                    <GridViewColumn x:Name="Column5" DisplayMemberBinding="{Binding Length}"
                                             Header="Länge" 
                                 util:GridViewSort.PropertyName="Length"
                                 ctrl:ProportionalColumn.Width="2"/>
-            </GridView>
-        </ListView.View>
-    </ListView>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
 
 </UserControl>

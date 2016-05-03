@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace TT.Models.Events
+namespace TT.Lib.Events
 {
     using TT.Models;
 

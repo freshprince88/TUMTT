@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using TT.Models.Events;
+using TT.Lib.Events;
 using TT.Viewer.ViewModels;
 using Itenso.Windows.Controls.ListViewLayout;
 
@@ -50,8 +50,9 @@ namespace TT.Viewer.Views
             {
                 case true:
                     //Column1.Header = "P";
-                    //Column2.Header = "S";    
-                    
+                    //Column2.Header = "S";
+                    //RalliesHeader.Visibility = Visibility.Collapsed;    
+                    //MiniStatistic.Visibility = Visibility.Collapsed;
                     ProportionalColumn.ApplyWidth(Column0, 2);
                     ProportionalColumn.ApplyWidth(Column1, 0);
                     ProportionalColumn.ApplyWidth(Column2, 0);
@@ -62,6 +63,8 @@ namespace TT.Viewer.Views
                 case false:
                     //Column1.Header = "Punkte";
                     //Column2.Header = "Sätze";
+                    //RalliesHeader.Visibility = Visibility.Visible;
+                    //MiniStatistic.Visibility = Visibility.Visible;
                     ProportionalColumn.ApplyWidth(Column0, 1);
                     ProportionalColumn.ApplyWidth(Column1, 2);
                     ProportionalColumn.ApplyWidth(Column2, 2);

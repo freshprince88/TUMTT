@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 using System.Windows.Controls;
-using TT.Models.Events;
+using TT.Lib.Events;
 using System;
 using TT.Models.Util.Enums;
 using TT.Lib.Managers;

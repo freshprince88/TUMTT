@@ -4,7 +4,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace TT.Models.Styles
+namespace TT.Lib.Styles
 {
     /// <summary>
     /// Adorner for the watermark

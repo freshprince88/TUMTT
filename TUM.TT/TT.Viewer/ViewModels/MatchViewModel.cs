@@ -1,9 +1,9 @@
 using Caliburn.Micro;
 using System.Windows;
 using System.Reflection;
-using TT.Models.Results;
+using TT.Lib.Results;
 using TT.Models.Util;
-using TT.Models.Events;
+using TT.Lib.Events;
 using System.Collections.Generic;
 using TT.Models;
 using System.IO;
@@ -35,7 +35,7 @@ namespace TT.Viewer.ViewModels
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             Manager = manager;
-            ResultView = new ResultViewModel(resultTabs);
+            ResultView = new ResultViewModel(resultTabs, eventAggregator, manager);
             PlaylistView = new PlaylistViewModel(Events, Manager, dc);
             MediaView = new MediaViewModel(Events, Manager);
             FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);

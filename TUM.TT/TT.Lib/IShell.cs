@@ -1,5 +1,5 @@
 using Caliburn.Micro;
 
-namespace TT.Models {
+namespace TT.Lib {
     public interface IShell : IConductor, IGuardClose { } 
 }
