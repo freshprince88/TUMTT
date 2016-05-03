@@ -35,7 +35,7 @@ namespace TT.Viewer.ViewModels
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             Manager = manager;
-            ResultView = new ResultViewModel(resultTabs);
+            ResultView = new ResultViewModel(resultTabs, eventAggregator, manager);
             PlaylistView = new PlaylistViewModel(Events, Manager, dc);
             MediaView = new MediaViewModel(Events, Manager);
             FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);

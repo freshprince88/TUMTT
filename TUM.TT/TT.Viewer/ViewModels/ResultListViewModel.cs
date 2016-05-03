@@ -25,7 +25,7 @@ namespace TT.Viewer.ViewModels
         public int PointsPlayer1 { get; set; }
         public int PointsPlayer2 { get; set; }
         public int totalRalliesCount { get; set; }
-        public ResultMiniStatisticViewModel MiniStatistic { get; set; }
+        //public ResultMiniStatisticViewModel MiniStatistic { get; set; }
         
 
         private IEventAggregator events;
@@ -48,7 +48,7 @@ namespace TT.Viewer.ViewModels
             PointsPlayer2 = 0;
             totalRalliesCount = 0;
 
-            MiniStatistic = new ResultMiniStatisticViewModel(this.events, manager);
+            //MiniStatistic = new ResultMiniStatisticViewModel(this.events, manager);
 
         }
 
@@ -128,7 +128,7 @@ namespace TT.Viewer.ViewModels
             this.events.Subscribe(this);
             Player1 = manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = manager.Match.SecondPlayer.Name.Split(' ')[0];
-            this.ActivateItem(MiniStatistic);
+            //this.ActivateItem(MiniStatistic);
 
         }
         #endregion

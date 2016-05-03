@@ -18,7 +18,7 @@
  
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0"  Grid.ColumnSpan="2">
-        <Label  FontSize="24" Foreground="{DynamicResource AccentColorBrush}"
+        <Label  FontSize="28" Foreground="{DynamicResource AccentColorBrush}"
                HorizontalAlignment="Center" VerticalAlignment="Center">
             Statistik   
         </Label>

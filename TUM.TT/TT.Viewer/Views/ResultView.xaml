@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
-    <TabControl x:Name="Items" Grid.Row="1">
-        <!--<TabItem x:Name="List" Header="Hitlist"/>
-            <TabItem x:Name="SmallTables" Header="Minitische"/>
-            <TabItem x:Name="BigTable" Header="Tisch"/>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-    </TabControl>
+        <ContentControl x:Name="MiniStatistic" Grid.Row="0" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+        <ContentControl x:Name="ResultTabView" Grid.Row="1" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+    </Grid>
 </UserControl>
