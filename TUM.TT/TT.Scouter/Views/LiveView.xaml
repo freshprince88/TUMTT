@@ -59,7 +59,7 @@
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
-            <Image Name="First" Grid.Column="1" Grid.Row="1" Source="pack://application:,,,/Resources/ping_pong.png">
+            <Image Name="First" Grid.Column="1" Grid.Row="2" Source="pack://application:,,,/Resources/ping_pong.png">
                 <Image.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
@@ -67,11 +67,9 @@
                     </MultiBinding>
                 </Image.Visibility>
             </Image>
-            
-            <Label Name="Player1" Content="{Binding Path=Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" FontSize="20"/>
-
-            <Label Name="Player2" Content="{Binding Path=Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" FontSize="20"/>
-            <Image Name="Second" Grid.Column="6" Grid.Row="1" Source="pack://application:,,,/Resources/ping_pong.png">
+            <Label Name="Player1" Content="{Binding Path=Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" FontSize="20" />
+            <Label Name="Player2" Content="{Binding Path=Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Grid.RowSpan="2"  FontSize="20"/>
+            <Image Name="Second" Grid.Column="6" Grid.Row="2" Source="pack://application:,,,/Resources/ping_pong.png">
                 <Image.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
@@ -80,13 +78,47 @@
                 </Image.Visibility>
             </Image>
 
-            <Label Name="SetScore1" Content="{Binding Path=CurrentRally.CurrentSetScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" FontSize="30"/>
-            <Label Name="PointScore1" Content="{Binding Path=CurrentRally.CurrentRallyScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" FontSize="75"/>
-            <Label Name="SetScore2" Content="{Binding Path=CurrentRally.CurrentSetScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="5" FontSize="30"/>
-            <Label Name="PointScore2" Content="{Binding Path=CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Center" Grid.Row="1" Grid.RowSpan="2" Grid.Column="4" FontSize="75"/>
+            <Label Name="SetScore1" Content="{Binding Path=CurrentRally.CurrentSetScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" FontSize="30"/>
+            <Label Name="PointScore1" Content="{Binding Path=CurrentRally.CurrentRallyScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" FontSize="75"/>
+            <Label Name="SetScore2" Content="{Binding Path=CurrentRally.CurrentSetScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="5" FontSize="30"/>
+            <Label Name="PointScore2" Content="{Binding Path=CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" FontSize="75"/>
         </Grid>
 
-        <Grid x:Name="StartGrid" Grid.Row="2" Visibility="{Binding IsNewRally, Converter={conv:BoolToVisibilityConverter}}">
+        <Grid Grid.Row="2" Visibility="{Binding FirstServerSet, Converter={conv:BoolNotToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Server1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="0" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="SetFirstServer">
+                            <cal:Parameter Value="{Binding Path=Match.FirstPlayer}" />
+
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Label Content="- Aufschlag -" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" FontSize="18"/>
+            <Button x:Name="Server2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="0" Grid.Column="2">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="SetFirstServer">
+                            <cal:Parameter Value="{Binding Path=Match.SecondPlayer}" />
+
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid x:Name="StartGrid" Grid.Row="2" Visibility="{Binding IsNewRally, Converter={conv:BoolToVisibilityConverter}}" IsEnabled="{Binding FirstServerSet}">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -259,7 +291,7 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Label Content="--- Winner --- " VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" FontSize="25"/>
+            <Label Content="--- Winner --- " VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" FontSize="18"/>
             <Button x:Name="Player2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -320,7 +352,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>-->
-            <Button x:Name="FinalizeLiveModeButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Center" ToolTip="Finalize">
+            <!--<Button x:Name="FinalizeLiveModeButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Center" ToolTip="Finalize">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -333,7 +365,7 @@
                         <cal:ActionMessage MethodName="FinalizeLiveMode" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </Button>
+            </Button>-->
             <Button x:Name="DeleteButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="2" Height="25" Width="25" HorizontalAlignment="Right" ToolTip="Delete Last Rally">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -356,7 +388,7 @@
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Content="Kommentar" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Label Content="Kommentar" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <TextBox AcceptsReturn="True" TextWrapping="Wrap" Grid.Row="1" Text="{Binding Path=CurrentRally.Kommentar}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">

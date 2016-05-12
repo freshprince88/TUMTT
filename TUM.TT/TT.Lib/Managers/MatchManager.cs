@@ -7,10 +7,15 @@ using TT.Lib.Events;
 using TT.Models;
 using TT.Lib.Results;
 using TT.Lib.Util;
+using MahApps.Metro.Controls.Dialogs;
+
+using System.Windows;
+using TT.Lib;
+
 
 namespace TT.Lib.Managers
 {
-    public class MatchManager : IMatchManager
+    public class MatchManager : Caliburn.Micro.PropertyChangedBase, IMatchManager 
     {
         #region Properties
         /// <summary>
@@ -30,12 +35,25 @@ namespace TT.Lib.Managers
                 {
                     _match = value;
                     MatchModified = true;
+                    NotifyOfPropertyChange("MatchModified");
+
                 }
             }
         }
+        private bool _matchMod;
+        public bool MatchModified
+        {
+            get { return _matchMod; }
+            set
+            {
+                if (_matchMod != value)
+                {
+                    _matchMod = value;
+                    NotifyOfPropertyChange("MatchModified");
 
-        public bool MatchModified { get; set; }
-
+                }
+            }
+        }
         private string _activeList;
         public Playlist ActivePlaylist
         {
@@ -102,7 +120,6 @@ namespace TT.Lib.Managers
 
             Match = deserialization.Result;
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
 
             if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
@@ -115,6 +132,7 @@ namespace TT.Lib.Managers
             else
             {
                 Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+                MatchModified = false;
             }
         }
         public IEnumerable<IResult> OpenLiveMatch()
@@ -138,7 +156,7 @@ namespace TT.Lib.Managers
 
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
 
-            
+
         }
 
         public void DeleteRally(Rally r) //Immer noch die schon gelöschte Rally als Parameter!!!!
@@ -150,6 +168,8 @@ namespace TT.Lib.Managers
                 Playlist test2 = ActivePlaylist;
                 Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
+                MatchModified = true;
+                
 
             }
         }
@@ -164,6 +184,8 @@ namespace TT.Lib.Managers
                 {
                     list.Name = newName;
                     Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
+                    MatchModified = true;
+                    
                 }
             }
         }

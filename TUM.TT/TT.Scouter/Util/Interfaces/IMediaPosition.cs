@@ -7,9 +7,10 @@ namespace TT.Scouter.Interfaces
     {
         TimeSpan MediaPosition { get; set; }
 
+        TimeSpan EndPosition { get; set; }
+
         void Play();
         
-
         void Pause();
 
         void Stop();

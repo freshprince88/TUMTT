@@ -6,6 +6,8 @@ using System.Windows;
 using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Results;
+using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
@@ -17,16 +19,15 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         public IEventAggregator Events { get; private set; }
-        private IMatchManager Manager;
+        public IMatchManager MatchManager { get; set; }
         private IDialogCoordinator DialogCoordinator;
 
         public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "TUM.TT Viewer";
             Events = eventAggregator;
-            Manager = manager;
+            MatchManager = manager;
             DialogCoordinator = coordinator;
-
 
         }
 
@@ -56,14 +57,14 @@ namespace TT.Viewer.ViewModels
 
             if (this.ActiveItem == null)
             {
-                ActivateItem(new WelcomeViewModel(Manager));
+                ActivateItem(new WelcomeViewModel(MatchManager));
             }
         }
 
         protected override async void OnDeactivate(bool close)
         {
             Events.Unsubscribe(this);
-            if (Manager.MatchModified)
+            if (MatchManager.MatchModified)
             {
                 var mySettings = new MetroDialogSettings()
                 {
@@ -82,8 +83,64 @@ namespace TT.Viewer.ViewModels
 
                 if (_shutdown)
                 {
-                    Coroutine.BeginExecute(Manager.SaveMatch().GetEnumerator(), new CoroutineExecutionContext() { View = this.GetView() });
+                    Coroutine.BeginExecute(MatchManager.SaveMatch().GetEnumerator(), new CoroutineExecutionContext() { View = this.GetView() });
                     Application.Current.Shutdown();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the view model can be closed.
+        /// </summary>
+        /// <param name="callback">Called to perform the closing</param>
+        public override void CanClose(System.Action<bool> callback)
+        {
+            var context = new CoroutineExecutionContext()
+            {
+                Target = this,
+                View = this.GetView() as DependencyObject,
+            };
+
+            Coroutine.BeginExecute(
+                this.PrepareClose().GetEnumerator(),
+                context,
+                (sender, args) =>
+                {
+                    callback(args.WasCancelled != true);
+                });
+        }
+
+        /// <summary>
+        /// Prepare the closing of this view model.
+        /// </summary>
+        /// <returns>The actions to execute before closing</returns>
+        private IEnumerable<IResult> PrepareClose()
+        {
+            if (MatchManager.MatchModified)
+            {
+                var question = new YesNoQuestionResult()
+                {
+                    Title = "Save the match?",
+                    Question = "The match is modified. Save changes?",
+                    AllowCancel = true
+                };
+                yield return question;
+
+                var playlist = MatchManager.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
+                var lastRally = playlist.Rallies.LastOrDefault();
+                //TODO
+                if (playlist.Rallies.Any())
+                {
+                    if (lastRally.Winner == MatchPlayer.None)
+                        playlist.Rallies.Remove(lastRally);
+                }
+
+                if (question.Result)
+                {
+                    foreach (var action in MatchManager.SaveMatch())
+                    {
+                        yield return action;
+                    }
                 }
             }
         }
@@ -99,13 +156,13 @@ namespace TT.Viewer.ViewModels
         {
             get
             {
-                return  Manager.Match != null && Manager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
             }
         }
 
         public IEnumerable<IResult> GenerateReport()
         {
-            return Manager.GenerateReport();
+            return MatchManager.GenerateReport();
         }
 
         #endregion
@@ -116,14 +173,29 @@ namespace TT.Viewer.ViewModels
         {
             // We must reconsider, whether we can generate a report now.
             this.NotifyOfPropertyChange(() => this.CanGenerateReport);
-            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), Manager, DialogCoordinator));
+            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
         }
         #endregion
         #region Helper Methods
         public IEnumerable<IResult> OpenMatch()
         {
-            return Manager.OpenMatch();
+            return MatchManager.OpenMatch();
         }
+
+        public IEnumerable<IResult> SaveMatch()
+        {
+            if (MatchManager.MatchModified)
+            {
+                foreach (var action in MatchManager.SaveMatch())
+                {
+                    yield return action;
+                }
+                
+            }
+
+
+        }
+
         #endregion
 
     }

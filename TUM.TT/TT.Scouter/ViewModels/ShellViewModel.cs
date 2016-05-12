@@ -18,12 +18,12 @@ namespace TT.Scouter
         /// Gets the event bus of this shell.
         /// </summary>
         public IEventAggregator Events { get; private set; }
-        private IMatchManager MatchManager;
+        public IMatchManager MatchManager { get; set; }
         private IDialogCoordinator DialogCoordinator;
 
         public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "TUM.TT";
+            this.DisplayName = "TUM.TT Scouter";
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
@@ -116,6 +116,36 @@ namespace TT.Scouter
         #endregion
 
         #region Events
+
+        #endregion
+
+        #region Helper Methods
+        public IEnumerable<IResult> OpenMatch()
+        {
+            //      Load Match
+            //      Open RemoteView in Shell
+            foreach (IResult result in MatchManager.OpenMatch())
+            {
+                yield return result;
+            }
+            var next = ShowScreenResult.Of<MainViewModel>();
+            next.Properties.Add("SelectedTab", MainViewModel.Tabs.Remote);
+            yield return next;
+        }
+
+        public IEnumerable<IResult> SaveMatch()
+        {
+            if (MatchManager.MatchModified)
+            {
+                foreach (var action in MatchManager.SaveMatch())
+                {
+                    yield return action;
+                }
+
+            }
+
+
+        }
 
         #endregion
     }

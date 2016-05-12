@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
 
-    <TabControl x:Name="Items" Controls:TabControlHelper.IsUnderlined="True">
+    <TabControl x:Name="Items" Controls:TabControlHelper.IsUnderlined="True" >
         <!--<TabItem x:Name="List" Header="Hitlist"/>
             <TabItem x:Name="SmallTables" Header="Minitische"/>
             <TabItem x:Name="BigTable" Header="Tisch"/>-->

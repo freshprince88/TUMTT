@@ -49,22 +49,17 @@ namespace TT.Viewer.Views
             switch (message.Fullscreen)
             {
                 case true:
-                    //Column1.Header = "P";
-                    //Column2.Header = "S";
-                    //RalliesHeader.Visibility = Visibility.Collapsed;    
-                    //MiniStatistic.Visibility = Visibility.Collapsed;
-                    ProportionalColumn.ApplyWidth(Column0, 2);
-                    ProportionalColumn.ApplyWidth(Column1, 0);
+                    Column1.Header = "S";
+                    ProportionalColumn.ApplyWidth(Column0, 1);
+                    ProportionalColumn.ApplyWidth(Column1, 2);
                     ProportionalColumn.ApplyWidth(Column2, 0);
                     ProportionalColumn.ApplyWidth(Column3, 0);
                     ProportionalColumn.ApplyWidth(Column4, 0);
                     ProportionalColumn.ApplyWidth(Column5, 0);
                     break;
                 case false:
-                    //Column1.Header = "Punkte";
-                    //Column2.Header = "Sätze";
-                    //RalliesHeader.Visibility = Visibility.Visible;
-                    //MiniStatistic.Visibility = Visibility.Visible;
+                    Column1.Header = "Score";
+                    
                     ProportionalColumn.ApplyWidth(Column0, 1);
                     ProportionalColumn.ApplyWidth(Column1, 2);
                     ProportionalColumn.ApplyWidth(Column2, 2);

@@ -1,16 +1,50 @@
 <Controls:MetroWindow x:Class="TT.Scouter.ShellView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
-        ResizeMode="CanResizeWithGrip"
-        Width="1024"
-        Height="768"         
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:cal="http://www.caliburnproject.org"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      Dialog:DialogParticipation.Register="{Binding}"
+                      ResizeMode="CanResizeWithGrip"
+                      Width="1024"
+                      Height="768"                            
         EnableDWMDropShadow="True"
         WindowTransitionsEnabled="True"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+                      Title="TUM.TT Scouter">
 
+
+    <Window.Resources>
+        <ResourceDictionary Source="/Resources/Icons.xaml" />
+    </Window.Resources>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button ToolTip="Save Match"
+                    cal:Message.Attach="[Event Click] = [Action SaveMatch()]" >
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_save}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button ToolTip="Open new Match"
+                    cal:Message.Attach="[Event Click] = [Action OpenMatch()]">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_folder_open}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
     <Controls:TransitioningContentControl x:Name="ActiveItem" Transition="LeftReplace"/>
 
 </Controls:MetroWindow>

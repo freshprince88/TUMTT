@@ -127,7 +127,6 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
             MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
-
         }
 
         protected override void OnActivate()
@@ -149,6 +148,7 @@ namespace TT.Scouter.ViewModels
                 TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
                 TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
                 MediaPlayer.MediaPosition = anfangRally;
+                MediaPlayer.EndPosition = endeRally;
                 MediaPlayer.Play();
                 
                 

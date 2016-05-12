@@ -50,6 +50,7 @@ namespace TT.Scouter.ViewModels
         {
             //TODO: Save Match Details in MatchManager and go to Video Choice
             MatchManager.MatchModified = true;
+            NotifyOfPropertyChange("MatchModified");
 
             Rally first = new Rally();
             first.Nummer = 1;

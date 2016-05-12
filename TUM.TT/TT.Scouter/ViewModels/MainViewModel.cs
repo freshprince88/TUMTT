@@ -40,14 +40,15 @@ namespace TT.Scouter.ViewModels
                             {
 
                             }
+
+                            else
+                            {
+                                LiveView.CurrentRally = new Rally();
+                                LiveView.Rallies.Add(LiveView.CurrentRally);
+                                LiveView.CurrentRally.UpdateServerAndScore();
+                            }
                         }
-                        else
-                        {
-                            LiveView.CurrentRally = new Rally();
-                            LiveView.Rallies.Add(LiveView.CurrentRally);
-                            LiveView.CurrentRally.UpdateServerAndScore();
-                        }
-                        
+
                     }
                     if (_selectedTab == 1)
                     {

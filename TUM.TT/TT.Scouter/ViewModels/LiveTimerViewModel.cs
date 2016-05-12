@@ -23,6 +23,21 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private TimeSpan _endPos;
+        public TimeSpan EndPosition
+        {
+            get
+            {
+                return _endPos;
+            }
+            set
+            {
+                if (_endPos != value)
+                    _endPos = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         public LiveTimerViewModel()
         {
             watch = new Stopwatch();

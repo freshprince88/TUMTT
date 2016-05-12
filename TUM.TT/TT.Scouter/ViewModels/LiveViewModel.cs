@@ -16,6 +16,16 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+        public bool FirstServerSet
+        {
+            get
+            {
+                return Match.FirstServer != MatchPlayer.None;
+                 
+            }
+
+            
+        }
        
         public int LengthHelper
         {
@@ -170,6 +180,7 @@ namespace TT.Scouter.ViewModels
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
             MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+            
         }
 
         #region Caliburn Hooks
@@ -182,11 +193,11 @@ namespace TT.Scouter.ViewModels
 
         protected override void OnViewReady(object view)
         {
-            CoroutineExecutionContext context = new CoroutineExecutionContext() { Target = this, Source = view, View = view };
-            if (Rallies.Count < 2)
-            {
-                Coroutine.ExecuteAsync(ShowServer().GetEnumerator(), context);
-            }
+            //CoroutineExecutionContext context = new CoroutineExecutionContext() { Target = this, Source = view, View = view };
+            //if (Rallies.Count < 2)
+            //{
+            //    Coroutine.ExecuteAsync(ShowServer().GetEnumerator(), context);
+            //}
         }
 
         #endregion
@@ -274,7 +285,7 @@ namespace TT.Scouter.ViewModels
             dialog.Combo = new ComboBox() { ItemsSource = Match.Players, SelectedIndex = 0, DisplayMemberPath = "Name" };
             StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };
             panel.Margin = new System.Windows.Thickness(10);
-            TextBlock message = new TextBlock() { Text = "Bitte Aufschlagspieler Auswählen" };
+            TextBlock message = new TextBlock() { Text = "Bitte Aufschlagspieler auswählen" };
             panel.Children.Add(message);
             panel.Children.Add(dialog.Combo);
             panel.Children.Add(dialog.CloseButton);
@@ -283,9 +294,20 @@ namespace TT.Scouter.ViewModels
             var result = new CustomDialogResult<Player>() { Title = "Server", DialogContent = dialog };
             yield return result;
 
+          
+            NotifyOfPropertyChange("FirstServerSet");
             this.Server = MatchManager.ConvertPlayer(result.Result);
             CurrentRally.Server = this.Server;
             NotifyOfPropertyChange("Server");
+        }
+        public void SetFirstServer(Player p)
+        {
+            
+            this.Server = MatchManager.ConvertPlayer(p);
+            CurrentRally.Server = this.Server;
+            NotifyOfPropertyChange("Server");
+            NotifyOfPropertyChange("FirstServerSet");
+
         }
 
         public void DeleteLastRally()
@@ -303,6 +325,8 @@ namespace TT.Scouter.ViewModels
                 Rallies.Add(new Rally());
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
+                NotifyOfPropertyChange("FirstServerSet");
+
             }
         }
 
