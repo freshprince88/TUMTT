@@ -32,7 +32,9 @@ namespace TT.Viewer.ViewModels
                 if (value != CurrentRally.Kommentar)
                 {
                     CurrentRally.Kommentar = value;
+                    Manager.MatchModified = true;
                     NotifyOfPropertyChange();
+
                 }
             }
         }

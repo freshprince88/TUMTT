@@ -7,7 +7,9 @@ using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
+
 using TT.Models;
+
 
 namespace TT.Viewer.ViewModels
 {
@@ -24,7 +26,8 @@ namespace TT.Viewer.ViewModels
 
         public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "TUM.TT Viewer";
+            this.DisplayName = "";
+
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
@@ -159,6 +162,27 @@ namespace TT.Viewer.ViewModels
                 return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
             }
         }
+        public bool CanSaveMatch
+        {
+            get
+            {
+                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+            }
+        }
+        public bool CanShowPlayer
+        {
+            get
+            {
+                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+            }
+        }
+        public bool CanShowCompetition
+        {
+            get
+            {
+                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+            }
+        }
 
         public IEnumerable<IResult> GenerateReport()
         {
@@ -173,6 +197,9 @@ namespace TT.Viewer.ViewModels
         {
             // We must reconsider, whether we can generate a report now.
             this.NotifyOfPropertyChange(() => this.CanGenerateReport);
+            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
+            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
+            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
         }
         #endregion
@@ -189,10 +216,16 @@ namespace TT.Viewer.ViewModels
                 foreach (var action in MatchManager.SaveMatch())
                 {
                     yield return action;
-                }
-                
+                }                
             }
+        }
 
+        public void ShowPlayer()
+        {
+
+        }
+        public void ShowCompetition()
+        {
 
         }
 
