@@ -113,6 +113,8 @@ namespace TT.Scouter
             }
         }
 
+        
+
         #endregion
 
         #region Events
@@ -135,7 +137,7 @@ namespace TT.Scouter
 
         public IEnumerable<IResult> SaveMatch()
         {
-            if (MatchManager.MatchModified)
+            //if (MatchManager.MatchModified)
             {
                 foreach (var action in MatchManager.SaveMatch())
                 {
