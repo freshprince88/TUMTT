@@ -14,23 +14,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Style="{StaticResource MetroAccentFlat}">
-                <Button.Content>
-                    <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Wettbewerb"/></TextBlock>
-                </Button.Content>
-            </Button>
-            <Button Grid.Column="1" Style="{StaticResource MetroAccentFlat}">
-            <Button.Content>
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Spieler"/></TextBlock>
-            </Button.Content> 
-        </Button>
-        </Grid>
-        <TabControl  x:Name="FilterStatisticsSwitch" Grid.Row="1"   Controls:TabControlHelper.IsUnderlined="True" TabStripPlacement="Top" cal:Message.Attach="[Event SelectionChanged] = [Action FilterStatisticsSelected ($eventArgs)]">
+        
+        <TabControl  x:Name="FilterStatisticsSwitch" Grid.Row="0"   Controls:TabControlHelper.IsUnderlined="True" TabStripPlacement="Top" cal:Message.Attach="[Event SelectionChanged] = [Action FilterStatisticsSelected ($eventArgs)]">
             <TabItem x:Name="FilterTab" Header=" Filter"/>
             <TabItem x:Name="StatisticsTab" Header="Statistik"/>
         </TabControl>

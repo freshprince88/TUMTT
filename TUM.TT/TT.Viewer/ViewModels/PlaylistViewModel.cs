@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using GongSolutions.Wpf.DragDrop;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
 using TT.Models;
+using MediaToolkit;
+using NReco.VideoConverter;
 
 namespace TT.Viewer.ViewModels
 {
@@ -20,13 +23,14 @@ namespace TT.Viewer.ViewModels
         IHandle<PlaylistChangedEvent>
     {
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IMatchManager MatchManager { get; set; }
         private IDialogCoordinator Dialogs;
+        
 
         public PlaylistViewModel(IEventAggregator e, IMatchManager man, IDialogCoordinator dc)
         {
             events = e;
-            Manager = man;
+            MatchManager = man;
             Dialogs = dc;            
         }
 
@@ -39,7 +43,7 @@ namespace TT.Viewer.ViewModels
             if (item != null)
             {
                 //this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
-                Manager.ActivePlaylist = item.List;
+                MatchManager.ActivePlaylist = item.List;
             }           
         }
 
@@ -51,8 +55,9 @@ namespace TT.Viewer.ViewModels
             {
                 Playlist p = new Playlist();
                 p.Name = name;
-                Manager.Match.Playlists.Add(p);
-                Manager.MatchModified = true;
+                MatchManager.Match.Playlists.Add(p);
+                MatchManager.MatchModified = true;
+                NotifyOfPropertyChange("MatchManager.MatchModified");
                 this.ActivateItem(new PlaylistItem()
                 {
                     Name = name,
@@ -64,7 +69,7 @@ namespace TT.Viewer.ViewModels
 
         public void Save()
         {
-            Manager.SaveMatch();
+            MatchManager.SaveMatch();
         }
 
         public void ShowSettings()
@@ -73,7 +78,7 @@ namespace TT.Viewer.ViewModels
         }
         public async void DeletePlaylist()
         {
-            if (Manager.ActivePlaylist.Name != "Alle" && Manager.ActivePlaylist.Name != "Markiert")
+            if (MatchManager.ActivePlaylist.Name != "Alle" && MatchManager.ActivePlaylist.Name != "Markiert")
 
             {
                 var mySettings = new MetroDialogSettings()
@@ -84,7 +89,7 @@ namespace TT.Viewer.ViewModels
                     AnimateHide = false
                 };
 
-                var result = await Dialogs.ShowMessageAsync(this, "Delete Playlist  '" + Manager.ActivePlaylist.Name + "' ?",
+                var result = await Dialogs.ShowMessageAsync(this, "Delete Playlist  '" + MatchManager.ActivePlaylist.Name + "' ?",
                     "Sure?", MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
                 if (result == MessageDialogResult.Negative)
@@ -92,17 +97,76 @@ namespace TT.Viewer.ViewModels
                 }
                 else
                 {
-                    Playlist p = Manager.ActivePlaylist;
+                    Playlist p = MatchManager.ActivePlaylist;
                     PlaylistItem p1 = this.Items[0];
-                    int i = Manager.Match.Playlists.IndexOf(p);
-                    Manager.Match.Playlists.RemoveAt(i);
+                    int i = MatchManager.Match.Playlists.IndexOf(p);
+                    MatchManager.Match.Playlists.RemoveAt(i);
                     this.Items.RemoveAt(i);
                     this.Items.ElementAt(0);
                     this.Items.Refresh();
                     //Manager.ActivePlaylist = Manager.Match.Playlists[0];  //TODO: Playlist in der ListView auswählen
                     events.PublishOnUIThread(new PlaylistDeletedEvent());
+                    MatchManager.MatchModified = true;
+                    NotifyOfPropertyChange("MatchManager.MatchModified");
+
                 }
             }
+        }
+
+        public void ExportPlaylist()
+        {
+            //TODO Ort Auswählen
+            //TODO Auswahlmöglichkeit: einzelne Ballwechsel-Videos, alle Ballwechsel in einem Video
+
+            var inputFile = new MediaToolkit.Model.MediaFile { Filename = @MatchManager.Match.VideoFile };
+            string videoName = MatchManager.Match.VideoFile.Split('\\').Last();
+            videoName = videoName.Split('.').First();
+            Directory.CreateDirectory(@"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName);
+            Directory.CreateDirectory(@"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName + @"\" + MatchManager.ActivePlaylist.Name);
+            int rallyCount = MatchManager.ActivePlaylist.Rallies.Count();
+            string[] RallyCollection = new string[rallyCount];
+
+            using (var engine = new Engine())
+            {
+                engine.GetMetadata(inputFile);
+                var options = new MediaToolkit.Options.ConversionOptions();
+                options.VideoBitRate = inputFile.Metadata.VideoData.BitRateKbs;
+                options.VideoSize = MediaToolkit.Options.VideoSize.Hd1080;
+
+                for (int i = 0; i < rallyCount; i++)
+                {
+                    Rally curRally = MatchManager.ActivePlaylist.Rallies[i];
+                    TimeSpan startRally = TimeSpan.FromMilliseconds(curRally.Anfang);
+                    TimeSpan endRally = TimeSpan.FromMilliseconds(curRally.Ende);
+                    TimeSpan duration = TimeSpan.FromMilliseconds(curRally.Ende - curRally.Anfang);
+                    string RallyScore = curRally.CurrentRallyScore.ToString();
+                    RallyScore = RallyScore.Replace(":", "-");
+                    string SetScore = curRally.CurrentSetScore.ToString();
+                    SetScore = SetScore.Replace(":", "-");
+
+
+                    string fileName = @"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName + @"\" + MatchManager.ActivePlaylist.Name + @"\" + RallyScore + " (" + SetScore + ").mp4";
+                    var outputFile = new MediaToolkit.Model.MediaFile { Filename = fileName };
+                    RallyCollection[i] = fileName;
+
+
+                    options.CutMedia(startRally, duration);
+                    engine.Convert(inputFile, outputFile, options);
+
+
+                }
+
+            }
+            var ffMpeg = new NReco.VideoConverter.FFMpegConverter();            
+            NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
+            ffMpeg.ConcatMedia(RallyCollection,@"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName + @"\" + MatchManager.ActivePlaylist.Name + @"\" + MatchManager.ActivePlaylist.Name+"_collection.mp4",Format.mp4,settings);
+
+
+            for (int i = 0; i < rallyCount; i++)
+            {
+                File.Delete(RallyCollection[i]);
+            }
+
         }
 
         #endregion
@@ -146,12 +210,13 @@ namespace TT.Viewer.ViewModels
             var sourceItem = dropInfo.Data as ResultListItem;
             var targetItem = dropInfo.TargetItem as PlaylistItem;
 
-            Playlist list = Manager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
+            Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
 
             if (list != null && !list.Rallies.Contains(sourceItem.Rally))
             {
                 list.Rallies.Add(sourceItem.Rally);
-                Manager.MatchModified = true;
+                MatchManager.MatchModified = true;
+                NotifyOfPropertyChange("MatchManager.MatchModified");
                 targetItem.Count++;
                 this.Items.Refresh();
             }            
@@ -176,7 +241,7 @@ namespace TT.Viewer.ViewModels
         {
             this.Items.Clear();
 
-            foreach (var playlist in Manager.Match.Playlists)
+            foreach (var playlist in MatchManager.Match.Playlists)
             {
                 string name = playlist.Name;
 

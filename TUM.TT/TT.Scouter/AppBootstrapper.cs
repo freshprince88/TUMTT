@@ -1,12 +1,13 @@
+using System;
+using System.Collections.Generic;
+using Caliburn.Micro;
+using TT.Models.Serialization;
+using TT.Lib.Managers;
+using TT.Lib;
+using TT.Scouter.ViewModels;
+using MahApps.Metro.Controls.Dialogs;
 namespace TT.Scouter {
-    using System;
-    using System.Collections.Generic;
-    using Caliburn.Micro;
-    using TT.Models.Serialization;
-    using TT.Lib.Managers;
-    using Lib;
-    using ViewModels;
-    using MahApps.Metro.Controls.Dialogs;
+    
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
 

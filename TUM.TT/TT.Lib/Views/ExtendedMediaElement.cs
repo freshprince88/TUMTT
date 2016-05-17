@@ -18,6 +18,12 @@ namespace TT.Lib.Views
             typeof(ExtendedMediaElement),
             new PropertyMetadata(MediaPositionChanged));
 
+        // Using a DependencyProperty as the backing store for EndPosition.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EndPositionProperty =
+            DependencyProperty.Register("EndPosition", typeof(TimeSpan), typeof(ExtendedMediaElement));
+
+
+
         private static void MediaPositionChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             ((ExtendedMediaElement)obj).MediaPositionChanged((TimeSpan)e.NewValue);
@@ -38,6 +44,12 @@ namespace TT.Lib.Views
         {
             get { return (TimeSpan)base.GetValue(MediaPositionProperty); }
             set { SetValue(MediaPositionProperty, value); NotifyOfPropertyChange(); }
+        }
+
+        public TimeSpan EndPosition
+        {
+            get { return (TimeSpan)GetValue(EndPositionProperty); }
+            set { SetValue(EndPositionProperty, value); }
         }
 
         public virtual bool IsNotifying { get; set; }
@@ -79,7 +91,12 @@ namespace TT.Lib.Views
         {
             positionChangedByTimer = true;
             MediaPosition = Position;
-            
+
+            if(EndPosition != null && EndPosition > Position)
+            {
+                //TODO: Send Event to RemoteMediaViewModel
+                // Pause()
+            }
         }
 
         public void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

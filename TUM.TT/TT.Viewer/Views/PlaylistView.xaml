@@ -62,7 +62,7 @@
             </ListView>
         </Border>
 
-        <Button x:Name="AddButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="0" Grid.Row="1" Height="25" Width="25">
+        <Button x:Name="AddButton" ToolTip="Wiedergabeliste hinzufügen" Style="{StaticResource MetroAccentFlat}" Grid.Column="0" Grid.Row="1" Height="25" Width="25">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>
@@ -77,7 +77,7 @@
             </i:Interaction.Triggers>
         </Button>
 
-        <Button x:Name="SaveButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Grid.Row="1" Height="25" Width="25">
+        <!--<Button x:Name="SaveButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Grid.Row="1" Height="25" Width="25">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>
@@ -90,9 +90,9 @@
                     <cal:ActionMessage MethodName="Save" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Button>
+        </Button>-->
 
-        <Button x:Name="DeleteButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
+        <Button x:Name="DeleteButton" ToolTip="Wiedergabeliste löschen"  Style="{StaticResource MetroAccentFlat}" Grid.Column="2" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>
@@ -103,6 +103,20 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <cal:ActionMessage MethodName="DeletePlaylist" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <Button x:Name="ExportButton" ToolTip="Wiedergabeliste exportieren" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
+            <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_video}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <cal:ActionMessage MethodName="ExportPlaylist" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
