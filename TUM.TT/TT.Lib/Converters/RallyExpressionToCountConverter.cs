@@ -27,7 +27,7 @@ namespace TT.Lib.Converters
                 var test = rallies.Where(func).Count();
                 return test;
             }
-           catch (NullReferenceException e)
+           catch (NullReferenceException)
             {
                 return 0;
             }
