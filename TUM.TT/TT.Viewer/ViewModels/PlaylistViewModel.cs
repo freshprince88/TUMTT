@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TT.Lib.Events;
+using TT.Lib.Results;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
 using TT.Models;
 using MediaToolkit;
 using NReco.VideoConverter;
+using TT.Lib.Util;
 
 namespace TT.Viewer.ViewModels
 {
@@ -25,13 +27,17 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IMatchManager MatchManager { get; set; }
         private IDialogCoordinator Dialogs;
+        public bool singleRalliesBool { get; set; }
+        public bool rallyCollectionBool { get; set; }
         
 
         public PlaylistViewModel(IEventAggregator e, IMatchManager man, IDialogCoordinator dc)
         {
             events = e;
             MatchManager = man;
-            Dialogs = dc;            
+            Dialogs = dc;
+            singleRalliesBool = false;
+            rallyCollectionBool = true;    
         }
 
         #region View Methods
@@ -113,60 +119,47 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public void ExportPlaylist()
+        public IEnumerable<IResult> ExportPlaylist()
         {
             //TODO Ort Auswählen
             //TODO Auswahlmöglichkeit: einzelne Ballwechsel-Videos, alle Ballwechsel in einem Video
-
-            var inputFile = new MediaToolkit.Model.MediaFile { Filename = @MatchManager.Match.VideoFile };
             string videoName = MatchManager.Match.VideoFile.Split('\\').Last();
             videoName = videoName.Split('.').First();
-            Directory.CreateDirectory(@"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName);
-            Directory.CreateDirectory(@"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName + @"\" + MatchManager.ActivePlaylist.Name);
-            int rallyCount = MatchManager.ActivePlaylist.Rallies.Count();
-            string[] RallyCollection = new string[rallyCount];
-
-            using (var engine = new Engine())
+            if (singleRalliesBool != false || rallyCollectionBool != false)
             {
-                engine.GetMetadata(inputFile);
-                var options = new MediaToolkit.Options.ConversionOptions();
-                options.VideoBitRate = inputFile.Metadata.VideoData.BitRateKbs;
-                options.VideoSize = MediaToolkit.Options.VideoSize.Hd1080;
-
-                for (int i = 0; i < rallyCount; i++)
+                var exportDialog = new ExportPlaylistDialogResult()
                 {
-                    Rally curRally = MatchManager.ActivePlaylist.Rallies[i];
-                    TimeSpan startRally = TimeSpan.FromMilliseconds(curRally.Anfang);
-                    TimeSpan endRally = TimeSpan.FromMilliseconds(curRally.Ende);
-                    TimeSpan duration = TimeSpan.FromMilliseconds(curRally.Ende - curRally.Anfang);
-                    string RallyScore = curRally.CurrentRallyScore.ToString();
-                    RallyScore = RallyScore.Replace(":", "-");
-                    string SetScore = curRally.CurrentSetScore.ToString();
-                    SetScore = SetScore.Replace(":", "-");
+                    Title = "Export playlist...",
+                    // Filter=
+                    DefaultFileName = videoName,
+
+                };
+                yield return exportDialog;
+
+                string folderName = exportDialog.Result;
 
 
-                    string fileName = @"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName + @"\" + MatchManager.ActivePlaylist.Name + @"\" + RallyScore + " (" + SetScore + ").mp4";
-                    var outputFile = new MediaToolkit.Model.MediaFile { Filename = fileName };
-                    RallyCollection[i] = fileName;
 
 
-                    options.CutMedia(startRally, duration);
-                    engine.Convert(inputFile, outputFile, options);
-
-
-                }
-
+                var progressDialog = new ExportPlaylistSaveResult(MatchManager, Dialogs, folderName, singleRalliesBool, rallyCollectionBool);
+                yield return progressDialog;
             }
-            var ffMpeg = new NReco.VideoConverter.FFMpegConverter();            
-            NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
-            ffMpeg.ConcatMedia(RallyCollection,@"C:\Users\Michael Fuchs\Desktop\ExportList\" + videoName + @"\" + MatchManager.ActivePlaylist.Name + @"\" + MatchManager.ActivePlaylist.Name+"_collection.mp4",Format.mp4,settings);
-
-
-            for (int i = 0; i < rallyCount; i++)
+            else
             {
-                File.Delete(RallyCollection[i]);
-            }
+                var errorDialog = new ErrorMessageResult()
+                {
+                    Title = "Keine Exportoptionen ausgewählt!",
+                    Message = "Bitte wählen sie per Rechtsklick entsprechende Optionen aus!",
+                    Dialogs = Dialogs
+                };
+                yield return errorDialog;
 
+            }
+        }
+
+        public void singleRallies()
+        {
+            singleRalliesBool = !singleRalliesBool;
         }
 
         #endregion

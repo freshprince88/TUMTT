@@ -9,6 +9,7 @@ namespace TT.Lib.Results
     using System;
     using System.Windows;
     using Caliburn.Micro;
+    using MahApps.Metro.Controls.Dialogs;
 
     /// <summary>
     /// Shows an error message.
@@ -19,6 +20,8 @@ namespace TT.Lib.Results
         /// Notifies about the completion of this action.
         /// </summary>
         public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
+
+        public IDialogCoordinator Dialogs { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the error message.
@@ -34,19 +37,21 @@ namespace TT.Lib.Results
         /// Executes this action.
         /// </summary>
         /// <param name="context">The execution context.</param>
-        public void Execute(CoroutineExecutionContext context)
+        public async void Execute(CoroutineExecutionContext context)
         {
-            Caliburn.Micro.Execute.BeginOnUIThread(() =>
+            var mySettings = new MetroDialogSettings()
             {
-                MessageBox.Show(
-                    Window.GetWindow(context.View as FrameworkElement),
-                    this.Message,
-                    this.Title,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                AffirmativeButtonText = "OK",
+                AnimateShow = true,
+                AnimateHide = false
+            };
+            var shell = (IoC.Get<IShell>() as Screen);
+            var result = await Dialogs.ShowMessageAsync(shell, this.Title,
+                this.Message,
+                MessageDialogStyle.Affirmative, mySettings);
 
-                this.Completed(this, new ResultCompletionEventArgs());
-            });
+            var args = new ResultCompletionEventArgs();
+            this.Completed(this, args);
         }
     }
 }
