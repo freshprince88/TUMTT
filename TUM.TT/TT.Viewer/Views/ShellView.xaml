@@ -113,7 +113,6 @@
                              AreAnimationsEnabled="False"
                              CloseButtonVisibility="Collapsed"
                              TitleVisibility="Collapsed"
-                             IsPinned="False"
                              Height="110">
                 <Grid>
                     <Grid.ColumnDefinitions>

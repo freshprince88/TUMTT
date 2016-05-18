@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TT.Lib.Managers;
-using MediaToolkit;
+
 using NReco.VideoConverter;
 using TT.Lib.Util;
 using TT.Models;
@@ -24,7 +24,13 @@ namespace TT.Lib.Results
         public string Location { get; set; }
         public bool singleRallies { get; set; }
         public bool rallyCollection { get; set; }
-        
+        public IEventAggregator Events { get; private set; }
+        public double ConvertProgress { get; set; }
+        public double ConvertDuration { get; set; }
+        public ProgressDialogController dialog { get; set; }
+        double currentProgress { get; set; }
+        double progressBar { get; set; }
+
 
         public ExportPlaylistSaveResult(IMatchManager manager, IDialogCoordinator dialogs, string location, bool sr, bool rc)
         {
@@ -33,6 +39,8 @@ namespace TT.Lib.Results
             Dialogs = dialogs;
             singleRallies = sr;
             rallyCollection = rc;
+            Events = IoC.Get<IEventAggregator>();
+            Events.Subscribe(this);
         }
 
         public event EventHandler<ResultCompletionEventArgs> Completed = delegate { };
@@ -40,79 +48,101 @@ namespace TT.Lib.Results
         public async void Execute(CoroutineExecutionContext context)
         {
             var shell = (IoC.Get<IShell>() as Screen);
-            var dialog = await Dialogs.ShowProgressAsync(shell, "Bitte warten...", "Ballwechsel werden exportiert", false);
-            if (singleRallies != false || rallyCollection != false) { 
-            await Task.Factory.StartNew(() => ExportVideo(dialog));
+            dialog = await Dialogs.ShowProgressAsync(shell, "Bitte warten...", "Ballwechsel werden exportiert", false);
+            if (singleRallies != false || rallyCollection != false)
+            {
+                   await Task.Factory.StartNew(() => ExportVideo(dialog));
             }
             await dialog.CloseAsync();
         }
-        
 
-        private void ExportVideo(ProgressDialogController progress)
-        {   
-            var inputFile = new MediaToolkit.Model.MediaFile { Filename = @Manager.Match.VideoFile };
+
+        public void ExportVideo(ProgressDialogController progress)
+        {
+            string inputFile = @Manager.Match.VideoFile;
             string videoName = Manager.Match.VideoFile.Split('\\').Last();
             videoName = videoName.Split('.').First();
             Directory.CreateDirectory(@Location);
-            Directory.CreateDirectory(@Location + @"\" + Manager.ActivePlaylist.Name);
+            string collectionName = @Location + @"\" + Manager.ActivePlaylist.Name + "_collection.mp4";
             int rallyCount = Manager.ActivePlaylist.Rallies.Count();
-            string[] RallyCollection = new string[rallyCount];
-            progress.Minimum = 0;
-            if (rallyCollection) { 
-            progress.Maximum = rallyCount + 1;
+            int sum = 0;
+            for (int s = 1; s <= rallyCount; s++)
+            {
+                sum = sum + s;
+            }
+            if (rallyCollection)
+            {
+                progressBar = sum * 2;
             }
             else
             {
-                progress.Maximum = rallyCount;
+                progressBar = sum;
             }
+            
+            currentProgress = 0;
 
+            string[] RallyCollection = new string[rallyCount];
+            string[] ConcatRally = new string[2];
+            progress.Minimum = 0;
+            progress.Maximum = progressBar;
             progress.SetProgress(0);
 
-            using (var engine = new Engine())
-            {
-                engine.GetMetadata(inputFile);
-                var options = new MediaToolkit.Options.ConversionOptions();
-                options.VideoBitRate = inputFile.Metadata.VideoData.BitRateKbs;
-                options.VideoSize = MediaToolkit.Options.VideoSize.Hd1080;
-
-                for (int i = 0; i < rallyCount; i++)
-                {
-                    Rally curRally = Manager.ActivePlaylist.Rallies[i];
-                    TimeSpan startRally = TimeSpan.FromMilliseconds(curRally.Anfang);
-                    TimeSpan endRally = TimeSpan.FromMilliseconds(curRally.Ende);
-                    TimeSpan duration = TimeSpan.FromMilliseconds(curRally.Ende - curRally.Anfang);
-                    string RallyScore = curRally.CurrentRallyScore.ToString();
-                    RallyScore = RallyScore.Replace(":", "-");
-                    string SetScore = curRally.CurrentSetScore.ToString();
-                    SetScore = SetScore.Replace(":", "-");
-
-
-                    string fileName = Location + @"\" + Manager.ActivePlaylist.Name + @"\" + RallyScore + " (" + SetScore + ").mp4";
-                    var outputFile = new MediaToolkit.Model.MediaFile { Filename = fileName };
-                    RallyCollection[i] = fileName;
-
-
-                    options.CutMedia(startRally, duration);
-                    engine.Convert(inputFile, outputFile, options);
-
-                    progress.SetProgress(i+1);
-                }
-
-            }
-
-            if (rallyCollection) { 
-            var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
-            NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
-            ffMpeg.ConcatMedia(RallyCollection, @Location + @"\" + Manager.ActivePlaylist.Name + @"\" + Manager.ActivePlaylist.Name + "_collection.mp4", NReco.VideoConverter.Format.mp4, settings);
-            progress.SetProgress(rallyCount + 1);
-            }
-
-            if (!singleRallies) { 
             for (int i = 0; i < rallyCount; i++)
             {
-                File.Delete(RallyCollection[i]);
+                progress.SetMessage("Wiedergabeliste '" + Manager.ActivePlaylist.Name + "' wird exportiert: \n\nBallwechsel " + (i + 1) + " wird gerade geschnitten...");
+                Rally curRally = Manager.ActivePlaylist.Rallies[i];
+                string RallyNumber = curRally.Nummer.ToString();
+                string RallyScore = curRally.CurrentRallyScore.ToString();
+                RallyScore = RallyScore.Replace(":", "-");
+                string SetScore = curRally.CurrentSetScore.ToString();
+                SetScore = SetScore.Replace(":", "-");
+                string fileName = @Location + @"\#" + RallyNumber + "_" + RallyScore + " (" + SetScore + ").mp4";
+                RallyCollection[i] = fileName;
+
+                var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
+                NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings();
+
+                settings.Seek = Convert.ToSingle(curRally.Anfang / 1000);
+                settings.MaxDuration = Convert.ToSingle((curRally.Ende - curRally.Anfang) / 1000);
+                settings.VideoFrameSize = NReco.VideoConverter.FrameSize.hd720;
+                ffMpeg.ConvertMedia(@Manager.Match.VideoFile, NReco.VideoConverter.Format.mp4, fileName, NReco.VideoConverter.Format.mp4, settings);
+                currentProgress = currentProgress + (i + 1);
+                progress.SetProgress(currentProgress);
             }
+
+            if (rallyCollection)
+            {
+                progress.SetMessage("\nDie Collection wird erstellt! \n\nDies kann leider etwas dauern... ");
+                var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
+                ffMpeg.ConvertProgress += UpdateProgress;                
+
+                NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
+                ffMpeg.ConcatMedia(RallyCollection, @Location + @"\" + Manager.ActivePlaylist.Name + "_collection("+rallyCount+").mp4", NReco.VideoConverter.Format.mp4, settings);
+                progress.SetProgress(progressBar);
             }
+
+            if (!singleRallies)
+            {
+                for (int i = 0; i < rallyCount; i++)
+                {
+                    File.Delete(RallyCollection[i]);
+                }
+            }
+        }
+
+        private void UpdateProgress (object sender, ConvertProgressEventArgs e)
+        {   double rT = e.TotalDuration.TotalSeconds-e.Processed.TotalSeconds;
+            if (rT < 0) rT = 0;
+            TimeSpan remainingTime = TimeSpan.FromSeconds(rT);
+            ConvertProgress = (double) e.Processed.TotalMilliseconds;
+            ConvertDuration = (double) e.TotalDuration.TotalMilliseconds;
+            currentProgress = (progressBar / 2) + (progressBar / 2) * (ConvertProgress / ConvertDuration);
+            if (currentProgress > progressBar)
+            {
+                currentProgress = progressBar;
+            }
+            dialog.SetMessage("\nDie Collection wird erstellt! \n\nDies kann leider etwas dauern...(" + remainingTime.Minutes+":"+remainingTime.Seconds+ ")");
+            dialog.SetProgress(currentProgress);
             
         }
     }

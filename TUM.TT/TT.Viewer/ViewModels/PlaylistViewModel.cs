@@ -14,9 +14,9 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
 using TT.Models;
-using MediaToolkit;
 using NReco.VideoConverter;
 using TT.Lib.Util;
+using TT.Lib;
 
 namespace TT.Viewer.ViewModels
 {
@@ -55,7 +55,8 @@ namespace TT.Viewer.ViewModels
 
         public async void Add()
         {
-            var name = await Dialogs.ShowInputAsync(this, "New Playlist", "Please enter a name for the playlist");
+            var shell = (IoC.Get<IShell>() as Screen);
+            var name = await Dialogs.ShowInputAsync(shell, "New Playlist", "Please enter a name for the playlist");
             //this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist")); 
             if(name != null && name != string.Empty)
             {
@@ -94,8 +95,8 @@ namespace TT.Viewer.ViewModels
                     AnimateShow = true,
                     AnimateHide = false
                 };
-
-                var result = await Dialogs.ShowMessageAsync(this, "Delete Playlist  '" + MatchManager.ActivePlaylist.Name + "' ?",
+                var shell = (IoC.Get<IShell>() as Screen);
+                var result = await Dialogs.ShowMessageAsync(shell, "Delete Playlist  '" + MatchManager.ActivePlaylist.Name + "' ?",
                     "Sure?", MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
                 if (result == MessageDialogResult.Negative)
@@ -125,6 +126,7 @@ namespace TT.Viewer.ViewModels
             //TODO Auswahlmöglichkeit: einzelne Ballwechsel-Videos, alle Ballwechsel in einem Video
             string videoName = MatchManager.Match.VideoFile.Split('\\').Last();
             videoName = videoName.Split('.').First();
+            videoName = videoName + "_("+ MatchManager.ActivePlaylist.Name+")";
             if (singleRalliesBool != false || rallyCollectionBool != false)
             {
                 var exportDialog = new ExportPlaylistDialogResult()

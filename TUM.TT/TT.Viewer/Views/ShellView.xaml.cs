@@ -28,12 +28,14 @@ namespace TT.Viewer.Views
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             MenuFlyout.IsOpen = true;
+            MenuFlyout.IsPinned = true;
         }
 
 
         public void Handle(MatchOpenedEvent message)
         {
             MenuFlyout.IsOpen = false;
+            MenuFlyout.IsPinned = false;
         }
 
         private void ShowMenu(object sender, RoutedEventArgs e)
