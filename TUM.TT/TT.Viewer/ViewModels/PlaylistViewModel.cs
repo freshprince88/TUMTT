@@ -168,7 +168,7 @@ namespace TT.Viewer.ViewModels
 
         #region Caliburn Hooks
 
-        protected override void OnActivate()
+        protected override void OnActivate() 
         {
             base.OnActivate();
             // Subscribe ourself to the event bus

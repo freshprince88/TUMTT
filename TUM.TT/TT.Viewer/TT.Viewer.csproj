@@ -474,6 +474,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />
+    <Resource Include="TUM_Logo_weiss_rgb_p.png" />
     <Resource Include="olive-letter-v-512.ico" />
     <Resource Include="Resources\Entypo-license.txt" />
     <Resource Include="Resources\WindowsIcons-license.txt" />

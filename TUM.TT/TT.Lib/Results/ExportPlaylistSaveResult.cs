@@ -13,6 +13,7 @@ using TT.Models;
 using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System.Diagnostics;
 
 namespace TT.Lib.Results
 {
@@ -59,6 +60,18 @@ namespace TT.Lib.Results
 
         public void ExportVideo(ProgressDialogController progress)
         {
+            //var ffMpeg2 = new NReco.VideoConverter.FFMpegConverter();
+            //NReco.VideoConverter.ConvertSettings settings2 = new NReco.VideoConverter.ConvertSettings()
+            //{
+            //    VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
+
+            //};
+            //ffMpeg2.ConvertMedia(@"rtmp://cp77194.edgefcs.net/ondemand/mp4:CHANNEL1-Seniors/2016/wttc_kuala_lumpur/t1/160306_t1_chn_jpn_men_match3",
+            //    NReco.VideoConverter.Format.flv,
+            //    @"C:\Users\Michael Fuchs\Desktop\Test3.mp4",
+            //NReco.VideoConverter.Format.mp4,
+            //settings2);
+
             string inputFile = @Manager.Match.VideoFile;
             string videoName = Manager.Match.VideoFile.Split('\\').Last();
             videoName = videoName.Split('.').First();
@@ -88,7 +101,9 @@ namespace TT.Lib.Results
             progress.SetProgress(0);
 
             for (int i = 0; i < rallyCount; i++)
-            {
+            {   
+
+
                 progress.SetMessage("Wiedergabeliste '" + Manager.ActivePlaylist.Name + "' wird exportiert: \n\nBallwechsel " + (i + 1) + " wird gerade geschnitten...");
                 Rally curRally = Manager.ActivePlaylist.Rallies[i];
                 string RallyNumber = curRally.Nummer.ToString();
@@ -99,13 +114,32 @@ namespace TT.Lib.Results
                 string fileName = @Location + @"\#" + RallyNumber + "_" + RallyScore + " (" + SetScore + ").mp4";
                 RallyCollection[i] = fileName;
 
-                var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
-                NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings();
+                //var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
+                //NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
+                //{
+                //    Seek = Convert.ToSingle(curRally.Anfang / 1000),
+                //    MaxDuration = Convert.ToSingle((curRally.Ende - curRally.Anfang) / 1000),
+                //    VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
+                //    CustomOutputArgs = " -filter_complex 'overlay'"
+                //};
+                //FFMpegInput[] ffmpegInput = new NReco.VideoConverter.FFMpegInput[2];
+                //ffmpegInput[0] = new FFMpegInput("");
+                //ffmpegInput[0].Input = String.Format(@Manager.Match.VideoFile);
+                //ffmpegInput[1] = new FFMpegInput("");
+                //ffmpegInput[1].Input = String.Format(@"C:\Users\Michael Fuchs\Desktop\TUM_Logo_weiss_rgb_p.png");
 
-                settings.Seek = Convert.ToSingle(curRally.Anfang / 1000);
-                settings.MaxDuration = Convert.ToSingle((curRally.Ende - curRally.Anfang) / 1000);
-                settings.VideoFrameSize = NReco.VideoConverter.FrameSize.hd720;
+                //ffMpeg.ConvertMedia(ffmpegInput, fileName, NReco.VideoConverter.Format.mp4, settings);
+                var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
+                NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
+                {
+                    Seek = Convert.ToSingle(curRally.Anfang / 1000),
+                    MaxDuration = Convert.ToSingle((curRally.Ende - curRally.Anfang) / 1000),
+                    VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
+
+                };
                 ffMpeg.ConvertMedia(@Manager.Match.VideoFile, NReco.VideoConverter.Format.mp4, fileName, NReco.VideoConverter.Format.mp4, settings);
+
+
                 currentProgress = currentProgress + (i + 1);
                 progress.SetProgress(currentProgress);
             }
@@ -144,6 +178,25 @@ namespace TT.Lib.Results
             dialog.SetMessage("\nDie Collection wird erstellt! \n\nDies kann leider etwas dauern...(" + remainingTime.Minutes+":"+remainingTime.Seconds+ ")");
             dialog.SetProgress(currentProgress);
             
+        }
+        private static string Execute(string exePath, string parameters)
+        {
+            string result = String.Empty;
+
+            using (Process p = new Process())
+            {
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.FileName = exePath;
+                p.StartInfo.Arguments = parameters;
+                p.Start();
+                p.WaitForExit();
+
+                result = p.StandardOutput.ReadToEnd();
+            }
+
+            return result;
         }
     }
 }
