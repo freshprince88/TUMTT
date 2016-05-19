@@ -136,6 +136,14 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
+                        <Controls:Tile Title="Vorlage Öffnen" cal:Message.Attach="[Event Click] = [Action OpenMatchWithoutVideo()]" Background="{DynamicResource AccentColorBrush}"  Style="{StaticResource SmallTileStyle }">
+                            <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Controls:Tile>
                         <Controls:Tile Title="Match Speichern" cal:Message.Attach="[Event Click] = [Action SaveMatch()]" 
                                    IsEnabled="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged}" 
                                    Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
@@ -143,14 +151,6 @@
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_save}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </Controls:Tile>
-                        <Controls:Tile Title="Report Erstellen" cal:Message.Attach="[Event Click] = [Action GenerateReport()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
-                            <Rectangle Width="30" Height="30" 
-                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_book_list}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
