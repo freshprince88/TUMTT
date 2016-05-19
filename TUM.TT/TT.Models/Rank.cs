@@ -15,17 +15,27 @@ namespace TT.Models
     /// <summary>
     /// The rank of a <see cref="Player"/>.
     /// </summary>
-    public class Rank : IXmlSerializable, IComparable<Rank>
+    public class Rank : PropertyChangedBase, IXmlSerializable, IComparable<Rank>
     {
+        /// <summary>
+        /// Backs the <see cref="Position"/> property.
+        /// </summary>
+        private int position;
+
+        /// <summary>
+        /// Backs the <see cref="Position"/> property.
+        /// </summary>
+        private DateTime date;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Rank"/> class.
         /// </summary>
         /// <param name="position">The position in the ranking.</param>
         /// <param name="date">The date of ranking.</param>
-        public Rank(int position, DateTime date)
+        public Rank(int p, DateTime d)
         {
-            this.Position = position;
-            this.Date = date;
+            this.Position = p;
+            this.Date = d;
         }
 
         /// <summary>
@@ -39,12 +49,42 @@ namespace TT.Models
         /// <summary>
         /// Gets the position in the ranking.
         /// </summary>
-        public int Position { get; set; }
+        public int Position
+        {
+            get
+            {
+                return this.position;
+            }
+            set
+            {
+                if (this.position != value)
+                {
+                    this.position = value;
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("Position");
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the date of the ranking.
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime Date
+        {
+            get
+            {
+                return this.date;
+            }
+            set
+            {
+                if (this.date != value)
+                {
+                    this.date = value;
+                    this.NotifyPropertyChanged();
+                    this.NotifyPropertyChanged("Date");
+                }
+            }
+        }
 
         /// <summary>
         /// Determines whether this rank is equal to an object.

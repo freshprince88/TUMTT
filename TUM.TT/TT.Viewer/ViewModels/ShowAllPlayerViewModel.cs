@@ -17,7 +17,7 @@ using System.Windows;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ShowAllPlayerViewModel : Conductor<IScreen>.Collection.AllActive, IShell
+    public class ShowAllPlayerViewModel : Conductor<IScreen>.Collection.AllActive, IShell,INotifyPropertyChangedEx
     {
         public PlayerInformationViewModel Player1InformationView { get; set; }
         public PlayerInformationViewModel Player2InformationView { get; set; }
@@ -45,6 +45,24 @@ namespace TT.Viewer.ViewModels
                 Number = 2
             };
             this.ActivateItem(Player2InformationView);
+
+            
+            Player1InformationView.Player.PropertyChanged += SetMatchModified;
+            Player1InformationView.Player.Rank.PropertyChanged += SetMatchModified;
+            Player2InformationView.Player.PropertyChanged += SetMatchModified;
+            Player2InformationView.Player.Rank.PropertyChanged += SetMatchModified;
+
+        }
+
+        /// <summary>
+        /// Set MatchModified=true, if player informations are modified
+        /// </summary>
+
+        private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            
+                MatchManager.MatchModified = true;
+          
         }
 
         #region Caliburn Hooks
@@ -197,6 +215,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+       
         #endregion
 
 

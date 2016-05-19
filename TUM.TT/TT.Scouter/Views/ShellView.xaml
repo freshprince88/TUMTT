@@ -71,7 +71,8 @@
     </Controls:MetroWindow.LeftWindowCommands>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button ToolTip="Save Match" cal:Message.Attach="[Event Click] = [Action SaveMatch()]" >
+            <Button ToolTip="Save Match" cal:Message.Attach="[Event Click] = [Action SaveMatch()]"
+                    Visibility="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}">
                 <Rectangle Width="22"
                            Height="22"
                            Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">

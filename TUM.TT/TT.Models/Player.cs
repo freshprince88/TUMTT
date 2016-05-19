@@ -15,6 +15,7 @@ namespace TT.Models
     /// </summary>
     public class Player : PropertyChangedBase
     {
+
         /// <summary>
         /// Backs the <see cref="Name"/> property.
         /// </summary>
@@ -120,8 +121,9 @@ namespace TT.Models
                 if (this.spielsystem != value)
                 {
                     this.spielsystem = value;
+                    this.NotifyPropertyChanged("Spielsystem");
                     this.NotifyPropertyChanged();
-                    
+
                 }
             }
         }
@@ -142,6 +144,7 @@ namespace TT.Models
                 if (this.händigkeit != value)
                 {
                     this.händigkeit = value;
+                    this.NotifyPropertyChanged("Händigkeit");
                     this.NotifyPropertyChanged();
                 }
             }

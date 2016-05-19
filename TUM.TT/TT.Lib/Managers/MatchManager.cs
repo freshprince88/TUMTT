@@ -34,8 +34,9 @@ namespace TT.Lib.Managers
                 if (_match != value)
                 {
                     _match = value;
-                    MatchModified = true;
+                    MatchModified = true; 
                     NotifyOfPropertyChange("MatchModified");
+                    NotifyOfPropertyChange();
 
                 }
             }
@@ -50,6 +51,7 @@ namespace TT.Lib.Managers
                 {
                     _matchMod = value;
                     NotifyOfPropertyChange("MatchModified");
+                    NotifyOfPropertyChange();
 
                 }
             }

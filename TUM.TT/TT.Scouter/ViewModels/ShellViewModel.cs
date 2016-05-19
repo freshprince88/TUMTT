@@ -29,6 +29,8 @@ namespace TT.Scouter.ViewModels
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
+            
+
         }
 
         #region Caliburn hooks
@@ -120,6 +122,12 @@ namespace TT.Scouter.ViewModels
         #endregion
 
         #region Events
+        private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+
+            MatchManager.MatchModified = true;
+
+        }
 
         public void Handle(MatchOpenedEvent message)
         {
@@ -128,6 +136,15 @@ namespace TT.Scouter.ViewModels
             this.NotifyOfPropertyChange(() => this.CanSaveMatch);
             this.NotifyOfPropertyChange(() => this.CanShowPlayer);
             this.NotifyOfPropertyChange(() => this.CanShowCompetition);
+            MatchManager.Match.PropertyChanged += SetMatchModified;
+            MatchManager.Match.FirstPlayer.PropertyChanged += SetMatchModified;
+            MatchManager.Match.SecondPlayer.PropertyChanged += SetMatchModified;
+            int countRallies = MatchManager.ActivePlaylist.Rallies.Count;
+            for (int i = 0; i < countRallies; i++)
+            {
+                MatchManager.ActivePlaylist.Rallies[i].PropertyChanged += SetMatchModified;
+            }
+
         }
         #endregion
 
@@ -158,7 +175,7 @@ namespace TT.Scouter.ViewModels
 
         public IEnumerable<IResult> SaveMatch()
         {
-            //if (MatchManager.MatchModified)
+            if (MatchManager.MatchModified)
             {
                 foreach (var action in MatchManager.SaveMatch())
                 {

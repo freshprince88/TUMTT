@@ -23,20 +23,27 @@ namespace TT.Viewer.ViewModels
                 if (this.player != value)
                 {
                     this.player = value;
-                    MatchManager.MatchModified = true;
-                    NotifyOfPropertyChange("MatchManager.MatchModified");
+
                     NotifyOfPropertyChange();
 
                 }
     }
 }
         public int Number { get; set; }
+        public DateTime date { get; set; }
         public IEventAggregator events { get; set; }
         public IMatchManager MatchManager { get; set; }
         public PlayerInformationViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
             MatchManager = man;
+
+        }
+
+        public void SetMatchModified()
+        {
+            
+
         }
 
 
