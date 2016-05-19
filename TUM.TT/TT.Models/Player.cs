@@ -2,12 +2,13 @@
 // <copyright file="Player.cs" company="Fakultät für Sport- und Gesundheitswissenschaft">
 //    Copyright © 2013, 2014 Fakultät für Sport- und Gesundheitswissenschaft
 // </copyright>
-//-----------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 namespace TT.Models
 {
     using System;
     using System.Xml.Serialization;
+
 
     /// <summary>
     /// A player participating in a <see cref="Match"/>.
@@ -120,6 +121,7 @@ namespace TT.Models
                 {
                     this.spielsystem = value;
                     this.NotifyPropertyChanged();
+                    
                 }
             }
         }
@@ -226,6 +228,8 @@ namespace TT.Models
                     this.nationality = value;
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("FullName");
+                    
+
                 }
             }
         }

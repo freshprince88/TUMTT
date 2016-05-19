@@ -1,48 +1,53 @@
 ﻿using Caliburn.Micro;
-using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
-using TT.Lib;
-using TT.Lib.Events;
-using TT.Lib.Managers;
-using TT.Lib.Results;
-
-using TT.Lib.Views;
-
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 using TT.Models;
-
+using TT.Lib.Events;
+using TT.Models.Util.Enums;
+using TT.Lib.Managers;
+using TT.Lib;
+using TT.Lib.Results;
+using MahApps.Metro.Controls.Dialogs;
+using System.Windows;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
-        IShell,
-        IHandle<MatchOpenedEvent>
+    public class ShowAllPlayerViewModel : Conductor<IScreen>.Collection.AllActive, IShell
     {
-        /// <summary>
-        /// Gets the event bus of this shell.
-        /// </summary>
-        public IEventAggregator Events { get; private set; }
+        public PlayerInformationViewModel Player1InformationView { get; set; }
+        public PlayerInformationViewModel Player2InformationView { get; set; }
+        public IEventAggregator events { get; private set; }
         public IMatchManager MatchManager { get; set; }
-        private IDialogCoordinator DialogCoordinator;
         private readonly IWindowManager _windowManager;
+        private IDialogCoordinator DialogCoordinator;
 
-
-
-
-        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
+        public ShowAllPlayerViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager man, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "";
-
+            this.DisplayName = "Spielerinformationen";
+            this.events = eventAggregator;
+            MatchManager = man;
             _windowManager = windowmanager;
-            Events = eventAggregator;
-            MatchManager = manager;
             DialogCoordinator = coordinator;
-            
-
+            Player1InformationView = new PlayerInformationViewModel(this.events, MatchManager)
+            {
+                Player = MatchManager.Match.FirstPlayer,
+                Number = 1
+            };
+            this.ActivateItem(Player1InformationView);
+            Player2InformationView = new PlayerInformationViewModel(this.events, MatchManager)
+            {
+                Player = MatchManager.Match.SecondPlayer,
+                Number = 2
+            };
+            this.ActivateItem(Player2InformationView);
         }
 
-        #region Caliburn hooks
+        #region Caliburn Hooks
 
         /// <summary>
         /// Initializes this view model.
@@ -50,44 +55,40 @@ namespace TT.Viewer.ViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-
-            // Subscribe ourself to the event bus
-            //this.Events.Subscribe(this);
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-
         }
 
         protected override void OnActivate()
         {
-            base.OnActivate();
-            Events.Subscribe(this);
 
-            if (this.ActiveItem == null)
-            {
-                ActivateItem(new WelcomeViewModel(MatchManager));
-            }
+            base.OnActivate();
+            // Subscribe ourself to the event bus
+            this.events.Subscribe(this);
+            this.ActivateItem(Player1InformationView);
+            this.ActivateItem(Player2InformationView);
+
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
         }
 
         protected override async void OnDeactivate(bool close)
         {
-            Events.Unsubscribe(this);
+            
             if (MatchManager.MatchModified)
             {
                 var mySettings = new MetroDialogSettings()
                 {
-                    AffirmativeButtonText = "Save and Quit",
+                    AffirmativeButtonText = "Save and Close",
                     NegativeButtonText = "Cancel",
-                    FirstAuxiliaryButtonText = "Quit Without Saving",
+                    FirstAuxiliaryButtonText = "Close Without Saving",
                     AnimateShow = true,
                     AnimateHide = false
                 };
 
-                var result = await DialogCoordinator.ShowMessageAsync(this, "Quit application?",
-                    "Sure you want to quit application?",
+                var result = await DialogCoordinator.ShowMessageAsync(this, "Close Window?",
+                    "You didn't save your changes?",
                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
                 bool _shutdown = result == MessageDialogResult.Affirmative;
@@ -98,6 +99,9 @@ namespace TT.Viewer.ViewModels
                     Application.Current.Shutdown();
                 }
             }
+            this.DeactivateItem(Player1InformationView, close);
+            this.DeactivateItem(Player2InformationView, close);
+            events.Unsubscribe(this);
         }
 
         /// <summary>
@@ -129,11 +133,15 @@ namespace TT.Viewer.ViewModels
         {
             if (MatchManager.MatchModified)
             {
-                var question = new YesNoQuestionResult()
+                
+
+
+                var question = new YesNoCloseQuestionResult()
                 {
-                    Title = "Save the match?",
-                    Question = "The match is modified. Save changes?",
-                    AllowCancel = true
+                    Title = "Save the Changes?",
+                    Question = "The Player Informations are modified. Save changes?",
+                    AllowCancel = true,
+                    
                 };
                 yield return question;
 
@@ -157,19 +165,12 @@ namespace TT.Viewer.ViewModels
         }
 
         #endregion
-
         #region View Methods
 
         /// <summary>
         /// Gets a value indicating whether a report can be generated.
         /// </summary>
-        public bool CanGenerateReport
-        {
-            get
-            {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
-            }
-        }
+       
         public bool CanSaveMatch
         {
             get
@@ -177,45 +178,13 @@ namespace TT.Viewer.ViewModels
                 return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
             }
         }
-        public bool CanShowPlayer
-        {
-            get
-            {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
-            }
-        }
-        public bool CanShowCompetition
-        {
-            get
-            {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
-            }
-        }
-
-        public IEnumerable<IResult> GenerateReport()
-        {
-            return MatchManager.GenerateReport();
-        }
-
         #endregion
 
         #region Events
 
-        public void Handle(MatchOpenedEvent message)
-        {
-            // We must reconsider, whether we can generate a report now.
-            this.NotifyOfPropertyChange(() => this.CanGenerateReport);
-            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
-            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
-            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
-            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
-        }
         #endregion
         #region Helper Methods
-        public IEnumerable<IResult> OpenMatch()
-        {
-            return MatchManager.OpenMatch();
-        }
+
 
         public IEnumerable<IResult> SaveMatch()
         {
@@ -224,22 +193,12 @@ namespace TT.Viewer.ViewModels
                 foreach (var action in MatchManager.SaveMatch())
                 {
                     yield return action;
-                }                
+                }
             }
         }
 
-        public void ShowPlayer()
-        {
-            _windowManager.ShowWindow(new ShowAllPlayerViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
-
-
-        }
-        public void ShowCompetition()
-        {
-
-        }
-
         #endregion
+
 
     }
 }

@@ -8,11 +8,13 @@ using TT.Lib;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Scouter.ViewModels;
+using TT.Lib.Events;
 
-namespace TT.Scouter
+namespace TT.Scouter.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
-        IShell
+        IShell,
+        IHandle<MatchOpenedEvent>
     {
         /// <summary>
         /// Gets the event bus of this shell.
@@ -23,7 +25,7 @@ namespace TT.Scouter
 
         public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "TUM.TT Scouter";
+            this.DisplayName = "";
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
@@ -113,15 +115,34 @@ namespace TT.Scouter
             }
         }
 
-        
+
 
         #endregion
 
         #region Events
 
+        public void Handle(MatchOpenedEvent message)
+        {
+            // We must reconsider, whether we can generate a report now.
+
+            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
+            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
+            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
+        }
         #endregion
 
-        #region Helper Methods
+        #region View Methods
+
+        public IEnumerable<IResult> OpenNewMatch()
+        {
+            MatchManager.CreateNewMatch();
+            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
+            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
+            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
+            Events.PublishOnUIThread(new HideMenuEvent());
+            var next = ShowScreenResult.Of<NewMatchViewModel>();
+            yield return next;
+        }
         public IEnumerable<IResult> OpenMatch()
         {
             //      Load Match
@@ -148,7 +169,57 @@ namespace TT.Scouter
 
 
         }
+        public IEnumerable<IResult> OpenMatchWithoutVideo()
+        {
+            foreach (IResult result in MatchManager.OpenLiveMatch())
+            {
+                yield return result;
+            }
+            var next = ShowScreenResult.Of<NewMatchViewModel>();
+            yield return next;
+        }
 
+        
+
+        public bool CanSaveMatch
+        {
+            get
+            {
+                return MatchManager.Match != null ;
+            }
+        }
+        public bool CanShowPlayer
+        {
+            get
+            {   if (MatchManager.Match != null)
+                {
+                    if(MatchManager.Match.FirstPlayer != null && MatchManager.Match.SecondPlayer != null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+                 
+            }
+        }
+        public bool CanShowCompetition
+        {
+            get
+            {
+                return MatchManager.Match != null ;
+            }
+        }
+
+
+        public void ShowPlayer()
+        {
+
+        }
+        public void ShowCompetition()
+        {
+
+        }
         #endregion
     }
 }
