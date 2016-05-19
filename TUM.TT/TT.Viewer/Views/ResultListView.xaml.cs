@@ -71,5 +71,10 @@ namespace TT.Viewer.Views
                     break;
             }
         }
+
+        private void Items_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

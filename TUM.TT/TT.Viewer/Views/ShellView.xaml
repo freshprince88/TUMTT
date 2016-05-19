@@ -110,9 +110,9 @@
         <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="MenuFlyout"
                              Position="Bottom"
+                             AreAnimationsEnabled="False"
                              CloseButtonVisibility="Collapsed"
                              TitleVisibility="Collapsed"
-                             IsPinned="False"
                              Height="110">
                 <Grid>
                     <Grid.ColumnDefinitions>

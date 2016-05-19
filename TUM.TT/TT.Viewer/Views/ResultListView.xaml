@@ -50,7 +50,8 @@
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="False"
             cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]; 
-              [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
+                  [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
+            
             <ListView.View>
                 <GridView x:Name="HitlistGrid">
                     <GridViewColumn x:Name="Column0" DisplayMemberBinding="{Binding Number}"

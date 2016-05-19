@@ -68,8 +68,9 @@ namespace TT.Viewer.ViewModels
 
         public void RightMouseDown(MouseButtonEventArgs e)
         {
-            //e.Handled = true;
+            e.Handled = true;
         }
+        
 
         #endregion
 

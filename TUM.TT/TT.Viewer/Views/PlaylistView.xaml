@@ -6,8 +6,6 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             Dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300">
 
@@ -114,6 +112,12 @@
                           Visual="{DynamicResource appbar_video}" />
                 </Rectangle.OpacityMask>
             </Rectangle>
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Rallies einzeln" IsCheckable="True" IsChecked="{Binding singleRalliesBool}" StaysOpenOnClick="True"/>
+                    <MenuItem Header="Collection" IsCheckable="True" IsChecked="{Binding rallyCollectionBool}" StaysOpenOnClick="True"/>
+                </ContextMenu>
+            </Button.ContextMenu>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <cal:ActionMessage MethodName="ExportPlaylist" />
