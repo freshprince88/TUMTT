@@ -648,6 +648,58 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="MetroAccentFlatAccent"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background"
+                Value="{DynamicResource AccentColorBrush2}"/>
+        <Setter Property="Foreground"
+                Value="{DynamicResource FlatButtonForegroundBrush}" />
+        <Setter Property="Padding"
+                Value="0,0,0,0" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border"
+                            Margin="0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush}"
+                                    TargetName="Border" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource GrayBrush2}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
+                        </Trigger>
+                        <!--<Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </Trigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="MetroAccentFlatGray"
            TargetType="{x:Type Button}">
         <Setter Property="Background"

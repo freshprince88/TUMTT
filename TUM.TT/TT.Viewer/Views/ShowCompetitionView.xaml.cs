@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace TT.Viewer.Views
 {
     /// <summary>
-    /// Interaktionslogik für ShowAllPlayerView.xaml
+    /// Interaktionslogik für ShowCompetitionView.xaml
     /// </summary>
-    public partial class ShowAllPlayerView : MahApps.Metro.Controls.MetroWindow
+    public partial class ShowCompetitionView : MahApps.Metro.Controls.MetroWindow
     {
-        public ShowAllPlayerView()
+        public ShowCompetitionView()
         {
             InitializeComponent();
-            Name = "ShowPlayer";
+            Name = "ShowCompetition";
         }
     }
 }

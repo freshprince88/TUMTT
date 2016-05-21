@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TT.Viewer.Views
+namespace TT.Scouter.Views
 {
     /// <summary>
-    /// Interaktionslogik für ShowAllPlayerView.xaml
+    /// Interaktionslogik für PlayerInformationView.xaml
     /// </summary>
-    public partial class ShowAllPlayerView : MahApps.Metro.Controls.MetroWindow
+    public partial class PlayerInformationView : UserControl
     {
-        public ShowAllPlayerView()
+        public PlayerInformationView()
         {
             InitializeComponent();
-            Name = "ShowPlayer";
         }
     }
 }

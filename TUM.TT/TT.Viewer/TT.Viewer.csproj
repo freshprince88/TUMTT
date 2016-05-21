@@ -176,6 +176,7 @@
     </Compile>
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ShowAllPlayerViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\TableKombiViewModel.cs" />
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="Views\ShowAllPlayerView.xaml.cs">
       <DependentUpon>ShowAllPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowCompetitionView.xaml.cs">
+      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
@@ -401,6 +405,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowAllPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowCompetitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

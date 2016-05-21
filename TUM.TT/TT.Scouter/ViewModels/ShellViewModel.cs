@@ -22,10 +22,13 @@ namespace TT.Scouter.ViewModels
         public IEventAggregator Events { get; private set; }
         public IMatchManager MatchManager { get; set; }
         private IDialogCoordinator DialogCoordinator;
+        private readonly IWindowManager _windowManager;
 
-        public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
+
+        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "";
+            _windowManager = windowmanager;
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
@@ -229,14 +232,50 @@ namespace TT.Scouter.ViewModels
         }
 
 
-        public void ShowPlayer()
+        public static bool IsWindowOpen<T>(string name = "") where T : Window
         {
+            return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
+        }
+        public void ShowPlayer()
+
+        {
+            if (IsWindowOpen<Window>("ShowPlayer"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ShowPlayer").FirstOrDefault().Focus();
+
+            }
+            else
+            {
+                _windowManager.ShowWindow(new ShowAllPlayerViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
+            }
 
         }
         public void ShowCompetition()
         {
+            if (IsWindowOpen<Window>("ShowCompetition"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ShowCompetition").FirstOrDefault().Focus();
 
+            }
+            else
+            {
+                _windowManager.ShowWindow(new ShowCompetitionViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
+            }
         }
+        public void OpenITTV()
+        {
+            if (IsWindowOpen<Window>("ITTV"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ITTV").FirstOrDefault().Focus();
+
+            }
+            else
+            {
+                _windowManager.ShowWindow(new IttvDownloadViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
+            }
+        }
+
+
         #endregion
     }
 }

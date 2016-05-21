@@ -174,10 +174,13 @@
     <Compile Include="Events\VideoControlEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\VideoPlayEvent.cs" />
+    <Compile Include="Events\WebBrowserEvent.cs" />
     <Compile Include="Interactivity\FocusBehavior.cs" />
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
     <Compile Include="Interactivity\InputBindingTrigger.cs" />
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
+    <Compile Include="Webbrowser\Test.cs" />
+    <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />

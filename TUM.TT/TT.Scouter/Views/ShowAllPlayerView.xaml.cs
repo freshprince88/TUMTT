@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TT.Viewer.Views
+namespace TT.Scouter.Views
 {
     /// <summary>
     /// Interaktionslogik für ShowAllPlayerView.xaml

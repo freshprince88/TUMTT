@@ -1,49 +1,48 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using TT.Lib;
-using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
-
-using TT.Lib.Views;
-
 using TT.Models;
 
-
-namespace TT.Viewer.ViewModels
+namespace TT.Scouter.ViewModels
 {
-    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
-        IShell,
-        IHandle<MatchOpenedEvent>
+    public class ShowCompetitionViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx
     {
-        /// <summary>
-        /// Gets the event bus of this shell.
-        /// </summary>
-        public IEventAggregator Events { get; private set; }
+        public IEventAggregator events { get; private set; }
         public IMatchManager MatchManager { get; set; }
-        private IDialogCoordinator DialogCoordinator;
         private readonly IWindowManager _windowManager;
-
-
-
-
-
-        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
+        private IDialogCoordinator DialogCoordinator;
+        public Match Match { get { return MatchManager.Match; } }
+        public ShowCompetitionViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager man, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "";
-
+            this.DisplayName = "Competition Details";
+            this.events = eventAggregator;
+            MatchManager = man;
             _windowManager = windowmanager;
-            Events = eventAggregator;
-            MatchManager = manager;
             DialogCoordinator = coordinator;
 
 
+            MatchManager.Match.PropertyChanged += SetMatchModified;
+        }
+        /// <summary>
+        /// Set MatchModified=true, if match informations are modified
+        /// </summary>
+
+        private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+
+            MatchManager.MatchModified = true;
+
         }
 
-        #region Caliburn hooks
+        #region Caliburn Hooks
 
         /// <summary>
         /// Initializes this view model.
@@ -51,44 +50,38 @@ namespace TT.Viewer.ViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-
-            // Subscribe ourself to the event bus
-            //this.Events.Subscribe(this);
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-
         }
 
         protected override void OnActivate()
         {
-            base.OnActivate();
-            Events.Subscribe(this);
 
-            if (this.ActiveItem == null)
-            {
-                ActivateItem(new WelcomeViewModel(MatchManager));
-            }
+            base.OnActivate();
+            // Subscribe ourself to the event bus
+            this.events.Subscribe(this);
+
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
         }
 
         protected override async void OnDeactivate(bool close)
         {
-            Events.Unsubscribe(this);
+
             if (MatchManager.MatchModified)
             {
                 var mySettings = new MetroDialogSettings()
                 {
-                    AffirmativeButtonText = "Save and Quit",
+                    AffirmativeButtonText = "Save and Close",
                     NegativeButtonText = "Cancel",
-                    FirstAuxiliaryButtonText = "Quit Without Saving",
+                    FirstAuxiliaryButtonText = "Close Without Saving",
                     AnimateShow = true,
                     AnimateHide = false
                 };
 
-                var result = await DialogCoordinator.ShowMessageAsync(this, "Quit application?",
-                    "Sure you want to quit application?",
+                var result = await DialogCoordinator.ShowMessageAsync(this, "Close Window?",
+                    "You didn't save your changes?",
                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
                 bool _shutdown = result == MessageDialogResult.Affirmative;
@@ -99,6 +92,7 @@ namespace TT.Viewer.ViewModels
                     Application.Current.Shutdown();
                 }
             }
+            events.Unsubscribe(this);
         }
 
         /// <summary>
@@ -130,11 +124,15 @@ namespace TT.Viewer.ViewModels
         {
             if (MatchManager.MatchModified)
             {
-                var question = new YesNoQuestionResult()
+
+
+
+                var question = new YesNoCloseQuestionResult()
                 {
-                    Title = "Save the match?",
-                    Question = "The match is modified. Save changes?",
-                    AllowCancel = true
+                    Title = "Save the Changes?",
+                    Question = "The Player Informations are modified. Save changes?",
+                    AllowCancel = true,
+
                 };
                 yield return question;
 
@@ -158,19 +156,12 @@ namespace TT.Viewer.ViewModels
         }
 
         #endregion
-
         #region View Methods
 
         /// <summary>
         /// Gets a value indicating whether a report can be generated.
         /// </summary>
-        public bool CanGenerateReport
-        {
-            get
-            {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
-            }
-        }
+
         public bool CanSaveMatch
         {
             get
@@ -178,45 +169,13 @@ namespace TT.Viewer.ViewModels
                 return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
             }
         }
-        public bool CanShowPlayer
-        {
-            get
-            {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
-            }
-        }
-        public bool CanShowCompetition
-        {
-            get
-            {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
-            }
-        }
-
-        public IEnumerable<IResult> GenerateReport()
-        {
-            return MatchManager.GenerateReport();
-        }
-
         #endregion
 
         #region Events
 
-        public void Handle(MatchOpenedEvent message)
-        {
-            // We must reconsider, whether we can generate a report now.
-            this.NotifyOfPropertyChange(() => this.CanGenerateReport);
-            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
-            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
-            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
-            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
-        }
         #endregion
         #region Helper Methods
-        public IEnumerable<IResult> OpenMatch()
-        {
-            return MatchManager.OpenMatch();
-        }
+
 
         public IEnumerable<IResult> SaveMatch()
         {
@@ -225,40 +184,31 @@ namespace TT.Viewer.ViewModels
                 foreach (var action in MatchManager.SaveMatch())
                 {
                     yield return action;
-                }                
+                }
             }
         }
-        public static bool IsWindowOpen<T>(string name ="") where T : Window
+
+        public static bool IsWindowOpen<T>(string name = "") where T : Window
         {
             return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
         }
         public void ShowPlayer()
-            
-        {  if (IsWindowOpen<Window>("ShowPlayer"))
+
+        {
+            if (IsWindowOpen<Window>("ShowPlayer"))
             {
                 Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ShowPlayer").FirstOrDefault().Focus();
-                
-            }
-            else
-            {
-                _windowManager.ShowWindow(new ShowAllPlayerViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
-            }
-
-        }
-        public void ShowCompetition()
-        {
-            if (IsWindowOpen<Window>("ShowCompetition"))
-            {
-                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ShowCompetition").FirstOrDefault().Focus();
 
             }
             else
             {
-                _windowManager.ShowWindow(new ShowCompetitionViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
+                _windowManager.ShowWindow(new ShowAllPlayerViewModel(_windowManager, events, MatchManager, DialogCoordinator));
             }
+
         }
 
         #endregion
+
 
     }
 }

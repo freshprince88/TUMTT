@@ -66,9 +66,11 @@
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -84,6 +86,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="Xceed.Wpf.AvalonDock, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>True</Private>
@@ -117,12 +120,14 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
+    <Compile Include="ViewModels\IttvDownloadViewModel.cs" />
     <Compile Include="ViewModels\LiveTimerViewModel.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
     <Compile Include="ViewModels\LiveMediaViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewMatchViewModel.cs" />
     <Compile Include="ViewModels\NewPlayerViewModel.cs" />
+    <Compile Include="ViewModels\PlayerInformationViewModel.cs" />
     <Compile Include="ViewModels\RemoteMediaViewModel.cs" />
     <Compile Include="ViewModels\RemoteSchlagViewModel.cs" />
     <Compile Include="ViewModels\RemoteViewModel.cs" />
@@ -134,10 +139,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\ShowAllPlayerViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
     <Compile Include="ViewModels\SpinRadioViewModel.cs" />
     <Compile Include="ViewModels\StrokePositionTableViewModel.cs" />
     <Compile Include="ViewModels\VideoSourceViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="Views\IttvDownloadView.xaml.cs">
+      <DependentUpon>IttvDownloadView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LiveMediaView.xaml.cs">
       <DependentUpon>LiveMediaView.xaml</DependentUpon>
     </Compile>
@@ -155,6 +165,9 @@
     </Compile>
     <Compile Include="Views\NewPlayerView.xaml.cs">
       <DependentUpon>NewPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayerInformationView.xaml.cs">
+      <DependentUpon>PlayerInformationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RemoteMediaView.xaml.cs">
       <DependentUpon>RemoteMediaView.xaml</DependentUpon>
@@ -177,6 +190,12 @@
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ShowAllPlayerView.xaml.cs">
+      <DependentUpon>ShowAllPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowCompetitionView.xaml.cs">
+      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SpinRadioView.xaml.cs">
       <DependentUpon>SpinRadioView.xaml</DependentUpon>
     </Compile>
@@ -197,6 +216,10 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\IttvDownloadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LiveMediaView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -221,6 +244,10 @@
     <Page Include="Views\NewPlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerInformationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\RemoteMediaView.xaml">
       <SubType>Designer</SubType>
@@ -249,6 +276,14 @@
     <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowAllPlayerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ShowCompetitionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SpinRadioView.xaml">
       <SubType>Designer</SubType>
