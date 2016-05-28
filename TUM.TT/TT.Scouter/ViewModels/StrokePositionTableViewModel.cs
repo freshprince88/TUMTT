@@ -16,7 +16,7 @@ namespace TT.Scouter.ViewModels
             Stroke.Balltreffpunkt = position;
         }
 
-        public void ChangePositionService(double X, double Y)
+        public void ChangePositionStroke(double X, double Y)
         {
             Models.Platzierung p = new Models.Platzierung();
             p.WX = X;
