@@ -14,7 +14,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 SpinControl.Stroke = value;
-                //TableControl.Stroke = value;
+                TableControl.Stroke = value;
                 _stroke = value;
             }
         }
@@ -24,7 +24,7 @@ namespace TT.Scouter.ViewModels
 
         public ServiceDetailViewModel(Schlag s)
         {
-            TableControl = new ServicePositionTableViewModel();
+            TableControl = new ServicePositionTableViewModel(s);
             SpinControl = new SpinRadioViewModel(s);
 
             Stroke = s;
