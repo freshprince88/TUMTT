@@ -6,7 +6,19 @@ namespace TT.Scouter.ViewModels
 {
     public class RemoteSchlagViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public ObservableCollection<Schlag> Strokes { get; set; }
+        private ObservableCollection<Schlag> _strokes;
+        public ObservableCollection<Schlag> Strokes
+        {
+            get
+            {
+                return _strokes;
+            }
+            set
+            {
+                _strokes = value;
+                Strokes_CollectionChanged();
+            }
+        }
 
 
         private Schlag _stroke;
@@ -42,10 +54,9 @@ namespace TT.Scouter.ViewModels
         public RemoteSchlagViewModel(ObservableCollection<Schlag> schläge)
         {
             Strokes = schläge;
-            Strokes.CollectionChanged += Strokes_CollectionChanged;
         }
 
-        private void Strokes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Strokes_CollectionChanged()
         {
             CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
         }
@@ -57,7 +68,8 @@ namespace TT.Scouter.ViewModels
 
         public void NextStroke()
         {
-            CurrentStroke = Strokes[CurrentStroke.Nummer];
+            if (CurrentStroke.Nummer < Strokes.Count)
+                CurrentStroke = Strokes[CurrentStroke.Nummer];
         }
 
         public void PreviousStroke()
