@@ -5,7 +5,19 @@ namespace TT.Scouter.ViewModels
 {
     public class SchlagDetailViewModel : Conductor<IScreen>.Collection.AllActive 
     {
-        public Schlag Stroke { get; set; }
+        private Schlag _stroke;
+        public Schlag Stroke
+        {
+            get
+            {
+                return _stroke;
+            }
+            set
+            {
+                _stroke = value;
+                TableControl.Stroke = value;
+            }
+        }
 
         public StrokePositionTableViewModel TableControl { get; set; }
 
@@ -13,8 +25,8 @@ namespace TT.Scouter.ViewModels
 
         public SchlagDetailViewModel(Schlag s)
         {
-            Stroke = s;
-            TableControl = new StrokePositionTableViewModel();
+            _stroke = s;
+            TableControl = new StrokePositionTableViewModel(s);
         }
 
         protected override void OnActivate()

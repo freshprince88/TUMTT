@@ -24,10 +24,10 @@ namespace TT.Scouter.ViewModels
 
         public ServiceDetailViewModel(Schlag s)
         {
+            _stroke = s;
+
             TableControl = new ServicePositionTableViewModel(s);
             SpinControl = new SpinRadioViewModel(s);
-
-            Stroke = s;
         }
 
         protected override void OnActivate()
