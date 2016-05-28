@@ -47,9 +47,9 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <RadioButton x:Name="Short" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" />
-                    <RadioButton x:Name="Half" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" />
-                    <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" />
+                    <RadioButton x:Name="Short" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(über)]"/>
+                    <RadioButton x:Name="Half" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(hinter)]"/>
+                    <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(halbdistanz)]"/>
                 </Grid>
 
                 <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
@@ -71,15 +71,15 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <RadioButton x:Name="TopLeft_top" Content="1" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="TopMid_top" Content="2" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30"  Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="TopRight_top" Content="3" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="MidLeft_top" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="MidMid_top" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="MidRight_top" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="BotLeft_top" Content="7" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="BotMid_top" Content="8" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="BotRight_top" Content="9" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
+                            <RadioButton x:Name="TopLeft_top" Content="1" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(0,0)]"/>
+                            <RadioButton x:Name="TopMid_top" Content="2" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30"  Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(75,0)]"/>
+                            <RadioButton x:Name="TopRight_top" Content="3" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(150,0)]"/>
+                            <RadioButton x:Name="MidLeft_top" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(0,54)]"/>
+                            <RadioButton x:Name="MidMid_top" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(75,54)]"/>
+                            <RadioButton x:Name="MidRight_top" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(150,54)]"/>
+                            <RadioButton x:Name="BotLeft_top" Content="7" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(0,108)]"/>
+                            <RadioButton x:Name="BotMid_top" Content="8" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(75,108)]"/>
+                            <RadioButton x:Name="BotRight_top" Content="9" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(150,108)]"/>
                         </Grid>
 
                         <Grid x:Name="BottomField" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="Hidden">
@@ -93,15 +93,15 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <RadioButton x:Name="BotRight_bot" Content="9" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="BotMid_bot" Content="8" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="BotLeft_bot" Content="7" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="MidRight_bot" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="MidMid_bot" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="MidLeft_bot" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="TopRight_bot" Content="3" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="TopMid_bot" Content="2" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
-                            <RadioButton x:Name="TopLeft_bot" Content="1" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}"/>
+                            <RadioButton x:Name="BotRight_bot" Content="9" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(0,162)]"/>
+                            <RadioButton x:Name="BotMid_bot" Content="8" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(75,162]"/>
+                            <RadioButton x:Name="BotLeft_bot" Content="7" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(150,162)]"/>
+                            <RadioButton x:Name="MidRight_bot" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(0,216)]"/>
+                            <RadioButton x:Name="MidMid_bot" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(75,216)]"/>
+                            <RadioButton x:Name="MidLeft_bot" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(150,216)]"/>
+                            <RadioButton x:Name="TopRight_bot" Content="3" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(0,270)]"/>
+                            <RadioButton x:Name="TopMid_bot" Content="2" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(75,270)]"/>
+                            <RadioButton x:Name="TopLeft_bot" Content="1" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(150,270)]"/>
                         </Grid>
 
                     </Grid>
