@@ -48,8 +48,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <RadioButton x:Name="Short" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(über)]"/>
-                    <RadioButton x:Name="Half" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(hinter)]"/>
-                    <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(halbdistanz)]"/>
+                    <RadioButton x:Name="Half" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(halbdistanz)]"/>
+                    <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(hinter)]"/>
                 </Grid>
 
                 <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">

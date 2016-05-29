@@ -35,7 +35,7 @@
                 </Grid.RowDefinitions>
 
                 <RadioButton x:Name="ÜSSL" GroupName="spin" Style="{StaticResource MetroSpinLeftTopRadio}" Background="Gainsboro" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Checked] = [Action Checked($eventArgs)]" />
-                <RadioButton x:Name="ÜL" GroupName="spin" Style="{StaticResource MetroSpinTopRadio}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action Checked($eventArgs)]" />
+                <RadioButton x:Name="ÜS" GroupName="spin" Style="{StaticResource MetroSpinTopRadio}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action Checked($eventArgs)]" />
                 <RadioButton x:Name="ÜSSR" GroupName="spin" Style="{StaticResource MetroSpinRightTopRadio}" Background="Gainsboro" Grid.Row="0" Grid.Column="2" cal:Message.Attach="[Event Checked] = [Action Checked($eventArgs)]" />
                 <RadioButton x:Name="SL" GroupName="spin" Style="{StaticResource MetroSpinLeftRadio}" Background="Gainsboro" Grid.Row="1" Grid.Column="0" cal:Message.Attach="[Event Checked] = [Action Checked($eventArgs)]" />
                 <RadioButton x:Name ="No" GroupName="spin" Height="120" Width="120" Style="{StaticResource MetroSpinMidRadio}" Background="Gainsboro" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action Checked($eventArgs)]" />
