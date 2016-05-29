@@ -11,6 +11,7 @@ using TT.Models;
 using TT.Lib.Results;
 using TT.Models.Util.Enums;
 using TT.Scouter.Interfaces;
+using System.Windows.Input;
 
 namespace TT.Scouter.ViewModels
 {
@@ -170,5 +171,11 @@ namespace TT.Scouter.ViewModels
             double seconds = Convert.ToDouble(dialog.Result);
             Match.Synchro = seconds * 1000;            
         }
+
+        public void MouseDown(MouseButtonEventArgs e, Object o)
+        {
+            double x = e.GetPosition((System.Windows.IInputElement)o).X;
+        }
+
     }
 }
