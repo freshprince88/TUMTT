@@ -194,9 +194,9 @@ namespace TT.Scouter.ViewModels
             Match.Synchro = seconds * 1000;            
         }
 
-        public void MouseDown(MouseButtonEventArgs e, Lib.Views.ExtendedMediaElement mediaElement)
+        public void MouseDown(MouseButtonEventArgs e, System.Windows.Controls.ItemsControl lineArea)
         {
-            System.Windows.Point p = e.GetPosition(mediaElement);
+            System.Windows.Point p = e.GetPosition(lineArea);
 
             if (!isFirstPointSet)
             {

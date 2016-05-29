@@ -42,7 +42,7 @@
                 <i:EventTrigger EventName="MouseDown">
                     <cal:ActionMessage MethodName="MouseDown">
                         <cal:Parameter Value="$eventArgs"/>
-                        <cal:Parameter Value="{Binding ElementName=MediaPlayer}"/>
+                        <cal:Parameter Value="{Binding ElementName=ItemControl}"/>
                     </cal:ActionMessage>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
