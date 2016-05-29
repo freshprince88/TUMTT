@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using TT.Lib.Results;
 using TT.Models.Util.Enums;
 using TT.Scouter.Interfaces;
 using System.Windows.Input;
+using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace TT.Scouter.ViewModels
 {
@@ -62,8 +65,23 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private ObservableCollection<Line> _lines;
+        public ObservableCollection<Line> Lines
+        {
+            get { return _lines; }
+            set
+            {
+                if (_lines != value)
+                {
+                    _lines = value;
 
-            private bool _playing;
+                    NotifyOfPropertyChange("Lines");
+                }
+            }
+        }
+
+
+        private bool _playing;
         public bool IsPlaying
         {
             get
@@ -98,13 +116,17 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager Manager;
         private IDialogCoordinator Dialogs;
+        private Point firstClickPoint;
+        private bool isFirstPointSet;
 
         public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
             Manager = man;
             IsPlaying = false;
-            Dialogs = cor;          
+            Dialogs = cor;
+            isFirstPointSet = false;
+            Lines = new ObservableCollection<Line>();
         }
 
         public void Pause()
@@ -172,10 +194,28 @@ namespace TT.Scouter.ViewModels
             Match.Synchro = seconds * 1000;            
         }
 
-        public void MouseDown(MouseButtonEventArgs e, Object o)
+        public void MouseDown(MouseButtonEventArgs e, Lib.Views.ExtendedMediaElement mediaElement)
         {
-            double x = e.GetPosition((System.Windows.IInputElement)o).X;
-        }
+            System.Windows.Point p = e.GetPosition(mediaElement);
 
+            if (!isFirstPointSet)
+            {
+                firstClickPoint = p;
+                isFirstPointSet = true;
+                return;
+            }
+
+            Line l = new Line();
+            l.X1 = firstClickPoint.X;
+            l.Y1 = firstClickPoint.Y;
+            l.X2 = p.X;
+            l.Y2 = p.Y;
+            l.Stroke = System.Windows.Media.Brushes.Black;
+            l.StrokeThickness = 4;
+
+            Lines.Add(l);
+
+            isFirstPointSet = false;
+        }
     }
 }
