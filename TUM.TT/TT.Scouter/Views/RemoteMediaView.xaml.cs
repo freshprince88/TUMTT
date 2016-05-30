@@ -26,7 +26,9 @@ namespace TT.Scouter.Views
         IHandle<MediaControlEvent>,
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>,
-        IHandle<VideoLoadedEvent>
+        IHandle<VideoLoadedEvent>,
+        IHandle<DrawLineEvent>,
+        IHandle<DeleteLinesEvent>
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
@@ -140,6 +142,19 @@ namespace TT.Scouter.Views
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
             MediaPlayer.Play();
             MediaPlayer.Pause();
+        }
+
+        public void Handle(DrawLineEvent message)
+        {
+            MediaContainer.Children.Add(message.Line);
+        }
+
+        public void Handle(DeleteLinesEvent message)
+        {
+            foreach(Line l in message.Lines)
+            {
+                MediaContainer.Children.Remove(l);
+            }
         }
 
         #endregion

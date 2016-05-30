@@ -147,6 +147,8 @@
     <Compile Include="Converters\TechniqueToBoolConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
+    <Compile Include="Events\DeleteLinesEvent.cs" />
+    <Compile Include="Events\DrawLineEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />

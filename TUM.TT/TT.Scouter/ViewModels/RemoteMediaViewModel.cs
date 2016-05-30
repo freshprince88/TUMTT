@@ -116,8 +116,7 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager Manager;
         private IDialogCoordinator Dialogs;
-        private Point firstClickPoint;
-        private bool isFirstPointSet;
+        private List<Point> points;
 
         public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
@@ -125,8 +124,9 @@ namespace TT.Scouter.ViewModels
             Manager = man;
             IsPlaying = false;
             Dialogs = cor;
-            isFirstPointSet = false;
+            points = new List<Point>();
             Lines = new ObservableCollection<Line>();
+            Lines.CollectionChanged += Lines_CollectionChanged;
         }
 
         public void Pause()
@@ -194,28 +194,60 @@ namespace TT.Scouter.ViewModels
             Match.Synchro = seconds * 1000;            
         }
 
-        public void MouseDown(MouseButtonEventArgs e, System.Windows.Controls.ItemsControl lineArea)
+        public void MouseDown(MouseButtonEventArgs e, System.Windows.Controls.Grid mediaContainer)
         {
-            System.Windows.Point p = e.GetPosition(lineArea);
-
-            if (!isFirstPointSet)
+            if (points.Count > 4)
             {
-                firstClickPoint = p;
-                isFirstPointSet = true;
-                return;
+                points.Clear();
+                Events.BeginPublishOnUIThread(new DeleteLinesEvent(Lines.ToList<Line>()));
+                Lines.Clear();
             }
 
+            System.Windows.Point p = e.GetPosition(mediaContainer);
+
+            points.Add(p);
+
+            if (points.Count < 2) return;
+
+            createLineBetweenLastPoints();
+
+            if (points.Count == 4)
+            {
+                points.Add(points[0]);
+                createLineBetweenLastPoints();
+            }
+        }
+
+        private void createLineBetweenLastPoints()
+        {
+            Point p1 = points[points.Count - 2];
+            Point p2 = points[points.Count - 1];
+
             Line l = new Line();
-            l.X1 = firstClickPoint.X;
-            l.Y1 = firstClickPoint.Y;
-            l.X2 = p.X;
-            l.Y2 = p.Y;
+            l.X1 = p1.X;
+            l.Y1 = p1.Y;
+            l.X2 = p2.X;
+            l.Y2 = p2.Y;
             l.Stroke = System.Windows.Media.Brushes.Black;
             l.StrokeThickness = 4;
 
             Lines.Add(l);
+        }
 
-            isFirstPointSet = false;
+        private void Lines_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch(e.Action)
+            {
+                case (System.Collections.Specialized.NotifyCollectionChangedAction.Add):
+                {
+                    if (e.NewItems.Count == 1)
+                    {
+                        Line newLine = (Line)e.NewItems[0];
+                        Events.PublishOnUIThread(new DrawLineEvent(newLine));
+                    }
+                }
+                break;
+            }
         }
     }
 }

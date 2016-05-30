@@ -33,28 +33,22 @@
         </Grid.RowDefinitions>
 
 
-        <ContentControl>
-            <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0"  ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
-                            MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
-                            MediaPosition="{Binding MediaPosition, Mode=TwoWay}"
-                            EndPosition="{Binding EndPosition, Mode=OneWay}"/>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDown">
-                    <cal:ActionMessage MethodName="MouseDown">
-                        <cal:Parameter Value="$eventArgs"/>
-                        <cal:Parameter Value="{Binding ElementName=ItemControl}"/>
-                    </cal:ActionMessage>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ContentControl>
-
-        <ItemsControl x:Name="ItemControl" ItemsSource="{Binding Path=Lines}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding Stroke}" StrokeThickness="{Binding StrokeThickness}"></Line>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Grid x:Name="MediaContainer">
+            <ContentControl>
+                <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0"  ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
+                                MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
+                                MediaPosition="{Binding MediaPosition, Mode=TwoWay}"
+                                EndPosition="{Binding EndPosition, Mode=OneWay}"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <cal:ActionMessage MethodName="MouseDown">
+                            <cal:Parameter Value="$eventArgs"/>
+                            <cal:Parameter Value="{Binding ElementName=MediaContainer}"/>
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ContentControl>
+        </Grid>
 
 
         <Slider x:Name="MediaSlider" Grid.Row="1" IsSnapToTickEnabled="False" IsMoveToPointEnabled="True"
