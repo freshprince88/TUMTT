@@ -124,6 +124,7 @@ namespace TT.Models {
                     this.NotifyPropertyChanged("FinalRallyScore");
                     this.NotifyPropertyChanged("FinalSetScore");
                     this.NotifyPropertyChanged("IsEndOfSet");
+
                 }
             }
         }
@@ -142,6 +143,7 @@ namespace TT.Models {
             set
             {
                 this.RaiseAndSetIfChanged(ref this.nummer, value);
+                this.NotifyPropertyChanged();
             }
         }
 
@@ -159,6 +161,10 @@ namespace TT.Models {
             set
             {
                 this.RaiseAndSetIfChanged(ref this.anfang, value);
+                this.NotifyPropertyChanged("Anfang");
+                this.NotifyPropertyChanged();
+
+
             }
         }
 
@@ -176,6 +182,9 @@ namespace TT.Models {
             set
             {
                 this.RaiseAndSetIfChanged(ref this.ende, value);
+                this.NotifyPropertyChanged("Ende");
+                this.NotifyPropertyChanged();
+
             }
         }
 
@@ -193,6 +202,10 @@ namespace TT.Models {
             set
             {
                 this.RaiseAndSetIfChanged(ref this.kommentar, value);
+                this.NotifyPropertyChanged("Kommentar");
+                this.NotifyPropertyChanged();
+
+
             }
         }
 
@@ -215,10 +228,15 @@ namespace TT.Models {
             set
             {
                 this.RaiseAndSetIfChanged(ref this.length, value);
-                
-                
+                this.NotifyPropertyChanged("Length");
+                this.NotifyPropertyChanged();
+
+
+
+
+
                 //int diff = value - schläge.Count();
-                
+
                 //if (schläge.Count < value)
                 //{
                 //    for (int i = 0; i < diff; i++)
@@ -253,7 +271,13 @@ namespace TT.Models {
         public MatchPlayer Server
         {
             get { return this.server; }
-            set { this.RaiseAndSetIfChanged(ref this.server, value); }
+            set {
+                this.RaiseAndSetIfChanged(ref this.server, value);
+                this.NotifyPropertyChanged("Server");
+                this.NotifyPropertyChanged();
+
+
+            }
         }
 
         /// <summary>
@@ -273,6 +297,8 @@ namespace TT.Models {
                     this.NotifyPropertyChanged("FinalRallyScore");
                     this.NotifyPropertyChanged("FinalSetScore");
                     this.NotifyPropertyChanged("IsEndOfSet");
+                    this.NotifyPropertyChanged();
+
                 }
             }
         }
@@ -301,6 +327,8 @@ namespace TT.Models {
                 if (this.RaiseAndSetIfChanged(ref this.currentSetScore, value))
                 {
                     this.NotifyPropertyChanged("FinalSetScore");
+                    this.NotifyPropertyChanged();
+
                 }
             }
         }

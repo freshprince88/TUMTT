@@ -150,6 +150,7 @@
     <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsTableViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PlayerInformationViewModel.cs" />
     <Compile Include="ViewModels\PlaylistItem.cs" />
     <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
@@ -174,6 +175,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\ShowAllPlayerViewModel.cs" />
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\TableKombiViewModel.cs" />
@@ -220,6 +222,9 @@
     <Compile Include="Views\PlacementStatisticsView.xaml.cs">
       <DependentUpon>PlacementStatisticsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PlayerInformationView.xaml.cs">
+      <DependentUpon>PlayerInformationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
@@ -252,6 +257,9 @@
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowAllPlayerView.xaml.cs">
+      <DependentUpon>ShowAllPlayerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
@@ -336,6 +344,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PlayerInformationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ResultListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -385,6 +397,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowAllPlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -34,8 +34,9 @@ namespace TT.Lib.Managers
                 if (_match != value)
                 {
                     _match = value;
-                    MatchModified = true;
+                    MatchModified = true; 
                     NotifyOfPropertyChange("MatchModified");
+                    NotifyOfPropertyChange();
 
                 }
             }
@@ -50,6 +51,7 @@ namespace TT.Lib.Managers
                 {
                     _matchMod = value;
                     NotifyOfPropertyChange("MatchModified");
+                    NotifyOfPropertyChange();
 
                 }
             }
@@ -99,6 +101,7 @@ namespace TT.Lib.Managers
                 .Propagate(); // Reraise the error to abort the coroutine
 
             MatchModified = false;
+            NotifyOfPropertyChange("MatchModified");
 
         }
 
@@ -121,6 +124,8 @@ namespace TT.Lib.Managers
             Match = deserialization.Result;
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
+            Events.PublishOnUIThread(new HideMenuEvent());
+            Events.PublishOnUIThread(new FullscreenEvent(false));
 
             if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
             {
@@ -155,6 +160,7 @@ namespace TT.Lib.Managers
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
 
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
+            Events.PublishOnUIThread(new HideMenuEvent());
 
 
         }

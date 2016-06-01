@@ -150,6 +150,7 @@
     <Compile Include="Events\DeleteLinesEvent.cs" />
     <Compile Include="Events\DrawLineEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />
+    <Compile Include="Events\HideMenuEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
     <Compile Include="Events\MediaControlEvent.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Results\GenerateReportResult.cs" />
     <Compile Include="Results\ExportPlaylistDialogResult.cs" />
     <Compile Include="Results\InputDialogResult.cs" />
+    <Compile Include="Results\YesNoCloseQuestionResult.cs" />
     <Compile Include="Util\CustomClosableComboDialog.cs" />
     <Compile Include="Util\MatchExtensions.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
@@ -222,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\Interfaces\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

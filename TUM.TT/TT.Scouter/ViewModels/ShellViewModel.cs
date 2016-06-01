@@ -8,11 +8,13 @@ using TT.Lib;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Scouter.ViewModels;
+using TT.Lib.Events;
 
-namespace TT.Scouter
+namespace TT.Scouter.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
-        IShell
+        IShell,
+        IHandle<MatchOpenedEvent>
     {
         /// <summary>
         /// Gets the event bus of this shell.
@@ -23,10 +25,12 @@ namespace TT.Scouter
 
         public ShellViewModel(IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "TUM.TT Scouter";
+            this.DisplayName = "";
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
+            
+
         }
 
         #region Caliburn hooks
@@ -113,15 +117,49 @@ namespace TT.Scouter
             }
         }
 
-        
+
 
         #endregion
 
         #region Events
+        private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
 
+            MatchManager.MatchModified = true;
+
+        }
+
+        public void Handle(MatchOpenedEvent message)
+        {
+            // We must reconsider, whether we can generate a report now.
+
+            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
+            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
+            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
+            MatchManager.Match.PropertyChanged += SetMatchModified;
+            MatchManager.Match.FirstPlayer.PropertyChanged += SetMatchModified;
+            MatchManager.Match.SecondPlayer.PropertyChanged += SetMatchModified;
+            int countRallies = MatchManager.ActivePlaylist.Rallies.Count;
+            for (int i = 0; i < countRallies; i++)
+            {
+                MatchManager.ActivePlaylist.Rallies[i].PropertyChanged += SetMatchModified;
+            }
+
+        }
         #endregion
 
-        #region Helper Methods
+        #region View Methods
+
+        public IEnumerable<IResult> OpenNewMatch()
+        {
+            MatchManager.CreateNewMatch();
+            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
+            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
+            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
+            Events.PublishOnUIThread(new HideMenuEvent());
+            var next = ShowScreenResult.Of<NewMatchViewModel>();
+            yield return next;
+        }
         public IEnumerable<IResult> OpenMatch()
         {
             //      Load Match
@@ -137,7 +175,7 @@ namespace TT.Scouter
 
         public IEnumerable<IResult> SaveMatch()
         {
-            //if (MatchManager.MatchModified)
+            if (MatchManager.MatchModified)
             {
                 foreach (var action in MatchManager.SaveMatch())
                 {
@@ -148,7 +186,57 @@ namespace TT.Scouter
 
 
         }
+        public IEnumerable<IResult> OpenMatchWithoutVideo()
+        {
+            foreach (IResult result in MatchManager.OpenLiveMatch())
+            {
+                yield return result;
+            }
+            var next = ShowScreenResult.Of<NewMatchViewModel>();
+            yield return next;
+        }
 
+        
+
+        public bool CanSaveMatch
+        {
+            get
+            {
+                return MatchManager.Match != null ;
+            }
+        }
+        public bool CanShowPlayer
+        {
+            get
+            {   if (MatchManager.Match != null)
+                {
+                    if(MatchManager.Match.FirstPlayer != null && MatchManager.Match.SecondPlayer != null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+                 
+            }
+        }
+        public bool CanShowCompetition
+        {
+            get
+            {
+                return MatchManager.Match != null ;
+            }
+        }
+
+
+        public void ShowPlayer()
+        {
+
+        }
+        public void ShowCompetition()
+        {
+
+        }
         #endregion
     }
 }

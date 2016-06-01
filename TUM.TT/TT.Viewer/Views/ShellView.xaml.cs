@@ -19,7 +19,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für ShellView.xaml
     /// </summary>
-    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<MatchOpenedEvent>
+    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<HideMenuEvent>
     {
         public IEventAggregator Events { get; private set; }
         public ShellView()
@@ -32,7 +32,7 @@ namespace TT.Viewer.Views
         }
 
 
-        public void Handle(MatchOpenedEvent message)
+        public void Handle(HideMenuEvent message)
         {
             MenuFlyout.IsOpen = false;
             MenuFlyout.IsPinned = false;
