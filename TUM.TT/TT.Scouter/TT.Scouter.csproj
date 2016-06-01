@@ -117,6 +117,7 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
+    <Compile Include="Util\Model\Calibration.cs" />
     <Compile Include="ViewModels\LiveTimerViewModel.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
     <Compile Include="ViewModels\LiveMediaViewModel.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="ViewModels\NewMatchViewModel.cs" />
     <Compile Include="ViewModels\NewPlayerViewModel.cs" />
     <Compile Include="ViewModels\RemoteMediaViewModel.cs" />
+    <Compile Include="ViewModels\RemotePositionsRallyViewModel.cs" />
     <Compile Include="ViewModels\RemoteSchlagViewModel.cs" />
     <Compile Include="ViewModels\RemoteViewModel.cs" />
     <Compile Include="ViewModels\SchlagDetailViewModel.cs" />
@@ -158,6 +160,9 @@
     </Compile>
     <Compile Include="Views\RemoteMediaView.xaml.cs">
       <DependentUpon>RemoteMediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemotePositionsRallyView.xaml.cs">
+      <DependentUpon>RemotePositionsRallyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RemoteSchlagView.xaml.cs">
       <DependentUpon>RemoteSchlagView.xaml</DependentUpon>
@@ -223,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RemoteMediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RemotePositionsRallyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

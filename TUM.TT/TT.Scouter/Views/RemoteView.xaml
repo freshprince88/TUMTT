@@ -234,17 +234,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="6*"/>
-                </Grid.RowDefinitions>
-                <Viewbox StretchDirection="DownOnly">
-                <TextBlock Text="Platzierungen" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
-                </Viewbox>
-                <!-- Platzhalter für Platzierungsfeld -->
-
-            </Grid>
+            <ContentControl x:Name="PositionsRallyView" Grid.Column="2"/>
 
             <Button Grid.Row="1" Width="40" HorizontalAlignment="Left" Visibility="{Binding Path=CurrentRally.Nummer, Converter={conv:NumToPrevVisibleConverter}, Mode=OneWay}" Margin="10 0 10 0"
                     cal:Message.Attach="[Event Click] = [Action PreviousRally()]">

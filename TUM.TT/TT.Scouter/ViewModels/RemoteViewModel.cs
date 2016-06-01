@@ -22,6 +22,7 @@ namespace TT.Scouter.ViewModels
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
         public RemoteSchlagViewModel SchlagView { get; set; }
+        public RemotePositionsRallyViewModel PositionsRallyView { get; set; }
 
         public bool HasLength
         {
@@ -76,11 +77,15 @@ namespace TT.Scouter.ViewModels
                 {
 
 
-                    if (SchlagView == null)
-                        SchlagView = new RemoteSchlagViewModel(value.Schläge);
+                    if (SchlagView == null || PositionsRallyView == null)
+                    {
+                        if (SchlagView == null) SchlagView = new RemoteSchlagViewModel(value.Schläge);
+                        if (PositionsRallyView == null) PositionsRallyView = new RemotePositionsRallyViewModel(value.Schläge, this);
+                    }
                     else
                     {
                         SchlagView.Strokes = CurrentRally.Schläge;
+                        PositionsRallyView.Strokes = CurrentRally.Schläge;
                     }
                     _rally = value;
 
@@ -134,6 +139,7 @@ namespace TT.Scouter.ViewModels
             base.OnActivate();
             this.ActivateItem(MediaPlayer);
             this.ActivateItem(SchlagView);
+            this.ActivateItem(PositionsRallyView);
         }
 
         #region View Methods
@@ -194,6 +200,15 @@ namespace TT.Scouter.ViewModels
 
             #endregion
 
+        }
+        public void CalibrateTable()
+        {
+            ((RemoteMediaViewModel)MediaPlayer).CalibrateTable();
+        }
+
+        public void ToogleCalibration()
+        {
+            ((RemoteMediaViewModel)MediaPlayer).ToogleCalibration();
         }
     }
 }

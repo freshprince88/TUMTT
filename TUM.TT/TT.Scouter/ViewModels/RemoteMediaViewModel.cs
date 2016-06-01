@@ -15,6 +15,7 @@ using TT.Scouter.Interfaces;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using TT.Scouter.Util.Model;
 
 namespace TT.Scouter.ViewModels
 {
@@ -116,7 +117,7 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager Manager;
         private IDialogCoordinator Dialogs;
-        private List<Point> points;
+        private Calibration calibration;
 
         public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
@@ -124,7 +125,7 @@ namespace TT.Scouter.ViewModels
             Manager = man;
             IsPlaying = false;
             Dialogs = cor;
-            points = new List<Point>();
+            calibration = new Calibration();
             Lines = new ObservableCollection<Line>();
             Lines.CollectionChanged += Lines_CollectionChanged;
         }
@@ -194,45 +195,57 @@ namespace TT.Scouter.ViewModels
             Match.Synchro = seconds * 1000;            
         }
 
-        public void MouseDown(MouseButtonEventArgs e, System.Windows.Controls.Grid mediaContainer)
+        #region Calibration Methods
+
+        public void CalibrateTable()
         {
-            if (points.Count > 4)
+            calibration.startCalibrating();
+            if (Lines.Count > 0)
             {
-                points.Clear();
                 Events.BeginPublishOnUIThread(new DeleteLinesEvent(Lines.ToList<Line>()));
                 Lines.Clear();
             }
+        }
 
-            System.Windows.Point p = e.GetPosition(mediaContainer);
-
-            points.Add(p);
-
-            if (points.Count < 2) return;
-
-            createLineBetweenLastPoints();
-
-            if (points.Count == 4)
+        public void ToogleCalibration()
+        {
+            if (calibration.isCalibrated)
             {
-                points.Add(points[0]);
-                createLineBetweenLastPoints();
+                foreach(Line l in Lines)
+                {
+                    if (l.Visibility == Visibility.Visible)
+                        l.Visibility = Visibility.Hidden;
+                    else
+                        l.Visibility = Visibility.Visible;
+                }
             }
         }
 
-        private void createLineBetweenLastPoints()
+        public void MouseDown(MouseButtonEventArgs e, System.Windows.Controls.Grid mediaContainer)
         {
-            Point p1 = points[points.Count - 2];
-            Point p2 = points[points.Count - 1];
+            if (calibration.isCalibrating)
+            {
+                System.Windows.Point p = e.GetPosition(mediaContainer);
 
-            Line l = new Line();
-            l.X1 = p1.X;
-            l.Y1 = p1.Y;
-            l.X2 = p2.X;
-            l.Y2 = p2.Y;
-            l.Stroke = System.Windows.Media.Brushes.Black;
-            l.StrokeThickness = 4;
+                Line[] newLines = calibration.AddPoint(p);
 
-            Lines.Add(l);
+                if (newLines != null)
+                {
+                    foreach (Line l in newLines)
+                        Lines.Add(l);
+                }
+            }
+            else if(calibration.isCalibrated)
+            {
+                System.Windows.Point p = e.GetPosition(mediaContainer);
+
+                if (calibration.IsPointInPolygon(p))
+                {
+                    Point pointOnTable = calibration.getPointPositionToTable(p);
+                }
+            }
         }
+        
 
         private void Lines_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -240,14 +253,15 @@ namespace TT.Scouter.ViewModels
             {
                 case (System.Collections.Specialized.NotifyCollectionChangedAction.Add):
                 {
-                    if (e.NewItems.Count == 1)
+                    foreach (Line l in e.NewItems)
                     {
-                        Line newLine = (Line)e.NewItems[0];
-                        Events.PublishOnUIThread(new DrawLineEvent(newLine));
+                        Events.PublishOnUIThread(new DrawLineEvent(l));
                     }
                 }
                 break;
             }
         }
+
+        #endregion
     }
 }
