@@ -8,6 +8,7 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 using TT.Scouter.Interfaces;
+using TT.Scouter.Util.Model;
 
 namespace TT.Scouter.ViewModels
 {
@@ -15,6 +16,7 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+        private Calibration calibration = new Calibration();
 
         public IMediaPosition MediaPlayer { get; set; }
 
@@ -79,7 +81,7 @@ namespace TT.Scouter.ViewModels
 
                     if (SchlagView == null || PositionsRallyView == null)
                     {
-                        if (SchlagView == null) SchlagView = new RemoteSchlagViewModel(value.Schläge);
+                        if (SchlagView == null) SchlagView = new RemoteSchlagViewModel(value.Schläge, calibration);
                         if (PositionsRallyView == null) PositionsRallyView = new RemotePositionsRallyViewModel(value.Schläge, this);
                     }
                     else
@@ -131,7 +133,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
-            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
+            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia, calibration);
         }
 
         protected override void OnActivate()

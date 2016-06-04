@@ -104,13 +104,13 @@ namespace TT.Scouter.ViewModels
         private IDialogCoordinator Dialogs;
         private Calibration calibration;
 
-        public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
+        public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor, Calibration cal)
         {
             Events = ev;
             Manager = man;
             IsPlaying = false;
             Dialogs = cor;
-            calibration = new Calibration();
+            calibration = cal;
             calibration.Lines.CollectionChanged += Lines_CollectionChanged;
         }
 
@@ -217,19 +217,7 @@ namespace TT.Scouter.ViewModels
             {
                 System.Windows.Point p = e.GetPosition(mediaContainer);
 
-                if (calibration.IsPointInPolygon(p))
-                {
-                    Point pointOnTable = calibration.getPointPositionToTable(p);
-                    Line l = new Line();
-                    l.X1 = p.X;
-                    l.Y1 = p.Y;
-                    l.X2 = pointOnTable.X;
-                    l.Y2 = pointOnTable.Y;
-                    l.Stroke = System.Windows.Media.Brushes.AliceBlue;
-                    l.StrokeThickness = 4;
-
-                    Events.PublishOnUIThread(new DrawLineEvent(l));
-                }
+                calibration.calcPointPositionOnTable(p);
             }
         }
         

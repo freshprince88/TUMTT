@@ -146,6 +146,7 @@
     <Compile Include="Converters\TechniqueCountToRankingColumnConverter.cs" />
     <Compile Include="Converters\TechniqueToBoolConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
+    <Compile Include="Events\StrokePositionCalculatedEventArgs.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\DeleteLinesEvent.cs" />
     <Compile Include="Events\DrawLineEvent.cs" />

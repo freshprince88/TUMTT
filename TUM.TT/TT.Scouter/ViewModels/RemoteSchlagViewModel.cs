@@ -1,11 +1,15 @@
 ﻿using Caliburn.Micro;
 using System.Collections.ObjectModel;
+using TT.Lib.Events;
 using TT.Models;
+using System;
+using TT.Scouter.Util.Model;
 
 namespace TT.Scouter.ViewModels
 {
     public class RemoteSchlagViewModel : Conductor<IScreen>.Collection.OneActive
     {
+
         private ObservableCollection<Schlag> _strokes;
         public ObservableCollection<Schlag> Strokes
         {
@@ -51,9 +55,10 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        public RemoteSchlagViewModel(ObservableCollection<Schlag> schläge)
+        public RemoteSchlagViewModel(ObservableCollection<Schlag> schläge, Calibration cal)
         {
             Strokes = schläge;
+            cal.StrokePositionCalculated += OnStrokePositionCalculated;
         }
 
         private void Strokes_CollectionChanged()
@@ -76,6 +81,17 @@ namespace TT.Scouter.ViewModels
         {
             var idx = CurrentStroke.Nummer - 1;
             CurrentStroke = Strokes[idx - 1];
+        }
+
+        public void OnStrokePositionCalculated(object sender, StrokePositionCalculatedEventArgs args)
+        {
+            Platzierung newPosition = new Platzierung();
+            newPosition.WX = args.Position.X;
+            newPosition.WY = args.Position.Y;
+            CurrentStroke.Platzierung = newPosition;
+            Console.WriteLine(args.Position.X);
+            Console.WriteLine(args.Position.Y);
+            NextStroke();
         }
     }
 }

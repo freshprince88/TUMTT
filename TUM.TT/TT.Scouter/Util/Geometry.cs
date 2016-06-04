@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shapes;
 
 namespace TT.Scouter.Util
 {
     static class Geometry
     {
-        public static Point Project(System.Windows.Shapes.Line l, Point toProject)
+        public static Point Project(Line l, Point toProject)
         {
             Point pointA = new Point(l.X1, l.Y1);
             Point pointB = new Point(l.X2, l.Y2);
@@ -25,7 +26,7 @@ namespace TT.Scouter.Util
 
         //Compute the distance from AB to C
         //if isSegment is true, AB is a segment, not a line.
-        public static double LineToPointDistance2D(System.Windows.Shapes.Line l, Point p,
+        public static double LineToPointDistance2D(Line l, Point p,
             bool isSegment)
         {
             double[] pointA = new double[] { l.X1, l.Y1 };
@@ -57,6 +58,11 @@ namespace TT.Scouter.Util
         public static double Distance(Point pointA, Point pointB)
         {
             return Distance(new double[] { pointA.X, pointA.Y }, new double[] { pointB.X, pointB.Y });
+        }
+
+        public static double LengthLine(Line line)
+        {
+            return Geometry.Distance(new Point(line.X1, line.Y1), new Point(line.X2, line.Y2));
         }
 
         //Compute the dot product AB . AC
