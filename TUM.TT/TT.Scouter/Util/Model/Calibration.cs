@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ namespace TT.Scouter.Util.Model
 {
     class Calibration
     {
+        // 1. Point: Topleft; 2. Point: TopRight; 3. Point: BottomRight; 4. Point: BottomLeft;
         public List<Point> Points  {get; }
+        public ObservableCollection<System.Windows.Shapes.Line> Lines { get; }
 
         public bool isCalibrated { get; private set; }
         public bool isCalibrating { get; private set; }
@@ -20,26 +23,29 @@ namespace TT.Scouter.Util.Model
             isCalibrated = false;
             isCalibrating = false;
             Points = new List<Point>();
+            Lines = new ObservableCollection<Line>();
         }
 
         public void startCalibrating()
         {
             isCalibrated = false;
             Points.Clear();
+            Lines.Clear();
             isCalibrating = true;
         }
 
-        public Line[] AddPoint(Point p)
+        public void AddPoint(Point p)
         {
             Points.Add(p);
 
             if (Points.Count < 2)
-                return null;
+                return;
 
 
             Point p2 = Points[Points.Count - 2];
 
             Line newLine = createLine(p, p2);
+            Lines.Add(newLine);
 
             if (Points.Count == 4)
             {
@@ -48,10 +54,8 @@ namespace TT.Scouter.Util.Model
                 // finish Calibrating
                 isCalibrating = false;
                 isCalibrated = true;
-                return new Line[] { newLine, endLine };
+                Lines.Add(endLine);
             }
-
-            return new Line[] { newLine };
         }
 
         // Source: https://social.msdn.microsoft.com/Forums/windows/en-US/95055cdc-60f8-4c22-8270-ab5f9870270a/determine-if-the-point-is-in-the-polygon-c?forum=winforms
@@ -111,8 +115,28 @@ namespace TT.Scouter.Util.Model
 
         internal Point getPointPositionToTable(Point p)
         {
+
+            foreach (Line l in Lines)
+                l.Stroke = System.Windows.Media.Brushes.Black;
+
             //throw new NotImplementedException();
-            return new Point();
+            Line closestHorizontalLine;
+            Line closestVerticalLine;
+
+            if (Geometry.LineToPointDistance2D(Lines[0], p, true) < Geometry.LineToPointDistance2D(Lines[2], p, true))
+                closestHorizontalLine = Lines[0];
+            else
+                closestHorizontalLine = Lines[2];
+
+            if (Geometry.LineToPointDistance2D(Lines[1], p, true) < Geometry.LineToPointDistance2D(Lines[3], p, true))
+                closestVerticalLine = Lines[1];
+            else
+                closestVerticalLine = Lines[3];
+
+            closestHorizontalLine.Stroke = System.Windows.Media.Brushes.Red;
+            closestVerticalLine.Stroke = System.Windows.Media.Brushes.Red;
+
+            return Geometry.Project(closestHorizontalLine, p);
         }
     }
 }

@@ -66,21 +66,6 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        private ObservableCollection<Line> _lines;
-        public ObservableCollection<Line> Lines
-        {
-            get { return _lines; }
-            set
-            {
-                if (_lines != value)
-                {
-                    _lines = value;
-
-                    NotifyOfPropertyChange("Lines");
-                }
-            }
-        }
-
 
         private bool _playing;
         public bool IsPlaying
@@ -126,8 +111,7 @@ namespace TT.Scouter.ViewModels
             IsPlaying = false;
             Dialogs = cor;
             calibration = new Calibration();
-            Lines = new ObservableCollection<Line>();
-            Lines.CollectionChanged += Lines_CollectionChanged;
+            calibration.Lines.CollectionChanged += Lines_CollectionChanged;
         }
 
         public void Pause()
@@ -199,19 +183,19 @@ namespace TT.Scouter.ViewModels
 
         public void CalibrateTable()
         {
-            calibration.startCalibrating();
-            if (Lines.Count > 0)
+            if (calibration.Lines.Count > 0)
             {
-                Events.BeginPublishOnUIThread(new DeleteLinesEvent(Lines.ToList<Line>()));
-                Lines.Clear();
+                Events.BeginPublishOnUIThread(new DeleteLinesEvent(calibration.Lines.ToList<Line>()));
+                calibration.Lines.Clear();
             }
+            calibration.startCalibrating();
         }
 
         public void ToogleCalibration()
         {
             if (calibration.isCalibrated)
             {
-                foreach(Line l in Lines)
+                foreach(Line l in calibration.Lines)
                 {
                     if (l.Visibility == Visibility.Visible)
                         l.Visibility = Visibility.Hidden;
@@ -227,13 +211,7 @@ namespace TT.Scouter.ViewModels
             {
                 System.Windows.Point p = e.GetPosition(mediaContainer);
 
-                Line[] newLines = calibration.AddPoint(p);
-
-                if (newLines != null)
-                {
-                    foreach (Line l in newLines)
-                        Lines.Add(l);
-                }
+                calibration.AddPoint(p);
             }
             else if(calibration.isCalibrated)
             {
@@ -242,6 +220,15 @@ namespace TT.Scouter.ViewModels
                 if (calibration.IsPointInPolygon(p))
                 {
                     Point pointOnTable = calibration.getPointPositionToTable(p);
+                    Line l = new Line();
+                    l.X1 = p.X;
+                    l.Y1 = p.Y;
+                    l.X2 = pointOnTable.X;
+                    l.Y2 = pointOnTable.Y;
+                    l.Stroke = System.Windows.Media.Brushes.AliceBlue;
+                    l.StrokeThickness = 4;
+
+                    Events.PublishOnUIThread(new DrawLineEvent(l));
                 }
             }
         }
