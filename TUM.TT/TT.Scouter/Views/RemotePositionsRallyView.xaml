@@ -7,14 +7,19 @@
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:local="clr-namespace:TT.Scouter.Views"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-
+             d:DesignHeight="600" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Olive.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="6*"/>
-            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Viewbox StretchDirection="DownOnly" Grid.Row="0">
@@ -23,15 +28,36 @@
         <!-- Platzhalter für Platzierungsfeld -->
 
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition />                
             </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-            <Button x:Name="CalibrateTable" Content="Calibrate Table" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action CalibrateTable()]"/>
-            <Button x:Name="ToogleCalibration" Content="{Binding ToogleCalibrationButtonText}" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action ToogleCalibration()]"/>
+                <Button x:Name="CalibrateTable" Content="Calibrate Table" Grid.Column="0" Grid.Row="0" cal:Message.Attach="[Event Click] = [Action CalibrateTable()]" VerticalAlignment="Top"/>
+                <Button x:Name="ToogleCalibration" Content="{Binding ToogleCalibrationButtonText}" Grid.Column="0" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action ToogleCalibration()]" VerticalAlignment="Bottom"/>
+            
+            </Grid>
+            <Grid Grid.Column="3">
+                <Viewbox Stretch="Uniform">
+                <Border Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
+                        <Grid Name="InnerFieldGrid" ShowGridLines="True" Height="548" Width="305">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                        </Grid>
+                    </Border>
+                </Viewbox>
+            </Grid>
         </Grid>
 
     </Grid>
