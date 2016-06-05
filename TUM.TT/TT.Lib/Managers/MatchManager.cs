@@ -104,6 +104,30 @@ namespace TT.Lib.Managers
             NotifyOfPropertyChange("MatchModified");
 
         }
+        public IEnumerable<IResult> DownloadMatch()
+        {
+            if (FileName == null || FileName == string.Empty)
+            {
+                var dialog = new SaveFileDialogResult()
+                {
+                    Title = string.Format("Save match \"{0}\"...", Match.Title()),
+                    Filter = Format.XML.DialogFilter,
+                    DefaultFileName = Match.DefaultFilename(),
+                };
+                yield return dialog;
+                FileName = dialog.Result;
+            }
+
+            var serialization = new SerializeMatchResult(Match, FileName, Format.XML.Serializer);
+            yield return serialization
+                .Rescue()
+                .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", FileName))
+                .Propagate(); // Reraise the error to abort the coroutine
+
+            MatchModified = false;
+            NotifyOfPropertyChange("MatchModified");
+
+        }
 
         public IEnumerable<IResult> OpenMatch()
         {

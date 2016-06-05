@@ -83,6 +83,8 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+        public bool toRallyStart { get; set; }
+       
 
         public Match Match { get { return Manager.Match; } }
 

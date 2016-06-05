@@ -97,13 +97,35 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager Manager;
         private IDialogCoordinator Dialogs;
-
+        public bool syncStart { get; set; }
+        public bool syncEnd { get; set; }
+        private bool _toRallyStart;
+        public bool toRallyStart {
+            get
+            {
+                return _toRallyStart;
+            }
+            set
+            {
+                if (_toRallyStart != value)
+                {
+                    _toRallyStart = value;
+                    NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("roRallyStart");
+                }
+            }
+        }
+        
         public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
             Manager = man;
             IsPlaying = false;
-            Dialogs = cor;          
+            Dialogs = cor;
+            syncStart = true;
+            syncEnd = true;
+            toRallyStart = true;
+                  
         }
 
         public void Pause()
@@ -123,6 +145,28 @@ namespace TT.Scouter.ViewModels
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
             IsPlaying = false;
             MediaPosition = TimeSpan.Zero;
+        }
+
+        public void NextFrame()
+        {
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 5, 0);
+            MediaPosition = MediaPosition + delta_time;
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
+            IsPlaying = false;
+            
+
+        }
+        public void Next5Frames()
+        {
+
+        }
+        public void PreviousFrame()
+        {
+
+        }
+        public void Previous5Frames()
+        {
+
         }
 
         public void Slow(int slow)
@@ -158,17 +202,53 @@ namespace TT.Scouter.ViewModels
 
         public IEnumerable<IResult> Sync()
         {
-            //Show Dialog to get Match Synchro
-            InputDialogResult dialog = new InputDialogResult()
+            if (syncStart == true && syncEnd == true)
             {
-                Title = "Synchronize Video with Data",
-                Question = "Please set the Offset in seconds! Current offset: " + (Match.Synchro / 1000)
-            };
+                //Show Dialog to get Match Synchro
+                InputDialogResult dialog = new InputDialogResult()
+                {
+                    Title = "Synchronize Video with Data",
+                    Question = "Please set the Offset in seconds! Current offset: " + (Match.Synchro / 1000)
+                };
+                yield return dialog;
+                double seconds = Convert.ToDouble(dialog.Result);
+                Match.Synchro = seconds * 1000;
+            }
 
-            yield return dialog;
+            else if (syncStart==true && syncEnd == false)
+            {   //Show Dialog to get Start Offset
+                InputDialogResult dialog = new InputDialogResult()
+                {
+                    Title = "Set Start Offset",
+                    Question = "Please set the Offset in seconds!"
+                };
+                yield return dialog;
+                double startOffset = Convert.ToDouble(dialog.Result)*1000;
+                Match.StartOffset(startOffset);
+            }
+            else if (syncStart==false && syncEnd == true)
+            {//Show Dialog to get End Offset
+                InputDialogResult dialog = new InputDialogResult()
+                {
+                    Title = "Set End Offset",
+                    Question = "Please set the Offset in seconds!"
+                };
+                yield return dialog;
+                double endOffset = Convert.ToDouble(dialog.Result)* 1000;
+                Match.EndOffset(endOffset);
+            }
+            else
+            {
+                var errorDialog = new ErrorMessageResult()
+                {
+                    Title = "Keine Offset Option ausgewählt!",
+                    Message = "Bitte wählen sie per Rechtsklick entsprechende Optionen aus!",
+                    Dialogs = Dialogs
+                };
+                yield return errorDialog;
+            }
 
-            double seconds = Convert.ToDouble(dialog.Result);
-            Match.Synchro = seconds * 1000;            
+
         }
     }
 }

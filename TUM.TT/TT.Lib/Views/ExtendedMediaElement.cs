@@ -73,7 +73,7 @@ namespace TT.Lib.Views
 
         private void MediaEndedHandler(object sender, RoutedEventArgs routedEventArgs)
         {
-            MediaLength = TimeSpan.Zero;
+            MediaPosition = TimeSpan.Zero;
         }
 
         private void MediaPositionChanged(TimeSpan newValue)

@@ -244,6 +244,35 @@ namespace TT.Models
                 }
             }
         }
+        /// <summary>
+        /// Sets video offset for Start of the Rally 
+        /// </summary>
+        public void StartOffset(double offset)
+        {
+            foreach (var p in Playlists)
+            {
+                foreach (var r in p.Rallies)
+                {
+                    r.Anfang += offset;
+
+                }
+            }
+        }
+        /// <summary>
+        /// Sets video offset for End of the Rally 
+        /// </summary>
+        public void EndOffset(double offset)
+        {
+            foreach (var p in Playlists)
+            {
+                foreach (var r in p.Rallies)
+                {
+
+                    r.Ende += offset;
+                }
+            }
+
+        }
 
         /// <summary>
         /// Swaps the players in this match.

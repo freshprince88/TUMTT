@@ -84,6 +84,46 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding Path=CurrentRally.Nummer, StringFormat=Rally \#{0:d}}" Grid.ColumnSpan="7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
                 <!-- Placeholder for Ball image -->
+                <Grid x:Name="Player1ServerGrid" Grid.Row="1" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Grid.Row="1" Grid.Column="1" Fill="White"/>
+                    <Grid.Visibility>
+                        <MultiBinding Converter="{conv:CurrentRallyServerToBallIsVisibleConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Server" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}"/>
+                        </MultiBinding>
+                    </Grid.Visibility>
+                </Grid>
+                <Grid x:Name="Player2ServerGrid" Grid.Row="1" Grid.Column="6" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Grid.Row="1" Grid.Column="1" Fill="White"/>
+                    <Grid.Visibility>
+                        <MultiBinding Converter="{conv:CurrentRallyServerToBallIsVisibleConverter}" Mode="OneWay">
+                            <Binding Path="CurrentRally.Server" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}"/>
+                        </MultiBinding>
+                    </Grid.Visibility>
+                </Grid>
+                
+                
                 <Button x:Name="Player1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{conv:CurrentRallyWinnerToButtonIsEnabledConverter}" Mode="OneWay">

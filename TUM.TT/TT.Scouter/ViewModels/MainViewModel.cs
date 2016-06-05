@@ -55,6 +55,7 @@ namespace TT.Scouter.ViewModels
                         if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
                         {
                             LiveView.Rallies.Remove(LiveView.Rallies.Last());
+                            
                         }
                     }
                 }

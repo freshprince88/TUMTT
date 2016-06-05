@@ -37,6 +37,7 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+        public bool toRallyStart { get; set; }
 
         public LiveTimerViewModel()
         {

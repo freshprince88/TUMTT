@@ -8,6 +8,7 @@ namespace TT.Scouter.Interfaces
         TimeSpan MediaPosition { get; set; }
 
         TimeSpan EndPosition { get; set; }
+        bool toRallyStart { get; set; }
 
         void Play();
         

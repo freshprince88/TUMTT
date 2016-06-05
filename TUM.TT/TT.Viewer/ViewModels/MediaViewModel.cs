@@ -241,6 +241,26 @@ namespace TT.Viewer.ViewModels
             events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
         }
 
+        public void JumpToEndOfRally(MediaElement myMediaElement)
+        {
+            this.Control = Media.Control.Pause;
+            TimeSpan Position_now = TimeSpan.FromMilliseconds(CurrentRally.Value.Anfang);
+            TimeSpan jump = TimeSpan.FromMilliseconds(CurrentRally.Value.Ende - CurrentRally.Value.Anfang);
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 2, 0);
+            if ((jump - delta_time).TotalMilliseconds > 0) { 
+            jump = jump - delta_time;
+            }
+            this.Control = Media.Control.Play;
+            events.PublishOnUIThread(new VideoControlEvent()
+            {
+                PlayMode = this.Control,
+                PlaySpeed = this.Speed,
+                Restart=true,
+                Position = Position_now + jump
+            });
+
+        }
+
         public void Slow75Percent(bool isChecked)
         {
             if (isChecked)

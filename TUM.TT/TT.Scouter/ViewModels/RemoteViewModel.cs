@@ -144,30 +144,47 @@ namespace TT.Scouter.ViewModels
 
             if (item != null)
             {
+                if (MediaPlayer.toRallyStart == true) { 
                 CurrentRally = item;
                 TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
                 TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
                 MediaPlayer.MediaPosition = anfangRally;
                 MediaPlayer.EndPosition = endeRally;
                 MediaPlayer.Play();
-                
-                
-               
+                }
+                else if (MediaPlayer.toRallyStart != true)
+                {
+                    CurrentRally = item;
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende-1000);
+                    MediaPlayer.MediaPosition = endeRally;
+                    MediaPlayer.EndPosition = endeRally;
+                    MediaPlayer.Play();
+                }
+
+
+
             }
         }
 
         public void NextRally()
         {
-            var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer + 1).FirstOrDefault();
-            Events.PublishOnUIThread(new ResultListControlEvent(rally));
-            CurrentRally = rally;
+            if (Rallies.Where(r => r.Nummer == CurrentRally.Nummer + 1).FirstOrDefault() != null)
+            {
+                var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer + 1).FirstOrDefault();
+                Events.PublishOnUIThread(new ResultListControlEvent(rally));
+                CurrentRally = rally;
+            }
         }
 
         public void PreviousRally()
         {
-            var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer - 1).FirstOrDefault();
-            Events.PublishOnUIThread(new ResultListControlEvent(rally));
-            CurrentRally = rally;
+            if (Rallies.Where(r => r.Nummer == CurrentRally.Nummer - 1).FirstOrDefault() != null)
+            {
+                var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer - 1).FirstOrDefault();
+                Events.PublishOnUIThread(new ResultListControlEvent(rally));
+                CurrentRally = rally;
+            }
         }
         public void PlusSecond(int i)
         {

@@ -7,6 +7,7 @@
 namespace TT.Lib.Results
 {
     using System;
+    using System.Linq;
     using System.Windows;
     using Caliburn.Micro;
     using MahApps.Metro.Controls.Dialogs;
@@ -45,8 +46,10 @@ namespace TT.Lib.Results
                 AnimateShow = true,
                 AnimateHide = false
             };
-            var shell = (IoC.Get<IShell>() as Screen);
-            var result = await Dialogs.ShowMessageAsync(shell, this.Title,
+            var shell = (IoC.Get<IShell>() as Screen); //context.Target
+
+            var curWindow=Application.Current;
+            var result = await Dialogs.ShowMessageAsync(context.Target, this.Title,
                 this.Message,
                 MessageDialogStyle.Affirmative, mySettings);
 

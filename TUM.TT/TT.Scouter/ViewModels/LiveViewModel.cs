@@ -227,6 +227,7 @@ namespace TT.Scouter.ViewModels
             //CurrentRally.Length = length;
             //NotifyOfPropertyChange("CurrentRally");
             LengthHelper = length;
+            NotifyOfPropertyChange("LengthHelper");
         }
 
         public void RallyWon(int player, int length)

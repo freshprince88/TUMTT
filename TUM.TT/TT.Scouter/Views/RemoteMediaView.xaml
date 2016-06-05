@@ -88,6 +88,12 @@
                           Visual="{DynamicResource appbar_control_rewind}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="zum Anfang" IsCheckable="True" IsChecked="{Binding Path=toRallyStart}" StaysOpenOnClick="True"/>
+                        <MenuItem Header="zum Ende" IsCheckable="True" IsChecked="{Binding Path=toRallyStart, Converter={conv:BoolNotConverter} }" StaysOpenOnClick="True"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="PreviousRally"/>
@@ -111,7 +117,6 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="Previous5Frames">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
@@ -119,7 +124,6 @@
                             <KeyBinding Modifiers="Shift" Key="MediaPreviousTrack"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="Previous5Frames">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
@@ -135,7 +139,6 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="PreviousFrame">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
@@ -143,7 +146,6 @@
                             <KeyBinding Modifiers="Alt" Key="MediaPreviousTrack"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="PreviousFrame">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
@@ -193,7 +195,6 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="NextFrame">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
@@ -201,7 +202,6 @@
                             <KeyBinding Modifiers="Alt" Key="MediaNextTrack"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="NextFrame">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
@@ -217,7 +217,6 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="Next5Frames">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
@@ -225,7 +224,6 @@
                             <KeyBinding Modifiers="Shift" Key="MediaNextTrack"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="Next5Frames">
-                            <cal:Parameter Value="{Binding ElementName=myMediaElement}" />
                         </cal:ActionMessage>
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
@@ -238,6 +236,12 @@
                           Visual="{DynamicResource appbar_control_fastforward}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="zum Anfang" IsCheckable="True" IsChecked="{Binding Path=toRallyStart}" StaysOpenOnClick="True"/>
+                        <MenuItem Header="zum Ende" IsCheckable="True" IsChecked="{Binding Path=toRallyStart, Converter={conv:BoolNotConverter} }" StaysOpenOnClick="True"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="NextRally"/>
@@ -313,6 +317,12 @@
                           Visual="{DynamicResource appbar_timer_check}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Anfang" IsCheckable="True" IsChecked="{Binding syncStart}" StaysOpenOnClick="True"/>
+                        <MenuItem Header="Ende" IsCheckable="True" IsChecked="{Binding syncEnd}" StaysOpenOnClick="True"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
             </Button>
         </Grid>
        

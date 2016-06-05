@@ -41,6 +41,18 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <ObjectDataProvider x:Key="RoundFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}" >
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MatchRound"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="CompetitionFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}" >
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MatchCompetition"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
         </ResourceDictionary>
     </Window.Resources>
     <Controls:MetroWindow.RightWindowCommands>
@@ -67,29 +79,76 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Choose a Video to watch" Background="{DynamicResource AccentColorBrush2}" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <Button Grid.Row="0" Grid.Column="1"  Content="Download Match"  Foreground="White"
-                     cal:Message.Attach="[Event Click] = [Action Test()]"   
-                    Style="{StaticResource MetroAccentFlatAccent}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
-                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Path=currentUrl, UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource AccentColorBrush2}" />
 
-                <!--<WebBrowser x:Name="MyWebBrowser" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Source="http://www.tum.de"  />-->    
-                <WindowsFormsHost Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                    <WindowsFormsHost.Child>
-                        <winForms:WebBrowser x:Name="MyWebBrowser" Url="http://www.ittf.com/ittv"   ScriptErrorsSuppressed="True"/>
-                    </WindowsFormsHost.Child>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding Path=secretLabel}"/>
+                    <TextBox Grid.Column="0" Text="{Binding Path=Password,UpdateSourceTrigger=PropertyChanged}" Foreground="{DynamicResource AccentColorBrush}" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding Path=secretTextbox}" BorderThickness="0">
+                        <i:Interaction.Triggers>
+                            <ob:InputBindingTrigger>
+                                <ob:InputBindingTrigger.InputBinding>
+                                    <KeyBinding Key="Enter" />
+                                </ob:InputBindingTrigger.InputBinding>
+                                <cal:ActionMessage MethodName="EnterPassword" >
+                                    <!--<cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />-->
+                                </cal:ActionMessage>
+                            </ob:InputBindingTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+
+                    <Label Name="InfoLabel" Grid.Column="1"  Content="{Binding Path=Header}" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding Path=headerVisible}" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Name="ErrorMessageLabel" Grid.Column="1"  Content="No Match was chosen! No Download possible..." Foreground="Red" Visibility="{Binding Path=errorMessageVisible}" Background="{DynamicResource AccentColorBrush2}" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <Button Grid.Column="2" Background="{DynamicResource AccentColorBrush2}" Style="{StaticResource MetroAccentFlat}"
+                            cal:Message.Attach="[Event Click] = [Action UnlockTextbox()]"/>
+                </Grid>
+
+                <!--<Label Grid.Row="1"  Content="{Binding Path=testString, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Background="{DynamicResource AccentColorBrush2}" />-->
+                <!--<WebBrowser x:Name="MyWebBrowser" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Source="http://www.tum.de"  />-->
+                <!--<Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource AccentColorBrush2}" Content="{Binding processOutput, UpdateSourceTrigger=PropertyChanged}" FontSize="18"  >  
+                </Label>-->
+
+
+                <Grid Grid.Row="2" Visibility="{Binding Path=secretDownload}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="77*"/>
+                        <ColumnDefinition Width="43*"/>
+                        <ColumnDefinition Width="85*"/>
+                        <ColumnDefinition Width="85*"/>
+                        <ColumnDefinition Width="85*"/>
+                        <ColumnDefinition Width="85*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox  Name="Tournament" Grid.Column="0" Text="{Binding Path=Tournament, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Background="{DynamicResource AccentColorBrush2}" Grid.ColumnSpan="2">
+                        <i:Interaction.Behaviors>
+                            <ob:SelectAllTextOnFocusBehavior />
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox  Name="Year" Grid.Column="2" Text="{Binding Path=Year, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Background="{DynamicResource AccentColorBrush2}">
+                        <i:Interaction.Behaviors>
+                            <ob:SelectAllTextOnFocusBehavior />
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <ComboBox Grid.Column="3" ItemsSource="{Binding Source={StaticResource CompetitionFromEnum}}" SelectedItem="{Binding Path=Competition}" FontSize="18" Background="{DynamicResource AccentColorBrush2}" />
+                    <ComboBox Grid.Column="4" ItemsSource="{Binding Source={StaticResource RoundFromEnum}}" SelectedItem="{Binding Path=Round}" FontSize="18" Background="{DynamicResource AccentColorBrush2}" />
+                    <Button Grid.Column="5" Grid.ColumnSpan="2"  Content="Download Match"  Foreground="White"
+                     cal:Message.Attach="[Event Click] = [Action DownloadMatch()]"   
+                    Style="{StaticResource MetroAccentFlatAccent}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+                </Grid>
+                <WindowsFormsHost Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                    <winForms:WebBrowser x:Name="MyWebBrowser" Url="http://www.ittf.com/ittv"   ScriptErrorsSuppressed="True"/>
                 </WindowsFormsHost>
-                
             </Grid>
         </Border>
-        
+
     </Grid>
 </Controls:MetroWindow>
