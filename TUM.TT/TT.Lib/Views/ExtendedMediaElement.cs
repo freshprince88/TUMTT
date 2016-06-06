@@ -22,7 +22,9 @@ namespace TT.Lib.Views
         public static readonly DependencyProperty EndPositionProperty =
             DependencyProperty.Register("EndPosition", typeof(TimeSpan), typeof(ExtendedMediaElement));
 
-
+        // Using a DependencyProperty as the backing store for IsPlaying.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsPlayingProperty =
+            DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(false));
 
         private static void MediaPositionChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -33,6 +35,12 @@ namespace TT.Lib.Views
         bool positionChangedByTimer;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public bool IsPlaying
+        {
+            get { return (bool)GetValue(IsPlayingProperty); }
+            set { SetValue(IsPlayingProperty, value); }
+        }
 
         public TimeSpan MediaLength
         {
@@ -62,7 +70,7 @@ namespace TT.Lib.Views
             mediaTimer = new DispatcherTimer();
             mediaTimer.Interval = TimeSpan.FromMilliseconds(100);
             mediaTimer.Tick += MediaTimerTickHandler;
-            mediaTimer.Start();
+            mediaTimer.Start();            
         }
 
         private void MediaOpenedHandler(object sender, RoutedEventArgs routedEventArgs)
@@ -89,10 +97,13 @@ namespace TT.Lib.Views
 
         private void MediaTimerTickHandler(object sender, EventArgs e)
         {
+            if (!IsPlaying)
+                return;
+
             positionChangedByTimer = true;
             MediaPosition = Position;
 
-            if(EndPosition != null && EndPosition > Position)
+            if(EndPosition != null && EndPosition <= Position)
             {
                 //TODO: Send Event to RemoteMediaViewModel
                 // Pause()

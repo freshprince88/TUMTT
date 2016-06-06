@@ -54,7 +54,6 @@ namespace TT.Scouter.Views
         {
             Events.Unsubscribe(this);
             currentTime = MediaPlayer.Position;
-
         }
 
         public void Handle(MediaControlEvent message)

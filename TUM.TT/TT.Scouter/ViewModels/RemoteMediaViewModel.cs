@@ -149,9 +149,9 @@ namespace TT.Scouter.ViewModels
 
         public void NextFrame()
         {
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 5, 0);
-            MediaPosition = MediaPosition + delta_time;
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 5, 0);            
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
+            MediaPosition = MediaPosition + delta_time;
             IsPlaying = false;
             
 
