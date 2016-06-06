@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.ComponentModel;
+using TT.Lib.Events;
+
 
 namespace TT.Lib.Views
 {
@@ -26,6 +28,39 @@ namespace TT.Lib.Views
         public static readonly DependencyProperty IsPlayingProperty =
             DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(false));
 
+
+
+        public bool? PlayMode
+        {
+            get { return (bool?)GetValue(PlayModeProperty); }
+            set { SetValue(PlayModeProperty, value); NotifyOfPropertyChange(); }
+        }
+
+        // Using a DependencyProperty as the backing store for PlayMode.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PlayModeProperty =
+            DependencyProperty.Register("PlayMode", typeof(bool?), typeof(ExtendedMediaElement), new PropertyMetadata(false));
+
+
+        private static void PlayModeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            ((ExtendedMediaElement)obj).PlayModeChanged((bool?)e.NewValue);
+        }
+
+        private void PlayModeChanged(bool? newValue)
+        {
+            switch (newValue)
+            {
+                case null:
+                    break;
+                case false:
+                    break;
+                case true:
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private static void MediaPositionChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             ((ExtendedMediaElement)obj).MediaPositionChanged((TimeSpan)e.NewValue);
@@ -39,7 +74,7 @@ namespace TT.Lib.Views
         public bool IsPlaying
         {
             get { return (bool)GetValue(IsPlayingProperty); }
-            set { SetValue(IsPlayingProperty, value); }
+            set { SetValue(IsPlayingProperty, value); NotifyOfPropertyChange(); }
         }
 
         public TimeSpan MediaLength
@@ -61,9 +96,11 @@ namespace TT.Lib.Views
         }
 
         public virtual bool IsNotifying { get; set; }
+        private IEventAggregator Events;
 
         public ExtendedMediaElement()
         {
+            Events = IoC.Get<IEventAggregator>();
             MediaOpened += MediaOpenedHandler;
             MediaEnded += MediaEndedHandler;
 
@@ -97,17 +134,30 @@ namespace TT.Lib.Views
 
         private void MediaTimerTickHandler(object sender, EventArgs e)
         {
+            if (EndPosition != null && EndPosition <= Position)
+            {
+                switch (PlayMode)
+                {
+                    case null:
+                        Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
+                        break;
+                    case false:
+                        break;
+                    case true:
+                        Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
+                        break;
+                    default:
+                        break;
+                }
+            } 
+
             if (!IsPlaying)
                 return;
 
             positionChangedByTimer = true;
             MediaPosition = Position;
 
-            if(EndPosition != null && EndPosition <= Position)
-            {
-                //TODO: Send Event to RemoteMediaViewModel
-                // Pause()
-            }
+            
         }
 
         public void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

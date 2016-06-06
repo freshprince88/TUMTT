@@ -11,7 +11,7 @@ using TT.Scouter.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
-    public class RemoteViewModel : Conductor<IScreen>.Collection.AllActive
+    public class RemoteViewModel : Conductor<IScreen>.Collection.AllActive, IHandle<PlayModeEvent>
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
@@ -132,6 +132,7 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            this.Events.Subscribe(this);
             this.ActivateItem(MediaPlayer);
             this.ActivateItem(SchlagView);
         }
@@ -186,6 +187,12 @@ namespace TT.Scouter.ViewModels
                 CurrentRally = rally;
             }
         }
+        public void StartRallyAtBeginning()
+        {
+            TimeSpan anfangRally = TimeSpan.FromMilliseconds(CurrentRally.Anfang);
+            MediaPlayer.MediaPosition = anfangRally;
+
+        }
         public void PlusSecond(int i)
         {
             if (i == 1)
@@ -212,5 +219,25 @@ namespace TT.Scouter.ViewModels
             #endregion
 
         }
+
+        #region Events
+        public void Handle(PlayModeEvent message)
+        {
+            switch (message.PlayMode)
+            {
+                case null:
+                    NextRally();
+                    break;
+                case false:
+                    break;
+                case true:
+                    StartRallyAtBeginning();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        #endregion
     }
 }

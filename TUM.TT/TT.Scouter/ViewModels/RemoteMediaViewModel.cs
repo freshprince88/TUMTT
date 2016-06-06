@@ -61,8 +61,7 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-
-            private bool _playing;
+        private bool _playing;
         public bool IsPlaying
         {
             get
@@ -93,12 +92,12 @@ namespace TT.Scouter.ViewModels
         }
 
         public Match Match { get { return Manager.Match; } }
-
         private IEventAggregator Events;
         private IMatchManager Manager;
         private IDialogCoordinator Dialogs;
         public bool syncStart { get; set; }
         public bool syncEnd { get; set; }
+
         private bool _toRallyStart;
         public bool toRallyStart {
             get
@@ -115,7 +114,22 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
-        
+
+        private bool? _playMode;
+        public bool? PlayMode
+        {
+            get
+            {
+                return _playMode;
+            }
+            set
+            {
+                if (_playMode != value)
+                    _playMode = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
@@ -125,6 +139,8 @@ namespace TT.Scouter.ViewModels
             syncStart = true;
             syncEnd = true;
             toRallyStart = true;
+            PlayMode = false;
+
                   
         }
 
@@ -149,7 +165,7 @@ namespace TT.Scouter.ViewModels
 
         public void NextFrame()
         {
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 5, 0);            
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
             MediaPosition = MediaPosition + delta_time;
             IsPlaying = false;
@@ -158,14 +174,26 @@ namespace TT.Scouter.ViewModels
         }
         public void Next5Frames()
         {
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
+            MediaPosition = MediaPosition + delta_time;
+            IsPlaying = false;
 
         }
         public void PreviousFrame()
         {
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
+            MediaPosition = MediaPosition - delta_time;
+            IsPlaying = false;
 
         }
         public void Previous5Frames()
         {
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
+            MediaPosition = MediaPosition - delta_time;
+            IsPlaying = false;
 
         }
 

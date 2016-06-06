@@ -159,6 +159,7 @@
     <Compile Include="Events\PlaylistDeletedEvent.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="Events\PlaylistSelectionChangedEvent.cs" />
+    <Compile Include="Events\PlayModeEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\RallyOverEvent.cs" />
