@@ -45,7 +45,7 @@ namespace TT.Models
         }
 
         /// <summary>
-        /// Gets or sets the round of the match.
+        /// Gets or sets the name of the Playlist.
         /// </summary>
         [XmlAttribute]
         public string Name

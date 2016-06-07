@@ -95,7 +95,9 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Grid.Row="1" Grid.Column="1" Fill="White"/>
+                    <Viewbox Grid.Row="1" Grid.Column="1">
+                        <Ellipse  Fill="White" Width="10" Height="10" Stretch="Fill" />
+                    </Viewbox>
                     <Grid.Visibility>
                         <MultiBinding Converter="{conv:CurrentRallyServerToBallIsVisibleConverter}" Mode="OneWay">
                             <Binding Path="CurrentRally.Server" />
@@ -103,7 +105,7 @@
                         </MultiBinding>
                     </Grid.Visibility>
                 </Grid>
-                <Grid x:Name="Player2ServerGrid" Grid.Row="1" Grid.Column="6" >
+                <Grid x:Name="Player2ServerGrid" Grid.Row="1" Grid.Column="6" Margin="2,0,-2,0" >
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="2*" />
@@ -114,7 +116,9 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Grid.Row="1" Grid.Column="1" Fill="White"/>
+                    <Viewbox Grid.Row="1" Grid.Column="1">
+                        <Ellipse  Fill="White" Width="10" Height="10" Stretch="Fill" />
+                    </Viewbox>
                     <Grid.Visibility>
                         <MultiBinding Converter="{conv:CurrentRallyServerToBallIsVisibleConverter}" Mode="OneWay">
                             <Binding Path="CurrentRally.Server" />
@@ -122,8 +126,8 @@
                         </MultiBinding>
                     </Grid.Visibility>
                 </Grid>
-                
-                
+
+
                 <Button x:Name="Player1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{conv:CurrentRallyWinnerToButtonIsEnabledConverter}" Mode="OneWay">
@@ -141,10 +145,10 @@
                     </Button.IsEnabled>
                 </Button>
                 <Viewbox Grid.Row="3" Grid.Column="0">
-                <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.First}"  FontSize="40"   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.First}"  FontSize="40"   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Viewbox>
                 <Viewbox Grid.Row="3" Grid.Column="6">
-                <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.Second}"  FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Path=CurrentRally.CurrentSetScore.Second}"  FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Viewbox>
                 <Viewbox Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
                     <TextBlock Text="{Binding Path=CurrentRally.CurrentRallyScore.First}"  FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -155,10 +159,10 @@
                 <Viewbox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Center" Margin="10 0 10 0">
                     <TextBlock Text="Länge:"  FontSize="20" Foreground="White" />
                 </Viewbox>
-                
+
                 <TextBox Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding Path=LengthHelper}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
-               
-                </Grid>
+
+            </Grid>
 
             <Border Grid.Column="0" BorderThickness="0 0 3 0" BorderBrush="Gray"/>
             <Border Grid.Column="1" BorderThickness="0 0 3 0" BorderBrush="Gray"/>
@@ -181,7 +185,7 @@
                 <Viewbox Grid.Row="1" Margin="10 0 10 0" StretchDirection="DownOnly">
                     <TextBlock Text="Ende:" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
                 </Viewbox>
-                
+
 
                 <TextBox Text="{Binding Path=CurrentRally.Anfang, Converter={conv:MSToTimeConverter}}" Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center"/>
                 <Grid Grid.Row="0" Grid.Column="3">
@@ -190,29 +194,29 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button  x:Name="AnfangPlusButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Height="20" Width="20" Foreground="White">
-                    <Rectangle Width="15" Height="15" 
+                        <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform"
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform"
                           Visual="{DynamicResource appbar_add}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
                         <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
+                            <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="PlusSecond">
                                     <cal:Parameter Value="1" />
                                 </cal:ActionMessage>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
-                <Button  x:Name="AnfangMinusButton" Style="{StaticResource MetroAccentFlat}"  Height="20" Width="20"  Foreground="White">
-                    <Rectangle Width="15" Height="15" 
+                    <Button  x:Name="AnfangMinusButton" Style="{StaticResource MetroAccentFlat}"  Height="20" Width="20"  Foreground="White">
+                        <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform"
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform"
                           Visual="{DynamicResource appbar_minus}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MinusSecond">
@@ -263,14 +267,18 @@
                     </Button>
                 </Grid>
                 <Grid Grid.Row="5" Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="89*"/>
+                        <ColumnDefinition Width="167*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="5*"/>
                     </Grid.RowDefinitions>
-                    <Viewbox StretchDirection="DownOnly">
+                    <Viewbox StretchDirection="DownOnly" Grid.ColumnSpan="2">
                         <TextBlock Text="Kommentar" HorizontalAlignment="Center" FontSize="16" Foreground="White" />
                     </Viewbox>
-                    <TextBox Text="{Binding Path=CurrentRally.Kommentar}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0"/>
+                    <TextBox Text="{Binding Path=CurrentRally.Kommentar}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
                 </Grid>
             </Grid>
 
@@ -280,7 +288,7 @@
                     <RowDefinition Height="6*"/>
                 </Grid.RowDefinitions>
                 <Viewbox StretchDirection="DownOnly">
-                <TextBlock Text="Platzierungen" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
+                    <TextBlock Text="Platzierungen" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
                 </Viewbox>
                 <!-- Platzhalter für Platzierungsfeld -->
 

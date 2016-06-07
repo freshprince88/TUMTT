@@ -31,20 +31,21 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="Aufschlag" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-        <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition/>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label Content="Spieler: " HorizontalAlignment="Center"/>
-            <Label Content="{Binding Path=CurrentStroke.SpielerString}" HorizontalAlignment="Center"/>
-            <Line Grid.Row="1" Grid.ColumnSpan="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            <Line Grid.Row="0" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 0 0 5"/>
+            <Label Grid.Row="1" Content="Spieler:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Button Grid.Row="1" Grid.Column="1" Margin="5 0 5 0"  Content="{Binding Path=PlayerName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" IsEnabled="False" />
+            <Line Grid.Row="2" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
 
         <Grid x:Name="TecGrid" Grid.Row="2" Margin="0 5 0 0">
@@ -59,7 +60,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <ToggleButton x:Name="FilterForehandButton"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
+                <TextBlock FontSize="16"><Run Text="VH"/></TextBlock>
             </ToggleButton>
             <ToggleButton x:Name="FilterBackhandButton" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
                 <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>

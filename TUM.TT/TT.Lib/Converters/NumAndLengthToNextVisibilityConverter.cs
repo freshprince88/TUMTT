@@ -14,7 +14,7 @@ namespace TT.Lib.Converters
                 int num = (int)values[0];
                 int length = (int)values[1];
 
-                if (num == length || length == 0)
+                if (num >= length || length == 0)
                     return Visibility.Hidden;
                 else
                     return Visibility.Visible;

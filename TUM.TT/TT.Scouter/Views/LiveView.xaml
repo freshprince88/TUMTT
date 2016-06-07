@@ -58,25 +58,51 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
-
-            <Image Name="First" Grid.Column="1" Grid.Row="2" Source="pack://application:,,,/Resources/ping_pong.png">
-                <Image.Visibility>
+            <Grid x:Name="First" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.Row="1" Grid.Column="1">
+                    <Ellipse  Fill="White" Width="10" Height="10" Stretch="Fill" />
+                </Viewbox>
+                
+                <Grid.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
                         <Binding  Path="CurrentRally.Server"/>
                     </MultiBinding>
-                </Image.Visibility>
-            </Image>
+                </Grid.Visibility>
+            </Grid>
             <Label Name="Player1" Content="{Binding Path=Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" FontSize="20" />
             <Label Name="Player2" Content="{Binding Path=Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Grid.RowSpan="2"  FontSize="20"/>
-            <Image Name="Second" Grid.Column="6" Grid.Row="2" Source="pack://application:,,,/Resources/ping_pong.png">
-                <Image.Visibility>
+            <Grid x:Name="Second" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="{Binding Path=ActualWidth, ElementName=BallWidth}" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="{Binding Path=ActualWidth, ElementName=BallWidth}" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.Row="1" Grid.Column="1">
+                    <Ellipse  Fill="White" Width="10" Height="10" Stretch="Fill" />
+                </Viewbox>
+                <Grid.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
-                        <Binding Path="CurrentRally.Server"/>
+                        <Binding  Path="CurrentRally.Server"/>
                     </MultiBinding>
-                </Image.Visibility>
-            </Image>
+                </Grid.Visibility>
+            </Grid>
 
             <Label Name="SetScore1" Content="{Binding Path=CurrentRally.CurrentSetScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" FontSize="30"/>
             <Label Name="PointScore1" Content="{Binding Path=CurrentRally.CurrentRallyScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" FontSize="75"/>
