@@ -131,6 +131,7 @@ namespace TT.Lib.Managers
 
         public IEnumerable<IResult> OpenMatch()
         {
+            bool loadNewVideo = false;
             var dialog = new OpenFileDialogResult()
             {
                 Title = "Open match...",
@@ -153,14 +154,20 @@ namespace TT.Lib.Managers
                 {
                     yield return result;
                 }
+                loadNewVideo = true;
+
+
             }
             else
             {
                 Events.PublishOnUIThread(new VideoLoadedEvent(tempMatch.VideoFile));
+                loadNewVideo = false;
             }
-                        
+
             this.Match = tempMatch;
+            if (!loadNewVideo) { 
             MatchModified = false;
+            }
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
@@ -187,6 +194,8 @@ namespace TT.Lib.Managers
 
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
+            MatchModified = false;
+
 
 
         }
@@ -257,6 +266,7 @@ namespace TT.Lib.Managers
             yield return videoDialog;
             Match.VideoFile = videoDialog.Result;
             Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+
         }
 
         public MatchPlayer ConvertPlayer(Player p)

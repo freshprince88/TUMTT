@@ -91,7 +91,6 @@ namespace TT.Scouter.Views
                 MediaPlayer.Pause();
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
                 
-                
             }
         }
 

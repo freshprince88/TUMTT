@@ -37,7 +37,7 @@
             <Border BorderThickness="0 0 1 1" BorderBrush="Gray" />
             <DockPanel Background="{DynamicResource AccentColorBrush2}">
                 <Label Content="Rallies" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
-                <ListBox x:Name="Items" ItemsSource="{Binding Path=Rallies}" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top"
+                <ListBox x:Name="Items" ItemsSource="{Binding Path=Rallies}" SelectedIndex="-1" VerticalAlignment="Top" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top"
                          cal:Message.Attach="[Event SelectionChanged] = [Action RallySelected($eventArgs)]">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
