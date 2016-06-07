@@ -2,15 +2,12 @@
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 using TT.Lib.Results;
 using TT.Models.Util.Enums;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {

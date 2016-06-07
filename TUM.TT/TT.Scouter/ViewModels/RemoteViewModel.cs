@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
@@ -164,9 +164,6 @@ namespace TT.Scouter.ViewModels
                     MediaPlayer.EndPosition = endeRally;
                     MediaPlayer.Play();
                 }
-
-
-
             }
         }
 

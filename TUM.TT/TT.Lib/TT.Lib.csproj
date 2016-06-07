@@ -181,6 +181,7 @@
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
     <Compile Include="Interactivity\InputBindingTrigger.cs" />
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
+    <Compile Include="Util\Interfaces\IMediaPosition.cs" />
     <Compile Include="Webbrowser\Test.cs" />
     <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />
@@ -226,7 +227,6 @@
     <Compile Include="Converters\Visibility2BoolConverter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Util\Interfaces\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>

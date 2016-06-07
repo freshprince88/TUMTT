@@ -29,7 +29,7 @@
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <ContentControl x:Name="MediaView"/>
+                    <ContentControl x:Name="MediaPlayer"/>
                 </Border>
                 <Border  Grid.Row="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <ContentControl x:Name="PlaylistView" />
