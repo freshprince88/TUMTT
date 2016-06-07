@@ -15,7 +15,7 @@ using TT.Lib;
 
 namespace TT.Lib.Managers
 {
-    public class MatchManager : Caliburn.Micro.PropertyChangedBase, IMatchManager 
+    public class MatchManager : Caliburn.Micro.PropertyChangedBase, IMatchManager
     {
         #region Properties
         /// <summary>
@@ -34,7 +34,7 @@ namespace TT.Lib.Managers
                 if (_match != value)
                 {
                     _match = value;
-                    MatchModified = true; 
+                    MatchModified = true;
                     NotifyOfPropertyChange("MatchModified");
                     NotifyOfPropertyChange();
 
@@ -143,26 +143,28 @@ namespace TT.Lib.Managers
             yield return deserialization
                 .Rescue()
                 .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
-                .Propagate(); // Reraise the error to abort the coroutine
+                .Propagate(); // Reraise the error to abort the coroutine            
 
-            Match = deserialization.Result;
-            ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-            Events.PublishOnUIThread(new MatchOpenedEvent(Match));
-            Events.PublishOnUIThread(new HideMenuEvent());
-            Events.PublishOnUIThread(new FullscreenEvent(false));
+            var tempMatch = deserialization.Result;
 
-            if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
+            if (string.IsNullOrEmpty(tempMatch.VideoFile) || !File.Exists(tempMatch.VideoFile))
             {
-                foreach (var result in LoadVideo())
+                foreach (var result in LoadVideo(tempMatch))
                 {
                     yield return result;
                 }
             }
             else
             {
-                Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
-                MatchModified = false;
+                Events.PublishOnUIThread(new VideoLoadedEvent(tempMatch.VideoFile));
             }
+                        
+            this.Match = tempMatch;
+            MatchModified = false;
+            ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
+            Events.PublishOnUIThread(new MatchOpenedEvent(Match));
+            Events.PublishOnUIThread(new HideMenuEvent());
+            Events.PublishOnUIThread(new FullscreenEvent(false));
         }
         public IEnumerable<IResult> OpenLiveMatch()
         {
@@ -199,7 +201,7 @@ namespace TT.Lib.Managers
                 Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                 MatchModified = true;
-                
+
 
             }
         }
@@ -215,7 +217,7 @@ namespace TT.Lib.Managers
                     list.Name = newName;
                     Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                     MatchModified = true;
-                    
+
                 }
             }
         }
@@ -231,6 +233,18 @@ namespace TT.Lib.Managers
             this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.FileName = String.Empty;
             this.MatchModified = false;
+        }
+
+        private IEnumerable<IResult> LoadVideo(Match temp)
+        {
+            var videoDialog = new OpenFileDialogResult()
+            {
+                Title = "Open video file...",
+                Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
+            };
+            yield return videoDialog;
+            temp.VideoFile = videoDialog.Result;
+            Events.PublishOnUIThread(new VideoLoadedEvent(temp.VideoFile));
         }
 
         public IEnumerable<IResult> LoadVideo()
