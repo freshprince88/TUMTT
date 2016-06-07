@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Timers;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {

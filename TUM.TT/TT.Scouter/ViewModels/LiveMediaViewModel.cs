@@ -4,7 +4,7 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 using TT.Models.Util.Enums;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {

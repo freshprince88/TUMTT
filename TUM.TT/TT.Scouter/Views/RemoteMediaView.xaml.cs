@@ -89,8 +89,9 @@ namespace TT.Scouter.Views
                 MediaPlayer.MediaPosition = currentTime;
                 MediaPlayer.Play();
                 MediaPlayer.Pause();
+
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
-                
+
             }
         }
 

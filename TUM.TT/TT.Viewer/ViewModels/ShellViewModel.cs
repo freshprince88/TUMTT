@@ -212,6 +212,7 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
         }
         #endregion
+
         #region Helper Methods
         public IEnumerable<IResult> OpenMatch()
         {

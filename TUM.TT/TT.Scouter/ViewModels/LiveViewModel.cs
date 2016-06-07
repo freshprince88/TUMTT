@@ -3,7 +3,7 @@ using Caliburn.Micro;
 using TT.Lib.Managers;
 using TT.Models;
 using System.Collections.ObjectModel;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
 using TT.Lib.Util;
