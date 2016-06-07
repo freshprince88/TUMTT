@@ -58,6 +58,36 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private double _min;
+        public double Minimum
+        {
+            get
+            {
+                return _min;
+            }
+            set
+            {
+                if (_min != value)
+                    _min = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private double _max;
+        public double Maximum
+        {
+            get
+            {
+                return _max;
+            }
+            set
+            {
+                if (_max != value)
+                    _max = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         private bool _playing;
         public bool IsPlaying
         {
