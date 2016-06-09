@@ -108,6 +108,12 @@
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="PreviousRally"/>
                     </ob:GlobalInputBindingTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Shift" Key="Left"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PreviousRally"/>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="StartRallyAtBeginningButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="7" Foreground="White">
@@ -176,10 +182,10 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            
+
             <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="11" Foreground="White"
                     Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"
-                    cal:Message.Attach="[Event Click] = [Action Play()]">
+>
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -187,6 +193,19 @@
                           Visual="{DynamicResource appbar_control_play}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Play">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding  Key="MediaPlayPause" />
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayPause">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </Button>
             <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="11"
                           Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolToVisibilityConverter}}"
@@ -199,6 +218,19 @@
                           Visual="{DynamicResource appbar_control_pause}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Pause">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding  Key="MediaPlayPause" />
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayPause">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="12" Foreground="White"
                     cal:Message.Attach="[Event Click] = [Action Stop()]">
@@ -275,6 +307,12 @@
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Key="MediaNextTrack"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="NextRally"/>
+                    </ob:GlobalInputBindingTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Shift" Key="Right"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="NextRally"/>
                     </ob:GlobalInputBindingTrigger>

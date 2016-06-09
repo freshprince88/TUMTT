@@ -22,6 +22,78 @@ namespace TT.Scouter.ViewModels
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
         public RemoteSchlagViewModel SchlagView { get; set; }
+        private bool _service;
+        public bool ServiceChecked
+        {
+            get
+            {
+                return _service;
+            }
+            set
+            {
+                if (_service != value)
+                    _service = value;
+                NotifyOfPropertyChange("ServiceChecked");
+            }
+        }
+        private bool _receive;
+        public bool ReceiveChecked
+        {
+            get
+            {
+                return _receive;
+            }
+            set
+            {
+                if (_receive != value)
+                    _receive = value;
+                NotifyOfPropertyChange("ReceiveChecked");
+            }
+        }
+        private bool _third;
+        public bool ThirdChecked
+        {
+            get
+            {
+                return _third;
+            }
+            set
+            {
+                if (_third != value)
+                    _third = value;
+                NotifyOfPropertyChange("ThirdChecked");
+            }
+        }
+        private bool _fourth;
+        public bool FourthChecked
+        {
+            get
+            {
+                return _fourth;
+            }
+            set
+            {
+                if (_fourth != value)
+                    _fourth = value;
+                NotifyOfPropertyChange("FourthChecked");
+            }
+        }
+        private bool _last;
+        public bool LastChecked
+        {
+            get
+            {
+                return _last;
+            }
+            set
+            {
+                if (_last != value)
+                    _last = value;
+                NotifyOfPropertyChange("LastChecked");
+            }
+        }
+
+
 
         public bool HasLength
         {
@@ -78,10 +150,11 @@ namespace TT.Scouter.ViewModels
 
 
                     if (SchlagView == null)
-                        SchlagView = new RemoteSchlagViewModel(value.Schläge, MatchManager);
+                        SchlagView = new RemoteSchlagViewModel(value.Schläge, MatchManager, value);
                     else
                     {
                         SchlagView.Strokes = value.Schläge;
+                        SchlagView.CurrentRally = value;
                     }
                     _rally = value;
 
@@ -92,6 +165,8 @@ namespace TT.Scouter.ViewModels
                     NotifyOfPropertyChange("CurrentStroke");
                     NotifyOfPropertyChange("LengthHelper");
                     NotifyOfPropertyChange("SchlagView.Strokes");
+                    NotifyOfPropertyChange("SchlagView.CurrentRally");
+
 
 
                 }
@@ -128,7 +203,12 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
-            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
+            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);                           
+            ServiceChecked = true;
+            ReceiveChecked = false;
+            ThirdChecked = false;
+            FourthChecked = false;
+            LastChecked = false;
         }
 
         protected override void OnActivate()
@@ -219,10 +299,53 @@ namespace TT.Scouter.ViewModels
                 CurrentRally.Ende = CurrentRally.Ende - 500;
                 MediaPlayer.EndPosition = TimeSpan.FromMilliseconds(CurrentRally.Ende);
             }
-
-            #endregion
-
         }
+
+        public void SetDefaultStroke(MenuItem m)
+        {
+            switch (m.Header.ToString())
+            {
+                case "Service":
+                    ServiceChecked = true;
+                    ReceiveChecked = false;
+                    ThirdChecked = false;
+                    FourthChecked = false;
+                    LastChecked = false;
+                    break;
+                case "Receive":
+                    ServiceChecked = false;
+                    ReceiveChecked = true;
+                    ThirdChecked = false;
+                    FourthChecked = false;
+                    LastChecked = false;
+                    break;
+                case "3rd Stroke":
+                    ServiceChecked = false;
+                    ReceiveChecked = false;
+                    ThirdChecked = true;
+                    FourthChecked = false;
+                    LastChecked = false;
+                    break;
+                case "4th Stroke":
+                    ServiceChecked = false;
+                    ReceiveChecked = false;
+                    ThirdChecked = false;
+                    FourthChecked = true;
+                    LastChecked = false;
+                    break;
+                case "Last Stroke":
+                    ServiceChecked = false;
+                    ReceiveChecked = false;
+                    ThirdChecked = false;
+                    FourthChecked = false;
+                    LastChecked = true;
+                    break;
+            }
+            
+        }
+
+
+        #endregion
 
         #region Events
         public void Handle(PlayModeEvent message)

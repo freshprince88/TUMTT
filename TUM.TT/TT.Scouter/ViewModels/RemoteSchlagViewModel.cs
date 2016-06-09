@@ -55,7 +55,21 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        public RemoteSchlagViewModel(ObservableCollection<Schlag> schläge, IMatchManager man)
+        private Rally _rally;
+        public Rally CurrentRally
+        {
+            get { return _rally; }
+            set
+            {
+                if (_rally != value)
+                {
+                    _rally = value;
+                    NotifyOfPropertyChange("CurrentRally");
+                }
+            }
+        }
+
+        public RemoteSchlagViewModel(ObservableCollection<Schlag> schläge, IMatchManager man, Rally r)
         {
             Strokes = schläge;
             Events = IoC.Get<IEventAggregator>();
@@ -63,6 +77,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             Strokes.CollectionChanged += Strokes_CollectionChanged;
             CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
+            CurrentRally = r;
         }
 
 
@@ -93,7 +108,13 @@ namespace TT.Scouter.ViewModels
         }
         public void LastStroke()
         {
+            if(CurrentRally.Winner == Strokes[Strokes.Count - 1].Spieler) { 
             CurrentStroke = Strokes[Strokes.Count-1];
+            }
+            else
+            {
+                CurrentStroke = Strokes[Strokes.Count - 2];
+            }
         }
     }
 }

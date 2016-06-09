@@ -302,6 +302,26 @@
                         <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_navigate_previous}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Selected Stroke:" IsEnabled="False"/>
+                        <MenuItem  Header="Service" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ServiceChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="Receive" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ReceiveChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="3rd Stroke" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ThirdChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="4th Stroke" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=FourthChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="Last Stroke" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=LastChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
             </Button>
 
             <Button Grid.Row="1" Grid.Column="2" Width="40" HorizontalAlignment="Right" Margin="10 0 10 0"
@@ -318,6 +338,26 @@
                         <Binding Path="RallyCount" />
                     </MultiBinding>
                 </Button.Visibility>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Selected Stroke:" IsEnabled="False"/>
+                        <MenuItem Header="Service" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ServiceChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="Receive" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ReceiveChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="3rd Stroke" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ThirdChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="4th Stroke" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=FourthChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                        <MenuItem Header="Last Stroke" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=LastChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultStroke($source)]">
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
             </Button>
 
         </Grid>

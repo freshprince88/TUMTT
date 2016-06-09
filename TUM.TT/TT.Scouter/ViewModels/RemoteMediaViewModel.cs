@@ -182,6 +182,17 @@ namespace TT.Scouter.ViewModels
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play, Media.Source.RemoteScouter));
             IsPlaying = true;
         }
+        public void PlayPause()
+        {
+            if (IsPlaying)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
+        }
 
         public void Stop()
         {
