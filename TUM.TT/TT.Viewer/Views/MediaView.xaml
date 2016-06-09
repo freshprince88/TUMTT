@@ -255,7 +255,7 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="16" Foreground="White">
+            <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="16" Foreground="White" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>

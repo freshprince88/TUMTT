@@ -15,7 +15,7 @@ namespace TT.Viewer.ViewModels
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
-        public List<Rally> SelectedRallies { get; private set; }
+
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Stroke.Quality Quality { get; private set; }
@@ -58,7 +58,6 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            SelectedRallies = new List<Rally>();
             Hand = Stroke.Hand.None;
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
@@ -496,7 +495,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r =>
+                var results = BasicFilterView.SelectedRallies.Where(r =>
                     r.Schläge[3].HasHand(this.Hand) &&
                     r.Schläge[3].HasStepAround(this.StepAround) &&
                     r.Schläge[3].HasStrokeTec(this.SelectedStrokeTec) &&
@@ -506,7 +505,7 @@ namespace TT.Viewer.ViewModels
                     r.Schläge[3].HasAggression(this.SelectedAggression) &&
                     r.Schläge[3].HasSpecials(this.Specials)).
                     ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
+                Manager.SelectedRallies = results;
             }
         }
         #endregion

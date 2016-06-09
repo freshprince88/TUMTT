@@ -251,6 +251,14 @@ namespace TT.Viewer.ViewModels
         public IEnumerable<IResult> Open()
         {
             return Manager.LoadVideo();
-        }        
+        }     
+        
+        public void NextRally()
+        {
+        }   
+
+        public void PreviousRally()
+        {
+        }
     }
 }

@@ -187,7 +187,7 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 var results = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.HasPlacementStatistics(3, X) && r.HasBasisInformationStatistics(4, X) && r.HasContactPositionStatistics(3, X) && r.HasTechniqueStatistics(3, X) && r.HasStepAroundStatistics(3, X)).ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(results));
+                Manager.SelectedRallies = results;
             }
         }
 

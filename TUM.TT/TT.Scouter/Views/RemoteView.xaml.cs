@@ -38,7 +38,6 @@ namespace TT.Scouter.Views
                     });
                 }
             }
-
         }
     }
 }

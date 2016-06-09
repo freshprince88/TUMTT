@@ -190,7 +190,7 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 var results = BasicFilterStatisticsView.SelectedRallies.Where(r => HasServices(r) && HasPlacement(r) && HasPosition(r) && HasSpin(r) && HasBasisInformation(r)).ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(results));
+                Manager.SelectedRallies = results;
             }
         }
 

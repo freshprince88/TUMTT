@@ -7,10 +7,6 @@ using TT.Lib.Events;
 using TT.Models;
 using TT.Lib.Results;
 using TT.Lib.Util;
-using MahApps.Metro.Controls.Dialogs;
-
-using System.Windows;
-using TT.Lib;
 
 
 namespace TT.Lib.Managers
@@ -41,6 +37,7 @@ namespace TT.Lib.Managers
                 }
             }
         }
+
         private bool _matchMod;
         public bool MatchModified
         {
@@ -56,6 +53,7 @@ namespace TT.Lib.Managers
                 }
             }
         }
+
         private string _activeList;
         public Playlist ActivePlaylist
         {
@@ -71,11 +69,45 @@ namespace TT.Lib.Managers
             }
         }
 
+        private Rally _activeRally;
+        public Rally ActiveRally
+        {
+            get { return _activeRally; }
+            set
+            {
+                if (_activeRally != value)
+                {
+                    _activeRally = value;
+                    NotifyOfPropertyChange();
+                    Events.PublishOnUIThread(new VideoPlayEvent()
+                    {
+                        Current = _activeRally
+                    });
+                }
+            }
+        }
+
+        private IEnumerable<Rally> _selected;
+        public IEnumerable<Rally> SelectedRallies
+        {
+            get { return _selected; }
+            set
+            {
+                if (_selected != value)
+                {
+                    _selected = value;
+                    NotifyOfPropertyChange();
+                    Events.PublishOnUIThread(new ResultsChangedEvent(_selected));
+                }
+            }
+        }
+
         #endregion
 
         public MatchManager(IEventAggregator aggregator)
         {
             Events = aggregator;
+            SelectedRallies = new List<Rally>();
         }
 
         #region Business Logic
@@ -297,5 +329,6 @@ namespace TT.Lib.Managers
         }
 
         #endregion
+
     }
 }

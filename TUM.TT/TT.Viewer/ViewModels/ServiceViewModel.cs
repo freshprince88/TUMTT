@@ -23,7 +23,6 @@ namespace TT.Viewer.ViewModels
         public BasicFilterViewModel BasicFilterView { get; set; }
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
-        public List<Rally> SelectedRallies { get; private set; }
         public List<Stroke.Spin> SelectedSpins { get; private set; }
         public Stroke.Hand Hand { get; private set; }       
         public Stroke.Quality Quality { get; private set; }
@@ -57,7 +56,6 @@ namespace TT.Viewer.ViewModels
             };
             TableView = new TableServiceViewModel(events);
 
-            SelectedRallies = new List<Rally>();
             SelectedSpins = new List<Stroke.Spin>();
             Hand = Stroke.Hand.None;       
             Quality = Stroke.Quality.None;
@@ -322,7 +320,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies
+                var results = BasicFilterView.SelectedRallies
                     .Where(r =>
                     r.Schläge[0].HasHand(this.Hand) &&
                     r.Schläge[0].HasQuality(this.Quality) &&
@@ -333,7 +331,7 @@ namespace TT.Viewer.ViewModels
                     r.Schläge[0].HasTablePosition(this.SelectedTablePositions)
                     )
                     .ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
+                Manager.SelectedRallies = results;
             }
         }
 

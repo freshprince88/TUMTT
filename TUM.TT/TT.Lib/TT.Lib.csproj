@@ -182,6 +182,7 @@
     <Compile Include="Interactivity\InputBindingTrigger.cs" />
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
+    <Compile Include="Util\ObservableSortedList.cs" />
     <Compile Include="Webbrowser\Test.cs" />
     <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />

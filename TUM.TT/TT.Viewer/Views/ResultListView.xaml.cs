@@ -28,10 +28,10 @@ namespace TT.Viewer.Views
 
         public void Handle(ResultListControlEvent msg)
         {
-            var newSelection = Items.Items.Cast<ResultListItem>().Where(i => i.Rally == msg.SelectedRally).FirstOrDefault();
+            var newSelection = List.Items.Cast<ResultListItem>().Where(i => i.Rally == msg.SelectedRally).FirstOrDefault();
 
-            if (newSelection != null && Items.SelectedItem != newSelection)
-                Items.SelectedItem = newSelection;
+            if (newSelection != null && List.SelectedItem != newSelection)
+                List.SelectedItem = newSelection;
             else
             {
                 if (newSelection != null)
