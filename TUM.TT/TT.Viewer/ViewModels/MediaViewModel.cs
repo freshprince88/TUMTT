@@ -255,10 +255,12 @@ namespace TT.Viewer.ViewModels
         
         public void NextRally()
         {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next, Media.Source.Viewer));
         }   
 
         public void PreviousRally()
         {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Previous, Media.Source.Viewer));
         }
     }
 }
