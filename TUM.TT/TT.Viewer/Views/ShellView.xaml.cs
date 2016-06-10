@@ -19,7 +19,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für ShellView.xaml
     /// </summary>
-    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<HideMenuEvent>
+    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<HideMenuEvent>, IHandle<FullscreenEvent>, IHandle<FullscreenHideAllEvent>
     {
         public IEventAggregator Events { get; private set; }
         public ShellView()
@@ -42,6 +42,46 @@ namespace TT.Viewer.Views
         {
             MenuFlyout.IsOpen = !MenuFlyout.IsOpen;
 
+        }
+
+        public void Handle(FullscreenEvent message)
+        {
+            switch (message.Fullscreen)
+            {
+                case true:
+                    WindowState = WindowState.Maximized;
+                    ShowTitleBar = false;
+                    IgnoreTaskbarOnMaximize = true;
+                    MenuButton.Visibility = Visibility.Collapsed;
+
+                   
+                    break;
+                case false:
+                    WindowState = WindowState.Normal;
+                    ShowTitleBar = true;
+                    IgnoreTaskbarOnMaximize = false;
+                    MenuButton.Visibility = Visibility.Visible;
+
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void Handle(FullscreenHideAllEvent message)
+        {
+            switch (message.Hide)
+            {
+                case true:
+
+                    break;
+                case false:
+
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

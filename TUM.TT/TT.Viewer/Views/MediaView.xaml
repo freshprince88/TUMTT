@@ -24,12 +24,12 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="5 5 5 5">
+    <Grid Margin="5 5 5 5" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto" x:Name="SliderRow"/>
+            <RowDefinition Height="25" x:Name="PlayerRow1"/>
+            <RowDefinition Height="25" x:Name="PlayerRow2"/>
         </Grid.RowDefinitions>
         <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0" ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
                                     MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
@@ -70,12 +70,12 @@
                           Visual="{DynamicResource appbar_control_rewind}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-                <Button.ContextMenu>
+                <!--<Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="zum Anfang" IsCheckable="True" IsChecked="{Binding Path=toRallyStart}" StaysOpenOnClick="True"/>
                         <MenuItem Header="zum Ende" IsCheckable="True" IsChecked="{Binding Path=toRallyStart, Converter={conv:BoolNotConverter} }" StaysOpenOnClick="True"/>
                     </ContextMenu>
-                </Button.ContextMenu>
+                </Button.ContextMenu>-->
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="PreviousRally"/>
@@ -103,7 +103,7 @@
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Shift" Key="MediaPreviousTrack"/>
+                            <KeyBinding Modifiers="Alt" Key="MediaPreviousTrack"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="StartRallyAtBeginning">
                         </cal:ActionMessage>
@@ -157,7 +157,7 @@
 
             <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="6"
                     Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"
-                    cal:Message.Attach="[Event Click] = [Action Play()]">
+                    >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -165,11 +165,23 @@
                           Visual="{DynamicResource appbar_control_play}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Play">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding  Key="MediaPlayPause"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayPause">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </Button>
             <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="6"
                           Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolToVisibilityConverter}}"
-                          IsChecked="{Binding IsPlaying, Mode=OneWay}"
-                          cal:Message.Attach="[Event Click] = [Action Pause()]">
+                          IsChecked="{Binding IsPlaying, Mode=OneWay}">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -177,6 +189,19 @@
                           Visual="{DynamicResource appbar_control_pause}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Pause">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding  Key="MediaPlayPause"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayPause">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8">
                 <Rectangle Width="15" Height="15" 
@@ -231,12 +256,12 @@
                           Visual="{DynamicResource appbar_control_fastforward}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-                <Button.ContextMenu>
+                <!--<Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="to Start" IsCheckable="True" IsChecked="{Binding Path=toRallyStart}" StaysOpenOnClick="True"/>
                         <MenuItem Header="to End (-1)" IsCheckable="True" IsChecked="{Binding Path=toRallyStart, Converter={conv:BoolNotConverter} }" StaysOpenOnClick="True"/>
                     </ContextMenu>
-                </Button.ContextMenu>
+                </Button.ContextMenu>-->
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="NextRally"/>
@@ -335,7 +360,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-            <ToggleButton x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="10" >
+            <ToggleButton x:Name="FullscreenButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="10" IsChecked="{Binding Path=IsFullscreen}" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
@@ -343,19 +368,19 @@
                           Visual="{DynamicResource appbar_fullscreen}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-                <!--<i:Interaction.Triggers>
+                <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="toFullscreen">
+                        <cal:ActionMessage MethodName="FullscreenOnOff">
                         </cal:ActionMessage>
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Modifiers="Alt"  Key="F"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="toFullscreen">
+                        <cal:ActionMessage MethodName="FullscreenHelper">
                         </cal:ActionMessage>
                     </ob:GlobalInputBindingTrigger>
-                </i:Interaction.Triggers>-->
+                </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="LoadButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="1" Grid.Column="11" ToolTip="Load Video"
                     cal:Message.Attach="[Event Click] = [Action Open()]">

@@ -4,21 +4,35 @@ using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Models.Util.Enums;
 using TT.Lib.Managers;
+using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Input;
 
 namespace TT.Viewer.Views
 {
     /// <summary>
     /// Interaktionslogik für MediaView.xaml
     /// </summary>
-    public partial class MediaView : UserControl,
+    public partial class MediaView : System.Windows.Controls.UserControl,
         IHandle<MediaControlEvent>,
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>,
-        IHandle<VideoLoadedEvent>
+        IHandle<VideoLoadedEvent>,
+        IHandle<FullscreenEvent>
     {
+
         private IEventAggregator Events;
         private IMatchManager Manager;
         TimeSpan currentTime;
+
+        public TimeSpan TimeoutToHide { get; private set; }
+        public DateTime LastMouseMove { get; private set; }
+        public bool IsHidden { get; private set; }
+        Timer timer = new Timer();
+        System.Drawing.Point mousePosition { get; set; }
+
+
+
 
         public MediaView()
         {
@@ -29,14 +43,51 @@ namespace TT.Viewer.Views
             this.Loaded += RemoteMediaView_Loaded;
             this.Unloaded += ExtendedMediaView_Unloaded;
             currentTime = TimeSpan.Zero;
+            TimeoutToHide = TimeSpan.FromSeconds(2);
+            this.MouseMove += MediaView_MouseMove;
+            timer.Tick += new EventHandler(timer1_Tick);
+            timer.Interval = (1000) * (3);
+            IsHidden = false;
+            mousePosition = System.Windows.Forms.Control.MousePosition;
+
+
         }
+
+
 
 
         #region Media Methods
 
+
         #endregion
 
         #region Event Handlers
+        private void MediaView_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (FullscreenButton.IsChecked == true)
+            {
+                if (mousePosition != System.Windows.Forms.Control.MousePosition)
+                {
+                    Mouse.OverrideCursor = null;
+
+                    LastMouseMove = DateTime.Now;
+
+                    if (IsHidden)
+                    {
+                        SliderRow.Height = new GridLength(1, GridUnitType.Auto);
+                        PlayerRow1.Height = new GridLength(25);
+                        PlayerRow2.Height = new GridLength(25);
+                        IsHidden = false;
+                        Events.PublishOnUIThread(new FullscreenHideAllEvent(false));
+                    }
+
+                    timer.Enabled = true;
+                    timer.Stop();
+                    timer.Start();
+                    mousePosition = System.Windows.Forms.Control.MousePosition;
+                }
+            }
+        }
 
         private void ExtendedMediaView_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -126,6 +177,41 @@ namespace TT.Viewer.Views
             MediaPlayer.Play();
             MediaPlayer.Pause();
         }
+
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (FullscreenButton.IsChecked == true)
+            {
+                timer.Stop();
+                {
+                    SliderRow.Height = new GridLength(0);
+                    PlayerRow1.Height = new GridLength(0);
+                    PlayerRow2.Height = new GridLength(0);
+                    IsHidden = true;
+                    Events.PublishOnUIThread(new FullscreenHideAllEvent(true));
+                    Mouse.OverrideCursor = System.Windows.Input.Cursors.None;
+                }
+
+            }
+        }
+
+        public void Handle(FullscreenEvent message)
+        {
+            switch (message.Fullscreen)
+            {
+                case true:
+                    MediaPlayer.SetValue(Grid.RowSpanProperty, 4);                    
+                    break;
+                case false:
+                    MediaPlayer.SetValue(Grid.RowSpanProperty, 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         #endregion
     }

@@ -24,7 +24,7 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für MatchView.xaml
     /// </summary>
     public partial class MatchView : UserControl,
-        IHandle<FullscreenEvent>
+        IHandle<FullscreenEvent>,IHandle<FullscreenHideAllEvent>
     {
         #region Properties
 
@@ -47,19 +47,39 @@ namespace TT.Viewer.Views
             switch (message.Fullscreen)
             {
                 case true:
+                    Column2Grid.SetValue(Grid.ColumnProperty, 1);
+                    Column2Grid.SetValue(Grid.ColumnSpanProperty, 2);
+                    Column2Grid.SetValue(Grid.ZIndexProperty,0);
+                    ResultView.SetValue(Grid.ZIndexProperty, 1);
+
+
                     Column1.Width = new GridLength(0);
                     Column2.Width = new GridLength(105);
                     Row2.Height = new GridLength(0);
                     Row3.Height = new GridLength(0);
                     break;
                 case false:
+                    Column2Grid.SetValue(Grid.ColumnProperty, 2);
+                    Column2Grid.SetValue(Grid.ColumnSpanProperty, 1);
                     Column1.Width = new GridLength(1, GridUnitType.Star);
                     Column2.Width = new GridLength(1, GridUnitType.Star);
                     Row2.Height = new GridLength(1, GridUnitType.Star);
                     Row3.Height = new GridLength(1, GridUnitType.Star);
+                    break;
+                default:
+                    break;
+            }
+        }
+        public void Handle(FullscreenHideAllEvent message)
+        {
+            switch (message.Hide)
+            {
+                case true:
+                    Column2.Width = new GridLength(0);
 
-
-
+                    break;
+                case false:
+                    Column2.Width = new GridLength(105);
 
                     break;
                 default:

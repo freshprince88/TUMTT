@@ -150,6 +150,8 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        
+
         #endregion
 
         #region Caliburn Hooks
@@ -164,6 +166,7 @@ namespace TT.Viewer.ViewModels
             //this.ActivateItem(MiniStatistic);
 
         }
+
         #endregion
     }
 }

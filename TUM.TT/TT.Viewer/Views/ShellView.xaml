@@ -18,7 +18,9 @@
                       Title="TUM.TT Viewer"
                       Icon="/olive-letter-v-512.ico"
                       ShowTitleBar="True"
-                      ShowIconOnTitleBar="True">
+                      ShowIconOnTitleBar="True"
+                      AllowsTransparency="True"
+                      >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -64,7 +66,7 @@
     
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
-            <Button ToolTip="Open Menu" Content="Menu" Click="ShowMenu">
+            <Button x:Name="MenuButton" ToolTip="Open Menu" Content="Menu" Click="ShowMenu">
 
             </Button>              
         </Controls:WindowCommands>

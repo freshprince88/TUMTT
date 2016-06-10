@@ -114,8 +114,9 @@ namespace TT.Viewer.ViewModels
                 {
                     CurrentRally = item;
                     TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
-                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende - 1000);
-                    MediaPlayer.MediaPosition = endeRally;
+                    TimeSpan vorEndeRally = TimeSpan.FromMilliseconds(item.Ende - 1000);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
+                    MediaPlayer.MediaPosition = vorEndeRally;
                     MediaPlayer.EndPosition = endeRally;
                     MediaPlayer.Play();
                 }

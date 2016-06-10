@@ -10,7 +10,8 @@ using TT.Lib.Interfaces;
 
 namespace TT.Viewer.ViewModels
 {
-    public class MediaViewModel : Screen, IMediaPosition
+    public class MediaViewModel : Screen, IMediaPosition,
+        IHandle<PlayModeEvent>
     {
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength
@@ -83,6 +84,20 @@ namespace TT.Viewer.ViewModels
             {
                 if (_muted != value)
                     _muted = value;
+                NotifyOfPropertyChange();
+            }
+        }
+        private bool _fullscreen;
+        public bool IsFullscreen
+        {
+            get
+            {
+                return _fullscreen;
+            }
+            set
+            {
+                if (_fullscreen != value)
+                    _fullscreen = value;
                 NotifyOfPropertyChange();
             }
         }
@@ -160,8 +175,10 @@ namespace TT.Viewer.ViewModels
         public MediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
+            Events.Subscribe(this);
             Manager = man;
             IsPlaying = false;
+            IsFullscreen = false;
             Dialogs = cor;
             syncStart = true;
             syncEnd = true;
@@ -179,6 +196,18 @@ namespace TT.Viewer.ViewModels
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play, Media.Source.Viewer));
             IsPlaying = true;
+        }
+
+        public void PlayPause()
+        {
+            if (IsPlaying)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
         }
 
         public void Stop()
@@ -222,6 +251,7 @@ namespace TT.Viewer.ViewModels
 
         }
 
+
         public void Slow(int slow)
         {
             if (slow == 50)
@@ -247,6 +277,25 @@ namespace TT.Viewer.ViewModels
             IsMuted = false;
             Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Unmute));
         }
+        public void FullscreenHelper()
+        {
+            IsFullscreen = !IsFullscreen;
+            FullscreenOnOff();
+        }
+        public void FullscreenOnOff()
+
+        {
+
+            if (IsFullscreen)
+            {
+                Events.PublishOnUIThread(new FullscreenEvent(true));
+            }
+            else
+            {
+                Events.PublishOnUIThread(new FullscreenEvent(false));
+
+            }
+        }
 
         public IEnumerable<IResult> Open()
         {
@@ -261,6 +310,37 @@ namespace TT.Viewer.ViewModels
         public void PreviousRally()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Previous, Media.Source.Viewer));
+        }
+        public void StartRallyAtBeginning()
+        {
+            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Anfang);
+
+        }
+        public void PauseRallyAtBeginning()
+        {
+            
+            Pause();
+            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Anfang);
+
+
+        }
+        public void Handle(PlayModeEvent message)
+        {
+            switch (message.PlayMode)
+            {
+                case null:
+                    NextRally();
+                    break;
+                case false:
+                    PauseRallyAtBeginning();
+                    break;
+                case true:
+                    StartRallyAtBeginning();
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

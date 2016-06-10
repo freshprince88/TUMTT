@@ -134,7 +134,7 @@ namespace TT.Lib.Views
 
         private void MediaTimerTickHandler(object sender, EventArgs e)
         {
-            if (EndPosition != null && EndPosition <= Position)
+            if (EndPosition != null && EndPosition <= Position && EndPosition != TimeSpan.Zero)
             {
                 switch (PlayMode)
                 {
@@ -142,6 +142,7 @@ namespace TT.Lib.Views
                         Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
                         break;
                     case false:
+                        Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
                         break;
                     case true:
                         Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
