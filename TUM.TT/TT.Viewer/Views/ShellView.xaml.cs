@@ -49,6 +49,7 @@ namespace TT.Viewer.Views
             switch (message.Fullscreen)
             {
                 case true:
+
                     WindowState = WindowState.Maximized;
                     ShowTitleBar = false;
                     IgnoreTaskbarOnMaximize = true;
