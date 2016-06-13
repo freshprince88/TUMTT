@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using System.Windows.Controls.Primitives;
 using TT.Lib.Managers;
 using TT.Models;
 
@@ -23,8 +24,56 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            
         }
+        public void SelectService(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("pendulum"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Aufschlagart="Pendulum";
+                }
+                else
+                {
+                    Stroke.Aufschlagart = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("reverse"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Aufschlagart = "Reverse";
+                }
+                else
+                {
+                    Stroke.Aufschlagart = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("tomahawk"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Aufschlagart = "Tomahawk";
+                }
+                else
+                {
+                    Stroke.Aufschlagart = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("special"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Aufschlagart = "Special";
+                }
+                else
+                {
+                    Stroke.Aufschlagart = "";
+                }
+            }
 
+        }
         private string GetNameFromStrokePlayer()
         {
             switch (Stroke.Spieler)

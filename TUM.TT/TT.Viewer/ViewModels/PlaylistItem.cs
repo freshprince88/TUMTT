@@ -10,7 +10,20 @@ namespace TT.Viewer.ViewModels
 {
     public class PlaylistItem : Screen
     {
-        public string Name { get; set; }
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                NameStr = value;
+            }
+
+        }
 
         private int _count;       
         public int Count
@@ -27,6 +40,7 @@ namespace TT.Viewer.ViewModels
         }
 
         public string CountStr { get; private set; }
+        public string NameStr { get; private set; }
 
         public Playlist List { get; set; }
 

@@ -44,14 +44,16 @@
             Margin="0"
             BorderThickness="0"
             SelectedIndex="0"
+             
             ctrl:ListViewLayoutManager.Enabled="True" 
             util:GridViewSort.ShowSortGlyph="True"
             util:GridViewSort.AutoSort="True"
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="False"
             ItemsSource="{Binding Items}"
-            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]; 
-                  [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
+            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)];                  
+                  [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)];" >
+            <!--[Event PreviewMouseDoubleClick] = [Action ListItemSelected($eventArgs)];-->
             
             <ListView.View>
                 <GridView x:Name="HitlistGrid">

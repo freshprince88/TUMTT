@@ -36,9 +36,9 @@ namespace TT.Scouter.ViewModels
             switch (Stroke.Nummer)
             {
                 case 2:
-                    return "Rückschlag";
+                    return "Receive";
                 default:
-                    return Stroke.Nummer + ". Schlag";
+                    return Stroke.Nummer + ". Stroke";
             }
         }
         private string GetNameFromStrokePlayer()

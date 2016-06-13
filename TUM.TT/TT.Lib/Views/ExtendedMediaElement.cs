@@ -26,7 +26,7 @@ namespace TT.Lib.Views
 
         // Using a DependencyProperty as the backing store for IsPlaying.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsPlayingProperty =
-            DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(false));
+            DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(true));
 
 
 

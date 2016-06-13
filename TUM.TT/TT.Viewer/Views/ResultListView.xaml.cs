@@ -76,5 +76,9 @@ namespace TT.Viewer.Views
         {
 
         }
+        private void Items_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

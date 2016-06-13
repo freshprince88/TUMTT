@@ -137,7 +137,7 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
-        
+
 
         private Rally _rally;
         public Rally CurrentRally
@@ -158,8 +158,57 @@ namespace TT.Scouter.ViewModels
                     }
                     _rally = value;
 
-                    if(_rally.Length > 0)
+                    if (_rally.Length > 0)
+                    {
                         CurrentStroke = _rally.Schläge.FirstOrDefault();
+                        if (ServiceChecked)
+                        {
+                            CurrentStroke = _rally.Schläge[0];
+                        }
+                        if (ReceiveChecked)
+                        {
+                            if (_rally.Length > 1)
+                            {
+                                CurrentStroke = _rally.Schläge[1];
+                            }
+                            else
+                            {
+                                CurrentStroke = _rally.Schläge.Last();
+                            }
+                        }
+
+                        if (ThirdChecked)
+                        {
+                            if (_rally.Length > 2)
+                            {
+                                CurrentStroke = _rally.Schläge[2];
+                            }
+                            else
+                            {
+                                CurrentStroke = _rally.Schläge.Last();
+                            }
+                        }
+                        if (FourthChecked)
+                        {
+                            if (_rally.Length > 3)
+                            {
+                                CurrentStroke = _rally.Schläge[3];
+                            }
+                            else
+                            {
+                                CurrentStroke = _rally.Schläge.Last();
+                            }
+                        }
+                        if (LastChecked)
+                        {
+
+                            CurrentStroke = _rally.Schläge.Last();
+                        }
+
+
+
+                    }
+
 
                     NotifyOfPropertyChange("CurrentRally");
                     NotifyOfPropertyChange("CurrentStroke");
@@ -203,7 +252,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
-            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);                           
+            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
             ServiceChecked = true;
             ReceiveChecked = false;
             ThirdChecked = false;
@@ -227,13 +276,14 @@ namespace TT.Scouter.ViewModels
 
             if (item != null)
             {
-                if (MediaPlayer.toRallyStart == true) { 
-                CurrentRally = item;
-                TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
-                TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
-                MediaPlayer.MediaPosition = anfangRally;
-                MediaPlayer.EndPosition = endeRally;
-                MediaPlayer.Play();
+                if (MediaPlayer.toRallyStart == true)
+                {
+                    CurrentRally = item;
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
+                    MediaPlayer.MediaPosition = anfangRally;
+                    MediaPlayer.EndPosition = endeRally;
+                    MediaPlayer.Play();
                 }
                 else if (MediaPlayer.toRallyStart != true)
                 {
@@ -342,7 +392,7 @@ namespace TT.Scouter.ViewModels
                     LastChecked = true;
                     break;
             }
-            
+
         }
 
 

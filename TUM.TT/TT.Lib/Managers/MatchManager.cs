@@ -7,7 +7,7 @@ using TT.Lib.Events;
 using TT.Models;
 using TT.Lib.Results;
 using TT.Lib.Util;
-
+using MahApps.Metro.Controls.Dialogs;
 
 namespace TT.Lib.Managers
 {
@@ -232,7 +232,7 @@ namespace TT.Lib.Managers
 
         }
 
-        public void DeleteRally(Rally r) //Immer noch die schon gelöschte Rally als Parameter!!!!
+        public void DeleteRally(Rally r)
         {
             if (ActivePlaylist.Name != "Alle")
             {
@@ -249,19 +249,21 @@ namespace TT.Lib.Managers
 
         public void RenamePlaylist(string oldName, string newName)
         {
-            if (oldName != "Alle")
+            if (oldName != "Alle" && oldName!="Markiert")
             {
                 Playlist list = Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault();
 
                 if (list != null)
                 {
-                    list.Name = newName;
+                    Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault().Name = newName;
+                    ActivePlaylist = Match.Playlists.Where(p => p.Name == newName).FirstOrDefault();
                     Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                     MatchModified = true;
 
                 }
             }
         }
+        
 
         public void CreateNewMatch()
         {

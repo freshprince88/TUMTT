@@ -80,9 +80,34 @@ namespace TT.Viewer.ViewModels
             MatchManager.SaveMatch();
         }
 
-        public void ShowSettings()
+        public async void RenamePlaylist()
         {
+            if (MatchManager.ActivePlaylist.Name != "Alle" && MatchManager.ActivePlaylist.Name != "Markiert")
+                
+            {
 
+                var shell = (IoC.Get<IShell>() as Screen);
+                var newName = await Dialogs.ShowInputAsync(shell, "Rename Playlist  '" + MatchManager.ActivePlaylist.Name + "' ?",
+                    "Sure?");
+                string oldName = MatchManager.ActivePlaylist.Name;
+                if (newName != null && newName != string.Empty)
+                {
+                    Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault();
+                    PlaylistItem playListItem = this.Items.Where(p => p.Name == oldName).FirstOrDefault();
+
+                    if (list != null)
+                    {
+                        MatchManager.Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault().Name = newName;
+                        this.Items.Where(p => p.Name == oldName).FirstOrDefault().Name = newName;
+                        MatchManager.ActivePlaylist = MatchManager.Match.Playlists.Where(p => p.Name == newName).FirstOrDefault();
+                        events.PublishOnUIThread(new PlaylistChangedEvent(MatchManager.ActivePlaylist));
+                        MatchManager.MatchModified = true;
+                        NotifyOfPropertyChange("MatchManager.MatchModified");
+                        //MatchManager.RenamePlaylist(MatchManager.ActivePlaylist.Name, name);
+
+                    }
+                }
+            }
         }
         public async void DeletePlaylist()
         {
