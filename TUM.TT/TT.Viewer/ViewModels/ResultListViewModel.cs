@@ -137,11 +137,19 @@ namespace TT.Viewer.ViewModels
                         }
                         break;
                     case Media.Control.Next:
-                        var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : null;
-                        if (rallyN != null)
+                        var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : Rallies[0];
+                        if (rallyN != null && rallyN != Rallies[0])
                         {                            
                             Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
                             Manager.ActiveRally = rallyN;
+                        }
+                        else if (rallyN != null && rallyN == Rallies[0])
+                        {
+                            Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
+                            Manager.ActiveRally = rallyN;
+                            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+                            
+
                         }
                         break;
                     default:

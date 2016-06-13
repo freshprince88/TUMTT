@@ -17,6 +17,7 @@ using TT.Models;
 using NReco.VideoConverter;
 using TT.Lib.Util;
 using TT.Lib;
+using System.Collections.ObjectModel;
 
 namespace TT.Viewer.ViewModels
 {
@@ -29,7 +30,7 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator Dialogs;
         public bool singleRalliesBool { get; set; }
         public bool rallyCollectionBool { get; set; }
-        
+
 
         public PlaylistViewModel(IEventAggregator e, IMatchManager man, IDialogCoordinator dc)
         {
@@ -37,7 +38,7 @@ namespace TT.Viewer.ViewModels
             MatchManager = man;
             Dialogs = dc;
             singleRalliesBool = false;
-            rallyCollectionBool = true;    
+            rallyCollectionBool = true;
         }
 
         #region View Methods
@@ -50,7 +51,7 @@ namespace TT.Viewer.ViewModels
             {
                 //this.events.PublishOnUIThread(new PlaylistChangedEvent(item.Name));
                 MatchManager.ActivePlaylist = item.List;
-            }           
+            }
         }
 
         public async void Add()
@@ -58,7 +59,7 @@ namespace TT.Viewer.ViewModels
             var shell = (IoC.Get<IShell>() as Screen);
             var name = await Dialogs.ShowInputAsync(shell, "New Playlist", "Please enter a name for the playlist");
             //this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist")); 
-            if(name != null && name != string.Empty)
+            if (name != null && name != string.Empty)
             {
                 Playlist p = new Playlist();
                 p.Name = name;
@@ -71,7 +72,7 @@ namespace TT.Viewer.ViewModels
                     Count = p.Rallies.Count(),
                     List = p
                 });
-            }               
+            }
         }
 
         public void Save()
@@ -126,7 +127,7 @@ namespace TT.Viewer.ViewModels
             //TODO Auswahlmöglichkeit: einzelne Ballwechsel-Videos, alle Ballwechsel in einem Video
             string videoName = MatchManager.Match.VideoFile.Split('\\').Last();
             videoName = videoName.Split('.').First();
-            videoName = videoName + "_("+ MatchManager.ActivePlaylist.Name+")";
+            videoName = videoName + "_(" + MatchManager.ActivePlaylist.Name + ")";
             if (singleRalliesBool != false || rallyCollectionBool != false)
             {
                 var exportDialog = new ExportPlaylistDialogResult()
@@ -168,7 +169,7 @@ namespace TT.Viewer.ViewModels
 
         #region Caliburn Hooks
 
-        protected override void OnActivate() 
+        protected override void OnActivate()
         {
             base.OnActivate();
             // Subscribe ourself to the event bus
@@ -178,7 +179,7 @@ namespace TT.Viewer.ViewModels
         }
 
         protected override void OnDeactivate(bool close)
-        {          
+        {
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
             base.OnDeactivate(close);
@@ -190,38 +191,82 @@ namespace TT.Viewer.ViewModels
 
         public void DragOver(IDropInfo dropInfo)
         {
-            var sourceItem = dropInfo.Data as ResultListItem;
-            var targetItem = dropInfo.TargetItem as PlaylistItem;            
-
-            if (sourceItem != null && targetItem != null)
+            if (dropInfo.Data is ResultListItem && dropInfo.TargetItem is PlaylistItem)
             {
-                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
-                dropInfo.Effects = DragDropEffects.Copy;
+                var sourceItem = dropInfo.Data as ResultListItem;
+                var targetItem = dropInfo.TargetItem as PlaylistItem;
+
+                if (sourceItem != null && targetItem != null)
+                {
+                    dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                    dropInfo.Effects = DragDropEffects.Copy;
+                }
             }
+
+            else if (dropInfo.Data is IEnumerable<ResultListItem> && dropInfo.TargetItem is PlaylistItem)
+            {
+                var sourceItem = dropInfo.Data as IEnumerable<ResultListItem>;
+                var targetItem = dropInfo.TargetItem as PlaylistItem;
+
+                if (sourceItem != null && targetItem != null)
+                {
+                    dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                    dropInfo.Effects = DragDropEffects.Copy;
+                }
+
+            }
+
         }
 
         public void Drop(IDropInfo dropInfo)
         {
-            var sourceItem = dropInfo.Data as ResultListItem;
-            var targetItem = dropInfo.TargetItem as PlaylistItem;
 
-            Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
-
-            if (list != null && !list.Rallies.Contains(sourceItem.Rally))
+            if (dropInfo.Data is ResultListItem && dropInfo.TargetItem is PlaylistItem)
             {
-                list.Rallies.Add(sourceItem.Rally);
-                MatchManager.MatchModified = true;
-                NotifyOfPropertyChange("MatchManager.MatchModified");
-                targetItem.Count++;
-                this.Items.Refresh();
-            }            
+                var sourceItem = dropInfo.Data as ResultListItem;
+                var targetItem = dropInfo.TargetItem as PlaylistItem;
+                Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
+                if (list != null && !list.Rallies.Contains(sourceItem.Rally))
+                {
+                    list.Rallies.Add(sourceItem.Rally);
+                    //Sort List after Rally-Number
+                    Sort(list.Rallies);
+                    MatchManager.MatchModified = true;
+                    NotifyOfPropertyChange("MatchManager.MatchModified");
+                    targetItem.Count++;
+                    this.Items.Refresh();
+                }
+            }
+            else if (dropInfo.Data is IEnumerable<ResultListItem> && dropInfo.TargetItem is PlaylistItem)
+            {
+                var sourceItem = dropInfo.Data as IEnumerable<ResultListItem>;
+                var targetItem = dropInfo.TargetItem as PlaylistItem;
+                Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
+
+                while (sourceItem.Count() > 0)
+                {
+                    if (list != null && !list.Rallies.Contains(sourceItem.Last().Rally))
+                    {
+                        list.Rallies.Add(sourceItem.Last().Rally);
+                        //Sort List after Rally-Number
+                        Sort(list.Rallies);
+                        MatchManager.MatchModified = true;
+                        NotifyOfPropertyChange("MatchManager.MatchModified");
+                        targetItem.Count++;
+                        this.Items.Refresh();
+                    }
+                    sourceItem = WithoutLast<ResultListItem>(sourceItem);
+                }
+            }
+
+
         }
 
         public void Handle(PlaylistChangedEvent message)
         {
             var selected = this.Items.Where(p => p.Name == message.List.Name).FirstOrDefault();
 
-            if(selected != null)
+            if (selected != null)
             {
                 selected.Count = message.List.Rallies.Count;
                 this.Items.Refresh();
@@ -231,6 +276,39 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Helper Methods
+        public IEnumerable<ResultListItem> WithoutLast<ResultListItem>(IEnumerable<ResultListItem> source)
+        {
+            using (var e = source.GetEnumerator())
+            {
+                if (e.MoveNext())
+                {
+                    for (var value = e.Current; e.MoveNext(); value = e.Current)
+                    {
+                        yield return value;
+                    }
+                }
+            }
+        }
+
+        public ObservableCollection<Rally> Sort(ObservableCollection<Rally> r)
+        {
+            List<Rally> sorted = r.OrderBy(x => x.Nummer).ToList();
+            int ptr = 0;
+            while (ptr < sorted.Count)
+            {
+                if (!r[ptr].Equals(sorted[ptr]))
+                {
+                    Rally t = r[ptr];
+                    r.RemoveAt(ptr);
+                    r.Insert(sorted.IndexOf(t), t);
+                }
+                else
+                {
+                    ptr++;
+                }
+            }
+            return r;
+        }
 
         private void LoadPlaylists()
         {

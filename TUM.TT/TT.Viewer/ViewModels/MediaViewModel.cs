@@ -11,7 +11,7 @@ using TT.Lib.Interfaces;
 namespace TT.Viewer.ViewModels
 {
     public class MediaViewModel : Screen, IMediaPosition,
-        IHandle<PlayModeEvent>
+        IHandle<PlayModeEvent>, IHandle<MediaControlEvent>
     {
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength
@@ -354,6 +354,26 @@ namespace TT.Viewer.ViewModels
 
                 default:
                     break;
+            }
+        }
+        public void Handle(MediaControlEvent message)
+        {
+            if (message.Source == Media.Source.Viewer)
+            {
+                switch (message.Ctrl)
+                {
+                    case Media.Control.Stop:
+                        IsPlaying = false;
+                        break;
+                    case Media.Control.Pause:
+                        IsPlaying = false;
+                        break;
+                    case Media.Control.Play:
+                        IsPlaying = true;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
