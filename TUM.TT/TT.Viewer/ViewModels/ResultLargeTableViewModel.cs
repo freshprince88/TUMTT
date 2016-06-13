@@ -15,7 +15,7 @@ using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ResultListViewModel : Screen, IResultViewTabItem,
+    public class ResultLargeTableViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
         IHandle<FullscreenEvent>,
         IHandle<MediaControlEvent>
@@ -36,9 +36,9 @@ namespace TT.Viewer.ViewModels
         public List<Rally> Rallies { get; set; }
 
 
-        public ResultListViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
+        public ResultLargeTableViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
-            this.DisplayName = "Hitlist";
+            this.DisplayName = "Großer Tisch";
             Header = "Hitlist (" + count + ")";
             Events = e;
             Dialogs = c;
@@ -55,7 +55,7 @@ namespace TT.Viewer.ViewModels
 
         public byte GetOrderInResultView()
         {
-            return 0;
+            return 1;
         }
 
         #region View Methods
@@ -102,7 +102,7 @@ namespace TT.Viewer.ViewModels
             //}
 
             count = Items.Count();
-            this.DisplayName = "Hitlist (" + count + ")";
+            //this.DisplayName = "Großer Tisch (" + count + ")";
             Header = "Hitlist (" + count + ")";
             NotifyOfPropertyChange("Header");
 
@@ -114,11 +114,11 @@ namespace TT.Viewer.ViewModels
             switch (message.Fullscreen)
             {
                 case true:
-                    this.DisplayName = "R(" + count + ")";
+                    //this.DisplayName = "GT(" + count + ")";
                     Header = "R(" + count + ")";
                     break;
                 case false:
-                    this.DisplayName = "Hitlist (" + count + ")";
+                    //this.DisplayName += "Großer Tisch (" + count + ")";
                     Header = "Hitlist (" + count + ")";
                     break;
                 default:
