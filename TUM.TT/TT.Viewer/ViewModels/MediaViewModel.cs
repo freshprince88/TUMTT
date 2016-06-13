@@ -317,12 +317,26 @@ namespace TT.Viewer.ViewModels
 
         }
         public void PauseRallyAtBeginning()
-        {
-            
+        {        
             Pause();
             MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Anfang);
+        }
 
+        public void PlayModeHelper()
+        {
+            switch (PlayMode)
+            {
+                case null:
+                    PlayMode = false;
+                    break;
+                case false:
+                    PlayMode = true;
+                    break;
+                case true:
+                    PlayMode = null;
+                    break;
 
+            }
         }
         public void Handle(PlayModeEvent message)
         {

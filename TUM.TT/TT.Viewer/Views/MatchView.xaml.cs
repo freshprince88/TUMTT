@@ -24,7 +24,7 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für MatchView.xaml
     /// </summary>
     public partial class MatchView : UserControl,
-        IHandle<FullscreenEvent>,IHandle<FullscreenHideAllEvent>
+        IHandle<FullscreenEvent>, IHandle<FullscreenHideAllEvent>
     {
         #region Properties
 
@@ -38,7 +38,7 @@ namespace TT.Viewer.Views
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Manager = IoC.Get<IMatchManager>();
-             gridLengthConverter = new GridLengthConverter();
+            gridLengthConverter = new GridLengthConverter();
             Events.Subscribe(this);
         }
 
@@ -47,39 +47,33 @@ namespace TT.Viewer.Views
             switch (message.Fullscreen)
             {
                 case true:
-                                 
+
                     ResultListGrid.SetValue(Grid.ColumnProperty, 2);
                     ResultListGrid.Width = 105;
-                    ResultListGrid.HorizontalAlignment = HorizontalAlignment.Left;                    
+                    ResultListGrid.HorizontalAlignment = HorizontalAlignment.Left;
                     (ResultListGrid as Grid).Opacity = 0.5;
-                    Column0.Width = new GridLength(0);
+                    Thickness mg = new Thickness();
+                    mg.Bottom = 75;
+                    ResultListGrid.Margin = mg;
+                        Column0.Width = new GridLength(0);
                     Column1.Width = new GridLength(0);
                     MediaRow1.Height = new GridLength(0);
                     MediaRow2.Height = new GridLength(0);
 
-                    //MediaGrid.SetValue(Grid.ColumnProperty, 1);
-                    //Column2Grid.SetValue(Grid.ColumnSpanProperty, 2);
-                    //ResultView.SetValue(Panel.ZIndexProperty, 1);
-                    //ResultListGrid.Width = 105;
-                    //ResultListGrid.HorizontalAlignment = HorizontalAlignment.Left;
-                    //Column0.Width = new GridLength(0);
-                    //Column2.Width = new GridLength(0);
 
-                    //MediaGrid.SetValue(Grid.ZIndexProperty, 0);
-                    //ResultListGrid.SetValue(Grid.ZIndexProperty, 1);
 
                     break;
                 case false:
+
                     ResultListGrid.SetValue(Grid.ColumnProperty, 1);
                     ResultListGrid.ClearValue(WidthProperty);
                     ResultListGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
                     (ResultListGrid as Grid).Opacity = 1;
+                    ResultListGrid.Margin = new Thickness(0);
                     Column0.Width = new GridLength(1, GridUnitType.Star);
                     Column1.Width = new GridLength(1, GridUnitType.Star);
                     MediaRow1.Height = new GridLength(1, GridUnitType.Star);
                     MediaRow2.Height = new GridLength(1, GridUnitType.Star);
-
-                    //MediaGrid.SetValue(Grid.ColumnProperty, 2);                    
 
                     break;
                 default:
@@ -91,7 +85,7 @@ namespace TT.Viewer.Views
             switch (message.Hide)
             {
                 case true:
-                    ResultListGrid.Width =  0;
+                    ResultListGrid.Width = 0;
 
                     break;
                 case false:

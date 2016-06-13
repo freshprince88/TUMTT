@@ -30,6 +30,7 @@
             <RowDefinition Height="Auto" x:Name="SliderRow"/>
             <RowDefinition Height="25" x:Name="PlayerRow1"/>
             <RowDefinition Height="25" x:Name="PlayerRow2"/>
+            <!--<RowDefinition Height="50"></RowDefinition>-->
         </Grid.RowDefinitions>
         <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0" ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
                                     MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
@@ -42,7 +43,7 @@
                 Minimum="{Binding Minimum, Mode=OneWay}"
                 Value="{Binding MediaPosition, Converter={conv:TimeSpanToMillisecondsConverter}, Mode=TwoWay}"/>
 
-        <Grid Grid.Row="2"   HorizontalAlignment="Stretch">
+        <Grid x:Name="MediaControl1" Grid.Row="2"   HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -291,7 +292,7 @@
             </Label>-->
 
         </Grid>
-        <Grid Grid.Row="3"   HorizontalAlignment="Stretch">
+        <Grid x:Name="MediaControl2" Grid.Row="3"   HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -310,6 +311,7 @@
                 <ColumnDefinition Width="2*" MaxWidth="30" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+          
             <RadioButton x:Name="Slow100Button" Content="100%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"
                          Grid.Column="1" IsChecked="True"
                           cal:Message.Attach="[Event Checked] = [Action Slow(100)]"/>
@@ -334,7 +336,16 @@
             </Button>
 
             <ToggleButton IsThreeState="True" Grid.Column="8" Style="{StaticResource MetroAccentFlatRepeat2Toggle}" IsChecked="{Binding Path=PlayMode}">
-
+                <i:Interaction.Triggers>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Alt"  Key="R"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayModeHelper">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
+                
             </ToggleButton>
 
             <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="9"  
@@ -393,6 +404,7 @@
                 </Rectangle>
             </Button>
         </Grid>
+        <!--<ListBox x:Name="listBox1" Grid.Row="4"></ListBox>-->
     </Grid>
 </UserControl>
 

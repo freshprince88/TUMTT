@@ -5,7 +5,8 @@
 
     <Style TargetType="RadioButton"
            x:Key="MetroAccentFlatRadio">
-
+        <Setter Property="Foreground"
+                Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderThickness"

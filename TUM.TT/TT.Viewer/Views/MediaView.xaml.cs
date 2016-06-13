@@ -7,6 +7,8 @@ using TT.Lib.Managers;
 using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
+using System.Windows.Media;
 
 namespace TT.Viewer.Views
 {
@@ -202,10 +204,33 @@ namespace TT.Viewer.Views
             switch (message.Fullscreen)
             {
                 case true:
-                    MediaPlayer.SetValue(Grid.RowSpanProperty, 4);                    
+                   
+                        MediaPlayer.SetValue(Grid.RowSpanProperty, 4);
+                    //SolidColorBrush bg = new SolidColorBrush(Colors.Black);
+                    //bg.Opacity = 0.5;
+                    //MediaControl1.Background = bg;
+                    //MediaControl2.Background = bg;
+
+                    //MediaControl1.ClearValue(BackgroundProperty);
+                        
+
+                    //// For each screen, add the screen properties to a list box.
+                    //foreach (var screen in System.Windows.Forms.Screen.AllScreens)
+                    //{
+
+                    //    listBox1.Items.Add("Device Name: " + screen.DeviceName);
+                    //    listBox1.Items.Add("Bounds: " +
+                    //        screen.Bounds.ToString());
+                    //    listBox1.Items.Add("Type: " +
+                    //        screen.GetType().ToString());
+                    //    listBox1.Items.Add("Working Area: " +
+                    //        screen.WorkingArea.ToString());
+                    //    listBox1.Items.Add("Primary Screen: " +
+                    //        screen.Primary.ToString());
+                    //};
                     break;
                 case false:
-                    MediaPlayer.SetValue(Grid.RowSpanProperty, 1);
+                        MediaPlayer.SetValue(Grid.RowSpanProperty, 1);
                     break;
                 default:
                     break;
