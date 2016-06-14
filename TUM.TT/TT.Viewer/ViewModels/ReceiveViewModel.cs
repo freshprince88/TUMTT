@@ -73,7 +73,7 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 1,
-                PlayerLabel = "Rückschlag:",
+                PlayerLabel = "Receive:",
                 StrokeNumber = 1
             };
 

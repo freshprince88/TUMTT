@@ -25,7 +25,7 @@
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
                 </Style>
             </TabControl.Resources>
-            <TabItem x:Name="ServiceStatisticsTabHeader" Header="A"/>
+            <TabItem x:Name="ServiceStatisticsTabHeader" Header="S"/>
             <TabItem x:Name="ReceiveStatisticsTabHeader" Header="R"/>
             <TabItem x:Name="ThirdStatisticsTabHeader" Header="3"/>
             <TabItem x:Name="FourthStatisticsTabHeader" Header="4"/>

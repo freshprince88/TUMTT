@@ -631,7 +631,7 @@ namespace TT.Models
                         ORresults.Add(Schlagtechnik.Art == "Chop");
                         break;
                     case Stroke.Technique.Special:
-                        ORresults.Add(Schlagtechnik.Art == "Miscellaneous");
+                        ORresults.Add(Schlagtechnik.Art == "Special");
                         break;
                     default:
                         break;
@@ -648,10 +648,10 @@ namespace TT.Models
                 switch (agg)
                 {
                     case Stroke.Aggression.Aggressive:
-                        ORresults.Add(Aggressivität == "aggressiv");
+                        ORresults.Add(Aggressivität == "aggressive");
                         break;
                     case Stroke.Aggression.Passive:
-                        ORresults.Add(Aggressivität == "passiv");
+                        ORresults.Add(Aggressivität == "passive");
                         break;
                     case Stroke.Aggression.Control:
                         ORresults.Add(Aggressivität == "Control");

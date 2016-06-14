@@ -176,8 +176,8 @@ namespace TT.Viewer.ViewModels
             {
                 var errorDialog = new ErrorMessageResult()
                 {
-                    Title = "Keine Exportoptionen ausgewählt!",
-                    Message = "Bitte wählen sie per Rechtsklick entsprechende Optionen aus!",
+                    Title = "No Export Option chosen!",
+                    Message = "Right-Click to choose an Option!",
                     Dialogs = Dialogs
                 };
                 yield return errorDialog;

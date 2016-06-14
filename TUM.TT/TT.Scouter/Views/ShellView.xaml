@@ -118,7 +118,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     
-                        <Controls:Tile Grid.Column="0" Title="Neues Match"  cal:Message.Attach="[Event Click] = [Action OpenNewMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                        <Controls:Tile Grid.Column="0" Title="New Match"  cal:Message.Attach="[Event Click] = [Action OpenNewMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                             <Rectangle Width="30" Height="30" 
                                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>
@@ -126,7 +126,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
-                    <Controls:Tile Grid.Column="1" Title="Match Öffnen" cal:Message.Attach="[Event Click] = [Action OpenMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="1" Title="Open Match" cal:Message.Attach="[Event Click] = [Action OpenMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>
@@ -134,7 +134,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
-                    <Controls:Tile Grid.Column="2" Title="Vorlage Öffnen" cal:Message.Attach="[Event Click] = [Action OpenMatchWithoutVideo()]" Background="{DynamicResource AccentColorBrush}"  Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="2" Title="Open Template" cal:Message.Attach="[Event Click] = [Action OpenMatchWithoutVideo()]" Background="{DynamicResource AccentColorBrush}"  Style="{StaticResource SmallTileStyle }">
                             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>
@@ -142,7 +142,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
-                    <Controls:Tile Grid.Column="3" Title="Match Speichern" cal:Message.Attach="[Event Click] = [Action SaveMatch()]" 
+                    <Controls:Tile Grid.Column="3" Title="Save Match" cal:Message.Attach="[Event Click] = [Action SaveMatch()]" 
                                    IsEnabled="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged}" 
                                    Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                             <Rectangle Width="30" Height="30" 
@@ -165,7 +165,7 @@
 
 
 
-                    <Controls:Tile Grid.Column="8" Title="Wettbewerb" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="8" Title="Competition" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>
@@ -173,7 +173,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
-                    <Controls:Tile Grid.Column="9" Title="Spieler" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"  Background="{DynamicResource AccentColorBrush}" Style="{StaticResource BigTileStyle }">
+                    <Controls:Tile Grid.Column="9" Title="Player" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"  Background="{DynamicResource AccentColorBrush}" Style="{StaticResource BigTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>

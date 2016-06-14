@@ -20,7 +20,7 @@
         <StackPanel Grid.Row="0"  Grid.ColumnSpan="2">
         <Label  FontSize="28" Foreground="{DynamicResource AccentColorBrush}"
                HorizontalAlignment="Center" VerticalAlignment="Center">
-            Statistik   
+            Statistics   
         </Label>
         <Border Height="2" Background="{DynamicResource AccentColorBrush}" />
         </StackPanel>
@@ -44,7 +44,7 @@
             <Border Grid.Column="4" Grid.Row="1" Grid.RowSpan="1" Width="1" Background="{DynamicResource AccentColorBrush}" />
             <Border Grid.Column="7" Grid.Row="1" Grid.RowSpan="1" Width="1" Background="{DynamicResource AccentColorBrush}" />
             <Label  Grid.Row="1" Grid.Column="0"   Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                Punkt
+                Point
             </Label>
             <Label x:Name="LabelPlayer1"  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"   Content="{Binding Path=Player1}" FontSize="18" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label x:Name="LabelPlayer2" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2"   Content="{Binding Path=Player2}" FontSize="18" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>

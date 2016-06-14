@@ -30,7 +30,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Aufschlag"/></TextBlock>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Service"/></TextBlock>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="1" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         <ContentControl x:Name="BasicFilterStatisticsView" Grid.Row="2" />
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="3" Stroke="{DynamicResource AccentColorBrush}"   Margin="0 5 0 0"/>
@@ -61,8 +61,8 @@
                     <ColumnDefinition />
                     <ColumnDefinition /> 
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Anzahl:"/>
-                <Label Grid.Row="1" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Punkt:"/>
+                <Label Grid.Row="0" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Count:"/>
+                <Label Grid.Row="1" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Point:"/>
                 <Label x:Name="BasisInformationLabelPlayer1"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player1}"/>
                 <Label x:Name="BasisInformationLabelPlayer2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player2}"/>
                 <ToggleButton x:Name="TotalServicesCount" Tag="r => r.Length >=1" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"   Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold">
@@ -132,7 +132,7 @@
                 </Grid.RowDefinitions>
                 <Expander  Grid.Row="0" BorderThickness="0" Background="Transparent"  Controls:ControlsHelper.ContentCharacterCasing="Normal" IsExpanded="False">
                     <Expander.Header>
-                        <Label HorizontalAlignment="Center" Content="Platzierung"/>
+                        <Label HorizontalAlignment="Center" Content="Placement"/>
                     </Expander.Header>
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
@@ -158,8 +158,8 @@
                         <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="∑"/>
                         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="l"/>
                         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="h"/>
-                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="k"/>
-                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="F"/>
+                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="s"/>
+                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="E"/>
                         <Grid Grid.Row="0" Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -1779,7 +1779,7 @@
                 </Grid.RowDefinitions>
                 <Expander Grid.Row="0" BorderThickness="0" Background="Transparent"  Controls:ControlsHelper.ContentCharacterCasing="Normal" IsExpanded="False">
                     <Expander.Header>
-                        <Label HorizontalAlignment="Center" Content="Technik"/>
+                        <Label HorizontalAlignment="Center" Content="Technique"/>
                     </Expander.Header>
                     <Grid ShowGridLines="False">
                             <Grid.RowDefinitions>
@@ -1811,10 +1811,10 @@
                             <Label Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"  Content="Pendulum"/>
                             <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Reverse"/>
                             <Label Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Tomahawk"/>
-                            <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Spezial"/>
+                            <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Content="Special"/>
                             <Label Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="∑"/>
-                            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="VH"/>
-                            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="RH"/>
+                            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Content="FH"/>
+                            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="BH"/>
                             <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="∑"/>
 
                             <Grid Grid.Row="1" Grid.Column="1" Margin="0 0 0 1" >
@@ -1827,7 +1827,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandPendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="ForehandPendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1846,7 +1846,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandPendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandPendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1865,7 +1865,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandPendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandPendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1884,7 +1884,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandPendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandPendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1914,7 +1914,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandPendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="BackhandPendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1933,7 +1933,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandPendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandPendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1952,7 +1952,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandPendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandPendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -1971,7 +1971,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandPendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandPendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2001,7 +2001,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllPendulumTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="AllPendulumTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2020,7 +2020,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllPendulumPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllPendulumPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2039,7 +2039,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllPendulumDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AllPendulumDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2058,7 +2058,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllPendulumPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllPendulumPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2088,7 +2088,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandReversePendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="ForehandReversePendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2107,7 +2107,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandReversePendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandReversePendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2126,7 +2126,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandReversePendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandReversePendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2145,7 +2145,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandReversePendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandReversePendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2175,7 +2175,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandReversePendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="BackhandReversePendulumTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2194,7 +2194,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandReversePendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandReversePendulumPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2213,7 +2213,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandReversePendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandReversePendulumDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2232,7 +2232,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandReversePendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandReversePendulumPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2259,7 +2259,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllReversePendulumTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="AllReversePendulumTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2278,7 +2278,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllReversePendulumPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllReversePendulumPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2297,7 +2297,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllReversePendulumDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AllReversePendulumDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2316,7 +2316,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllReversePendulumPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Gegenläufer' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllReversePendulumPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Reverse' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2346,7 +2346,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandTomahawkTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="ForehandTomahawkTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2365,7 +2365,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandTomahawkPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandTomahawkPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2384,7 +2384,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandTomahawkDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandTomahawkDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2403,7 +2403,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandTomahawkPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandTomahawkPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2433,7 +2433,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandTomahawkTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="BackhandTomahawkTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2452,7 +2452,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandTomahawkPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandTomahawkPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2471,7 +2471,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandTomahawkDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandTomahawkDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2490,7 +2490,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandTomahawkPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandTomahawkPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2520,7 +2520,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllTomahawkTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="AllTomahawkTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2539,7 +2539,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllTomahawkPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllTomahawkPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2558,7 +2558,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllTomahawkDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AllTomahawkDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2577,7 +2577,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllTomahawkPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllTomahawkPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Tomahawk' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2607,7 +2607,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandSpecialTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="ForehandSpecialTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2626,7 +2626,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandSpecialPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandSpecialPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2645,7 +2645,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandSpecialDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandSpecialDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2664,7 +2664,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandSpecialPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandSpecialPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2694,7 +2694,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandSpecialTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="BackhandSpecialTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2713,7 +2713,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandSpecialPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandSpecialPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2732,7 +2732,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandSpecialDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandSpecialDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2751,7 +2751,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandSpecialPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandSpecialPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2781,7 +2781,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllSpecialTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="AllSpecialTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Special'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2800,7 +2800,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllSpecialPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllSpecialPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2819,7 +2819,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllSpecialDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="AllSpecialDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2838,7 +2838,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="AllSpecialPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Vorhand' || r.Schläge[0].Schlägerseite == 'Rückhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Spezial' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="AllSpecialPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Special' &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2868,7 +2868,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ForehandAllTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="ForehandAllTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2887,7 +2887,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandAllPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandAllPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2906,7 +2906,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandAllDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="ForehandAllDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2925,7 +2925,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="ForehandAllPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Vorhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="ForehandAllPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Forehand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2955,7 +2955,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="BackhandAllTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                                <ToggleButton x:Name="BackhandAllTotalButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2974,7 +2974,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandAllPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandAllPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -2993,7 +2993,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandAllDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                                <ToggleButton x:Name="BackhandAllDirectPointsWonButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -3012,7 +3012,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="BackhandAllPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Rückhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                                <ToggleButton x:Name="BackhandAllPointsLostButton" Tag="r => r.Schläge[0].Schlägerseite == 'Backhand' &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -3042,7 +3042,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="AllServicesTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Rückhand' || r.Schläge[0].Schlägerseite == 'Vorhand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial')" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                            <ToggleButton x:Name="AllServicesTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Backhand' || r.Schläge[0].Schlägerseite == 'Forehand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special')" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -3061,7 +3061,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AllServicesPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Rückhand' || r.Schläge[0].Schlägerseite == 'Vorhand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="AllServicesPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Backhand' || r.Schläge[0].Schlägerseite == 'Forehand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -3080,7 +3080,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AllServicesDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Rückhand' || r.Schläge[0].Schlägerseite == 'Vorhand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="AllServicesDirectPointsWonButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Backhand' || r.Schläge[0].Schlägerseite == 'Forehand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -3099,7 +3099,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AllServicesPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Rückhand' || r.Schläge[0].Schlägerseite == 'Vorhand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Gegenläufer' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Spezial') &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="AllServicesPointsLostButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Backhand' || r.Schläge[0].Schlägerseite == 'Forehand') &amp;&amp; (r.Schläge[0].Aufschlagart == 'Pendulum' || r.Schläge[0].Aufschlagart == 'Reverse' || r.Schläge[0].Aufschlagart == 'Tomahawk' || r.Schläge[0].Aufschlagart == 'Special') &amp;&amp; r.Schläge[0].Spieler != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">

@@ -133,7 +133,7 @@
             </Rectangle>
             <Button.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Rallies einzeln" IsCheckable="True" IsChecked="{Binding singleRalliesBool}" StaysOpenOnClick="True"/>
+                    <MenuItem Header="Single Rallies (splited)" IsCheckable="True" IsChecked="{Binding singleRalliesBool}" StaysOpenOnClick="True"/>
                     <MenuItem Header="Collection" IsCheckable="True" IsChecked="{Binding rallyCollectionBool}" StaysOpenOnClick="True"/>
                 </ContextMenu>
             </Button.ContextMenu>

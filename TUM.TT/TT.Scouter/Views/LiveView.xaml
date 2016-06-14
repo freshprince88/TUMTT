@@ -131,7 +131,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Label Content="- Aufschlag -" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" FontSize="18"/>
+            <Label Content="- First Server -" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" FontSize="18"/>
             <Button x:Name="Server2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="0" Grid.Column="2">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -184,7 +184,7 @@
             <Label Name="lbl_RallyNum" Grid.Column="1" Content="{Binding Path=CurrentRally.RallyNumLong}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                <Label Content="Rally Länge:" VerticalAlignment="Center" FontSize="20" Margin="0 0 10 0"/>
+                <Label Content="Rally Length:" VerticalAlignment="Center" FontSize="20" Margin="0 0 10 0"/>
                 <RadioButton GroupName="RallyLength" Content="1" Width="35" Margin="0 0 10 0" FontSize="16"
                     cal:Message.Attach="[Event Checked] = [Action SetRallyLength(1)]" >
                     <RadioButton.IsChecked>
