@@ -201,7 +201,6 @@ namespace TT.Scouter.ViewModels
                         }
                         if (LastChecked)
                         {
-
                             CurrentStroke = _rally.Schläge.Last();
                         }
 
@@ -327,7 +326,6 @@ namespace TT.Scouter.ViewModels
             if (i == 1)
             {
                 CurrentRally.Anfang = CurrentRally.Anfang + 500;
-                MediaPlayer.EndPosition = TimeSpan.FromMilliseconds(CurrentRally.Anfang);
 
             }
             else if (i == 2)
@@ -342,8 +340,6 @@ namespace TT.Scouter.ViewModels
             if (i == 1)
             {
                 CurrentRally.Anfang = CurrentRally.Anfang - 500;
-                MediaPlayer.EndPosition = TimeSpan.FromMilliseconds(CurrentRally.Anfang);
-
             }
             else if (i == 2)
             {
