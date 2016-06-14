@@ -228,6 +228,8 @@ namespace TT.Scouter.ViewModels
             //NotifyOfPropertyChange("CurrentRally");
             LengthHelper = length;
             NotifyOfPropertyChange("LengthHelper");
+            MatchManager.MatchModified = true;
+
         }
 
         public void RallyWon(int player, int length)
@@ -257,11 +259,11 @@ namespace TT.Scouter.ViewModels
                 Server = CurrentRally.Server;
                 //LengthHelper = 0;
                 NotifyOfPropertyChange();
-                NotifyOfPropertyChange("Server");
-                               
-
+                NotifyOfPropertyChange("Server");                               
                 IsNewRally = true;
                 IsWinnerEnabled = false;
+                MatchManager.MatchModified = true;
+
             }
         }
 
@@ -270,12 +272,11 @@ namespace TT.Scouter.ViewModels
             if (IsNewRally)
             {
                 CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
-
                 IsNewRally = false;
                 IsWinnerEnabled = true;
-
-
                 MediaPlayer.Play();
+                MatchManager.MatchModified = true;
+
             }
         }
 
@@ -308,6 +309,7 @@ namespace TT.Scouter.ViewModels
             CurrentRally.Server = this.Server;
             NotifyOfPropertyChange("Server");
             NotifyOfPropertyChange("FirstServerSet");
+            MatchManager.MatchModified = true;
 
         }
 
@@ -326,6 +328,7 @@ namespace TT.Scouter.ViewModels
                 Rallies.Add(new Rally());
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
+                MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("FirstServerSet");
 
             }

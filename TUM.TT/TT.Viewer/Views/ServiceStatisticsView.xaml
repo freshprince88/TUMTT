@@ -2001,7 +2001,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="AllPendulumTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand') &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                            <ToggleButton x:Name="AllPendulumTotalButton" Tag="r => (r.Schläge[0].Schlägerseite == 'Forehand' || r.Schläge[0].Schlägerseite == 'Backhand'|| r.Schläge[0].Schlägerseite == null) &amp;&amp; r.Schläge[0].Aufschlagart == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">

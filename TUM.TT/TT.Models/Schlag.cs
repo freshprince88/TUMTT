@@ -166,6 +166,8 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref aufschlagart, value);
+                this.NotifyPropertyChanged("Aufschlagart");
+                this.NotifyPropertyChanged();
             }
         }
 

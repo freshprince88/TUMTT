@@ -21,11 +21,11 @@ namespace TT.Viewer.ViewModels
         IHandle<MediaControlEvent>
     {
         public string Header { get; set; }
-        public string Player1 {get; set;}
+        public string Player1 { get; set; }
         public string Player2 { get; set; }
         public int PointsPlayer1 { get; set; }
         public int PointsPlayer2 { get; set; }
-        public int totalRalliesCount { get; set; }     
+        public int totalRalliesCount { get; set; }
 
         private IEventAggregator Events;
         private IDialogCoordinator Dialogs;
@@ -61,7 +61,7 @@ namespace TT.Viewer.ViewModels
             if (item != null)
             {
                 Manager.ActiveRally = item.Rally;
-            }           
+            }
         }
 
         public void RightMouseDown(MouseButtonEventArgs e)
@@ -121,33 +121,39 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MediaControlEvent message)
         {
-            if(message.Source == Media.Source.Viewer)
+            if (message.Source == Media.Source.Viewer)
             {
                 var idx = Rallies.IndexOf(Manager.ActiveRally);
                 switch (message.Ctrl)
                 {
-                    case Media.Control.Previous:                        
+                    case Media.Control.Previous:
                         var rallyP = idx - 1 >= 0 ? Rallies[idx - 1] : null;
                         if (rallyP != null)
-                        {                            
+                        {
                             Events.PublishOnUIThread(new ResultListControlEvent(rallyP));
                             Manager.ActiveRally = rallyP;
                         }
                         break;
                     case Media.Control.Next:
-                        var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : Rallies[0];
-                        if (rallyN != null && rallyN != Rallies[0])
-                        {                            
-                            Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
-                            Manager.ActiveRally = rallyN;
-                        }
-                        else if (rallyN != null && rallyN == Rallies[0])
+                        if (Rallies.Count() != 0)
                         {
-                            Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
-                            Manager.ActiveRally = rallyN;
-                            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
-                            
+                            var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : Rallies[0];
+                            if (rallyN != null && rallyN != Rallies[0])
+                            {
+                                Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
+                                Manager.ActiveRally = rallyN;
+                            }
+                            else if (rallyN != null && rallyN == Rallies[0])
+                            {
+                                Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
+                                Manager.ActiveRally = rallyN;
+                                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+                            }
 
+                        }
+                        else
+                        {
+                            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));
                         }
                         break;
                     default:
@@ -156,7 +162,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        
+
 
         #endregion
 
