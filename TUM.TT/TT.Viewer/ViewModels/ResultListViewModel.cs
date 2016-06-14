@@ -44,8 +44,8 @@ namespace TT.Viewer.ViewModels
             Dialogs = c;
             Manager = man;
             count = 0;
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
+            Player1 = "Player 1";
+            Player2 = "Player 2";
             PointsPlayer1 = 0;
             PointsPlayer2 = 0;
             totalRalliesCount = 0;
@@ -68,8 +68,6 @@ namespace TT.Viewer.ViewModels
         {
             e.Handled = true;
         }
-        
-
         #endregion
 
         #region Event Handlers
@@ -171,8 +169,6 @@ namespace TT.Viewer.ViewModels
             Events.Subscribe(this);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-            //this.ActivateItem(MiniStatistic);
-
         }
 
         #endregion
