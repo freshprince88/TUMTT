@@ -20,20 +20,6 @@ namespace TT.Viewer.ViewModels
         public PlaylistViewModel PlaylistView { get; private set; } 
         public CommentViewModel CommentView { get; private set; }
 
-        private Rally _rally;
-        public Rally CurrentRally
-        {
-            get { return _rally; }
-            set
-            {
-                if (_rally != value)
-                {
-                    _rally = value;               
-                    NotifyOfPropertyChange();
-                }
-            }
-        }
-
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
@@ -45,7 +31,6 @@ namespace TT.Viewer.ViewModels
             this.DisplayName = "TUM.TT";
             Events = eventAggregator;
             Manager = manager;
-            CurrentRally = Manager.ActivePlaylist.Rallies.First();
             ResultView = new ResultViewModel(resultTabs, eventAggregator, manager);
             PlaylistView = new PlaylistViewModel(Events, Manager, dc);
             MediaPlayer = new MediaViewModel(Events, Manager, dc);
@@ -54,22 +39,6 @@ namespace TT.Viewer.ViewModels
         }
 
         #region Caliburn hooks
-
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            // Subscribe ourself to the event bus
-            //this.Events.Subscribe(this);        
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-        }
 
         protected override void OnActivate()
         {
@@ -80,6 +49,12 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(MediaPlayer);
             this.ActivateItem(FilterStatisticsView);
             this.ActivateItem(CommentView);                              
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
 
         #endregion
@@ -103,7 +78,6 @@ namespace TT.Viewer.ViewModels
 
                 if (MediaPlayer.toRallyStart == true)
                 {
-                    CurrentRally = item;
                     TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
                     TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);               
                     MediaPlayer.MediaPosition = anfangRally;
@@ -112,7 +86,6 @@ namespace TT.Viewer.ViewModels
                 }
                 else if (MediaPlayer.toRallyStart != true)
                 {
-                    CurrentRally = item;
                     TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
                     TimeSpan vorEndeRally = TimeSpan.FromMilliseconds(item.Ende - 1000);
                     TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);

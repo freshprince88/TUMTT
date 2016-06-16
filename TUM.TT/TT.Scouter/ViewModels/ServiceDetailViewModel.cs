@@ -28,6 +28,12 @@ namespace TT.Scouter.ViewModels
         }
         public void SelectService(ToggleButton source)
         {
+            if (Stroke == null)
+            {
+                Stroke.Aufschlagart = "";
+                return;
+            }
+
             if (source.Name.ToLower().Contains("pendulum"))
             {
                 if (source.IsChecked.Value)
@@ -74,8 +80,12 @@ namespace TT.Scouter.ViewModels
             }
 
         }
+
         private string GetNameFromStrokePlayer()
         {
+            if (Stroke == null)
+                return "";
+
             switch (Stroke.Spieler)
             {
                 case MatchPlayer.First:

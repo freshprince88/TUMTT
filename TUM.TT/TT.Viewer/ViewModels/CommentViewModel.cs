@@ -54,6 +54,7 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange("Comment");
         }
         #endregion
+
         #region Caliburn Hooks
 
         protected override void OnActivate()
@@ -62,7 +63,14 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
         }
+
+        protected override void OnDeactivate(bool close)
+        {
+            events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
         #endregion
+
         #region Helper Methods
 
         public void ChangeCommentOnEnter()

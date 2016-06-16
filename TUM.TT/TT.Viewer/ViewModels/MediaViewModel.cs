@@ -87,6 +87,7 @@ namespace TT.Viewer.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+
         private bool _fullscreen;
         public bool IsFullscreen
         {
@@ -175,7 +176,6 @@ namespace TT.Viewer.ViewModels
         public MediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
-            Events.Subscribe(this);
             Manager = man;
             IsPlaying = false;
             IsFullscreen = false;
@@ -185,6 +185,25 @@ namespace TT.Viewer.ViewModels
             toRallyStart = true;
             PlayMode = false;
         }
+
+        #region Caliburn hooks
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            Events.Subscribe(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.PublishOnUIThread(new DeactivationEvent(close));
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
+        #endregion
+
+        #region Media Methods
 
         public void Pause()
         {
@@ -223,9 +242,8 @@ namespace TT.Viewer.ViewModels
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             MediaPosition = MediaPosition + delta_time;
             IsPlaying = false;
-
-
         }
+
         public void Next5Frames()
         {
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
@@ -234,6 +252,7 @@ namespace TT.Viewer.ViewModels
             IsPlaying = false;
 
         }
+
         public void PreviousFrame()
         {
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
@@ -242,13 +261,13 @@ namespace TT.Viewer.ViewModels
             IsPlaying = false;
 
         }
+
         public void Previous5Frames()
         {
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             MediaPosition = MediaPosition - delta_time;
             IsPlaying = false;
-
         }
 
 
@@ -297,27 +316,31 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        #endregion
+
         public IEnumerable<IResult> Open()
         {
             return Manager.LoadVideo();
-        }     
-        
+        }
+
         public void NextRally()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next, Media.Source.Viewer));
-        }   
+        }
 
         public void PreviousRally()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Previous, Media.Source.Viewer));
         }
+
         public void StartRallyAtBeginning()
         {
             MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Anfang);
 
         }
+
         public void PauseRallyAtBeginning()
-        {        
+        {
             Pause();
             MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Anfang);
         }
@@ -338,6 +361,7 @@ namespace TT.Viewer.ViewModels
 
             }
         }
+
         public void Handle(PlayModeEvent message)
         {
             switch (message.PlayMode)
@@ -356,6 +380,7 @@ namespace TT.Viewer.ViewModels
                     break;
             }
         }
+
         public void Handle(MediaControlEvent message)
         {
             if (message.Source == Media.Source.Viewer)

@@ -25,25 +25,16 @@ namespace TT.Viewer.Views
             Events.Subscribe(this);            
         }
 
-
         public void Handle(ResultListControlEvent msg)
         {
             var newSelection = List.Items.Cast<ResultListItem>().Where(i => i.Rally == msg.SelectedRally).FirstOrDefault();
 
             if (newSelection != null && List.SelectedItem != newSelection)
                 List.SelectedItem = newSelection;
-            else
-            {
-                if (newSelection != null)
-                {
-                    Events.PublishOnUIThread(new VideoPlayEvent()
-                    {
-                        Current = newSelection.Rally
-                    });
-                }
-            }
+
 
         }
+
         public void Handle(FullscreenEvent message)
         {
             switch (message.Fullscreen)

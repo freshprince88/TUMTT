@@ -39,8 +39,6 @@ namespace TT.Viewer.ViewModels
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
-
-
         }
 
         #region Caliburn hooks
@@ -204,12 +202,13 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MatchOpenedEvent message)
         {
+            //DeactivateItem(ActiveItem, true);
             // We must reconsider, whether we can generate a report now.
-            this.NotifyOfPropertyChange(() => this.CanGenerateReport);
-            this.NotifyOfPropertyChange(() => this.CanSaveMatch);
-            this.NotifyOfPropertyChange(() => this.CanShowPlayer);
-            this.NotifyOfPropertyChange(() => this.CanShowCompetition);
-            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
+            NotifyOfPropertyChange(() => this.CanGenerateReport);
+            NotifyOfPropertyChange(() => this.CanSaveMatch);
+            NotifyOfPropertyChange(() => this.CanShowPlayer);
+            NotifyOfPropertyChange(() => this.CanShowCompetition);
+            ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
         }
         #endregion
 

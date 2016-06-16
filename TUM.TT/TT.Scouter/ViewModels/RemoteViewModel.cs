@@ -150,7 +150,7 @@ namespace TT.Scouter.ViewModels
 
 
                     if (SchlagView == null)
-                        SchlagView = new RemoteSchlagViewModel(value.Schläge, MatchManager, value);
+                        SchlagView = new RemoteSchlagViewModel(MatchManager, value);
                     else
                     {
                         SchlagView.Strokes = value.Schläge;

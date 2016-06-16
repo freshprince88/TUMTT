@@ -8,6 +8,7 @@ using TT.Models;
 using TT.Lib.Results;
 using TT.Lib.Util;
 using MahApps.Metro.Controls.Dialogs;
+using TT.Models.Util.Enums;
 
 namespace TT.Lib.Managers
 {
@@ -136,6 +137,7 @@ namespace TT.Lib.Managers
             NotifyOfPropertyChange("MatchModified");
 
         }
+
         public IEnumerable<IResult> DownloadMatch()
         {
             if (FileName == null || FileName == string.Empty)
@@ -163,7 +165,7 @@ namespace TT.Lib.Managers
 
         public IEnumerable<IResult> OpenMatch()
         {
-            bool loadNewVideo = false;
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));            
             var dialog = new OpenFileDialogResult()
             {
                 Title = "Open match...",
@@ -186,25 +188,21 @@ namespace TT.Lib.Managers
                 {
                     yield return result;
                 }
-                loadNewVideo = true;
-
-
+                MatchModified = true;
             }
             else
             {
                 Events.PublishOnUIThread(new VideoLoadedEvent(tempMatch.VideoFile));
-                loadNewVideo = false;
+                MatchModified = false;
             }
 
             this.Match = tempMatch;
-            if (!loadNewVideo) { 
-            MatchModified = false;
-            }
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
             Events.PublishOnUIThread(new FullscreenEvent(false));
         }
+
         public IEnumerable<IResult> OpenLiveMatch()
         {
             var dialog = new OpenFileDialogResult()
@@ -227,9 +225,6 @@ namespace TT.Lib.Managers
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
             MatchModified = false;
-
-
-
         }
 
         public void DeleteRally(Rally r)
@@ -242,14 +237,12 @@ namespace TT.Lib.Managers
                 Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                 MatchModified = true;
-
-
             }
         }
 
         public void RenamePlaylist(string oldName, string newName)
         {
-            if (oldName != "Alle" && oldName!="Markiert")
+            if (oldName != "Alle" && oldName != "Markiert")
             {
                 Playlist list = Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault();
 
@@ -263,7 +256,6 @@ namespace TT.Lib.Managers
                 }
             }
         }
-        
 
         public void CreateNewMatch()
         {

@@ -131,7 +131,6 @@ namespace TT.Viewer.ViewModels
                         if (rallyP != null)
                         {
                             Events.PublishOnUIThread(new ResultListControlEvent(rallyP));
-                            Manager.ActiveRally = rallyP;
                         }
                         break;
                     case Media.Control.Next:
@@ -141,12 +140,10 @@ namespace TT.Viewer.ViewModels
                             if (rallyN != null && rallyN != Rallies[0])
                             {
                                 Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
-                                Manager.ActiveRally = rallyN;
                             }
                             else if (rallyN != null && rallyN == Rallies[0])
                             {
                                 Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
-                                Manager.ActiveRally = rallyN;
                                 Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
                             }
 
@@ -175,6 +172,13 @@ namespace TT.Viewer.ViewModels
             Events.Subscribe(this);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            Items.Clear();
+            base.OnDeactivate(close);
         }
 
         #endregion

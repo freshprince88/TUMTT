@@ -33,6 +33,9 @@ namespace TT.Scouter.ViewModels
 
         private string GetTitleFromStroke()
         {
+            if (Stroke == null)
+                return "";
+
             switch (Stroke.Nummer)
             {
                 case 2:
@@ -43,6 +46,9 @@ namespace TT.Scouter.ViewModels
         }
         private string GetNameFromStrokePlayer()
         {
+            if (Stroke == null)
+                return "";
+
             switch (Stroke.Spieler)
             {
                 case MatchPlayer.First:
