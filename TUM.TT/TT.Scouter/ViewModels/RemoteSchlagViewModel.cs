@@ -70,9 +70,7 @@ namespace TT.Scouter.ViewModels
         public RemoteSchlagViewModel(IMatchManager man, Rally r)
         {
             Events = IoC.Get<IEventAggregator>();
-            MatchManager = man;
-            Strokes = schläge;
-            CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
+            MatchManager = man;            
             CurrentRally = r;
             Strokes.CollectionChanged += Strokes_CollectionChanged;
         }
