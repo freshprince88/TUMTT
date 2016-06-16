@@ -71,7 +71,8 @@ namespace TT.Scouter.ViewModels
         {
             Events = IoC.Get<IEventAggregator>();
             MatchManager = man;
-
+            Strokes = schläge;
+            CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
             CurrentRally = r;
             Strokes.CollectionChanged += Strokes_CollectionChanged;
         }

@@ -206,26 +206,6 @@ namespace TT.Scouter.ViewModels
 
         public void SetRallyLength(int length)
         {
-            //var diff = length - CurrentRally.Length;
-            //if (CurrentRally.Length < length)
-            //{
-            //    for (int i = 0; i < diff; i++)
-            //    {
-            //        CurrentRally.Schläge.Add(new Schlag());
-            //    }
-
-            //}
-            //else if (CurrentRally.Length > length)
-            //{
-            //    diff = -diff;
-            //    for (int i = 0; i < diff; i++)
-            //    {
-            //        CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
-            //    }
-            //}
-
-            //CurrentRally.Length = length;
-            //NotifyOfPropertyChange("CurrentRally");
             LengthHelper = length;
             NotifyOfPropertyChange("LengthHelper");
             MatchManager.MatchModified = true;
@@ -234,8 +214,7 @@ namespace TT.Scouter.ViewModels
 
         public void RallyWon(int player, int length)
         {
-            //SetRallyLength(length);
-            //LengthHelper = length;
+        
             if (!IsNewRally)
             {
                 // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
