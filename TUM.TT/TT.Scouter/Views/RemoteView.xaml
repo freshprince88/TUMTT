@@ -160,7 +160,7 @@
                     <TextBlock Text="Length:"  FontSize="20" Foreground="White" />
                 </Viewbox>
 
-                <TextBox Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding Path=LengthHelper}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
+                <TextBox Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding Path=LengthHelper, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
 
             </Grid>
 

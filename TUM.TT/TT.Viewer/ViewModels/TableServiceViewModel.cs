@@ -92,6 +92,8 @@ namespace TT.Viewer.ViewModels
         {
             this.events.Subscribe(this);
             base.OnActivate();
+            NotifyOfPropertyChange("SelectedPositions");
+            NotifyOfPropertyChange("SelectedServerPositions");
         }
 
         /// <summary>

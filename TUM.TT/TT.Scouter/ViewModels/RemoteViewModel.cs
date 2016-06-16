@@ -118,10 +118,11 @@ namespace TT.Scouter.ViewModels
                         for (int i = 0; i < diff; i++)
                         {
                             CurrentRally.Schläge.Add(new Schlag());
+                            //MatchManager.ActivePlaylist.Rallies.Where(r => r.Nummer == CurrentRally.Nummer).FirstOrDefault().Schläge[i+CurrentRally.Length].PropertyChanged += SetMatchModified;
                         }
 
                     }
-                    else if (CurrentRally.Length > value)
+                    else if (CurrentRally.Length > value && value!=0)
                     {
                         diff = -diff;
                         for (int i = 0; i < diff; i++)
@@ -130,10 +131,21 @@ namespace TT.Scouter.ViewModels
                         }
                         SchlagView.CurrentStroke = CurrentRally.Schläge.Last();
                     }
+                    else if (value == 0)
+                    {
+                        diff = -diff;
+                        for (int i = 0; i < diff; i++)
+                        {
+                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                        }
+                    }
+                    
 
                     CurrentRally.Length = value;
                     NotifyOfPropertyChange();
                     NotifyOfPropertyChange("CurrentRally");
+                    NotifyOfPropertyChange("HasLength");
+
                 }
             }
         }
@@ -153,6 +165,7 @@ namespace TT.Scouter.ViewModels
                         SchlagView = new RemoteSchlagViewModel(value.Schläge, MatchManager, value);
                     else
                     {
+
                         SchlagView.Strokes = value.Schläge;
                         SchlagView.CurrentRally = value;
                     }
@@ -214,6 +227,8 @@ namespace TT.Scouter.ViewModels
                     NotifyOfPropertyChange("LengthHelper");
                     NotifyOfPropertyChange("SchlagView.Strokes");
                     NotifyOfPropertyChange("SchlagView.CurrentRally");
+                    NotifyOfPropertyChange("HasLength");
+
 
 
 
@@ -393,7 +408,11 @@ namespace TT.Scouter.ViewModels
 
 
         #endregion
+        private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            MatchManager.MatchModified = true;
 
+        }
         #region Events
         public void Handle(PlayModeEvent message)
         {

@@ -148,18 +148,26 @@ namespace TT.Viewer.ViewModels
 
         protected override void OnActivate()
         {
-            base.OnActivate();
-            // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+            base.OnActivate();
+            // Subscribe ourself to the event bus            
             this.ActivateItem(BasicFilterStatisticsView);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+            NotifyOfPropertyChange("BasicFilterStatisticsView");
+            NotifyOfPropertyChange("BasicFilterStatisticsView.SelectedRallies");
+            NotifyOfPropertyChange("Manager.ActivePlaylist");
+            this.Refresh();
+
+
         }
 
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);
             UpdateSelection(Manager.ActivePlaylist);
+            NotifyOfPropertyChange("BasicFilterStatisticsView.SelectedRallies");
+
         }
 
         protected override void OnDeactivate(bool close)
@@ -198,8 +206,6 @@ namespace TT.Viewer.ViewModels
                 
                 Manager.SelectedRallies = results;
 
-                //var results = BasicFilterStatisticsView.SelectedRallies.Where(r => HasServices(r) && HasPlacement(r) && HasPosition(r) && HasSpin(r) && HasBasisInformation(r)).ToList();
-                //Manager.SelectedRallies = results;
             }
         }
 

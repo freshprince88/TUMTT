@@ -71,10 +71,11 @@ namespace TT.Scouter.ViewModels
 
         public RemoteSchlagViewModel(ObservableCollection<Schlag> schläge, IMatchManager man, Rally r)
         {
-            Strokes = schläge;
+            
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             MatchManager = man;
+            Strokes = schläge;
             Strokes.CollectionChanged += Strokes_CollectionChanged;
             CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
             CurrentRally = r;

@@ -75,7 +75,8 @@ namespace TT.Scouter.ViewModels
 
         }
         private string GetNameFromStrokePlayer()
-        {
+        {   
+            
             switch (Stroke.Spieler)
             {
                 case MatchPlayer.First:

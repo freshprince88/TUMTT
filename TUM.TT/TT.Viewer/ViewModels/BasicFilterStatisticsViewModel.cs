@@ -26,7 +26,7 @@ namespace TT.Viewer.ViewModels
             {
                 return _selRallies;
             }
-            private set
+            set
             {
                 _selRallies = value;
                 NotifyOfPropertyChange("SelectedRallies");
@@ -258,6 +258,10 @@ namespace TT.Viewer.ViewModels
             this.events.Subscribe(this);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+            NotifyOfPropertyChange();
+            NotifyOfPropertyChange("SelectedRallies");
+            NotifyOfPropertyChange("Manager.ActivePlaylist");
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnViewReady(object view)
@@ -282,6 +286,7 @@ namespace TT.Viewer.ViewModels
         {
             UpdateSelection(Manager.ActivePlaylist);
         }
+
 
         #endregion
 
