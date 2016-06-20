@@ -9,7 +9,7 @@ using Itenso.Windows.Controls.ListViewLayout;
 namespace TT.Viewer.Views
 {
     /// <summary>
-    /// Interaktionslogik für ListResultView.xaml
+    /// Interaktionslogik für ListLargeTableView.xaml
     /// </summary>
     public partial class ResultLargeTableView : UserControl,
         IHandle<ResultListControlEvent>,
@@ -43,6 +43,26 @@ namespace TT.Viewer.Views
         }
 
         private void Items_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void CheckSchlagrichtung_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckSpin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckHand_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckPunkt_Click(object sender, RoutedEventArgs e)
         {
 
         }

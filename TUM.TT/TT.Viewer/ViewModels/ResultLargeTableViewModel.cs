@@ -85,8 +85,10 @@ namespace TT.Viewer.ViewModels
             Rallies = message.Rallies.ToList();
             foreach (var rally in Rallies)
             {
+                Console.Out.WriteLine(rally.Nummer);
                 temp.Add(new ResultListItem(rally));
             }
+            Console.Out.WriteLine();
 
             Items = new ObservableCollection<ResultListItem>(temp);
             NotifyOfPropertyChange("Items");
@@ -169,7 +171,8 @@ namespace TT.Viewer.ViewModels
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
             //this.ActivateItem(MiniStatistic);
-
+            Console.Out.WriteLine("activated!");
+            Console.Out.WriteLine("active rally: " + (Manager.ActiveRally != null ? "" + Manager.ActiveRally.Nummer : "[no]"));
         }
 
         #endregion
