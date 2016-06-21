@@ -107,7 +107,7 @@
                 <Ellipse Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Black" StrokeThickness="2px"/>
             </Grid>
         </Viewbox>
-        <ToggleButton x:Name="Hidden" Grid.Row="1" Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="verdeckt" cal:Message.Attach="[Event Click] = [Action SelectHidden($source)]" >
+        <ToggleButton x:Name="Hidden" Grid.Row="1" Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Hidden" cal:Message.Attach="[Event Click] = [Action SelectHidden($source)]" >
             <ToggleButton.IsChecked>
                 <MultiBinding Converter="{conv:SpinToCheckedConverter}" Mode="OneWay">
                     <Binding Path="Selected" />

@@ -9,7 +9,9 @@ using TT.Lib.Events;
 
 namespace TT.Lib.Views
 {
-    public class ExtendedMediaElement : MediaElement, INotifyPropertyChangedEx
+    public class ExtendedMediaElement : MediaElement, 
+        INotifyPropertyChangedEx,
+        IHandle<DeactivationEvent>
     {
         public static readonly DependencyProperty MediaLengthProperty = DependencyProperty.Register("MediaLength",
             typeof(TimeSpan),
@@ -26,7 +28,7 @@ namespace TT.Lib.Views
 
         // Using a DependencyProperty as the backing store for IsPlaying.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsPlayingProperty =
-            DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(false));
+            DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(true));
 
 
 
@@ -101,6 +103,7 @@ namespace TT.Lib.Views
         public ExtendedMediaElement()
         {
             Events = IoC.Get<IEventAggregator>();
+            Events.Subscribe(this);
             MediaOpened += MediaOpenedHandler;
             MediaEnded += MediaEndedHandler;
 
@@ -134,31 +137,17 @@ namespace TT.Lib.Views
 
         private void MediaTimerTickHandler(object sender, EventArgs e)
         {
-            if (EndPosition != null && EndPosition <= Position && EndPosition != TimeSpan.Zero)
-            {
-                switch (PlayMode)
-                {
-                    case null:
-                        Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
-                        break;
-                    case false:
-                        Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
-                        break;
-                    case true:
-                        Events.PublishOnUIThread(new PlayModeEvent(PlayMode));
-                        break;
-                    default:
-                        break;
-                }
-            } 
-
             if (!IsPlaying)
                 return;
+                        
+            if (EndPosition != null && EndPosition <= Position && EndPosition != TimeSpan.Zero)
+            {
+                Pause();
+                Execute.OnUIThread(() => Events.PublishOnUIThread(new PlayModeEvent(PlayMode)));
+            }             
 
             positionChangedByTimer = true;
-            MediaPosition = Position;
-
-            
+            MediaPosition = Position;            
         }
 
         public void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
@@ -186,6 +175,13 @@ namespace TT.Lib.Views
             {
                 handler(this, e);
             }
+        }
+
+        public void Handle(DeactivationEvent message)
+        {
+            mediaTimer.Stop();
+            mediaTimer.Tick -= MediaTimerTickHandler;
+            Events.Unsubscribe(this);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace TT.Models
     {
         None = 0,
 
-        Rechts = 1,
+        Rechts  = 1,
 
         Links = 2
     }

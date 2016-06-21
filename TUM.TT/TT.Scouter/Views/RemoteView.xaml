@@ -157,10 +157,10 @@
                     <TextBlock Text="{Binding Path=CurrentRally.CurrentRallyScore.Second}" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Viewbox>
                 <Viewbox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Center" Margin="10 0 10 0">
-                    <TextBlock Text="Länge:"  FontSize="20" Foreground="White" />
+                    <TextBlock Text="Length:"  FontSize="20" Foreground="White" />
                 </Viewbox>
 
-                <TextBox Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding Path=LengthHelper}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
+                <TextBox Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding Path=LengthHelper, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
 
             </Grid>
 
@@ -183,7 +183,7 @@
                     <TextBlock Text="Start:" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
                 </Viewbox>
                 <Viewbox Grid.Row="1" Margin="10 0 10 0" StretchDirection="DownOnly">
-                    <TextBlock Text="Ende:" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
+                    <TextBlock Text="End:" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
                 </Viewbox>
 
 
@@ -276,7 +276,7 @@
                         <RowDefinition Height="5*"/>
                     </Grid.RowDefinitions>
                     <Viewbox StretchDirection="DownOnly" Grid.ColumnSpan="2">
-                        <TextBlock Text="Kommentar" HorizontalAlignment="Center" FontSize="16" Foreground="White" />
+                        <TextBlock Text="Comment" HorizontalAlignment="Center" FontSize="16" Foreground="White" />
                     </Viewbox>
                     <TextBox Text="{Binding Path=CurrentRally.Kommentar}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
                 </Grid>
@@ -288,7 +288,7 @@
                     <RowDefinition Height="6*"/>
                 </Grid.RowDefinitions>
                 <Viewbox StretchDirection="DownOnly">
-                    <TextBlock Text="Platzierungen" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
+                    <TextBlock Text="Placement" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
                 </Viewbox>
                 <!-- Platzhalter für Platzierungsfeld -->
 

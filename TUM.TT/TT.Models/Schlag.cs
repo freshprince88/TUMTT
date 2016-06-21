@@ -166,6 +166,8 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref aufschlagart, value);
+                this.NotifyPropertyChanged("Aufschlagart");
+                this.NotifyPropertyChanged();
             }
         }
 
@@ -532,9 +534,9 @@ namespace TT.Models
             switch (h)
             {
                 case Stroke.Hand.Fore:
-                    return Schlägerseite == "Vorhand";
+                    return Schlägerseite == "Forehand";
                 case Stroke.Hand.Back:
-                    return Schlägerseite == "Rückhand";
+                    return Schlägerseite == "Backhand";
                 case Stroke.Hand.None:
                     return true;
                 case Stroke.Hand.Both:
@@ -564,7 +566,7 @@ namespace TT.Models
                 case Stroke.WinnerOrNetOut.Winner:
                     return Verlauf == "Winner";
                 case Stroke.WinnerOrNetOut.NetOut:
-                    return Verlauf == "Netz" || Verlauf == "Aus";
+                    return Verlauf == "Net" || Verlauf == "Out";
                 case Stroke.WinnerOrNetOut.None:
                     return true;
                 case Stroke.WinnerOrNetOut.Both:
@@ -589,16 +591,16 @@ namespace TT.Models
                 switch (stroketec)
                 {
                     case Stroke.Technique.Push:
-                        ORresults.Add(Schlagtechnik.Art == "Schupf");
+                        ORresults.Add(Schlagtechnik.Art == "Push");
                         break;
                     case Stroke.Technique.PushAggressive:
-                        ORresults.Add(Schlagtechnik.Art == "Schupf" && Schlagtechnik.Option == "aggressiv");
+                        ORresults.Add(Schlagtechnik.Art == "Push" && Schlagtechnik.Option == "aggressive");
                         break;
                     case Stroke.Technique.Flip:
                         ORresults.Add(Schlagtechnik.Art == "Flip");
                         break;
                     case Stroke.Technique.Banana:
-                        ORresults.Add(Schlagtechnik.Art == "Flip" && Schlagtechnik.Option == "Banane");
+                        ORresults.Add(Schlagtechnik.Art == "Flip" && Schlagtechnik.Option == "Banana");
                         break;
                     case Stroke.Technique.Topspin:
                         ORresults.Add(Schlagtechnik.Art == "Topspin");
@@ -619,19 +621,19 @@ namespace TT.Models
                         ORresults.Add(Schlagtechnik.Art == "Block" && Schlagtechnik.Option == "Chop");
                         break;
                     case Stroke.Technique.Counter:
-                        ORresults.Add(Schlagtechnik.Art == "Konter");
+                        ORresults.Add(Schlagtechnik.Art == "Counter");
                         break;
                     case Stroke.Technique.Smash:
-                        ORresults.Add(Schlagtechnik.Art == "Schuss");
+                        ORresults.Add(Schlagtechnik.Art == "Smash");
                         break;
                     case Stroke.Technique.Lob:
-                        ORresults.Add(Schlagtechnik.Art == "Ballonabwehr");
+                        ORresults.Add(Schlagtechnik.Art == "Lob");
                         break;
                     case Stroke.Technique.Chop:
-                        ORresults.Add(Schlagtechnik.Art == "Schnittabwehr");
+                        ORresults.Add(Schlagtechnik.Art == "Chop");
                         break;
                     case Stroke.Technique.Special:
-                        ORresults.Add(Schlagtechnik.Art == "Sonstige");
+                        ORresults.Add(Schlagtechnik.Art == "Special");
                         break;
                     default:
                         break;
@@ -648,13 +650,13 @@ namespace TT.Models
                 switch (agg)
                 {
                     case Stroke.Aggression.Aggressive:
-                        ORresults.Add(Aggressivität == "aggressiv");
+                        ORresults.Add(Aggressivität == "aggressive");
                         break;
                     case Stroke.Aggression.Passive:
-                        ORresults.Add(Aggressivität == "passiv");
+                        ORresults.Add(Aggressivität == "passive");
                         break;
                     case Stroke.Aggression.Control:
-                        ORresults.Add(Aggressivität == "Kontrolle");
+                        ORresults.Add(Aggressivität == "Control");
                         break;
                     default:
                         break;
@@ -668,13 +670,13 @@ namespace TT.Models
             switch (q)
             {
                 case Stroke.Quality.Good:
-                    return Qualität == "gut";
+                    return Qualität == "good";
                 case Stroke.Quality.Bad:
-                    return Qualität == "schlecht";
+                    return Qualität == "bad";
                 case Stroke.Quality.None:
                     return true;
                 case Stroke.Quality.Both:
-                    return Qualität == "gut" || Qualität == "schlecht";
+                    return Qualität == "good" || Qualität == "bad";
                 default:
                     return false;
             }
@@ -803,13 +805,13 @@ namespace TT.Models
                         ORresults.Add(Aufschlagart == "Pendulum");
                         break;
                     case Stroke.Services.Reverse:
-                        ORresults.Add(Aufschlagart == "Gegenläufer");
+                        ORresults.Add(Aufschlagart == "Reverse");
                         break;
                     case Stroke.Services.Tomahawk:
                         ORresults.Add(Aufschlagart == "Tomahawk");
                         break;
                     case Stroke.Services.Special:
-                        ORresults.Add(Aufschlagart == "Spezial");
+                        ORresults.Add(Aufschlagart == "Special");
                         break;
                     default:
                         break;
@@ -828,13 +830,13 @@ namespace TT.Models
                 switch (service)
                 {
                     case Stroke.ServiceWinner.All:
-                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Gegenläufer" || Aufschlagart == "Tomahawk" || Aufschlagart == "Spezial"));
+                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Reverse" || Aufschlagart == "Tomahawk" || Aufschlagart == "Special"));
                         break;
                     case Stroke.ServiceWinner.Short:
-                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Gegenläufer" || Aufschlagart == "Tomahawk" || Aufschlagart == "Spezial") && this.IsShort());
+                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Reverse" || Aufschlagart == "Tomahawk" || Aufschlagart == "Special") && this.IsShort());
                         break;
                     case Stroke.ServiceWinner.Long:
-                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Gegenläufer" || Aufschlagart == "Tomahawk" || Aufschlagart == "Spezial") && this.IsLong());
+                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Reverse" || Aufschlagart == "Tomahawk" || Aufschlagart == "Special") && this.IsLong());
                         break;
                     default:
                         break;
@@ -850,15 +852,15 @@ namespace TT.Models
             switch (specials)
             {
                 case Stroke.Specials.EdgeTable:
-                    return Besonderes == "Tischkante";
+                    return Besonderes == "EdgeTable";
                 case Stroke.Specials.EdgeRacket:
-                    return Besonderes == "Schlägerkante";
+                    return Besonderes == "EdgeRacket";
                 case Stroke.Specials.EdgeNet:
-                    return Besonderes == "Netzkante";
+                    return Besonderes == "EdgeNet";
                 case Stroke.Specials.None:
                     return true;
                 case Stroke.Specials.Both:
-                    return Besonderes == "Tischkante" || Besonderes == "Netzkante";
+                    return Besonderes == "EdgeTable" || Besonderes == "EdgeNet";
                 default:
                     return false;
             }

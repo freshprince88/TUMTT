@@ -33,16 +33,22 @@ namespace TT.Scouter.ViewModels
 
         private string GetTitleFromStroke()
         {
+            if (Stroke == null)
+                return "";
+
             switch (Stroke.Nummer)
             {
                 case 2:
-                    return "Rückschlag";
+                    return "Receive";
                 default:
-                    return Stroke.Nummer + ". Schlag";
+                    return Stroke.Nummer + ". Stroke";
             }
         }
         private string GetNameFromStrokePlayer()
         {
+            if (Stroke == null)
+                return "";
+
             switch (Stroke.Spieler)
             {
                 case MatchPlayer.First:

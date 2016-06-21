@@ -27,9 +27,8 @@ namespace TT.Viewer.ViewModels
             MatchManager = man;
             _windowManager = windowmanager;
             DialogCoordinator = coordinator;
-
-
             MatchManager.Match.PropertyChanged += SetMatchModified;
+
         }
         /// <summary>
         /// Set MatchModified=true, if match informations are modified

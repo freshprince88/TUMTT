@@ -49,7 +49,7 @@ namespace TT.Viewer.ViewModels
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 0,
-                PlayerLabel = "Aufschlag:",
+                PlayerLabel = "Service:",
                 LastStroke = false,
                 StrokeNumber = 0
 
@@ -282,11 +282,11 @@ namespace TT.Viewer.ViewModels
             this.events.Unsubscribe(this);
         }
 
-        protected override void OnViewReady(object view)
-        {
-            base.OnViewReady(view);
-            UpdateSelection(Manager.ActivePlaylist);
-        }
+        //protected override void OnViewReady(object view)
+        //{
+        //    base.OnViewReady(view);
+        //    UpdateSelection(Manager.ActivePlaylist);
+        //}
 
         #endregion
 

@@ -30,7 +30,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Aufschlag" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Service" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
@@ -43,7 +43,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Line Grid.Row="0" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 0 0 5"/>
-            <Label Grid.Row="1" Content="Spieler:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label Grid.Row="1" Content="Player:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
             <Button Grid.Row="1" Grid.Column="1" Margin="5 0 5 0"  Content="{Binding Path=PlayerName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" IsEnabled="False" />
             <Line Grid.Row="2" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
@@ -60,15 +60,43 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <ToggleButton x:Name="FilterForehandButton"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16"><Run Text="VH"/></TextBlock>
+                <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
             </ToggleButton>
             <ToggleButton x:Name="FilterBackhandButton" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
+                <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
             </ToggleButton>
-            <RadioButton x:Name="Pendulum" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Pendulum" Grid.Row="1"  MinWidth="90" />
-            <RadioButton x:Name="Reverse" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Gegenläufer" Grid.Row="1" Grid.Column="1" MinWidth="90" />
-            <RadioButton x:Name="Tomahawk" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Tomahawk" Grid.Row="2" MinWidth="90" />
-            <RadioButton x:Name="Special" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Spezial" Grid.Row="2" Grid.Column="1" MinWidth="90" />
+            <RadioButton x:Name="Pendulum" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Pendulum" Grid.Row="1"  MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
+            <RadioButton x:Name="Reverse" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Reverse" Grid.Row="1" Grid.Column="1" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]" VerticalAlignment="Top">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
+            <RadioButton x:Name="Tomahawk" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Tomahawk" Grid.Row="2" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
+            <RadioButton x:Name="Special" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Special" Grid.Row="2" Grid.Column="1" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
             <Line Grid.Row="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
 
@@ -98,10 +126,10 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Content="Qualität" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="12"/>
-            <RadioButton Content="Gut" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="Normal" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" IsChecked="True"/>
-            <RadioButton Content="Schlecht" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
+            <Label Content="Quality" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="12"/>
+            <RadioButton Content="good" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
+            <RadioButton Content="normal" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" IsChecked="True"/>
+            <RadioButton Content="bad" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
             <Line Grid.Row="2" Grid.ColumnSpan="3" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
 
@@ -111,7 +139,7 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Platzierungen" HorizontalAlignment="Center"/>
+            <Label Content="Placement" HorizontalAlignment="Center"/>
             <ContentControl x:Name="TableControl" Grid.Row="1"/>
             <Line Grid.Row="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
@@ -126,7 +154,7 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Besonderes: " HorizontalAlignment="Center"/>
+            <Label Content="Specials: " HorizontalAlignment="Center"/>
             <ComboBox Grid.Column="1" Margin="5 5 5 5"/>
             <Line Grid.Row="1"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
@@ -141,9 +169,9 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <RadioButton Content="Netz/Aus" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="Weiter" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="Punkt" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
+            <RadioButton Content="Net/Out" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
+            <RadioButton Content="continue" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
+            <RadioButton Content="Point" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
             <Line Grid.Row="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
         

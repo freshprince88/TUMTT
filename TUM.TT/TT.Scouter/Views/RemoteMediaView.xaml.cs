@@ -88,6 +88,7 @@ namespace TT.Scouter.Views
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
                 MediaPlayer.MediaPosition = currentTime;
                 MediaPlayer.Play();
+                               
                 MediaPlayer.Pause();
 
                 PlayButton.Visibility = System.Windows.Visibility.Visible;

@@ -47,10 +47,10 @@ namespace TT.Scouter.ViewModels
             this.ActivateItem(Player2InformationView);
 
             
-            Player1InformationView.Player.PropertyChanged += SetMatchModified;
-            Player1InformationView.Player.Rank.PropertyChanged += SetMatchModified;
-            Player2InformationView.Player.PropertyChanged += SetMatchModified;
-            Player2InformationView.Player.Rank.PropertyChanged += SetMatchModified;
+            //Player1InformationView.Player.PropertyChanged += SetMatchModified;
+            //Player1InformationView.Player.Rank.PropertyChanged += SetMatchModified;
+            //Player2InformationView.Player.PropertyChanged += SetMatchModified;
+            //Player2InformationView.Player.Rank.PropertyChanged += SetMatchModified;
 
         }
 
@@ -58,12 +58,12 @@ namespace TT.Scouter.ViewModels
         /// Set MatchModified=true, if player informations are modified
         /// </summary>
 
-        private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
+        //private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
             
-                MatchManager.MatchModified = true;
+        //        MatchManager.MatchModified = true;
           
-        }
+        //}
 
         #region Caliburn Hooks
 

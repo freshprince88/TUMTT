@@ -342,6 +342,7 @@
                                     </Rectangle>
                                 </Setter.Value>
                             </Setter>
+                            <Setter Property="ToolTip" Value="Repeat Rally"/>
                         </Trigger>
                         <Trigger Property="ToggleButton.IsChecked"
                                  Value="{x:Null}">
@@ -383,20 +384,8 @@
                                     </Rectangle>
                                 </Setter.Value>
                             </Setter>
+                            <Setter Property="ToolTip" Value="Jump to Next Rally"/>
                         </Trigger>
-                        <!--<Trigger Property="ToggleButton.IsChecked"
-                                 Value="{x:Null}">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Rectangle Width="15" Height="15" Fill="{DynamicResource FlatButtonForegroundBrush}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Fill"
-                                             Visual="{DynamicResource appbar_infinite}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>-->
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="rectangle"

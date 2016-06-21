@@ -37,8 +37,8 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
+            Player1 = "Player 1";
+            Player2 = "Player 2";
 
             
         }

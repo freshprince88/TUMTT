@@ -28,7 +28,7 @@ namespace TT.Viewer.ViewModels
 
         public ShowAllPlayerViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager man, IDialogCoordinator coordinator)
         {
-            this.DisplayName = "Spielerinformationen";
+            this.DisplayName = "Player Details";
             this.events = eventAggregator;
             MatchManager = man;
             _windowManager = windowmanager;
@@ -46,23 +46,23 @@ namespace TT.Viewer.ViewModels
             };
             this.ActivateItem(Player2InformationView);
 
-            
+
             Player1InformationView.Player.PropertyChanged += SetMatchModified;
             Player1InformationView.Player.Rank.PropertyChanged += SetMatchModified;
             Player2InformationView.Player.PropertyChanged += SetMatchModified;
             Player2InformationView.Player.Rank.PropertyChanged += SetMatchModified;
 
+
         }
 
-        /// <summary>
         /// Set MatchModified=true, if player informations are modified
         /// </summary>
 
         private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            
-                MatchManager.MatchModified = true;
-          
+
+            MatchManager.MatchModified = true;
+
         }
 
         #region Caliburn Hooks

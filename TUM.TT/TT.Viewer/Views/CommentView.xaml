@@ -30,7 +30,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Kommentar"/></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Comment"/></TextBlock>
         <TextBox Grid.Row="2" Grid.Column="0"  Text="{Binding Comment , UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" FontSize="16">
 
         </TextBox>

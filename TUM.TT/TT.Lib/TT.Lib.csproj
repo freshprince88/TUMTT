@@ -135,6 +135,7 @@
     <Compile Include="Converters\RallyLengthToBoolConverter.cs" />
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
+    <Compile Include="Converters\ServiceToBoolScouterConverter.cs" />
     <Compile Include="Converters\SetToBoolConverter.cs" />
     <Compile Include="Converters\SpecialToBoolConverter.cs" />
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Converters\TechniqueToBoolConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
+    <Compile Include="Events\DeactivationEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />
     <Compile Include="Events\FullscreenHideAllEvent.cs" />
     <Compile Include="Events\HideMenuEvent.cs" />

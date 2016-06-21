@@ -29,18 +29,18 @@ namespace TT.Scouter.ViewModels
             DialogCoordinator = coordinator;
 
 
-            MatchManager.Match.PropertyChanged += SetMatchModified;
+            //MatchManager.Match.PropertyChanged += SetMatchModified;
         }
         /// <summary>
         /// Set MatchModified=true, if match informations are modified
         /// </summary>
 
-        private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
+        //private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
 
-            MatchManager.MatchModified = true;
+        //    MatchManager.MatchModified = true;
 
-        }
+        //}
 
         #region Caliburn Hooks
 

@@ -49,7 +49,7 @@ namespace TT.Lib.Results
         public async void Execute(CoroutineExecutionContext context)
         {
             var shell = (IoC.Get<IShell>() as Screen);
-            dialog = await Dialogs.ShowProgressAsync(shell, "Bitte warten...", "Ballwechsel werden exportiert", false);
+            dialog = await Dialogs.ShowProgressAsync(shell, "Please wait...", "Export is in Progress...", false);
             if (singleRallies != false || rallyCollection != false)
             {
                    await Task.Factory.StartNew(() => ExportVideo(dialog));
@@ -94,7 +94,7 @@ namespace TT.Lib.Results
             {   
 
 
-                progress.SetMessage("Wiedergabeliste '" + Manager.ActivePlaylist.Name + "' wird exportiert: \n\nBallwechsel " + (i + 1) + " wird gerade geschnitten...");
+                progress.SetMessage("Export Playlist '" + Manager.ActivePlaylist.Name + "': \n\nRally " + (i + 1) + " is being created...");
                 Rally curRally = Manager.ActivePlaylist.Rallies[i];
                 string RallyNumber = curRally.Nummer.ToString();
                 string RallyScore = curRally.CurrentRallyScore.ToString();
@@ -121,7 +121,7 @@ namespace TT.Lib.Results
 
             if (rallyCollection)
             {
-                progress.SetMessage("\nDie Collection wird erstellt! \n\nDies kann leider etwas dauern... ");
+                progress.SetMessage("\n Collection is currently being created! \n\nIt may take a while...");
                 var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
                 ffMpeg.ConvertProgress += UpdateProgress;                
 
@@ -150,7 +150,7 @@ namespace TT.Lib.Results
             {
                 currentProgress = progressBar;
             }
-            dialog.SetMessage("\nDie Collection wird erstellt! \n\nDies kann leider etwas dauern...(" + remainingTime.Minutes+":"+remainingTime.Seconds+ ")");
+            dialog.SetMessage("\nCollection is currently being created! \n\nIt may take a while...(" + remainingTime.Minutes+":"+remainingTime.Seconds+ ")");
             dialog.SetProgress(currentProgress);
             
         }
