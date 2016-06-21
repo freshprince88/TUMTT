@@ -282,14 +282,12 @@ namespace TT.Scouter.ViewModels
             NotifyOfPropertyChange("Server");
         }
         public void SetFirstServer(Player p)
-        {
-            
+        {          
             this.Server = MatchManager.ConvertPlayer(p);
             CurrentRally.Server = this.Server;
             NotifyOfPropertyChange("Server");
             NotifyOfPropertyChange("FirstServerSet");
             MatchManager.MatchModified = true;
-
         }
 
         public void DeleteLastRally()
@@ -301,30 +299,15 @@ namespace TT.Scouter.ViewModels
                 {
                     Rallies.Remove(lastRally);
                     lastRally = Rallies.Last();
-                }
-                
+                }                
                 Rallies.Remove(lastRally);
                 Rallies.Add(new Rally());
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("FirstServerSet");
-
             }
         }
-
-        //public void UpdateScoreAndServer()
-        //{
-        //    CurrentRally = Rallies.Last();
-        //    CurrentRally = new Rally();
-        //    Rallies.Add(CurrentRally);
-        //    CurrentRally.UpdateServerAndScore();
-        //    Server = CurrentRally.Server;
-        //    NotifyOfPropertyChange("Server");
-        //    IsNewRally = true;
-        //    IsWinnerEnabled = false;
-        //    CurrentRally.UpdateServerAndScore();
-        //}
 
         public void FinalizeLiveMode()
         {
@@ -333,7 +316,6 @@ namespace TT.Scouter.ViewModels
                 Rallies.Remove(Rallies.Last());
                 Rallies.Last().UpdateServerAndScore();
             }
-
         }
 
         #endregion
