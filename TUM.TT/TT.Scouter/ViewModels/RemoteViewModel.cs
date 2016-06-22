@@ -81,13 +81,12 @@ namespace TT.Scouter.ViewModels
 
                     if (SchlagView == null || PositionsRallyView == null)
                     {
+                        if (PositionsRallyView == null) PositionsRallyView = new RemotePositionsRallyViewModel(this, calibration);
                         if (SchlagView == null) SchlagView = new RemoteSchlagViewModel(value.Schläge, calibration);
-                        if (PositionsRallyView == null) PositionsRallyView = new RemotePositionsRallyViewModel(value.Schläge, this);
                     }
                     else
                     {
                         SchlagView.Strokes = CurrentRally.Schläge;
-                        PositionsRallyView.Strokes = CurrentRally.Schläge;
                     }
                     _rally = value;
 
