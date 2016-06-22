@@ -116,7 +116,6 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
-    <Compile Include="Util\Geometry.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
     <Compile Include="Util\Model\Calibration.cs" />
     <Compile Include="ViewModels\LiveTimerViewModel.cs" />

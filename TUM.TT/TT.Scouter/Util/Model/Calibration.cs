@@ -69,51 +69,26 @@ namespace TT.Scouter.Util.Model
             if (!IsPointInPolygon(p))
                 return;
 
-            foreach (Line l in Lines)
-                l.Stroke = System.Windows.Media.Brushes.Black;
-            
-            Line closestHorizontalLine =new Line();
-            Line closestVerticalLine = new Line();
+            Point a = Points[0];
+            Point b = Points[1];
+            Point c = Points[2];
+            Point d = Points[3];
 
-            if (Geometry.LineToPointDistance2D(Lines[0], p, true) < Geometry.LineToPointDistance2D(Lines[2], p, true))
-            {
-                closestHorizontalLine.X1 = Lines[0].X1;
-                closestHorizontalLine.Y1 = Lines[0].Y1;
-                closestHorizontalLine.X2 = Lines[0].X2;
-                closestHorizontalLine.Y2 = Lines[0].Y2;
-            }
-            else
-            {
-                closestHorizontalLine.X1 = Lines[2].X2;
-                closestHorizontalLine.Y1 = Lines[2].Y2;
-                closestHorizontalLine.X2 = Lines[2].X1;
-                closestHorizontalLine.Y2 = Lines[2].Y1;
-            }
-            if (Geometry.LineToPointDistance2D(Lines[1], p, true) < Geometry.LineToPointDistance2D(Lines[3], p, true))
-            {
-                closestVerticalLine.X1 = Lines[1].X1;
-                closestVerticalLine.Y1 = Lines[1].Y1;
-                closestVerticalLine.X2 = Lines[1].X2;
-                closestVerticalLine.Y2 = Lines[1].Y2;
-            }
-            else
-            {
-                closestVerticalLine.X1 = Lines[3].X2;
-                closestVerticalLine.Y1 = Lines[3].Y2;
-                closestVerticalLine.X2 = Lines[3].X1;
-                closestVerticalLine.Y2 = Lines[3].Y1;
-            }
+            double C = (double)(a.Y - p.Y) * (d.X - p.X) - (double)(a.X - p.X) * (d.Y - p.Y);
+            double B = (double)(a.Y - p.Y) * (c.X - d.X) + (double)(b.Y - a.Y) * (d.X - p.X) - (double)(a.X - p.X) * (c.Y - d.Y) - (double)(b.X - a.X) * (d.Y - p.Y);
+            double A = (double)(b.Y - a.Y) * (c.X - d.X) - (double)(b.X - a.X) * (c.Y - d.Y);
 
-            double lengthHorizontalLine = Geometry.LengthLine(closestHorizontalLine);
-            double lengthVerticalLine = Geometry.LengthLine(closestVerticalLine);
+            double D = B * B - 4 * A * C;
 
-            double distanceToStartHorizontal = Geometry.Distance(new Point(closestHorizontalLine.X1, closestHorizontalLine.Y1), Geometry.Project(closestHorizontalLine,p));
-            double distanceToStartVertical = Geometry.Distance(new Point(closestVerticalLine.X1, closestVerticalLine.Y1), Geometry.Project(closestVerticalLine,p));
+            double u = (-B - Math.Sqrt(D)) / (2 * A);
 
-            double percentageX = distanceToStartHorizontal / lengthHorizontalLine;
-            double percentageY = distanceToStartVertical / lengthVerticalLine;
+            double p1x = a.X + (b.X - a.X) * u;
+            double p2x = d.X + (c.X - d.X) * u;
+            double px = p.X;
 
-            OnStrokePositionCalculated(new Point(percentageX * 152.5, percentageY * 274));
+            double v = (px - p1x) / (p2x - p1x);
+
+            OnStrokePositionCalculated(new Point(u * 152.5, v * 274));
         }
 
         protected virtual void OnStrokePositionCalculated(Point p)
