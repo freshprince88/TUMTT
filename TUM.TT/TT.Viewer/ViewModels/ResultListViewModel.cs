@@ -181,8 +181,11 @@ namespace TT.Viewer.ViewModels
 
         protected override void OnDeactivate(bool close)
         {
-            Events.Unsubscribe(this);
-            Items.Clear();
+            if (close)
+            {
+                Events.Unsubscribe(this);
+                Items.Clear();
+            }
             base.OnDeactivate(close);
         }
 
