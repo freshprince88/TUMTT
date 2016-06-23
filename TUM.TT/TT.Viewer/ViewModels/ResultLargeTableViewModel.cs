@@ -18,43 +18,32 @@ namespace TT.Viewer.ViewModels
 {
     public class ResultLargeTableViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
+        IHandle<RallyLengthChangedEvent>,
         IHandle<FullscreenEvent>,
         IHandle<MediaControlEvent>
     {
         
-        public string Header { get; set; }
-        public string Player1 {get; set;}
-        public string Player2 { get; set; }
-        public int PointsPlayer1 { get; set; }
-        public int PointsPlayer2 { get; set; }
-        public int totalRalliesCount { get; set; }     
-
         private IEventAggregator Events;
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
-        private int count;
 
         public ObservableCollection<ResultListItem> Items { get; set; }
         public List<Rally> Rallies { get; set; }
 
+        public int RallyLength { get; private set; }
+
         public ResultLargeTableViewModel()
         {
-
+            // default constructor for caliburn design time integration
         }
 
         public ResultLargeTableViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
             this.DisplayName = Properties.Resources.table_large_tab_title;
-            Header = "Hitlist (" + count + ")";
             Events = e;
             Dialogs = c;
             Manager = man;
-            count = 0;
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
-            PointsPlayer1 = 0;
-            PointsPlayer2 = 0;
-            totalRalliesCount = 0;
+            RallyLength = 1;
             Items = new ObservableCollection<ResultListItem>();
             Rallies = new List<Rally>();
         }
@@ -80,6 +69,20 @@ namespace TT.Viewer.ViewModels
             e.Handled = true;
         }
         
+        private void UpdateStrokeDisplay(IEnumerable<Rally> rallies)
+        {
+            var strokes = new List<Models.Stroke>();
+            foreach (var r in rallies)
+            {
+                Models.Stroke stroke = r.Strokes.SingleOrDefault(s =>
+                {
+                    return s.Number == RallyLength;
+                });
+                if (stroke != null)
+                    strokes.Add(stroke);
+            }
+            Events.PublishOnUIThread(new StrokesPaintEvent(strokes));
+        }
 
         #endregion
 
@@ -87,87 +90,21 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(ResultsChangedEvent message)
         {
-            List<ResultListItem> temp = new List<ResultListItem>();
-            Rallies = message.Rallies.ToList();
-            foreach (var rally in Rallies)
-            {
-                temp.Add(new ResultListItem(rally));
-            }
+            UpdateStrokeDisplay(message.Rallies);
+        }
 
-            Items = new ObservableCollection<ResultListItem>(temp);
-            NotifyOfPropertyChange("Items");
-
-            //for (int i = Items.Count - 1; i >= 0; i--)
-            //{
-            //    this.DeactivateItem(Items[i], true);
-            //}
-
-            //foreach (var rally in message.Rallies)
-            //{
-            //    this.ActivateItem(new ResultListItem(rally));
-            //}
-
-            count = Items.Count();
-            //this.DisplayName = "Großer Tisch (" + count + ")";
-            Header = "Hitlist (" + count + ")";
-            NotifyOfPropertyChange("Header");
-
-            //this.Items.Refresh();
-            var strokes = new List<Schlag>();
-            foreach (var r in message.Rallies)
-            {
-                strokes.Add(r.Schläge.First());
-            }
-            Events.PublishOnUIThread(new StrokesPaintEvent(strokes));
+        public void Handle(RallyLengthChangedEvent message)
+        {
+            RallyLength = message;
         }
 
         public void Handle(FullscreenEvent message)
         {
-            switch (message.Fullscreen)
-            {
-                case true:
-                    //this.DisplayName = "GT(" + count + ")";
-                    Header = "R(" + count + ")";
-                    break;
-                case false:
-                    //this.DisplayName += "Großer Tisch (" + count + ")";
-                    Header = "Hitlist (" + count + ")";
-                    break;
-                default:
-                    break;
-            }
         }
 
         public void Handle(MediaControlEvent message)
         {
-            if(message.Source == Media.Source.Viewer)
-            {
-                var idx = Rallies.IndexOf(Manager.ActiveRally);
-                switch (message.Ctrl)
-                {
-                    case Media.Control.Previous:                        
-                        var rallyP = idx - 1 >= 0 ? Rallies[idx - 1] : null;
-                        if (rallyP != null)
-                        {                            
-                            Events.PublishOnUIThread(new ResultListControlEvent(rallyP));
-                            Manager.ActiveRally = rallyP;
-                        }
-                        break;
-                    case Media.Control.Next:
-                        var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : null;
-                        if (rallyN != null)
-                        {                            
-                            Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
-                            Manager.ActiveRally = rallyN;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
-
-        
 
         #endregion
 
@@ -178,9 +115,18 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             Events.Subscribe(this);
-            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-            //this.ActivateItem(MiniStatistic);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateStrokeDisplay(Manager.SelectedRallies);
         }
 
         #endregion

@@ -71,29 +71,33 @@ namespace TT.Viewer.Views
 
         public void Handle(StrokesPaintEvent message)
         {
-            Console.Out.WriteLine("results changed (view): " + message.Strokes);
-
             InnerFieldGrid.Children.Clear();
 
             if (message.Strokes == null)
                 return;
-
-            var ctr = 0;
+            
             foreach (var s in message.Strokes)
             {
-                if (ctr > 9)
-                    break;
-
-                Line line = new Line();
-                line.X1 = 0; line.Y1 = 0;
-                line.X2 = s.Platzierung.WX; line.Y2 = s.Platzierung.WY;
-                line.StrokeThickness = 2;
-                line.Stroke = Brushes.Black;
-                line.Fill = Brushes.Black;
-                InnerFieldGrid.Children.Add(line);
-
-                ctr++;
+                if (PlacementValuesValid(s.Placement))
+                {
+                    Line line = new Line();
+                    line.X1 = 0; line.Y1 = InnerFieldGrid.ActualHeight;
+                    line.X2 = s.Placement.WX; line.Y2 = InnerFieldGrid.ActualHeight - s.Placement.WY;
+                    line.StrokeThickness = 2;
+                    line.Stroke = Brushes.Black;
+                    line.Fill = Brushes.Black;
+                    InnerFieldGrid.Children.Add(line);
+                }
+                else
+                {
+                    Console.Out.WriteLine("invalid Placement of stroke {0}: x={1} y={2}", s, s.Placement.WX, s.Placement.WY);
+                }
             }
+        }
+
+        private bool PlacementValuesValid(Placement placement)
+        {
+            return placement.WX != double.NaN && placement.WX > 0 && placement.WY != double.NaN && placement.WY > 0;
         }
     }
 }
