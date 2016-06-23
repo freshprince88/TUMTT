@@ -33,7 +33,6 @@ namespace TT.Viewer.ViewModels
             set
             {
                 if (!_mode.Equals(value))
-                    //events.PublishOnUIThread(new TableViewModeChangedEvent(value));
 
                 _mode = value;
                 
@@ -130,17 +129,17 @@ namespace TT.Viewer.ViewModels
             {
                 
 
-                    topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsTopLeft()).Count();
-                    topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsTopMid()).Count();
-                    topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsTopRight()).Count();
+                    topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsTopLeft()).Count();
+                    topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsTopMid()).Count();
+                    topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsTopRight()).Count();
 
-                    midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsMidLeft()).Count();
-                    midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsMidMid()).Count();
-                    midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsMidRight()).Count();
+                    midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsMidLeft()).Count();
+                    midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsMidMid()).Count();
+                    midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsMidRight()).Count();
 
-                    botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsBotLeft()).Count();
-                    botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsBotMid()).Count();
-                    botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Schläge[0].IsBotRight()).Count();
+                    botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsBotLeft()).Count();
+                    botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsBotMid()).Count();
+                    botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsBotRight()).Count();
                
             }
             Dictionary<string, int> positionKeys = new Dictionary<string, int>();

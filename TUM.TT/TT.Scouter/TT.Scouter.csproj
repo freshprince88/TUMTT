@@ -132,9 +132,8 @@
     <Compile Include="ViewModels\NewPlayerViewModel.cs" />
     <Compile Include="ViewModels\PlayerInformationViewModel.cs" />
     <Compile Include="ViewModels\RemoteMediaViewModel.cs" />
-    <Compile Include="ViewModels\RemoteSchlagViewModel.cs" />
+    <Compile Include="ViewModels\RemoteStrokeViewModel.cs" />
     <Compile Include="ViewModels\RemoteViewModel.cs" />
-    <Compile Include="ViewModels\SchlagDetailViewModel.cs" />
     <Compile Include="ViewModels\ServiceDetailViewModel.cs" />
     <Compile Include="ViewModels\ServicePositionTableViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -145,6 +144,7 @@
     <Compile Include="ViewModels\ShowAllPlayerViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
     <Compile Include="ViewModels\SpinRadioViewModel.cs" />
+    <Compile Include="ViewModels\StrokeDetailViewModel.cs" />
     <Compile Include="ViewModels\StrokePositionTableViewModel.cs" />
     <Compile Include="ViewModels\VideoSourceViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
@@ -175,14 +175,11 @@
     <Compile Include="Views\RemoteMediaView.xaml.cs">
       <DependentUpon>RemoteMediaView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RemoteSchlagView.xaml.cs">
-      <DependentUpon>RemoteSchlagView.xaml</DependentUpon>
+    <Compile Include="Views\RemoteStrokeView.xaml.cs">
+      <DependentUpon>RemoteStrokeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RemoteView.xaml.cs">
       <DependentUpon>RemoteView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SchlagDetailView.xaml.cs">
-      <DependentUpon>SchlagDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ServiceDetailView.xaml.cs">
       <DependentUpon>ServiceDetailView.xaml</DependentUpon>
@@ -201,6 +198,9 @@
     </Compile>
     <Compile Include="Views\SpinRadioView.xaml.cs">
       <DependentUpon>SpinRadioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StrokeDetailView.xaml.cs">
+      <DependentUpon>StrokeDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StrokePositionTableView.xaml.cs">
       <DependentUpon>StrokePositionTableView.xaml</DependentUpon>
@@ -256,15 +256,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RemoteSchlagView.xaml">
+    <Page Include="Views\RemoteStrokeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RemoteView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SchlagDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,6 +285,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SpinRadioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StrokeDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

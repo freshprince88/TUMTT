@@ -5,11 +5,11 @@ using TT.Models;
 
 namespace TT.Scouter.ViewModels
 {
-    public class RemoteSchlagViewModel : Conductor<IScreen>.Collection.OneActive
+    public class RemoteStrokeViewModel : Conductor<IScreen>.Collection.OneActive
     {
         private IMatchManager MatchManager;
-        private ObservableCollection<Schlag> _strokes;
-        public ObservableCollection<Schlag> Strokes
+        private ObservableCollection<Stroke> _strokes;
+        public ObservableCollection<Stroke> Strokes
         {
             get { return _strokes; }
             set
@@ -25,8 +25,8 @@ namespace TT.Scouter.ViewModels
 
         public Screen SchlagDetail { get; set; }
 
-        private Schlag _stroke;
-        public Schlag CurrentStroke
+        private Stroke _stroke;
+        public Stroke CurrentStroke
         {
             get { return _stroke; }
             set
@@ -36,14 +36,14 @@ namespace TT.Scouter.ViewModels
                     _stroke = value;
                     NotifyOfPropertyChange("CurrentStroke");
 
-                    if (_stroke == null || _stroke.Nummer == 1)
+                    if (_stroke == null || _stroke.Number == 1)
                     {
                         SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager);
                         NotifyOfPropertyChange("SchlagDetail");
                     }
                     else
                     {
-                        SchlagDetail = new SchlagDetailViewModel(CurrentStroke, MatchManager);
+                        SchlagDetail = new StrokeDetailViewModel(CurrentStroke, MatchManager);
                         NotifyOfPropertyChange("SchlagDetail");
                     }
 
@@ -60,17 +60,17 @@ namespace TT.Scouter.ViewModels
                 if (_rally != value)
                 {
                     _rally = value;
-                    Strokes = _rally.Schläge != null ? new ObservableCollection<Schlag>(_rally.Schläge) : new ObservableCollection<Schlag>();
+                    Strokes = _rally.Strokes != null ? new ObservableCollection<Stroke>(_rally.Strokes) : new ObservableCollection<Stroke>();
                     CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
                     NotifyOfPropertyChange("CurrentRally");
                 }
             }
         }
 
-        public RemoteSchlagViewModel(IMatchManager man, Rally r)
+        public RemoteStrokeViewModel(IMatchManager man, Rally r)
         {
             Events = IoC.Get<IEventAggregator>();
-            MatchManager = man;            
+            MatchManager = man;
             CurrentRally = r;
             Strokes.CollectionChanged += Strokes_CollectionChanged;
         }
@@ -89,12 +89,12 @@ namespace TT.Scouter.ViewModels
 
         public void NextStroke()
         {
-            CurrentStroke = Strokes[CurrentStroke.Nummer];
+            CurrentStroke = Strokes[CurrentStroke.Number];
         }
 
         public void PreviousStroke()
         {
-            var idx = CurrentStroke.Nummer - 1;
+            var idx = CurrentStroke.Number - 1;
             CurrentStroke = Strokes[idx - 1];
         }
 
@@ -105,7 +105,7 @@ namespace TT.Scouter.ViewModels
 
         public void LastStroke()
         {
-            if (CurrentRally.Winner == Strokes[Strokes.Count - 1].Spieler)
+            if (CurrentRally.Winner == Strokes[Strokes.Count - 1].Player)
             {
                 CurrentStroke = Strokes[Strokes.Count - 1];
             }

@@ -6,18 +6,18 @@ using TT.Models.Util.Enums;
 
 namespace TT.Models
 {
-    public class Schlag : PropertyChangedBase
+    public class Stroke : PropertyChangedBase
     {
         /// <summary>
         /// Backs the <see cref="Rally"/> property.
         /// </summary>
         private Rally rally;
 
-        private Schlagtechnik schlagtechnikField;
+        private Stroketechnique schlagtechnikField;
 
         private Spin spinField;
 
-        private Platzierung platzierungField;
+        private Placement platzierungField;
 
         private int nummer;
 
@@ -43,7 +43,7 @@ namespace TT.Models
 
         private bool eröffnung;
 
-        public Schlagtechnik Schlagtechnik
+        public Stroketechnique Schlagtechnik
         {
             get
             {
@@ -67,7 +67,7 @@ namespace TT.Models
             }
         }
 
-        public Platzierung Platzierung
+        public Placement Placement
         {
             get
             {
@@ -105,7 +105,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public int Nummer
+        public int Number
         {
             get
             {
@@ -119,7 +119,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public MatchPlayer Spieler
+        public MatchPlayer Player
         {
             get
             {
@@ -137,13 +137,13 @@ namespace TT.Models
         {
             get
             {
-                return Spieler.ToString();
+                return Player.ToString();
             }
         }
 
         /// <remarks/>
         [XmlAttribute]
-        public string Schlägerseite
+        public string Side
         {
             get
             {
@@ -157,7 +157,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string Aufschlagart
+        public string Servicetechnique
         {
             get
             {
@@ -166,14 +166,14 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref aufschlagart, value);
-                this.NotifyPropertyChanged("Aufschlagart");
+                this.NotifyPropertyChanged("Servicetechnique");
                 this.NotifyPropertyChanged();
             }
         }
 
         /// <remarks/>
         [XmlAttribute]
-        public string Balltreffpunkt
+        public string PointOfContact
         {
             get
             {
@@ -187,7 +187,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string Qualität
+        public string Quality
         {
             get
             {
@@ -199,16 +199,16 @@ namespace TT.Models
             }
         }
 
-        [XmlAttribute("Spielerposition")]
-        public string SpielerpositionString
+        [XmlAttribute("Playerposition")]
+        public string PlayerpositionString
         {
-            get { return this.Spielerposition.ToString(); }
-            set { this.Spielerposition = value == string.Empty || value == null ? double.NaN : Convert.ToDouble(value); }
+            get { return this.Playerposition.ToString(); }
+            set { this.Playerposition = value == string.Empty || value == null ? double.NaN : Convert.ToDouble(value); }
         }
 
         /// <remarks/>
         [XmlIgnore]
-        public double Spielerposition
+        public double Playerposition
         {
             get
             {
@@ -222,7 +222,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string Besonderes
+        public string Specials
         {
             get
             {
@@ -236,7 +236,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string Verlauf
+        public string Course
         {
             get
             {
@@ -250,7 +250,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public bool Umlaufen
+        public bool StepAround
         {
             get
             {
@@ -264,7 +264,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string Aggressivität
+        public string Aggressiveness
         {
             get
             {
@@ -294,16 +294,16 @@ namespace TT.Models
         /// </summary>
         private void UpdateNummer()
         {
-            Schlag previousStroke = this.Rally.FindPreviousStroke(this);
+            Stroke previousStroke = this.Rally.FindPreviousStroke(this);
 
             // We don't need to update the server if there is no previous rally
             if (previousStroke != null)
             {
-                Nummer = previousStroke.Nummer + 1;
+                Number = previousStroke.Number + 1;
             }
             else
             {
-                Nummer = 1;
+                Number = 1;
             }
         }
 
@@ -312,16 +312,16 @@ namespace TT.Models
         /// </summary>
         private void UpdatePlayer()
         {
-            Schlag previousStroke = this.Rally.FindPreviousStroke(this);
+            Stroke previousStroke = this.Rally.FindPreviousStroke(this);
 
             // We don't need to update the server if there is no previous rally
             if (previousStroke != null)
             {
-                this.Spieler = previousStroke.Spieler.Other();
+                this.Player = previousStroke.Player.Other();
             }
             else
             {
-                this.Spieler = Rally.Server;
+                this.Player = Rally.Server;
             }
         }
 
@@ -329,145 +329,145 @@ namespace TT.Models
 
         public bool IsTopLeft()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
-               
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X >= 0 && X < 50.5 && Y >= 0 && Y <= 46) || (X <= 152.5 && X > 102 && Y <= 274 && Y >= 228);
         }
 
         public bool IsTopMid()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X >= 50.5 && X <= 102 && Y >= 0 && Y <= 46) || (X >= 50.5 && X <= 102 && Y >= 228 && Y <= 274);
         }
 
         public bool IsTopRight()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X <= 152.5 && X > 102 && Y >= 0 && Y <= 46) || (X >= 0 && X < 50.5 && Y >= 228 && Y <= 274);
         }
 
         public bool IsMidLeft()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X >= 0 && X < 50.5 && Y <= 92 && Y > 46) || (X <= 152.5 && X > 102 && Y < 228 && Y >= 182);
         }
 
         public bool IsMidMid()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X >= 50.5 && X <= 102 && Y <= 92 && Y > 46) || (X >= 50.5 && X <= 102 && Y < 228 && Y >= 182);
         }
 
         public bool IsMidRight()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X <= 152.5 && X > 102 && Y <= 92 && Y > 46) || (X >= 0 && X < 50.5 && Y < 228 && Y >= 182);
         }
 
         public bool IsBotLeft()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X >= 0 && X < 50.5 && Y < 137 && Y > 92) || (X <= 152.5 && X > 102 && Y >= 137 && Y < 182);
         }
 
         public bool IsBotMid()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X >= 50.5 && X <= 102 && Y < 137 && Y > 92) || (X >= 50.5 && X <= 102 && Y >= 137 && Y < 182);
         }
 
         public bool IsBotRight()
         {
-            if (Platzierung == null)
+            if (Placement == null)
             {
-                Platzierung = new Platzierung();
-                Platzierung.WX = -1;
-                Platzierung.WY = -1;
+                Placement = new Placement();
+                Placement.WX = -1;
+                Placement.WY = -1;
 
             }
 
-            double X = Platzierung.WX == double.NaN ? -1 : Platzierung.WX;
-            double Y = Platzierung.WY == double.NaN ? -1 : Platzierung.WY;
+            double X = Placement.WX == double.NaN ? -1 : Placement.WX;
+            double Y = Placement.WY == double.NaN ? -1 : Placement.WY;
 
             return (X <= 152.5 && X > 102 && Y < 137 && Y > 92) || (X >= 0 && X < 50.5 && Y >= 137 && Y < 182);
         }
@@ -513,75 +513,75 @@ namespace TT.Models
 
         public bool IsOverTheTable()
         {
-            return string.IsNullOrWhiteSpace(Balltreffpunkt) ? false : this.Balltreffpunkt.ToLower() == "über";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : this.PointOfContact.ToLower() == "über";
         }
 
         public bool IsAtTheTable()
         {
-            return string.IsNullOrWhiteSpace(Balltreffpunkt) ? false : Balltreffpunkt.ToLower() == "hinter";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "hinter";
         }
 
         public bool IsHalfDistance()
         {
-            return string.IsNullOrWhiteSpace(Balltreffpunkt) ? false : Balltreffpunkt.ToLower() == "halbdistanz";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "halbdistanz";
         }
 
 
         #region Filter Methods
 
-        public bool HasHand(Stroke.Hand h)
+        public bool HasHand(Util.Enums.Stroke.Hand h)
         {
             switch (h)
             {
-                case Stroke.Hand.Fore:
-                    return Schlägerseite == "Forehand";
-                case Stroke.Hand.Back:
-                    return Schlägerseite == "Backhand";
-                case Stroke.Hand.None:
+                case Util.Enums.Stroke.Hand.Fore:
+                    return Side == "Forehand";
+                case Util.Enums.Stroke.Hand.Back:
+                    return Side == "Backhand";
+                case Util.Enums.Stroke.Hand.None:
                     return true;
-                case Stroke.Hand.Both:
+                case Util.Enums.Stroke.Hand.Both:
                     return true;
                 default:
                     return false;
             }
         }
 
-        public bool HasStepAround(Stroke.StepAround s)
+        public bool HasStepAround(Util.Enums.Stroke.StepAround s)
         {
             switch (s)
             {
-                case Stroke.StepAround.StepAround:
-                    return Umlaufen;
-                case Stroke.StepAround.Not:
+                case Util.Enums.Stroke.StepAround.StepAround:
+                    return StepAround;
+                case Util.Enums.Stroke.StepAround.Not:
                     return true;
                 default:
                     return false;
             }
         }
 
-        public bool HasWinner(Stroke.WinnerOrNetOut w)
+        public bool HasWinner(Util.Enums.Stroke.WinnerOrNetOut w)
         {
             switch (w)
             {
-                case Stroke.WinnerOrNetOut.Winner:
-                    return Verlauf == "Winner";
-                case Stroke.WinnerOrNetOut.NetOut:
-                    return Verlauf == "Net" || Verlauf == "Out";
-                case Stroke.WinnerOrNetOut.None:
+                case Util.Enums.Stroke.WinnerOrNetOut.Winner:
+                    return Course == "Winner";
+                case Util.Enums.Stroke.WinnerOrNetOut.NetOut:
+                    return Course == "Net" || Course == "Out";
+                case Util.Enums.Stroke.WinnerOrNetOut.None:
                     return true;
-                case Stroke.WinnerOrNetOut.Both:
+                case Util.Enums.Stroke.WinnerOrNetOut.Both:
                     return true;
                 default:
                     return false;
             }
         }
 
-        public bool HasStrokeTec(IEnumerable<Stroke.Technique> tecs)
+        public bool HasStrokeTec(IEnumerable<Util.Enums.Stroke.Technique> tecs)
         {
             if (Schlagtechnik == null)
             {
-                Schlagtechnik = new Schlagtechnik();
-                Schlagtechnik.Art = "";
+                Schlagtechnik = new Stroketechnique();
+                Schlagtechnik.Type = "";
                 Schlagtechnik.Option = "";
             }
 
@@ -590,50 +590,50 @@ namespace TT.Models
             {
                 switch (stroketec)
                 {
-                    case Stroke.Technique.Push:
-                        ORresults.Add(Schlagtechnik.Art == "Push");
+                    case Util.Enums.Stroke.Technique.Push:
+                        ORresults.Add(Schlagtechnik.Type == "Push");
                         break;
-                    case Stroke.Technique.PushAggressive:
-                        ORresults.Add(Schlagtechnik.Art == "Push" && Schlagtechnik.Option == "aggressive");
+                    case Util.Enums.Stroke.Technique.PushAggressive:
+                        ORresults.Add(Schlagtechnik.Type == "Push" && Schlagtechnik.Option == "aggressive");
                         break;
-                    case Stroke.Technique.Flip:
-                        ORresults.Add(Schlagtechnik.Art == "Flip");
+                    case Util.Enums.Stroke.Technique.Flip:
+                        ORresults.Add(Schlagtechnik.Type == "Flip");
                         break;
-                    case Stroke.Technique.Banana:
-                        ORresults.Add(Schlagtechnik.Art == "Flip" && Schlagtechnik.Option == "Banana");
+                    case Util.Enums.Stroke.Technique.Banana:
+                        ORresults.Add(Schlagtechnik.Type == "Flip" && Schlagtechnik.Option == "Banana");
                         break;
-                    case Stroke.Technique.Topspin:
-                        ORresults.Add(Schlagtechnik.Art == "Topspin");
+                    case Util.Enums.Stroke.Technique.Topspin:
+                        ORresults.Add(Schlagtechnik.Type == "Topspin");
                         break;
-                    case Stroke.Technique.TopspinSpin:
-                        ORresults.Add(Schlagtechnik.Art == "Topspin" && Schlagtechnik.Option == "Spin");
+                    case Util.Enums.Stroke.Technique.TopspinSpin:
+                        ORresults.Add(Schlagtechnik.Type == "Topspin" && Schlagtechnik.Option == "Spin");
                         break;
-                    case Stroke.Technique.TopspinTempo:
-                        ORresults.Add(Schlagtechnik.Art == "Topspin" && Schlagtechnik.Option == "Tempo");
+                    case Util.Enums.Stroke.Technique.TopspinTempo:
+                        ORresults.Add(Schlagtechnik.Type == "Topspin" && Schlagtechnik.Option == "Tempo");
                         break;
-                    case Stroke.Technique.Block:
-                        ORresults.Add(Schlagtechnik.Art == "Block");
+                    case Util.Enums.Stroke.Technique.Block:
+                        ORresults.Add(Schlagtechnik.Type == "Block");
                         break;
-                    case Stroke.Technique.BlockTempo:
-                        ORresults.Add(Schlagtechnik.Art == "Block" && Schlagtechnik.Option == "Tempo");
+                    case Util.Enums.Stroke.Technique.BlockTempo:
+                        ORresults.Add(Schlagtechnik.Type == "Block" && Schlagtechnik.Option == "Tempo");
                         break;
-                    case Stroke.Technique.BlockChop:
-                        ORresults.Add(Schlagtechnik.Art == "Block" && Schlagtechnik.Option == "Chop");
+                    case Util.Enums.Stroke.Technique.BlockChop:
+                        ORresults.Add(Schlagtechnik.Type == "Block" && Schlagtechnik.Option == "Chop");
                         break;
-                    case Stroke.Technique.Counter:
-                        ORresults.Add(Schlagtechnik.Art == "Counter");
+                    case Util.Enums.Stroke.Technique.Counter:
+                        ORresults.Add(Schlagtechnik.Type == "Counter");
                         break;
-                    case Stroke.Technique.Smash:
-                        ORresults.Add(Schlagtechnik.Art == "Smash");
+                    case Util.Enums.Stroke.Technique.Smash:
+                        ORresults.Add(Schlagtechnik.Type == "Smash");
                         break;
-                    case Stroke.Technique.Lob:
-                        ORresults.Add(Schlagtechnik.Art == "Lob");
+                    case Util.Enums.Stroke.Technique.Lob:
+                        ORresults.Add(Schlagtechnik.Type == "Lob");
                         break;
-                    case Stroke.Technique.Chop:
-                        ORresults.Add(Schlagtechnik.Art == "Chop");
+                    case Util.Enums.Stroke.Technique.Chop:
+                        ORresults.Add(Schlagtechnik.Type == "Chop");
                         break;
-                    case Stroke.Technique.Special:
-                        ORresults.Add(Schlagtechnik.Art == "Special");
+                    case Util.Enums.Stroke.Technique.Special:
+                        ORresults.Add(Schlagtechnik.Type == "Special");
                         break;
                     default:
                         break;
@@ -642,21 +642,21 @@ namespace TT.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasAggression(IEnumerable<Stroke.Aggression> aggressions)
+        public bool HasAggression(IEnumerable<Util.Enums.Stroke.Aggression> aggressions)
         {
             List<bool> ORresults = new List<bool>();
             foreach (var agg in aggressions)
             {
                 switch (agg)
                 {
-                    case Stroke.Aggression.Aggressive:
-                        ORresults.Add(Aggressivität == "aggressive");
+                    case Util.Enums.Stroke.Aggression.Aggressive:
+                        ORresults.Add(Aggressiveness == "aggressive");
                         break;
-                    case Stroke.Aggression.Passive:
-                        ORresults.Add(Aggressivität == "passive");
+                    case Util.Enums.Stroke.Aggression.Passive:
+                        ORresults.Add(Aggressiveness == "passive");
                         break;
-                    case Stroke.Aggression.Control:
-                        ORresults.Add(Aggressivität == "Control");
+                    case Util.Enums.Stroke.Aggression.Control:
+                        ORresults.Add(Aggressiveness == "Control");
                         break;
                     default:
                         break;
@@ -665,18 +665,18 @@ namespace TT.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasQuality(Stroke.Quality q)
+        public bool HasQuality(Util.Enums.Stroke.Quality q)
         {
             switch (q)
             {
-                case Stroke.Quality.Good:
-                    return Qualität == "good";
-                case Stroke.Quality.Bad:
-                    return Qualität == "bad";
-                case Stroke.Quality.None:
+                case Util.Enums.Stroke.Quality.Good:
+                    return Quality == "good";
+                case Util.Enums.Stroke.Quality.Bad:
+                    return Quality == "bad";
+                case Util.Enums.Stroke.Quality.None:
                     return true;
-                case Stroke.Quality.Both:
-                    return Qualität == "good" || Qualität == "bad";
+                case Util.Enums.Stroke.Quality.Both:
+                    return Quality == "good" || Quality == "bad";
                 default:
                     return false;
             }
@@ -746,7 +746,7 @@ namespace TT.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasSpins(IEnumerable<Stroke.Spin> spins)
+        public bool HasSpins(IEnumerable<Util.Enums.Stroke.Spin> spins)
         {
             if (Spin == null)
                 return true;
@@ -756,35 +756,35 @@ namespace TT.Models
             {
                 switch (spin)
                 {
-                    case Stroke.Spin.Hidden:
-                        ORresults.Add(Spin.ÜS == "" || Spin.SL == "" || Spin.SR == "" || Spin.US == "" || Spin.No == "");
+                    case Util.Enums.Stroke.Spin.Hidden:
+                        ORresults.Add(Spin.TS == "" || Spin.SL == "" || Spin.SR == "" || Spin.US == "" || Spin.No == "");
                         break;
-                    case Stroke.Spin.ÜS:
-                        ORresults.Add(Spin.ÜS == "1" && Spin.SL == "0" && Spin.SR == "0");
+                    case Util.Enums.Stroke.Spin.ÜS:
+                        ORresults.Add(Spin.TS == "1" && Spin.SL == "0" && Spin.SR == "0");
                         break;
-                    case Stroke.Spin.SR:
-                        ORresults.Add(Spin.SR == "1" && Spin.ÜS == "0" && Spin.US == "0");
+                    case Util.Enums.Stroke.Spin.SR:
+                        ORresults.Add(Spin.SR == "1" && Spin.TS == "0" && Spin.US == "0");
                         break;
-                    case Stroke.Spin.No:
-                        ORresults.Add(Spin.No == "1" && Spin.SL == "0" && Spin.SR == "0" && Spin.ÜS == "0" && Spin.US == "0");
+                    case Util.Enums.Stroke.Spin.No:
+                        ORresults.Add(Spin.No == "1" && Spin.SL == "0" && Spin.SR == "0" && Spin.TS == "0" && Spin.US == "0");
                         break;
-                    case Stroke.Spin.SL:
-                        ORresults.Add(Spin.SL == "1" && Spin.ÜS == "0" && Spin.US == "0");
+                    case Util.Enums.Stroke.Spin.SL:
+                        ORresults.Add(Spin.SL == "1" && Spin.TS == "0" && Spin.US == "0");
                         break;
-                    case Stroke.Spin.US:
+                    case Util.Enums.Stroke.Spin.US:
                         ORresults.Add(Spin.US == "1" && Spin.SL == "0" && Spin.SR == "0");
                         break;
-                    case Stroke.Spin.USSL:
+                    case Util.Enums.Stroke.Spin.USSL:
                         ORresults.Add(Spin.US == "1" && Spin.SL == "1");
                         break;
-                    case Stroke.Spin.USSR:
+                    case Util.Enums.Stroke.Spin.USSR:
                         ORresults.Add(Spin.US == "1" && Spin.SR == "1");
                         break;
-                    case Stroke.Spin.ÜSSL:
-                        ORresults.Add(Spin.ÜS == "1" && Spin.SL == "1");
+                    case Util.Enums.Stroke.Spin.ÜSSL:
+                        ORresults.Add(Spin.TS == "1" && Spin.SL == "1");
                         break;
-                    case Stroke.Spin.ÜSSR:
-                        ORresults.Add(Spin.ÜS == "1" && Spin.SR == "1");
+                    case Util.Enums.Stroke.Spin.ÜSSR:
+                        ORresults.Add(Spin.TS == "1" && Spin.SR == "1");
                         break;
                     default:
                         break;
@@ -794,24 +794,24 @@ namespace TT.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasServices(IEnumerable<Stroke.Services> services)
+        public bool HasServices(IEnumerable<Util.Enums.Stroke.Services> services)
         {
             List<bool> ORresults = new List<bool>();
             foreach (var service in services)
             {
                 switch (service)
                 {
-                    case Stroke.Services.Pendulum:
-                        ORresults.Add(Aufschlagart == "Pendulum");
+                    case Util.Enums.Stroke.Services.Pendulum:
+                        ORresults.Add(Servicetechnique == "Pendulum");
                         break;
-                    case Stroke.Services.Reverse:
-                        ORresults.Add(Aufschlagart == "Reverse");
+                    case Util.Enums.Stroke.Services.Reverse:
+                        ORresults.Add(Servicetechnique == "Reverse");
                         break;
-                    case Stroke.Services.Tomahawk:
-                        ORresults.Add(Aufschlagart == "Tomahawk");
+                    case Util.Enums.Stroke.Services.Tomahawk:
+                        ORresults.Add(Servicetechnique == "Tomahawk");
                         break;
-                    case Stroke.Services.Special:
-                        ORresults.Add(Aufschlagart == "Special");
+                    case Util.Enums.Stroke.Services.Special:
+                        ORresults.Add(Servicetechnique == "Special");
                         break;
                     default:
                         break;
@@ -822,21 +822,21 @@ namespace TT.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasServiceWinners(IEnumerable<Stroke.ServiceWinner> serviceWinner)
+        public bool HasServiceWinners(IEnumerable<Util.Enums.Stroke.ServiceWinner> serviceWinner)
         {
             List<bool> ORresults = new List<bool>();
             foreach (var service in serviceWinner)
             {
                 switch (service)
                 {
-                    case Stroke.ServiceWinner.All:
-                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Reverse" || Aufschlagart == "Tomahawk" || Aufschlagart == "Special"));
+                    case Util.Enums.Stroke.ServiceWinner.All:
+                        ORresults.Add((Servicetechnique == "Pendulum" || Servicetechnique == "Reverse" || Servicetechnique == "Tomahawk" || Servicetechnique == "Special"));
                         break;
-                    case Stroke.ServiceWinner.Short:
-                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Reverse" || Aufschlagart == "Tomahawk" || Aufschlagart == "Special") && this.IsShort());
+                    case Util.Enums.Stroke.ServiceWinner.Short:
+                        ORresults.Add((Servicetechnique == "Pendulum" || Servicetechnique == "Reverse" || Servicetechnique == "Tomahawk" || Servicetechnique == "Special") && this.IsShort());
                         break;
-                    case Stroke.ServiceWinner.Long:
-                        ORresults.Add((Aufschlagart == "Pendulum" || Aufschlagart == "Reverse" || Aufschlagart == "Tomahawk" || Aufschlagart == "Special") && this.IsLong());
+                    case Util.Enums.Stroke.ServiceWinner.Long:
+                        ORresults.Add((Servicetechnique == "Pendulum" || Servicetechnique == "Reverse" || Servicetechnique == "Tomahawk" || Servicetechnique == "Special") && this.IsLong());
                         break;
                     default:
                         break;
@@ -847,20 +847,20 @@ namespace TT.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasSpecials(Stroke.Specials specials)
-        {        
+        public bool HasSpecials(Util.Enums.Stroke.Specials specials)
+        {
             switch (specials)
             {
-                case Stroke.Specials.EdgeTable:
-                    return Besonderes == "EdgeTable";
-                case Stroke.Specials.EdgeRacket:
-                    return Besonderes == "EdgeRacket";
-                case Stroke.Specials.EdgeNet:
-                    return Besonderes == "EdgeNet";
-                case Stroke.Specials.None:
+                case Util.Enums.Stroke.Specials.EdgeTable:
+                    return Specials == "EdgeTable";
+                case Util.Enums.Stroke.Specials.EdgeRacket:
+                    return Specials == "EdgeRacket";
+                case Util.Enums.Stroke.Specials.EdgeNet:
+                    return Specials == "EdgeNet";
+                case Util.Enums.Stroke.Specials.None:
                     return true;
-                case Stroke.Specials.Both:
-                    return Besonderes == "EdgeTable" || Besonderes == "EdgeNet";
+                case Util.Enums.Stroke.Specials.Both:
+                    return Specials == "EdgeTable" || Specials == "EdgeNet";
                 default:
                     return false;
             }
@@ -868,16 +868,16 @@ namespace TT.Models
 
         public bool HasServerPosition(IEnumerable<Positions.Server> server)
         {
-            if (Platzierung == null)
+            if (Placement == null)
                 return true;
 
             List<bool> ORresults = new List<bool>();
             double X;
-            double Seite = Platzierung.WY == double.NaN ? 999 : Platzierung.WY;
+            double Seite = Placement.WY == double.NaN ? 999 : Placement.WY;
             if (Seite >= 137)
-                X = 152.5 - (Spielerposition == double.NaN ? 999 : Spielerposition);
+                X = 152.5 - (Playerposition == double.NaN ? 999 : Playerposition);
             else
-                X = Spielerposition == double.NaN ? 999 : Spielerposition;
+                X = Playerposition == double.NaN ? 999 : Playerposition;
 
             foreach (var sel in server)
             {
@@ -908,18 +908,18 @@ namespace TT.Models
 
         public bool IsLeftServicePosition()
         {
-            if (Platzierung == null)
+            if (Placement == null)
                 return true;
 
             double aufschlagPosition;
-            double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            double seite = this.Placement.WY == double.NaN ? 999 : Convert.ToDouble(this.Placement.WY);
             if (seite >= 137)
             {
-                aufschlagPosition = 152.5 - (this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition));
+                aufschlagPosition = 152.5 - (this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition));
             }
             else
             {
-                aufschlagPosition = this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition);
+                aufschlagPosition = this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition);
             }
 
             return (0 <= aufschlagPosition && aufschlagPosition < 50.5);
@@ -927,18 +927,18 @@ namespace TT.Models
 
         public bool IsMiddleServicePosition()
         {
-            if (Platzierung == null)
+            if (Placement == null)
                 return true;
 
             double aufschlagPosition;
-            double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            double seite = this.Placement.WY == double.NaN ? 999 : Convert.ToDouble(this.Placement.WY);
             if (seite >= 137)
             {
-                aufschlagPosition = 152.5 - (this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition));
+                aufschlagPosition = 152.5 - (this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition));
             }
             else
             {
-                aufschlagPosition = this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition);
+                aufschlagPosition = this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition);
             }
 
             return (50.5 <= aufschlagPosition && aufschlagPosition <= 102);
@@ -946,18 +946,18 @@ namespace TT.Models
 
         public bool IsRightServicePosition()
         {
-            if (Platzierung == null)
+            if (Placement == null)
                 return true;
 
             double aufschlagPosition;
-            double seite = this.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(this.Platzierung.WY);
+            double seite = this.Placement.WY == double.NaN ? 999 : Convert.ToDouble(this.Placement.WY);
             if (seite >= 137)
             {
-                aufschlagPosition = 152.5 - (this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition));
+                aufschlagPosition = 152.5 - (this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition));
             }
             else
             {
-                aufschlagPosition = this.Spielerposition == double.NaN ? 999 : Convert.ToDouble(this.Spielerposition);
+                aufschlagPosition = this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition);
             }
 
             return (102 < aufschlagPosition && aufschlagPosition <= 152.5);
@@ -967,7 +967,7 @@ namespace TT.Models
 
         #region Statistic Methods
 
-        
+
 
         #endregion
 
@@ -975,7 +975,7 @@ namespace TT.Models
 
 
 
-    public class Schlagtechnik : PropertyChangedBase
+    public class Stroketechnique : PropertyChangedBase
     {
         private string art;
 
@@ -983,7 +983,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string Art
+        public string Type
         {
             get
             {
@@ -1010,7 +1010,7 @@ namespace TT.Models
         }
     }
 
-    public class Spin :PropertyChangedBase
+    public class Spin : PropertyChangedBase
     {
 
         private string us;
@@ -1039,7 +1039,7 @@ namespace TT.Models
 
         /// <remarks/>
         [XmlAttribute]
-        public string ÜS
+        public string TS
         {
             get
             {
@@ -1094,7 +1094,7 @@ namespace TT.Models
         }
     }
 
-    public class Platzierung : PropertyChangedBase
+    public class Placement : PropertyChangedBase
     {
 
         private double wx;

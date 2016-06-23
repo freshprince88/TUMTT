@@ -53,7 +53,7 @@ namespace TT.Scouter.ViewModels
             NotifyOfPropertyChange("MatchModified");
 
             Rally first = new Rally();
-            first.Nummer = 1;
+            first.Number = 1;
 
             MatchManager.ActivePlaylist.Rallies.Add(first);
             first.UpdateServerAndScore();

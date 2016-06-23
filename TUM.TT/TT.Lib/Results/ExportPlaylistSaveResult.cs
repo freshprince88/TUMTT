@@ -96,7 +96,7 @@ namespace TT.Lib.Results
 
                 progress.SetMessage("Export Playlist '" + Manager.ActivePlaylist.Name + "': \n\nRally " + (i + 1) + " is being created...");
                 Rally curRally = Manager.ActivePlaylist.Rallies[i];
-                string RallyNumber = curRally.Nummer.ToString();
+                string RallyNumber = curRally.Number.ToString();
                 string RallyScore = curRally.CurrentRallyScore.ToString();
                 RallyScore = RallyScore.Replace(":", "-");
                 string SetScore = curRally.CurrentSetScore.ToString();
@@ -107,8 +107,8 @@ namespace TT.Lib.Results
                 var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
                 NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
                 {
-                    Seek = Convert.ToSingle(curRally.Anfang / 1000),
-                    MaxDuration = Convert.ToSingle((curRally.Ende - curRally.Anfang) / 1000),
+                    Seek = Convert.ToSingle(curRally.Start / 1000),
+                    MaxDuration = Convert.ToSingle((curRally.End - curRally.Start) / 1000),
                     VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
 
                 };

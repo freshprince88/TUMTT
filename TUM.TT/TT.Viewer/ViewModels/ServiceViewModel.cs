@@ -23,12 +23,12 @@ namespace TT.Viewer.ViewModels
         public BasicFilterViewModel BasicFilterView { get; set; }
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
-        public List<Stroke.Spin> SelectedSpins { get; private set; }
-        public Stroke.Hand Hand { get; private set; }       
-        public Stroke.Quality Quality { get; private set; }
-        public Stroke.Specials Specials { get; private set; }
+        public List<Models.Util.Enums.Stroke.Spin> SelectedSpins { get; private set; }
+        public Models.Util.Enums.Stroke.Hand Hand { get; private set; }       
+        public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
+        public Models.Util.Enums.Stroke.Specials Specials { get; private set; }
 
-        public HashSet<Stroke.Services> SelectedServices { get; private set; }
+        public HashSet<Models.Util.Enums.Stroke.Services> SelectedServices { get; private set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public HashSet<Positions.Server> SelectedServerPositions { get; set; }
 
@@ -56,11 +56,11 @@ namespace TT.Viewer.ViewModels
             };
             TableView = new TableServiceViewModel(events);
 
-            SelectedSpins = new List<Stroke.Spin>();
-            Hand = Stroke.Hand.None;       
-            Quality = Stroke.Quality.None;
-            Specials = Stroke.Specials.None;          
-            SelectedServices = new HashSet<Stroke.Services>();
+            SelectedSpins = new List<Models.Util.Enums.Stroke.Spin>();
+            Hand = Models.Util.Enums.Stroke.Hand.None;
+            Quality = Models.Util.Enums.Stroke.Quality.None;
+            Specials = Models.Util.Enums.Stroke.Specials.None;
+            SelectedServices = new HashSet<Models.Util.Enums.Stroke.Services>();
             SelectedServerPositions = new HashSet<Positions.Server>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             SpinControl = new SpinControlViewModel(events);
@@ -74,44 +74,44 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Stroke.Services.Pendulum);
+                    SelectedServices.Add(Models.Util.Enums.Stroke.Services.Pendulum);
                 }
                 else
                 {
-                    SelectedServices.Remove(Stroke.Services.Pendulum);
+                    SelectedServices.Remove(Models.Util.Enums.Stroke.Services.Pendulum);
                 }
             }
             else if (source.Name.ToLower().Contains("reverse"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Stroke.Services.Reverse);
+                    SelectedServices.Add(Models.Util.Enums.Stroke.Services.Reverse);
                 }
                 else
                 {
-                    SelectedServices.Remove(Stroke.Services.Reverse);
+                    SelectedServices.Remove(Models.Util.Enums.Stroke.Services.Reverse);
                 }
             }
             else if (source.Name.ToLower().Contains("tomahawk"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Stroke.Services.Tomahawk);
+                    SelectedServices.Add(Models.Util.Enums.Stroke.Services.Tomahawk);
                 }
                 else
                 {
-                    SelectedServices.Remove(Stroke.Services.Tomahawk);
+                    SelectedServices.Remove(Models.Util.Enums.Stroke.Services.Tomahawk);
                 }
             }
             else if (source.Name.ToLower().Contains("special"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedServices.Add(Stroke.Services.Special);
+                    SelectedServices.Add(Models.Util.Enums.Stroke.Services.Special);
                 }
                 else
                 {
-                    SelectedServices.Remove(Stroke.Services.Special);
+                    SelectedServices.Remove(Models.Util.Enums.Stroke.Services.Special);
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -135,34 +135,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Fore;
-                    else if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.Both;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.None)
+                        Hand = Models.Util.Enums.Stroke.Hand.Fore;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Back)
+                        Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Back;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.Fore)
+                        Hand = Models.Util.Enums.Stroke.Hand.None;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
+                        Hand = Models.Util.Enums.Stroke.Hand.Back;
                 }
             }
             else if (source.Name.ToLower().Contains("backhand"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Back;
-                    else if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.Both;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.None)
+                        Hand = Models.Util.Enums.Stroke.Hand.Back;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Fore)
+                        Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Fore;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.Back)
+                        Hand = Models.Util.Enums.Stroke.Hand.None;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
+                        Hand = Models.Util.Enums.Stroke.Hand.Fore;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -174,34 +174,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == Stroke.Quality.None)
-                        Quality = Stroke.Quality.Good;
-                    else if (Quality == Stroke.Quality.Bad)
-                        Quality = Stroke.Quality.Both;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.None)
+                        Quality = Models.Util.Enums.Stroke.Quality.Good;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Bad)
+                        Quality = Models.Util.Enums.Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == Stroke.Quality.Good)
-                        Quality = Stroke.Quality.None;
-                    else if (Quality == Stroke.Quality.Both)
-                        Quality = Stroke.Quality.Bad;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.Good)
+                        Quality = Models.Util.Enums.Stroke.Quality.None;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Both)
+                        Quality = Models.Util.Enums.Stroke.Quality.Bad;
                 }
             }
             else if (source.Name.ToLower().Contains("badq"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == Stroke.Quality.None)
-                        Quality = Stroke.Quality.Bad;
-                    else if (Quality == Stroke.Quality.Good)
-                        Quality = Stroke.Quality.Both;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.None)
+                        Quality = Models.Util.Enums.Stroke.Quality.Bad;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Good)
+                        Quality = Models.Util.Enums.Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == Stroke.Quality.Bad)
-                        Quality = Stroke.Quality.None;
-                    else if (Quality == Stroke.Quality.Both)
-                        Quality = Stroke.Quality.Good;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.Bad)
+                        Quality = Models.Util.Enums.Stroke.Quality.None;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Both)
+                        Quality = Models.Util.Enums.Stroke.Quality.Good;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -213,34 +213,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Stroke.Specials.None)
-                        Specials = Stroke.Specials.EdgeTable;
-                    else if (Specials == Stroke.Specials.EdgeNet)
-                        Specials = Stroke.Specials.Both;
+                    if (Specials == Models.Util.Enums.Stroke.Specials.None)
+                        Specials = Models.Util.Enums.Stroke.Specials.EdgeTable;
+                    else if (Specials == Models.Util.Enums.Stroke.Specials.EdgeNet)
+                        Specials = Models.Util.Enums.Stroke.Specials.Both;
                 }
                 else
                 {
-                    if (Specials == Stroke.Specials.EdgeTable)
-                        Specials = Stroke.Specials.None;
-                    else if (Specials == Stroke.Specials.Both)
-                        Specials = Stroke.Specials.EdgeNet;
+                    if (Specials == Models.Util.Enums.Stroke.Specials.EdgeTable)
+                        Specials = Models.Util.Enums.Stroke.Specials.None;
+                    else if (Specials == Models.Util.Enums.Stroke.Specials.Both)
+                        Specials = Models.Util.Enums.Stroke.Specials.EdgeNet;
                 }
             }
             else if (source.Name.ToLower().Contains("edgenet"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Stroke.Specials.None)
-                        Specials = Stroke.Specials.EdgeNet;
-                    else if (Specials == Stroke.Specials.EdgeTable)
-                        Specials = Stroke.Specials.Both;
+                    if (Specials == Models.Util.Enums.Stroke.Specials.None)
+                        Specials = Models.Util.Enums.Stroke.Specials.EdgeNet;
+                    else if (Specials == Models.Util.Enums.Stroke.Specials.EdgeTable)
+                        Specials = Models.Util.Enums.Stroke.Specials.Both;
                 }
                 else
                 {
-                    if (Specials == Stroke.Specials.EdgeNet)
-                        Specials = Stroke.Specials.None;
-                    else if (Specials == Stroke.Specials.Both)
-                        Specials = Stroke.Specials.EdgeTable;
+                    if (Specials == Models.Util.Enums.Stroke.Specials.EdgeNet)
+                        Specials = Models.Util.Enums.Stroke.Specials.None;
+                    else if (Specials == Models.Util.Enums.Stroke.Specials.Both)
+                        Specials = Models.Util.Enums.Stroke.Specials.EdgeTable;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -322,13 +322,13 @@ namespace TT.Viewer.ViewModels
             {
                 var results = BasicFilterView.SelectedRallies
                     .Where(r =>
-                    r.Schläge[0].HasHand(this.Hand) &&
-                    r.Schläge[0].HasQuality(this.Quality) &&
-                    r.Schläge[0].HasSpins(this.SelectedSpins) &&
-                    r.Schläge[0].HasServices(this.SelectedServices) &&
-                    r.Schläge[0].HasSpecials(this.Specials) &&
-                    r.Schläge[0].HasServerPosition(this.SelectedServerPositions) &&
-                    r.Schläge[0].HasTablePosition(this.SelectedTablePositions)
+                    r.Strokes[0].HasHand(this.Hand) &&
+                    r.Strokes[0].HasQuality(this.Quality) &&
+                    r.Strokes[0].HasSpins(this.SelectedSpins) &&
+                    r.Strokes[0].HasServices(this.SelectedServices) &&
+                    r.Strokes[0].HasSpecials(this.Specials) &&
+                    r.Strokes[0].HasServerPosition(this.SelectedServerPositions) &&
+                    r.Strokes[0].HasTablePosition(this.SelectedTablePositions)
                     )
                     .ToList();
                 Manager.SelectedRallies = results;

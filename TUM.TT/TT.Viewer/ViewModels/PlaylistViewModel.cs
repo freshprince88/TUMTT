@@ -317,7 +317,7 @@ namespace TT.Viewer.ViewModels
 
         public ObservableCollection<Rally> Sort(ObservableCollection<Rally> r)
         {
-            List<Rally> sorted = r.OrderBy(x => x.Nummer).ToList();
+            List<Rally> sorted = r.OrderBy(x => x.Number).ToList();
             int ptr = 0;
             while (ptr < sorted.Count)
             {

@@ -78,16 +78,16 @@ namespace TT.Viewer.Views
 
         public double AufschlagPosition(Rally r)
         {
-            Schlag service = r.Schläge.Where(s => s.Nummer == 1).FirstOrDefault();
+            Stroke service = r.Strokes.Where(s => s.Number == 1).FirstOrDefault();
             double aufschlagPosition;
-            double seite = service.Platzierung.WY == double.NaN ? 999 : Convert.ToDouble(service.Platzierung.WY);
+            double seite = service.Placement.WY == double.NaN ? 999 : Convert.ToDouble(service.Placement.WY);
             if (seite >= 137)
             {
-                aufschlagPosition = 152.5 - (service.Spielerposition == double.NaN ? 999 : Convert.ToDouble(service.Spielerposition));
+                aufschlagPosition = 152.5 - (service.Playerposition == double.NaN ? 999 : Convert.ToDouble(service.Playerposition));
             }
             else
             {
-                aufschlagPosition = service.Spielerposition == double.NaN ? 999 : Convert.ToDouble(service.Spielerposition);
+                aufschlagPosition = service.Playerposition == double.NaN ? 999 : Convert.ToDouble(service.Playerposition);
             }
 
             return aufschlagPosition;

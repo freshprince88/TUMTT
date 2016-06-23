@@ -4,9 +4,9 @@ using TT.Models;
 
 namespace TT.Scouter.ViewModels
 {
-    public class SchlagDetailViewModel : Conductor<IScreen>.Collection.AllActive 
+    public class StrokeDetailViewModel : Conductor<IScreen>.Collection.AllActive
     {
-        public Schlag Stroke { get; set; }
+        public Stroke Stroke { get; set; }
         private IMatchManager MatchManager;
 
 
@@ -18,7 +18,7 @@ namespace TT.Scouter.ViewModels
 
 
 
-        public SchlagDetailViewModel(Schlag s, IMatchManager man)
+        public StrokeDetailViewModel(Stroke s, IMatchManager man)
         {
             MatchManager = man;
             Stroke = s;
@@ -36,12 +36,12 @@ namespace TT.Scouter.ViewModels
             if (Stroke == null)
                 return "";
 
-            switch (Stroke.Nummer)
+            switch (Stroke.Number)
             {
                 case 2:
                     return "Receive";
                 default:
-                    return Stroke.Nummer + ". Stroke";
+                    return Stroke.Number + ". Stroke";
             }
         }
         private string GetNameFromStrokePlayer()
@@ -49,7 +49,7 @@ namespace TT.Scouter.ViewModels
             if (Stroke == null)
                 return "";
 
-            switch (Stroke.Spieler)
+            switch (Stroke.Player)
             {
                 case MatchPlayer.First:
                     return MatchManager.Match.FirstPlayer.Name.Split(' ')[0];

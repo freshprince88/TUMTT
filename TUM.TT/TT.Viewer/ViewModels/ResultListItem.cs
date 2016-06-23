@@ -28,7 +28,7 @@ namespace TT.Viewer.ViewModels
             Manager = IoC.Get<IMatchManager>();
 
             Rally = rally;
-            Number = rally.Nummer;
+            Number = rally.Number;
             Score= String.Format("{0} : {1}", rally.CurrentRallyScore.First, rally.CurrentRallyScore.Second);
             Sets = String.Format("({0} : {1})", rally.CurrentSetScore.First, rally.CurrentSetScore.Second);
 
@@ -50,8 +50,8 @@ namespace TT.Viewer.ViewModels
             }
 
             Length = rally.Length.ToString();
-            RallyStart = Convert.ToInt32(rally.Anfang);
-            RallyEnd = Convert.ToInt32(rally.Ende);
+            RallyStart = Convert.ToInt32(rally.Start);
+            RallyEnd = Convert.ToInt32(rally.End);
         }
 
         public void DeleteRally(ResultListItem r)

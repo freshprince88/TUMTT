@@ -8,12 +8,12 @@ using TT.Models.Util.Enums;
 namespace TT.Lib.Converters
     
 {
-    [ValueConversion(typeof(HashSet<Stroke.Services>), typeof(bool))]
+    [ValueConversion(typeof(HashSet<Models.Util.Enums.Stroke.Services>), typeof(bool))]
     public class AggressionToBoolConverter : BaseConverter, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            HashSet<Stroke.Aggression> set = (HashSet<Stroke.Aggression>)values[0];
+            HashSet<Models.Util.Enums.Stroke.Aggression> set = (HashSet<Models.Util.Enums.Stroke.Aggression>)values[0];
             string btnName = (string)values[1];
 
             foreach (var agg in set)
