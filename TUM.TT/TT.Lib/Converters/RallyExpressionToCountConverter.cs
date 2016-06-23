@@ -20,8 +20,6 @@ namespace TT.Lib.Converters
 
             Func<Rally, bool> func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
 
-            //var test = rallies.ToArray().AsQueryable().Where(expression, null).Count();
-
             try
             {
                 var test = rallies.Where(func).Count();

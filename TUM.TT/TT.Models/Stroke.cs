@@ -21,7 +21,7 @@ namespace TT.Models
 
         private int nummer;
 
-        private MatchPlayer spieler;
+        private MatchPlayer player;
 
         private string schlägerseite;
 
@@ -43,7 +43,7 @@ namespace TT.Models
 
         private bool eröffnung;
 
-        public Stroketechnique Schlagtechnik
+        public Stroketechnique Stroketechnique
         {
             get
             {
@@ -123,17 +123,17 @@ namespace TT.Models
         {
             get
             {
-                return spieler;
+                return player;
             }
             set
             {
-                RaiseAndSetIfChanged(ref spieler, value);
+                RaiseAndSetIfChanged(ref player, value);
             }
         }
 
         /// <remarks/>
         [XmlIgnore]
-        public string SpielerString
+        public string PlayerString
         {
             get
             {
@@ -578,11 +578,11 @@ namespace TT.Models
 
         public bool HasStrokeTec(IEnumerable<Util.Enums.Stroke.Technique> tecs)
         {
-            if (Schlagtechnik == null)
+            if (Stroketechnique == null)
             {
-                Schlagtechnik = new Stroketechnique();
-                Schlagtechnik.Type = "";
-                Schlagtechnik.Option = "";
+                Stroketechnique = new Stroketechnique();
+                Stroketechnique.Type = "";
+                Stroketechnique.Option = "";
             }
 
             List<bool> ORresults = new List<bool>();
@@ -591,49 +591,49 @@ namespace TT.Models
                 switch (stroketec)
                 {
                     case Util.Enums.Stroke.Technique.Push:
-                        ORresults.Add(Schlagtechnik.Type == "Push");
+                        ORresults.Add(Stroketechnique.Type == "Push");
                         break;
                     case Util.Enums.Stroke.Technique.PushAggressive:
-                        ORresults.Add(Schlagtechnik.Type == "Push" && Schlagtechnik.Option == "aggressive");
+                        ORresults.Add(Stroketechnique.Type == "Push" && Stroketechnique.Option == "aggressive");
                         break;
                     case Util.Enums.Stroke.Technique.Flip:
-                        ORresults.Add(Schlagtechnik.Type == "Flip");
+                        ORresults.Add(Stroketechnique.Type == "Flip");
                         break;
                     case Util.Enums.Stroke.Technique.Banana:
-                        ORresults.Add(Schlagtechnik.Type == "Flip" && Schlagtechnik.Option == "Banana");
+                        ORresults.Add(Stroketechnique.Type == "Flip" && Stroketechnique.Option == "Banana");
                         break;
                     case Util.Enums.Stroke.Technique.Topspin:
-                        ORresults.Add(Schlagtechnik.Type == "Topspin");
+                        ORresults.Add(Stroketechnique.Type == "Topspin");
                         break;
                     case Util.Enums.Stroke.Technique.TopspinSpin:
-                        ORresults.Add(Schlagtechnik.Type == "Topspin" && Schlagtechnik.Option == "Spin");
+                        ORresults.Add(Stroketechnique.Type == "Topspin" && Stroketechnique.Option == "Spin");
                         break;
                     case Util.Enums.Stroke.Technique.TopspinTempo:
-                        ORresults.Add(Schlagtechnik.Type == "Topspin" && Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(Stroketechnique.Type == "Topspin" && Stroketechnique.Option == "Tempo");
                         break;
                     case Util.Enums.Stroke.Technique.Block:
-                        ORresults.Add(Schlagtechnik.Type == "Block");
+                        ORresults.Add(Stroketechnique.Type == "Block");
                         break;
                     case Util.Enums.Stroke.Technique.BlockTempo:
-                        ORresults.Add(Schlagtechnik.Type == "Block" && Schlagtechnik.Option == "Tempo");
+                        ORresults.Add(Stroketechnique.Type == "Block" && Stroketechnique.Option == "Tempo");
                         break;
                     case Util.Enums.Stroke.Technique.BlockChop:
-                        ORresults.Add(Schlagtechnik.Type == "Block" && Schlagtechnik.Option == "Chop");
+                        ORresults.Add(Stroketechnique.Type == "Block" && Stroketechnique.Option == "Chop");
                         break;
                     case Util.Enums.Stroke.Technique.Counter:
-                        ORresults.Add(Schlagtechnik.Type == "Counter");
+                        ORresults.Add(Stroketechnique.Type == "Counter");
                         break;
                     case Util.Enums.Stroke.Technique.Smash:
-                        ORresults.Add(Schlagtechnik.Type == "Smash");
+                        ORresults.Add(Stroketechnique.Type == "Smash");
                         break;
                     case Util.Enums.Stroke.Technique.Lob:
-                        ORresults.Add(Schlagtechnik.Type == "Lob");
+                        ORresults.Add(Stroketechnique.Type == "Lob");
                         break;
                     case Util.Enums.Stroke.Technique.Chop:
-                        ORresults.Add(Schlagtechnik.Type == "Chop");
+                        ORresults.Add(Stroketechnique.Type == "Chop");
                         break;
                     case Util.Enums.Stroke.Technique.Special:
-                        ORresults.Add(Schlagtechnik.Type == "Special");
+                        ORresults.Add(Stroketechnique.Type == "Special");
                         break;
                     default:
                         break;
