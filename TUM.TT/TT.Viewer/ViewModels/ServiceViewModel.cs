@@ -274,19 +274,19 @@ namespace TT.Viewer.ViewModels
 
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);
             this.DeactivateItem(SpinControl, close);
             this.DeactivateItem(TableView, close);
             this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
 
-        //protected override void OnViewReady(object view)
-        //{
-        //    base.OnViewReady(view);
-        //    UpdateSelection(Manager.ActivePlaylist);
-        //}
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateSelection(Manager.ActivePlaylist);
+        }
 
         #endregion
 
