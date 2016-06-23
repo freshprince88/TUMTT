@@ -42,7 +42,7 @@ namespace TT.Scouter.ViewModels
                     {
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Schläge.Add(new Schlag());
+                            CurrentRally.Strokes.Add(new Stroke());
                         }
 
                     }
@@ -51,7 +51,7 @@ namespace TT.Scouter.ViewModels
                         diff = -diff;
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                            CurrentRally.Strokes.Remove(CurrentRally.Strokes.Last());
                         }
                     }
 
@@ -224,7 +224,7 @@ namespace TT.Scouter.ViewModels
                 else
                     CurrentRally.Winner = MatchPlayer.Second;
 
-                CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+                CurrentRally.End = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
 
                 if (Markiert)
                 {
@@ -250,7 +250,7 @@ namespace TT.Scouter.ViewModels
         {
             if (IsNewRally)
             {
-                CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+                CurrentRally.Start = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
                 IsNewRally = false;
                 IsWinnerEnabled = true;
                 MediaPlayer.Play();

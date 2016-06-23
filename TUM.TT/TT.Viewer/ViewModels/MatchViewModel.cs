@@ -73,22 +73,22 @@ namespace TT.Viewer.ViewModels
 
             if (item != null)
             {
-                MediaPlayer.Minimum = item.Anfang;
-                MediaPlayer.Maximum = item.Ende;
+                MediaPlayer.Minimum = item.Start;
+                MediaPlayer.Maximum = item.End;
 
                 if (MediaPlayer.toRallyStart == true)
                 {
-                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
-                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);               
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Start);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.End);               
                     MediaPlayer.MediaPosition = anfangRally;
                     MediaPlayer.EndPosition = endeRally;
                     MediaPlayer.Play();
                 }
                 else if (MediaPlayer.toRallyStart != true)
                 {
-                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
-                    TimeSpan vorEndeRally = TimeSpan.FromMilliseconds(item.Ende - 1000);
-                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Start);
+                    TimeSpan vorEndeRally = TimeSpan.FromMilliseconds(item.End - 1000);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.End);
                     MediaPlayer.MediaPosition = vorEndeRally;
                     MediaPlayer.EndPosition = endeRally;
                     MediaPlayer.Play();

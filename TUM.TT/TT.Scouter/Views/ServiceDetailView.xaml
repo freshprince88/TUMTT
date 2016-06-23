@@ -68,7 +68,7 @@
             <RadioButton x:Name="Pendulum" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Pendulum" Grid.Row="1"  MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
                 <RadioButton.IsChecked>
                     <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
-                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Stroke.Servicetechnique" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </RadioButton.IsChecked>
@@ -76,7 +76,7 @@
             <RadioButton x:Name="Reverse" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Reverse" Grid.Row="1" Grid.Column="1" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]" VerticalAlignment="Top">
                 <RadioButton.IsChecked>
                     <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
-                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Stroke.Servicetechnique" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </RadioButton.IsChecked>
@@ -84,7 +84,7 @@
             <RadioButton x:Name="Tomahawk" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Tomahawk" Grid.Row="2" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
                 <RadioButton.IsChecked>
                     <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
-                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Stroke.Servicetechnique" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </RadioButton.IsChecked>
@@ -92,7 +92,7 @@
             <RadioButton x:Name="Special" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Special" Grid.Row="2" Grid.Column="1" MinWidth="90" cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
                 <RadioButton.IsChecked>
                     <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
-                        <Binding Path="Stroke.Aufschlagart" />
+                        <Binding Path="Stroke.Servicetechnique" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </RadioButton.IsChecked>

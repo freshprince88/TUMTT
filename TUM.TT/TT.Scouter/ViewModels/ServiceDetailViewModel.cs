@@ -7,13 +7,13 @@ namespace TT.Scouter.ViewModels
 {
     public class ServiceDetailViewModel : Conductor<IScreen>.Collection.AllActive
     {
-        public Schlag Stroke { get; set; }
+        public Stroke Stroke { get; set; }
         private IMatchManager MatchManager;
         public ServicePositionTableViewModel TableControl { get; set; }
         public SpinRadioViewModel SpinControl { get; set; }
         public string PlayerName { get { return GetNameFromStrokePlayer(); } }
 
-        public ServiceDetailViewModel(Schlag s, IMatchManager man)
+        public ServiceDetailViewModel(Stroke s, IMatchManager man)
         {
             MatchManager = man;
             Stroke = s;
@@ -30,7 +30,7 @@ namespace TT.Scouter.ViewModels
         {
             if (Stroke == null)
             {
-                Stroke.Aufschlagart = "";
+                Stroke.Servicetechnique = "";
                 return;
             }
 
@@ -38,44 +38,44 @@ namespace TT.Scouter.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    Stroke.Aufschlagart="Pendulum";
+                    Stroke.Servicetechnique="Pendulum";
                 }
                 else
                 {
-                    Stroke.Aufschlagart = "";
+                    Stroke.Servicetechnique = "";
                 }
             }
             else if (source.Name.ToLower().Contains("reverse"))
             {
                 if (source.IsChecked.Value)
                 {
-                    Stroke.Aufschlagart = "Reverse";
+                    Stroke.Servicetechnique = "Reverse";
                 }
                 else
                 {
-                    Stroke.Aufschlagart = "";
+                    Stroke.Servicetechnique = "";
                 }
             }
             else if (source.Name.ToLower().Contains("tomahawk"))
             {
                 if (source.IsChecked.Value)
                 {
-                    Stroke.Aufschlagart = "Tomahawk";
+                    Stroke.Servicetechnique = "Tomahawk";
                 }
                 else
                 {
-                    Stroke.Aufschlagart = "";
+                    Stroke.Servicetechnique = "";
                 }
             }
             else if (source.Name.ToLower().Contains("special"))
             {
                 if (source.IsChecked.Value)
                 {
-                    Stroke.Aufschlagart = "Special";
+                    Stroke.Servicetechnique = "Special";
                 }
                 else
                 {
-                    Stroke.Aufschlagart = "";
+                    Stroke.Servicetechnique = "";
                 }
             }
 
@@ -86,7 +86,7 @@ namespace TT.Scouter.ViewModels
             if (Stroke == null)
                 return "";
 
-            switch (Stroke.Spieler)
+            switch (Stroke.Player)
             {
                 case MatchPlayer.First:
                     return MatchManager.Match.FirstPlayer.Name.Split(' ')[0];

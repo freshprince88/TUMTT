@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace TT.Scouter.Views
 {
     /// <summary>
-    /// Interaction logic for SchlagDetailView.xaml
+    /// Interaktionslogik für StrokeDetailView.xaml
     /// </summary>
-    public partial class SchlagDetailView : UserControl
+    public partial class StrokeDetailView : UserControl
     {
-        public SchlagDetailView()
+        public StrokeDetailView()
         {
             InitializeComponent();
         }

@@ -355,7 +355,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding Nummer}" />
+                            <Label Content="{Binding Number}" />
                             <Label Content="{Binding CurrentRallyScore}" FontWeight="Bold"/>
                             <Label Content="{Binding CurrentSetScore, StringFormat=({0})}" />
                             <Label Content="{Binding Winner, Converter={conv:MatchPlayerToStringConverter}}" />

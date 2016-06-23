@@ -25,13 +25,13 @@ namespace TT.Viewer.ViewModels
         {
             get
             {
-                return CurrentRally != null ? CurrentRally.Kommentar : string.Empty;
+                return CurrentRally != null ? CurrentRally.Comment : string.Empty;
             }
             set
             {
-                if (value != CurrentRally.Kommentar)
+                if (value != CurrentRally.Comment)
                 {
-                    CurrentRally.Kommentar = value;
+                    CurrentRally.Comment = value;
                     Manager.MatchModified = true;
                     NotifyOfPropertyChange();
 
@@ -50,7 +50,7 @@ namespace TT.Viewer.ViewModels
         public void Handle(VideoPlayEvent message)
         {
             CurrentRally = message.Current;
-            Comment = CurrentRally.Kommentar;
+            Comment = CurrentRally.Comment;
             NotifyOfPropertyChange("Comment");
         }
         #endregion

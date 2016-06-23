@@ -140,17 +140,17 @@ namespace TT.Viewer.ViewModels
                 if (lastStroke == false)
                 {
 
-                    topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsTopLeft()).Count();
-                    topMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsTopMid()).Count();
-                    topRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsTopRight()).Count();
+                    topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsTopLeft()).Count();
+                    topMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsTopMid()).Count();
+                    topRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsTopRight()).Count();
 
-                    midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsMidLeft()).Count();
-                    midMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsMidMid()).Count();
-                    midRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsMidRight()).Count();
+                    midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsMidLeft()).Count();
+                    midMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsMidMid()).Count();
+                    midRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsMidRight()).Count();
 
-                    botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsBotLeft()).Count();
-                    botMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsBotMid()).Count();
-                    botRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsBotRight()).Count();
+                    botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotLeft()).Count();
+                    botMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotMid()).Count();
+                    botRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotRight()).Count();
                 }
                 else
                 {

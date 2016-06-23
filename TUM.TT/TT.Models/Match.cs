@@ -238,8 +238,8 @@ namespace TT.Models
                 {
                     foreach (var r in p.Rallies)
                     {
-                        r.Anfang -= diff;
-                        r.Ende -= diff;
+                        r.Start -= diff;
+                        r.End -= diff;
                     }
                 }
             }
@@ -253,7 +253,7 @@ namespace TT.Models
             {
                 foreach (var r in p.Rallies)
                 {
-                    r.Anfang += offset;
+                    r.Start += offset;
 
                 }
             }
@@ -268,7 +268,7 @@ namespace TT.Models
                 foreach (var r in p.Rallies)
                 {
 
-                    r.Ende += offset;
+                    r.End += offset;
                 }
             }
 

@@ -335,14 +335,14 @@ namespace TT.Viewer.ViewModels
 
         public void StartRallyAtBeginning()
         {
-            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Anfang);
+            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Start);
 
         }
 
         public void PauseRallyAtBeginning()
         {
             Pause();
-            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Anfang);
+            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Start);
         }
 
         public void PlayModeHelper()

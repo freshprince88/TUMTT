@@ -21,7 +21,7 @@ namespace TT.Scouter.ViewModels
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
-        public RemoteSchlagViewModel SchlagView { get; set; }
+        public RemoteStrokeViewModel SchlagView { get; set; }
         private bool _service;
         public bool ServiceChecked
         {
@@ -117,8 +117,7 @@ namespace TT.Scouter.ViewModels
                     {
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Schläge.Add(new Schlag());
-                            //MatchManager.ActivePlaylist.Rallies.Where(r => r.Nummer == CurrentRally.Nummer).FirstOrDefault().Schläge[i+CurrentRally.Length].PropertyChanged += SetMatchModified;
+                            CurrentRally.Strokes.Add(new Stroke());
                         }
 
                     }
@@ -127,16 +126,16 @@ namespace TT.Scouter.ViewModels
                         diff = -diff;
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                            CurrentRally.Strokes.Remove(CurrentRally.Strokes.Last());
                         }
-                        SchlagView.CurrentStroke = CurrentRally.Schläge.Last();
+                        SchlagView.CurrentStroke = CurrentRally.Strokes.Last();
                     }
                     else if (value == 0)
                     {
                         diff = -diff;
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                            CurrentRally.Strokes.Remove(CurrentRally.Strokes.Last());
                         }
                     }
                     
@@ -162,31 +161,31 @@ namespace TT.Scouter.ViewModels
 
 
                     if (SchlagView == null)
-                        SchlagView = new RemoteSchlagViewModel(MatchManager, value);
+                        SchlagView = new RemoteStrokeViewModel(MatchManager, value);
                     else
                     {
 
-                        SchlagView.Strokes = value.Schläge;
+                        SchlagView.Strokes = value.Strokes;
                         SchlagView.CurrentRally = value;
                     }
                     _rally = value;
 
                     if (_rally.Length > 0)
                     {
-                        CurrentStroke = _rally.Schläge.FirstOrDefault();
+                        CurrentStroke = _rally.Strokes.FirstOrDefault();
                         if (ServiceChecked)
                         {
-                            CurrentStroke = _rally.Schläge[0];
+                            CurrentStroke = _rally.Strokes[0];
                         }
                         if (ReceiveChecked)
                         {
                             if (_rally.Length > 1)
                             {
-                                CurrentStroke = _rally.Schläge[1];
+                                CurrentStroke = _rally.Strokes[1];
                             }
                             else
                             {
-                                CurrentStroke = _rally.Schläge.Last();
+                                CurrentStroke = _rally.Strokes.Last();
                             }
                         }
 
@@ -194,27 +193,27 @@ namespace TT.Scouter.ViewModels
                         {
                             if (_rally.Length > 2)
                             {
-                                CurrentStroke = _rally.Schläge[2];
+                                CurrentStroke = _rally.Strokes[2];
                             }
                             else
                             {
-                                CurrentStroke = _rally.Schläge.Last();
+                                CurrentStroke = _rally.Strokes.Last();
                             }
                         }
                         if (FourthChecked)
                         {
                             if (_rally.Length > 3)
                             {
-                                CurrentStroke = _rally.Schläge[3];
+                                CurrentStroke = _rally.Strokes[3];
                             }
                             else
                             {
-                                CurrentStroke = _rally.Schläge.Last();
+                                CurrentStroke = _rally.Strokes.Last();
                             }
                         }
                         if (LastChecked)
                         {
-                            CurrentStroke = _rally.Schläge.Last();
+                            CurrentStroke = _rally.Strokes.Last();
                         }
 
 
@@ -236,8 +235,8 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        private Schlag _stroke;
-        public Schlag CurrentStroke
+        private Stroke _stroke;
+        public Stroke CurrentStroke
         {
             get { return _stroke; }
             set
@@ -247,13 +246,13 @@ namespace TT.Scouter.ViewModels
                     _stroke = value;
                     NotifyOfPropertyChange("CurrentStroke");
 
-                    if (_stroke.Nummer == 1)
+                    if (_stroke.Number == 1)
                     {
                         SchlagView.ActivateItem(new ServiceDetailViewModel(CurrentStroke, MatchManager));
                     }
                     else
                     {
-                        SchlagView.ActivateItem(new SchlagDetailViewModel(CurrentStroke, MatchManager));
+                        SchlagView.ActivateItem(new StrokeDetailViewModel(CurrentStroke, MatchManager));
                     }
                 }
             }
@@ -293,8 +292,8 @@ namespace TT.Scouter.ViewModels
                 if (MediaPlayer.toRallyStart == true)
                 {
                     CurrentRally = item;
-                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
-                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Start);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.End);
                     MediaPlayer.MediaPosition = anfangRally;
                     MediaPlayer.EndPosition = endeRally;
                     MediaPlayer.Play();
@@ -302,9 +301,9 @@ namespace TT.Scouter.ViewModels
                 else if (MediaPlayer.toRallyStart != true)
                 {
                     CurrentRally = item;
-                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Anfang);
-                    TimeSpan vorEndeRally = TimeSpan.FromMilliseconds(item.Ende - 1000);
-                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.Ende);
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Start);
+                    TimeSpan vorEndeRally = TimeSpan.FromMilliseconds(item.End - 1000);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.End);
                     MediaPlayer.MediaPosition = vorEndeRally;
                     MediaPlayer.EndPosition = endeRally;
                     MediaPlayer.Play();
@@ -314,9 +313,9 @@ namespace TT.Scouter.ViewModels
 
         public void NextRally()
         {
-            if (Rallies.Where(r => r.Nummer == CurrentRally.Nummer + 1).FirstOrDefault() != null)
+            if (Rallies.Where(r => r.Number == CurrentRally.Number + 1).FirstOrDefault() != null)
             {
-                var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer + 1).FirstOrDefault();
+                var rally = Rallies.Where(r => r.Number == CurrentRally.Number + 1).FirstOrDefault();
                 Events.PublishOnUIThread(new ResultListControlEvent(rally));
                 CurrentRally = rally;
             }
@@ -324,29 +323,29 @@ namespace TT.Scouter.ViewModels
 
         public void PreviousRally()
         {
-            if (Rallies.Where(r => r.Nummer == CurrentRally.Nummer - 1).FirstOrDefault() != null)
+            if (Rallies.Where(r => r.Number == CurrentRally.Number - 1).FirstOrDefault() != null)
             {
-                var rally = Rallies.Where(r => r.Nummer == CurrentRally.Nummer - 1).FirstOrDefault();
+                var rally = Rallies.Where(r => r.Number == CurrentRally.Number - 1).FirstOrDefault();
                 Events.PublishOnUIThread(new ResultListControlEvent(rally));
                 CurrentRally = rally;
             }
         }
         public void StartRallyAtBeginning()
         {
-            MediaPlayer.MediaPosition = TimeSpan.FromMilliseconds(CurrentRally.Anfang);
+            MediaPlayer.MediaPosition = TimeSpan.FromMilliseconds(CurrentRally.Start);
 
         }
         public void PlusSecond(int i)
         {
             if (i == 1)
             {
-                CurrentRally.Anfang = CurrentRally.Anfang + 500;
+                CurrentRally.Start = CurrentRally.Start + 500;
 
             }
             else if (i == 2)
             {
-                CurrentRally.Ende = CurrentRally.Ende + 500;
-                MediaPlayer.EndPosition = TimeSpan.FromMilliseconds(CurrentRally.Ende);
+                CurrentRally.End = CurrentRally.End + 500;
+                MediaPlayer.EndPosition = TimeSpan.FromMilliseconds(CurrentRally.End);
             }
 
         }
@@ -354,12 +353,12 @@ namespace TT.Scouter.ViewModels
         {
             if (i == 1)
             {
-                CurrentRally.Anfang = CurrentRally.Anfang - 500;
+                CurrentRally.Start = CurrentRally.Start - 500;
             }
             else if (i == 2)
             {
-                CurrentRally.Ende = CurrentRally.Ende - 500;
-                MediaPlayer.EndPosition = TimeSpan.FromMilliseconds(CurrentRally.Ende);
+                CurrentRally.End = CurrentRally.End - 500;
+                MediaPlayer.EndPosition = TimeSpan.FromMilliseconds(CurrentRally.End);
             }
         }
 

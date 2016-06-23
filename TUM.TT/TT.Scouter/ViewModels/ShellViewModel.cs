@@ -145,10 +145,10 @@ namespace TT.Scouter.ViewModels
             for (int i = 0; i < countRallies; i++)
             {
                 MatchManager.ActivePlaylist.Rallies[i].PropertyChanged += SetMatchModified;
-                int countStrokes = MatchManager.ActivePlaylist.Rallies[i].Schläge.Count();
+                int countStrokes = MatchManager.ActivePlaylist.Rallies[i].Strokes.Count();
                 for (int j=0; j < countStrokes; j++)
                 {
-                    MatchManager.ActivePlaylist.Rallies[i].Schläge[j].PropertyChanged += SetMatchModified;
+                    MatchManager.ActivePlaylist.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
                 }
             }
 
