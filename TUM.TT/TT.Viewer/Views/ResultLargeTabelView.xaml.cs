@@ -1,19 +1,21 @@
 ﻿using Caliburn.Micro;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using TT.Lib.Events;
-using TT.Viewer.ViewModels;
-using Itenso.Windows.Controls.ListViewLayout;
+using System;
+using TT.Models;
+using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace TT.Viewer.Views
 {
     /// <summary>
-    /// Interaktionslogik für ListLargeTableView.xaml
+    /// Interaktionslogik für ResultLargeTableView.xaml
     /// </summary>
     public partial class ResultLargeTableView : UserControl,
         IHandle<ResultListControlEvent>,
-        IHandle<FullscreenEvent>
+        IHandle<FullscreenEvent>,
+        IHandle<StrokesPaintEvent>
     {
 
         public IEventAggregator Events { get; private set; }
@@ -65,6 +67,33 @@ namespace TT.Viewer.Views
         private void CheckPunkt_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void Handle(StrokesPaintEvent message)
+        {
+            Console.Out.WriteLine("results changed (view): " + message.Strokes);
+
+            InnerFieldGrid.Children.Clear();
+
+            if (message.Strokes == null)
+                return;
+
+            var ctr = 0;
+            foreach (var s in message.Strokes)
+            {
+                if (ctr > 9)
+                    break;
+
+                Line line = new Line();
+                line.X1 = 0; line.Y1 = 0;
+                line.X2 = s.Platzierung.WX; line.Y2 = s.Platzierung.WY;
+                line.StrokeThickness = 2;
+                line.Stroke = Brushes.Black;
+                line.Fill = Brushes.Black;
+                InnerFieldGrid.Children.Add(line);
+
+                ctr++;
+            }
         }
     }
 }

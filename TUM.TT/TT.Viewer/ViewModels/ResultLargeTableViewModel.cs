@@ -12,6 +12,7 @@ using TT.Lib.Managers;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
+using System.Windows.Shapes;
 
 namespace TT.Viewer.ViewModels
 {
@@ -20,6 +21,7 @@ namespace TT.Viewer.ViewModels
         IHandle<FullscreenEvent>,
         IHandle<MediaControlEvent>
     {
+        
         public string Header { get; set; }
         public string Player1 {get; set;}
         public string Player2 { get; set; }
@@ -35,10 +37,14 @@ namespace TT.Viewer.ViewModels
         public ObservableCollection<ResultListItem> Items { get; set; }
         public List<Rally> Rallies { get; set; }
 
+        public ResultLargeTableViewModel()
+        {
+
+        }
 
         public ResultLargeTableViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
-            this.DisplayName = "Großer Tisch";
+            this.DisplayName = Properties.Resources.table_large_tab_title;
             Header = "Hitlist (" + count + ")";
             Events = e;
             Dialogs = c;
@@ -85,10 +91,8 @@ namespace TT.Viewer.ViewModels
             Rallies = message.Rallies.ToList();
             foreach (var rally in Rallies)
             {
-                Console.Out.WriteLine(rally.Nummer);
                 temp.Add(new ResultListItem(rally));
             }
-            Console.Out.WriteLine();
 
             Items = new ObservableCollection<ResultListItem>(temp);
             NotifyOfPropertyChange("Items");
@@ -109,6 +113,12 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange("Header");
 
             //this.Items.Refresh();
+            var strokes = new List<Schlag>();
+            foreach (var r in message.Rallies)
+            {
+                strokes.Add(r.Schläge.First());
+            }
+            Events.PublishOnUIThread(new StrokesPaintEvent(strokes));
         }
 
         public void Handle(FullscreenEvent message)
@@ -171,8 +181,6 @@ namespace TT.Viewer.ViewModels
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
             //this.ActivateItem(MiniStatistic);
-            Console.Out.WriteLine("activated!");
-            Console.Out.WriteLine("active rally: " + (Manager.ActiveRally != null ? "" + Manager.ActiveRally.Nummer : "[no]"));
         }
 
         #endregion
