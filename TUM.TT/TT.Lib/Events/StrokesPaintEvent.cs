@@ -9,12 +9,12 @@ namespace TT.Lib.Events
 {
     public class StrokesPaintEvent
     {
-        public StrokesPaintEvent(List<Schlag> strokes)
+        public StrokesPaintEvent(List<Stroke> strokes)
         {
             Strokes = strokes;
         }
 
-        public List<Schlag> Strokes {
+        public List<Stroke> Strokes {
             get; private set;
         }
     }
