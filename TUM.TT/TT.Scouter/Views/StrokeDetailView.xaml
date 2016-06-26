@@ -117,7 +117,7 @@
             <RadioButton Content="normal" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" />
             <RadioButton Content="bad" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
 
-            <Label Content="Aggression" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="12"/>
+            <Label Content="Aggressiveness" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="12"/>
             <Grid  Grid.Row="3" Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

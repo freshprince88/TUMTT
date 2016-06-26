@@ -367,12 +367,12 @@
                 <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aggression:</Label>
+            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aggressiveness:</Label>
             <ToggleButton x:Name="Aggressive" Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" 
                           cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]" >
                 <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
-                        <Binding Path="SelectedAggression" />
+                    <MultiBinding Converter="{conv:AggressivenessToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggressiveness" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
@@ -381,8 +381,8 @@
             <ToggleButton x:Name="Control" Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]">
                 <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
-                        <Binding Path="SelectedAggression" />
+                    <MultiBinding Converter="{conv:AggressivenessToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggressiveness" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
@@ -391,8 +391,8 @@
             <ToggleButton x:Name="Passive" Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]">
                 <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
-                        <Binding Path="SelectedAggression" />
+                    <MultiBinding Converter="{conv:AggressivenessToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggressiveness" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>

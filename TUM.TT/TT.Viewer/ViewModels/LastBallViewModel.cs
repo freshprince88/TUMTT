@@ -25,16 +25,16 @@ namespace TT.Viewer.ViewModels
         public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
         public Models.Util.Enums.Stroke.WinnerOrNetOut Winner { get; private set; }
         public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
-        private HashSet<Models.Util.Enums.Stroke.Aggression> _aggression;
-        public HashSet<Models.Util.Enums.Stroke.Aggression> SelectedAggression
+        private HashSet<Models.Util.Enums.Stroke.Aggressiveness> _aggressiveness;
+        public HashSet<Models.Util.Enums.Stroke.Aggressiveness> SelectedAggressiveness
         {
             get
             {
-                return _aggression;
+                return _aggressiveness;
             }
             private set
             {
-                _aggression = value;
+                _aggressiveness = value;
             }
         }
         public Models.Util.Enums.Stroke.Specials Specials { get; private set; }
@@ -67,7 +67,7 @@ namespace TT.Viewer.ViewModels
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
             Quality = Models.Util.Enums.Stroke.Quality.None;
-            SelectedAggression = new HashSet<Models.Util.Enums.Stroke.Aggression>();
+            SelectedAggressiveness = new HashSet<Models.Util.Enums.Stroke.Aggressiveness>();
             SelectedStrokeTec = new HashSet<Models.Util.Enums.Stroke.Technique>();
             Specials = Models.Util.Enums.Stroke.Specials.None;
             StepAround = Models.Util.Enums.Stroke.StepAround.Not;
@@ -408,33 +408,33 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedAggression.Add(Models.Util.Enums.Stroke.Aggression.Aggressive);
+                    SelectedAggressiveness.Add(Models.Util.Enums.Stroke.Aggressiveness.Aggressive);
                 }
                 else
                 {
-                    SelectedAggression.Remove(Models.Util.Enums.Stroke.Aggression.Aggressive);
+                    SelectedAggressiveness.Remove(Models.Util.Enums.Stroke.Aggressiveness.Aggressive);
                 }
             }
             else if (source.Name.ToLower().Equals("passive"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedAggression.Add(Models.Util.Enums.Stroke.Aggression.Passive);
+                    SelectedAggressiveness.Add(Models.Util.Enums.Stroke.Aggressiveness.Passive);
                 }
                 else
                 {
-                    SelectedAggression.Remove(Models.Util.Enums.Stroke.Aggression.Passive);
+                    SelectedAggressiveness.Remove(Models.Util.Enums.Stroke.Aggressiveness.Passive);
                 }
             }
             else if (source.Name.ToLower().Equals("control"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedAggression.Add(Models.Util.Enums.Stroke.Aggression.Control);
+                    SelectedAggressiveness.Add(Models.Util.Enums.Stroke.Aggressiveness.Control);
                 }
                 else
                 {
-                    SelectedAggression.Remove(Models.Util.Enums.Stroke.Aggression.Control);
+                    SelectedAggressiveness.Remove(Models.Util.Enums.Stroke.Aggressiveness.Control);
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -546,7 +546,7 @@ namespace TT.Viewer.ViewModels
                     r.LastWinnerStroke().HasQuality(this.Quality) &&
                     r.LastWinnerStroke().HasTablePosition(this.SelectedTablePositions) &&
                     r.LastWinnerStroke().HasStrokeLength(this.SelectedStrokeLengths) &&
-                    r.LastWinnerStroke().HasAggression(this.SelectedAggression) &&
+                    r.LastWinnerStroke().HasAggressiveness(this.SelectedAggressiveness) &&
                     r.LastWinnerStroke().HasSpecials(this.Specials)).
                     ToList();
                 Manager.SelectedRallies = results;
