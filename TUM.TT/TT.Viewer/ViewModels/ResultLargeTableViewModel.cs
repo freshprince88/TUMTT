@@ -69,6 +69,12 @@ namespace TT.Viewer.ViewModels
             e.Handled = true;
         }
         
+        public void StrokeSelected(object dataContext)
+        {
+            Console.Out.WriteLine("Selected Rally: {0}", ((Models.Stroke) dataContext).Rally.Number);
+            Manager.ActiveRally = (dataContext as Models.Stroke).Rally;
+        }
+
         private void UpdateStrokeDisplay(IEnumerable<Rally> rallies)
         {
             var strokes = new List<Models.Stroke>();
@@ -81,7 +87,7 @@ namespace TT.Viewer.ViewModels
                 if (stroke != null)
                     strokes.Add(stroke);
             }
-            Events.PublishOnUIThread(new StrokesPaintEvent(strokes));
+            Events.PublishOnUIThread(new StrokesPaintEvent(strokes, RallyLength));
         }
 
         #endregion

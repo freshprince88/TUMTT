@@ -11,8 +11,9 @@
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.ResultLargeTableView"
              xmlns:vm="clr-namespace:TT.Viewer.ViewModels"
+             xmlns:prop="clr-namespace:TT.Viewer.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="400"
+             d:DesignHeight="374" d:DesignWidth="233"
              d:DataContext="{d:DesignInstance Type=vm:ResultLargeTableViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
@@ -26,6 +27,7 @@
             </Setter>
         </Style>
         <conv:MathConverter x:Key="MathConverter" />
+        <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
 
     <Grid Name="basic_field">
@@ -41,44 +43,33 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Border BorderBrush="Black" BorderThickness="2 2 2 2" Grid.Row="0" Grid.Column="0">
-                <CheckBox Grid.Column="0" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Left" x:Name="CheckSchlagrichtung" IsChecked="True"  Click="CheckSchlagrichtung_Click">
-                    Schlagrichtung
+            <Border BorderBrush="Black" BorderThickness="1 1 1 1" Grid.Column="0">
+                <CheckBox VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckSpin" IsChecked="True" Click="CheckSpin_Click"
+                          Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}">
                 </CheckBox>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="2 0 2 2" Grid.Row="1" Grid.Column="0">
-                <CheckBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="5" x:Name="CheckSpin" IsChecked="True" Click="CheckSpin_Click">
-                    Spin
+            <Border BorderBrush="Black" BorderThickness="1 1 1 1" Grid.Column="1">
+                <CheckBox VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDirection" IsChecked="True" Click="CheckDirection_Click"
+                          Content="{Binding Path=table_direction_title, Source={StaticResource LocalizedStrings}}">
                 </CheckBox>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="0 2 2 2" Grid.Row="0" Grid.Column="1">
-                <CheckBox Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="5" x:Name="CheckHand" IsChecked="True" Click="CheckHand_Click">
-                    Vor-/Rückhand
-                </CheckBox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="0 0 2 2" Grid.Row="1" Grid.Column="1">
-                <CheckBox Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="5" x:Name="CheckPunkt" IsChecked="True" Click="CheckPunkt_Click">
-                    Punkt
-                </CheckBox>
-            </Border>
-
         </Grid>
 
         <Viewbox Grid.Row="1" Stretch="Uniform">
-            <Grid Name="TableGrid" HorizontalAlignment="Left" Width="300" Height="460">
+            <Grid Name="TableGrid" HorizontalAlignment="Left" Width="252.5" Height="374">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <Line X1="25" Y1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Converter={StaticResource MathConverter}, ConverterParameter= x-25}" Y2="0"  Grid.Row="0" Stroke="Black" StrokeThickness="3" VerticalAlignment="Bottom" Panel.ZIndex="1"/>
-                <Border Grid.Row="0"  Grid.RowSpan="2" Margin="50,50,50,50" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99"/>
+                <Border Name="TableBorder" Grid.Row="0"  Grid.RowSpan="2" Margin="50,50,50,50" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99"/>
 
-                <Grid Name="InnerFieldGrid" Grid.RowSpan="2" Panel.ZIndex="-1"/>
-                
+                <Grid Name="InnerFieldGrid" Grid.RowSpan="2" Margin="30,30,30,30" Panel.ZIndex="-1">                    
+                </Grid>
+
             </Grid>
         </Viewbox>
     </Grid>

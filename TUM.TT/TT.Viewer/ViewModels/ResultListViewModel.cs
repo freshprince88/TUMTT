@@ -177,6 +177,9 @@ namespace TT.Viewer.ViewModels
             Events.Subscribe(this);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+
+            if (Manager.ActiveRally != null)
+                Events.PublishOnUIThread(new ResultListControlEvent(Manager.ActiveRally));
         }
 
         protected override void OnDeactivate(bool close)
