@@ -12,21 +12,10 @@ using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels
 {
-    public class LiveViewModel : Conductor<IScreen>.Collection.AllActive
+    public class LiveScoutingViewModel : Screen
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
-        public bool FirstServerSet
-        {
-            get
-            {
-                return Match.FirstServer != MatchPlayer.None;
-                 
-            }
-
-            
-        }
-       
         public int LengthHelper
         {
             get
@@ -61,50 +50,12 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
-
-
-        public enum TimeMode
-        {
-            Video,
-            Timer
-        }
-
-        private TimeMode _mode;
-        public TimeMode ViewMode
-        {
-            get
-            {
-                return _mode;
-            }
-            set
-            {
-                if (_mode != value)
-                {
-                    this.DeactivateItem(MediaPlayer, true);
-                    _mode = value;
-                    switch (_mode)
-                    {
-                        case TimeMode.Video:
-                            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
-                            break;
-                        case TimeMode.Timer:
-                            MediaPlayer = new LiveTimerViewModel();
-                            break;
-                        default:
-                            break;
-                    }
-                    this.ActivateItem(MediaPlayer);
-                    NotifyOfPropertyChange();
-                }
-            }
-        }
-
         public IMediaPosition MediaPlayer { get; set; }
 
         public MatchPlayer Server { get; set; }
-
         public Match Match { get { return MatchManager.Match; } }
         public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
+
 
         private Rally _currentRally;
         /// <summary>
@@ -165,55 +116,21 @@ namespace TT.Scouter.ViewModels
 
             }
         }
-
-
         public bool Markiert { get; set; }
-        public ChoiceOfEndsViewModel ChoiceOfEnds { get; private set; }
-        public ChoiceOfServiceReceiveViewModel ChoiceOfServiceReceive { get; private set; }
-        public LiveScoutingViewModel LiveScouting { get; private set; }
-        public Screen TransitioningContent { get; set; }
-        public Screen CurrentScreen { get; set; }
+        public LiveViewModel LiveView { get; private set; }
 
-        public LiveViewModel(IEventAggregator ev, IMatchManager man)
+        public LiveScoutingViewModel (IEventAggregator ev, IMatchManager man, IMediaPosition mp, LiveViewModel live)
         {
-          
             Events = ev;
             MatchManager = man;
-            IsNewRally = true;
-            IsWinnerEnabled = false;
+            MediaPlayer = mp;
+            LiveView = live;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
-            //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-            //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
-            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
-            ChoiceOfEnds = new ChoiceOfEndsViewModel(Events, MatchManager, this);
-            ChoiceOfServiceReceive = new ChoiceOfServiceReceiveViewModel(Events, MatchManager, this);
-            LiveScouting = new LiveScoutingViewModel(Events, MatchManager, MediaPlayer, this);
-            CurrentScreen = ChoiceOfEnds;
-            
-        }
-
-        #region Caliburn Hooks
-
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-            this.ActivateItem(ChoiceOfEnds);
-            this.ActivateItem(ChoiceOfServiceReceive);
-            this.ActivateItem(LiveScouting);
-
-            TransitioningContent = CurrentScreen;
-
 
         }
 
-        protected override void OnViewReady(object view)
-        {
-        }
-
-        #endregion
 
         #region View Methods
-
         public void SetRallyLength(int length)
         {
             LengthHelper = length;
@@ -224,7 +141,7 @@ namespace TT.Scouter.ViewModels
 
         public void RallyWon(int player, int length)
         {
-        
+
             if (!IsNewRally)
             {
                 // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
@@ -248,7 +165,7 @@ namespace TT.Scouter.ViewModels
                 Server = CurrentRally.Server;
                 //LengthHelper = 0;
                 NotifyOfPropertyChange();
-                NotifyOfPropertyChange("Server");                               
+                NotifyOfPropertyChange("Server");
                 IsNewRally = true;
                 IsWinnerEnabled = false;
                 MatchManager.MatchModified = true;
@@ -268,66 +185,6 @@ namespace TT.Scouter.ViewModels
 
             }
         }
-
-        public IEnumerable<IResult> ShowServer()
-        {
-            var dialog = new CustomClosableComboDialog<Player>();
-            dialog.CloseButton = new Button() { Content = "OK" };
-            dialog.Combo = new ComboBox() { ItemsSource = Match.Players, SelectedIndex = 0, DisplayMemberPath = "Name" };
-            StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };
-            panel.Margin = new System.Windows.Thickness(10);
-            TextBlock message = new TextBlock() { Text = "Bitte Aufschlagspieler auswählen" };
-            panel.Children.Add(message);
-            panel.Children.Add(dialog.Combo);
-            panel.Children.Add(dialog.CloseButton);
-
-            dialog.Content = panel;
-            var result = new CustomDialogResult<Player>() { Title = "Server", DialogContent = dialog };
-            yield return result;
-
-          
-            NotifyOfPropertyChange("FirstServerSet");
-            this.Server = MatchManager.ConvertPlayer(result.Result);
-            CurrentRally.Server = this.Server;
-            NotifyOfPropertyChange("Server");
-        }
-        public void SetFirstServer(Player p)
-        {          
-            this.Server = MatchManager.ConvertPlayer(p);
-            CurrentRally.Server = this.Server;
-            NotifyOfPropertyChange("Server");
-            NotifyOfPropertyChange("FirstServerSet");
-            MatchManager.MatchModified = true;
-        }
-
-        public void DeleteLastRally()
-        {
-            if (Rallies.Count > 1)
-            {
-                Rally lastRally = Rallies.Last();
-                if (lastRally.Winner == MatchPlayer.None)
-                {
-                    Rallies.Remove(lastRally);
-                    lastRally = Rallies.Last();
-                }                
-                Rallies.Remove(lastRally);
-                Rallies.Add(new Rally());
-                CurrentRally = Rallies.Last();
-                CurrentRally.UpdateServerAndScore();
-                MatchManager.MatchModified = true;
-                NotifyOfPropertyChange("FirstServerSet");
-            }
-        }
-
-        public void FinalizeLiveMode()
-        {
-            if (Rallies.Last().Winner == MatchPlayer.None && Rallies.Last().Length == 0)
-            {
-                Rallies.Remove(Rallies.Last());
-                Rallies.Last().UpdateServerAndScore();
-            }
-        }
-
         #endregion
     }
 }
