@@ -17,7 +17,7 @@ namespace TT.Lib.Converters
             expression = expression.Replace("MatchPlayer.First", "\"First\"");
             expression = expression.Replace("MatchPlayer.Second", "\"Second\"");
             expression = expression.Replace(".Winner", ".Winner.ToString()");
-            expression = expression.Replace(".Spieler", ".Spieler.ToString()");
+            expression = expression.Replace(".Player", ".Player.ToString()");
             expression = expression.Replace(".Server", ".Server.ToString()");
 
             return expression;

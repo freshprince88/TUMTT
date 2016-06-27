@@ -113,7 +113,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\AggressionToBoolConverter.cs" />
+    <Compile Include="Converters\AggressivenessToBoolConverter.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BoolNotConverter.cs" />
     <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />

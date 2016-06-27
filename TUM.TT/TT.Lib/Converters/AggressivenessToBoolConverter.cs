@@ -6,14 +6,14 @@ using TT.Models;
 using TT.Models.Util.Enums;
 
 namespace TT.Lib.Converters
-    
+
 {
     [ValueConversion(typeof(HashSet<Models.Util.Enums.Stroke.Services>), typeof(bool))]
-    public class AggressionToBoolConverter : BaseConverter, IMultiValueConverter
+    public class AggressivenessToBoolConverter : BaseConverter, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            HashSet<Models.Util.Enums.Stroke.Aggression> set = (HashSet<Models.Util.Enums.Stroke.Aggression>)values[0];
+            HashSet<Models.Util.Enums.Stroke.Aggressiveness> set = (HashSet<Models.Util.Enums.Stroke.Aggressiveness>)values[0];
             string btnName = (string)values[1];
 
             foreach (var agg in set)

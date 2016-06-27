@@ -32,19 +32,19 @@ namespace TT.Models
         private Rank rank;
 
         /// <summary>
-        /// Backs the <see cref="Spielsystem"/> property.
+        /// Backs the <see cref="PlayingStyle"/> property.
         /// </summary>
-        private Spielsystem spielsystem = Spielsystem.None;
+        private PlayingStyle playingStyle = PlayingStyle.None;
 
         /// <summary>
-        /// Backs the <see cref="Händigkeit"/> property.
+        /// Backs the <see cref="Handedness"/> property.
         /// </summary>
-        private Händigkeit händigkeit = Händigkeit.None;
+        private Handedness handedness = Handedness.None;
 
         /// <summary>
-        /// Backs the <see cref="Griffhaltung"/> property.
+        /// Backs the <see cref="Grip"/> property.
         /// </summary>
-        private Griffhaltung griffhaltung = Griffhaltung.None;
+        private Grip grip = Grip.None;
 
         /// <summary>
         /// Backs the <see cref="Material"/> property.
@@ -109,19 +109,19 @@ namespace TT.Models
         /// Gets or sets the Spielsystem of this player.
         /// </summary>
         [XmlAttribute]
-        public Spielsystem Spielsystem
+        public PlayingStyle PlayingStyle
         {
             get
             {
-                return this.spielsystem;
+                return this.playingStyle;
             }
 
             set
             {
-                if (this.spielsystem != value)
+                if (this.playingStyle != value)
                 {
-                    this.spielsystem = value;
-                    this.NotifyPropertyChanged("Spielsystem");
+                    this.playingStyle = value;
+                    this.NotifyPropertyChanged("PlayingStyle");
                     this.NotifyPropertyChanged();
 
                 }
@@ -129,50 +129,50 @@ namespace TT.Models
         }
 
         /// <summary>
-        /// Gets or sets the Händigkeit of this player.
+        /// Gets or sets the Handedness of this player.
         /// </summary>
         [XmlAttribute]
-        public Händigkeit Händigkeit
+        public Handedness Handedness
         {
             get
             {
-                return this.händigkeit;
+                return this.handedness;
             }
 
             set
             {
-                if (this.händigkeit != value)
+                if (this.handedness != value)
                 {
-                    this.händigkeit = value;
-                    this.NotifyPropertyChanged("Händigkeit");
+                    this.handedness = value;
+                    this.NotifyPropertyChanged("Handedness");
                     this.NotifyPropertyChanged();
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the Griffhaltung of this player.
+        /// Gets or sets the Grip of this player.
         /// </summary>
         [XmlAttribute]
-        public Griffhaltung Griffhaltung
+        public Grip Grip
         {
             get
             {
-                return this.griffhaltung;
+                return this.grip;
             }
 
             set
             {
-                if (this.griffhaltung != value)
+                if (this.grip != value)
                 {
-                    this.griffhaltung = value;
+                    this.grip = value;
                     this.NotifyPropertyChanged();
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the Griffhaltung of this player.
+        /// Gets or sets the PlayerIndex of this player.
         /// </summary>
         [XmlAttribute]
         public MatchPlayer PlayerIndex

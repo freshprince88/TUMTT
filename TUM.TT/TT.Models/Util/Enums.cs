@@ -227,7 +227,7 @@
             None,
             Both
         }
-        public enum Aggression
+        public enum Aggressiveness
         {
             Aggressive,
             Control,
