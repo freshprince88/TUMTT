@@ -171,7 +171,19 @@ namespace TT.Scouter.ViewModels
         public ChoiceOfEndsViewModel ChoiceOfEnds { get; private set; }
         public ChoiceOfServiceReceiveViewModel ChoiceOfServiceReceive { get; private set; }
         public LiveScoutingViewModel LiveScouting { get; private set; }
-        public Screen TransitioningContent { get; set; }
+        private Screen _trans;
+        public Screen TransitioningContent
+        {
+            get { return _trans; }
+            set
+            {
+                if (_trans!=value)
+                {
+                    _trans = value;
+                    NotifyOfPropertyChange();
+                }
+            }
+        }
         public Screen CurrentScreen { get; set; }
 
         public LiveViewModel(IEventAggregator ev, IMatchManager man)
@@ -188,8 +200,23 @@ namespace TT.Scouter.ViewModels
             ChoiceOfEnds = new ChoiceOfEndsViewModel(Events, MatchManager, this);
             ChoiceOfServiceReceive = new ChoiceOfServiceReceiveViewModel(Events, MatchManager, this);
             LiveScouting = new LiveScoutingViewModel(Events, MatchManager, MediaPlayer, this);
-            CurrentScreen = ChoiceOfEnds;
-            
+            if (MatchManager.Match.FirstPlayer.StartingTableEnd == StartingTableEnd.None || MatchManager.Match.SecondPlayer.StartingTableEnd == StartingTableEnd.None)
+            {
+                CurrentScreen = ChoiceOfEnds;
+            }
+            else
+            {
+                if (!FirstServerSet)
+                {
+                    CurrentScreen = ChoiceOfEnds;
+                }
+                else
+                {
+                    CurrentScreen = LiveScouting;
+                }
+            }
+
+
         }
 
         #region Caliburn Hooks
@@ -200,7 +227,6 @@ namespace TT.Scouter.ViewModels
             this.ActivateItem(ChoiceOfEnds);
             this.ActivateItem(ChoiceOfServiceReceive);
             this.ActivateItem(LiveScouting);
-
             TransitioningContent = CurrentScreen;
 
 
@@ -302,7 +328,28 @@ namespace TT.Scouter.ViewModels
 
         public void DeleteLastRally()
         {
-            if (Rallies.Count > 1)
+            if (Rallies.Count == 2)
+            {
+                MatchPlayer firstServerBackup = MatchManager.Match.FirstServer;
+                Rally lastRally = Rallies.Last();
+                if (lastRally.Winner == MatchPlayer.None)
+                {
+                    Rallies.Remove(lastRally);
+                    lastRally = Rallies.Last();
+                }
+                Rallies.Remove(lastRally);
+                Rallies.Add(new Rally());
+                CurrentRally = Rallies.Last();
+                this.Server = firstServerBackup;
+                CurrentRally.Server = this.Server;
+                NotifyOfPropertyChange("LiveView.Server");
+                NotifyOfPropertyChange("LiveView.FirstServerSet");
+                MatchManager.MatchModified = true;
+                CurrentRally.UpdateServerAndScore();
+                MatchManager.MatchModified = true;
+                NotifyOfPropertyChange("FirstServerSet");
+            }
+            if (Rallies.Count > 2)
             {
                 Rally lastRally = Rallies.Last();
                 if (lastRally.Winner == MatchPlayer.None)
@@ -317,6 +364,7 @@ namespace TT.Scouter.ViewModels
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("FirstServerSet");
             }
+            
         }
 
         public void FinalizeLiveMode()
@@ -326,6 +374,11 @@ namespace TT.Scouter.ViewModels
                 Rallies.Remove(Rallies.Last());
                 Rallies.Last().UpdateServerAndScore();
             }
+        }
+
+        public void ChangeTransitioningContent()
+        {
+            TransitioningContent = CurrentScreen;
         }
 
         #endregion

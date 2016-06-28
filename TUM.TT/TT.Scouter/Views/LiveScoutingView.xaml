@@ -60,12 +60,12 @@
                 <Grid.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
-                        <Binding  Path="CurrentRally.Server"/>
+                        <Binding  Path="LiveView.CurrentRally.Server"/>
                     </MultiBinding>
                 </Grid.Visibility>
             </Grid>
-            <Label Name="Player1" Content="{Binding Path=Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" FontSize="20" />
-            <Label Name="Player2" Content="{Binding Path=Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Grid.RowSpan="2"  FontSize="20"/>
+            <Label Name="Player1" Content="{Binding Path=LiveView.Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" FontSize="20" />
+            <Label Name="Player2" Content="{Binding Path=LiveView.Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Grid.RowSpan="2"  FontSize="20"/>
             <Grid x:Name="Second" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -83,17 +83,17 @@
                 <Grid.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
-                        <Binding  Path="CurrentRally.Server"/>
+                        <Binding  Path="LiveView.CurrentRally.Server"/>
                     </MultiBinding>
                 </Grid.Visibility>
             </Grid>
 
-            <Label Name="SetScore1" Content="{Binding Path=CurrentRally.CurrentSetScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" FontSize="30"/>
-            <Label Name="PointScore1" Content="{Binding Path=CurrentRally.CurrentRallyScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" FontSize="75"/>
-            <Label Name="SetScore2" Content="{Binding Path=CurrentRally.CurrentSetScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="5" FontSize="30"/>
-            <Label Name="PointScore2" Content="{Binding Path=CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" FontSize="75"/>
+            <Label Name="SetScore1" Content="{Binding Path=LiveView.CurrentRally.CurrentSetScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" FontSize="30"/>
+            <Label Name="PointScore1" Content="{Binding Path=LiveView.CurrentRally.CurrentRallyScore.First}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" FontSize="75"/>
+            <Label Name="SetScore2" Content="{Binding Path=LiveView.CurrentRally.CurrentSetScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="1" Grid.RowSpan="2" Grid.Column="5" FontSize="30"/>
+            <Label Name="PointScore2" Content="{Binding Path=LiveView.CurrentRally.CurrentRallyScore.Second}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"  Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" FontSize="75"/>
         </Grid>
-        <Grid x:Name="StartGrid" Grid.Row="2" Visibility="{Binding IsNewRally, Converter={conv:BoolToVisibilityConverter}}" IsEnabled="{Binding FirstServerSet}">
+        <Grid x:Name="StartGrid" Grid.Row="2" Visibility="{Binding Path=LiveView.IsNewRally, Converter={conv:BoolToVisibilityConverter}}" >
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -118,7 +118,7 @@
             </Button>
         </Grid>
 
-        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
+        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding Path=LiveView.IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -130,15 +130,15 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Label Name="lbl_RallyNum" Grid.Column="1" Content="{Binding Path=CurrentRally.RallyNumLong}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Name="lbl_RallyNum" Grid.Column="1" Content="{Binding Path=LiveView.CurrentRally.RallyNumLong}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                <Label Content="Rally Length:" VerticalAlignment="Center" FontSize="20" Margin="0 0 10 0"/>
+                <Label Content="Rally Length:" VerticalAlignment="Center" FontSize="18" Margin="0 0 10 0"/>
                 <RadioButton GroupName="RallyLength" Content="1" Width="35" Margin="0 0 10 0" FontSize="16"
                     cal:Message.Attach="[Event Checked] = [Action SetRallyLength(1)]" >
                     <RadioButton.IsChecked>
                         <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
-                            <Binding Path="LengthHelper"/>
+                            <Binding Path="LiveView.LengthHelper"/>
                             <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
                         </MultiBinding>
                     </RadioButton.IsChecked>
@@ -147,7 +147,7 @@
                              cal:Message.Attach="[Event Checked] = [Action SetRallyLength(2)]" >
                     <RadioButton.IsChecked>
                         <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
-                            <Binding Path="LengthHelper"/>
+                            <Binding Path="LiveView.LengthHelper"/>
                             <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
                         </MultiBinding>
                     </RadioButton.IsChecked>
@@ -156,7 +156,7 @@
                              cal:Message.Attach="[Event Checked] = [Action SetRallyLength(3)]" >
                     <RadioButton.IsChecked>
                         <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
-                            <Binding Path="LengthHelper"/>
+                            <Binding Path="LiveView.LengthHelper"/>
                             <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
                         </MultiBinding>
                     </RadioButton.IsChecked>
@@ -165,7 +165,7 @@
                              cal:Message.Attach="[Event Checked] = [Action SetRallyLength(4)]" >
                     <RadioButton.IsChecked>
                         <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
-                            <Binding Path="LengthHelper"/>
+                            <Binding Path="LiveView.LengthHelper"/>
                             <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
                         </MultiBinding>
                     </RadioButton.IsChecked>
@@ -174,7 +174,7 @@
                              cal:Message.Attach="[Event Checked] = [Action SetRallyLength(5)]" >
                     <RadioButton.IsChecked>
                         <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
-                            <Binding Path="LengthHelper"/>
+                            <Binding Path="LiveView.LengthHelper"/>
                             <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
                         </MultiBinding>
                     </RadioButton.IsChecked>
@@ -183,15 +183,15 @@
                              cal:Message.Attach="[Event Checked] = [Action SetRallyLength(6)]" >
                     <RadioButton.IsChecked>
                         <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
-                            <Binding Path="LengthHelper"/>
+                            <Binding Path="LiveView.LengthHelper"/>
                             <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
                         </MultiBinding>
                     </RadioButton.IsChecked>
                 </RadioButton>
-                <TextBox Name="NumberBox" Width="60" Margin="0 0 10 0" Text="{Binding Path=LengthHelper, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18"  >
+                <TextBox Name="NumberBox" Width="60" Margin="0 0 10 0" Text="{Binding Path=LiveView.LengthHelper, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18"  >
 
                     <i:Interaction.Behaviors>
-                        <ob:FocusBehavior HasInitialFocus="True" IsFocused="{Binding IsWinnerEnabled, Mode=TwoWay}"/>
+                        <ob:FocusBehavior HasInitialFocus="True" IsFocused="{Binding Path=LiveView.IsWinnerEnabled, Mode=TwoWay}"/>
                         <ob:SelectAllTextOnFocusBehavior />
                     </i:Interaction.Behaviors>
                     <i:Interaction.Triggers>
@@ -237,14 +237,14 @@
                              cal:Message.Attach="[Event Checked] = [Action SetRallyLength(0)]" >
                     <RadioButton.IsChecked>
                         <MultiBinding Converter="{conv:RallyLengthToCheckedConverter}" Mode="OneWay">
-                            <Binding Path="LengthHelper"/>
+                            <Binding Path="LiveView.LengthHelper"/>
                             <Binding RelativeSource="{RelativeSource Self}" Path="Content"/>
                         </MultiBinding>
                     </RadioButton.IsChecked>
                 </RadioButton>
             </StackPanel>
 
-            <Button x:Name="Player1Button" Content="{Binding Path=Match.FirstPlayer.Name}" Grid.Row="2" >
+            <Button x:Name="Player1Button" Content="{Binding Path=LiveView.Match.FirstPlayer.Name}" Grid.Row="2" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="RallyWon">
@@ -264,7 +264,7 @@
                 </i:Interaction.Triggers>
             </Button>
             <Label Content="--- Winner --- " VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" FontSize="18"/>
-            <Button x:Name="Player2Button" Content="{Binding Path=Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2">
+            <Button x:Name="Player2Button" Content="{Binding Path=LiveView.Match.SecondPlayer.Name}" Grid.Row="2" Grid.Column="2">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="RallyWon">

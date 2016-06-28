@@ -19,23 +19,70 @@ namespace TT.Scouter.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
-        public string Player1 { get; set; }
-        public string Player2 { get; set; }
+        private IMatchManager MatchManager;
+
         public LiveViewModel LiveView { get; private set; }
 
+        private bool _player1TopPlayer2Bottom;
+        /// <summary>
+        /// Determines whether Player1 is FirstServer
+        /// </summary>
+        public bool Player1TopPlayer2Bottom
+        {
+            get { return _player1TopPlayer2Bottom; }
+            set
+            {
+                if (_player1TopPlayer2Bottom != value)
+                {
+                    _player1TopPlayer2Bottom = value;
+                    NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("Player1TopPlayer2Bottom");
+
+                }
+
+            }
+        }
+        private bool _player2TopPlayer1Bottom;
+        /// <summary>
+        /// Determines whether Player1 is FirstServer
+        /// </summary>
+        public bool Player2TopPlayer1Bottom
+        {
+            get { return _player2TopPlayer1Bottom; }
+            set
+            {
+                if (_player2TopPlayer1Bottom != value)
+                {
+                    _player2TopPlayer1Bottom = value;
+                    NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("Player2TopPlayer1Bottom");
+                }
+
+            }
+        }
 
         public ChoiceOfEndsViewModel(IEventAggregator eventAggregator, IMatchManager man, LiveViewModel live)
         {
             this.events = eventAggregator;
-            Manager = man;
+            MatchManager = man;
             LiveView = live;
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
-
+            if (MatchManager.Match.FirstPlayer.StartingTableEnd == StartingTableEnd.Top && MatchManager.Match.SecondPlayer.StartingTableEnd == StartingTableEnd.Bottom)
+            {
+                Player1TopPlayer2Bottom = true;
+                Player2TopPlayer1Bottom = false;
+            }
+            if (MatchManager.Match.FirstPlayer.StartingTableEnd == StartingTableEnd.Bottom && MatchManager.Match.SecondPlayer.StartingTableEnd == StartingTableEnd.Top)
+            {
+                Player1TopPlayer2Bottom = false;
+                Player2TopPlayer1Bottom = true;
+            }
+            else
+            {
+                Player1TopPlayer2Bottom = false;
+                Player2TopPlayer1Bottom = false;
+            }
 
         }
-
 
         #region Caliburn Hooks
 
@@ -53,11 +100,6 @@ namespace TT.Scouter.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            if (Manager.Match.FirstPlayer.Name != null)
-                Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-            if (Manager.Match.SecondPlayer.Name != null)
-                Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-
         }
 
 
@@ -71,9 +113,38 @@ namespace TT.Scouter.ViewModels
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
         }
+        #endregion
 
+        #region View Methods
+        public void SetChoiceOfEnds()
+        {
+            if (Player1TopPlayer2Bottom)
+            {
+                MatchManager.Match.FirstPlayer.StartingTableEnd = StartingTableEnd.Top;
+                MatchManager.Match.SecondPlayer.StartingTableEnd = StartingTableEnd.Bottom;
+                MatchManager.MatchModified = true;
+            }
+            else if (Player2TopPlayer1Bottom)
+            {
+                MatchManager.Match.FirstPlayer.StartingTableEnd = StartingTableEnd.Bottom;
+                MatchManager.Match.SecondPlayer.StartingTableEnd = StartingTableEnd.Top;
+                MatchManager.MatchModified = true;
+            }
+            else
+            {
+                MatchManager.Match.FirstPlayer.StartingTableEnd = StartingTableEnd.None;
+                MatchManager.Match.SecondPlayer.StartingTableEnd = StartingTableEnd.None;
+            }
 
+        }
 
+        public void Next()
+        {
+            LiveView.CurrentScreen = LiveView.ChoiceOfServiceReceive;
+            LiveView.ChangeTransitioningContent();
+        }
         #endregion
     }
+
+
 }
