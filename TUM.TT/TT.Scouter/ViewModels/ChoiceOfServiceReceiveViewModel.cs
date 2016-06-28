@@ -20,33 +20,69 @@ namespace TT.Scouter.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
-        public string Player1 { get; set; }
-        public string Player2 { get; set; }
-        public MatchPlayer Server { get; set; }
-        private Rally _firstRally;
-        public Rally FirstRally
+        private IMatchManager MatchManager;
+        public LiveViewModel LiveView { get; private set; }
+        private bool _firstServerPlayer1;
+        /// <summary>
+        /// Determines whether Player1 is FirstServer
+        /// </summary>
+        public bool FirstServerPlayer1
         {
-            get { return _firstRally; }
+            get { return _firstServerPlayer1; }
             set
             {
-                _firstRally = value;
-            
-            NotifyOfPropertyChange();
-            NotifyOfPropertyChange("LengthHelper");
+                if (_firstServerPlayer1 != value)
+                {
+                    _firstServerPlayer1 = value;
+                    NotifyOfPropertyChange();
+                }
+
+            }
         }
+
+        private bool _firstServerPlayer2;
+        /// <summary>
+        /// Determines whether Player1 is FirstServer
+        /// </summary>
+        public bool FirstServerPlayer2
+        {
+            get { return _firstServerPlayer2; }
+            set
+            {
+                if (_firstServerPlayer2 != value)
+                {
+                    _firstServerPlayer2 = value;
+                    NotifyOfPropertyChange();
+                }
+
+            }
         }
-        public LiveViewModel LiveView { get; private set; }
+
 
 
         public ChoiceOfServiceReceiveViewModel(IEventAggregator eventAggregator, IMatchManager man, LiveViewModel live)
         {
             this.events = eventAggregator;
-            Manager = man;
+            MatchManager = man;
             LiveView = live;
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
-            FirstRally = Manager.ActivePlaylist.Rallies.FirstOrDefault();
+
+            if (!LiveView.FirstServerSet) { 
+            FirstServerPlayer1 = false;
+            FirstServerPlayer2 = false;
+            }
+            else
+            {
+                if (LiveView.Match.FirstServer == MatchPlayer.First)
+                {
+                    FirstServerPlayer1 = true;
+                    FirstServerPlayer2 = false;
+                }
+                else
+                {
+                    FirstServerPlayer1 = false;
+                    FirstServerPlayer2 = true;
+                }
+            }
 
 
         }
@@ -68,12 +104,6 @@ namespace TT.Scouter.ViewModels
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-
-            if (Manager.Match.FirstPlayer.Name != null)
-                Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-            if (Manager.Match.SecondPlayer.Name != null)
-                Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-
         }
 
         /// <summary>
@@ -86,40 +116,49 @@ namespace TT.Scouter.ViewModels
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
         }
+        #endregion
 
         #region View Methods
 
 
-    
-        public void SetFirstServer(RadioButton buttonP1, RadioButton buttonP2)
+
+        public void SetFirstServer()
         {
-            bool p1 = (bool) buttonP1.IsChecked;
-            bool p2 = (bool) buttonP2.IsChecked;
-
-            if (p1 && !p2)
+            if (FirstServerPlayer1)
             {
-                this.Server = Manager.ConvertPlayer(Manager.Match.FirstPlayer);
-                FirstRally.Server = this.Server;
-            }
-            else if (!p1 && p2)
-            {
-                this.Server = Manager.ConvertPlayer(Manager.Match.SecondPlayer);
-                FirstRally.Server = this.Server;
-            }
-            else if (!p1 && !p2)
-            {
+                LiveView.Server = MatchManager.ConvertPlayer(MatchManager.Match.FirstPlayer);
+                LiveView.CurrentRally.Server = LiveView.Server;
+                NotifyOfPropertyChange("LiveView.Server");
+                NotifyOfPropertyChange("LiveView.FirstServerSet");
+                MatchManager.MatchModified = true;
 
             }
-
-
-            NotifyOfPropertyChange("Server");
-            NotifyOfPropertyChange("FirstServerSet");
-            Manager.MatchModified = true;
+            else if (FirstServerPlayer2)
+            {
+                LiveView.Server = MatchManager.ConvertPlayer(MatchManager.Match.SecondPlayer);
+                LiveView.CurrentRally.Server = LiveView.Server;
+                NotifyOfPropertyChange("LiveView.Server");
+                NotifyOfPropertyChange("LiveView.FirstServerSet");
+                MatchManager.MatchModified = true;
+            }
+            else
+            {
+               
+            }
+        }
+        public void Next()
+        {
+            LiveView.CurrentScreen = LiveView.LiveScouting;
+            LiveView.ChangeTransitioningContent();
         }
 
-      
+        public void Previous()
+        {
+            LiveView.CurrentScreen = LiveView.ChoiceOfEnds;
+            LiveView.ChangeTransitioningContent();
+        }
 
-        #endregion
+
 
         #endregion
     }
