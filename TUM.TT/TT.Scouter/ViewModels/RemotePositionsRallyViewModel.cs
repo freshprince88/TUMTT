@@ -7,12 +7,16 @@ using System.Windows.Shapes;
 using TT.Scouter.Util.Model;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace TT.Scouter.ViewModels
 {
     public class RemotePositionsRallyViewModel : Conductor<IScreen>.Collection.AllActive
     {
         private RemoteViewModel remoteViewModel;
+
+        private bool isEllipseDragged = false;
+        private int clickOffsetX, clickOffsetY;
 
         public string ToogleCalibrationButtonText { get; private set; }
 
@@ -116,7 +120,43 @@ namespace TT.Scouter.ViewModels
             e.Stroke = System.Windows.Media.Brushes.Black;
             e.StrokeThickness = 2;
             e.Visibility = visibility;
+            e.MouseDown += new System.Windows.Input.MouseButtonEventHandler(EllipseClicked);
+            e.MouseMove += new System.Windows.Input.MouseEventHandler(MouseMoved);
+            e.MouseUp += new System.Windows.Input.MouseButtonEventHandler(EllipseUnclicked);
             return e;
+        }
+
+        private void EllipseUnclicked(object sender, MouseButtonEventArgs e)
+        {
+            isEllipseDragged = false;
+        }
+
+        private void MouseMoved(object sender, MouseEventArgs e)
+        {
+            if (isEllipseDragged == true)
+            {
+                Ellipse el = (Ellipse)sender;
+               
+                Point p = e.GetPosition(el);
+                double px = el.Margin.Left;
+                double py = el.Margin.Top;
+
+                double x = px + p.X;
+                double y = py + p.Y;
+                double left = x - (el.Width / 2);
+                double top = y - (el.Height / 2);
+                el.Margin = new Thickness(left, top, 0, 0);
+            }
+        }
+
+        private void EllipseClicked(object sender, MouseButtonEventArgs e)
+        {
+            Ellipse ellipse = sender as Ellipse;
+            isEllipseDragged = true;
+
+            Point p = e.GetPosition(ellipse);
+            clickOffsetX = (int)p.X;
+            clickOffsetY = (int)p.Y;
         }
 
     }
