@@ -24,5 +24,10 @@ namespace TT.Scouter.Views
         {
             InitializeComponent();
         }
+
+        private void Grid_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
