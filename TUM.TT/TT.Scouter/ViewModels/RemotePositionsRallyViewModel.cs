@@ -16,7 +16,6 @@ namespace TT.Scouter.ViewModels
         private RemoteViewModel remoteViewModel;
 
         private bool isEllipseDragged = false;
-        private int clickOffsetX, clickOffsetY;
 
         public string ToogleCalibrationButtonText { get; private set; }
 
@@ -40,6 +39,7 @@ namespace TT.Scouter.ViewModels
         public Schlag CurrentStroke
         {
             get { return remoteViewModel.SchlagView.CurrentStroke; }
+            set { remoteViewModel.SchlagView.CurrentStroke = value;  }
         }
 
         public ObservableCollection<Schlag> Strokes
@@ -104,7 +104,7 @@ namespace TT.Scouter.ViewModels
         private Ellipse putEllipseToPosition(Point Position, Ellipse e)
         {
             double x = Position.X * ((double)305 / 152.5);
-            double y = Position.Y * ((double)548 / 274);
+            double y = Position.Y * ((double)548 / (double)274);
             double left = x - (e.Width / 2);
             double top = y - (e.Height / 2);
             e.Margin = new Thickness(left, top, 0, 0);
@@ -115,10 +115,11 @@ namespace TT.Scouter.ViewModels
         private Ellipse createEllipseAtPosition(Visibility visibility)
         {
             Ellipse e = new Ellipse();
-            e.Height = 10;
-            e.Width = 10;
+            e.Height = 30;
+            e.Width = 30;
             e.Stroke = System.Windows.Media.Brushes.Black;
-            e.StrokeThickness = 2;
+            e.Fill = System.Windows.Media.Brushes.Transparent;
+            e.StrokeThickness = 5;
             e.Visibility = visibility;
             e.MouseDown += new System.Windows.Input.MouseButtonEventHandler(EllipseClicked);
             e.MouseMove += new System.Windows.Input.MouseEventHandler(MouseMoved);
@@ -126,23 +127,33 @@ namespace TT.Scouter.ViewModels
             return e;
         }
 
-        private void EllipseUnclicked(object sender, MouseButtonEventArgs e)
+        public void EllipseUnclicked(object sender, MouseButtonEventArgs e)
         {
-            isEllipseDragged = false;
+            if (isEllipseDragged)
+            {
+                isEllipseDragged = false;
+                Ellipse draggedEllipse = DrawnStrokes[CurrentStroke.Nummer - 1];
+
+                Platzierung p = new Platzierung();
+                // reversed the Method putEllipseToPosition()
+                double x = draggedEllipse.Margin.Left + (draggedEllipse.Width / 2);
+                double y = draggedEllipse.Margin.Top + (draggedEllipse.Height / 2);
+                p.WX = x / ((double)305/152.5);
+                p.WY = y / ((double)548 / (double)274);
+                CurrentStroke.Platzierung = p;
+            }
         }
 
-        private void MouseMoved(object sender, MouseEventArgs e)
+        public void MouseMoved(object sender, MouseEventArgs e)
         {
             if (isEllipseDragged == true)
             {
-                Ellipse el = (Ellipse)sender;
-               
-                Point p = e.GetPosition(el);
-                double px = el.Margin.Left;
-                double py = el.Margin.Top;
+                Ellipse el = DrawnStrokes[CurrentStroke.Nummer - 1];
 
-                double x = px + p.X;
-                double y = py + p.Y;
+                Point p = e.GetPosition((IInputElement)sender);
+
+                double x = p.X;
+                double y = p.Y;
                 double left = x - (el.Width / 2);
                 double top = y - (el.Height / 2);
                 el.Margin = new Thickness(left, top, 0, 0);
@@ -154,9 +165,16 @@ namespace TT.Scouter.ViewModels
             Ellipse ellipse = sender as Ellipse;
             isEllipseDragged = true;
 
-            Point p = e.GetPosition(ellipse);
-            clickOffsetX = (int)p.X;
-            clickOffsetY = (int)p.Y;
+            // Point p = e.GetPosition(ellipse);
+            // here was some offset - setting - didn't work so i deleted it xD
+
+            for (int i = 0; i < DrawnStrokes.Count; i++)
+            {
+                if (DrawnStrokes[i].Equals(ellipse))
+                {
+                    CurrentStroke = Strokes[i];
+                }
+            }
         }
 
     }
