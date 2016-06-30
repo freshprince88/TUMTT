@@ -41,7 +41,7 @@
                           Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}">
                 </CheckBox>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1 1 1 1" Grid.Column="1">
+            <Border BorderBrush="Black" BorderThickness="0 1 1 1" Grid.Column="1">
                 <CheckBox VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDirection" IsChecked="True" Click="CheckDirection_Click"
                           Content="{Binding Path=table_direction_title, Source={StaticResource LocalizedStrings}}">
                 </CheckBox>
@@ -59,7 +59,8 @@
                 <Border Name="TableBorder" Grid.Row="0"  Grid.RowSpan="2" Margin="50,50,50,50" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99"/>
 
                 <Grid Name="InnerFieldGrid" Grid.RowSpan="2" Margin="30,30,30,30" Panel.ZIndex="-1"/>
-
+                <Grid Name="InnerFieldSpinGrid" Grid.RowSpan="2" Margin="30,30,30,15" Panel.ZIndex="-1"/>
+                
             </Grid>
         </Viewbox>
     </Grid>
