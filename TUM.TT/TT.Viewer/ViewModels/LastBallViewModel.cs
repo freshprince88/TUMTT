@@ -538,7 +538,9 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BasicFilterView.SelectedRallies.Where(r => r.Strokes[r.Length-1].HasWinner(this.Winner) &&
+                var results = BasicFilterView.SelectedRallies
+                    .Where(r => 
+                    r.Strokes[r.Length-1].HasWinner(this.Winner) &&
                     r.LastWinnerStroke().Number>1 &&
                     r.LastWinnerStroke().HasHand(this.Hand) &&
                     r.LastWinnerStroke().HasStepAround(this.StepAround) && 

@@ -321,7 +321,7 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 var results = BasicFilterView.SelectedRallies
-                    .Where(r =>
+                    .Where(r => r.Strokes.Count > 0 &&
                     r.Strokes[0].HasHand(this.Hand) &&
                     r.Strokes[0].HasQuality(this.Quality) &&
                     r.Strokes[0].HasSpins(this.SelectedSpins) &&

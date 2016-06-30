@@ -17,7 +17,8 @@ namespace TT.Viewer.ViewModels
 
         private IEventAggregator events;
         public HashSet<Positions.Table> SelectedPositions { get; set; }
-        public HashSet<Positions.Server> SelectedServerPositions { get; set; }       
+        public HashSet<Positions.Server> SelectedServerPositions { get; set; }
+        public Dictionary<string, int> PositionCounts { get; set; }
 
         #region Enums       
 
@@ -42,6 +43,16 @@ namespace TT.Viewer.ViewModels
         public TableServiceViewModel(IEventAggregator eventAggregator)
         {
             this.events = eventAggregator;
+            PositionCounts = new Dictionary<string, int>();
+            PositionCounts.Add("BotLeft", 0);
+            PositionCounts.Add("BotMid", 0);
+            PositionCounts.Add("BotRight", 0);
+            PositionCounts.Add("MidLeft", 0);
+            PositionCounts.Add("MidMid", 0);
+            PositionCounts.Add("MidRight", 0);
+            PositionCounts.Add("TopLeft", 0);
+            PositionCounts.Add("TopMid", 0);
+            PositionCounts.Add("TopRight", 0);
             SelectedServerPositions = new HashSet<Positions.Server>();
             SelectedPositions = new HashSet<Positions.Table>();
         }
@@ -142,18 +153,16 @@ namespace TT.Viewer.ViewModels
                     botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 0 && r.Strokes[0].IsBotRight()).Count();
                
             }
-            Dictionary<string, int> positionKeys = new Dictionary<string, int>();
-            positionKeys.Add("BotLeft", botLeft);
-            positionKeys.Add("BotMid", botMid);
-            positionKeys.Add("BotRight", botRight);
-            positionKeys.Add("MidLeft", midLeft);
-            positionKeys.Add("MidMid", midMid);
-            positionKeys.Add("MidRight", midRight);
-            positionKeys.Add("TopLeft", topLeft);
-            positionKeys.Add("TopMid", topMid);
-            positionKeys.Add("TopRight", topRight);
-
-            events.PublishOnUIThread(new ShowTableNumbersEvent(positionKeys));
+            PositionCounts["BotLeft"] = botLeft;
+            PositionCounts["BotMid"] = botMid;
+            PositionCounts["BotRight"] = botRight;
+            PositionCounts["MidLeft"] = midLeft;
+            PositionCounts["MidMid"] = midMid;
+            PositionCounts["MidRight"] = midRight;
+            PositionCounts["TopLeft"] = topLeft;
+            PositionCounts["TopMid"] = topMid;
+            PositionCounts["TopRight"] = topRight;
+            NotifyOfPropertyChange("PositionCounts");
         }
 
         #endregion

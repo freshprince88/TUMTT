@@ -142,6 +142,7 @@
     <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="Converters\StepAroundToBoolConverter.cs" />
     <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
+    <Compile Include="Converters\TablePositionCountConverter.cs" />
     <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
     <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingRowConverter.cs" />
