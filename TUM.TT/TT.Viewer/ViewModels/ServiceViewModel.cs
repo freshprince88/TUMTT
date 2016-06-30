@@ -282,11 +282,11 @@ namespace TT.Viewer.ViewModels
             this.events.Unsubscribe(this);
         }
 
-        //protected override void OnViewReady(object view)
-        //{
-        //    base.OnViewReady(view);
-        //    UpdateSelection(Manager.ActivePlaylist);
-        //}
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateSelection(Manager.ActivePlaylist);
+        }
 
         #endregion
 

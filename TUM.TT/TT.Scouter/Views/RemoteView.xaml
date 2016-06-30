@@ -187,7 +187,7 @@
                 </Viewbox>
 
 
-                <TextBox Text="{Binding Path=CurrentRally.Anfang, Converter={conv:MSToTimeConverter}}" Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Path=CurrentRally.Start, Converter={conv:MSToTimeConverter}}" Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center"/>
                 <Grid Grid.Row="0" Grid.Column="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -227,7 +227,7 @@
                     </Button>
                 </Grid>
 
-                <TextBox Text="{Binding Path=CurrentRally.Ende, Converter={conv:MSToTimeConverter}, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Path=CurrentRally.End, Converter={conv:MSToTimeConverter}, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"/>
                 <Grid Grid.Row="1" Grid.Column="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -278,7 +278,7 @@
                     <Viewbox StretchDirection="DownOnly" Grid.ColumnSpan="2">
                         <TextBlock Text="Comment" HorizontalAlignment="Center" FontSize="16" Foreground="White" />
                     </Viewbox>
-                    <TextBox Text="{Binding Path=CurrentRally.Kommentar}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
+                    <TextBox Text="{Binding Path=CurrentRally.Comment}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
                 </Grid>
             </Grid>
 
