@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/TT.Lib;component/Styles/SpinToggleButtons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/TT.Lib;component/Styles/SpinButtonsSmall.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/TT.Lib;component/Styles/AccentToggleButtons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/TT.Lib;component/Styles/SpinToggleButtons.xaml" />

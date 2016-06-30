@@ -269,6 +269,9 @@
     <Compile Include="Views\ShowCompetitionView.xaml.cs">
       <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SpinSmallView.xaml.cs">
+      <DependentUpon>SpinSmallView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
     </Compile>
@@ -420,6 +423,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SpinSmallView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\SpinControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -508,6 +515,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />
+    <Resource Include="Resources\spin_top_right.png" />
     <Resource Include="TUM_Logo_weiss_rgb_p.png" />
     <Resource Include="olive-letter-v-512.ico" />
     <Resource Include="Resources\Entypo-license.txt" />

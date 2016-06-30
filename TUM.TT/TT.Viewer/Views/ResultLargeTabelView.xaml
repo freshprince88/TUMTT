@@ -17,15 +17,6 @@
              d:DataContext="{d:DesignInstance Type=vm:ResultLargeTableViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
-        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
-            <Setter Property="ContextMenu">
-                <Setter.Value>
-                    <ContextMenu>
-                        <MenuItem Header="Delete from current Playlist" cal:Message.Attach="[Event Click] = [Action DeleteRally($dataContext)]"/>
-                    </ContextMenu>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <conv:MathConverter x:Key="MathConverter" />
         <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
@@ -67,8 +58,7 @@
                 <Line X1="25" Y1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Converter={StaticResource MathConverter}, ConverterParameter= x-25}" Y2="0"  Grid.Row="0" Stroke="Black" StrokeThickness="3" VerticalAlignment="Bottom" Panel.ZIndex="1"/>
                 <Border Name="TableBorder" Grid.Row="0"  Grid.RowSpan="2" Margin="50,50,50,50" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99"/>
 
-                <Grid Name="InnerFieldGrid" Grid.RowSpan="2" Margin="30,30,30,30" Panel.ZIndex="-1">                    
-                </Grid>
+                <Grid Name="InnerFieldGrid" Grid.RowSpan="2" Margin="30,30,30,30" Panel.ZIndex="-1"/>
 
             </Grid>
         </Viewbox>

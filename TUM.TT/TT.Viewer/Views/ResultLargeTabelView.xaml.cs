@@ -117,10 +117,27 @@ namespace TT.Viewer.Views
             {
                 default:
                 case 1:                    
+                    AddServiceStrokesPoint(message.Strokes);
                     if (CheckDirection.IsChecked.Value)
                         AddServiceStrokesDirection(message.Strokes);
-                    AddServiceStrokesPoint(message.Strokes);
+                    if (CheckSpin.IsChecked.Value)
+                        AddServiceStrokesSpin(message.Strokes);
                     break;
+            }
+        }
+
+        private void AddServiceStrokesSpin(List<Stroke> strokes)
+        {
+            foreach (var stroke in strokes)
+            {
+                if (PlacementValuesValid(stroke.Placement))
+                {
+                    SpinSmallView spinView = new SpinSmallView(stroke.Spin);
+                    spinView.Width = spinView.Height = 15;
+                    spinView.Margin = new Thickness(stroke.Playerposition.Equals(double.NaN) ? 0 : stroke.Playerposition, InnerFieldGrid.ActualHeight - 15, 0, 0);
+                    
+                    InnerFieldGrid.Children.Add(spinView);
+                }
             }
         }
 
