@@ -116,7 +116,7 @@ namespace TT.Lib.Views
         private void MediaOpenedHandler(object sender, RoutedEventArgs routedEventArgs)
         {
             if(NaturalDuration.HasTimeSpan)
-             MediaLength = NaturalDuration.TimeSpan;
+                MediaLength = NaturalDuration.TimeSpan;
         }
 
         private void MediaEndedHandler(object sender, RoutedEventArgs routedEventArgs)
@@ -139,15 +139,14 @@ namespace TT.Lib.Views
         {
             if (!IsPlaying)
                 return;
-                        
-            if (EndPosition != null && EndPosition <= Position && EndPosition != TimeSpan.Zero)
-            {
-                Pause();
-                Execute.OnUIThread(() => Events.PublishOnUIThread(new PlayModeEvent(PlayMode)));
-            }             
 
             positionChangedByTimer = true;
-            MediaPosition = Position;            
+            MediaPosition = Position;
+
+            if (EndPosition != null && EndPosition <= Position && EndPosition != TimeSpan.Zero)
+            {
+                Execute.OnUIThread(() => Events.PublishOnUIThread(new PlayModeEvent(PlayMode)));
+            }                             
         }
 
         public void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

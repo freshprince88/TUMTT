@@ -180,7 +180,7 @@
     <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
     <Compile Include="Events\VideoControlEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
-    <Compile Include="Events\VideoPlayEvent.cs" />
+    <Compile Include="Events\ActiveRallyChangedEvent.cs" />
     <Compile Include="Events\WebBrowserEvent.cs" />
     <Compile Include="Interactivity\FocusBehavior.cs" />
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />

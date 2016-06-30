@@ -7,16 +7,16 @@ using TT.Models;
 
 namespace TT.Lib.Events
 {
-    public class VideoPlayEvent
+    public class ActiveRallyChangedEvent
     {
         public Rally Current { get; set; }
 
-        public VideoPlayEvent()
+        public ActiveRallyChangedEvent()
         {
             this.Current = null;
         }
 
-        public VideoPlayEvent(Rally r)
+        public ActiveRallyChangedEvent(Rally r)
         {
             this.Current = r;
         }
