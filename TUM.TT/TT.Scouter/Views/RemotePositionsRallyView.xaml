@@ -49,15 +49,20 @@
                 <Viewbox Stretch="Uniform">
                     <Border x:Name="Table" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}" >
                         <Grid Name="InnerFieldGrid" ShowGridLines="True" Height="548" Width="305">
-                            <ItemsControl Grid.RowSpan="2" x:Name="ItemControl" ItemsSource="{Binding Path=DrawnStrokes}">
+                            <ItemsControl Grid.RowSpan="2" x:Name="ItemControl" cal:Message.Attach="[Event MouseMove] = [Action MouseMoved($source, $eventArgs)];
+                                          [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]" ItemsSource="{Binding Path=DrawnStrokes}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <Canvas Background="Transparent"  />
+                                        <Canvas Background="Transparent" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Ellipse Width="{Binding Width}" Height="{Binding Height}" Stroke="{Binding Stroke}" StrokeThickness="{Binding StrokeThickness}" Visibility="{Binding Visibility}"></Ellipse>
+                                        <Grid Width="{Binding g.Width}" Height="{Binding g.Height}" Background="Transparent" IsHitTestVisible="True" Margin="{Binding g.Margin}"
+                                              cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]; [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]">
+                                            <Ellipse Stroke="{Binding e.Stroke}" StrokeThickness="{Binding e.StrokeThickness}" Visibility="{Binding e.Visibility}"></Ellipse>
+                                            <TextBlock HorizontalAlignment="Center" Text="{Binding text}" TextAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

@@ -24,5 +24,6 @@ namespace TT.Scouter.Views
         {
             InitializeComponent();
         }
+
     }
 }
