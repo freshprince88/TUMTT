@@ -172,20 +172,20 @@ namespace TT.Scouter.ViewModels
 
                     if (_rally.Length > 0)
                     {
-                        CurrentStroke = _rally.Strokes.FirstOrDefault();
+                        SchlagView.CurrentStroke = _rally.Strokes.FirstOrDefault();
                         if (ServiceChecked)
                         {
-                            CurrentStroke = _rally.Strokes[0];
+                            SchlagView.CurrentStroke = _rally.Strokes[0];
                         }
                         if (ReceiveChecked)
                         {
                             if (_rally.Length > 1)
                             {
-                                CurrentStroke = _rally.Strokes[1];
+                                SchlagView.CurrentStroke = _rally.Strokes[1];
                             }
                             else
                             {
-                                CurrentStroke = _rally.Strokes.Last();
+                                SchlagView.CurrentStroke = _rally.Strokes.Last();
                             }
                         }
 
@@ -193,27 +193,39 @@ namespace TT.Scouter.ViewModels
                         {
                             if (_rally.Length > 2)
                             {
-                                CurrentStroke = _rally.Strokes[2];
+                                SchlagView.CurrentStroke = _rally.Strokes[2];
                             }
                             else
                             {
-                                CurrentStroke = _rally.Strokes.Last();
+                                SchlagView.CurrentStroke = _rally.Strokes.Last();
                             }
                         }
                         if (FourthChecked)
                         {
                             if (_rally.Length > 3)
                             {
-                                CurrentStroke = _rally.Strokes[3];
+                                SchlagView.CurrentStroke = _rally.Strokes[3];
                             }
                             else
                             {
-                                CurrentStroke = _rally.Strokes.Last();
+                                SchlagView.CurrentStroke = _rally.Strokes.Last();
                             }
                         }
                         if (LastChecked)
                         {
-                            CurrentStroke = _rally.Strokes.Last();
+                            if (_rally.Winner == _rally.Strokes[_rally.Strokes.Count - 1].Player)
+                            {
+                               SchlagView.CurrentStroke = _rally.Strokes[_rally.Strokes.Count - 1];
+                            }
+                            else
+                            {   if (_rally.Length > 1)
+                                {
+                                    SchlagView.CurrentStroke = _rally.Strokes[_rally.Strokes.Count - 2];
+                                }
+                                else
+                                    SchlagView.CurrentStroke = _rally.Strokes[0];
+                            }
+                            
                         }
 
 

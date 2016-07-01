@@ -81,9 +81,10 @@
                 </Rectangle.OpacityMask>
             </Rectangle>
             <Button.Visibility>
-                <MultiBinding Converter="{conv:NumAndLengthToNextVisibilityConverter}" Mode="OneWay">
-                    <Binding Path="CurrentStroke.Number" />
-                    <Binding Path="Strokes.Count" />
+                <MultiBinding Converter="{conv:NumAndLengthToLastVisibilityConverter}" Mode="OneWay">
+                    <Binding Path="CurrentRally" />
+                    <Binding Path="Strokes" />
+                    <Binding Path="CurrentStroke" />
                 </MultiBinding>
             </Button.Visibility>
         </Button>
