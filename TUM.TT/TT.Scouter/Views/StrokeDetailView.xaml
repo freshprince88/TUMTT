@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:local="clr-namespace:TT.Scouter.Views"
              mc:Ignorable="d" 
@@ -16,164 +17,405 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="{x:Type ListBoxItem}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <ToggleButton 
-              IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource TemplatedParent}}" 
-              Name="toggleButton"/>
-                            <ControlTemplate.Triggers>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+
         </ResourceDictionary>
 
     </UserControl.Resources>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Label Content="{Binding Path=Title}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-        <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition/>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Line Grid.Row="0" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 0 0 5"/>
-            <Label Grid.Row="1" Content="Player:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-            <Button Grid.Row="1" Grid.Column="1" Margin="5 0 5 0"  Content="{Binding Path=PlayerName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" IsEnabled="False" />
-            <Line Grid.Row="2" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-        <Grid x:Name="TecGrid" Grid.Row="2" Margin="0 5 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="FilterForehandButton"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
-            </ToggleButton>
-            <ToggleButton x:Name="FilterBackhandButton" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
-            </ToggleButton>
-            <ToggleButton Grid.ColumnSpan="2" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Step Around" Grid.Row="1"  MinWidth="90" HorizontalAlignment="Center"/>
-            <Line Grid.Row="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-        <Grid Grid.Row="3">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-        </Grid>
-
-        <Grid Grid.Row="4">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label Content="Quality" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="12"/>
-            <RadioButton Content="good" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="normal" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" />
-            <RadioButton Content="bad" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
+            <Label Content="{Binding Path=Title}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
+            <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
 
-            <Label Content="Aggressiveness" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="12"/>
-            <Grid  Grid.Row="3" Grid.ColumnSpan="3">
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Line Grid.Row="0" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 0 0 5"/>
+                <Label Grid.Row="1" Content="Player:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                <Button Grid.Row="1" Grid.Column="1" Margin="5 0 5 0"  Content="{Binding Path=PlayerName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" IsEnabled="False" />
+                <Line Grid.Row="2"  Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            </Grid>
+
+            <Grid x:Name="SideGrid" Grid.Row="2" Margin="0 5 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ToggleButton x:Name="FilterForehandButton" Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                    <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SideGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="FilterBackhandButton" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                    <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SideGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton Grid.Column="2" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Step Around" MinWidth="90" HorizontalAlignment="Center"/>
+                <Line Grid.Row="1" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            </Grid>
+
+            <Grid x:Name="TecGrid" Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <ToggleButton x:Name="Push" Content="Push"  Grid.Row="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <CheckBox x:Name="PushAggressive" Content="aggressive" Grid.Row="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Push, Path=IsChecked}"  Visibility="{Binding ElementName=Push, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"></CheckBox>
+                <ToggleButton x:Name="Flip" Content="Flip"   Grid.Row="0" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <CheckBox x:Name="Banana" Content="Banana" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Flip, Path=IsChecked}"  Visibility="{Binding ElementName=Flip, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"></CheckBox>
+                <ToggleButton x:Name="Topspin" Content="Topspin" Grid.Row="2" Grid.Column="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                    <Grid x:Name="TopspinGrid" Grid.Row="3" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox x:Name="TopspinSpin" Content="Spin" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Topspin, Path=IsChecked}" Visibility="{Binding ElementName=Topspin, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                        <CheckBox x:Name="TopspinTempo" Content="Tempo"  Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Topspin, Path=IsChecked}" Visibility="{Binding ElementName=Topspin, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                    </Grid>
+                    <ToggleButton x:Name="Block" Content="Block"  Grid.Row="2" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                <Grid x:Name="BlockGrid" Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="BlockChop" Content="Chop" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Block, Path=IsChecked}" Visibility="{Binding ElementName=Block, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                    <CheckBox x:Name="BlockTempo" Content="Tempo"  Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Block, Path=IsChecked}" Visibility="{Binding ElementName=Block, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                </Grid>
+                <ToggleButton x:Name="Chop" Content="Chop"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <Grid Grid.Row="5" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton x:Name="Lob" Content="Lob" Grid.Column="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                    <ToggleButton x:Name="Smash" Content="Smash"  Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                    <ToggleButton x:Name="Counter" Content="Counter" Grid.Column="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                    <ToggleButton x:Name="Special" Content="Special" Grid.Column="3" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                </Grid>
+                <Line Grid.Row="6" Grid.ColumnSpan="2" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Content="Placement" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                    <ContentControl x:Name="TableControl" Grid.Row="1"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"  />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="AggressivenessGrid" Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="Aggressiveness" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                        <ToggleButton x:Name="aggressive" Content="aggressive" Grid.Row="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=AggressivenessGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                        <ToggleButton x:Name="passive" Content="passive" Grid.Row="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=AggressivenessGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                        <ToggleButton x:Name="Control" Content="Control" Grid.Row="3"  Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=AggressivenessGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                    </Grid>
+                    <Line Grid.Row="1" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+                    <Grid x:Name="QualityGrid" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="Quality" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                        <ToggleButton x:Name="goodQuality" Content="good"  Grid.Row="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=QualityGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                        <ToggleButton x:Name="normalQuality" Content="normal" Grid.Row="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=QualityGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                        <ToggleButton x:Name="badQuality" Content="bad" Grid.Row="3" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=QualityGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                    </Grid>
+                    <Line Grid.Row="3" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+                    <Grid x:Name="SpecialsGrid" Grid.Row="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="Specials" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                        <ComboBox Grid.Row="1" Margin="5 5 5 5"/>
+                    </Grid>
+                </Grid>
+                <Line Grid.Row="1" Grid.ColumnSpan="2" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            </Grid>
+            <Grid x:Name="CourseGrid" Grid.Row="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <RadioButton Content="aggressive" GroupName="aktiv" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" DockPanel.Dock="Left"/>
-                <RadioButton Content="passive" GroupName="aktiv" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" DockPanel.Dock="Right" Grid.Column="1"/>
-                <RadioButton Content="Control" GroupName="aktiv" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" DockPanel.Dock="Right" Grid.Column="2"/>
-
+                <ToggleButton x:Name="NetOut" Content="Net/Out" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=CourseGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="continue" Content="continue" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=CourseGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="Winner" Content="Winner" Grid.Column="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=CourseGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <Line Grid.Row="1" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
             </Grid>
-
-            <Line Grid.Row="4" Grid.ColumnSpan="3" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         </Grid>
-
-        <Grid Grid.Row="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label Content="Placement" HorizontalAlignment="Center"/>
-            <ContentControl x:Name="TableControl" Grid.Row="1"/>
-            <Line Grid.Row="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-        <Grid Grid.Row="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="7*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label Content="Specials: " HorizontalAlignment="Center"/>
-            <ComboBox Grid.Column="1" Margin="5 5 5 5"/>
-            <Line Grid.Row="1"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-        <Grid Grid.Row="7">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <RadioButton Content="Net/Out" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="continue" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="Point" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <Line Grid.Row="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-    </Grid>
+    </ScrollViewer>
 </UserControl>

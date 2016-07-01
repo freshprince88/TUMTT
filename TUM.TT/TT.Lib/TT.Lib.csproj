@@ -117,6 +117,7 @@
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BoolNotConverter.cs" />
     <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\CrunchToBoolConverter.cs" />
     <Compile Include="Converters\CurrentRallyServerToBallIsVisibleConverter.cs" />

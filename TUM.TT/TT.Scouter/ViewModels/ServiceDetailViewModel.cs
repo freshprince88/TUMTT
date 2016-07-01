@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Managers;
 using TT.Models;
@@ -26,6 +28,17 @@ namespace TT.Scouter.ViewModels
             base.OnActivate();
             
         }
+
+        #region View Methods
+        public void MutualExclusiveToggleButtonClick(Grid parent, ToggleButton tb)
+        {
+            foreach (ToggleButton btn in parent.FindChildren<ToggleButton>())
+            {
+                if (btn.Name != tb.Name)
+                    btn.IsChecked = false;
+            }
+        }
+
         public void SelectService(ToggleButton source)
         {
             if (Stroke == null)
@@ -98,5 +111,6 @@ namespace TT.Scouter.ViewModels
                     return "";
             }
         }
+        #endregion
     }
 }
