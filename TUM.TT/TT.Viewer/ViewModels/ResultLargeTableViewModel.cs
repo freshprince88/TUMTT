@@ -3,16 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using TT.Models.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
-using System.Windows.Shapes;
 
 namespace TT.Viewer.ViewModels
 {
@@ -30,7 +26,18 @@ namespace TT.Viewer.ViewModels
         public ObservableCollection<ResultListItem> Items { get; set; }
         public List<Rally> Rallies { get; set; }
 
-        public int RallyLength { get; private set; }
+        private int rallyLength;
+        public int RallyLength {
+            get
+            {
+                return rallyLength;
+            }
+            set
+            {
+                rallyLength = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         public ResultLargeTableViewModel()
         {
@@ -46,6 +53,9 @@ namespace TT.Viewer.ViewModels
             RallyLength = 1;
             Items = new ObservableCollection<ResultListItem>();
             Rallies = new List<Rally>();
+
+            // Subscribe ourself to the event bus
+            Events.Subscribe(this);
         }
 
         public byte GetOrderInResultView()
@@ -71,19 +81,27 @@ namespace TT.Viewer.ViewModels
         
         public void StrokeSelected(object dataContext)
         {
-            Console.Out.WriteLine("Selected Rally: {0}", ((Models.Stroke) dataContext).Rally.Number);
-            Manager.ActiveRally = (dataContext as Models.Stroke).Rally;
+            Console.Out.WriteLine("Selected Rally: {0}", ((Stroke) dataContext).Rally.Number);
+            Manager.ActiveRally = (dataContext as Stroke).Rally;
         }
 
         private void UpdateStrokeDisplay(IEnumerable<Rally> rallies)
         {
-            var strokes = new List<Models.Stroke>();
+            var strokes = new List<Models.Stroke>();            
             foreach (var r in rallies)
             {
-                Models.Stroke stroke = r.Strokes.SingleOrDefault(s =>
+                Stroke stroke;
+                if (RallyLength == 5)
                 {
-                    return s.Number == RallyLength;
-                });
+                    stroke = r.Strokes.LastOrDefault();
+                }
+                else
+                {
+                    stroke = r.Strokes.SingleOrDefault(s =>
+                    {
+                        return s.Number == RallyLength;
+                    });
+                }
                 if (stroke != null)
                     strokes.Add(stroke);
             }
@@ -96,7 +114,8 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(ResultsChangedEvent message)
         {
-            UpdateStrokeDisplay(message.Rallies);
+            if (IsActive)
+                UpdateStrokeDisplay(message.Rallies);
         }
 
         public void Handle(RallyLengthChangedEvent message)
@@ -119,20 +138,19 @@ namespace TT.Viewer.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
-            // Subscribe ourself to the event bus
-            Events.Subscribe(this);
         }
 
         protected override void OnDeactivate(bool close)
         {
-            Events.Unsubscribe(this);
+            if (close)
+                Events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
 
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);
-            UpdateStrokeDisplay(Manager.SelectedRallies);
+            UpdateStrokeDisplay(Manager. SelectedRallies);
         }
 
         #endregion

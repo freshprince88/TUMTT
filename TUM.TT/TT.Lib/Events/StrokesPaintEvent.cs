@@ -9,9 +9,6 @@ namespace TT.Lib.Events
 {
     public class StrokesPaintEvent
     {
-        private int strokeNumber;
-        private List<Stroke> strokes;
-        
         public StrokesPaintEvent(List<Stroke> strokes, int strokeNumber)
         {
             Strokes = strokes;

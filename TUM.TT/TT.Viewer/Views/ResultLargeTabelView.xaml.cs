@@ -16,36 +16,42 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für ResultLargeTableView.xaml
     /// </summary>
     public partial class ResultLargeTableView : UserControl,
-        IHandle<ResultListControlEvent>,
-        IHandle<FullscreenEvent>,
         IHandle<StrokesPaintEvent>
     {
-        private double halfFieldWidth;
-        private double halfFieldHeight;
-        private double tableMarginFieldLeft;
-        private double tableMarginFieldBottom;
+        #region Constants
 
         private const double STROKE_THICKNESS = 1.75;
         private const double STROKE_THICKNESS_HOVER = 2.5;
-        private const double SPIN_STROKE_THICKNESS = 1;
-        private const double SPIN_STROKE_THICKNESS_HOVER = 2;
-        private const double STROKE_THICKNESS_SMASH = 2;
-        private const double STROKE_THICKNESS_SMASH_HOVER = 3;
+        private const double SPIN_ARROW_STROKE_THICKNESS = 1;
+        private const double SPIN_ARROW_STROKE_THICKNESS_HOVER = 2;
+        private const double STROKE_THICKNESS_SMASH = 3.5;
+        private const double STROKE_THICKNESS_SMASH_HOVER = 5;
 
         private const string TAG_SPIN_ARROW = "spinarrow";
         private const string TAG_ARROW_TIP = "arrowtip";
+        private const string TAG_DIRECTION = "direction";
 
         private const string STROKE_ATTR_SIDE_FOREHAND = "Forehand";
         private const string STROKE_ATTR_SIDE_BACKHAND = "Backhand";
+
         private const string STROKE_ATTR_HAS_SPIN = "has_spin";
+
         private const string STROKE_ATTR_TECHNIQUE_PUSH = "Push";
         private const string STROKE_ATTR_TECHNIQUE_FLIP = "Flip";
         private const string STROKE_ATTR_TECHNIQUE_OPTION_BANANA = "Banana";
-        private const string STROKE_ATTR_SMASH = "Smash";
-        private const string STROKE_ATTR_COUNTER = "Counter";
-        private const string STROKE_ATTR_CHOP = "Chop";
+        private const string STROKE_ATTR_TECHNIQUE_TOPSPIN = "Topspin";
+        private const string STROKE_ATTR_TECHNIQUE_BLOCK = "Block";
+        private const string STROKE_ATTR_TECHNIQUE_SMASH = "Smash";
+        private const string STROKE_ATTR_TECHNIQUE_COUNTER = "Counter";
+        private const string STROKE_ATTR_TECHNIQUE_CHOP = "Chop";
+        private const string STROKE_ATTR_TECHNIQUE_LOB = "Lob";
+        private const string STROKE_ATTR_TECHNIQUE_MISCELLANEOUS = "Miscellaneous";
+
         private const string STROKE_ATTR_POC_OVER = "over";
+        private const string STROKE_ATTR_POC_HALFDISTANCE = "half-distance";
         private const string STROKE_ATTR_POC_BEHIND = "behind";
+
+        #endregion
 
         private Dictionary<Stroke, List<Shape>> strokeShapes;
         private int strokeNumber;
@@ -61,34 +67,14 @@ namespace TT.Viewer.Views
             strokeShapes = new Dictionary<Stroke, List<Shape>>();
         }
 
-
-        public void Handle(ResultListControlEvent msg)
-        {
-            
-        }
-        public void Handle(FullscreenEvent message)
-        {
-            switch (message.Fullscreen)
-            {
-                case true:
-                case false:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void Items_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
+        #region Event handlers
 
         private void CheckSpin_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as CheckBox).IsChecked.Value)
                 AddServiceStrokesSpinArrows(new List<Stroke>(strokeShapes.Keys));
             else
-                RemoveServiceStrokesSpinArrows();
+                RemoveShapesByTag(TAG_SPIN_ARROW);
         }
 
         private void CheckDirection_Click(object sender, RoutedEventArgs e)
@@ -96,14 +82,15 @@ namespace TT.Viewer.Views
             if ((sender as CheckBox).IsChecked.Value)
                 AddStrokesDirectionLines(new List<Stroke>(strokeShapes.Keys), strokeNumber == 1);
             else
-                RemoveStrokesDirectionLines();
+                RemoveShapesByTag(TAG_DIRECTION);
         }
 
         private void Stroke_MouseEnter(Object sender, MouseEventArgs e)
         {
-            Debug.WriteLine("mouse enter on stroke of rally {0}", ((sender as Shape).DataContext as Stroke).Rally.Number);
             Shape shape = sender as Shape;
             Stroke stroke = shape.DataContext as Stroke;
+
+            //Debug.WriteLine("mouse enter on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
 
             foreach (var strokeShape in strokeShapes)
             {
@@ -111,13 +98,13 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        if (TAG_SPIN_ARROW.Equals(s.Tag))
+                        if ((string) s.Tag == TAG_SPIN_ARROW)
                         {
-                            s.StrokeThickness = SPIN_STROKE_THICKNESS_HOVER;
+                            s.StrokeThickness = SPIN_ARROW_STROKE_THICKNESS_HOVER;
                         }
                         else
                         {
-                            if ("Smash".Equals(stroke.Stroketechnique))
+                            if (stroke.Stroketechnique != null && stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
                             {
                                 s.StrokeThickness = STROKE_THICKNESS_SMASH_HOVER;
                             }
@@ -135,9 +122,10 @@ namespace TT.Viewer.Views
         
         private void Stroke_MouseLeave(Object sender, MouseEventArgs e)
         {
-            Debug.WriteLine("mouse leave on stroke of rally {0}", ((sender as Shape).DataContext as Stroke).Rally.Number);
             Shape shape = sender as Shape;
             Stroke stroke = shape.DataContext as Stroke;
+
+            //Debug.WriteLine("mouse leave on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
 
             foreach (var strokeShape in strokeShapes)
             {
@@ -145,13 +133,13 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        if (TAG_SPIN_ARROW.Equals(s.Tag))
+                        if ((string) s.Tag == TAG_SPIN_ARROW)
                         {
-                            s.StrokeThickness = SPIN_STROKE_THICKNESS;
+                            s.StrokeThickness = SPIN_ARROW_STROKE_THICKNESS;
                         }
                         else
                         {
-                            if ("Smash".Equals(stroke.Stroketechnique))
+                            if (stroke.Stroketechnique != null && stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
                             {
                                 s.StrokeThickness = STROKE_THICKNESS_SMASH;
                             }
@@ -169,8 +157,11 @@ namespace TT.Viewer.Views
 
         public void Handle(StrokesPaintEvent message)
         {
-            InnerFieldGrid.Children.Clear();
-            InnerFieldSpinGrid.Children.Clear();
+            foreach (UIElement p in TableGrid.Children)
+            {
+                if (p is Grid)
+                    (p as Grid).Children.Clear();
+            }
             strokeShapes.Clear();
 
             if (message.Strokes == null)
@@ -179,14 +170,9 @@ namespace TT.Viewer.Views
             strokeNumber = message.StrokeNumber;
             message.Strokes.ForEach(s => { strokeShapes[s] = new List<Shape>(); });
 
-            halfFieldWidth = InnerFieldGrid.ActualWidth / 2;
-            halfFieldHeight = InnerFieldGrid.ActualHeight / 2;
-            tableMarginFieldLeft = TableBorder.Margin.Left - InnerFieldGrid.Margin.Left;
-            tableMarginFieldBottom = TableBorder.Margin.Bottom - InnerFieldGrid.Margin.Bottom;
-
             switch (strokeNumber)
             {
-                case 1:                    
+                case 1:
                     AddStrokesArrowtips(message.Strokes, true);
                     if (CheckDirection.IsChecked.Value)
                         AddStrokesDirectionLines(message.Strokes, true);
@@ -194,12 +180,16 @@ namespace TT.Viewer.Views
                         AddServiceStrokesSpinArrows(message.Strokes);
                     break;
                 default:
-                    AddStrokesArrowtips(message.Strokes, false);
                     if (CheckDirection.IsChecked.Value)
                         AddStrokesDirectionLines(message.Strokes, false);
+                    AddStrokesArrowtips(message.Strokes, false);
                     break;
             }
         }
+
+        #endregion
+
+        #region Shape addition & removal
 
         private void AddStrokesDirectionLines(List<Stroke> strokes, bool isServiceStroke)
         {
@@ -208,19 +198,17 @@ namespace TT.Viewer.Views
             {
                 if (PlacementValuesValid(stroke.Placement))
                 {
-                    Stroke precedingStroke = null;
-                    Line strokeLine = new Line();
-
                     double X1, X2, Y1, Y2;
 
                     if (isServiceStroke)
                     {
                         X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
-                        Y1 = InnerFieldGrid.ActualHeight; // start lines at the bottom
+                        Y1 = InnerFieldBehindGrid.ActualHeight; // service strokes start at the bottom
                     }
                     else
                     {
-                        precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
+                        var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
+
                         X1 = GetAdjustedX(stroke, precedingStroke.Placement.WX);
                         Y1 = GetAdjustedY(stroke, precedingStroke.Placement.WY);
                     }
@@ -228,81 +216,70 @@ namespace TT.Viewer.Views
                     X2 = GetAdjustedX(stroke, stroke.Placement.WX);
                     Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
 
-                    strokeLine.X1 = X1; strokeLine.Y1 = Y1; strokeLine.X2 = X2; strokeLine.Y2 = Y2;
+                    Shape shape;
+                    if (!isServiceStroke)
+                        if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_FLIP || stroke.Stroketechnique.Option == STROKE_ATTR_TECHNIQUE_OPTION_BANANA)
+                            shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
+                        else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_TOPSPIN)
+                            shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
+                        else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_CHOP)
+                            shape = GetChopShape(stroke, X1, Y1, X2, Y2);
+                        else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_LOB)
+                            shape = GetLobShape(stroke, X1, Y1, X2, Y2);
+                        else
+                            shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+                    else
+                        shape = GetLineShape(stroke, X1, Y1, X2, Y2);
 
-                    if (!isServiceStroke && STROKE_ATTR_POC_BEHIND.Equals(stroke.PointOfContact))
-                    {
-                        Line interceptBehindLine = new Line();
-                        interceptBehindLine.X1 = X2 - (X2 - X1) * ((InnerFieldGrid.ActualHeight - 10 - Y2) / (Y1 - Y2));
-                        interceptBehindLine.Y1 = InnerFieldGrid.ActualHeight - 10;
+                    shape.StrokeThickness = STROKE_THICKNESS;
+                    shape.Stroke = Brushes.Black;
 
-                        interceptBehindLine.X2 = X1;
-                        interceptBehindLine.Y2 = Y1;
+                    shape.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
+                    shape.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
+                    shape.DataContext = stroke;
+                    shape.Tag = TAG_DIRECTION;
+                    Message.SetAttach(shape, "StrokeSelected($DataContext)");
 
-                        interceptBehindLine.Stroke = Brushes.Black;
-                        interceptBehindLine.Fill = Brushes.Black;
-                        interceptBehindLine.StrokeThickness = STROKE_THICKNESS;
+                    if (!strokeShapes[stroke].Contains(shape))
+                        strokeShapes[stroke].Add(shape);
 
-                        DoubleCollection dashes = new DoubleCollection();
-                        dashes.Add(0.5);
-                        interceptBehindLine.StrokeDashArray = dashes;
-
-                        interceptBehindLine.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
-                        interceptBehindLine.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
-                        interceptBehindLine.DataContext = stroke;
-                        Message.SetAttach(interceptBehindLine, "StrokeSelected($DataContext)");
-
-                        if (!strokeShapes[stroke].Contains(interceptBehindLine))
-                            strokeShapes[stroke].Add(interceptBehindLine);
-
-                        InnerFieldGrid.Children.Add(interceptBehindLine);
-                    }
-
-                    Debug.WriteLine("stroke rally={4} x1={0} y1={1} x2={2} y2={3}", strokeLine.X1, strokeLine.Y1, strokeLine.X2, strokeLine.Y2, stroke.Rally.Number);
-
-                    strokeLine.StrokeThickness = STROKE_THICKNESS;
-                    strokeLine.Stroke = Brushes.Black;
-                    strokeLine.Fill = Brushes.Black;
+                    ApplyStyle(stroke, shape);
 
                     if (isServiceStroke)
-                    {
-                        if (STROKE_ATTR_SIDE_BACKHAND.Equals(stroke.Side))
-                            ApplyStyle(strokeLine, STROKE_ATTR_SIDE_BACKHAND);
-
-                        if (stroke.Spin != null && !"1".Equals(stroke.Spin.No))
-                        {
-                            ApplyStyle(strokeLine, STROKE_ATTR_HAS_SPIN);
-                        }
-                    }
+                        InnerFieldBehindGrid.Children.Add(shape);
                     else
                     {
-                        if (STROKE_ATTR_TECHNIQUE_PUSH.Equals(stroke.Stroketechnique.Type) || STROKE_ATTR_CHOP.Equals(stroke.Stroketechnique.Type))
+                        if (stroke.PointOfContact == STROKE_ATTR_POC_BEHIND)
+                            InnerFieldBehindGrid.Children.Add(shape);
+                        else if (stroke.PointOfContact == STROKE_ATTR_POC_HALFDISTANCE)
+                            InnerFieldHalfDistanceGrid.Children.Add(shape);
+                        else
+                            InnerFieldGrid.Children.Add(shape);
+                    }
+
+                    shape = strokeShapes[stroke].Find(s => s is Path && (string)s.Tag == TAG_DIRECTION);
+                    if (shape != null)
+                    {
+                        Geometry geom = ((Path)shape).Data;
+                        if (geom is PathGeometry)
                         {
-                            ApplyStyle(strokeLine, STROKE_ATTR_TECHNIQUE_PUSH);
-                        }
-                        else if (STROKE_ATTR_TECHNIQUE_FLIP.Equals(stroke.Stroketechnique.Type) || STROKE_ATTR_TECHNIQUE_OPTION_BANANA.Equals(stroke.Stroketechnique.Option))
-                        {
-                            ApplyStyle(strokeLine, STROKE_ATTR_TECHNIQUE_FLIP);
-                        }
-                        else if (STROKE_ATTR_SMASH.Equals(stroke.Stroketechnique.Type))
-                        {
-                            ApplyStyle(strokeLine, STROKE_ATTR_SMASH);
+                            PathSegment seg = ((PathGeometry)geom).Figures[0].Segments[0];
+                            if (seg is QuadraticBezierSegment)
+                            {
+                                X2 = ((QuadraticBezierSegment)seg).Point1.X;
+                                Y2 = ((QuadraticBezierSegment)seg).Point1.Y;
+                            }
                         }
                     }
 
-                    strokeLine.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
-                    strokeLine.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
-                    strokeLine.DataContext = stroke;
-                    Message.SetAttach(strokeLine, "StrokeSelected($DataContext)");
-
-                    if (!strokeShapes[stroke].Contains(strokeLine))
-                        strokeShapes[stroke].Add(strokeLine);
-
-                    InnerFieldGrid.Children.Add(strokeLine);
+                    if (!isServiceStroke && stroke.PointOfContact == STROKE_ATTR_POC_BEHIND)
+                        AddBehindLine(stroke, X1, Y1, X2, Y2);
+                    else if (!isServiceStroke && stroke.PointOfContact == STROKE_ATTR_POC_HALFDISTANCE)
+                        AddHalfDistanceLine(stroke, X1, Y1, X2, Y2);
                 }
                 else
                 {
-                    Debug.WriteLine("invalid Placement of stroke {0}: x={1} y={2}", stroke, stroke.Placement.WX, stroke.Placement.WY);
+                    Debug.WriteLine("invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
                 }
             }
         }
@@ -314,17 +291,35 @@ namespace TT.Viewer.Views
                 if (PlacementValuesValid(stroke.Placement))
                 {
                     double X1, X2, Y1, Y2;
+                    X1 = Y1 = int.MinValue;
 
                     if (isServiceStroke)
                     {
                         X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
-                        Y1 = InnerFieldGrid.ActualHeight; // start lines at the bottom
+                        Y1 = InnerFieldBehindGrid.ActualHeight; // service strokes start at the bottom
                     }
                     else
                     {
-                        var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];                        
-                        X1 = GetAdjustedX(stroke, precedingStroke.Placement.WX);
-                        Y1 = GetAdjustedY(stroke, precedingStroke.Placement.WY);
+                        Shape shape = strokeShapes[stroke].Find(s => s is Path && (string)s.Tag == TAG_DIRECTION);
+                        if (shape != null)
+                        {
+                            Geometry geom = ((Path)shape).Data;
+                            if (geom is PathGeometry)
+                            {
+                                PathSegment seg = ((PathGeometry)geom).Figures[0].Segments[0];
+                                if (seg is QuadraticBezierSegment)
+                                {
+                                    X1 = ((QuadraticBezierSegment)seg).Point1.X;
+                                    Y1 = ((QuadraticBezierSegment)seg).Point1.Y;
+                                }
+                            }
+                        }
+                        if (X1 == int.MinValue || Y1 == int.MinValue)
+                        {
+                            var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
+                            X1 = GetAdjustedX(stroke, precedingStroke.Placement.WX);
+                            Y1 = GetAdjustedY(stroke, precedingStroke.Placement.WY);
+                        }
                     }
 
                     X2 = GetAdjustedX(stroke, stroke.Placement.WX);
@@ -334,12 +329,12 @@ namespace TT.Viewer.Views
 
                     PathFigure pathFigure = new PathFigure();
                     pathFigure.IsClosed = true;
-                    pathFigure.StartPoint = new Point(X2 - 3, Y2);
+                    pathFigure.StartPoint = new Point(X2 - 3, Y2 - 3);
 
-                    LineSegment ltt = new LineSegment(new Point(X2, Y2 + 3), true);
+                    LineSegment ltt = new LineSegment(new Point(X2, Y2), true);
                     pathFigure.Segments.Add(ltt);
 
-                    LineSegment ttr = new LineSegment(new Point(X2 + 3, Y2), true);
+                    LineSegment ttr = new LineSegment(new Point(X2 + 3, Y2 - 3), true);
                     pathFigure.Segments.Add(ttr);
 
                     double theta = Math.Atan2((Y2 - Y1), (X2 - X1)) * 180 / Math.PI;
@@ -355,31 +350,9 @@ namespace TT.Viewer.Views
                     strokeArrowTip.Data = arrowTipGeometry;
                     strokeArrowTip.Tag = TAG_ARROW_TIP;
                     strokeArrowTip.Stroke = Brushes.Black;
-                    strokeArrowTip.Fill = Brushes.Black;
                     strokeArrowTip.StrokeThickness = STROKE_THICKNESS;
 
-                    if (isServiceStroke)
-                    {
-                        if (stroke.Spin != null && !"1".Equals(stroke.Spin.No))
-                        {
-                            ApplyStyle(strokeArrowTip, STROKE_ATTR_HAS_SPIN);
-                        }
-                    }
-                    else
-                    {
-                        if (STROKE_ATTR_TECHNIQUE_PUSH.Equals(stroke.Stroketechnique.Type) || STROKE_ATTR_CHOP.Equals(stroke.Stroketechnique.Type))
-                        {
-                            ApplyStyle(strokeArrowTip, STROKE_ATTR_TECHNIQUE_PUSH);                        
-                        }
-                        else if (STROKE_ATTR_TECHNIQUE_FLIP.Equals(stroke.Stroketechnique.Type) || STROKE_ATTR_TECHNIQUE_OPTION_BANANA.Equals(stroke.Stroketechnique.Option))
-                        {
-                            ApplyStyle(strokeArrowTip, STROKE_ATTR_TECHNIQUE_FLIP);
-                        }
-                        else if (STROKE_ATTR_SMASH.Equals(stroke.Stroketechnique.Type))
-                        {
-                            ApplyStyle(strokeArrowTip, STROKE_ATTR_SMASH);
-                        }
-                    }
+                    ApplyStyle(stroke, strokeArrowTip);
 
                     strokeArrowTip.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
                     strokeArrowTip.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
@@ -393,7 +366,7 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("invalid Placement of stroke {0}: x={1} y={2}", stroke, stroke.Placement.WX, stroke.Placement.WY);
+                    Debug.WriteLine("invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
                 }
             }
         }
@@ -405,7 +378,7 @@ namespace TT.Viewer.Views
             {
                 if (PlacementValuesValid(stroke.Placement))
                 {
-                    if (stroke.Spin == null || "1".Equals(stroke.Spin.No))
+                    if (stroke.Spin == null || stroke.Spin.No == "1")
                         continue;
 
                     double X1, Y1;
@@ -443,7 +416,7 @@ namespace TT.Viewer.Views
                     Path spinArrow = new Path();
                     spinArrow.Data = arrowTipGeometry;
                     spinArrow.Stroke = Brushes.Blue;
-                    spinArrow.StrokeThickness = SPIN_STROKE_THICKNESS;
+                    spinArrow.StrokeThickness = SPIN_ARROW_STROKE_THICKNESS;
 
                     spinArrow.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
                     spinArrow.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
@@ -458,68 +431,295 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("invalid Placement of stroke {0}: x={1} y={2}", stroke, stroke.Placement.WX, stroke.Placement.WY);
+                    Debug.WriteLine("invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
                 }
             }
         }
-        
-        private double GetAdjustedX(Stroke stroke, double oldX)
+
+        private void AddBehindLine(Stroke stroke, double x1, double y1, double x2, double y2)
         {
-            if (stroke.Placement.WY < 137)
-            {
-                // stroke in the upper half of table
-                return oldX + tableMarginFieldLeft;                
-            }
-            else
-            {
-                // stroke in the lower half of table => flip x
-                return halfFieldWidth - ((oldX + tableMarginFieldLeft) - halfFieldWidth);
-            }
+            Line behindLine = new Line();
+            behindLine.X1 = x2 - (x2 - x1) * ((InnerFieldBehindGrid.ActualHeight - y2) / (y1 - y2));
+            behindLine.Y1 = InnerFieldBehindGrid.ActualHeight;
+
+            behindLine.X2 = x1;
+            behindLine.Y2 = y1;
+
+            behindLine.Stroke = Brushes.Black;
+            behindLine.Fill = Brushes.Black;
+            behindLine.StrokeThickness = STROKE_THICKNESS;
+
+            DoubleCollection dashes = new DoubleCollection();
+            dashes.Add(0.5);
+            behindLine.StrokeDashArray = dashes;
+
+            ApplyStyle(stroke, behindLine);
+
+            behindLine.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
+            behindLine.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
+            behindLine.DataContext = stroke;
+            behindLine.Tag = TAG_DIRECTION;
+            Message.SetAttach(behindLine, "StrokeSelected($DataContext)");
+
+            if (!strokeShapes[stroke].Contains(behindLine))
+                strokeShapes[stroke].Add(behindLine);
+
+            InnerFieldBehindGrid.Children.Add(behindLine);
         }
 
-        private double GetAdjustedY(Stroke stroke, double oldY)
+        private void AddHalfDistanceLine(Stroke stroke, double x1, double y1, double x2, double y2)
         {
-            if (stroke.Placement.WY < 137)
-            {
-                // stroke in the upper half of table
-                return oldY + tableMarginFieldBottom;
-            }
-            else
-            {
-                // stroke in the lower half of table => flip y
-                return InnerFieldGrid.ActualHeight - tableMarginFieldBottom - oldY;
-            }
+            Line halfDistanceLine = new Line();
+            halfDistanceLine.X1 = x2 - (x2 - x1) * ((InnerFieldHalfDistanceGrid.ActualHeight - y2) / (y1 - y2));
+            halfDistanceLine.Y1 = InnerFieldHalfDistanceGrid.ActualHeight;
+
+            halfDistanceLine.X2 = x1;
+            halfDistanceLine.Y2 = y1;
+
+            halfDistanceLine.Stroke = Brushes.Black;
+            halfDistanceLine.Fill = Brushes.Black;
+            halfDistanceLine.StrokeThickness = STROKE_THICKNESS;
+
+            DoubleCollection dashes = new DoubleCollection();
+            dashes.Add(1);
+            halfDistanceLine.StrokeDashArray = dashes;
+
+            ApplyStyle(stroke, halfDistanceLine);
+
+            halfDistanceLine.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
+            halfDistanceLine.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
+            halfDistanceLine.DataContext = stroke;
+            halfDistanceLine.Tag = TAG_DIRECTION;
+            Message.SetAttach(halfDistanceLine, "StrokeSelected($DataContext)");
+
+            if (!strokeShapes[stroke].Contains(halfDistanceLine))
+                strokeShapes[stroke].Add(halfDistanceLine);
+
+            InnerFieldHalfDistanceGrid.Children.Add(halfDistanceLine);
         }
 
-        private void RemoveStrokesDirectionLines()
+        private void RemoveShapesByTag(string tag)
         {
             foreach (var s in strokeShapes.Values)
             {
                 for (int i = 0; i < s.Count; i++)
                 {
-                    if (s[i] is Line)
+                    if ((string)s[i].Tag == tag)
                     {
-                        InnerFieldGrid.Children.Remove(s[i]);
-                        s.RemoveAt(i);
-                        --i;
-                    }
-                }                
-            }
-        }
-
-        private void RemoveServiceStrokesSpinArrows()
-        {
-            foreach (var s in strokeShapes.Values)
-            {
-                for (int i = 0; i < s.Count; i++)
-                {
-                    if (s[i] is Path && TAG_SPIN_ARROW.Equals((s[i] as Path).Tag))
-                    {
-                        InnerFieldSpinGrid.Children.Remove(s[i]);
+                        (s[i].Parent as Grid).Children.Remove(s[i]);
                         s.RemoveAt(i);
                         --i;
                     }
                 }
+            }
+        }
+
+        #endregion
+
+        #region Shape creation
+
+        private Shape GetLobShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        {
+            double m, cpx, cpy, lineTwoThirdsX, lineTwoThirdsY;
+
+            lineTwoThirdsY = Y1 - (2d / 3d) * (Y1 - Y2);
+            if (X1 <= X2)
+            {
+                m = (X2 - X1) / (Y1 - Y2);
+                lineTwoThirdsX = X1 + (2d / 3d) * (X2 - X1);
+                cpx = lineTwoThirdsX - 0.7 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = lineTwoThirdsY - m * (lineTwoThirdsX - cpx);
+            }
+            else
+            {
+                m = (X1 - X2) / (Y1 - Y2);
+                lineTwoThirdsX = X1 - (2d / 3d) * (X1 - X2);
+                cpx = lineTwoThirdsX + 0.7 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = lineTwoThirdsY - m * (cpx - lineTwoThirdsX);
+            }
+
+            //Debug.WriteLine("chop {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
+
+            PathGeometry chopGeometry = new PathGeometry();
+
+            PathFigure pathFigure = new PathFigure();
+
+            Point startPoint = new Point(X1, Y1);
+            Point endPoint = new Point(X2, Y2);
+            Point controlPoint = new Point(cpx, cpy);
+
+            pathFigure.StartPoint = startPoint;
+
+            QuadraticBezierSegment segment = new QuadraticBezierSegment(controlPoint, endPoint, true);
+            pathFigure.Segments.Add(segment);
+
+            chopGeometry.Figures.Add(pathFigure);
+
+            Path chopPath = new Path();
+            chopPath.Data = chopGeometry;
+            return chopPath;
+        }
+
+        private Shape GetChopShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        {
+            double m, cpx, cpy, lineNineteenTwentiethsX, lineNineteenTwentiethsY;
+
+            lineNineteenTwentiethsY = Y1 - (19d / 20d) * (Y1 - Y2);
+            if (X1 <= X2)
+            {
+                m = (X2 - X1) / (Y1 - Y2);
+                lineNineteenTwentiethsX = X1 + (19d / 20d) * (X2 - X1);
+                cpx = lineNineteenTwentiethsX - 0.2 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = lineNineteenTwentiethsY - m * (lineNineteenTwentiethsX - cpx);
+            }
+            else
+            {
+                m = (X1 - X2) / (Y1 - Y2);
+                lineNineteenTwentiethsX = X1 - (19d / 20d) * (X1 - X2);
+                cpx = lineNineteenTwentiethsX + 0.2 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = lineNineteenTwentiethsY - m * (cpx - lineNineteenTwentiethsX);
+            }
+
+            //Debug.WriteLine("chop {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
+
+            PathGeometry chopGeometry = new PathGeometry();
+
+            PathFigure pathFigure = new PathFigure();
+
+            Point startPoint = new Point(X1, Y1);
+            Point endPoint = new Point(X2, Y2);
+            Point controlPoint = new Point(cpx, cpy);
+
+            pathFigure.StartPoint = startPoint;
+
+            QuadraticBezierSegment segment = new QuadraticBezierSegment(controlPoint, endPoint, true);
+            pathFigure.Segments.Add(segment);
+
+            chopGeometry.Figures.Add(pathFigure);
+
+            Path chopPath = new Path();
+            chopPath.Data = chopGeometry;
+            return chopPath;
+        }
+
+        private Shape GetTopSpinShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        {
+            double m, cpx, cpy, lineFourFifthsX, lineFourFifthsY;
+
+            lineFourFifthsY = Y1 - (4d / 5d) * (Y1 - Y2);
+            if (X1 <= X2)
+            {
+                m = (X2 - X1) / (Y1 - Y2);
+                lineFourFifthsX = X1 + (4d / 5d) * (X2 - X1);
+                cpx = lineFourFifthsX - 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = lineFourFifthsY - m * (lineFourFifthsX - cpx);
+            }
+            else
+            {
+                m = (X1 - X2) / (Y1 - Y2);
+                lineFourFifthsX = X1 - (4d / 5d) * (X1 - X2);
+                cpx = lineFourFifthsX + 0.25 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = lineFourFifthsY - m * (cpx - lineFourFifthsX);
+            }
+
+            //Debug.WriteLine("topspin {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
+
+            PathGeometry topSpinGeometry = new PathGeometry();
+
+            PathFigure pathFigure = new PathFigure();
+
+            Point startPoint = new Point(X1, Y1);
+            Point endPoint = new Point(X2, Y2);
+            Point controlPoint = new Point(cpx, cpy);
+
+            pathFigure.StartPoint = startPoint;
+
+            QuadraticBezierSegment segment = new QuadraticBezierSegment(controlPoint, endPoint, true);
+            pathFigure.Segments.Add(segment);
+
+            topSpinGeometry.Figures.Add(pathFigure);
+
+            Path topSpinPath = new Path();
+            topSpinPath.Data = topSpinGeometry;
+            return topSpinPath;
+        }
+
+        private Shape GetBananaShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        {
+            double m, cpx, cpy, lineMiddleX;
+
+            if (X1 <= X2)
+            {
+                m = (X2 - X1) / (Y1 - Y2);
+                lineMiddleX = (X2 + X1) / 2;
+                cpx = lineMiddleX - 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = (Y1 + Y2) / 2 - m * (lineMiddleX - cpx);
+            }
+            else
+            {
+                m = (X1 - X2) / (Y1 - Y2);
+                lineMiddleX = (X1 + X2) / 2;
+                cpx = lineMiddleX + 0.25 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
+                cpy = (Y1 + Y2) / 2 - m * (cpx - lineMiddleX);
+            }
+
+            //Debug.WriteLine("banana/flip {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
+
+            PathGeometry bananaGeometry = new PathGeometry();
+
+            PathFigure pathFigure = new PathFigure();
+
+            Point startPoint = new Point(X1, Y1);
+            Point endPoint = new Point(X2, Y2);
+            Point controlPoint = new Point(cpx, cpy);
+
+            pathFigure.StartPoint = startPoint;
+
+            QuadraticBezierSegment segment = new QuadraticBezierSegment(controlPoint, endPoint, true);
+            pathFigure.Segments.Add(segment);
+
+            bananaGeometry.Figures.Add(pathFigure);
+
+            Path bananaPath = new Path();
+            bananaPath.Data = bananaGeometry;            
+            return bananaPath;
+        }
+
+        private Shape GetLineShape(Stroke stroke, double x1, double y1, double x2, double y2)
+        {
+            Line line = new Line();
+            line.X1 = x1; line.Y1 = y1; line.X2 = x2; line.Y2 = y2;
+
+            //Debug.WriteLine("stroke {5} of rally {4}: x1={0} y1={1} -> x2={2} y2={3}", x1, y1, x2, y2, stroke.Rally.Number, stroke.Number);
+
+            return line;
+        }
+
+        #endregion
+
+        #region Style
+
+        private void ApplyStyle(Stroke stroke, Shape shape)
+        {
+            if (stroke.Number == 1)
+            {
+                if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+                    ApplyStyle(shape, STROKE_ATTR_SIDE_BACKHAND);
+                if (stroke.Spin != null && stroke.Spin.No != "1")
+                    ApplyStyle(shape, STROKE_ATTR_HAS_SPIN);
+            }
+            else
+            {
+                if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_PUSH || stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_CHOP)
+                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_PUSH);
+                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_FLIP || stroke.Stroketechnique.Option == STROKE_ATTR_TECHNIQUE_OPTION_BANANA)
+                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_FLIP);
+                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
+                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_SMASH);
+                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_BLOCK || stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_COUNTER)
+                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_BLOCK);
+                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_MISCELLANEOUS)
+                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_MISCELLANEOUS);
             }
         }
 
@@ -533,16 +733,14 @@ namespace TT.Viewer.Views
                     shape.StrokeDashArray = dashes;
                     break;
                 case STROKE_ATTR_TECHNIQUE_PUSH:
-                case STROKE_ATTR_CHOP:
+                case STROKE_ATTR_TECHNIQUE_CHOP:
                     shape.Stroke = Brushes.Red;
-                    shape.Fill = Brushes.Red;
                     break;
                 case STROKE_ATTR_TECHNIQUE_FLIP:
                 case STROKE_ATTR_TECHNIQUE_OPTION_BANANA:
                     shape.Stroke = Brushes.Yellow;
-                    shape.Fill = Brushes.Yellow;
                     break;
-                case STROKE_ATTR_SMASH:
+                case STROKE_ATTR_TECHNIQUE_SMASH:
                     shape.Stroke = Brushes.Blue;
                     shape.Fill = Brushes.Blue;
                     shape.StrokeThickness = STROKE_THICKNESS_SMASH;
@@ -551,7 +749,84 @@ namespace TT.Viewer.Views
                     shape.Stroke = Brushes.SaddleBrown;
                     shape.Fill = Brushes.SaddleBrown;
                     break;
+                case STROKE_ATTR_TECHNIQUE_BLOCK:
+                case STROKE_ATTR_TECHNIQUE_COUNTER:
+                    shape.Stroke = Brushes.Blue;
+                    shape.Fill = Brushes.Blue;
+                    break;
+                case STROKE_ATTR_TECHNIQUE_MISCELLANEOUS:
+                    shape.Stroke = Brushes.Green;
+                    break;
             }
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private double GetAdjustedX(Stroke stroke, double oldX)
+        {
+            Grid grid = GetGridForStroke(stroke);
+            if (stroke.Placement.WY < 137)
+            {
+                // stroke in the upper half of table
+                return oldX + (TableBorder.Margin.Left - grid.Margin.Left);                
+            }
+            else
+            {
+                // stroke in the lower half of table => flip x
+                return grid.ActualWidth - oldX - (TableBorder.Margin.Left - grid.Margin.Left);
+            }
+        }
+
+        private double GetAdjustedY(Stroke stroke, double oldY)
+        {
+            Grid grid = GetGridForStroke(stroke);
+            if (stroke.Placement.WY < 137)
+            {
+                // stroke in the upper half of table
+                return oldY + (TableBorder.Margin.Top - grid.Margin.Top);
+            }
+            else
+            {
+                // stroke in the lower half of table => flip y
+                return grid.ActualHeight - oldY - (TableBorder.Margin.Bottom - grid.Margin.Bottom);
+            }
+        }
+
+        private Grid GetGridForStroke(Stroke stroke)
+        {
+            if (stroke.Number == 1)
+                return InnerFieldBehindGrid;
+            else if (stroke.PointOfContact == STROKE_ATTR_POC_OVER)
+                return InnerFieldGrid;
+            else if (stroke.PointOfContact == STROKE_ATTR_POC_BEHIND)
+                return InnerFieldBehindGrid;
+            else if (stroke.PointOfContact == STROKE_ATTR_POC_HALFDISTANCE)
+                return InnerFieldHalfDistanceGrid;
+            return null;
+        }
+
+        private double GetRotationAngleForSpin(Spin spin)
+        {
+            if (spin.SL == "1" && spin.TS == "1")
+                return -45;
+            else if (spin.SL == "1" && spin.US == "1")
+                return -135;
+            else if (spin.SL == "1")
+                return -90;
+            else if (spin.SR == "1" && spin.TS == "1")
+                return 45;
+            else if (spin.SR == "1" && spin.US == "1")
+                return 135;
+            else if (spin.SR == "1")
+                return 90;
+            else if (spin.TS == "1")
+                return 0;
+            else if (spin.US == "1")
+                return 180;
+            else
+                return 0;
         }
 
         private bool PlacementValuesValid(Placement placement)
@@ -559,26 +834,7 @@ namespace TT.Viewer.Views
             return placement.WX != double.NaN && placement.WX > 0 && placement.WY != double.NaN && placement.WY > 0;
         }
 
-        private double GetRotationAngleForSpin(Spin spin)
-        {
-            if ("1".Equals(spin.SL) && "1".Equals(spin.TS))
-                return -45;
-            else if ("1".Equals(spin.SL) && "1".Equals(spin.US))
-                return -135;
-            else if ("1".Equals(spin.SL))
-                return -90;
-            else if ("1".Equals(spin.SR) && "1".Equals(spin.TS))
-                return 45;
-            else if ("1".Equals(spin.SR) && "1".Equals(spin.US))
-                return 135;
-            else if ("1".Equals(spin.SR))
-                return 90;
-            else if ("1".Equals(spin.TS))
-                return 0;
-            else if ("1".Equals(spin.US))
-                return 180;
-            else
-                return 0;
-        }
+        #endregion
+
     }
 }

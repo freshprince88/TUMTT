@@ -3,13 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ctrl="clr-namespace:Itenso.Windows.Controls.ListViewLayout;assembly=Itenso.Windows.Controls.ListViewLayout"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:cal="http://www.caliburnproject.org"
-             xmlns:util="clr-namespace:TT.Lib.Util;assembly=TT.Lib"
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
-             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.ResultLargeTableView"
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:vm="clr-namespace:TT.Viewer.ViewModels"
              xmlns:prop="clr-namespace:TT.Viewer.Properties"
              mc:Ignorable="d" 
@@ -18,6 +14,8 @@
 
     <UserControl.Resources>
         <conv:MathConverter x:Key="MathConverter" />
+        <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
+        <conv:RallyLengthToColSpanConverter x:Key="RallyLengthToColSpanConverter" />
         <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
 
@@ -36,14 +34,14 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Border BorderBrush="Black" BorderThickness="1 1 1 1" Grid.Column="0">
-                <CheckBox VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckSpin" IsChecked="True" Click="CheckSpin_Click"
-                          Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}">
-                </CheckBox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="0 1 1 1" Grid.Column="1">
+            <Border BorderBrush="Black" BorderThickness="1 1 1 1" Grid.Column="0" Grid.ColumnSpan="{Binding RallyLength, Converter={StaticResource RallyLengthToColSpanConverter}}">
                 <CheckBox VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDirection" IsChecked="True" Click="CheckDirection_Click"
                           Content="{Binding Path=table_direction_title, Source={StaticResource LocalizedStrings}}">
+                </CheckBox>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="0 1 1 1" Grid.Column="1" Visibility="{Binding RallyLength, Converter={StaticResource RallyLengthToVisibilityConverter}}">
+                <CheckBox VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckSpin" IsChecked="True" Click="CheckSpin_Click"
+                          Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}">
                 </CheckBox>
             </Border>
         </Grid>
@@ -55,11 +53,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Line X1="25" Y1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Converter={StaticResource MathConverter}, ConverterParameter= x-25}" Y2="0"  Grid.Row="0" Stroke="Black" StrokeThickness="3" VerticalAlignment="Bottom" Panel.ZIndex="1"/>
+                <Line X1="25" Y1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Converter={StaticResource MathConverter}, ConverterParameter= x-25}" Y2="0"  Grid.Row="0" Stroke="Black" StrokeThickness="3" VerticalAlignment="Bottom" Panel.ZIndex="-98"/>
                 <Border Name="TableBorder" Grid.Row="0"  Grid.RowSpan="2" Margin="50,50,50,50" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99"/>
 
-                <Grid Name="InnerFieldGrid" Grid.RowSpan="2" Margin="30,30,30,30" Panel.ZIndex="-1"/>
-                <Grid Name="InnerFieldSpinGrid" Grid.RowSpan="2" Margin="30,30,30,15" Panel.ZIndex="-1"/>
+                <Grid Name="InnerFieldGrid" Grid.RowSpan="2" Margin="30,40,30,50"/>
+                <Grid Name="InnerFieldBehindGrid" Grid.RowSpan="2" Margin="30,40,30,30"/>
+                <Grid Name="InnerFieldSpinGrid" Grid.RowSpan="2" Margin="30,40,30,15"/>
+                <Grid Name="InnerFieldHalfDistanceGrid" Grid.RowSpan="2" Margin="30,40,30,0"/>
                 
             </Grid>
         </Viewbox>
