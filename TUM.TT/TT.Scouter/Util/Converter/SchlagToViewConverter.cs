@@ -16,10 +16,11 @@ namespace TT.Scouter.Util.Converter
         {
             Stroke stroke = (Stroke)values[0];
             IMatchManager Manager = (IMatchManager)values[1];
+            Rally currentRally = (Rally)values[2];
             if (stroke.Number > 1)
-                return new ServiceDetailViewModel(stroke, Manager);
+                return new ServiceDetailViewModel(stroke, Manager, currentRally);
             else
-                return new StrokeDetailViewModel(stroke,Manager);
+                return new StrokeDetailViewModel(stroke,Manager, currentRally);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

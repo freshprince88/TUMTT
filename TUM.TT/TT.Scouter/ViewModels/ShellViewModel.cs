@@ -9,12 +9,13 @@ using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Scouter.ViewModels;
 using TT.Lib.Events;
+using System;
 
 namespace TT.Scouter.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
         IShell,
-        IHandle<MatchOpenedEvent>
+        IHandle<MatchOpenedEvent>, IHandle<RalliesStrokesAddedEvent>
     {
         /// <summary>
         /// Gets the event bus of this shell.
@@ -153,6 +154,21 @@ namespace TT.Scouter.ViewModels
             }
 
         }
+        public void Handle(RalliesStrokesAddedEvent message)
+        {
+            int countRallies = MatchManager.ActivePlaylist.Rallies.Count;
+            for (int i = 0; i < countRallies; i++)
+            {
+                MatchManager.ActivePlaylist.Rallies[i].PropertyChanged += SetMatchModified;
+                int countStrokes = MatchManager.ActivePlaylist.Rallies[i].Strokes.Count();
+                for (int j = 0; j < countStrokes; j++)
+                {
+                    MatchManager.ActivePlaylist.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
+                }
+            }
+        }
+
+
         #endregion
 
         #region View Methods
@@ -278,6 +294,8 @@ namespace TT.Scouter.ViewModels
                 _windowManager.ShowWindow(new IttvDownloadViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
             }
         }
+
+        
 
 
         #endregion

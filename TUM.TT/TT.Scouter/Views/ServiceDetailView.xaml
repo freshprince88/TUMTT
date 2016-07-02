@@ -250,46 +250,52 @@
             <Grid x:Name="CourseGrid" Grid.Row="5">
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ToggleButton x:Name="NetOut" Content="Net/Out" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                <cal:Parameter Value="{Binding ElementName=CourseGrid}" />
-                                <cal:Parameter Value="$source" />
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ToggleButton>
-                <ToggleButton x:Name="continue" Content="continue" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                <cal:Parameter Value="{Binding ElementName=CourseGrid}" />
-                                <cal:Parameter Value="$source" />
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ToggleButton>
-                <ToggleButton x:Name="Winner" Content="Winner" Grid.Column="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                <cal:Parameter Value="{Binding ElementName=CourseGrid}" />
-                                <cal:Parameter Value="$source" />
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ToggleButton>
-                <Line Grid.Row="1" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+                <RadioButton x:Name="NetOut" GroupName="Course" Content="Net/Out" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" 
+                             Height="30" IsEnabled="{Binding ElementName=NetOut, Path=IsChecked}"
+                             cal:Message.Attach="[Event Checked] = [Action SelectCourse($source)]">
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:CourseToBoolScouterConverter}" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="CurrentRally.Length" />
+                            <Binding Path="Stroke.Number" />
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Stroke.Player" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton x:Name="continue" GroupName="Course" Content="continue" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" 
+                             Height="30" IsEnabled="{Binding ElementName=continue, Path=IsChecked}"
+                             cal:Message.Attach="[Event Checked] = [Action SelectCourse($source)]">
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:CourseToBoolScouterConverter}" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="CurrentRally.Length" />
+                            <Binding Path="Stroke.Number" />
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Stroke.Player" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton x:Name="Winner" GroupName="Course" Content="Winner" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center"
+                             Height="30" IsEnabled="{Binding ElementName=Winner, Path=IsChecked}"
+                             cal:Message.Attach="[Event Checked] = [Action SelectCourse($source)]">
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:CourseToBoolScouterConverter}" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="CurrentRally.Length" />
+                            <Binding Path="Stroke.Number" />
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Stroke.Player" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
             </Grid>
-
         </Grid>
     </ScrollViewer>
 </UserControl>

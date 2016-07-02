@@ -21,7 +21,7 @@ namespace TT.Scouter.ViewModels
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
         public int RallyCount { get { return Rallies.Count(); } }
-        public RemoteStrokeViewModel SchlagView { get; set; }
+        public RemoteStrokeViewModel SchlagView { get; set;  }
         private bool _service;
         public bool ServiceChecked
         {
@@ -117,8 +117,13 @@ namespace TT.Scouter.ViewModels
                     {
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Strokes.Add(new Stroke());
+                          CurrentRally.Strokes.Add(new Stroke());
+                          
+
                         }
+                        SchlagView.Strokes = CurrentRally.Strokes;
+                        Events.PublishOnUIThread(new RalliesStrokesAddedEvent());
+                        //SchlagView.CurrentStroke = CurrentStroke;
 
                     }
                     else if (CurrentRally.Length > value && value!=0)
@@ -128,6 +133,7 @@ namespace TT.Scouter.ViewModels
                         {
                             CurrentRally.Strokes.Remove(CurrentRally.Strokes.Last());
                         }
+                        SchlagView.Strokes = CurrentRally.Strokes;
                         SchlagView.CurrentStroke = CurrentRally.Strokes.Last();
                     }
                     else if (value == 0)
@@ -142,6 +148,9 @@ namespace TT.Scouter.ViewModels
 
                     CurrentRally.Length = value;
                     NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("SchlagView");
+                    NotifyOfPropertyChange("SchlagView.CurrentRally");
+                    NotifyOfPropertyChange("LengthHelper");
                     NotifyOfPropertyChange("CurrentRally");
                     NotifyOfPropertyChange("HasLength");
 
@@ -164,7 +173,7 @@ namespace TT.Scouter.ViewModels
                         SchlagView = new RemoteStrokeViewModel(MatchManager, value);
                     else
                     {
-
+                        //TODO Hier kommt er nicht rein, wenn man die Länge verändert -> keine neuen Schläge werden erstellt!!!!
                         SchlagView.Strokes = value.Strokes;
                         SchlagView.CurrentRally = value;
                     }
@@ -260,11 +269,11 @@ namespace TT.Scouter.ViewModels
 
                     if (_stroke.Number == 1)
                     {
-                        SchlagView.ActivateItem(new ServiceDetailViewModel(CurrentStroke, MatchManager));
+                        SchlagView.ActivateItem(new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally));
                     }
                     else
                     {
-                        SchlagView.ActivateItem(new StrokeDetailViewModel(CurrentStroke, MatchManager));
+                        SchlagView.ActivateItem(new StrokeDetailViewModel(CurrentStroke, MatchManager, CurrentRally));
                     }
                 }
             }

@@ -485,7 +485,7 @@ namespace TT.Models
                 int now = i;
                 int prev = i - 1;
 
-                if (this.Strokes[now].Course == "Aus")
+                if (this.Strokes[now].Course == "Net/Out")
                     return false;
 
                 if (Double.IsNaN(this.Strokes[now].Placement.WX))
@@ -507,7 +507,7 @@ namespace TT.Models
                 int now = i;
                 int prev = i - 1;
 
-                if (this.Strokes[now].Course == "Aus")
+                if (this.Strokes[now].Course == "Net/Out")
                     return false;
 
                 return this.Strokes[now].IsBotMid() || this.Strokes[now].IsMidMid() || this.Strokes[now].IsTopMid();
@@ -525,7 +525,7 @@ namespace TT.Models
             {
                 int now = i;
                 int prev = i - 1;
-                if (this.Strokes[now].Course == "Out" || this.Strokes[now].Course == "Net")
+                if (this.Strokes[now].Course == "Net/Out")
                     return false;
                 if (Double.IsNaN(this.Strokes[now].Placement.WX))
                     return false;

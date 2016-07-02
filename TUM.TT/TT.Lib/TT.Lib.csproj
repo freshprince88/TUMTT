@@ -119,6 +119,7 @@
     <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\CourseToBoolScouterConverter.cs" />
     <Compile Include="Converters\CrunchToBoolConverter.cs" />
     <Compile Include="Converters\CurrentRallyServerToBallIsVisibleConverter.cs" />
     <Compile Include="Converters\CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Events\PlaylistSelectionChangedEvent.cs" />
     <Compile Include="Events\PlayModeEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />
+    <Compile Include="Events\RalliesStrokesAddedEvent.cs" />
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\RallyOverEvent.cs" />
     <Compile Include="Events\ResultListControlEvent.cs" />

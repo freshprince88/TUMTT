@@ -362,7 +362,7 @@
 
         </Grid>
 
-        <ContentControl x:Name="SchlagView" Grid.Column="1" Grid.RowSpan="2" Visibility="{Binding Path=HasLength, Converter={conv:BoolToVisibilityConverter}}" />
+        <ContentControl x:Name="SchlagView" Grid.Column="1" Grid.RowSpan="2" Visibility="{Binding Path=HasLength, Converter={conv:BoolToVisibilityConverter}}"/>
 
     </Grid>
 

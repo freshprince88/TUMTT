@@ -243,8 +243,11 @@ namespace TT.Models
                 return course;
             }
             set
-            {
+            { if (course != value) { 
                 RaiseAndSetIfChanged(ref course, value);
+                    NotifyPropertyChanged("Course");
+                    NotifyPropertyChanged();
+                }
             }
         }
 
@@ -566,7 +569,7 @@ namespace TT.Models
                 case Util.Enums.Stroke.WinnerOrNetOut.Winner:
                     return Course == "Winner";
                 case Util.Enums.Stroke.WinnerOrNetOut.NetOut:
-                    return Course == "Net" || Course == "Out";
+                    return Course == "Net/Out";
                 case Util.Enums.Stroke.WinnerOrNetOut.None:
                     return true;
                 case Util.Enums.Stroke.WinnerOrNetOut.Both:
