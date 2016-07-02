@@ -150,6 +150,12 @@ namespace TT.Scouter.ViewModels
                 for (int j=0; j < countStrokes; j++)
                 {
                     MatchManager.ActivePlaylist.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
+                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin != null)
+                    MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
+                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique != null)
+                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique.PropertyChanged += SetMatchModified;
+                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement != null)
+                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement.PropertyChanged += SetMatchModified;
                 }
             }
 
@@ -164,6 +170,15 @@ namespace TT.Scouter.ViewModels
                 for (int j = 0; j < countStrokes; j++)
                 {
                     MatchManager.ActivePlaylist.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
+                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin != null)
+                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
+                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique != null)
+                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique.PropertyChanged += SetMatchModified;
+                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement != null)
+                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement.PropertyChanged += SetMatchModified;
+
+
+
                 }
             }
         }

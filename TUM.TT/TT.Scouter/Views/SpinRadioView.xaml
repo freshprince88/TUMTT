@@ -40,7 +40,18 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ToggleButton x:Name="ÜSSL"  Style="{StaticResource MetroSpinLeftTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="0">
+                <ToggleButton x:Name="TSSL"  Style="{StaticResource MetroSpinLeftTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="0"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -50,7 +61,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="ÜL"  Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1">
+                <ToggleButton x:Name="TS"  Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -60,7 +82,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="ÜSSR"  Style="{StaticResource MetroSpinRightTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="2">
+                <ToggleButton x:Name="TSSR"  Style="{StaticResource MetroSpinRightTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="2"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -70,7 +103,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="SL" Style="{StaticResource MetroSpinLeftToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="0">
+                <ToggleButton x:Name="SL" Style="{StaticResource MetroSpinLeftToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="0"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -80,7 +124,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name ="No"  Height="120" Width="120" Style="{StaticResource MetroSpinMidToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="1">
+                <ToggleButton x:Name ="No"  Height="120" Width="120" Style="{StaticResource MetroSpinMidToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="1"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -90,7 +145,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="SR"  Style="{StaticResource MetroSpinRightToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="2">
+                <ToggleButton x:Name="SR"  Style="{StaticResource MetroSpinRightToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="2"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -100,7 +166,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="USSL" Style="{StaticResource MetroSpinLeftBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="0">
+                <ToggleButton x:Name="USSL" Style="{StaticResource MetroSpinLeftBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="0"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -110,7 +187,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name ="US"  Style="{StaticResource MetroSpinBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="1">
+                <ToggleButton x:Name ="US"  Style="{StaticResource MetroSpinBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="1"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -120,7 +208,18 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="USSR" Style="{StaticResource MetroSpinRightBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="2">
+                <ToggleButton x:Name="USSR" Style="{StaticResource MetroSpinRightBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="2"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -133,7 +232,18 @@
                 <Ellipse Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Black" StrokeThickness="2px"/>
             </Grid>
         </Viewbox>
-        <ToggleButton x:Name="Hidden" Grid.Row="1" Grid.RowSpan="3" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Height="30" Content="Hidden">
+        <ToggleButton x:Name="Hidden" Grid.Row="1" Grid.RowSpan="3" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Height="30" Content="Hidden"
+                      cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+            <ToggleButton.IsChecked>
+                <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                    <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                </MultiBinding>
+            </ToggleButton.IsChecked>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">

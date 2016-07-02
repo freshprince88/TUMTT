@@ -63,7 +63,8 @@ namespace TT.Models
             }
             set
             {
-                spinField = value;
+                RaiseAndSetIfChanged(ref spinField, value);
+
             }
         }
 
@@ -762,7 +763,7 @@ namespace TT.Models
                     case Util.Enums.Stroke.Spin.Hidden:
                         ORresults.Add(Spin.TS == "" || Spin.SL == "" || Spin.SR == "" || Spin.US == "" || Spin.No == "");
                         break;
-                    case Util.Enums.Stroke.Spin.ÜS:
+                    case Util.Enums.Stroke.Spin.TS:
                         ORresults.Add(Spin.TS == "1" && Spin.SL == "0" && Spin.SR == "0");
                         break;
                     case Util.Enums.Stroke.Spin.SR:
@@ -783,10 +784,10 @@ namespace TT.Models
                     case Util.Enums.Stroke.Spin.USSR:
                         ORresults.Add(Spin.US == "1" && Spin.SR == "1");
                         break;
-                    case Util.Enums.Stroke.Spin.ÜSSL:
+                    case Util.Enums.Stroke.Spin.TSSL:
                         ORresults.Add(Spin.TS == "1" && Spin.SL == "1");
                         break;
-                    case Util.Enums.Stroke.Spin.ÜSSR:
+                    case Util.Enums.Stroke.Spin.TSSR:
                         ORresults.Add(Spin.TS == "1" && Spin.SR == "1");
                         break;
                     default:
@@ -1018,7 +1019,7 @@ namespace TT.Models
 
         private string us;
 
-        private string üs;
+        private string ts;
 
         private string sl;
 
@@ -1037,6 +1038,7 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref us, value);
+                NotifyPropertyChanged();
             }
         }
 
@@ -1046,11 +1048,13 @@ namespace TT.Models
         {
             get
             {
-                return üs;
+                return ts;
             }
             set
             {
-                RaiseAndSetIfChanged(ref üs, value);
+                RaiseAndSetIfChanged(ref ts, value);
+                NotifyPropertyChanged();
+
             }
         }
 

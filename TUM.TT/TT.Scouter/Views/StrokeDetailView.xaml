@@ -61,8 +61,15 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ToggleButton x:Name="FilterForehandButton" Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                <ToggleButton x:Name="Forehand"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                              cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
                     <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Side" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -72,8 +79,15 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="FilterBackhandButton" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                <ToggleButton x:Name="Backhand" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                              cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
                     <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Side" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -291,7 +305,14 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Label Content="Aggressiveness" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
-                        <ToggleButton x:Name="aggressive" Content="aggressive" Grid.Row="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30" >
+                        <ToggleButton x:Name="aggressive" Content="aggressive" Grid.Row="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectAggressiveness($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:AggressivenessToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Aggressiveness" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -301,7 +322,14 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ToggleButton>
-                        <ToggleButton x:Name="passive" Content="passive" Grid.Row="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30" >
+                        <ToggleButton x:Name="passive" Content="passive" Grid.Row="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectAggressiveness($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:AggressivenessToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Aggressiveness" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -311,7 +339,14 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ToggleButton>
-                        <ToggleButton x:Name="Control" Content="Control" Grid.Row="3"  Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"  >
+                        <ToggleButton x:Name="Control" Content="Control" Grid.Row="3"  Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectAggressiveness($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:AggressivenessToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Aggressiveness" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -331,7 +366,14 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Label Content="Quality" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
-                        <ToggleButton x:Name="goodQuality" Content="good"  Grid.Row="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <ToggleButton x:Name="good" Content="good"  Grid.Row="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectQuality($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:QualityToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Quality" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -341,7 +383,14 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ToggleButton>
-                        <ToggleButton x:Name="normalQuality" Content="normal" Grid.Row="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <ToggleButton x:Name="normal" Content="normal" Grid.Row="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectQuality($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:QualityToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Quality" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -351,7 +400,14 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ToggleButton>
-                        <ToggleButton x:Name="badQuality" Content="bad" Grid.Row="3" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                        <ToggleButton x:Name="bad" Content="bad" Grid.Row="3" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectQuality($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:QualityToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Quality" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">

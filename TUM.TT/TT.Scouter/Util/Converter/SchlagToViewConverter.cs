@@ -20,7 +20,7 @@ namespace TT.Scouter.Util.Converter
             if (stroke.Number > 1)
                 return new ServiceDetailViewModel(stroke, Manager, currentRally);
             else
-                return new StrokeDetailViewModel(stroke,Manager, currentRally);
+                return new StrokeDetailViewModel(stroke, Manager, currentRally);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

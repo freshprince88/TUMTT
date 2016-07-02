@@ -42,7 +42,7 @@ namespace TT.Scouter.ViewModels
 
                     if (_stroke == null || _stroke.Number == 1)
                     {
-                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally);
+                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally);                       
                         NotifyOfPropertyChange("SchlagDetail");
                     }
                     else

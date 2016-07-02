@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\AggressivenessToBoolConverter.cs" />
+    <Compile Include="Converters\AggressivenessToBoolScouterConverter.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BoolNotConverter.cs" />
     <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Converters\PlayerP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\PointP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\QualityToBoolConverter.cs" />
+    <Compile Include="Converters\QualityToBoolScouterConverter.cs" />
     <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
     <Compile Include="Converters\MatchPlayerToStringConverter.cs" />
     <Compile Include="Converters\MSToTimeConverter.cs" />
@@ -140,7 +142,9 @@
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
     <Compile Include="Converters\ServiceToBoolScouterConverter.cs" />
     <Compile Include="Converters\SetToBoolConverter.cs" />
+    <Compile Include="Converters\SideToBoolScouterConverter.cs" />
     <Compile Include="Converters\SpecialToBoolConverter.cs" />
+    <Compile Include="Converters\SpinToBoolScouterConverter.cs" />
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
     <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="Converters\StepAroundToBoolConverter.cs" />

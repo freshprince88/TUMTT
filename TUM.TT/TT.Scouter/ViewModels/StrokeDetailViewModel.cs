@@ -22,6 +22,7 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
+        public IEventAggregator Events { get; set; }
         private IMatchManager MatchManager;
         private Rally _rally;
         public Rally CurrentRally
@@ -48,6 +49,7 @@ namespace TT.Scouter.ViewModels
 
         public StrokeDetailViewModel(Stroke s, IMatchManager man, Rally cr)
         {
+            Events = IoC.Get<IEventAggregator>();
             MatchManager = man;
             Stroke = s;
             TableControl = new StrokePositionTableViewModel();
@@ -59,8 +61,129 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            Events.Subscribe(this);
         }
         #region View Methods
+        public void SelectSide(ToggleButton source)
+        {
+            if (Stroke == null)
+            {
+                Stroke.Side = "";
+                return;
+            }
+
+            if (source.Name.ToLower().Contains("forehand"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Side = "Forehand";
+                }
+                else
+                {
+                    Stroke.Side = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("backhand"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Side = "Backhand";
+                }
+                else
+                {
+                    Stroke.Side = "";
+                }
+            }
+
+        }
+        public void SelectQuality(ToggleButton source)
+        {
+            if (Stroke == null)
+            {
+                Stroke.Quality = "";
+                return;
+            }
+
+            if (source.Name.ToLower().Contains("good"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Quality = "good";
+                }
+                else
+                {
+                    Stroke.Quality = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("normal"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Quality = "normal";
+                }
+                else
+                {
+                    Stroke.Quality = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("bad"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Quality = "bad";
+                }
+                else
+                {
+                    Stroke.Quality = "";
+                }
+            }
+
+        }
+        public void SelectAggressiveness(ToggleButton source)
+        {
+            if (Stroke == null)
+            {
+                Stroke.Aggressiveness = "";
+                return;
+            }
+
+            if (source.Name.ToLower().Contains("aggressive"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Aggressiveness = "aggressive";
+                }
+                else
+                {
+                    Stroke.Aggressiveness = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("passive"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Aggressiveness = "passive";
+                }
+                else
+                {
+                    Stroke.Aggressiveness = "";
+                }
+            }
+            else if (source.Name.ToLower().Contains("control"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Aggressiveness = "Control";
+                }
+                else
+                {
+                    Stroke.Aggressiveness = "";
+                }
+            }
+
+        }
+
+
         public void SelectCourse(ToggleButton source)
         {
             if (Stroke == null)

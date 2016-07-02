@@ -208,15 +208,15 @@
 
         public enum Spin
         {
-            ÜS,
+            TS,
             SR,
             No,
             SL,
             US,
-            ÜSSR,
+            TSSR,
             USSR,
             USSL,
-            ÜSSL,
+            TSSL,
             Hidden
         }
 
