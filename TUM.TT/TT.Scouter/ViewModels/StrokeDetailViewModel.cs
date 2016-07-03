@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 
@@ -55,6 +56,13 @@ namespace TT.Scouter.ViewModels
             TableControl = new StrokePositionTableViewModel();
             CurrentRally = cr;
             SetCourse();
+            if (Stroke.Stroketechnique == null)
+            {
+                Stroke.Stroketechnique = new Stroketechnique();
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Events.PublishOnUIThread(new RalliesStrokesAddedEvent());
+            }
 
         }
 
@@ -94,6 +102,195 @@ namespace TT.Scouter.ViewModels
                     Stroke.Side = "";
                 }
             }
+
+        }
+        public void SelectStroketechnique (ToggleButton source)
+        {
+            if (source.Name.ToLower().Equals("push"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Push";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("pushaggressive"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Option = "aggressive";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("flip"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Flip";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("banana"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Option = "Banana";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("topspin"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Topspin";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("topspinspin"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Option = "Spin";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("topspintempo"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Option = "Tempo";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("block"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Block";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("blockchop"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Option = "Chop";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("blocktempo"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Option = "Tempo";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("chop"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Chop";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("lob"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Lob";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("smash"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Smash";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("counter"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Counter";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+            else if (source.Name.ToLower().Equals("special"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Type = "Special";
+                    Stroke.Stroketechnique.Option = "";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Type = "";
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
+
 
         }
         public void SelectQuality(ToggleButton source)

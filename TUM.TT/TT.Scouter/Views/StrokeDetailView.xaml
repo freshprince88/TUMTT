@@ -97,7 +97,10 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton Grid.Column="2" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Step Around" MinWidth="90" HorizontalAlignment="Center"/>
+                <ToggleButton Grid.Column="2" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Step Around" MinWidth="90" HorizontalAlignment="Center"
+                             IsChecked="{Binding Path=Stroke.StepAround, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+      
+                </ToggleButton>
                 <Line Grid.Row="1" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
             </Grid>
 
@@ -116,7 +119,15 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <ToggleButton x:Name="Push" Content="Push"  Grid.Row="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                <ToggleButton x:Name="Push" Content="Push"  Grid.Row="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Stroketechnique.Type"/>
+                            <Binding Path="Stroke.Stroketechnique.Option" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -126,8 +137,26 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <CheckBox x:Name="PushAggressive" Content="aggressive" Grid.Row="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Push, Path=IsChecked}"  Visibility="{Binding ElementName=Push, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"></CheckBox>
-                <ToggleButton x:Name="Flip" Content="Flip"   Grid.Row="0" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                <CheckBox x:Name="PushAggressive" Content="aggressive" Grid.Row="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Push, Path=IsChecked}"
+                          Visibility="{Binding ElementName=Push, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"
+                          cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                    <CheckBox.IsChecked>
+                        <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Stroketechnique.Type"/>
+                            <Binding Path="Stroke.Stroketechnique.Option" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </CheckBox.IsChecked>
+                </CheckBox>
+                <ToggleButton x:Name="Flip" Content="Flip"   Grid.Row="0" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Stroketechnique.Type"/>
+                            <Binding Path="Stroke.Stroketechnique.Option" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -137,59 +166,50 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <CheckBox x:Name="Banana" Content="Banana" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Flip, Path=IsChecked}"  Visibility="{Binding ElementName=Flip, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"></CheckBox>
-                <ToggleButton x:Name="Topspin" Content="Topspin" Grid.Row="2" Grid.Column="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
-                                    <cal:Parameter Value="$source" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ToggleButton>
-                    <Grid x:Name="TopspinGrid" Grid.Row="3" Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="TopspinSpin" Content="Spin" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Topspin, Path=IsChecked}" Visibility="{Binding ElementName=Topspin, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                        <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
-                                        <cal:Parameter Value="$source" />
-                                    </cal:ActionMessage>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </CheckBox>
-                        <CheckBox x:Name="TopspinTempo" Content="Tempo"  Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Topspin, Path=IsChecked}" Visibility="{Binding ElementName=Topspin, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                        <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
-                                        <cal:Parameter Value="$source" />
-                                    </cal:ActionMessage>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </CheckBox>
-                    </Grid>
-                    <ToggleButton x:Name="Block" Content="Block"  Grid.Row="2" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                    <cal:Parameter Value="{Binding ElementName=TecGrid}" />
-                                    <cal:Parameter Value="$source" />
-                                </cal:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ToggleButton>
-                <Grid x:Name="BlockGrid" Grid.Row="3" Grid.Column="1">
+                <CheckBox x:Name="Banana" Content="Banana" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Flip, Path=IsChecked}"
+                          Visibility="{Binding ElementName=Flip, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"
+                          cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                    <CheckBox.IsChecked>
+                        <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Stroketechnique.Type"/>
+                            <Binding Path="Stroke.Stroketechnique.Option" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </CheckBox.IsChecked>
+                </CheckBox>
+                <ToggleButton x:Name="Topspin" Content="Topspin" Grid.Row="2" Grid.Column="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Stroketechnique.Type"/>
+                            <Binding Path="Stroke.Stroketechnique.Option" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <Grid x:Name="TopspinGrid" Grid.Row="3" Grid.Column="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox x:Name="BlockChop" Content="Chop" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Block, Path=IsChecked}" Visibility="{Binding ElementName=Block, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
+                    <CheckBox x:Name="TopspinSpin" Content="Spin" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Topspin, Path=IsChecked}" 
+                              Visibility="{Binding ElementName=Topspin, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <CheckBox.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </CheckBox.IsChecked>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -199,7 +219,16 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </CheckBox>
-                    <CheckBox x:Name="BlockTempo" Content="Tempo"  Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Block, Path=IsChecked}" Visibility="{Binding ElementName=Block, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}">
+                    <CheckBox x:Name="TopspinTempo" Content="Tempo"  Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Topspin, Path=IsChecked}" 
+                              Visibility="{Binding ElementName=Topspin, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <CheckBox.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </CheckBox.IsChecked>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -210,7 +239,77 @@
                         </i:Interaction.Triggers>
                     </CheckBox>
                 </Grid>
-                <ToggleButton x:Name="Chop" Content="Chop"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                <ToggleButton x:Name="Block" Content="Block"  Grid.Row="2" Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Stroketechnique.Type"/>
+                            <Binding Path="Stroke.Stroketechnique.Option" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <Grid x:Name="BlockGrid" Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="BlockChop" Content="Chop" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Block, Path=IsChecked}" 
+                              Visibility="{Binding ElementName=Block, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <CheckBox.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </CheckBox.IsChecked>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                    <CheckBox x:Name="BlockTempo" Content="Tempo"  Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Block, Path=IsChecked}" 
+                              Visibility="{Binding ElementName=Block, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <CheckBox.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </CheckBox.IsChecked>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                </Grid>
+                <ToggleButton x:Name="Chop" Content="Chop"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                              cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Stroketechnique.Type"/>
+                            <Binding Path="Stroke.Stroketechnique.Option" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -227,7 +326,15 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ToggleButton x:Name="Lob" Content="Lob" Grid.Column="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <ToggleButton x:Name="Lob" Content="Lob" Grid.Column="0" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                  cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -237,7 +344,15 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ToggleButton>
-                    <ToggleButton x:Name="Smash" Content="Smash"  Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <ToggleButton x:Name="Smash" Content="Smash"  Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                  cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -247,7 +362,15 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ToggleButton>
-                    <ToggleButton x:Name="Counter" Content="Counter" Grid.Column="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <ToggleButton x:Name="Counter" Content="Counter" Grid.Column="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                  cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
@@ -257,7 +380,15 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ToggleButton>
-                    <ToggleButton x:Name="Special" Content="Special" Grid.Column="3" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30">
+                    <ToggleButton x:Name="Special" Content="Special" Grid.Column="3" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                  cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">

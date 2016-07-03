@@ -51,7 +51,7 @@ namespace TT.Models
             }
             set
             {
-                strokeTechniqueField = value;
+                RaiseAndSetIfChanged(ref strokeTechniqueField, value);
             }
         }
 
@@ -981,7 +981,7 @@ namespace TT.Models
 
     public class Stroketechnique : PropertyChangedBase
     {
-        private string art;
+        private string type;
 
         private string option;
 
@@ -991,11 +991,11 @@ namespace TT.Models
         {
             get
             {
-                return art;
+                return type;
             }
             set
             {
-                RaiseAndSetIfChanged(ref art, value);
+                RaiseAndSetIfChanged(ref type, value);
             }
         }
 
