@@ -79,6 +79,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Small Tables.
+        /// </summary>
+        public static string table_small_tab_title {
+            get {
+                return ResourceManager.GetString("table_small_tab_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spin.
         /// </summary>
         public static string table_spin_title {

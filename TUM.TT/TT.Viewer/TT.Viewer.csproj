@@ -15,6 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -158,6 +158,7 @@
     <Compile Include="ViewModels\FourthBallViewModel.cs" />
     <Compile Include="ViewModels\IResultViewTabItem.cs" />
     <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ResultSmallTablesViewModel.cs" />
     <Compile Include="ViewModels\ResultListItem.cs" />
     <Compile Include="ViewModels\LastBallViewModel.cs" />
     <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
@@ -239,8 +240,11 @@
     <Compile Include="Views\ReceiveView.xaml.cs">
       <DependentUpon>ReceiveView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ResultLargeTabelView.xaml.cs">
-      <DependentUpon>ResultLargeTabelView.xaml</DependentUpon>
+    <Compile Include="Views\ResultSmallTabelsView.xaml.cs">
+      <DependentUpon>ResultSmallTabelsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultLargeTableView.xaml.cs">
+      <DependentUpon>ResultLargeTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResultMiniStatisticView.xaml.cs">
       <DependentUpon>ResultMiniStatisticView.xaml</DependentUpon>
@@ -268,6 +272,9 @@
     </Compile>
     <Compile Include="Views\ShowCompetitionView.xaml.cs">
       <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SmallTableView.xaml.cs">
+      <DependentUpon>SmallTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
@@ -356,7 +363,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ResultLargeTabelView.xaml">
+    <Page Include="Views\ResultSmallTabelsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ResultLargeTableView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -417,6 +428,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowCompetitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SmallTableView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

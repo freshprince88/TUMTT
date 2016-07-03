@@ -12,7 +12,7 @@ using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ResultLargeTableViewModel : Screen, IResultViewTabItem,
+    public class ResultSmallTablesViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
         IHandle<RallyLengthChangedEvent>,
         IHandle<FullscreenEvent>,
@@ -23,9 +23,7 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
 
-        public ObservableCollection<ResultListItem> Items { get; set; }
-        
-        public ObservableCollection<Stroke> Strokes { get; set; }
+        public ObservableCollection<Rally> Rallies { get; set; }
 
         private int rallyLength;
         public int RallyLength {
@@ -40,28 +38,29 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public ResultLargeTableViewModel()
+        public List<int> IntList { get; set; }
+
+        public ResultSmallTablesViewModel()
         {
             // default constructor for caliburn design time integration
         }
 
-        public ResultLargeTableViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
+        public ResultSmallTablesViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
-            this.DisplayName = Properties.Resources.table_large_tab_title;
+            this.DisplayName = Properties.Resources.table_small_tab_title;
             Events = e;
             Dialogs = c;
             Manager = man;
             RallyLength = 1;
-            Strokes = new ObservableCollection<Stroke>();
+            Rallies = new ObservableCollection<Rally>();
 
             // Subscribe ourself to the event bus
-            Events.Subscribe(this);
-
+            Events.Subscribe(this);            
         }
 
         public byte GetOrderInResultView()
         {
-            return 1;
+            return 2;
         }
 
         #region View Methods
@@ -106,9 +105,7 @@ namespace TT.Viewer.ViewModels
                 if (stroke != null)
                     strokes.Add(stroke);
             }
-            //Events.PublishOnUIThread(new StrokesPaintEvent(strokes, RallyLength));
-            Strokes.Clear();
-            strokes.ForEach(stroke => Strokes.Add(stroke));
+            Events.PublishOnUIThread(new StrokesPaintEvent(strokes, RallyLength));
         }
 
         #endregion
@@ -118,12 +115,16 @@ namespace TT.Viewer.ViewModels
         public void Handle(ResultsChangedEvent message)
         {
             if (IsActive)
-                UpdateStrokeDisplay(message.Rallies);
+            {
+                //Rallies = new ObservableCollection<Rally>(message.Rallies);
+                Rallies.Clear();
+                message.Rallies.Apply(rally => Rallies.Add(rally));
+                //UpdateStrokeDisplay(message.Rallies);
+            }
         }
 
         public void Handle(RallyLengthChangedEvent message)
         {
-            //UpdateStrokeDisplay(Manager.SelectedRallies);
             RallyLength = message;
         }
 
@@ -154,7 +155,8 @@ namespace TT.Viewer.ViewModels
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);
-            UpdateStrokeDisplay(Manager. SelectedRallies);
+            Rallies.Clear();
+            Manager.SelectedRallies.Apply(rally => Rallies.Add(rally));
         }
 
         #endregion
