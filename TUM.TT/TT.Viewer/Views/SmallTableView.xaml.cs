@@ -737,9 +737,12 @@ namespace TT.Viewer.Views
             switch (style)
             {
                 case STROKE_ATTR_SIDE_BACKHAND:
-                    DoubleCollection dashes = new DoubleCollection();
-                    dashes.Add(2);
-                    shape.StrokeDashArray = dashes;
+                    if ((string)shape.Tag != TAG_ARROW_TIP)
+                    {
+                        DoubleCollection dashes = new DoubleCollection();
+                        dashes.Add(2);
+                        shape.StrokeDashArray = dashes;
+                    }
                     break;
                 case STROKE_ATTR_TECHNIQUE_PUSH:
                 case STROKE_ATTR_TECHNIQUE_CHOP:
