@@ -70,8 +70,10 @@ namespace TT.Viewer.ViewModels
             set
             {
                 if (_playing != value)
+                {
                     _playing = value;
-                NotifyOfPropertyChange();
+                    NotifyOfPropertyChange();
+                }
             }
         }
 
@@ -181,7 +183,6 @@ namespace TT.Viewer.ViewModels
         {
             Events = ev;
             Manager = man;
-            IsPlaying = false;
             IsFullscreen = false;
             Dialogs = cor;
             syncStart = true;
@@ -232,13 +233,11 @@ namespace TT.Viewer.ViewModels
 
         public void Pause()
         {
-            IsPlaying = false;
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
         }
 
         public void Play()
         {
-            IsPlaying = true;
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play, Media.Source.Viewer));
         }
 
@@ -255,42 +254,36 @@ namespace TT.Viewer.ViewModels
         }
 
         public void Stop()
-        {
-            IsPlaying = false;
-            MediaPosition = TimeSpan.Zero;
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));;
         }
 
         public void NextFrame()
-        {
-            IsPlaying = false;
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             MediaPosition = MediaPosition + delta_time;
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
         }
 
         public void Next5Frames()
-        {
-            IsPlaying = false;
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             MediaPosition = MediaPosition + delta_time;
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
         }
 
         public void PreviousFrame()
-        {
-            IsPlaying = false;
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
             MediaPosition = MediaPosition - delta_time;
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
         }
 
         public void Previous5Frames()
-        {
-            IsPlaying = false;
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             MediaPosition = MediaPosition - delta_time;
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
         }
 
 

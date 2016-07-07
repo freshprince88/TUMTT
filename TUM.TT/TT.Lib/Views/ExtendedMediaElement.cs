@@ -30,8 +30,6 @@ namespace TT.Lib.Views
         public static readonly DependencyProperty IsPlayingProperty =
             DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(true));
 
-
-
         public bool? PlayMode
         {
             get { return (bool?)GetValue(PlayModeProperty); }
@@ -147,6 +145,24 @@ namespace TT.Lib.Views
             {
                 Execute.OnUIThread(() => Events.PublishOnUIThread(new PlayModeEvent(PlayMode)));
             }                             
+        }
+
+        public void PlayWithState()
+        {
+            IsPlaying = true;
+            Play();
+        }
+
+        public void PauseWithState()
+        {
+            IsPlaying = false;
+            Pause();
+        }
+
+        public void StopWithState()
+        {
+            IsPlaying = false;
+            Stop();
         }
 
         public void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

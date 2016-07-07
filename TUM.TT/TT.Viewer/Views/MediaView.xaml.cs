@@ -104,13 +104,13 @@ namespace TT.Viewer.Views
                 switch (message.Ctrl)
                 {
                     case Media.Control.Stop:
-                        MediaPlayer.Stop();
+                        MediaPlayer.StopWithState();
                         break;
                     case Media.Control.Pause:
-                        MediaPlayer.Pause();
+                        MediaPlayer.PauseWithState();
                         break;
                     case Media.Control.Play:
-                        MediaPlayer.Play();
+                        MediaPlayer.PlayWithState();
                         break;
                     default:
                         break;
@@ -124,12 +124,12 @@ namespace TT.Viewer.Views
 
             if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
             {
-                MediaPlayer.Stop();
+                MediaPlayer.StopWithState();
                 MediaPlayer.Close();
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
                 MediaPlayer.MediaPosition = currentTime;
-                MediaPlayer.Play();
-                MediaPlayer.Pause();
+                MediaPlayer.PlayWithState();
+                MediaPlayer.PauseWithState();
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
             }
         }
@@ -173,11 +173,11 @@ namespace TT.Viewer.Views
 
         public void Handle(VideoLoadedEvent message)
         {
-            MediaPlayer.Stop();
+            MediaPlayer.StopWithState();
             MediaPlayer.Close();
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
-            MediaPlayer.Play();
-            MediaPlayer.Pause();
+            MediaPlayer.PlayWithState();
+            MediaPlayer.PauseWithState();
         }
 
 
