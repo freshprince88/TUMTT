@@ -302,6 +302,12 @@ namespace TT.Scouter.ViewModels
             this.ActivateItem(SchlagView);
         }
 
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
         #region View Methods
 
         public void RallySelected(SelectionChangedEventArgs e)
@@ -428,12 +434,15 @@ namespace TT.Scouter.ViewModels
 
 
         #endregion
+
         private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             MatchManager.MatchModified = true;
 
         }
+
         #region Events
+
         public void Handle(PlayModeEvent message)
         {
             switch (message.PlayMode)
@@ -451,6 +460,7 @@ namespace TT.Scouter.ViewModels
                     break;
             }
         }
+
         #endregion
     }
 }

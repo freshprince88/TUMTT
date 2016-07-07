@@ -16,6 +16,7 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+
         public bool FirstServerSet
         {
             get
@@ -148,6 +149,7 @@ namespace TT.Scouter.ViewModels
 
             }
         }
+
         private bool _winnerEnabled;
         /// <summary>
         /// Determines whether the "Winner of the Rally" Buttons are shown
@@ -165,12 +167,12 @@ namespace TT.Scouter.ViewModels
 
             }
         }
-
-
+    
         public bool Markiert { get; set; }
         public ChoiceOfEndsViewModel ChoiceOfEnds { get; private set; }
         public ChoiceOfServiceReceiveViewModel ChoiceOfServiceReceive { get; private set; }
         public LiveScoutingViewModel LiveScouting { get; private set; }
+
         private Screen _trans;
         public Screen TransitioningContent
         {
@@ -184,11 +186,11 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
+
         public Screen CurrentScreen { get; set; }
 
         public LiveViewModel(IEventAggregator ev, IMatchManager man)
-        {
-          
+        {          
             Events = ev;
             MatchManager = man;
             IsNewRally = true;
@@ -200,6 +202,7 @@ namespace TT.Scouter.ViewModels
             ChoiceOfEnds = new ChoiceOfEndsViewModel(Events, MatchManager, this);
             ChoiceOfServiceReceive = new ChoiceOfServiceReceiveViewModel(Events, MatchManager, this);
             LiveScouting = new LiveScoutingViewModel(Events, MatchManager, MediaPlayer, this);
+
             if (MatchManager.Match.FirstPlayer.StartingTableEnd == StartingTableEnd.None || MatchManager.Match.SecondPlayer.StartingTableEnd == StartingTableEnd.None)
             {
                 CurrentScreen = ChoiceOfEnds;
@@ -215,8 +218,6 @@ namespace TT.Scouter.ViewModels
                     CurrentScreen = LiveScouting;
                 }
             }
-
-
         }
 
         #region Caliburn Hooks
@@ -228,12 +229,6 @@ namespace TT.Scouter.ViewModels
             this.ActivateItem(ChoiceOfServiceReceive);
             this.ActivateItem(LiveScouting);
             TransitioningContent = CurrentScreen;
-
-
-        }
-
-        protected override void OnViewReady(object view)
-        {
         }
 
         #endregion
