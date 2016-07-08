@@ -44,11 +44,11 @@ namespace TT.Scouter.ViewModels
             if (Stroke.Spin == null)
             {
                 Stroke.Spin = new Spin();
-                Stroke.Spin.TS = "";
-                Stroke.Spin.SL = "";
-                Stroke.Spin.SR = "";
-                Stroke.Spin.US = "";
-                Stroke.Spin.No = "";
+                Stroke.Spin.TS = "0";
+                Stroke.Spin.SL = "0";
+                Stroke.Spin.SR = "0";
+                Stroke.Spin.US = "0";
+                Stroke.Spin.No = "0";
                 Events.PublishOnUIThread(new RalliesStrokesAddedEvent());
             }
 

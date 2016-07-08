@@ -169,7 +169,9 @@ namespace TT.Scouter.ViewModels
             toRallyStart = true;
             PlayMode = false;             
         }
+        
 
+        #region Media Methods
         public void Pause()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
@@ -307,5 +309,7 @@ namespace TT.Scouter.ViewModels
 
 
         }
+
+        #endregion
     }
 }
