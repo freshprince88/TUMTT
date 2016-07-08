@@ -46,9 +46,9 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <RadioButton x:Name="Short" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(über)]"/>
-                    <RadioButton x:Name="Half" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(halbdistanz)]"/>
-                    <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(hinter)]"/>
+                    <RadioButton x:Name="Short" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding over}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('over')]"/>
+                <RadioButton x:Name="Half" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
+                <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding behind}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
                 </Grid>
 
             <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
