@@ -174,6 +174,7 @@ namespace TT.Scouter.ViewModels
 
                     if (SchlagView == null || PositionsRallyView == null)
                     {
+                        // Positioning IMPORTANT - this way PositionsRallyView gets notified about a calculated Stroke before SchlagView and PositionRallyView depends on the Schlagviewstate
                         if (PositionsRallyView == null) PositionsRallyView = new RemotePositionsRallyViewModel(this, calibration);
                         if (SchlagView == null) SchlagView = new RemoteStrokeViewModel(MatchManager, value, calibration);
                     }
@@ -182,6 +183,7 @@ namespace TT.Scouter.ViewModels
                         //TODO Hier kommt er nicht rein, wenn man die Länge verändert -> keine neuen Schläge werden erstellt!!!!
                         SchlagView.Strokes = value.Strokes;
                         SchlagView.CurrentRally = value;
+                        PositionsRallyView.OnNewStrokes();
                     }
                     _rally = value;
 

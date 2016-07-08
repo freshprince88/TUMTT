@@ -61,6 +61,22 @@ namespace TT.Scouter.ViewModels
             DrawnStrokes = new ObservableCollection<DrawElement>();
         }
 
+        public void OnNewStrokes()
+        {
+            DrawnStrokes.Clear();
+            foreach(Stroke s in Strokes)
+            {
+                DrawElement dE = createDrawElement(Visibility.Hidden);
+                dE.text = s.Number.ToString();
+                if (s.Placement != null)
+                {
+                    dE.g.Visibility = Visibility.Visible;
+                    putGridToPosition(new Point(s.Placement.WX, s.Placement.WY), dE);
+                }
+                DrawnStrokes.Add(dE);
+            }
+        }
+
         protected override void OnActivate()
         {
             base.OnActivate();
@@ -92,7 +108,7 @@ namespace TT.Scouter.ViewModels
             {
                 while (CurrentStroke.Number > DrawnStrokes.Count)
                 {
-                    DrawnStrokes.Add(createDrawElementAtPosition(Visibility.Hidden));
+                    DrawnStrokes.Add(createDrawElement(Visibility.Hidden));
                 }
             }
 
@@ -100,7 +116,6 @@ namespace TT.Scouter.ViewModels
             dE.text = CurrentStroke.Number.ToString();
             putGridToPosition(args.Position, dE);
             dE.g.Visibility = Visibility.Visible;
-            dE.e.Visibility = Visibility.Visible;
         }
 
         private DrawElement putGridToPosition(Point Position, DrawElement drawElement)
@@ -114,18 +129,18 @@ namespace TT.Scouter.ViewModels
             return drawElement;
         }
 
-        private DrawElement createDrawElementAtPosition(Visibility visibility)
+        private DrawElement createDrawElement(Visibility visibility)
         {
             Ellipse e = new Ellipse();
             e.Stroke = System.Windows.Media.Brushes.Black;
             e.Fill = System.Windows.Media.Brushes.Transparent;
             e.StrokeThickness = 5;
-            e.Visibility = visibility;
             Grid g = new Grid();
-            g.Height = 60;
-            g.Width = 60;
+            g.Height = 40;
+            g.Width = 40;
             g.IsHitTestVisible = true;
             g.Background = System.Windows.Media.Brushes.Transparent;
+            g.Visibility = visibility;
 
             DrawElement ele = new DrawElement();
             ele.e = e;
