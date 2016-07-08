@@ -6,24 +6,24 @@ namespace TT.Scouter.ViewModels
 {
     public class ServicePositionTableViewModel : Screen
     {
-        public Models.Schlag Stroke { get; set; }
+        public Models.Stroke Stroke { get; set; }
 
-        public ServicePositionTableViewModel(Models.Schlag s)
+        public ServicePositionTableViewModel(Models.Stroke s)
         {
             Stroke = s;
         }
 
         public void ChangePositionPlayer(double position)
         {
-            Stroke.Spielerposition = position;
+            Stroke.Playerposition = position;
         }
 
         public void ChangePositionService(double X, double Y)
         {
-            Models.Platzierung p = new Models.Platzierung();
+            Models.Placement p = new Models.Placement();
             p.WX = X;
             p.WY = Y;
-            Stroke.Platzierung = p;
+            Stroke.Placement = p;
         }
     }
 }

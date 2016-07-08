@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace TT.Scouter.Views
 {
     /// <summary>
-    /// Interaction logic for SchlagDetailView.xaml
+    /// Interaktionslogik für ShowAllPlayerView.xaml
     /// </summary>
-    public partial class SchlagDetailView : UserControl
+    public partial class ShowAllPlayerView : MahApps.Metro.Controls.MetroWindow
     {
-        public SchlagDetailView()
+        public ShowAllPlayerView()
         {
             InitializeComponent();
+            Name = "ShowPlayer";
         }
     }
 }

@@ -208,15 +208,15 @@
 
         public enum Spin
         {
-            ÜS,
+            TS,
             SR,
             No,
             SL,
             US,
-            ÜSSR,
+            TSSR,
             USSR,
             USSL,
-            ÜSSL,
+            TSSL,
             Hidden
         }
 
@@ -227,7 +227,7 @@
             None,
             Both
         }
-        public enum Aggression
+        public enum Aggressiveness
         {
             Aggressive,
             Control,

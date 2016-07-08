@@ -4,24 +4,24 @@ namespace TT.Scouter.ViewModels
 {
     public class StrokePositionTableViewModel : Screen
     {
-        public Models.Schlag Stroke { get; set; }
+        public Models.Stroke Stroke { get; set; }
 
-        public StrokePositionTableViewModel(Models.Schlag s)
+        public StrokePositionTableViewModel(Models.Stroke s)
         {
             Stroke = s;
         }
 
         public void ChangePositionPlayer(string position)
         {
-            Stroke.Balltreffpunkt = position;
+            Stroke.PlayerpositionString = position;
         }
 
         public void ChangePositionStroke(double X, double Y)
         {
-            Models.Platzierung p = new Models.Platzierung();
+            Models.Placement p = new Models.Placement();
             p.WX = X;
             p.WY = Y;
-            Stroke.Platzierung = p;
+            Stroke.Placement = p;
         }
     }
 }

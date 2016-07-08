@@ -26,7 +26,8 @@
 
         <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0" ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
                                     MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
-                                    MediaPosition="{Binding MediaPosition, Mode=TwoWay}"/>
+                                    MediaPosition="{Binding MediaPosition, Mode=TwoWay}"
+                                    IsPlaying="{Binding IsPlaying, Mode=OneWayToSource}"/>
         <Slider x:Name="MediaSlider" Grid.Row="1" IsSnapToTickEnabled="False" IsMoveToPointEnabled="True"
                 Maximum="{Binding MediaLength, Converter={conv:TimeSpanToMillisecondsConverter}, Mode=OneWay}"
                 Value="{Binding MediaPosition, Converter={conv:TimeSpanToMillisecondsConverter}, Mode=TwoWay}"/>

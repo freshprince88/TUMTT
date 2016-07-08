@@ -4,7 +4,7 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 using TT.Models.Util.Enums;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
@@ -54,6 +54,36 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private double _min;
+        public double Minimum
+        {
+            get
+            {
+                return _min;
+            }
+            set
+            {
+                if (_min != value)
+                    _min = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private double _max;
+        public double Maximum
+        {
+            get
+            {
+                return _max;
+            }
+            set
+            {
+                if (_max != value)
+                    _max = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         private bool _playing;
         public bool IsPlaying
         {
@@ -84,6 +114,8 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        public bool toRallyStart { get; set; }
+       
         public Match Match { get { return Manager.Match; } }
 
         private IEventAggregator Events;
@@ -93,7 +125,6 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             Manager = man;
-            IsPlaying = false;
         }
 
         #region  Caliburn Hooks
@@ -112,19 +143,16 @@ namespace TT.Scouter.ViewModels
         public void Play()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play,Media.Source.LiveScouter));
-            IsPlaying = true;
         }
 
         public void Pause()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
-            IsPlaying = false;
         }
 
         public void Stop()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
-            IsPlaying = false;
             MediaPosition = TimeSpan.Zero;
         }
 

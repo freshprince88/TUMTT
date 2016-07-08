@@ -8,14 +8,11 @@ using TT.Models;
 using TT.Lib.Results;
 using TT.Lib.Util;
 using MahApps.Metro.Controls.Dialogs;
-
-using System.Windows;
-using TT.Lib;
-
+using TT.Models.Util.Enums;
 
 namespace TT.Lib.Managers
 {
-    public class MatchManager : Caliburn.Micro.PropertyChangedBase, IMatchManager 
+    public class MatchManager : Caliburn.Micro.PropertyChangedBase, IMatchManager
     {
         #region Properties
         /// <summary>
@@ -34,13 +31,14 @@ namespace TT.Lib.Managers
                 if (_match != value)
                 {
                     _match = value;
-                    MatchModified = true; 
+                    MatchModified = true;
                     NotifyOfPropertyChange("MatchModified");
                     NotifyOfPropertyChange();
 
                 }
             }
         }
+
         private bool _matchMod;
         public bool MatchModified
         {
@@ -56,6 +54,7 @@ namespace TT.Lib.Managers
                 }
             }
         }
+
         private string _activeList;
         public Playlist ActivePlaylist
         {
@@ -71,11 +70,45 @@ namespace TT.Lib.Managers
             }
         }
 
+        private Rally _activeRally;
+        public Rally ActiveRally
+        {
+            get { return _activeRally; }
+            set
+            {
+                if (_activeRally != value)
+                {
+                    _activeRally = value;
+                    NotifyOfPropertyChange();
+                    Events.PublishOnUIThread(new ActiveRallyChangedEvent()
+                    {
+                        Current = _activeRally
+                    });
+                }
+            }
+        }
+
+        private IEnumerable<Rally> _selected;
+        public IEnumerable<Rally> SelectedRallies
+        {
+            get { return _selected; }
+            set
+            {
+                if (_selected != value)
+                {
+                    _selected = value;
+                    NotifyOfPropertyChange();
+                    Events.PublishOnUIThread(new ResultsChangedEvent(_selected));
+                }
+            }
+        }
+
         #endregion
 
         public MatchManager(IEventAggregator aggregator)
         {
             Events = aggregator;
+            SelectedRallies = new List<Rally>();
         }
 
         #region Business Logic
@@ -105,8 +138,35 @@ namespace TT.Lib.Managers
 
         }
 
+        public IEnumerable<IResult> DownloadMatch()
+        {
+            if (FileName == null || FileName == string.Empty)
+            {
+                var dialog = new SaveFileDialogResult()
+                {
+                    Title = string.Format("Save match \"{0}\"...", Match.Title()),
+                    Filter = Format.XML.DialogFilter,
+                    DefaultFileName = Match.DefaultFilename(),
+                };
+                yield return dialog;
+                FileName = dialog.Result;
+            }
+
+            var serialization = new SerializeMatchResult(Match, FileName, Format.XML.Serializer);
+            yield return serialization
+                .Rescue()
+                .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", FileName))
+                .Propagate(); // Reraise the error to abort the coroutine
+
+            MatchModified = false;
+            NotifyOfPropertyChange("MatchModified");
+
+        }
+
         public IEnumerable<IResult> OpenMatch()
         {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));
+            bool newVideoLoaded = false;
             var dialog = new OpenFileDialogResult()
             {
                 Title = "Open match...",
@@ -119,27 +179,35 @@ namespace TT.Lib.Managers
             yield return deserialization
                 .Rescue()
                 .WithMessage("Error loading the match", string.Format("Could not load a match from {0}.", dialog.Result))
-                .Propagate(); // Reraise the error to abort the coroutine
+                .Propagate(); // Reraise the error to abort the coroutine            
 
-            Match = deserialization.Result;
+            var tempMatch = deserialization.Result;
+
+            if (string.IsNullOrEmpty(tempMatch.VideoFile) || !File.Exists(tempMatch.VideoFile))
+            {
+                foreach (var result in LoadVideo(tempMatch))
+                {
+                    yield return result;
+                }
+                newVideoLoaded = true;
+            }
+            else
+            {
+                Events.PublishOnUIThread(new VideoLoadedEvent(tempMatch.VideoFile));
+                newVideoLoaded = false;
+            }
+
+            this.Match = tempMatch;
+            if (!newVideoLoaded)
+            {
+                MatchModified = false;
+            }
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
             Events.PublishOnUIThread(new FullscreenEvent(false));
-
-            if (string.IsNullOrEmpty(Match.VideoFile) || !File.Exists(Match.VideoFile))
-            {
-                foreach (var result in LoadVideo())
-                {
-                    yield return result;
-                }
-            }
-            else
-            {
-                Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
-                MatchModified = false;
-            }
         }
+
         public IEnumerable<IResult> OpenLiveMatch()
         {
             var dialog = new OpenFileDialogResult()
@@ -161,11 +229,10 @@ namespace TT.Lib.Managers
 
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
-
-
+            MatchModified = false;
         }
 
-        public void DeleteRally(Rally r) //Immer noch die schon gelöschte Rally als Parameter!!!!
+        public void DeleteRally(Rally r)
         {
             if (ActivePlaylist.Name != "Alle")
             {
@@ -175,23 +242,22 @@ namespace TT.Lib.Managers
                 Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                 MatchModified = true;
-                
-
             }
         }
 
         public void RenamePlaylist(string oldName, string newName)
         {
-            if (oldName != "Alle")
+            if (oldName != "Alle" && oldName != "Markiert")
             {
                 Playlist list = Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault();
 
                 if (list != null)
                 {
-                    list.Name = newName;
+                    Match.Playlists.Where(p => p.Name == oldName).FirstOrDefault().Name = newName;
+                    ActivePlaylist = Match.Playlists.Where(p => p.Name == newName).FirstOrDefault();
                     Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                     MatchModified = true;
-                    
+
                 }
             }
         }
@@ -209,6 +275,18 @@ namespace TT.Lib.Managers
             this.MatchModified = false;
         }
 
+        private IEnumerable<IResult> LoadVideo(Match temp)
+        {
+            var videoDialog = new OpenFileDialogResult()
+            {
+                Title = "Open video file...",
+                Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
+            };
+            yield return videoDialog;
+            temp.VideoFile = videoDialog.Result;
+            Events.PublishOnUIThread(new VideoLoadedEvent(temp.VideoFile));
+        }
+
         public IEnumerable<IResult> LoadVideo()
         {
             var videoDialog = new OpenFileDialogResult()
@@ -219,6 +297,7 @@ namespace TT.Lib.Managers
             yield return videoDialog;
             Match.VideoFile = videoDialog.Result;
             Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
+
         }
 
         public MatchPlayer ConvertPlayer(Player p)
@@ -249,5 +328,6 @@ namespace TT.Lib.Managers
         }
 
         #endregion
+
     }
 }

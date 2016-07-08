@@ -32,7 +32,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ToggleButton x:Name="ÜSSL" Style="{StaticResource MetroSpinLeftTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectTopLeft($source)]">
+                <ToggleButton x:Name="TSSL" Style="{StaticResource MetroSpinLeftTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SelectTopLeft($source)]">
                     <ToggleButton.IsChecked>
                         <MultiBinding Converter="{conv:SpinToCheckedConverter}" Mode="OneWay">
                             <Binding Path="Selected" />
@@ -40,7 +40,7 @@
                         </MultiBinding>
                     </ToggleButton.IsChecked>
                 </ToggleButton>
-                <ToggleButton x:Name="ÜL" Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectTop($source)]">
+                <ToggleButton x:Name="TS" Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SelectTop($source)]">
                     <ToggleButton.IsChecked>
                         <MultiBinding Converter="{conv:SpinToCheckedConverter}" Mode="OneWay">
                             <Binding Path="Selected" />
@@ -48,7 +48,7 @@
                         </MultiBinding>
                     </ToggleButton.IsChecked>
                 </ToggleButton>
-                <ToggleButton x:Name="ÜSSR" Style="{StaticResource MetroSpinRightTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectTopRight($source)]">
+                <ToggleButton x:Name="TSSR" Style="{StaticResource MetroSpinRightTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SelectTopRight($source)]">
                     <ToggleButton.IsChecked>
                         <MultiBinding Converter="{conv:SpinToCheckedConverter}" Mode="OneWay">
                             <Binding Path="Selected" />
@@ -107,7 +107,7 @@
                 <Ellipse Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Black" StrokeThickness="2px"/>
             </Grid>
         </Viewbox>
-        <ToggleButton x:Name="Hidden" Grid.Row="1" Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="verdeckt" cal:Message.Attach="[Event Click] = [Action SelectHidden($source)]" >
+        <ToggleButton x:Name="Hidden" Grid.Row="1" Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Content="Hidden" cal:Message.Attach="[Event Click] = [Action SelectHidden($source)]" >
             <ToggleButton.IsChecked>
                 <MultiBinding Converter="{conv:SpinToCheckedConverter}" Mode="OneWay">
                     <Binding Path="Selected" />

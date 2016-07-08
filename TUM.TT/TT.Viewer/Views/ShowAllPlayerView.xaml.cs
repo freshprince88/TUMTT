@@ -23,6 +23,7 @@ namespace TT.Viewer.Views
         public ShowAllPlayerView()
         {
             InitializeComponent();
+            Name = "ShowPlayer";
         }
     }
 }

@@ -26,14 +26,14 @@ namespace TT.Viewer.ViewModels
             {
                 return _selRallies;
             }
-            private set
+            set
             {
                 _selRallies = value;
                 NotifyOfPropertyChange("SelectedRallies");
             }
         }
-        public Stroke.Player Player { get; private set; }
-        public Stroke.Crunch Crunch { get; private set; }
+        public Models.Util.Enums.Stroke.Player Player { get; private set; }
+        public Models.Util.Enums.Stroke.Crunch Crunch { get; private set; }
         public HashSet<int> SelectedSets { get; private set; }
         public int MinRallyLength { get; set; }
         public bool LastStroke { get; set; }
@@ -55,8 +55,8 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             Manager = man;
             SelectedRallies = new List<Rally>();
-            Player = Stroke.Player.None;
-            Crunch = Stroke.Crunch.Not;
+            Player = Models.Util.Enums.Stroke.Player.None;
+            Crunch = Models.Util.Enums.Stroke.Crunch.Not;
             SelectedSets = new HashSet<int>();
 
             Player1 = "Spieler 1";
@@ -180,11 +180,11 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    Crunch = Stroke.Crunch.CrunchTime;
+                    Crunch = Models.Util.Enums.Stroke.Crunch.CrunchTime;
                 }
                 else
                 {
-                    Crunch = Stroke.Crunch.Not;
+                    Crunch = Models.Util.Enums.Stroke.Crunch.Not;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -196,34 +196,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Player == Stroke.Player.None)
-                        Player = Stroke.Player.Player1;
-                    else if (Player == Stroke.Player.Player2)
-                        Player = Stroke.Player.Both;
+                    if (Player == Models.Util.Enums.Stroke.Player.None)
+                        Player = Models.Util.Enums.Stroke.Player.Player1;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Player2)
+                        Player = Models.Util.Enums.Stroke.Player.Both;
                 }
                 else
                 {
-                    if (Player == Stroke.Player.Player1)
-                        Player = Stroke.Player.None;
-                    else if (Player == Stroke.Player.Both)
-                        Player = Stroke.Player.Player2;
+                    if (Player == Models.Util.Enums.Stroke.Player.Player1)
+                        Player = Models.Util.Enums.Stroke.Player.None;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
+                        Player = Models.Util.Enums.Stroke.Player.Player2;
                 }
             }
             else if (source.Name.ToLower().Contains("player2"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Player == Stroke.Player.None)
-                        Player = Stroke.Player.Player2;
-                    else if (Player == Stroke.Player.Player1)
-                        Player = Stroke.Player.Both;
+                    if (Player == Models.Util.Enums.Stroke.Player.None)
+                        Player = Models.Util.Enums.Stroke.Player.Player2;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Player1)
+                        Player = Models.Util.Enums.Stroke.Player.Both;
                 }
                 else
                 {
-                    if (Player == Stroke.Player.Player2)
-                        Player = Stroke.Player.None;
-                    else if (Player == Stroke.Player.Both)
-                        Player = Stroke.Player.Player1;
+                    if (Player == Models.Util.Enums.Stroke.Player.Player2)
+                        Player = Models.Util.Enums.Stroke.Player.None;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
+                        Player = Models.Util.Enums.Stroke.Player.Player1;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -258,6 +258,10 @@ namespace TT.Viewer.ViewModels
             this.events.Subscribe(this);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+            NotifyOfPropertyChange();
+            NotifyOfPropertyChange("SelectedRallies");
+            NotifyOfPropertyChange("Manager.ActivePlaylist");
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnViewReady(object view)
@@ -283,6 +287,7 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
+
         #endregion
 
         #region Helper Methods
@@ -300,13 +305,13 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Player)
             {
-                case Stroke.Player.Player1:
-                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.First;
-                case Stroke.Player.Player2:
-                    return r.Schläge[StrokeNumber].Spieler == MatchPlayer.Second;
-                case Stroke.Player.None:
+                case Models.Util.Enums.Stroke.Player.Player1:
+                    return r.Strokes[StrokeNumber].Player == MatchPlayer.First;
+                case Models.Util.Enums.Stroke.Player.Player2:
+                    return r.Strokes[StrokeNumber].Player == MatchPlayer.Second;
+                case Models.Util.Enums.Stroke.Player.None:
                     return true;
-                case Stroke.Player.Both:
+                case Models.Util.Enums.Stroke.Player.Both:
                     return true;
                 default:
                     return false;
@@ -329,9 +334,9 @@ namespace TT.Viewer.ViewModels
         {
             switch (this.Crunch)
             {
-                case Stroke.Crunch.CrunchTime:
+                case Models.Util.Enums.Stroke.Crunch.CrunchTime:
                     return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
-                case Stroke.Crunch.Not:
+                case Models.Util.Enums.Stroke.Crunch.Not:
                     return true;
                 default:
                     return false;

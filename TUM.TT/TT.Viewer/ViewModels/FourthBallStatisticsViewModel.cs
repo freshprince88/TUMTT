@@ -37,8 +37,8 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             Manager = man;
             X = "";
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
+            Player1 = "Player 1";
+            Player2 = "Player 2";
             BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events, Manager)
             {
                 MinRallyLength = 3,
@@ -186,8 +186,13 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 3 && r.HasPlacementStatistics(3, X) && r.HasBasisInformationStatistics(4, X) && r.HasContactPositionStatistics(3, X) && r.HasTechniqueStatistics(3, X) && r.HasStepAroundStatistics(3, X)).ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(results));
+                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 3 && 
+                r.HasPlacementStatistics(3, X) && 
+                r.HasBasisInformationStatistics(4, X) && 
+                r.HasContactPositionStatistics(3, X) && 
+                r.HasTechniqueStatistics(3, X) && 
+                r.HasStepAroundStatistics(3, X)).ToList();
+                Manager.SelectedRallies = results;
             }
         }
 

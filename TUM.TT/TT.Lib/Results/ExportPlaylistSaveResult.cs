@@ -49,7 +49,7 @@ namespace TT.Lib.Results
         public async void Execute(CoroutineExecutionContext context)
         {
             var shell = (IoC.Get<IShell>() as Screen);
-            dialog = await Dialogs.ShowProgressAsync(shell, "Bitte warten...", "Ballwechsel werden exportiert", false);
+            dialog = await Dialogs.ShowProgressAsync(shell, "Please wait...", "Export is in Progress...", false);
             if (singleRallies != false || rallyCollection != false)
             {
                    await Task.Factory.StartNew(() => ExportVideo(dialog));
@@ -60,17 +60,7 @@ namespace TT.Lib.Results
 
         public void ExportVideo(ProgressDialogController progress)
         {
-            //var ffMpeg2 = new NReco.VideoConverter.FFMpegConverter();
-            //NReco.VideoConverter.ConvertSettings settings2 = new NReco.VideoConverter.ConvertSettings()
-            //{
-            //    VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
-
-            //};
-            //ffMpeg2.ConvertMedia(@"rtmp://cp77194.edgefcs.net/ondemand/mp4:CHANNEL1-Seniors/2016/wttc_kuala_lumpur/t1/160306_t1_chn_jpn_men_match3",
-            //    NReco.VideoConverter.Format.flv,
-            //    @"C:\Users\Michael Fuchs\Desktop\Test3.mp4",
-            //NReco.VideoConverter.Format.mp4,
-            //settings2);
+            
 
             string inputFile = @Manager.Match.VideoFile;
             string videoName = Manager.Match.VideoFile.Split('\\').Last();
@@ -104,9 +94,9 @@ namespace TT.Lib.Results
             {   
 
 
-                progress.SetMessage("Wiedergabeliste '" + Manager.ActivePlaylist.Name + "' wird exportiert: \n\nBallwechsel " + (i + 1) + " wird gerade geschnitten...");
+                progress.SetMessage("Export Playlist '" + Manager.ActivePlaylist.Name + "': \n\nRally " + (i + 1) + " is being created...");
                 Rally curRally = Manager.ActivePlaylist.Rallies[i];
-                string RallyNumber = curRally.Nummer.ToString();
+                string RallyNumber = curRally.Number.ToString();
                 string RallyScore = curRally.CurrentRallyScore.ToString();
                 RallyScore = RallyScore.Replace(":", "-");
                 string SetScore = curRally.CurrentSetScore.ToString();
@@ -114,26 +104,11 @@ namespace TT.Lib.Results
                 string fileName = @Location + @"\#" + RallyNumber + "_" + RallyScore + " (" + SetScore + ").mp4";
                 RallyCollection[i] = fileName;
 
-                //var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
-                //NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
-                //{
-                //    Seek = Convert.ToSingle(curRally.Anfang / 1000),
-                //    MaxDuration = Convert.ToSingle((curRally.Ende - curRally.Anfang) / 1000),
-                //    VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
-                //    CustomOutputArgs = " -filter_complex 'overlay'"
-                //};
-                //FFMpegInput[] ffmpegInput = new NReco.VideoConverter.FFMpegInput[2];
-                //ffmpegInput[0] = new FFMpegInput("");
-                //ffmpegInput[0].Input = String.Format(@Manager.Match.VideoFile);
-                //ffmpegInput[1] = new FFMpegInput("");
-                //ffmpegInput[1].Input = String.Format(@"C:\Users\Michael Fuchs\Desktop\TUM_Logo_weiss_rgb_p.png");
-
-                //ffMpeg.ConvertMedia(ffmpegInput, fileName, NReco.VideoConverter.Format.mp4, settings);
                 var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
                 NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
                 {
-                    Seek = Convert.ToSingle(curRally.Anfang / 1000),
-                    MaxDuration = Convert.ToSingle((curRally.Ende - curRally.Anfang) / 1000),
+                    Seek = Convert.ToSingle(curRally.Start / 1000),
+                    MaxDuration = Convert.ToSingle((curRally.End - curRally.Start) / 1000),
                     VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
 
                 };
@@ -146,7 +121,7 @@ namespace TT.Lib.Results
 
             if (rallyCollection)
             {
-                progress.SetMessage("\nDie Collection wird erstellt! \n\nDies kann leider etwas dauern... ");
+                progress.SetMessage("\n Collection is currently being created! \n\nIt may take a while...");
                 var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
                 ffMpeg.ConvertProgress += UpdateProgress;                
 
@@ -175,7 +150,7 @@ namespace TT.Lib.Results
             {
                 currentProgress = progressBar;
             }
-            dialog.SetMessage("\nDie Collection wird erstellt! \n\nDies kann leider etwas dauern...(" + remainingTime.Minutes+":"+remainingTime.Seconds+ ")");
+            dialog.SetMessage("\nCollection is currently being created! \n\nIt may take a while...(" + remainingTime.Minutes+":"+remainingTime.Seconds+ ")");
             dialog.SetProgress(currentProgress);
             
         }

@@ -238,11 +238,40 @@ namespace TT.Models
                 {
                     foreach (var r in p.Rallies)
                     {
-                        r.Anfang -= diff;
-                        r.Ende -= diff;
+                        r.Start -= diff;
+                        r.End -= diff;
                     }
                 }
             }
+        }
+        /// <summary>
+        /// Sets video offset for Start of the Rally 
+        /// </summary>
+        public void StartOffset(double offset)
+        {
+            foreach (var p in Playlists)
+            {
+                foreach (var r in p.Rallies)
+                {
+                    r.Start += offset;
+
+                }
+            }
+        }
+        /// <summary>
+        /// Sets video offset for End of the Rally 
+        /// </summary>
+        public void EndOffset(double offset)
+        {
+            foreach (var p in Playlists)
+            {
+                foreach (var r in p.Rallies)
+                {
+
+                    r.End += offset;
+                }
+            }
+
         }
 
         /// <summary>

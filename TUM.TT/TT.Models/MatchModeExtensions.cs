@@ -33,6 +33,101 @@ namespace TT.Models
         [Description("Best of 7")]
         BestOf7,
     }
+    /// <summary>
+    /// The Round in a Tournament.
+    /// </summary>
+    public enum MatchRound
+    {
+        /// <summary>
+        /// Round.
+        /// </summary>
+        [Description("Round")]
+        Round,
+        /// <summary>
+        /// Final.
+        /// </summary>
+        [Description("Final")]
+        Final,
+        /// <summary>
+        /// Semifinal.
+        /// </summary>
+        [Description("Semifinal")]
+        Semifinal,
+        /// <summary>
+        /// Quarterfinal.
+        /// </summary>
+        [Description("Quarterfinal")]
+        Quarterfinal,
+        /// <summary>
+        /// Round of 16.
+        /// </summary>
+        [Description("Round of 16")]
+        R16,
+        /// <summary>
+        /// Round of 32.
+        /// </summary>
+        [Description("Round of 32")]
+        R32,
+        /// <summary>
+        /// Round of 64.
+        /// </summary>
+        [Description("Round of 64")]
+        R64,
+        /// <summary>
+        /// PreRounds.
+        /// </summary>
+        [Description("PreRounds")]
+        PreRounds,
+        /// <summary>
+        /// Group Stage.
+        /// </summary>
+        [Description("Group Stage/Qualification")]
+        GroupStage,
+    }
+
+    /// <summary>
+    /// The Round in a Tournament.
+    /// </summary>
+    public enum MatchCompetition
+    {
+        /// <summary>
+        /// Competition.
+        /// </summary>
+        [Description("Men's Singles")]
+        Competition,
+        /// <summary>
+        /// Men's Singles.
+        /// </summary>
+        [Description("Men's Singles")]
+        MS,
+        /// <summary>
+        /// Women's Singles.
+        /// </summary>
+        [Description("Women's Singles")]
+        WS,
+        /// <summary>
+        /// U21 Men's Singles.
+        /// </summary>
+        [Description("U21 Men's Singles")]
+        BS,
+        /// <summary>
+        /// U21 Women's Singles.
+        /// </summary>
+        [Description("U21 Women's Singles")]
+        GS,
+        /// <summary>
+        /// Men's Doubles.
+        /// </summary>
+        [Description("Men's Doubles")]
+        MD,
+        /// <summary>
+        /// Women's Doubles.
+        /// </summary>
+        [Description("Women's Doubles")]
+        WD,
+      
+    }
+
 
     /// <summary>
     /// Extensions for <see cref="MatchMode"/>.

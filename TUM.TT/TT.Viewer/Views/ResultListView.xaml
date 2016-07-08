@@ -39,18 +39,21 @@
             </Label>
             <Border Height="2" Background="{DynamicResource AccentColorBrush}" />
         </StackPanel>-->
-        <ListView x:Name="Items"
+        <ListView x:Name="List"
             Grid.Row="2"
             Margin="0"
             BorderThickness="0"
             SelectedIndex="0"
-            ctrl:ListViewLayoutManager.Enabled="true" 
-            util:GridViewSort.ShowSortGlyph="False"
+             
+            ctrl:ListViewLayoutManager.Enabled="True" 
+            util:GridViewSort.ShowSortGlyph="True"
             util:GridViewSort.AutoSort="True"
             dd:DragDrop.IsDragSource="True"
             dd:DragDrop.IsDropTarget="False"
-            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)]; 
-                  [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)]" >
+            ItemsSource="{Binding Items}"
+            cal:Message.Attach="[Event SelectionChanged ] = [Action ListItemSelected($eventArgs)];                  
+                  [Event PreviewMouseRightButtonDown ] = [Action RightMouseDown($eventArgs)];" >
+            <!--[Event PreviewMouseDoubleClick] = [Action ListItemSelected($eventArgs)];-->
             
             <ListView.View>
                 <GridView x:Name="HitlistGrid">
@@ -63,19 +66,19 @@
                                 util:GridViewSort.PropertyName="Score"  
                                 ctrl:ProportionalColumn.Width="2"/>
                     <GridViewColumn x:Name="Column2" DisplayMemberBinding="{Binding Sets}"
-                                            Header="Sätze" 
+                                            Header="Sets" 
                                 util:GridViewSort.PropertyName="Sets"
                                 ctrl:ProportionalColumn.Width="2"/>
                     <GridViewColumn x:Name="Column3" DisplayMemberBinding="{Binding Server}"
-                                            Header="Aufschlag" 
+                                            Header="Server" 
                                 util:GridViewSort.PropertyName="Server"
                                 ctrl:ProportionalColumn.Width="3"/>
                     <GridViewColumn x:Name="Column4" DisplayMemberBinding="{Binding Point}"
-                                            Header="Punkt" 
+                                            Header="Point" 
                                 util:GridViewSort.PropertyName="Point"
                                 ctrl:ProportionalColumn.Width="3"/>
                     <GridViewColumn x:Name="Column5" DisplayMemberBinding="{Binding Length}"
-                                            Header="Länge" 
+                                            Header="Length" 
                                 util:GridViewSort.PropertyName="Length"
                                 ctrl:ProportionalColumn.Width="2"/>
                 </GridView>

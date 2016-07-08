@@ -13,7 +13,7 @@ namespace TT.Lib.Events
         /// Initializes a new instance of the <see cref="RalliesEvent"/> class.
         /// </summary>
         /// <param name="match">The match.</param>
-        protected RalliesEvent(Rally[] rallies)
+        protected RalliesEvent(IEnumerable<Rally> rallies)
         {
             this.Rallies = rallies;
         }
@@ -21,6 +21,6 @@ namespace TT.Lib.Events
         /// <summary>
         /// Gets the match affected by this event.
         /// </summary>
-        public Rally[] Rallies { get; private set; }
+        public IEnumerable<Rally> Rallies { get; private set; }
     }
 }

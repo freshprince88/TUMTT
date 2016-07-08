@@ -36,13 +36,13 @@ namespace TT.Scouter.ViewModels
         }
         
 
-        public Schlag CurrentStroke
+        public Stroke CurrentStroke
         {
             get { return remoteViewModel.SchlagView.CurrentStroke; }
             set { remoteViewModel.SchlagView.CurrentStroke = value;  }
         }
 
-        public ObservableCollection<Schlag> Strokes
+        public ObservableCollection<Stroke> Strokes
         {
             get
             {
@@ -88,16 +88,16 @@ namespace TT.Scouter.ViewModels
 
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)
         {
-            if (CurrentStroke.Nummer > DrawnStrokes.Count)
+            if (CurrentStroke.Number > DrawnStrokes.Count)
             {
-                while (CurrentStroke.Nummer > DrawnStrokes.Count)
+                while (CurrentStroke.Number > DrawnStrokes.Count)
                 {
                     DrawnStrokes.Add(createDrawElementAtPosition(Visibility.Hidden));
                 }
             }
 
-            DrawElement dE = DrawnStrokes[CurrentStroke.Nummer - 1];
-            dE.text = CurrentStroke.Nummer.ToString();
+            DrawElement dE = DrawnStrokes[CurrentStroke.Number - 1];
+            dE.text = CurrentStroke.Number.ToString();
             putGridToPosition(args.Position, dE);
             dE.g.Visibility = Visibility.Visible;
             dE.e.Visibility = Visibility.Visible;
@@ -138,15 +138,15 @@ namespace TT.Scouter.ViewModels
             if (isEllipseDragged)
             {
                 isEllipseDragged = false;
-                Grid draggedGrid = DrawnStrokes[CurrentStroke.Nummer - 1].g;
+                Grid draggedGrid = DrawnStrokes[CurrentStroke.Number - 1].g;
 
-                Platzierung p = new Platzierung();
+                Placement p = new Placement();
                 // reversed the Method putEllipseToPosition()
                 double x = draggedGrid.Margin.Left + (draggedGrid.Width / 2);
                 double y = draggedGrid.Margin.Top + (draggedGrid.Height / 2);
                 p.WX = x / ((double)305/152.5);
                 p.WY = y / ((double)548 / (double)274);
-                CurrentStroke.Platzierung = p;
+                CurrentStroke.Placement = p;
             }
         }
 
@@ -154,7 +154,7 @@ namespace TT.Scouter.ViewModels
         {
             if (isEllipseDragged == true)
             {
-                Grid g = DrawnStrokes[CurrentStroke.Nummer - 1].g;
+                Grid g = DrawnStrokes[CurrentStroke.Number - 1].g;
 
                 Point p = e.GetPosition((IInputElement)sender);
 

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Controls;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 using TT.Models;
 
 namespace TT.Scouter.Views
@@ -13,12 +14,14 @@ namespace TT.Scouter.Views
         IHandle<ResultListControlEvent>
     {
         public IEventAggregator Events { get; private set; }
+        public IMatchManager Manager { get; private set; }
 
         public RemoteView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
+            Manager = IoC.Get<IMatchManager>();
         }
 
 
@@ -32,13 +35,9 @@ namespace TT.Scouter.Views
             {
                 if (newSelection != null)
                 {
-                    Events.PublishOnUIThread(new VideoPlayEvent()
-                    {
-                        Current = newSelection
-                    });
+                    Manager.ActiveRally = newSelection;
                 }
             }
-
         }
     }
 }

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace TT.Scouter.Views
 {
     /// <summary>
-    /// Interaction logic for RemoteSchlagView.xaml
+    /// Interaktionslogik für RemoteStrokeView.xaml
     /// </summary>
-    public partial class RemoteSchlagView : UserControl
+    public partial class RemoteStrokeView : UserControl
     {
-        public RemoteSchlagView()
+        public RemoteStrokeView()
         {
             InitializeComponent();
         }

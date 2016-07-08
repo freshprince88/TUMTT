@@ -21,6 +21,7 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Length> SelectedStrokeLength { get; set; }
         public int StrokeNumber { get; set; }  
         public bool lastStroke { get; set; }
+        public Dictionary<string, int> PositionCounts { get; set; }
         public string name
         {
             get; set;
@@ -49,6 +50,16 @@ namespace TT.Viewer.ViewModels
             StrokeNumber = 0;
             lastStroke = false;
             this.events = eventAggregator;
+            PositionCounts = new Dictionary<string, int>();
+            PositionCounts.Add("BotLeft", 0);
+            PositionCounts.Add("BotMid", 0);
+            PositionCounts.Add("BotRight", 0);
+            PositionCounts.Add("MidLeft", 0);
+            PositionCounts.Add("MidMid", 0);
+            PositionCounts.Add("MidRight", 0);
+            PositionCounts.Add("TopLeft", 0);
+            PositionCounts.Add("TopMid", 0);
+            PositionCounts.Add("TopRight", 0);
             SelectedStrokeLength = new HashSet<Positions.Length>();
             SelectedPositions = new HashSet<Positions.Table>();
         }
@@ -140,17 +151,17 @@ namespace TT.Viewer.ViewModels
                 if (lastStroke == false)
                 {
 
-                    topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsTopLeft()).Count();
-                    topMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsTopMid()).Count();
-                    topRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsTopRight()).Count();
+                    topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsTopLeft()).Count();
+                    topMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsTopMid()).Count();
+                    topRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsTopRight()).Count();
 
-                    midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsMidLeft()).Count();
-                    midMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsMidMid()).Count();
-                    midRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsMidRight()).Count();
+                    midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsMidLeft()).Count();
+                    midMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsMidMid()).Count();
+                    midRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsMidRight()).Count();
 
-                    botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsBotLeft()).Count();
-                    botMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsBotMid()).Count();
-                    botRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Schläge[StrokeNumber].IsBotRight()).Count();
+                    botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotLeft()).Count();
+                    botMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotMid()).Count();
+                    botRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotRight()).Count();
                 }
                 else
                 {
@@ -168,18 +179,16 @@ namespace TT.Viewer.ViewModels
 
                 }
             }
-            Dictionary<string, int> positionKeys = new Dictionary<string, int>();
-            positionKeys.Add("BotLeft", botLeft);
-            positionKeys.Add("BotMid", botMid);
-            positionKeys.Add("BotRight", botRight);
-            positionKeys.Add("MidLeft", midLeft);
-            positionKeys.Add("MidMid", midMid);
-            positionKeys.Add("MidRight", midRight);
-            positionKeys.Add("TopLeft", topLeft);
-            positionKeys.Add("TopMid", topMid);
-            positionKeys.Add("TopRight", topRight);
-
-            events.PublishOnUIThread(new ShowTableNumbersEvent(positionKeys));
+            PositionCounts["BotLeft"] = botLeft;
+            PositionCounts["BotMid"] = botMid;
+            PositionCounts["BotRight"] = botRight;
+            PositionCounts["MidLeft"] = midLeft;
+            PositionCounts["MidMid"] = midMid;
+            PositionCounts["MidRight"] = midRight;
+            PositionCounts["TopLeft"] = topLeft;
+            PositionCounts["TopMid"] = topMid;
+            PositionCounts["TopRight"] = topRight;
+            NotifyOfPropertyChange("PositionCounts");
         }
 
 

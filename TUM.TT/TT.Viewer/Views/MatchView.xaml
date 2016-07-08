@@ -9,28 +9,31 @@
         <Grid x:Name="MainGrid">
             <Grid.ColumnDefinitions>
                 <!--<ColumnDefinition x:Name="Column1" Width="{Binding Path=IsExpanded, ElementName=FilterView, Converter={StaticResource c2tc}}"/>-->
-                <ColumnDefinition x:Name="Column1" Width="*"   MaxWidth="400"/>
+                <ColumnDefinition x:Name="Column0" Width="*"   MaxWidth="400"/>
                 <!--MinWidth="270"-->
+                <ColumnDefinition x:Name="Column1" Width="*"/>
                 <ColumnDefinition x:Name="Column2" Width="*"/>
-                <ColumnDefinition x:Name="Column3" Width="*"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
                 <ContentControl x:Name="FilterStatisticsView" Grid.Column="0"/>
             </Border>
-            <Border Grid.Column="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
+            <Grid x:Name="ResultListGrid" Grid.Column="1" Panel.ZIndex="1" >
+                <Border  BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
                 <ContentControl x:Name="ResultView" Grid.Column="1"/>
             </Border>
+            </Grid>
 
-            <Grid x:Name="Column2Grid" Grid.Column="2">
+            <Grid x:Name="MediaGrid" Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" x:Name="Row2" />
-                    <RowDefinition Height="*" x:Name="Row3" />
+                    <RowDefinition Height="*" x:Name="MediaRow1" />
+                    <RowDefinition Height="*" x:Name="MediaRow2" />
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
-                    <ContentControl x:Name="MediaView"/>
+                    <ContentControl x:Name="MediaPlayer"/>
                 </Border>
+                
                 <Border  Grid.Row="1" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <ContentControl x:Name="PlaylistView" />
                 </Border>

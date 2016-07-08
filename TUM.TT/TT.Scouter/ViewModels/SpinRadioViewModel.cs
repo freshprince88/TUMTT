@@ -1,54 +1,80 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using TT.Lib.Managers;
+using TT.Models;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using TT.Models.Util.Enums;
 
 namespace TT.Scouter.ViewModels
 {
     public class SpinRadioViewModel : Screen
     {
-        public TT.Models.Schlag Stroke { get; set; }
 
-        public SpinRadioViewModel(TT.Models.Schlag s)
+        private IMatchManager MatchManager;
+        public ServiceDetailViewModel ServiceDetailView { get; private set;}
+       
+        public SpinRadioViewModel(IMatchManager man, ServiceDetailViewModel sdv)
         {
-            Stroke = s;
+            MatchManager = man;
+            ServiceDetailView = sdv;
         }
 
-        public void Checked(RoutedEventArgs e)
+        #region Caliburn Hooks
+
+        /// <summary>
+        /// Initializes this view model.
+        /// </summary>
+        /// 
+
+        protected override void OnInitialize()
         {
-            if(e.Source.GetType().Equals(typeof(RadioButton)))
+            base.OnInitialize();
+        }
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            // Subscribe ourself to the event bus
+            //this.events.Subscribe(this);
+        }
+
+
+        /// <summary>
+        /// Handles deactivation of this view model.
+        /// </summary>
+        /// <param name="close">Whether the view model is closed</param>
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            // Unsubscribe ourself to the event bus
+            //this.events.Unsubscribe(this);
+        }
+        #endregion
+
+        #region View Methods
+
+        public void SelectSpin(ToggleButton source)
+        {
+
+            ServiceDetailView.SelectSpin(source);
+        }
+
+        #endregion
+
+
+            #region Helper Methods
+        public void MutualExclusiveToggleButtonClick(Grid parent, ToggleButton tb)
+        {
+            foreach (ToggleButton btn in parent.FindChildren<ToggleButton>())
             {
-                RadioButton rb = (RadioButton)e.Source;
-                TT.Models.Spin newSpin = new TT.Models.Spin();
-
-                if (rb.Name.Contains("ÜS"))
-                    newSpin.ÜS = "1";
-                else
-                    newSpin.ÜS = "0";
-
-                if (rb.Name.Contains("US"))
-                    newSpin.US = "1";
-                else
-                    newSpin.US = "0";
-
-                if (rb.Name.Contains("SL"))
-                    newSpin.SL = "1";
-                else
-                    newSpin.SL = "0";
-
-                if (rb.Name.Contains("SR"))
-                    newSpin.SR = "1";
-                else
-                    newSpin.SR = "0";
-
-                if (rb.Name.Contains("No"))
-                    newSpin.No = "1";
-                else
-                    newSpin.No = "0";
-
-                Stroke.Spin = newSpin;
+                if (btn.Name != tb.Name)
+                    btn.IsChecked = false;
             }
+
         }
+        #endregion
+
     }
 }

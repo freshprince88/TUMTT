@@ -10,6 +10,10 @@ namespace TT.Lib.Managers
 
         Playlist ActivePlaylist { get; set; }
 
+        Rally ActiveRally { get; set; }
+
+        IEnumerable<Rally> SelectedRallies { get; set; }
+
         string FileName { get; set; }
 
         bool MatchModified { get; set; }

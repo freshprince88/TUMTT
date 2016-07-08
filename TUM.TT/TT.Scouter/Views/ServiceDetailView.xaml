@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:local="clr-namespace:TT.Scouter.Views"
              mc:Ignorable="d" 
@@ -18,133 +19,322 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Label Content="Aufschlag" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-        <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="7*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Label Content="Spieler: " HorizontalAlignment="Center"/>
-            <Label Content="{Binding Path=CurrentStroke.SpielerString}" HorizontalAlignment="Center"/>
-            <Line Grid.Row="1" Grid.ColumnSpan="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-        <Grid x:Name="TecGrid" Grid.Row="2" Margin="0 5 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="FilterForehandButton"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
-            </ToggleButton>
-            <ToggleButton x:Name="FilterBackhandButton" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
-                <TextBlock FontSize="16"><Run Text="RH"/></TextBlock>
-            </ToggleButton>
-            <RadioButton x:Name="Pendulum" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Pendulum" Grid.Row="1"  MinWidth="90" />
-            <RadioButton x:Name="Reverse" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Gegenläufer" Grid.Row="1" Grid.Column="1" MinWidth="90" />
-            <RadioButton x:Name="Tomahawk" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Tomahawk" Grid.Row="2" MinWidth="90" />
-            <RadioButton x:Name="Special" GroupName="Tec" Style="{StaticResource MetroAccentRadio}" Height="30" Content="Spezial" Grid.Row="2" Grid.Column="1" MinWidth="90" />
-            <Line Grid.Row="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Label Content="Spin: " FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <ContentControl x:Name="SpinControl" Grid.Column="1"/>
-            <Line Grid.Row="1" Grid.ColumnSpan="2" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-        
-        <Grid Grid.Row="4">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label Content="Qualität" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="12"/>
-            <RadioButton Content="Gut" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="Normal" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30" IsChecked="True"/>
-            <RadioButton Content="Schlecht" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <Line Grid.Row="2" Grid.ColumnSpan="3" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
-
-        <Grid Grid.Row="5">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition />
                 <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label Content="Platzierungen" HorizontalAlignment="Center"/>
-            <ContentControl x:Name="TableControl" Grid.Row="1"/>
-            <Line Grid.Row="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-        <Grid Grid.Row="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="7*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Besonderes: " HorizontalAlignment="Center"/>
-            <ComboBox Grid.Column="1" Margin="5 5 5 5"/>
-            <Line Grid.Row="1"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        </Grid>
+            <Label Content="Service" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Line Grid.Row="0" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 0 0 5"/>
+                <Label Grid.Row="1" Content="Player:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                <Button Grid.Row="1" Grid.Column="1" Margin="5 0 5 0"  Content="{Binding Path=PlayerName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" IsEnabled="False" />
+                <Line Grid.Row="2" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            </Grid>
 
-        <Grid Grid.Row="7">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <RadioButton Content="Netz/Aus" GroupName="quality" Grid.Row="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="Weiter" GroupName="quality" Grid.Row="1" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <RadioButton Content="Punkt" GroupName="quality" Grid.Row="1" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" Height="30"/>
-            <Line Grid.Row="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            <Grid x:Name="SideGrid" Grid.Row="2" Margin="0 5 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ToggleButton x:Name="Forehand"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                              cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
+                    <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Side" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SideGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="Backhand" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                              cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
+                    <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Side" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SideGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <Line Grid.Row="1" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            </Grid>
+
+            <Grid x:Name="TecGrid" Grid.Row="3" Margin="0 5 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ToggleButton x:Name="Pendulum" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Pendulum" Grid.Row="1"  MinWidth="90"
+                              cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Servicetechnique" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="Reverse" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Reverse" Grid.Row="1" Grid.Column="1" MinWidth="90" 
+                              cal:Message.Attach="[Event Click] = [Action SelectService($source)]" VerticalAlignment="Top">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Servicetechnique" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="Tomahawk" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Tomahawk" Grid.Row="2" MinWidth="90" 
+                              cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Servicetechnique" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="Special" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Special" Grid.Row="2" Grid.Column="1" MinWidth="90" 
+                              cal:Message.Attach="[Event Click] = [Action SelectService($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:ServiceToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="Stroke.Servicetechnique" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=TecGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <Line Grid.Row="3" Grid.ColumnSpan="2"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Content="Placement" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                    <ContentControl x:Name="TableControl" Grid.Row="1"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"  />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="Spin" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
+                        <ContentControl x:Name="SpinControl" Grid.Row="1"/>
+                    </Grid>
+                    <Line Grid.Row="1" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+                    <Grid x:Name="QualityGrid" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="Quality" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                        <ToggleButton x:Name="good" Content="good"  Grid.Row="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectQuality($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:QualityToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Quality" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=QualityGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                        <ToggleButton x:Name="normal" Content="normal" Grid.Row="2" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectQuality($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:QualityToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Quality" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=QualityGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                        <ToggleButton x:Name="bad" Content="bad" Grid.Row="3" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
+                                      cal:Message.Attach="[Event Click] = [Action SelectQuality($source)]">
+                            <ToggleButton.IsChecked>
+                                <MultiBinding Converter="{conv:QualityToBoolScouterConverter}" Mode="OneWay">
+                                    <Binding Path="Stroke.Quality" />
+                                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                </MultiBinding>
+                            </ToggleButton.IsChecked>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                        <cal:Parameter Value="{Binding ElementName=QualityGrid}" />
+                                        <cal:Parameter Value="$source" />
+                                    </cal:ActionMessage>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                    </Grid>
+                    <Line Grid.Row="3" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+                    <Grid x:Name="SpecialsGrid" Grid.Row="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Content="Specials" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontStyle="Italic"/>
+                        <ComboBox Grid.Row="1" Margin="5 5 5 5"/>
+                    </Grid>
+                </Grid>
+                <Line Grid.Row="1" Grid.ColumnSpan="2" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+            </Grid>
+
+            <Grid x:Name="CourseGrid" Grid.Row="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="NetOut" GroupName="Course" Content="Net/Out" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" 
+                             Height="30" IsEnabled="{Binding ElementName=NetOut, Path=IsChecked}"
+                             cal:Message.Attach="[Event Checked] = [Action SelectCourse($source)]">
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:CourseToBoolScouterConverter}" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="CurrentRally.Length" />
+                            <Binding Path="Stroke.Number" />
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Stroke.Player" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton x:Name="continue" GroupName="Course" Content="continue" Grid.Column="1" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center" 
+                             Height="30" IsEnabled="{Binding ElementName=continue, Path=IsChecked}"
+                             cal:Message.Attach="[Event Checked] = [Action SelectCourse($source)]">
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:CourseToBoolScouterConverter}" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="CurrentRally.Length" />
+                            <Binding Path="Stroke.Number" />
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Stroke.Player" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+                <RadioButton x:Name="Winner" GroupName="Course" Content="Winner" Grid.Column="2" Style="{StaticResource MetroAccentRadio}" HorizontalContentAlignment="Center"
+                             Height="30" IsEnabled="{Binding ElementName=Winner, Path=IsChecked}"
+                             cal:Message.Attach="[Event Checked] = [Action SelectCourse($source)]">
+                    <RadioButton.IsChecked>
+                        <MultiBinding Converter="{conv:CourseToBoolScouterConverter}" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="CurrentRally.Length" />
+                            <Binding Path="Stroke.Number" />
+                            <Binding Path="CurrentRally.Winner" />
+                            <Binding Path="Stroke.Player" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </RadioButton.IsChecked>
+                </RadioButton>
+            </Grid>
         </Grid>
-        
-    </Grid>
+    </ScrollViewer>
 </UserControl>

@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Timers;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 
 namespace TT.Scouter.ViewModels
 {
@@ -37,6 +37,38 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+
+        private double _min;
+        public double Minimum
+        {
+            get
+            {
+                return _min;
+            }
+            set
+            {
+                if (_min != value)
+                    _min = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private double _max;
+        public double Maximum
+        {
+            get
+            {
+                return _max;
+            }
+            set
+            {
+                if (_max != value)
+                    _max = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public bool toRallyStart { get; set; }
 
         public LiveTimerViewModel()
         {

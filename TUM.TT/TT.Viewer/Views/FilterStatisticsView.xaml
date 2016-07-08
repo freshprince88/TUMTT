@@ -16,8 +16,8 @@
         </Grid.RowDefinitions>
         
         <TabControl  x:Name="FilterStatisticsSwitch" Grid.Row="0"   Controls:TabControlHelper.IsUnderlined="True" TabStripPlacement="Top" cal:Message.Attach="[Event SelectionChanged] = [Action FilterStatisticsSelected ($eventArgs)]">
-            <TabItem x:Name="FilterTab" Header=" Filter"/>
-            <TabItem x:Name="StatisticsTab" Header="Statistik"/>
+            <TabItem x:Name="FilterTab" Header="Filter"/>
+            <TabItem x:Name="StatisticsTab" Header="Statistics"/>
         </TabControl>
 
         <ContentControl Grid.Row="2" x:Name="ActiveItem" />

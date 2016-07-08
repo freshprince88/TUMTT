@@ -113,19 +113,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\AggressionToBoolConverter.cs" />
+    <Compile Include="Converters\AggressivenessToBoolConverter.cs" />
+    <Compile Include="Converters\AggressivenessToBoolScouterConverter.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BoolNotConverter.cs" />
     <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\CourseToBoolScouterConverter.cs" />
     <Compile Include="Converters\CrunchToBoolConverter.cs" />
+    <Compile Include="Converters\CurrentRallyServerToBallIsVisibleConverter.cs" />
     <Compile Include="Converters\CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
     <Compile Include="Converters\ForeBackHandToBoolConverter.cs" />
     <Compile Include="Converters\MatchPlayerToVisibilityConverter.cs" />
     <Compile Include="Converters\MinRallyLengthToVisibleConverter.cs" />
+    <Compile Include="Converters\NumAndLengthToLastVisibilityConverter.cs" />
     <Compile Include="Converters\PlayerP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\PointP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\QualityToBoolConverter.cs" />
+    <Compile Include="Converters\QualityToBoolScouterConverter.cs" />
     <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
     <Compile Include="Converters\MatchPlayerToStringConverter.cs" />
     <Compile Include="Converters\MSToTimeConverter.cs" />
@@ -134,23 +140,31 @@
     <Compile Include="Converters\RallyLengthToBoolConverter.cs" />
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
+    <Compile Include="Converters\ServiceToBoolScouterConverter.cs" />
     <Compile Include="Converters\SetToBoolConverter.cs" />
+    <Compile Include="Converters\SideToBoolScouterConverter.cs" />
     <Compile Include="Converters\SpecialToBoolConverter.cs" />
+    <Compile Include="Converters\SpinToBoolScouterConverter.cs" />
     <Compile Include="Converters\SpinToCheckedConverter.cs" />
     <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="Converters\StepAroundToBoolConverter.cs" />
+    <Compile Include="Converters\StrokeTechniqueToBoolScouterConverter.cs" />
     <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
+    <Compile Include="Converters\TablePositionCountConverter.cs" />
     <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
     <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingRowConverter.cs" />
     <Compile Include="Converters\TechniqueCountToRankingColumnConverter.cs" />
     <Compile Include="Converters\TechniqueToBoolConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
+    <Compile Include="Converters\TwoBoolToBoolConverter.cs" />
     <Compile Include="Events\StrokePositionCalculatedEventArgs.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
+    <Compile Include="Events\DeactivationEvent.cs" />
     <Compile Include="Events\DeleteLinesEvent.cs" />
     <Compile Include="Events\DrawLineEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />
+    <Compile Include="Events\FullscreenHideAllEvent.cs" />
     <Compile Include="Events\HideMenuEvent.cs" />
     <Compile Include="Events\MatchEvent.cs" />
     <Compile Include="Events\MatchOpenedEvent.cs" />
@@ -161,7 +175,9 @@
     <Compile Include="Events\PlaylistDeletedEvent.cs" />
     <Compile Include="Events\PlaylistEvent.cs" />
     <Compile Include="Events\PlaylistSelectionChangedEvent.cs" />
+    <Compile Include="Events\PlayModeEvent.cs" />
     <Compile Include="Events\RalliesEvent.cs" />
+    <Compile Include="Events\RalliesStrokesAddedEvent.cs" />
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\RallyOverEvent.cs" />
     <Compile Include="Events\ResultListControlEvent.cs" />
@@ -176,11 +192,16 @@
     <Compile Include="Events\TableViewSelectionChangedEvent.cs" />
     <Compile Include="Events\VideoControlEvent.cs" />
     <Compile Include="Events\VideoLoadedEvent.cs" />
-    <Compile Include="Events\VideoPlayEvent.cs" />
+    <Compile Include="Events\ActiveRallyChangedEvent.cs" />
+    <Compile Include="Events\WebBrowserEvent.cs" />
     <Compile Include="Interactivity\FocusBehavior.cs" />
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
     <Compile Include="Interactivity\InputBindingTrigger.cs" />
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
+    <Compile Include="Util\Interfaces\IMediaPosition.cs" />
+    <Compile Include="Util\ObservableSortedList.cs" />
+    <Compile Include="Webbrowser\Test.cs" />
+    <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />
     <Compile Include="Managers\IMatchManager.cs" />
     <Compile Include="Managers\MatchManager.cs" />
@@ -224,7 +245,6 @@
     <Compile Include="Converters\Visibility2BoolConverter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Util\Interfaces\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>

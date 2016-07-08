@@ -22,19 +22,18 @@
     </UserControl.Resources>
 
     <Viewbox Stretch="Uniform">
-        <Border BorderThickness="3 3 3 3" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid Name="OuterFieldGrid" Width="394" Height="750">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="150"/>
-                </Grid.RowDefinitions>
+        <Grid Name="OuterFieldGrid" Width="394" Height="750">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
 
                 <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
                     <Grid.RowDefinitions>
@@ -52,24 +51,24 @@
                     <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" cal:Message.Attach="[Event Checked] = [Action ChangePositionPlayer(hinter)]"/>
                 </Grid>
 
-                <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
-                    <Grid Name="InnerFieldGrid">
+            <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
+                <Grid Name="InnerFieldGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="Visible">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
-
-                        <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="Visible">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
                             <RadioButton x:Name="TopLeft_top" Content="1" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(0,0)]"/>
                             <RadioButton x:Name="TopMid_top" Content="2" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30"  Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(75,0)]"/>
@@ -104,10 +103,9 @@
                             <RadioButton x:Name="TopLeft_bot" Content="1" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" cal:Message.Attach="[Event Checked] = [Action ChangePositionStroke(150,270)]"/>
                         </Grid>
 
-                    </Grid>
-                </Border>
-                <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
-            </Grid>
-        </Border>
+                </Grid>
+            </Border>
+            <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
+        </Grid>
     </Viewbox>
 </UserControl>

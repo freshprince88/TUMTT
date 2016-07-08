@@ -15,41 +15,42 @@ using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ResultListViewModel : Conductor<IScreen>.Collection.AllActive, IResultViewTabItem,
+    public class ResultListViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
-        IHandle<FullscreenEvent>
+        IHandle<FullscreenEvent>,
+        IHandle<MediaControlEvent>
     {
         public string Header { get; set; }
-        public string Player1 {get; set;}
+        public string Player1 { get; set; }
         public string Player2 { get; set; }
         public int PointsPlayer1 { get; set; }
         public int PointsPlayer2 { get; set; }
         public int totalRalliesCount { get; set; }
-        //public ResultMiniStatisticViewModel MiniStatistic { get; set; }
-        
 
-        private IEventAggregator events;
-        private IDialogCoordinator dialogs;
-        private IMatchManager manager;
+        private IEventAggregator Events;
+        private IDialogCoordinator Dialogs;
+        private IMatchManager Manager;
         private int count;
+
+        public ObservableCollection<ResultListItem> Items { get; set; }
+        public List<Rally> Rallies { get; set; }
 
 
         public ResultListViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
             this.DisplayName = "Hitlist";
             Header = "Hitlist (" + count + ")";
-            events = e;
-            dialogs = c;
-            manager = man;
+            Events = e;
+            Dialogs = c;
+            Manager = man;
             count = 0;
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
+            Player1 = "Player 1";
+            Player2 = "Player 2";
             PointsPlayer1 = 0;
             PointsPlayer2 = 0;
             totalRalliesCount = 0;
-
-            //MiniStatistic = new ResultMiniStatisticViewModel(this.events, manager);
-
+            Items = new ObservableCollection<ResultListItem>();
+            Rallies = new List<Rally>();
         }
 
         #region View Methods
@@ -59,46 +60,46 @@ namespace TT.Viewer.ViewModels
             ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
             if (item != null)
             {
-                this.events.PublishOnUIThread(new VideoPlayEvent()
-                {
-                    Current = item.Rally
-                });
-            }           
+                Manager.ActiveRally = item.Rally;
+            }
         }
 
         public void RightMouseDown(MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
-        
-
         #endregion
 
         #region Event Handlers
 
         public void Handle(ResultsChangedEvent message)
         {
-
-            for (int i = Items.Count - 1; i >= 0; i--)
+            List<ResultListItem> temp = new List<ResultListItem>();
+            Rallies = message.Rallies.ToList();
+            foreach (var rally in Rallies)
             {
-                this.DeactivateItem(Items[i], true);
+                temp.Add(new ResultListItem(rally));
             }
 
-            foreach (var rally in message.Rallies)
-            {
-                this.ActivateItem(new ResultListItem(rally));
-            }
-            
-            count=this.Items.Count();
+            Items = new ObservableCollection<ResultListItem>(temp);
+            NotifyOfPropertyChange("Items");
+
+            //for (int i = Items.Count - 1; i >= 0; i--)
+            //{
+            //    this.DeactivateItem(Items[i], true);
+            //}
+
+            //foreach (var rally in message.Rallies)
+            //{
+            //    this.ActivateItem(new ResultListItem(rally));
+            //}
+
+            count = Items.Count();
             this.DisplayName = "Hitlist (" + count + ")";
             Header = "Hitlist (" + count + ")";
             NotifyOfPropertyChange("Header");
 
-            this.Items.Refresh();
-            
-
-
-
+            //this.Items.Refresh();
         }
 
         public void Handle(FullscreenEvent message)
@@ -118,6 +119,48 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public void Handle(MediaControlEvent message)
+        {
+            if (message.Source == Media.Source.Viewer)
+            {
+                var idx = Rallies.IndexOf(Manager.ActiveRally);
+                switch (message.Ctrl)
+                {
+                    case Media.Control.Previous:
+                        var rallyP = idx - 1 >= 0 ? Rallies[idx - 1] : null;
+                        if (rallyP != null)
+                        {
+                            Events.PublishOnUIThread(new ResultListControlEvent(rallyP));
+                        }
+                        break;
+                    case Media.Control.Next:
+                        if (Rallies.Count() != 0)
+                        {
+                            var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : Rallies[0];
+                            if (rallyN != null && rallyN != Rallies[0])
+                            {
+                                Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
+                            }
+                            else if (rallyN != null && rallyN == Rallies[0])
+                            {
+                                Events.PublishOnUIThread(new ResultListControlEvent(rallyN));
+                                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+                            }
+
+                        }
+                        else
+                        {
+                            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+
         #endregion
 
         #region Caliburn Hooks
@@ -126,12 +169,18 @@ namespace TT.Viewer.ViewModels
         {
             base.OnActivate();
             // Subscribe ourself to the event bus
-            this.events.Subscribe(this);
-            Player1 = manager.Match.FirstPlayer.Name.Split(' ')[0];
-            Player2 = manager.Match.SecondPlayer.Name.Split(' ')[0];
-            //this.ActivateItem(MiniStatistic);
-
+            Events.Subscribe(this);
+            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
         }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            Items.Clear();
+            base.OnDeactivate(close);
+        }
+
         #endregion
     }
 }

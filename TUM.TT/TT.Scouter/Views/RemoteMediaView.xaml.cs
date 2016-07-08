@@ -56,7 +56,6 @@ namespace TT.Scouter.Views
         {
             Events.Unsubscribe(this);
             currentTime = MediaPlayer.Position;
-
         }
 
         public void Handle(MediaControlEvent message)
@@ -66,13 +65,13 @@ namespace TT.Scouter.Views
                 switch (message.Ctrl)
                 {
                     case Media.Control.Stop:
-                        MediaPlayer.Stop();
+                        MediaPlayer.StopWithState();
                         break;
                     case Media.Control.Pause:
-                        MediaPlayer.Pause();
+                        MediaPlayer.PauseWithState();
                         break;
                     case Media.Control.Play:
-                        MediaPlayer.Play();
+                        MediaPlayer.PlayWithState();
                         break;
                     default:
                         break;
@@ -86,15 +85,16 @@ namespace TT.Scouter.Views
 
             if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
             {
-                MediaPlayer.Stop();
+                MediaPlayer.StopWithState();
                 MediaPlayer.Close();
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
                 MediaPlayer.MediaPosition = currentTime;
-                MediaPlayer.Play();
-                MediaPlayer.Pause();
+                MediaPlayer.PlayWithState();
+                               
+                MediaPlayer.PauseWithState();
+
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
-                
-                
+
             }
         }
 
@@ -137,11 +137,11 @@ namespace TT.Scouter.Views
 
         public void Handle(VideoLoadedEvent message)
         {
-            MediaPlayer.Stop();
+            MediaPlayer.StopWithState();
             MediaPlayer.Close();
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
-            MediaPlayer.Play();
-            MediaPlayer.Pause();
+            MediaPlayer.PlayWithState();
+            MediaPlayer.PauseWithState();
         }
 
         public void Handle(DrawLineEvent message)

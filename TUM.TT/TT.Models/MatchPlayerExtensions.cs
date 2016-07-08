@@ -29,31 +29,39 @@ namespace TT.Models
         Second = 2
     }
 
-    public enum Händigkeit
+    public enum Handedness
     {
         None = 0,
 
-        Rechts = 1,
+        Right  = 1,
 
-        Links = 2
+        Left = 2
     }
 
-    public enum Griffhaltung
+    public enum Grip
     {
         None = 0,
 
-        Penholder = 1,
+        Penhold = 1,
 
         Shakehand = 2
     }
 
-    public enum Spielsystem
+    public enum PlayingStyle
     {
         None = 0,
 
-        Offensiv = 1,
+        Offensive = 1,
 
-        Defensiv = 2
+        Defensive = 2
+    }
+    public enum StartingTableEnd
+    {
+        None=0,
+
+        Top=1,
+
+        Bottom=2
     }
 
     /// <summary>

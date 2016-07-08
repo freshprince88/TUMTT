@@ -66,7 +66,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyChangedBase.cs" />
     <Compile Include="Rally.cs" />
-    <Compile Include="Schlag.cs" />
     <Compile Include="Score.cs" />
     <Compile Include="Serialization\ExcelMatchSerializer.cs" />
     <Compile Include="Serialization\ExcelSerializationException.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="Statistics\TechnicalEfficiency.cs" />
     <Compile Include="Statistics\Transitions.cs" />
     <Compile Include="Statistics\IMatchTransitionStatistics.cs" />
+    <Compile Include="Stroke.cs" />
     <Compile Include="Util\AsyncXmlSerializer.cs" />
     <Compile Include="Util\EnumExtensions.cs" />
     <Compile Include="Util\Enums.cs" />
