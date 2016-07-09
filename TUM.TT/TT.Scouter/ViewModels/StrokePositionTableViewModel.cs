@@ -300,6 +300,8 @@ namespace TT.Scouter.ViewModels
 
         }
 
+        #region PointOfContact Functions
+
         public void ChangePointOfContact(string pointOfContact)
         {
             if (Stroke.PointOfContact.Equals(pointOfContact))
@@ -324,6 +326,9 @@ namespace TT.Scouter.ViewModels
             else
                 Stroke.PointOfContact = "";
         }
+        #endregion
+
+        #region Placement Functions
 
         public void OnPlacementChanged(object sender, EventArgs e)
         {
@@ -409,5 +414,7 @@ namespace TT.Scouter.ViewModels
             p.WY = Y;
             Stroke.Placement = p;
         }
+
+        #endregion
     }
 }

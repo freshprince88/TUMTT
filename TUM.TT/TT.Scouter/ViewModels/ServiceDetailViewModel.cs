@@ -48,7 +48,7 @@ namespace TT.Scouter.ViewModels
             Events = IoC.Get<IEventAggregator>();
             MatchManager = man;
             _stroke = s;
-            TableControl = new ServicePositionTableViewModel(s);
+            TableControl = new ServicePositionTableViewModel(s, MatchManager);
             SpinControl = new SpinRadioViewModel(MatchManager, this);
             CurrentRally = cr;
             SetCourse();
@@ -63,7 +63,7 @@ namespace TT.Scouter.ViewModels
                 Events.PublishOnUIThread(new RalliesStrokesAddedEvent());
             }
 
-            TableControl = new ServicePositionTableViewModel(s);
+            TableControl = new ServicePositionTableViewModel(s, man);
             SpinControl = new SpinRadioViewModel(man, this);
         }
 
