@@ -68,6 +68,7 @@ namespace TT.Scouter.ViewModels
             {
                 DrawElement dE = createDrawElement(Visibility.Hidden);
                 dE.text = s.Number.ToString();
+                s.StrokePlacementChanged += S_StrokePlacementChanged;
                 if (s.Placement != null)
                 {
                     dE.g.Visibility = Visibility.Visible;
@@ -75,6 +76,12 @@ namespace TT.Scouter.ViewModels
                 }
                 DrawnStrokes.Add(dE);
             }
+        }
+
+        private void S_StrokePlacementChanged(object source, EventArgs args)
+        {
+            Point pos = new Point(((Stroke)source).Placement.WX, ((Stroke)source).Placement.WY);
+            OnStrokePositionCalculated(source, new StrokePositionCalculatedEventArgs(pos));
         }
 
         protected override void OnActivate()

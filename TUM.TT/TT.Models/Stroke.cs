@@ -43,6 +43,11 @@ namespace TT.Models
 
         private bool openingShot;
 
+        public delegate void StrokePlacementChangedEventHandler(object source, EventArgs args);
+
+        public event StrokePlacementChangedEventHandler StrokePlacementChanged;
+
+
         public Stroketechnique Stroketechnique
         {
             get
@@ -77,6 +82,15 @@ namespace TT.Models
             set
             {
                 placementField = value;
+                OnPlacementChanged();
+            }
+        }
+
+        protected virtual void OnPlacementChanged()
+        {
+            if (StrokePlacementChanged != null)
+            {
+                StrokePlacementChanged(this, new EventArgs());
             }
         }
 

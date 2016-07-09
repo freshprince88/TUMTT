@@ -87,7 +87,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeTopMid_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeTopMid_top");
             }
         }
 
@@ -98,7 +98,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeTopRight_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeTopRight_top");
             }
         }
 
@@ -109,7 +109,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeMidLeft_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeMidLeft_top");
             }
         }
 
@@ -120,7 +120,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeMidMid_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeMidMid_top");
             }
         }
 
@@ -131,7 +131,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeMidRight_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeMidRight_top");
             }
         }
 
@@ -142,7 +142,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeBotLeft_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeBotLeft_top");
             }
         }
 
@@ -153,7 +153,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeBotMid_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeBotMid_top");
             }
         }
 
@@ -164,7 +164,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeBotRight_top = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeBotRight_top");
             }
         }
 
@@ -175,7 +175,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeBotRight_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeBotRight_bot");
             }
         }
 
@@ -186,7 +186,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeBotMid_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeBotMid_bot");
             }
         }
 
@@ -197,7 +197,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeBotLeft_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeBotLeft_bot");
             }
         }
 
@@ -208,7 +208,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeMidRight_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeMidRight_bot");
             }
         }
 
@@ -219,7 +219,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeMidMid_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeMidMid_bot");
             }
         }
 
@@ -230,7 +230,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeMidLef_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeMidLef_bot");
             }
         }
 
@@ -241,7 +241,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeTopRight_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeTopRight_bot");
             }
         }
 
@@ -252,7 +252,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeTopMid_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeTopMid_bot");
             }
         }
 
@@ -263,7 +263,7 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _placeTopLeft_bot = value;
-                NotifyOfPropertyChange("placeTopLeft_top");
+                NotifyOfPropertyChange("placeTopLeft_bot");
             }
         }
 
@@ -273,6 +273,7 @@ namespace TT.Scouter.ViewModels
         public StrokePositionTableViewModel(Models.Stroke s, IMatchManager m)
         {
             Stroke = s;
+            s.StrokePlacementChanged += OnPlacementChanged;
             _over = false;
             half = false;
             _behind = false;
@@ -324,16 +325,19 @@ namespace TT.Scouter.ViewModels
                 Stroke.PointOfContact = "";
         }
 
+        public void OnPlacementChanged(object sender, EventArgs e)
+        {
+            makeAllFalse();
+
+            makeRightRight(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
+        }
+
         public void GridClicked(object sender, MouseButtonEventArgs e)
         {
             Grid grid = sender as Grid;
             Point position = e.GetPosition(grid);
             Point fieldPosition = new Point(position.X / grid.ActualWidth * 152.5, position.Y / grid.ActualHeight * 274);
             ChangePositionStroke(fieldPosition.X, fieldPosition.Y);
-
-            makeAllFalse();
-
-            makeRightRight(fieldPosition);
         }
 
         private void makeAllFalse()
