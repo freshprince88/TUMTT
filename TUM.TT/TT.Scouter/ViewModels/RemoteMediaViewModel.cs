@@ -263,6 +263,7 @@ namespace TT.Scouter.ViewModels
             IsMuted = false;
             Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Unmute));
         }
+        #endregion
 
         public IEnumerable<IResult> Open()
         {
