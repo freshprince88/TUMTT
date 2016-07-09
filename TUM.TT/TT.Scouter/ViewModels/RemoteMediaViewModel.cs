@@ -179,7 +179,9 @@ namespace TT.Scouter.ViewModels
             calibration = cal;
             calibration.Lines.CollectionChanged += Lines_CollectionChanged;
         }
+        
 
+        #region Media Methods
         public void Pause()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
