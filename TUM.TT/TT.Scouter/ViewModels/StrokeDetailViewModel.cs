@@ -53,7 +53,7 @@ namespace TT.Scouter.ViewModels
             Events = IoC.Get<IEventAggregator>();
             MatchManager = man;
             Stroke = s;
-            TableControl = new StrokePositionTableViewModel(s);
+            TableControl = new StrokePositionTableViewModel(s, man);
             CurrentRally = cr;
             SetCourse();
             if (Stroke.Stroketechnique == null)
