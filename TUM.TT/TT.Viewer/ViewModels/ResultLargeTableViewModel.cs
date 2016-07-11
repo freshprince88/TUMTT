@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Lib.Managers;
-using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
 
@@ -15,30 +13,28 @@ namespace TT.Viewer.ViewModels
     public class ResultLargeTableViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
         IHandle<RallyLengthChangedEvent>,
-        IHandle<FullscreenEvent>,
         IHandle<MediaControlEvent>
     {
         
         private IEventAggregator Events;
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
-
-        public ObservableCollection<ResultListItem> Items { get; set; }
         
-        public ObservableCollection<Stroke> Strokes { get; set; }
-
-        private int rallyLength;
-        public int RallyLength {
+        private ObservableCollection<Stroke> strokes;
+        public ObservableCollection<Stroke> Strokes
+        {
             get
             {
-                return rallyLength;
+                return strokes;
             }
             set
             {
-                rallyLength = value;
+                strokes = value;
                 NotifyOfPropertyChange();
             }
         }
+
+        public int RallyLength { get; set; }
 
         public ResultLargeTableViewModel()
         {
@@ -65,20 +61,6 @@ namespace TT.Viewer.ViewModels
         }
 
         #region View Methods
-
-        public void ListItemSelected(SelectionChangedEventArgs e)
-        {
-            ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
-            if (item != null)
-            {
-                Manager.ActiveRally = item.Rally;
-            }           
-        }
-
-        public void RightMouseDown(MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
         
         public void StrokeSelected(object dataContext)
         {
@@ -106,9 +88,12 @@ namespace TT.Viewer.ViewModels
                 if (stroke != null)
                     strokes.Add(stroke);
             }
-            //Events.PublishOnUIThread(new StrokesPaintEvent(strokes, RallyLength));
-            Strokes.Clear();
-            strokes.ForEach(stroke => Strokes.Add(stroke));
+
+            // more elegant solution, doesn't seem to respect property change notifications though
+            //Strokes.Clear();
+            //strokes.ForEach(stroke => Strokes.Add(stroke));
+
+            Strokes = new ObservableCollection<Stroke>(strokes);
         }
 
         #endregion
@@ -123,12 +108,7 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(RallyLengthChangedEvent message)
         {
-            //UpdateStrokeDisplay(Manager.SelectedRallies);
             RallyLength = message;
-        }
-
-        public void Handle(FullscreenEvent message)
-        {
         }
 
         public void Handle(MediaControlEvent message)

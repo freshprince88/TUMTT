@@ -16,7 +16,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaction logic for SmallTableView.xaml
     /// </summary>
-    public partial class SmallTableView : UserControl
+    public partial class TableView : UserControl
     {
         #region Constants
 
@@ -26,10 +26,13 @@ namespace TT.Viewer.Views
         private const double SPIN_ARROW_STROKE_THICKNESS_HOVER = 2;
         private const double STROKE_THICKNESS_SMASH = 3.5;
         private const double STROKE_THICKNESS_SMASH_HOVER = 5;
+        private const double STROKE_THICKNESS_DEBUG_PRECEDING_HOVER = 0.7;
+        private const double STROKE_THICKNESS_DEBUG_PRECEDING = 0.5;
 
         private const string TAG_SPIN_ARROW = "spinarrow";
         private const string TAG_ARROW_TIP = "arrowtip";
         private const string TAG_DIRECTION = "direction";
+        private const string TAG_DEBUG_PRECEDING = "debug_preceding";
 
         private const string STROKE_ATTR_SIDE_FOREHAND = "Forehand";
         private const string STROKE_ATTR_SIDE_BACKHAND = "Backhand";
@@ -61,10 +64,19 @@ namespace TT.Viewer.Views
             set { SetValue(StrokesProperty, value); }
         }
 
-        public static DependencyProperty StrokesProperty = DependencyProperty.Register(
-        "Strokes", typeof(ICollection<Stroke>), typeof(SmallTableView), new FrameworkPropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
+        public bool IsDebug
+        {
+            get { return (bool)GetValue(IsDebugProperty); }
+            set { SetValue(IsDebugProperty, value); }
+        }
 
-        public SmallTableView()
+        public static DependencyProperty StrokesProperty = DependencyProperty.Register(
+        "Strokes", typeof(ICollection<Stroke>), typeof(TableView), new FrameworkPropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
+
+        public static DependencyProperty IsDebugProperty = DependencyProperty.Register(
+        "IsDebug", typeof(bool), typeof(TableView), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnIsDebugPropertyChanged)));
+
+        public TableView()
         {
             InitializeComponent();
             strokeShapes = new Dictionary<Stroke, List<Shape>>();
@@ -102,13 +114,13 @@ namespace TT.Viewer.Views
                     case 1:
                         AddStrokesArrowtips(strokes, true);
                         //if (checkdirection.ischecked.value)
-                            AddStrokesDirectionLines(strokes, true);
+                            AddStrokesDirectionLines(strokes);
                         //if (checkspin.ischecked.value)
                             AddServiceStrokesSpinArrows(strokes);
                         break;
                     default:
                         //if (checkdirection.ischecked.value)
-                            AddStrokesDirectionLines(strokes, false);
+                            AddStrokesDirectionLines(strokes);
                         AddStrokesArrowtips(strokes, false);
                         break;
                 }
@@ -117,30 +129,22 @@ namespace TT.Viewer.Views
 
         private static void OnStrokesPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            Debug.WriteLine("OnStrokesPropertyChanged sender={0}, sender.Tag={3} e.ov={1}, e.nv={2}", sender, e.OldValue, e.NewValue, ((SmallTableView)sender).Tag);
+            Debug.WriteLine("OnStrokesPropertyChanged sender={0}, sender.Tag={3} e.ov={1}, e.nv={2}", sender, e.OldValue, e.NewValue, ((TableView)sender).Tag);
 
-            if ((string)((SmallTableView)sender).Tag == "SmallTable")
-                ((SmallTableView)sender).SmallTableViewBorder.Visibility = Visibility.Visible;
+            if ((string)((TableView)sender).Tag == "SmallTable")
+                ((TableView)sender).SmallTableViewBorder.Visibility = Visibility.Visible;
 
-            Grid innerFieldGrid = ((SmallTableView)sender).InnerFieldGrid;
+            Grid innerFieldGrid = ((TableView)sender).InnerFieldGrid;
             if (e.NewValue is ICollection<Stroke>)
             {
                 List<Stroke> strokes = new List<Stroke>((ICollection<Stroke>) e.NewValue);
-                ((SmallTableView)sender).Handle(strokes);
-                
-                    
-
-                    //Line l = new Line();
-                    //l.X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : stroke.Playerposition;
-                    //l.Y1 = innerFieldGrid.ActualHeight;
-                    //l.X2 = stroke.Placement.WX.Equals(double.NaN) ? 0 : stroke.Placement.WX;
-                    //l.Y2 = stroke.Placement.WY.Equals(double.NaN) ? 0 : stroke.Placement.WY;
-
-                    //l.Stroke = Brushes.Black;
-                    //l.StrokeThickness = 6;
-
-                    //innerFieldGrid.Children.Add(l);
+                ((TableView)sender).Handle(strokes);
             }
+        }
+
+        private static void OnIsDebugPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            Console.Out.WriteLine("is debug changed to {0}", e.NewValue);
         }
 
         private static bool PlacementValuesValid(Placement placement)
@@ -165,19 +169,7 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        if ((string)s.Tag == TAG_SPIN_ARROW)
-                        {
-                            s.StrokeThickness = SPIN_ARROW_STROKE_THICKNESS_HOVER;
-                        }
-                        else
-                        {
-                            if (stroke.Stroketechnique != null && stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
-                            {
-                                s.StrokeThickness = STROKE_THICKNESS_SMASH_HOVER;
-                            }
-                            else
-                                s.StrokeThickness = STROKE_THICKNESS_HOVER;
-                        }
+                        s.StrokeThickness = GetStrokeThicknessForStroke((string) s.Tag, stroke.Stroketechnique, true);                        
                     }
                     else
                     {
@@ -200,19 +192,7 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        if ((string)s.Tag == TAG_SPIN_ARROW)
-                        {
-                            s.StrokeThickness = SPIN_ARROW_STROKE_THICKNESS;
-                        }
-                        else
-                        {
-                            if (stroke.Stroketechnique != null && stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
-                            {
-                                s.StrokeThickness = STROKE_THICKNESS_SMASH;
-                            }
-                            else
-                                s.StrokeThickness = STROKE_THICKNESS;
-                        }
+                        s.StrokeThickness = GetStrokeThicknessForStroke((string) s.Tag, stroke.Stroketechnique, false);
                     }
                     else
                     {
@@ -222,12 +202,12 @@ namespace TT.Viewer.Views
             }
         }
 
-        private void AddStrokesDirectionLines(List<Stroke> strokes, bool isServiceStroke)
+        internal void AddStrokesDirectionLines(List<Stroke> strokes)
         {
             Debug.WriteLine("Strokes to paint: {0}", strokes.Count);
             foreach (var stroke in strokes)
             {
-                isServiceStroke = stroke.Number == 1;
+                bool isServiceStroke = stroke.Number == 1;
                 if (PlacementValuesValid(stroke.Placement))
                 {
                     double X1, X2, Y1, Y2;
@@ -240,9 +220,30 @@ namespace TT.Viewer.Views
                     else
                     {
                         var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
+                        double precedingStartX, precedingStartY, precedingEndX, precedingEndY;
 
-                        X1 = GetAdjustedX(stroke, precedingStroke.Placement.WX);
-                        Y1 = GetAdjustedY(stroke, precedingStroke.Placement.WY);
+                        if (precedingStroke.Number == 1)
+                        {
+                            precedingStartX = GetAdjustedX(stroke, precedingStroke.Playerposition);
+                            precedingStartY = 0;
+                        }
+                        else
+                        {
+                            precedingStartX = GetAdjustedX(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WX);
+                            precedingStartY = GetAdjustedY(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WY);
+                        }
+                        
+                        precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
+                        precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
+                        
+                        if (IsDebug)
+                            AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
+
+                        Y1 = stroke.PointOfContact == STROKE_ATTR_POC_OVER ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+                        X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
+
+                        if (IsDebug)
+                            AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                     }
 
                     X2 = GetAdjustedX(stroke, stroke.Placement.WX);
@@ -289,30 +290,51 @@ namespace TT.Viewer.Views
                             InnerFieldGrid.Children.Add(shape);
                     }
 
-                    shape = strokeShapes[stroke].Find(s => s is Path && (string)s.Tag == TAG_DIRECTION);
-                    if (shape != null)
-                    {
-                        Geometry geom = ((Path)shape).Data;
-                        if (geom is PathGeometry)
-                        {
-                            PathSegment seg = ((PathGeometry)geom).Figures[0].Segments[0];
-                            if (seg is QuadraticBezierSegment)
-                            {
-                                X2 = ((QuadraticBezierSegment)seg).Point1.X;
-                                Y2 = ((QuadraticBezierSegment)seg).Point1.Y;
-                            }
-                        }
-                    }
+                    //shape = strokeShapes[stroke].Find(s => s is Path && (string)s.Tag == TAG_DIRECTION);
+                    //if (shape != null)
+                    //{
+                    //    Geometry geom = ((Path)shape).Data;
+                    //    if (geom is PathGeometry)
+                    //    {
+                    //        PathSegment seg = ((PathGeometry)geom).Figures[0].Segments[0];
+                    //        if (seg is QuadraticBezierSegment)
+                    //        {
+                    //            X2 = ((QuadraticBezierSegment)seg).Point1.X;
+                    //            Y2 = ((QuadraticBezierSegment)seg).Point1.Y;
+                    //        }
+                    //    }
+                    //}
 
-                    if (!isServiceStroke && stroke.PointOfContact == STROKE_ATTR_POC_BEHIND)
-                        AddBehindLine(stroke, X1, Y1, X2, Y2);
-                    else if (!isServiceStroke && stroke.PointOfContact == STROKE_ATTR_POC_HALFDISTANCE)
-                        AddHalfDistanceLine(stroke, X1, Y1, X2, Y2);
+                    //if (!isServiceStroke && stroke.PointOfContact == STROKE_ATTR_POC_BEHIND)
+                    //    AddBehindLine(stroke, X1, Y1, X2, Y2);
+                    //else if (!isServiceStroke && stroke.PointOfContact == STROKE_ATTR_POC_HALFDISTANCE)
+                    //    AddHalfDistanceLine(stroke, X1, Y1, X2, Y2);
                 }
                 else
                 {
                     Debug.WriteLine("invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
                 }
+            }
+        }
+
+        private void AddDebugLine(Stroke stroke, double precedingStartX, double precedingStartY, double precedingEndX, double precedingEndY, bool dashed)
+        {
+            if (!precedingStartX.Equals(double.NaN) && !precedingStartY.Equals(double.NaN) && !precedingEndX.Equals(double.NaN) && !precedingEndY.Equals(double.NaN))
+            {
+                Line l = new Line();
+                l.X1 = precedingStartX; l.Y1 = precedingStartY;
+                l.X2 = precedingEndX; l.Y2 = precedingEndY;
+                l.Stroke = Brushes.Black;
+                l.StrokeThickness = STROKE_THICKNESS_DEBUG_PRECEDING;
+                l.Tag = TAG_DEBUG_PRECEDING;
+                if (dashed)
+                {
+                    DoubleCollection dashes = new DoubleCollection();
+                    dashes.Add(2);
+                    l.StrokeDashArray = dashes;
+                }
+                GetGridForStroke(stroke).Children.Add(l);
+                strokeShapes[stroke].Add(l);
             }
         }
 
@@ -333,8 +355,8 @@ namespace TT.Viewer.Views
                     }
                     else
                     {
-                        Shape shape = strokeShapes[stroke].Find(s => s is Path && (string)s.Tag == TAG_DIRECTION);
-                        if (shape != null)
+                        Shape shape = strokeShapes[stroke].Find(s => (string)s.Tag == TAG_DIRECTION);
+                        if (shape is Path)
                         {
                             Geometry geom = ((Path)shape).Data;
                             if (geom is PathGeometry)
@@ -347,11 +369,10 @@ namespace TT.Viewer.Views
                                 }
                             }
                         }
-                        if (X1 == int.MinValue || Y1 == int.MinValue)
+                        else if (shape is Line)
                         {
-                            var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
-                            X1 = GetAdjustedX(stroke, precedingStroke.Placement.WX);
-                            Y1 = GetAdjustedY(stroke, precedingStroke.Placement.WY);
+                            X1 = ((Line) shape).X1;
+                            Y1 = ((Line) shape).Y1;
                         }
                     }
 
@@ -395,7 +416,7 @@ namespace TT.Viewer.Views
                     if (!strokeShapes[stroke].Contains(strokeArrowTip))
                         strokeShapes[stroke].Add(strokeArrowTip);
 
-                    InnerFieldGrid.Children.Add(strokeArrowTip);
+                    GetGridForStroke(stroke).Children.Add(strokeArrowTip);
                 }
                 else
                 {
@@ -404,7 +425,7 @@ namespace TT.Viewer.Views
             }
         }
 
-        private void AddServiceStrokesSpinArrows(List<Stroke> strokes)
+        internal void AddServiceStrokesSpinArrows(List<Stroke> strokes)
         {
             Random rnd = new Random();
             foreach (var stroke in strokes)
@@ -536,7 +557,7 @@ namespace TT.Viewer.Views
             double m, cpx, cpy, lineTwoThirdsX, lineTwoThirdsY;
 
             lineTwoThirdsY = Y1 - (2d / 3d) * (Y1 - Y2);
-            if (X1 <= X2)
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
             {
                 m = (X2 - X1) / (Y1 - Y2);
                 lineTwoThirdsX = X1 + (2d / 3d) * (X2 - X1);
@@ -553,7 +574,7 @@ namespace TT.Viewer.Views
 
             //Debug.WriteLine("chop {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
 
-            PathGeometry chopGeometry = new PathGeometry();
+            PathGeometry lobGeometry = new PathGeometry();
 
             PathFigure pathFigure = new PathFigure();
 
@@ -566,11 +587,18 @@ namespace TT.Viewer.Views
             QuadraticBezierSegment segment = new QuadraticBezierSegment(controlPoint, endPoint, true);
             pathFigure.Segments.Add(segment);
 
-            chopGeometry.Figures.Add(pathFigure);
+            lobGeometry.Figures.Add(pathFigure);
 
-            Path chopPath = new Path();
-            chopPath.Data = chopGeometry;
-            return chopPath;
+            Path lobPath = new Path();
+            lobPath.Data = lobGeometry;
+
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            {
+                DoubleCollection dashes = new DoubleCollection();
+                dashes.Add(2);
+                lobPath.StrokeDashArray = dashes;
+            }
+            return lobPath;
         }
 
         private Shape GetChopShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
@@ -578,7 +606,7 @@ namespace TT.Viewer.Views
             double m, cpx, cpy, lineNineteenTwentiethsX, lineNineteenTwentiethsY;
 
             lineNineteenTwentiethsY = Y1 - (19d / 20d) * (Y1 - Y2);
-            if (X1 <= X2)
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
             {
                 m = (X2 - X1) / (Y1 - Y2);
                 lineNineteenTwentiethsX = X1 + (19d / 20d) * (X2 - X1);
@@ -612,6 +640,13 @@ namespace TT.Viewer.Views
 
             Path chopPath = new Path();
             chopPath.Data = chopGeometry;
+
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            {
+                DoubleCollection dashes = new DoubleCollection();
+                dashes.Add(2);
+                chopPath.StrokeDashArray = dashes;
+            }
             return chopPath;
         }
 
@@ -620,7 +655,7 @@ namespace TT.Viewer.Views
             double m, cpx, cpy, lineFourFifthsX, lineFourFifthsY;
 
             lineFourFifthsY = Y1 - (4d / 5d) * (Y1 - Y2);
-            if (X1 <= X2)
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
             {
                 m = (X2 - X1) / (Y1 - Y2);
                 lineFourFifthsX = X1 + (4d / 5d) * (X2 - X1);
@@ -654,6 +689,13 @@ namespace TT.Viewer.Views
 
             Path topSpinPath = new Path();
             topSpinPath.Data = topSpinGeometry;
+
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            {
+                DoubleCollection dashes = new DoubleCollection();
+                dashes.Add(2);
+                topSpinPath.StrokeDashArray = dashes;                
+            }
             return topSpinPath;
         }
 
@@ -661,20 +703,11 @@ namespace TT.Viewer.Views
         {
             double m, cpx, cpy, lineMiddleX;
 
-            if (X1 <= X2)
-            {
-                m = (X2 - X1) / (Y1 - Y2);
-                lineMiddleX = (X2 + X1) / 2;
-                cpx = lineMiddleX - 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
-                cpy = (Y1 + Y2) / 2 - m * (lineMiddleX - cpx);
-            }
-            else
-            {
-                m = (X1 - X2) / (Y1 - Y2);
-                lineMiddleX = (X1 + X2) / 2;
-                cpx = lineMiddleX + 0.25 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
-                cpy = (Y1 + Y2) / 2 - m * (cpx - lineMiddleX);
-            }
+            // banana is always backhand -> left curvature
+            m = (X2 - X1) / (Y1 - Y2);
+            lineMiddleX = (X2 + X1) / 2;
+            cpx = lineMiddleX - 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
+            cpy = (Y1 + Y2) / 2 - m * (lineMiddleX - cpx);
 
             //Debug.WriteLine("banana/flip {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
 
@@ -695,6 +728,13 @@ namespace TT.Viewer.Views
 
             Path bananaPath = new Path();
             bananaPath.Data = bananaGeometry;
+
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            {
+                DoubleCollection dashes = new DoubleCollection();
+                dashes.Add(2);
+                bananaPath.StrokeDashArray = dashes;
+            }
             return bananaPath;
         }
 
@@ -705,7 +745,29 @@ namespace TT.Viewer.Views
 
             //Debug.WriteLine("stroke {5} of rally {4}: x1={0} y1={1} -> x2={2} y2={3}", x1, y1, x2, y2, stroke.Rally.Number, stroke.Number);
 
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            {
+                DoubleCollection dashes = new DoubleCollection();
+                dashes.Add(2);
+                line.StrokeDashArray = dashes;
+            }
             return line;
+        }
+
+        internal void RemoveShapesByTag(string tag)
+        {
+            foreach (var s in strokeShapes.Values)
+            {
+                for (int i = 0; i < s.Count; i++)
+                {
+                    if ((string)s[i].Tag == tag)
+                    {
+                        (s[i].Parent as Grid).Children.Remove(s[i]);
+                        s.RemoveAt(i);
+                        --i;
+                    }
+                }
+            }
         }
 
         private void ApplyStyle(Stroke stroke, Shape shape)
@@ -836,6 +898,33 @@ namespace TT.Viewer.Views
                 return 180;
             else
                 return 0;
+        }
+
+        private double GetStrokeThicknessForStroke(string tag, Stroketechnique technique, bool hover)
+        {
+            if (tag == TAG_SPIN_ARROW)
+            {
+                return hover ? SPIN_ARROW_STROKE_THICKNESS_HOVER : SPIN_ARROW_STROKE_THICKNESS;
+            }
+            else
+            {
+                if (tag == TAG_DEBUG_PRECEDING)
+                {
+                    return hover ? STROKE_THICKNESS_DEBUG_PRECEDING_HOVER : STROKE_THICKNESS_DEBUG_PRECEDING;
+                }
+                else if (technique != null && technique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
+                {
+                    return hover ? STROKE_THICKNESS_SMASH_HOVER : STROKE_THICKNESS_SMASH;
+                }
+                else
+                    return hover ? STROKE_THICKNESS_HOVER : STROKE_THICKNESS;
+            }
+        }
+
+
+        private double GetLinearContinuationX(double x1, double y1, double x2, double y2, double targetY)
+        {
+            return ((targetY - y1) / (y2 - y1)) * (x2 - x1) + x1;
         }
 
         #endregion

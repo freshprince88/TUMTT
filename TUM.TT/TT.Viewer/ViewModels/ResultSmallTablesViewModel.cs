@@ -24,21 +24,8 @@ namespace TT.Viewer.ViewModels
         private IMatchManager Manager;
 
         public ObservableCollection<Rally> Rallies { get; set; }
-
-        private int rallyLength;
-        public int RallyLength {
-            get
-            {
-                return rallyLength;
-            }
-            set
-            {
-                rallyLength = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
-        public List<int> IntList { get; set; }
+        
+        public int RallyLength { get; set; }
 
         public ResultSmallTablesViewModel()
         {
@@ -64,20 +51,6 @@ namespace TT.Viewer.ViewModels
         }
 
         #region View Methods
-
-        public void ListItemSelected(SelectionChangedEventArgs e)
-        {
-            ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
-            if (item != null)
-            {
-                Manager.ActiveRally = item.Rally;
-            }           
-        }
-
-        public void RightMouseDown(MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
         
         public void StrokeSelected(object dataContext)
         {
@@ -105,7 +78,6 @@ namespace TT.Viewer.ViewModels
                 if (stroke != null)
                     strokes.Add(stroke);
             }
-            Events.PublishOnUIThread(new StrokesPaintEvent(strokes, RallyLength));
         }
 
         #endregion
@@ -116,10 +88,8 @@ namespace TT.Viewer.ViewModels
         {
             if (IsActive)
             {
-                //Rallies = new ObservableCollection<Rally>(message.Rallies);
                 Rallies.Clear();
                 message.Rallies.Apply(rally => Rallies.Add(rally));
-                //UpdateStrokeDisplay(message.Rallies);
             }
         }
 

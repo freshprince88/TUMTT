@@ -84,13 +84,13 @@ namespace TT.Viewer.Views
         private void SmallTable_MouseEnter(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("MouseEnter {0} {1}", sender, e);
-            ((Border) ((SmallTableView) sender).Parent).BorderThickness = new Thickness(2);
+            ((Border) ((TableView) sender).Parent).BorderThickness = new Thickness(2);
         }
 
         private void SmallTable_MouseLeave(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("MouseLeave {0} {1}", sender, e);
-            ((Border) ((SmallTableView)sender).Parent).BorderThickness = new Thickness(1);
+            ((Border) ((TableView)sender).Parent).BorderThickness = new Thickness(1);
         }
 
         private void Stroke_MouseEnter(Object sender, MouseEventArgs e)

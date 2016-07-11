@@ -30,6 +30,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <CheckBox Grid.Column="0" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDirection" IsChecked="True" Click="CheckDirection_Click"
@@ -38,22 +39,13 @@
             <CheckBox Grid.Column="1" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckSpin" IsChecked="True" Click="CheckSpin_Click"
                         Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}">
             </CheckBox>
+            <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDebug" IsChecked="{Binding IsDebug}" Click="CheckDebug_Click"
+                        Content="debug">
+            </CheckBox>
         </Grid>
 
         <Viewbox Grid.Row="1" Stretch="Uniform">
-            <!--<Grid Name="TableGrid" Width="252.5" Height="344">
-
-                <Border Name="TableBorder" Margin="50,20,50,50" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99">
-                    <Line X1="0" X2="{Binding ActualWidth, ElementName=InnerFieldGrid}" Stroke="Black" StrokeThickness="3" VerticalAlignment="Center" Panel.ZIndex="-98" Margin="-22 0 -22 0"/>
-                </Border>
-
-                <Grid Name="InnerFieldGrid" Margin="30,20,30,50"/>
-                <Grid Name="InnerFieldBehindGrid" Margin="30,20,30,30"/>
-                <Grid Name="InnerFieldSpinGrid" Margin="30,20,30,15"/>
-                <Grid Name="InnerFieldHalfDistanceGrid" Margin="30,20,30,0"/>
-                
-            </Grid>-->
-            <local:SmallTableView Strokes="{Binding Strokes}" Tag="LargeTable"/>
+            <local:TableView x:Name="LargeTableView" Strokes="{Binding Strokes}" Tag="LargeTable"/>
         </Viewbox>
     </Grid>
 </UserControl>

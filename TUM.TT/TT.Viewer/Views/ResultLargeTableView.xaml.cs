@@ -15,8 +15,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für ResultLargeTableView.xaml
     /// </summary>
-    public partial class ResultLargeTableView : UserControl,
-        IHandle<StrokesPaintEvent>
+    public partial class ResultLargeTableView : UserControl
     {
         #region Constants
 
@@ -30,6 +29,7 @@ namespace TT.Viewer.Views
         private const string TAG_SPIN_ARROW = "spinarrow";
         private const string TAG_ARROW_TIP = "arrowtip";
         private const string TAG_DIRECTION = "direction";
+        private const string TAG_DEBUG_PRECEDING = "debug_preceding";
 
         private const string STROKE_ATTR_SIDE_FOREHAND = "Forehand";
         private const string STROKE_ATTR_SIDE_BACKHAND = "Backhand";
@@ -53,17 +53,16 @@ namespace TT.Viewer.Views
 
         #endregion
 
-        public ICollection<Stroke> Strokes
-        {
-            get { return (ICollection<Stroke>)GetValue(StrokesProperty); }
-            set { SetValue(StrokesProperty, value); }
-        }
+        //public ICollection<Stroke> Strokes
+        //{
+        //    get { return (ICollection<Stroke>)GetValue(StrokesProperty); }
+        //    set { SetValue(StrokesProperty, value); }
+        //}
 
-        public static DependencyProperty StrokesProperty = DependencyProperty.Register(
-        "Strokes", typeof(ICollection<Stroke>), typeof(ResultLargeTableView), new FrameworkPropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
+        //public static DependencyProperty StrokesProperty = DependencyProperty.Register(
+        //"Strokes", typeof(ICollection<Stroke>), typeof(ResultLargeTableView), new FrameworkPropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
 
         private Dictionary<Stroke, List<Shape>> strokeShapes;
-        private int strokeNumber;
 
         public IEventAggregator Events { get; private set; }
 
@@ -79,22 +78,25 @@ namespace TT.Viewer.Views
         #region Event handlers
 
         private void CheckSpin_Click(object sender, RoutedEventArgs e)
-        {
-            //if ((sender as CheckBox).IsChecked.Value)
-            //    AddServiceStrokesSpinArrows(new List<Stroke>(strokeShapes.Keys));
-            //else
-            //    RemoveShapesByTag(TAG_SPIN_ARROW);
+        {            
+            if ((sender as CheckBox).IsChecked.Value)
+                LargeTableView.AddServiceStrokesSpinArrows(new List<Stroke>(strokeShapes.Keys));
+            else
+                LargeTableView.RemoveShapesByTag(TAG_SPIN_ARROW);
         }
 
         private void CheckDirection_Click(object sender, RoutedEventArgs e)
         {
-            //if ((sender as CheckBox).IsChecked.Value)
-            //    AddStrokesDirectionLines(new List<Stroke>(strokeShapes.Keys), strokeNumber == 1);
-            //else
-            //    RemoveShapesByTag(TAG_DIRECTION);
+            if ((sender as CheckBox).IsChecked.Value)
+                LargeTableView.AddStrokesDirectionLines(new List<Stroke>(strokeShapes.Keys));
+            else
+                LargeTableView.RemoveShapesByTag(TAG_DIRECTION);
         }
 
-
+        private void CheckDebug_Click(object sender, RoutedEventArgs e)
+        {
+            LargeTableView.RemoveShapesByTag(TAG_DEBUG_PRECEDING);            
+        }
 
         public void Handle(StrokesPaintEvent message)
         {
@@ -137,23 +139,6 @@ namespace TT.Viewer.Views
 
         #region Shape addition & removal
 
-
-
-        private void RemoveShapesByTag(string tag)
-        {
-            foreach (var s in strokeShapes.Values)
-            {
-                for (int i = 0; i < s.Count; i++)
-                {
-                    if ((string)s[i].Tag == tag)
-                    {
-                        (s[i].Parent as Grid).Children.Remove(s[i]);
-                        s.RemoveAt(i);
-                        --i;
-                    }
-                }
-            }
-        }
 
         #endregion
 
