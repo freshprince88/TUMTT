@@ -240,8 +240,8 @@
     <Compile Include="Views\ReceiveView.xaml.cs">
       <DependentUpon>ReceiveView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ResultSmallTabelsView.xaml.cs">
-      <DependentUpon>ResultSmallTabelsView.xaml</DependentUpon>
+    <Compile Include="Views\ResultSmallTablesView.xaml.cs">
+      <DependentUpon>ResultSmallTablesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResultLargeTableView.xaml.cs">
       <DependentUpon>ResultLargeTableView.xaml</DependentUpon>
@@ -363,7 +363,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ResultSmallTabelsView.xaml">
+    <Page Include="Views\ResultSmallTablesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
