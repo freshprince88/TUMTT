@@ -15,7 +15,7 @@ using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class CommentViewModel : Screen, IHandle<VideoPlayEvent>
+    public class CommentViewModel : Screen, IHandle<ActiveRallyChangedEvent>
     {
         private IEventAggregator events;
         private IMatchManager Manager;
@@ -47,7 +47,7 @@ namespace TT.Viewer.ViewModels
         }
 
         #region Event Handlers
-        public void Handle(VideoPlayEvent message)
+        public void Handle(ActiveRallyChangedEvent message)
         {
             CurrentRally = message.Current;
             Comment = CurrentRally.Comment;

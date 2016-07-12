@@ -55,6 +55,14 @@ namespace TT.Models
 
         Defensive = 2
     }
+    public enum StartingTableEnd
+    {
+        None=0,
+
+        Top=1,
+
+        Bottom=2
+    }
 
     /// <summary>
     /// Extensions for <see cref="MatchPlayer"/>.

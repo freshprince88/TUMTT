@@ -12,7 +12,7 @@ namespace TT.Viewer.ViewModels
 {
 
     public class MatchViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<VideoPlayEvent>              
+        IHandle<ActiveRallyChangedEvent>              
     {
         public IMediaPosition MediaPlayer { get; private set; }
         public FilterStatisticsViewModel FilterStatisticsView { get; private set; }
@@ -67,7 +67,7 @@ namespace TT.Viewer.ViewModels
 
         #region Events
 
-        public void Handle(VideoPlayEvent message)
+        public void Handle(ActiveRallyChangedEvent message)
         {
             var item = message.Current;
 

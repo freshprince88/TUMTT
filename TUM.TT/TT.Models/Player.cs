@@ -45,6 +45,10 @@ namespace TT.Models
         /// Backs the <see cref="Grip"/> property.
         /// </summary>
         private Grip grip = Grip.None;
+        /// <summary>
+        /// Backs the <see cref="StartingTableEnd"/> property.
+        /// </summary>
+        private StartingTableEnd startingTableEnd = StartingTableEnd.None;
 
         /// <summary>
         /// Backs the <see cref="Material"/> property.
@@ -106,7 +110,7 @@ namespace TT.Models
 
 
         /// <summary>
-        /// Gets or sets the Spielsystem of this player.
+        /// Gets or sets the PlayingStyle of this player.
         /// </summary>
         [XmlAttribute]
         public PlayingStyle PlayingStyle
@@ -122,6 +126,30 @@ namespace TT.Models
                 {
                     this.playingStyle = value;
                     this.NotifyPropertyChanged("PlayingStyle");
+                    this.NotifyPropertyChanged();
+
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the StartingTableEnd of this player.
+        /// </summary>
+        [XmlAttribute]
+        public StartingTableEnd StartingTableEnd
+        {
+            get
+            {
+                return this.startingTableEnd;
+            }
+
+            set
+            {
+                if (this.startingTableEnd != value)
+                {
+                    this.startingTableEnd = value;
+                    this.NotifyPropertyChanged("StartingTableEnd");
                     this.NotifyPropertyChanged();
 
                 }

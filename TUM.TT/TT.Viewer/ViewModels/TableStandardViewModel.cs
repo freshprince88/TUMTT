@@ -21,6 +21,7 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Length> SelectedStrokeLength { get; set; }
         public int StrokeNumber { get; set; }  
         public bool lastStroke { get; set; }
+        public Dictionary<string, int> PositionCounts { get; set; }
         public string name
         {
             get; set;
@@ -49,6 +50,16 @@ namespace TT.Viewer.ViewModels
             StrokeNumber = 0;
             lastStroke = false;
             this.events = eventAggregator;
+            PositionCounts = new Dictionary<string, int>();
+            PositionCounts.Add("BotLeft", 0);
+            PositionCounts.Add("BotMid", 0);
+            PositionCounts.Add("BotRight", 0);
+            PositionCounts.Add("MidLeft", 0);
+            PositionCounts.Add("MidMid", 0);
+            PositionCounts.Add("MidRight", 0);
+            PositionCounts.Add("TopLeft", 0);
+            PositionCounts.Add("TopMid", 0);
+            PositionCounts.Add("TopRight", 0);
             SelectedStrokeLength = new HashSet<Positions.Length>();
             SelectedPositions = new HashSet<Positions.Table>();
         }
@@ -168,18 +179,16 @@ namespace TT.Viewer.ViewModels
 
                 }
             }
-            Dictionary<string, int> positionKeys = new Dictionary<string, int>();
-            positionKeys.Add("BotLeft", botLeft);
-            positionKeys.Add("BotMid", botMid);
-            positionKeys.Add("BotRight", botRight);
-            positionKeys.Add("MidLeft", midLeft);
-            positionKeys.Add("MidMid", midMid);
-            positionKeys.Add("MidRight", midRight);
-            positionKeys.Add("TopLeft", topLeft);
-            positionKeys.Add("TopMid", topMid);
-            positionKeys.Add("TopRight", topRight);
-
-            events.PublishOnUIThread(new ShowTableNumbersEvent(positionKeys));
+            PositionCounts["BotLeft"] = botLeft;
+            PositionCounts["BotMid"] = botMid;
+            PositionCounts["BotRight"] = botRight;
+            PositionCounts["MidLeft"] = midLeft;
+            PositionCounts["MidMid"] = midMid;
+            PositionCounts["MidRight"] = midRight;
+            PositionCounts["TopLeft"] = topLeft;
+            PositionCounts["TopMid"] = topMid;
+            PositionCounts["TopRight"] = topRight;
+            NotifyOfPropertyChange("PositionCounts");
         }
 
 

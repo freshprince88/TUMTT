@@ -123,7 +123,10 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
+    <Compile Include="ViewModels\ChoiceOfEndsViewModel.cs" />
+    <Compile Include="ViewModels\ChoiceOfServiceReceiveViewModel.cs" />
     <Compile Include="ViewModels\IttvDownloadViewModel.cs" />
+    <Compile Include="ViewModels\LiveScoutingViewModel.cs" />
     <Compile Include="ViewModels\LiveTimerViewModel.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
     <Compile Include="ViewModels\LiveMediaViewModel.cs" />
@@ -148,11 +151,20 @@
     <Compile Include="ViewModels\StrokePositionTableViewModel.cs" />
     <Compile Include="ViewModels\VideoSourceViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="Views\ChoiceOfEndsView.xaml.cs">
+      <DependentUpon>ChoiceOfEndsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChoiceOfServiceReceiveView.xaml.cs">
+      <DependentUpon>ChoiceOfServiceReceiveView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\IttvDownloadView.xaml.cs">
       <DependentUpon>IttvDownloadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LiveMediaView.xaml.cs">
       <DependentUpon>LiveMediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LiveScoutingView.xaml.cs">
+      <DependentUpon>LiveScoutingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LiveTimerView.xaml.cs">
       <DependentUpon>LiveTimerView.xaml</DependentUpon>
@@ -220,6 +232,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ChoiceOfEndsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChoiceOfServiceReceiveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\IttvDownloadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -227,6 +247,10 @@
     <Page Include="Views\LiveMediaView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LiveScoutingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LiveTimerView.xaml">
       <SubType>Designer</SubType>

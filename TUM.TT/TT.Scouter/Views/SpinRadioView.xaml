@@ -4,16 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TT.Scouter.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:template="clr-namespace:TT.Lib.Templates;assembly=TT.Lib"
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="410" d:DesignWidth="360">
-    <Grid>
+    <Grid x:Name="SpinGrid">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+
+        </Grid.ColumnDefinitions>
         <Viewbox Grid.Row="0"  Stretch="Uniform">
             <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid.Margin>
@@ -33,18 +40,218 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <RadioButton x:Name="ÜSSL" GroupName="spin" Style="{StaticResource MetroSpinLeftTopRadio}" Background="Gainsboro" Grid.Row="0" Grid.Column="0" />
-                <RadioButton x:Name="ÜL" GroupName="spin" Style="{StaticResource MetroSpinTopRadio}" Background="Gainsboro" Grid.Row="0" Grid.Column="1" />
-                <RadioButton x:Name="ÜSSR" GroupName="spin" Style="{StaticResource MetroSpinRightTopRadio}" Background="Gainsboro" Grid.Row="0" Grid.Column="2" />
-                <RadioButton x:Name="SL" GroupName="spin" Style="{StaticResource MetroSpinLeftRadio}" Background="Gainsboro" Grid.Row="1" Grid.Column="0" />
-                <RadioButton x:Name ="No" GroupName="spin" Height="120" Width="120" Style="{StaticResource MetroSpinMidRadio}" Background="Gainsboro" Grid.Row="1" Grid.Column="1" />
-                <RadioButton x:Name="SR" GroupName="spin" Style="{StaticResource MetroSpinRightRadio}" Background="Gainsboro" Grid.Row="1" Grid.Column="2" />
-                <RadioButton x:Name="USSL" GroupName="spin" Style="{StaticResource MetroSpinLeftBotRadio}" Background="Gainsboro" Grid.Row="2" Grid.Column="0" />
-                <RadioButton x:Name ="US" GroupName="spin" Style="{StaticResource MetroSpinBotRadio}" Background="Gainsboro" Grid.Row="2" Grid.Column="1" />
-                <RadioButton x:Name="USSR" GroupName="spin" Style="{StaticResource MetroSpinRightBotRadio}" Background="Gainsboro" Grid.Row="2" Grid.Column="2" />
+                <ToggleButton x:Name="TSSL"  Style="{StaticResource MetroSpinLeftTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="0"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="TS"  Style="{StaticResource MetroSpinTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="1"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="TSSR"  Style="{StaticResource MetroSpinRightTopToggle}" Background="Gainsboro" Grid.Row="0" Grid.Column="2"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="SL" Style="{StaticResource MetroSpinLeftToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="0"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name ="No"  Height="120" Width="120" Style="{StaticResource MetroSpinMidToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="1"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="SR"  Style="{StaticResource MetroSpinRightToggle}" Background="Gainsboro" Grid.Row="1" Grid.Column="2"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="USSL" Style="{StaticResource MetroSpinLeftBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="0"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name ="US"  Style="{StaticResource MetroSpinBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="1"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+                <ToggleButton x:Name="USSR" Style="{StaticResource MetroSpinRightBotToggle}" Background="Gainsboro" Grid.Row="2" Grid.Column="2"
+                              cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                            <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                            <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                                <cal:Parameter Value="$source" />
+                            </cal:ActionMessage>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
                 <Ellipse Grid.ColumnSpan="3" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Black" StrokeThickness="2px"/>
             </Grid>
         </Viewbox>
-        <RadioButton x:Name="Hidden" GroupName="spin" Grid.Row="1" Height="30"   Margin="0 0 0 0"  Style="{DynamicResource MetroAccentRadio}" Content="verdeckt" />
+        <ToggleButton x:Name="Hidden" Grid.Row="1" Grid.RowSpan="3" Margin="0 0 0 0"  Style="{DynamicResource MetroAccentToggle}" Height="30" Content="Hidden"
+                      cal:Message.Attach="[Event Click] = [Action SelectSpin($source)]">
+            <ToggleButton.IsChecked>
+                <MultiBinding Converter="{conv:SpinToBoolScouterConverter}" Mode="OneWay">
+                    <Binding Path="ServiceDetailView.Stroke.Spin.US" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.TS" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.SL" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.SR" />
+                    <Binding Path="ServiceDetailView.Stroke.Spin.No" />
+                    <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                </MultiBinding>
+            </ToggleButton.IsChecked>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                        <cal:Parameter Value="{Binding ElementName=SpinGrid}" />
+                        <cal:Parameter Value="$source" />
+                    </cal:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ToggleButton>
     </Grid>
 </UserControl>

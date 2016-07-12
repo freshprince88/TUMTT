@@ -51,7 +51,7 @@ namespace TT.Models
             }
             set
             {
-                strokeTechniqueField = value;
+                RaiseAndSetIfChanged(ref strokeTechniqueField, value);
             }
         }
 
@@ -63,7 +63,8 @@ namespace TT.Models
             }
             set
             {
-                spinField = value;
+                RaiseAndSetIfChanged(ref spinField, value);
+
             }
         }
 
@@ -243,8 +244,11 @@ namespace TT.Models
                 return course;
             }
             set
-            {
+            { if (course != value) { 
                 RaiseAndSetIfChanged(ref course, value);
+                    NotifyPropertyChanged("Course");
+                    NotifyPropertyChanged();
+                }
             }
         }
 
@@ -566,7 +570,7 @@ namespace TT.Models
                 case Util.Enums.Stroke.WinnerOrNetOut.Winner:
                     return Course == "Winner";
                 case Util.Enums.Stroke.WinnerOrNetOut.NetOut:
-                    return Course == "Net" || Course == "Out";
+                    return Course == "Net/Out";
                 case Util.Enums.Stroke.WinnerOrNetOut.None:
                     return true;
                 case Util.Enums.Stroke.WinnerOrNetOut.Both:
@@ -759,7 +763,7 @@ namespace TT.Models
                     case Util.Enums.Stroke.Spin.Hidden:
                         ORresults.Add(Spin.TS == "" || Spin.SL == "" || Spin.SR == "" || Spin.US == "" || Spin.No == "");
                         break;
-                    case Util.Enums.Stroke.Spin.ÜS:
+                    case Util.Enums.Stroke.Spin.TS:
                         ORresults.Add(Spin.TS == "1" && Spin.SL == "0" && Spin.SR == "0");
                         break;
                     case Util.Enums.Stroke.Spin.SR:
@@ -780,10 +784,10 @@ namespace TT.Models
                     case Util.Enums.Stroke.Spin.USSR:
                         ORresults.Add(Spin.US == "1" && Spin.SR == "1");
                         break;
-                    case Util.Enums.Stroke.Spin.ÜSSL:
+                    case Util.Enums.Stroke.Spin.TSSL:
                         ORresults.Add(Spin.TS == "1" && Spin.SL == "1");
                         break;
-                    case Util.Enums.Stroke.Spin.ÜSSR:
+                    case Util.Enums.Stroke.Spin.TSSR:
                         ORresults.Add(Spin.TS == "1" && Spin.SR == "1");
                         break;
                     default:
@@ -977,7 +981,7 @@ namespace TT.Models
 
     public class Stroketechnique : PropertyChangedBase
     {
-        private string art;
+        private string type;
 
         private string option;
 
@@ -987,11 +991,11 @@ namespace TT.Models
         {
             get
             {
-                return art;
+                return type;
             }
             set
             {
-                RaiseAndSetIfChanged(ref art, value);
+                RaiseAndSetIfChanged(ref type, value);
             }
         }
 
@@ -1015,7 +1019,7 @@ namespace TT.Models
 
         private string us;
 
-        private string üs;
+        private string ts;
 
         private string sl;
 
@@ -1034,6 +1038,7 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref us, value);
+                NotifyPropertyChanged();
             }
         }
 
@@ -1043,11 +1048,13 @@ namespace TT.Models
         {
             get
             {
-                return üs;
+                return ts;
             }
             set
             {
-                RaiseAndSetIfChanged(ref üs, value);
+                RaiseAndSetIfChanged(ref ts, value);
+                NotifyPropertyChanged();
+
             }
         }
 

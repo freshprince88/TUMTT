@@ -418,7 +418,6 @@
     </Style>
     <Style TargetType="ToggleButton"
            x:Key="MetroAccentFlatGrayCheckedToggle">
-
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderThickness"
@@ -1067,7 +1066,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-   
-   
-
 </ResourceDictionary>

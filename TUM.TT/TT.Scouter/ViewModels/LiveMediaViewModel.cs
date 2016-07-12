@@ -113,9 +113,9 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+
         public bool toRallyStart { get; set; }
        
-
         public Match Match { get { return Manager.Match; } }
 
         private IEventAggregator Events;
@@ -125,7 +125,6 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             Manager = man;
-            IsPlaying = false;
         }
 
         #region  Caliburn Hooks
@@ -144,19 +143,16 @@ namespace TT.Scouter.ViewModels
         public void Play()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play,Media.Source.LiveScouter));
-            IsPlaying = true;
         }
 
         public void Pause()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
-            IsPlaying = false;
         }
 
         public void Stop()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
-            IsPlaying = false;
             MediaPosition = TimeSpan.Zero;
         }
 

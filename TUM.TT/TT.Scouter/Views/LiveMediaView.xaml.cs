@@ -47,13 +47,13 @@ namespace TT.Scouter.Views
                 switch (message.Ctrl)
                 {
                     case Media.Control.Stop:
-                        MediaPlayer.Stop();
+                        MediaPlayer.StopWithState();
                         break;
                     case Media.Control.Pause:
-                        MediaPlayer.Pause();
+                        MediaPlayer.PauseWithState();
                         break;
                     case Media.Control.Play:
-                        MediaPlayer.Play();
+                        MediaPlayer.PlayWithState();
                         break;
                     default:
                         break;
@@ -64,11 +64,11 @@ namespace TT.Scouter.Views
         private void LiveMediaView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             Events.Subscribe(this);
-            MediaPlayer.Stop();
+            MediaPlayer.StopWithState();
             MediaPlayer.Close();
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
-            MediaPlayer.Play();
-            MediaPlayer.Pause();
+            MediaPlayer.PlayWithState();
+            MediaPlayer.PauseWithState();
             PlayButton.Visibility = System.Windows.Visibility.Visible;
             
         }

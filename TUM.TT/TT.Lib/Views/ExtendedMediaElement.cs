@@ -30,8 +30,6 @@ namespace TT.Lib.Views
         public static readonly DependencyProperty IsPlayingProperty =
             DependencyProperty.Register("IsPlaying", typeof(bool), typeof(ExtendedMediaElement), new PropertyMetadata(true));
 
-
-
         public bool? PlayMode
         {
             get { return (bool?)GetValue(PlayModeProperty); }
@@ -116,7 +114,7 @@ namespace TT.Lib.Views
         private void MediaOpenedHandler(object sender, RoutedEventArgs routedEventArgs)
         {
             if(NaturalDuration.HasTimeSpan)
-             MediaLength = NaturalDuration.TimeSpan;
+                MediaLength = NaturalDuration.TimeSpan;
         }
 
         private void MediaEndedHandler(object sender, RoutedEventArgs routedEventArgs)
@@ -139,15 +137,32 @@ namespace TT.Lib.Views
         {
             if (!IsPlaying)
                 return;
-                        
-            if (EndPosition != null && EndPosition <= Position && EndPosition != TimeSpan.Zero)
-            {
-                Pause();
-                Execute.OnUIThread(() => Events.PublishOnUIThread(new PlayModeEvent(PlayMode)));
-            }             
 
             positionChangedByTimer = true;
-            MediaPosition = Position;            
+            MediaPosition = Position;
+
+            if (EndPosition != null && EndPosition <= Position && EndPosition != TimeSpan.Zero)
+            {
+                Execute.OnUIThread(() => Events.PublishOnUIThread(new PlayModeEvent(PlayMode)));
+            }                             
+        }
+
+        public void PlayWithState()
+        {
+            IsPlaying = true;
+            Play();
+        }
+
+        public void PauseWithState()
+        {
+            IsPlaying = false;
+            Pause();
+        }
+
+        public void StopWithState()
+        {
+            IsPlaying = false;
+            Stop();
         }
 
         public void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

@@ -80,7 +80,7 @@ namespace TT.Lib.Managers
                 {
                     _activeRally = value;
                     NotifyOfPropertyChange();
-                    Events.PublishOnUIThread(new VideoPlayEvent()
+                    Events.PublishOnUIThread(new ActiveRallyChangedEvent()
                     {
                         Current = _activeRally
                     });

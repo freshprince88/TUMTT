@@ -495,7 +495,8 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BasicFilterView.SelectedRallies.Where(r =>
+                var results = BasicFilterView.SelectedRallies
+                    .Where(r => r.Strokes.Count > 3 &&
                     r.Strokes[3].HasHand(this.Hand) &&
                     r.Strokes[3].HasStepAround(this.StepAround) &&
                     r.Strokes[3].HasStrokeTec(this.SelectedStrokeTec) &&

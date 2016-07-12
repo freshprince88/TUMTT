@@ -18,6 +18,10 @@ namespace TT.Scouter.ViewModels
                 {
                     _strokes = value;
                     NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("Strokes");
+                    NotifyOfPropertyChange("CurrentRally");
+                    NotifyOfPropertyChange("CurrentStroke");
+
                 }
             }
         }
@@ -38,12 +42,12 @@ namespace TT.Scouter.ViewModels
 
                     if (_stroke == null || _stroke.Number == 1)
                     {
-                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager);
+                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally);                       
                         NotifyOfPropertyChange("SchlagDetail");
                     }
                     else
                     {
-                        SchlagDetail = new StrokeDetailViewModel(CurrentStroke, MatchManager);
+                        SchlagDetail = new StrokeDetailViewModel(CurrentStroke, MatchManager, CurrentRally);
                         NotifyOfPropertyChange("SchlagDetail");
                     }
 
@@ -73,6 +77,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             CurrentRally = r;
             Strokes.CollectionChanged += Strokes_CollectionChanged;
+
         }
 
         private void Strokes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -86,7 +91,7 @@ namespace TT.Scouter.ViewModels
             Events.Subscribe(this);
             ActivateItem(SchlagDetail);
         }
-
+        #region View Methods
         public void NextStroke()
         {
             CurrentStroke = Strokes[CurrentStroke.Number];
@@ -114,5 +119,13 @@ namespace TT.Scouter.ViewModels
                 CurrentStroke = Strokes[Strokes.Count - 2];
             }
         }
+        #endregion
+        #region Helper Methods
+        public void SetCourses()
+        {
+
+        }
+
+        #endregion
     }
 }
