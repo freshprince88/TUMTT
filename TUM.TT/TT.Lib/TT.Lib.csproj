@@ -127,7 +127,6 @@
     <Compile Include="Converters\PlayerP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\PointP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\QualityToBoolConverter.cs" />
-    <Compile Include="Converters\RallyLengthToColSpanConverter.cs" />
     <Compile Include="Converters\RallyLengthToVisibilityConverter.cs" />
     <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
     <Compile Include="Converters\MatchPlayerToStringConverter.cs" />
@@ -174,7 +173,6 @@
     <Compile Include="Events\ShowTableNumbersEvent.cs" />
     <Compile Include="Events\SpinControlSelectionChangedEvent.cs" />
     <Compile Include="Events\StatisticDetailChangedEvent.cs" />
-    <Compile Include="Events\StrokesPaintEvent.cs" />
     <Compile Include="Events\TableKombiViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableStdViewSelectionChangedEvent.cs" />
     <Compile Include="Events\TableViewModeChangedEvent.cs" />

@@ -14,13 +14,13 @@
         <Border Name="SmallTableViewBorder" BorderThickness="1 1 1 1" BorderBrush="Gray" Visibility="Hidden"/>
         
         <Border Name="TableBorder" Margin="50,35,50,35" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99">
-            <Line X1="0" X2="{Binding ActualWidth, ElementName=InnerFieldGrid}" Stroke="Black" StrokeThickness="3" VerticalAlignment="Center" Panel.ZIndex="-98" Margin="-22 0 -22 0"/>
+            <Line X1="0" X2="{Binding ElementName=InnerFieldGrid, Path=ActualWidth}" Stroke="Black" StrokeThickness="3" VerticalAlignment="Center" Panel.ZIndex="-98" Margin="-22 0 -22 0"/>
         </Border>
 
         <Grid Name="InnerFieldGrid" Margin="30,35,30,35"/>
         <Grid Name="InnerFieldBehindGrid" Margin="30,20,30,20"/>
         <Grid Name="InnerFieldHalfDistanceGrid" Margin="30,0,30,0"/>
-        <Grid Name="InnerFieldSpinGrid" Margin="30,35,30,6"/>
+        <Grid Name="InnerFieldSpinGrid" Margin="30,6,30,6"/>
 
     </Grid>
     

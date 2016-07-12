@@ -34,7 +34,17 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public int RallyLength { get; set; }
+        private int rallyLength;
+        public int RallyLength { get
+            {
+                return rallyLength;
+            }
+            set
+            {
+                rallyLength = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         public ResultLargeTableViewModel()
         {

@@ -1,8 +1,6 @@
-﻿
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,12 +20,12 @@ namespace TT.Viewer.Views
 
         private const double STROKE_THICKNESS = 1.75;
         private const double STROKE_THICKNESS_HOVER = 2.5;
-        private const double SPIN_ARROW_STROKE_THICKNESS = 1;
-        private const double SPIN_ARROW_STROKE_THICKNESS_HOVER = 2;
+        private const double STROKE_THICKNESS_SPIN_ARROW = 1;
+        private const double STROKE_THICKNESS_SPIN_ARROW_HOVER = 2;
         private const double STROKE_THICKNESS_SMASH = 3.5;
         private const double STROKE_THICKNESS_SMASH_HOVER = 5;
-        private const double STROKE_THICKNESS_DEBUG_PRECEDING_HOVER = 0.7;
         private const double STROKE_THICKNESS_DEBUG_PRECEDING = 0.5;
+        private const double STROKE_THICKNESS_DEBUG_PRECEDING_HOVER = 0.7;
 
         private const string TAG_SPIN_ARROW = "spinarrow";
         private const string TAG_ARROW_TIP = "arrowtip";
@@ -56,7 +54,7 @@ namespace TT.Viewer.Views
 
         #endregion
 
-        private Dictionary<Stroke, List<Shape>> strokeShapes;
+        #region Dependency Properties
 
         public ICollection<Stroke> Strokes
         {
@@ -64,23 +62,47 @@ namespace TT.Viewer.Views
             set { SetValue(StrokesProperty, value); }
         }
 
-        public bool IsDebug
+        public bool ShowDebug
         {
-            get { return (bool)GetValue(IsDebugProperty); }
-            set { SetValue(IsDebugProperty, value); }
+            get { return (bool)GetValue(ShowDebugProperty); }
+            set { SetValue(ShowDebugProperty, value); }
+        }
+
+        public bool ShowDirection
+        {
+            get { return (bool)GetValue(ShowDirectionProperty); }
+            set { SetValue(ShowDirectionProperty, value); }
+        }
+
+        public bool ShowSpin
+        {
+            get { return (bool)GetValue(ShowSpinProperty); }
+            set { SetValue(ShowSpinProperty, value); }
         }
 
         public static DependencyProperty StrokesProperty = DependencyProperty.Register(
-        "Strokes", typeof(ICollection<Stroke>), typeof(TableView), new FrameworkPropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
+            "Strokes", typeof(ICollection<Stroke>), typeof(TableView), new FrameworkPropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
 
-        public static DependencyProperty IsDebugProperty = DependencyProperty.Register(
-        "IsDebug", typeof(bool), typeof(TableView), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnIsDebugPropertyChanged)));
+        public static DependencyProperty ShowDebugProperty = DependencyProperty.Register(
+            "ShowDebug", typeof(bool), typeof(TableView), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        public static DependencyProperty ShowDirectionProperty = DependencyProperty.Register(
+            "ShowDirection", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        public static readonly DependencyProperty ShowSpinProperty = DependencyProperty.Register(
+            "ShowSpin", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        #endregion
+
+        private Dictionary<Stroke, List<Shape>> strokeShapes;
 
         public TableView()
         {
             InitializeComponent();
             strokeShapes = new Dictionary<Stroke, List<Shape>>();
         }
+
+        #region Event handlers
 
         private void Table_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -94,32 +116,32 @@ namespace TT.Viewer.Views
 
         private void Handle(List<Stroke> strokes)
         {
+            foreach (UIElement p in TableGrid.Children)
+            {
+                if (p is Grid)
+                    (p as Grid).Children.Clear();
+            }
+            strokeShapes.Clear();
+
+            strokes.ForEach(s => { strokeShapes[s] = new List<Shape>(); });
+
             for (int i = 0; i < strokes.Count && i < 4; i++)
             {
                 Stroke stroke = strokes[i];
                 if (!PlacementValuesValid(stroke.Placement))
                     continue;
 
-                foreach (UIElement p in TableGrid.Children)
-                {
-                    if (p is Grid)
-                        (p as Grid).Children.Clear();
-                }
-                strokeShapes.Clear();
-
-                strokes.ForEach(s => { strokeShapes[s] = new List<Shape>(); });
-
                 switch (stroke.Number)
                 {
                     case 1:
                         AddStrokesArrowtips(strokes, true);
-                        //if (checkdirection.ischecked.value)
+                        if (ShowDirection)
                             AddStrokesDirectionLines(strokes);
-                        //if (checkspin.ischecked.value)
+                        if (ShowSpin)
                             AddServiceStrokesSpinArrows(strokes);
                         break;
                     default:
-                        //if (checkdirection.ischecked.value)
+                        if (ShowDirection)
                             AddStrokesDirectionLines(strokes);
                         AddStrokesArrowtips(strokes, false);
                         break;
@@ -133,8 +155,7 @@ namespace TT.Viewer.Views
 
             if ((string)((TableView)sender).Tag == "SmallTable")
                 ((TableView)sender).SmallTableViewBorder.Visibility = Visibility.Visible;
-
-            Grid innerFieldGrid = ((TableView)sender).InnerFieldGrid;
+            
             if (e.NewValue is ICollection<Stroke>)
             {
                 List<Stroke> strokes = new List<Stroke>((ICollection<Stroke>) e.NewValue);
@@ -142,19 +163,35 @@ namespace TT.Viewer.Views
             }
         }
 
-        private static void OnIsDebugPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void OnDisplayTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            Console.Out.WriteLine("is debug changed to {0}", e.NewValue);
+            Console.Out.WriteLine("sender: {0}, args: {1}, newval: {2}", sender, e, e.NewValue);
+            if (sender is TableView)
+            {
+                TableView view = (TableView)sender;
+            
+                if (e.Property == ShowDirectionProperty)
+                {
+                    if ((bool)e.NewValue)
+                        view.AddStrokesDirectionLines(new List<Stroke>(view.strokeShapes.Keys));
+                    else
+                        view.RemoveShapesByTag(TAG_DIRECTION);
+                }
+                else if (e.Property == ShowSpinProperty)
+                {
+                    if ((bool)e.NewValue)
+                        view.AddServiceStrokesSpinArrows(new List<Stroke>(view.strokeShapes.Keys));
+                    else
+                        view.RemoveShapesByTag(TAG_SPIN_ARROW);
+                }
+                else if (e.Property == ShowDebugProperty)
+                {
+                    // you'll have to reload the view to display debug lines again :(
+                    if (!(bool)e.NewValue)
+                        view.RemoveShapesByTag(TAG_DEBUG_PRECEDING);
+                }
+            }
         }
-
-        private static bool PlacementValuesValid(Placement placement)
-        {
-            return placement.WX != double.NaN && placement.WX > 0 && placement.WY != double.NaN && placement.WY > 0;
-        }
-
-
-
-        #region ResultLargeTableView.xaml.cs contents
 
         private void Stroke_MouseEnter(Object sender, MouseEventArgs e)
         {
@@ -202,6 +239,10 @@ namespace TT.Viewer.Views
             }
         }
 
+        #endregion
+
+        #region Shape addition & removal
+
         internal void AddStrokesDirectionLines(List<Stroke> strokes)
         {
             Debug.WriteLine("Strokes to paint: {0}", strokes.Count);
@@ -236,13 +277,13 @@ namespace TT.Viewer.Views
                         precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
                         precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
                         
-                        if (IsDebug)
+                        if (ShowDebug)
                             AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
 
                         Y1 = stroke.PointOfContact == STROKE_ATTR_POC_OVER ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
                         X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
 
-                        if (IsDebug)
+                        if (ShowDebug)
                             AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                     }
 
@@ -404,6 +445,7 @@ namespace TT.Viewer.Views
                     strokeArrowTip.Data = arrowTipGeometry;
                     strokeArrowTip.Tag = TAG_ARROW_TIP;
                     strokeArrowTip.Stroke = Brushes.Black;
+                    strokeArrowTip.Fill = Brushes.Black;
                     strokeArrowTip.StrokeThickness = STROKE_THICKNESS;
 
                     ApplyStyle(stroke, strokeArrowTip);
@@ -470,7 +512,7 @@ namespace TT.Viewer.Views
                     Path spinArrow = new Path();
                     spinArrow.Data = arrowTipGeometry;
                     spinArrow.Stroke = Brushes.Blue;
-                    spinArrow.StrokeThickness = SPIN_ARROW_STROKE_THICKNESS;
+                    spinArrow.StrokeThickness = STROKE_THICKNESS_SPIN_ARROW;
 
                     spinArrow.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
                     spinArrow.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
@@ -551,6 +593,26 @@ namespace TT.Viewer.Views
 
             InnerFieldHalfDistanceGrid.Children.Add(halfDistanceLine);
         }
+
+        internal void RemoveShapesByTag(string tag)
+        {
+            foreach (var s in strokeShapes.Values)
+            {
+                for (int i = 0; i < s.Count; i++)
+                {
+                    if ((string)s[i].Tag == tag)
+                    {
+                        (s[i].Parent as Grid).Children.Remove(s[i]);
+                        s.RemoveAt(i);
+                        --i;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Shape creation
 
         private Shape GetLobShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
         {
@@ -754,21 +816,9 @@ namespace TT.Viewer.Views
             return line;
         }
 
-        internal void RemoveShapesByTag(string tag)
-        {
-            foreach (var s in strokeShapes.Values)
-            {
-                for (int i = 0; i < s.Count; i++)
-                {
-                    if ((string)s[i].Tag == tag)
-                    {
-                        (s[i].Parent as Grid).Children.Remove(s[i]);
-                        s.RemoveAt(i);
-                        --i;
-                    }
-                }
-            }
-        }
+        #endregion
+
+        #region Style
 
         private void ApplyStyle(Stroke stroke, Shape shape)
         {
@@ -781,16 +831,7 @@ namespace TT.Viewer.Views
             }
             else
             {
-                if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_PUSH || stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_CHOP)
-                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_PUSH);
-                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_FLIP || stroke.Stroketechnique.Option == STROKE_ATTR_TECHNIQUE_OPTION_BANANA)
-                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_FLIP);
-                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
-                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_SMASH);
-                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_BLOCK || stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_COUNTER)
-                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_BLOCK);
-                else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_MISCELLANEOUS)
-                    ApplyStyle(shape, STROKE_ATTR_TECHNIQUE_MISCELLANEOUS);
+                ApplyStyle(shape, stroke.Stroketechnique.Type);
             }
         }
 
@@ -809,10 +850,14 @@ namespace TT.Viewer.Views
                 case STROKE_ATTR_TECHNIQUE_PUSH:
                 case STROKE_ATTR_TECHNIQUE_CHOP:
                     shape.Stroke = Brushes.Red;
+                    if ((string)shape.Tag == TAG_ARROW_TIP)
+                        shape.Fill = Brushes.Red;
                     break;
                 case STROKE_ATTR_TECHNIQUE_FLIP:
                 case STROKE_ATTR_TECHNIQUE_OPTION_BANANA:
                     shape.Stroke = Brushes.Yellow;
+                    if ((string)shape.Tag == TAG_ARROW_TIP)
+                        shape.Fill = Brushes.Yellow;
                     break;
                 case STROKE_ATTR_TECHNIQUE_SMASH:
                     shape.Stroke = Brushes.Blue;
@@ -830,10 +875,15 @@ namespace TT.Viewer.Views
                     break;
                 case STROKE_ATTR_TECHNIQUE_MISCELLANEOUS:
                     shape.Stroke = Brushes.Green;
+                    if ((string)shape.Tag == TAG_ARROW_TIP)
+                        shape.Fill = Brushes.Green;
                     break;
             }
         }
 
+        #endregion Style
+
+        #region Helper methods
         private double GetAdjustedX(Stroke stroke, double oldX)
         {
             Grid grid = GetGridForStroke(stroke);
@@ -904,7 +954,7 @@ namespace TT.Viewer.Views
         {
             if (tag == TAG_SPIN_ARROW)
             {
-                return hover ? SPIN_ARROW_STROKE_THICKNESS_HOVER : SPIN_ARROW_STROKE_THICKNESS;
+                return hover ? STROKE_THICKNESS_SPIN_ARROW_HOVER : STROKE_THICKNESS_SPIN_ARROW;
             }
             else
             {
@@ -925,6 +975,11 @@ namespace TT.Viewer.Views
         private double GetLinearContinuationX(double x1, double y1, double x2, double y2, double targetY)
         {
             return ((targetY - y1) / (y2 - y1)) * (x2 - x1) + x1;
+        }
+
+        private static bool PlacementValuesValid(Placement placement)
+        {
+            return placement.WX != double.NaN && placement.WX > 0 && placement.WY != double.NaN && placement.WY > 0;
         }
 
         #endregion

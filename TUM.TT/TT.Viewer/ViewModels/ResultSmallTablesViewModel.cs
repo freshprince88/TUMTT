@@ -24,8 +24,20 @@ namespace TT.Viewer.ViewModels
         private IMatchManager Manager;
 
         public ObservableCollection<Rally> Rallies { get; set; }
-        
-        public int RallyLength { get; set; }
+
+        private int rallyLength;
+        public int RallyLength
+        {
+            get
+            {
+                return rallyLength;
+            }
+            set
+            {
+                rallyLength = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         public ResultSmallTablesViewModel()
         {
