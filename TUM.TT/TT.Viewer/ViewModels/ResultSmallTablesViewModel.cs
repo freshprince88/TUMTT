@@ -3,39 +3,32 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ResultLargeTableViewModel : Screen, IResultViewTabItem,
+    public class ResultSmallTablesViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
         IHandle<RallyLengthChangedEvent>,
+        IHandle<FullscreenEvent>,
         IHandle<MediaControlEvent>
     {
         
         private IEventAggregator Events;
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
-        
-        private ObservableCollection<Stroke> strokes;
-        public ObservableCollection<Stroke> Strokes
-        {
-            get
-            {
-                return strokes;
-            }
-            set
-            {
-                strokes = value;
-                NotifyOfPropertyChange();
-            }
-        }
+
+        public ObservableCollection<Rally> Rallies { get; set; }
 
         private int rallyLength;
-        public int RallyLength { get
+        public int RallyLength
+        {
+            get
             {
                 return rallyLength;
             }
@@ -46,28 +39,27 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public ResultLargeTableViewModel()
+        public ResultSmallTablesViewModel()
         {
             // default constructor for caliburn design time integration
         }
 
-        public ResultLargeTableViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
+        public ResultSmallTablesViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
-            this.DisplayName = Properties.Resources.table_large_tab_title;
+            this.DisplayName = Properties.Resources.table_small_tab_title;
             Events = e;
             Dialogs = c;
             Manager = man;
             RallyLength = 1;
-            Strokes = new ObservableCollection<Stroke>();
+            Rallies = new ObservableCollection<Rally>();
 
             // Subscribe ourself to the event bus
-            Events.Subscribe(this);
-
+            Events.Subscribe(this);            
         }
 
         public byte GetOrderInResultView()
         {
-            return 1;
+            return 2;
         }
 
         #region View Methods
@@ -98,12 +90,6 @@ namespace TT.Viewer.ViewModels
                 if (stroke != null)
                     strokes.Add(stroke);
             }
-
-            // more elegant solution, doesn't seem to respect property change notifications though
-            //Strokes.Clear();
-            //strokes.ForEach(stroke => Strokes.Add(stroke));
-
-            Strokes = new ObservableCollection<Stroke>(strokes);
         }
 
         #endregion
@@ -113,12 +99,19 @@ namespace TT.Viewer.ViewModels
         public void Handle(ResultsChangedEvent message)
         {
             if (IsActive)
-                UpdateStrokeDisplay(message.Rallies);
+            {
+                Rallies.Clear();
+                message.Rallies.Apply(rally => Rallies.Add(rally));
+            }
         }
 
         public void Handle(RallyLengthChangedEvent message)
         {
             RallyLength = message;
+        }
+
+        public void Handle(FullscreenEvent message)
+        {
         }
 
         public void Handle(MediaControlEvent message)
@@ -144,7 +137,8 @@ namespace TT.Viewer.ViewModels
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);
-            UpdateStrokeDisplay(Manager. SelectedRallies);
+            Rallies.Clear();
+            Manager.SelectedRallies.Apply(rally => Rallies.Add(rally));
         }
 
         #endregion

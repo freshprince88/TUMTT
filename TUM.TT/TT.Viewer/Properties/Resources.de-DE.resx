@@ -120,8 +120,14 @@
   <data name="table_direction_title" xml:space="preserve">
     <value>Richtung</value>
   </data>
+  <data name="table_intercept_title" xml:space="preserve">
+    <value>Annahme</value>
+  </data>
   <data name="table_large_tab_title" xml:space="preserve">
     <value>Großer Tisch</value>
+  </data>
+  <data name="table_small_tab_title" xml:space="preserve">
+    <value>Kleine Tische</value>
   </data>
   <data name="table_spin_title" xml:space="preserve">
     <value>Drehung</value>
