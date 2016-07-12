@@ -70,6 +70,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intercept.
+        /// </summary>
+        public static string table_intercept_title {
+            get {
+                return ResourceManager.GetString("table_intercept_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Large Table.
         /// </summary>
         public static string table_large_tab_title {

@@ -17,10 +17,10 @@
             <Line X1="0" X2="{Binding ElementName=InnerFieldGrid, Path=ActualWidth}" Stroke="Black" StrokeThickness="3" VerticalAlignment="Center" Panel.ZIndex="-98" Margin="-22 0 -22 0"/>
         </Border>
 
-        <Grid Name="InnerFieldGrid" Margin="30,35,30,35"/>
-        <Grid Name="InnerFieldBehindGrid" Margin="30,20,30,20"/>
-        <Grid Name="InnerFieldHalfDistanceGrid" Margin="30,0,30,0"/>
-        <Grid Name="InnerFieldSpinGrid" Margin="30,6,30,6"/>
+        <Grid Name="InnerFieldGrid" Margin="0,35,0,35"/>
+        <Grid Name="InnerFieldBehindGrid" Margin="0,20,0,20"/>
+        <Grid Name="InnerFieldHalfDistanceGrid" Margin="0,0,0,0"/>
+        <Grid Name="InnerFieldSpinGrid" Margin="0,6,0,6"/>
 
     </Grid>
     
