@@ -74,7 +74,7 @@ namespace TT.Viewer.ViewModels
         
         public void StrokeSelected(object dataContext)
         {
-            Console.Out.WriteLine("Selected Rally: {0}", ((Stroke) dataContext).Rally.Number);
+            Console.Out.WriteLine("Selected stroke {1} of rally: {0}", ((Stroke) dataContext).Rally.Number, ((Stroke)dataContext).Number);
             Manager.ActiveRally = (dataContext as Stroke).Rally;
         }
 

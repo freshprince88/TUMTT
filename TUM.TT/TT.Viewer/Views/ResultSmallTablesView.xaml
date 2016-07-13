@@ -14,6 +14,7 @@
 
     <UserControl.Resources>
         <conv:MathConverter x:Key="MathConverter" />
+        <conv:RoundingConverter x:Key="RoundingConverter" />
         <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
         <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
@@ -29,6 +30,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -41,7 +43,8 @@
                           Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}"/>
             <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckIntercept" IsChecked="True"
                         Content="{Binding Path=table_intercept_title, Source={StaticResource LocalizedStrings}}"/>
-            <Slider x:Name="slider" Grid.Column="3" HorizontalAlignment="Left" Width="150" Margin="5" VerticalAlignment="Top" Maximum="1.5" Minimum="0.25" Value="0.75"/>
+            <Slider x:Name="slider" Grid.Column="3" HorizontalAlignment="Left" Width="150" Margin="5" VerticalAlignment="Center" Maximum="1.5" Minimum="0.25" Value="1.25"/>
+            <TextBox Grid.Column="4" Text="{Binding ElementName=slider, Path=Value, Converter={StaticResource RoundingConverter}}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center"/>
         </Grid>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -57,7 +60,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:TableView Strokes="{Binding Strokes}" Tag="SmallTable">
+                        <local:SmallTableView Strokes="{Binding Strokes}" Tag="SmallTable">
                             <local:TableView.ShowDirection>
                                 <Binding ElementName="CheckDirection" Path="IsChecked"/>
                             </local:TableView.ShowDirection>
@@ -67,7 +70,7 @@
                             <local:TableView.ShowIntercept>
                                 <Binding ElementName="CheckIntercept" Path="IsChecked"/>
                             </local:TableView.ShowIntercept>
-                        </local:TableView>
+                        </local:SmallTableView>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

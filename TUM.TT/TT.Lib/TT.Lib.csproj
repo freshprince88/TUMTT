@@ -139,6 +139,7 @@
     <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
     <Compile Include="Converters\NumToPrevVisibleConverter.cs" />
     <Compile Include="Converters\RallyLengthToBoolConverter.cs" />
+    <Compile Include="Converters\RoundingConverter.cs" />
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
     <Compile Include="Converters\ServiceToBoolScouterConverter.cs" />

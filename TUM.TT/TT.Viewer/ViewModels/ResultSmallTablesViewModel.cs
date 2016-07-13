@@ -9,6 +9,7 @@ using TT.Lib.Managers;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
+using System.Diagnostics;
 
 namespace TT.Viewer.ViewModels
 {
@@ -61,38 +62,18 @@ namespace TT.Viewer.ViewModels
         {
             return 2;
         }
-
-        #region View Methods
         
+        public void RallySelected(object dataContext)
+        {
+            Debug.WriteLine("Selected rally {0}", ((Rally)dataContext).Number);
+            Manager.ActiveRally = (Rally)dataContext;
+        }
+
         public void StrokeSelected(object dataContext)
         {
-            Console.Out.WriteLine("Selected Rally: {0}", ((Stroke) dataContext).Rally.Number);
+            Console.Out.WriteLine("Selected stroke {1} of rally: {0}", ((Stroke)dataContext).Rally.Number, ((Stroke)dataContext).Number);
             Manager.ActiveRally = (dataContext as Stroke).Rally;
         }
-
-        private void UpdateStrokeDisplay(IEnumerable<Rally> rallies)
-        {
-            var strokes = new List<Stroke>();            
-            foreach (var r in rallies)
-            {
-                Stroke stroke;
-                if (RallyLength == 5)
-                {
-                    stroke = r.Strokes.LastOrDefault();
-                }
-                else
-                {
-                    stroke = r.Strokes.SingleOrDefault(s =>
-                    {
-                        return s.Number == RallyLength;
-                    });
-                }
-                if (stroke != null)
-                    strokes.Add(stroke);
-            }
-        }
-
-        #endregion
 
         #region Event Handlers
 

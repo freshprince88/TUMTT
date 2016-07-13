@@ -44,7 +44,7 @@
         </Grid>
 
         <Viewbox Grid.Row="1" Stretch="Uniform">
-            <local:TableView x:Name="LargeTableView" Strokes="{Binding Strokes}" Tag="LargeTable">
+            <local:LargeTableView x:Name="LargeTableView" Strokes="{Binding Strokes}" Tag="LargeTable">
                 <local:TableView.ShowDirection>
                     <Binding ElementName="CheckDirection" Path="IsChecked"/>
                 </local:TableView.ShowDirection>
@@ -57,7 +57,7 @@
                 <local:TableView.ShowDebug>
                     <Binding ElementName="CheckDebug" Path="IsChecked"/>
                 </local:TableView.ShowDebug>
-            </local:TableView>
+            </local:LargeTableView>
         </Viewbox>
     </Grid>
 </UserControl>

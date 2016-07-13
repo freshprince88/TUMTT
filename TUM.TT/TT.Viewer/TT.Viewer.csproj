@@ -273,8 +273,11 @@
     <Compile Include="Views\ShowCompetitionView.xaml.cs">
       <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TableView.xaml.cs">
-      <DependentUpon>TableView.xaml</DependentUpon>
+    <Compile Include="Views\SmallTableView.xaml.cs">
+      <DependentUpon>SmallTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LargeTableView.xaml.cs">
+      <DependentUpon>LargeTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
@@ -291,6 +294,7 @@
     <Compile Include="Views\TableStandardView.xaml.cs">
       <DependentUpon>TableStandardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TableView.cs" />
     <Compile Include="Views\ThirdBallStatisticsView.xaml.cs">
       <DependentUpon>ThirdBallStatisticsView.xaml</DependentUpon>
     </Compile>
@@ -431,7 +435,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TableView.xaml">
+    <Page Include="Views\SmallTableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LargeTableView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
