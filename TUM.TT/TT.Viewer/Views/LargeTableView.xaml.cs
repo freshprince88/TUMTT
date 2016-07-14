@@ -103,12 +103,12 @@ namespace TT.Viewer.Views
             if (stroke.Placement.WY < 137)
             {
                 // stroke in the upper half of table
-                return oldX + (View_TableBorder.Margin.Left - grid.Margin.Left);
+                return oldX + (TableBorder.Margin.Left - grid.Margin.Left);
             }
             else
             {
                 // stroke in the lower half of table => flip x
-                return grid.ActualWidth - oldX - (View_TableBorder.Margin.Left - grid.Margin.Left);
+                return grid.ActualWidth - oldX - (TableBorder.Margin.Left - grid.Margin.Left);
             }
         }
 
@@ -119,27 +119,44 @@ namespace TT.Viewer.Views
             if (stroke.Placement.WY < 137)
             {
                 // stroke in the upper half of table
-                return oldY + (View_TableBorder.Margin.Top - grid.Margin.Top);
+                return oldY + (TableBorder.Margin.Top - grid.Margin.Top);
             }
             else
             {
                 // stroke in the lower half of table => flip y
-                return grid.ActualHeight - oldY - (View_TableBorder.Margin.Bottom - grid.Margin.Bottom);
+                return grid.ActualHeight - oldY - (TableBorder.Margin.Bottom - grid.Margin.Bottom);
             }
         }
-
-        protected override void DoStrokePainting(List<Stroke> strokes)
+        
+        protected override double GetSecondStrokePrecedingStartY()
         {
-            foreach (Stroke stroke in strokes)
+            return 0;
+        }
+
+        protected override void ProcessStrokes(List<Stroke> strokes)
+        {
+            // clear all previous strokes
+            foreach (UIElement p in TableGrid.Children)
             {
-                if (!PlacementValuesValid(stroke.Placement))
+                if (p is Grid)
+                    (p as Grid).Children.Clear();
+            }
+            StrokeShapes.Clear();
+
+            // add new lists of shapes for each stroke and also the strokes themselves 
+            // (at this point the actual size of this view should be set)
+            foreach (Stroke s in strokes)
+            {
+                StrokeShapes[s] = new List<Shape>();
+
+                if (!PlacementValuesValid(s.Placement))
                     continue;
 
-                if (stroke.Number == 1)
-                    AddServiceStrokesSpinArrows(stroke);
-                AddStrokesDirectionLines(stroke);
-                AddInterceptArrows(stroke);
-                AddStrokesArrowtips(stroke);
+                if (s.Number == 1)
+                    AddServiceStrokesSpinArrows(s);
+                AddStrokesDirectionLines(s);
+                AddInterceptArrows(s);
+                AddStrokesArrowtips(s);
             }
         }
     }

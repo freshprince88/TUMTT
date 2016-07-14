@@ -125,25 +125,11 @@ namespace TT.Viewer.Views
         {
             //Debug.WriteLine("OnStrokesPropertyChanged sender={0}, sender.Tag={3} e.ov={1}, e.nv={2}", sender, e.OldValue, e.NewValue, ((TableView)sender).Tag);
 
-            if (e.NewValue is ICollection<Stroke>)
-            {
-                List<Stroke> strokes = new List<Stroke>((ICollection<Stroke>)e.NewValue);
-
-                TableView view = (TableView)sender;
-                foreach (UIElement p in view.View_TableGrid.Children)
-                {
-                    if (p is Grid)
-                        (p as Grid).Children.Clear();
-                }
-                view.StrokeShapes.Clear();
-
-                strokes.ForEach(s => { view.StrokeShapes[s] = new List<Shape>(); });
-
-                view.DoStrokePainting(strokes);                
-            }
+            TableView view = (TableView)sender;
+            view.ProcessStrokes(new List<Stroke>((ICollection<Stroke>)e.NewValue));
         }
 
-        protected abstract void DoStrokePainting(List<Stroke> strokes);
+        protected abstract void ProcessStrokes(List<Stroke> strokes);
 
         private static void OnDisplayTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -189,8 +175,6 @@ namespace TT.Viewer.Views
 
         protected void AddStrokesDirectionLines(Stroke stroke)
         {
-            //Debug.WriteLine("Strokes to paint: {0}", strokes.Count);
-
             Shape shape = StrokeShapes[stroke].Find(s => (string)s.Tag == TAG_DIRECTION);
             if (shape != null)
                 shape.Visibility = Visibility.Visible;
@@ -215,7 +199,7 @@ namespace TT.Viewer.Views
                         if (precedingStroke.Number == 1)
                         {
                             precedingStartX = GetAdjustedX(stroke, precedingStroke.Playerposition);
-                            precedingStartY = 0;
+                            precedingStartY = GetSecondStrokePrecedingStartY(); // magic
                         }
                         else
                         {
@@ -226,14 +210,19 @@ namespace TT.Viewer.Views
                         precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
                         precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
 
-                        //if (ShowDebug)
-                        //    AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
 
-                        Y1 = stroke.PointOfContact == STROKE_ATTR_POC_OVER ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+                        if (ShowDebug)
+                            AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
+
+                        if (precedingStartY > precedingEndY)    // bottom -> top
+                            Y1 = stroke.PointOfContact == STROKE_ATTR_POC_OVER ? precedingEndY - 30 : 0;
+                        else
+                            Y1 = stroke.PointOfContact == STROKE_ATTR_POC_OVER ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+
                         X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
 
-                        //if (ShowDebug)
-                        //    AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
+                        if (ShowDebug)
+                            AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                     }
 
                     X2 = GetAdjustedX(stroke, stroke.Placement.WX);
@@ -304,14 +293,19 @@ namespace TT.Viewer.Views
                             if (stroke.Number >= stroke.Rally.Strokes.Count)
                                 return;
 
+                            Stroke followingStroke = stroke.Rally.Strokes[stroke.Number];
+                            Grid followingStrokeGrid = GetGridForStroke(followingStroke);
+
                             double x1, y1, x2, y2;
-                            GetPointForShape(shape, PointType.Start, out x1, out y1);
-                            GetPointForShape(shape, PointType.End, out x2, out y2);
+                            GetPointForShapeRelativeToGrid(shape, PointType.Start, followingStrokeGrid, out x1, out y1);
+                            GetPointForShapeRelativeToGrid(shape, PointType.End, followingStrokeGrid, out x2, out y2);
 
                             double xE, yE;
-                            Stroke followingStroke = stroke.Rally.Strokes[stroke.Number];
 
-                            yE = followingStroke.PointOfContact == STROKE_ATTR_POC_OVER ? y2 - 30 : 0;
+                            if (y1 > y2)
+                                yE = followingStroke.PointOfContact == STROKE_ATTR_POC_OVER ? y2 - 30 : 0;
+                            else
+                                yE = followingStroke.PointOfContact == STROKE_ATTR_POC_OVER ? y2 + 30 : followingStrokeGrid.ActualHeight;
                             xE = GetLinearContinuationX(x1, y1, x2, y2, yE);
 
                             if (xE.Equals(double.NaN) || yE.Equals(double.NaN))
@@ -345,7 +339,7 @@ namespace TT.Viewer.Views
                             if (!ShowIntercept)
                                 interceptLine.Visibility = Visibility.Hidden;
 
-                            GetGridForStroke(stroke).Children.Add(interceptLine);
+                            followingStrokeGrid.Children.Add(interceptLine);
                             // ---
 
                             // arrow tip
@@ -386,7 +380,7 @@ namespace TT.Viewer.Views
                             if (!ShowIntercept)
                                 interceptArrowTip.Visibility = Visibility.Hidden;
 
-                            GetGridForStroke(stroke).Children.Add(interceptArrowTip);
+                            followingStrokeGrid.Children.Add(interceptArrowTip);
                             // ---
 
                             return;
@@ -431,6 +425,7 @@ namespace TT.Viewer.Views
                     double X1, X2, Y1, Y2;
                     X1 = Y1 = int.MinValue;
 
+                    Grid gridOfStroke = GetGridForStroke(stroke);
                     if (isServiceStroke)
                     {
                         X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
@@ -439,7 +434,7 @@ namespace TT.Viewer.Views
                     else
                     {
                         Shape shape = StrokeShapes[stroke].Find(s => (string)s.Tag == TAG_DIRECTION);
-                        GetPointForShape(shape, PointType.Middle, out X1, out Y1);
+                        GetPointForShapeRelativeToGrid(shape, PointType.Middle, gridOfStroke, out X1, out Y1);
                     }
 
                     X2 = GetAdjustedX(stroke, stroke.Placement.WX);
@@ -479,7 +474,7 @@ namespace TT.Viewer.Views
 
                     StrokeShapes[stroke].Add(strokeArrowTip);
 
-                    GetGridForStroke(stroke).Children.Add(strokeArrowTip);
+                    gridOfStroke.Children.Add(strokeArrowTip);
                 }
                 else
                 {
@@ -783,8 +778,6 @@ namespace TT.Viewer.Views
         {
             if (stroke.Number == 1)
             {
-                if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
-                    ApplyStyle(shape, STROKE_ATTR_SIDE_BACKHAND);
                 if (stroke.Spin != null && stroke.Spin.No != "1")
                     ApplyStyle(shape, STROKE_ATTR_HAS_SPIN);
             }
@@ -792,30 +785,29 @@ namespace TT.Viewer.Views
             {
                 ApplyStyle(shape, stroke.Stroketechnique.Type);
             }
+
+            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND && (string)shape.Tag != TAG_ARROW_TIP && (string)shape.Tag != TAG_INTERCEPT)
+            {
+                DoubleCollection dashes = new DoubleCollection();
+                dashes.Add(2);
+                shape.StrokeDashArray = dashes;
+            }
         }
 
         private void ApplyStyle(Shape shape, string style)
         {
             switch (style)
-            {
-                case STROKE_ATTR_SIDE_BACKHAND:
-                    if ((string)shape.Tag != TAG_ARROW_TIP && (string)shape.Tag != TAG_INTERCEPT)
-                    {
-                        DoubleCollection dashes = new DoubleCollection();
-                        dashes.Add(2);
-                        shape.StrokeDashArray = dashes;
-                    }
-                    break;
+            {                
                 case STROKE_ATTR_TECHNIQUE_PUSH:
                 case STROKE_ATTR_TECHNIQUE_CHOP:
                     shape.Stroke = Brushes.Red;
-                    if ((string)shape.Tag == TAG_ARROW_TIP)
+                    if (shape is Path && (string)shape.Tag != TAG_DIRECTION)
                         shape.Fill = Brushes.Red;
                     break;
                 case STROKE_ATTR_TECHNIQUE_FLIP:
                 case STROKE_ATTR_TECHNIQUE_OPTION_BANANA:
                     shape.Stroke = Brushes.Yellow;
-                    if ((string)shape.Tag == TAG_ARROW_TIP)
+                    if (shape is Path && (string)shape.Tag != TAG_DIRECTION)
                         shape.Fill = Brushes.Yellow;
                     break;
                 case STROKE_ATTR_TECHNIQUE_SMASH:
@@ -834,7 +826,7 @@ namespace TT.Viewer.Views
                     break;
                 case STROKE_ATTR_TECHNIQUE_MISCELLANEOUS:
                     shape.Stroke = Brushes.Green;
-                    if ((string)shape.Tag == TAG_ARROW_TIP)
+                    if (shape is Path && (string)shape.Tag != TAG_DIRECTION)
                         shape.Fill = Brushes.Green;
                     break;
             }
@@ -849,6 +841,12 @@ namespace TT.Viewer.Views
         protected abstract double GetAdjustedX(Stroke stroke, double oldX);
 
         protected abstract double GetAdjustedY(Stroke stroke, double oldY);
+
+        /// <summary>
+        /// Not 100% sure why, but we need this method - small and large table need exact opposite values,
+        /// but only for second stroke
+        /// </summary>
+        protected abstract double GetSecondStrokePrecedingStartY();
 
         protected Grid GetGridForStroke(Stroke stroke)
         {
@@ -886,7 +884,7 @@ namespace TT.Viewer.Views
                 return 0;
         }
 
-        private void GetPointForShape(Shape shape, PointType which, out double x, out double y)
+        private void GetPointForShapeRelativeToGrid(Shape shape, PointType which, Grid grid, out double x, out double y)
         {
             if (shape is Path)
             {
@@ -924,7 +922,6 @@ namespace TT.Viewer.Views
                             y = fig.StartPoint.Y;
                             break;
                     }
-
                 }
                 else
                     throw new ArgumentException("point for shape not defined! data of " + shape + " is not a PathGeometry.");
@@ -947,8 +944,13 @@ namespace TT.Viewer.Views
             }
             else
             {
-                x = y = 0;
                 throw new ArgumentException("point for shape not defined! shape " + shape + " is neither Path nor Line.");
+            }
+
+            Grid parent = (Grid)shape.Parent;
+            if (parent.Name != grid.Name)
+            {
+                y -= grid.Margin.Top - parent.Margin.Top;
             }
         }
 

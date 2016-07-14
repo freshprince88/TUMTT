@@ -18,6 +18,8 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class SmallTableView : TableView
     {
+        private const int MAX_DISPLAYED_STROKES = 4;
+
         private static BrushConverter brushConverter = new BrushConverter();
 
         private AutoResetEvent sizeChangedWaitEvent;
@@ -63,25 +65,37 @@ namespace TT.Viewer.Views
         }
 
         #endregion
-
-        protected override void DoStrokePainting(List<Stroke> strokes)
+        protected override void ProcessStrokes(List<Stroke> strokes)
         {
+            // clear all previous strokes
+            foreach (UIElement p in TableGrid.Children)
+            {
+                if (p is Grid)
+                    (p as Grid).Children.Clear();
+            }
+            StrokeShapes.Clear();
+
+            // add new lists of shapes for each stroke - up to MAX_DISPLAYED_STROKES many for small table!
+            int maxStrokeDisplayCounter = 0;
+            foreach (Stroke s in strokes)
+            {
+                maxStrokeDisplayCounter++;
+                if (maxStrokeDisplayCounter > MAX_DISPLAYED_STROKES)
+                    break;
+                StrokeShapes[s] = new List<Shape>();
+            }
+
+            // once size of this view changed, we know it's been fully added: add the actual stroke shapes (they need the actual size)
             new Thread(new ThreadStart(() =>
             {
                 sizeChangedWaitEvent.WaitOne();
 
                 Dispatcher.Invoke(() =>
-                {
-                    int maxStrokeDisplayCounter = 0;
-                    foreach (Stroke stroke in strokes)
+                {                    
+                    foreach (Stroke stroke in StrokeShapes.Keys)
                     {
-                        maxStrokeDisplayCounter++;
-
-                        if (maxStrokeDisplayCounter >= 4)
-                            break;
-
                         if (!PlacementValuesValid(stroke.Placement))
-                            continue;
+                            continue;                        
 
                         if (stroke.Number == 1)
                             AddServiceStrokesSpinArrows(stroke);
@@ -125,6 +139,11 @@ namespace TT.Viewer.Views
                 // stroke in the lower half of table => flip y
                 return stroke.Number % 2 == 1 ? grid.ActualHeight - oldY - (TableBorder.Margin.Bottom - grid.Margin.Bottom) : oldY + (TableBorder.Margin.Top - grid.Margin.Top);
             }
+        }
+
+        protected override double GetSecondStrokePrecedingStartY()
+        {
+            return InnerFieldBehindGrid.ActualHeight;
         }
 
         protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke)
@@ -198,6 +217,7 @@ namespace TT.Viewer.Views
             else
                 return hover ? STROKE_THICKNESS_HOVER : STROKE_THICKNESS;
         }
+
         #endregion
     }
 }
