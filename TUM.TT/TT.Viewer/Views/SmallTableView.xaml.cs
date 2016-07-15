@@ -24,11 +24,9 @@ namespace TT.Viewer.Views
         private AutoResetEvent sizeChangedWaitEvent;
 
         public override Grid View_InnerFieldGrid { get { return InnerFieldGrid; } }
-        public override Grid View_TableGrid { get { return TableGrid; } }
         public override Grid View_InnerFieldBehindGrid { get { return InnerFieldBehindGrid; } }
         public override Grid View_InnerFieldHalfDistanceGrid { get { return InnerFieldHalfDistanceGrid; } }
         public override Grid View_InnerFieldSpinGrid { get { return InnerFieldSpinGrid; } }
-        public override Border View_TableBorder { get { return TableBorder; } }
 
         public SmallTableView()
         {            

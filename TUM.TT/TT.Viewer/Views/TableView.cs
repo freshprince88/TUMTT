@@ -14,11 +14,9 @@ namespace TT.Viewer.Views
         protected Dictionary<Stroke, List<Shape>> StrokeShapes { get; private set; }
 
         public abstract Grid View_InnerFieldGrid { get; }
-        public abstract Grid View_TableGrid { get; }
         public abstract Grid View_InnerFieldBehindGrid { get; }
         public abstract Grid View_InnerFieldHalfDistanceGrid { get; }
         public abstract Grid View_InnerFieldSpinGrid { get; }
-        public abstract Border View_TableBorder { get; }
 
         public TableView()
         {
@@ -159,8 +157,16 @@ namespace TT.Viewer.Views
 
                     if (isServiceStroke)
                     {
-                        X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
-                        Y1 = View_InnerFieldBehindGrid.ActualHeight; // service strokes start at the bottom
+                        if (stroke.Playerposition == double.MinValue)
+                        {
+                            X1 = 0;
+                            Y1 = stroke.Placement.WY; // service stroke for legend
+                        }
+                        else
+                        {
+                            X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
+                            Y1 = View_InnerFieldBehindGrid.ActualHeight; // else: service strokes start at the bottom
+                        }
                     }
                     else
                     {

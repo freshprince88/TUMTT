@@ -6,11 +6,61 @@
              xmlns:local="clr-namespace:TT.Viewer.Views"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="200"
+             d:DesignHeight="410" d:DesignWidth="200"
              Strokes="{Binding Strokes}">
-    <Grid Height="300" Width="200" Background="White" Focusable="true"> <!--cal:Message.Attach="[Event MouseLeave] = [Action MouseLeft()]"-->
-        <Border Name="TableBorder" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="-99"/>
-        <Grid Name="InnerFieldGrid" Margin="30,10,30,10"/>
-        <Grid Name="InnerFieldBehindGrid" Margin="15,10,15,10"/>
+    <Grid Height="410" Width="200" Background="White" Focusable="true"> <!--cal:Message.Attach="[Event MouseLeave] = [Action MouseLeft()]"-->
+        <Border Name="TableBorder" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="-99"/>        
+
+        <Grid Name="IFG1" Margin="20,10,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Service (without spin)"/>
+        </Grid>
+        <Grid Name="IFBG1" Margin="20,10,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG2" Margin="20,50,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Service (with spin)"/>
+        </Grid>
+        <Grid Name="IFBG2" Margin="20,50,20,0" Height="40" VerticalAlignment="Top"/>
+        <Grid Name="IFSG2" Margin="10,50,20,0" Height="30" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG3"  Margin="20,90,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Push"/>
+        </Grid>
+        <Grid Name="IFBG3"  Margin="20,90,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG4"  Margin="20,130,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Chop"/>
+        </Grid>
+        <Grid Name="IFBG4"  Margin="20,130,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG5"  Margin="20,170,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Lob"/>
+        </Grid>
+        <Grid Name="IFBG5"  Margin="20,170,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG6"  Margin="20,210,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Topspin"/>
+        </Grid>
+        <Grid Name="IFBG6"  Margin="20,210,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG7"  Margin="20,250,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Banana / Flip"/>
+        </Grid>
+        <Grid Name="IFBG7"  Margin="20,250,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG8"  Margin="20,290,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Block / Counter"/>
+        </Grid>
+        <Grid Name="IFBG8"  Margin="20,290,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG9"  Margin="20,330,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Smash"/>
+        </Grid>
+        <Grid Name="IFBG9"  Margin="20,330,20,0" Height="40" VerticalAlignment="Top"/>
+
+        <Grid Name="IFG10"  Margin="20,370,20,0" Height="40" VerticalAlignment="Top">
+            <TextBlock Text="Misc"/>
+        </Grid>
+        <Grid Name="IFBG10"  Margin="20,370,20,0" Height="40" VerticalAlignment="Top"/>
+
     </Grid>
 </local:TableView>

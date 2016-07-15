@@ -26,13 +26,16 @@ namespace TT.Viewer.Views
         public TableLegendView()
         {
             InitializeComponent();
-        }        
-        
+        }
+
+        private Grid currentInnerFieldGrid;
+        private Grid currentInnerFieldBehindGrid;
+
         public override Grid View_InnerFieldBehindGrid
         {
             get
             {
-                return InnerFieldBehindGrid;
+                return currentInnerFieldBehindGrid;
             }
         }
 
@@ -40,7 +43,7 @@ namespace TT.Viewer.Views
         {
             get
             {
-                return InnerFieldGrid;
+                return currentInnerFieldGrid;
             }
         }
 
@@ -56,23 +59,7 @@ namespace TT.Viewer.Views
         {
             get
             {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override Border View_TableBorder
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override Grid View_TableGrid
-        {
-            get
-            {
-                throw new NotImplementedException();
+                return IFSG2;
             }
         }
 
@@ -106,10 +93,17 @@ namespace TT.Viewer.Views
 
             foreach (Stroke s in strokes)
             {
+                currentInnerFieldGrid = (Grid)FindName("IFG" + (-1) * s.Rally.Number);
+                currentInnerFieldBehindGrid = (Grid)FindName("IFBG" + (-1) * s.Rally.Number);
+
                 StrokeShapes[s] = new List<Shape>();
                 AddStrokesDirectionShapes(s);
                 AddStrokesArrowtips(s);
                 AddInterceptArrows(s);
+
+                if (s.Playerposition == double.MinValue)
+                    s.Playerposition = 0;
+                AddServiceStrokesSpinArrows(s);
             }
         }
 
