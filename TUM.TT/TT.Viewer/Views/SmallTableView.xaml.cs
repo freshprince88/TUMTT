@@ -2,7 +2,6 @@
 using MahApps.Metro;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +17,7 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class SmallTableView : TableView
     {
-        private const int MAX_DISPLAYED_STROKES = 4;
+        private const int MaxDisplayedStrokes = 4;
 
         private static BrushConverter brushConverter = new BrushConverter();
 
@@ -47,11 +46,6 @@ namespace TT.Viewer.Views
 
         #region Event handlers
 
-        private void MySizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            Debug.WriteLine(e);
-        }
-
         private void Table_MouseEnter(object sender, MouseEventArgs e)
         {
             SmallTableViewBorder.BorderThickness = new Thickness(2);
@@ -65,6 +59,7 @@ namespace TT.Viewer.Views
         }
 
         #endregion
+
         protected override void ProcessStrokes(List<Stroke> strokes)
         {
             // clear all previous strokes
@@ -75,12 +70,12 @@ namespace TT.Viewer.Views
             }
             StrokeShapes.Clear();
 
-            // add new lists of shapes for each stroke - up to MAX_DISPLAYED_STROKES many for small table!
+            // add new lists of shapes for each stroke - up to MaxDisplayedStrokes many for small table!
             int maxStrokeDisplayCounter = 0;
             foreach (Stroke s in strokes)
             {
                 maxStrokeDisplayCounter++;
-                if (maxStrokeDisplayCounter > MAX_DISPLAYED_STROKES)
+                if (maxStrokeDisplayCounter > MaxDisplayedStrokes)
                     break;
                 StrokeShapes[s] = new List<Shape>();
             }
@@ -99,7 +94,7 @@ namespace TT.Viewer.Views
 
                         if (stroke.Number == 1)
                             AddServiceStrokesSpinArrows(stroke);
-                        AddStrokesDirectionLines(stroke);
+                        AddStrokesDirectionShapes(stroke);
                         AddInterceptArrows(stroke);
                         AddStrokesArrowtips(stroke);
                     }
@@ -131,12 +126,12 @@ namespace TT.Viewer.Views
             //Debug.WriteLine("{0} : ah={1} mb={2} mt={3}", stroke.Rally.Number, grid.ActualHeight, grid.Margin.Bottom, grid.Margin.Top);
             if (stroke.Placement.WY < 137)
             {
-                // stroke in the upper half of table
+                // stroke in the upper half of table, flip y for even-numbered strokes
                 return stroke.Number % 2 == 1 ? oldY + (TableBorder.Margin.Top - grid.Margin.Top) : grid.ActualHeight - oldY - (TableBorder.Margin.Bottom - grid.Margin.Bottom);
             }
             else
             {
-                // stroke in the lower half of table => flip y
+                // stroke in the lower half of table, flip y for odd-numbered strokes
                 return stroke.Number % 2 == 1 ? grid.ActualHeight - oldY - (TableBorder.Margin.Bottom - grid.Margin.Bottom) : oldY + (TableBorder.Margin.Top - grid.Margin.Top);
             }
         }
@@ -149,10 +144,13 @@ namespace TT.Viewer.Views
         protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke)
         {
             // no event handlers on strokes in small table view
+            
+            // DEBUG
             shape.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
             shape.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
             shape.DataContext = stroke;
             Message.SetAttach(shape, "StrokeSelected($DataContext)");
+            // ---
         }
 
         #endregion
@@ -171,7 +169,7 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        s.StrokeThickness = GetStrokeThicknessForStroke((string)s.Tag, stroke.Stroketechnique, true);
+                        s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, true);
                     }
                     else
                     {
@@ -194,7 +192,7 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        s.StrokeThickness = GetStrokeThicknessForStroke((string)s.Tag, stroke.Stroketechnique, false);
+                        s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, false);
                     }
                     else
                     {
@@ -204,18 +202,18 @@ namespace TT.Viewer.Views
             }
         }
 
-        private double GetStrokeThicknessForStroke(string tag, Stroketechnique technique, bool hover)
+        private double GetStrokeThicknessForStroke(ShapeType tag, Stroketechnique technique, bool hover)
         {
-            if (tag == TAG_SPIN_ARROW)
-                return hover ? STROKE_THICKNESS_SPIN_ARROW_HOVER : STROKE_THICKNESS_SPIN_ARROW;
-            else if (tag == TAG_INTERCEPT)
-                return hover ? STROKE_THICKNESS_INTERCEPT_HOVER : STROKE_THICKNESS_INTERCEPT;
-            else if (tag == TAG_DEBUG_PRECEDING)
-                return hover ? STROKE_THICKNESS_DEBUG_PRECEDING_HOVER : STROKE_THICKNESS_DEBUG_PRECEDING;
-            else if (technique != null && technique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
-                return hover ? STROKE_THICKNESS_SMASH_HOVER : STROKE_THICKNESS_SMASH;
+            if (tag == ShapeType.SpinArrow)
+                return hover ? StrokeThicknessSpinArrowHover : StrokeThicknessSpinArrow;
+            else if (tag == ShapeType.Intercept)
+                return hover ? StrokeThicknessInterceptHover : StrokeThicknessIntercept;
+            else if (tag == ShapeType.Debug_preceding)
+                return hover ? StrokeThicknessPrecedingHover_Debug : StrokeThicknessPreceding_Debug;
+            else if (technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                return hover ? StrokeThicknessSmashHover : StrokeThicknessSmash;
             else
-                return hover ? STROKE_THICKNESS_HOVER : STROKE_THICKNESS;
+                return hover ? StrokeThicknessHover : StrokeThickness;
         }
 
         #endregion

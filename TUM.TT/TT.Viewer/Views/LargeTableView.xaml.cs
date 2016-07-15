@@ -1,11 +1,9 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Shapes;
 using TT.Models;
 
@@ -28,6 +26,8 @@ namespace TT.Viewer.Views
             InitializeComponent();            
         }
 
+        #region Event handlers
+
         private void Stroke_MouseEnter(Object sender, MouseEventArgs e)
         {
             Shape shape = sender as Shape;
@@ -41,7 +41,7 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        s.StrokeThickness = GetStrokeThicknessForStroke((string)s.Tag, stroke.Stroketechnique, true);
+                        s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, true);
                     }
                     else
                     {
@@ -64,7 +64,7 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(stroke))
                     {
-                        s.StrokeThickness = GetStrokeThicknessForStroke((string)s.Tag, stroke.Stroketechnique, false);
+                        s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, false);
                     }
                     else
                     {
@@ -82,18 +82,22 @@ namespace TT.Viewer.Views
             Message.SetAttach(shape, "StrokeSelected($DataContext)");
         }
 
-        private double GetStrokeThicknessForStroke(string tag, Stroketechnique technique, bool hover)
+        #endregion
+
+        #region Helper methods
+
+        private double GetStrokeThicknessForStroke(ShapeType tag, Stroketechnique technique, bool hover)
         {
-            if (tag == TAG_SPIN_ARROW)
-                return hover ? STROKE_THICKNESS_SPIN_ARROW_HOVER : STROKE_THICKNESS_SPIN_ARROW;
-            else if (tag == TAG_INTERCEPT)
-                return hover ? STROKE_THICKNESS_INTERCEPT_HOVER : STROKE_THICKNESS_INTERCEPT;
-            else if (tag == TAG_DEBUG_PRECEDING)
-                return hover ? STROKE_THICKNESS_DEBUG_PRECEDING_HOVER : STROKE_THICKNESS_DEBUG_PRECEDING;
-            else if (technique != null && technique.Type == STROKE_ATTR_TECHNIQUE_SMASH)
-                return hover ? STROKE_THICKNESS_SMASH_HOVER : STROKE_THICKNESS_SMASH;
+            if (tag == ShapeType.SpinArrow)
+                return hover ? StrokeThicknessSpinArrowHover : StrokeThicknessSpinArrow;
+            else if (tag == ShapeType.Intercept)
+                return hover ? StrokeThicknessInterceptHover : StrokeThicknessIntercept;
+            else if (tag == ShapeType.Debug_preceding)
+                return hover ? StrokeThicknessPrecedingHover_Debug : StrokeThicknessPreceding_Debug;
+            else if (technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                return hover ? StrokeThicknessSmashHover : StrokeThicknessSmash;
             else
-                return hover ? STROKE_THICKNESS_HOVER : STROKE_THICKNESS;
+                return hover ? StrokeThicknessHover : StrokeThickness;
         }
 
         protected override double GetAdjustedX(Stroke stroke, double oldX)
@@ -133,6 +137,8 @@ namespace TT.Viewer.Views
             return 0;
         }
 
+        #endregion
+
         protected override void ProcessStrokes(List<Stroke> strokes)
         {
             // clear all previous strokes
@@ -154,7 +160,7 @@ namespace TT.Viewer.Views
 
                 if (s.Number == 1)
                     AddServiceStrokesSpinArrows(s);
-                AddStrokesDirectionLines(s);
+                AddStrokesDirectionShapes(s);
                 AddInterceptArrows(s);
                 AddStrokesArrowtips(s);
             }

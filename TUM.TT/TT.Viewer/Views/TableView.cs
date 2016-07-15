@@ -1,11 +1,8 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using TT.Models;
@@ -30,43 +27,18 @@ namespace TT.Viewer.Views
 
         #region Constants
 
-        protected const double STROKE_THICKNESS = 1.75;
-        protected const double STROKE_THICKNESS_HOVER = 2.5;
-        protected const double STROKE_THICKNESS_SPIN_ARROW = 1;
-        protected const double STROKE_THICKNESS_SPIN_ARROW_HOVER = 2;
-        protected const double STROKE_THICKNESS_SMASH = 3.5;
-        protected const double STROKE_THICKNESS_SMASH_HOVER = 5;
-        protected const double STROKE_THICKNESS_DEBUG_PRECEDING = 0.5;
-        protected const double STROKE_THICKNESS_DEBUG_PRECEDING_HOVER = 0.7;
-        protected const double STROKE_THICKNESS_INTERCEPT = 1.0;
-        protected const double STROKE_THICKNESS_INTERCEPT_HOVER = 1.7;
+        protected const double StrokeThickness = 1.75;
+        protected const double StrokeThicknessHover = 2.5;
+        protected const double StrokeThicknessSpinArrow = 1;
+        protected const double StrokeThicknessSpinArrowHover = 2;
+        protected const double StrokeThicknessSmash = 3.5;
+        protected const double StrokeThicknessSmashHover = 5;
+        protected const double StrokeThicknessPreceding_Debug = 0.5;
+        protected const double StrokeThicknessPrecedingHover_Debug = 0.7;
+        protected const double StrokeThicknessIntercept = 1.0;
+        protected const double StrokeThicknessInterceptHover = 1.7;
 
-        protected const string TAG_SPIN_ARROW = "spinarrow";
-        protected const string TAG_ARROW_TIP = "arrowtip";
-        protected const string TAG_DIRECTION = "direction";
-        protected const string TAG_INTERCEPT = "intercept";
-        protected const string TAG_DEBUG_PRECEDING = "debug_preceding";
-        protected const string TAG_SMALL_TABLE = "SmallTable";
-
-        protected const string STROKE_ATTR_SIDE_FOREHAND = "Forehand";
-        protected const string STROKE_ATTR_SIDE_BACKHAND = "Backhand";
-
-        protected const string STROKE_ATTR_HAS_SPIN = "has_spin";
-
-        protected const string STROKE_ATTR_TECHNIQUE_PUSH = "Push";
-        protected const string STROKE_ATTR_TECHNIQUE_FLIP = "Flip";
-        protected const string STROKE_ATTR_TECHNIQUE_OPTION_BANANA = "Banana";
-        protected const string STROKE_ATTR_TECHNIQUE_TOPSPIN = "Topspin";
-        protected const string STROKE_ATTR_TECHNIQUE_BLOCK = "Block";
-        protected const string STROKE_ATTR_TECHNIQUE_SMASH = "Smash";
-        protected const string STROKE_ATTR_TECHNIQUE_COUNTER = "Counter";
-        protected const string STROKE_ATTR_TECHNIQUE_CHOP = "Chop";
-        protected const string STROKE_ATTR_TECHNIQUE_LOB = "Lob";
-        protected const string STROKE_ATTR_TECHNIQUE_MISCELLANEOUS = "Miscellaneous";
-
-        protected const string STROKE_ATTR_POC_OVER = "over";
-        protected const string STROKE_ATTR_POC_HALFDISTANCE = "half-distance";
-        protected const string STROKE_ATTR_POC_BEHIND = "behind";
+        protected const string StrokeAttrTechniqueOptionBanana = "Banana";  // what is 'option'? TODO: convert to enum!        
 
         #endregion
 
@@ -124,12 +96,9 @@ namespace TT.Viewer.Views
         private static void OnStrokesPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             //Debug.WriteLine("OnStrokesPropertyChanged sender={0}, sender.Tag={3} e.ov={1}, e.nv={2}", sender, e.OldValue, e.NewValue, ((TableView)sender).Tag);
-
-            TableView view = (TableView)sender;
-            view.ProcessStrokes(new List<Stroke>((ICollection<Stroke>)e.NewValue));
+            
+             ((TableView)sender).ProcessStrokes(new List<Stroke>((ICollection<Stroke>)e.NewValue));
         }
-
-        protected abstract void ProcessStrokes(List<Stroke> strokes);
 
         private static void OnDisplayTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -142,40 +111,42 @@ namespace TT.Viewer.Views
                 if (e.Property == ShowDirectionProperty)
                 {
                     if ((bool)e.NewValue)
-                        foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokesDirectionLines(s);
+                        foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokesDirectionShapes(s);
                     else
-                        view.HideShapesByTag(TAG_DIRECTION);
+                        view.HideShapesByTag(ShapeType.Direction);
                 }
                 else if (e.Property == ShowSpinProperty)
                 {
                     if ((bool)e.NewValue)
                         foreach (Stroke s in view.StrokeShapes.Keys) view.AddServiceStrokesSpinArrows(s);
                     else
-                        view.HideShapesByTag(TAG_SPIN_ARROW);
+                        view.HideShapesByTag(ShapeType.SpinArrow);
                 }
                 else if (e.Property == ShowDebugProperty)
                 {
                     // you'll have to reload the view to display debug lines again :(
                     if (!(bool)e.NewValue)
-                        view.HideShapesByTag(TAG_DEBUG_PRECEDING);
+                        view.HideShapesByTag(ShapeType.Debug_preceding);
                 }
                 else if (e.Property == ShowInterceptProperty)
                 {
                     if ((bool)e.NewValue)
                         foreach (Stroke s in view.StrokeShapes.Keys) view.AddInterceptArrows(s);
                     else
-                        view.HideShapesByTag(TAG_INTERCEPT);
+                        view.HideShapesByTag(ShapeType.Intercept);
                 }
             }
         }
-        
+
+        protected abstract void ProcessStrokes(List<Stroke> strokes);
+
         #endregion
 
         #region Shape addition & removal
 
-        protected void AddStrokesDirectionLines(Stroke stroke)
+        protected void AddStrokesDirectionShapes(Stroke stroke)
         {
-            Shape shape = StrokeShapes[stroke].Find(s => (string)s.Tag == TAG_DIRECTION);
+            Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
             if (shape != null)
                 shape.Visibility = Visibility.Visible;
 
@@ -215,9 +186,9 @@ namespace TT.Viewer.Views
                             AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
 
                         if (precedingStartY > precedingEndY)    // bottom -> top
-                            Y1 = stroke.PointOfContact == STROKE_ATTR_POC_OVER ? precedingEndY - 30 : 0;
+                            Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
                         else
-                            Y1 = stroke.PointOfContact == STROKE_ATTR_POC_OVER ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+                            Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
 
                         X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
 
@@ -229,22 +200,21 @@ namespace TT.Viewer.Views
                     Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
 
                     if (!isServiceStroke)
-                        if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_FLIP || stroke.Stroketechnique.Option == STROKE_ATTR_TECHNIQUE_OPTION_BANANA)
+                        if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
                             shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
-                        else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_TOPSPIN)
+                        else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
                             shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
-                        else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_CHOP)
+                        else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Chop)
                             shape = GetChopShape(stroke, X1, Y1, X2, Y2);
-                        else if (stroke.Stroketechnique.Type == STROKE_ATTR_TECHNIQUE_LOB)
+                        else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Lob)
                             shape = GetLobShape(stroke, X1, Y1, X2, Y2);
                         else
                             shape = GetLineShape(stroke, X1, Y1, X2, Y2);
                     else
                         shape = GetLineShape(stroke, X1, Y1, X2, Y2);
 
-                    shape.Tag = TAG_DIRECTION;
-                    shape.StrokeThickness = STROKE_THICKNESS;
-                    shape.Stroke = Brushes.Black;
+                    shape.Tag = ShapeType.Direction;
+                    shape.StrokeThickness = StrokeThickness;
 
                     AttachEventHandlerToShape(shape, stroke);
 
@@ -256,9 +226,9 @@ namespace TT.Viewer.Views
                         View_InnerFieldBehindGrid.Children.Add(shape);
                     else
                     {
-                        if (stroke.PointOfContact == STROKE_ATTR_POC_BEHIND)
+                        if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Behind)
                             View_InnerFieldBehindGrid.Children.Add(shape);
-                        else if (stroke.PointOfContact == STROKE_ATTR_POC_HALFDISTANCE)
+                        else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.HalfDistance)
                             View_InnerFieldHalfDistanceGrid.Children.Add(shape);
                         else
                             View_InnerFieldGrid.Children.Add(shape);
@@ -269,14 +239,14 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                    Debug.WriteLine("Direction: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
                 }
             }
         }
 
         protected void AddInterceptArrows(Stroke stroke)
         {
-            List<Shape> interceptShapes = StrokeShapes[stroke].FindAll(s => (string)s.Tag == TAG_INTERCEPT);
+            List<Shape> interceptShapes = StrokeShapes[stroke].FindAll(s => (ShapeType)s.Tag == ShapeType.Intercept);
             if (interceptShapes != null && interceptShapes.Count != 0)
                 foreach (Shape interceptShape in interceptShapes)
                     interceptShape.Visibility = Visibility.Visible;
@@ -288,7 +258,7 @@ namespace TT.Viewer.Views
                 {
                     foreach (Shape shape in StrokeShapes[stroke])
                     {
-                        if ((string)shape.Tag == TAG_DIRECTION)
+                        if ((ShapeType)shape.Tag == ShapeType.Direction)
                         {
                             if (stroke.Number >= stroke.Rally.Strokes.Count)
                                 return;
@@ -303,14 +273,14 @@ namespace TT.Viewer.Views
                             double xE, yE;
 
                             if (y1 > y2)
-                                yE = followingStroke.PointOfContact == STROKE_ATTR_POC_OVER ? y2 - 30 : 0;
+                                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 - 30 : 0;
                             else
-                                yE = followingStroke.PointOfContact == STROKE_ATTR_POC_OVER ? y2 + 30 : followingStrokeGrid.ActualHeight;
+                                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 + 30 : followingStrokeGrid.ActualHeight;
                             xE = GetLinearContinuationX(x1, y1, x2, y2, yE);
 
                             if (xE.Equals(double.NaN) || yE.Equals(double.NaN))
                             {
-                                Console.Out.WriteLine("NaN extrapolated values (xE={2} yE={3}) for stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number, xE, yE);
+                                Debug.WriteLine("Intercept: NaN extrapolated values (xE={2} yE={3}) for stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number, xE, yE);
                                 return;
                             }
 
@@ -321,10 +291,8 @@ namespace TT.Viewer.Views
                             interceptLine.X2 = xE;
                             interceptLine.Y2 = yE;
 
-                            interceptLine.Tag = TAG_INTERCEPT;
-                            interceptLine.Stroke = Brushes.Black;
-                            interceptLine.Fill = Brushes.Black;
-                            interceptLine.StrokeThickness = STROKE_THICKNESS_INTERCEPT;
+                            interceptLine.Tag = ShapeType.Intercept;
+                            interceptLine.StrokeThickness = StrokeThicknessIntercept;
 
                             DoubleCollection dashes = new DoubleCollection();
                             dashes.Add(1);
@@ -366,10 +334,8 @@ namespace TT.Viewer.Views
 
                             Path interceptArrowTip = new Path();
                             interceptArrowTip.Data = arrowTipGeometry;
-                            interceptArrowTip.Tag = TAG_INTERCEPT;
-                            interceptArrowTip.Stroke = Brushes.Black;
-                            interceptArrowTip.Fill = Brushes.Black;
-                            interceptArrowTip.StrokeThickness = STROKE_THICKNESS_INTERCEPT;
+                            interceptArrowTip.Tag = ShapeType.Intercept;
+                            interceptArrowTip.StrokeThickness = StrokeThicknessIntercept;
 
                             ApplyStyle(stroke, interceptArrowTip);
 
@@ -398,8 +364,8 @@ namespace TT.Viewer.Views
                 l.X1 = precedingStartX; l.Y1 = precedingStartY;
                 l.X2 = precedingEndX; l.Y2 = precedingEndY;
                 l.Stroke = Brushes.Black;
-                l.StrokeThickness = STROKE_THICKNESS_DEBUG_PRECEDING;
-                l.Tag = TAG_DEBUG_PRECEDING;
+                l.StrokeThickness = StrokeThicknessPreceding_Debug;
+                l.Tag = ShapeType.Debug_preceding;
                 if (dashed)
                 {
                     DoubleCollection dashes = new DoubleCollection();
@@ -413,7 +379,7 @@ namespace TT.Viewer.Views
 
         protected void AddStrokesArrowtips(Stroke stroke)
         {
-            Shape strokeArrowTip = StrokeShapes[stroke].Find(s => (string)s.Tag == TAG_ARROW_TIP);
+            Shape strokeArrowTip = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip);
             if (strokeArrowTip != null)
                 strokeArrowTip.Visibility = Visibility.Visible;
 
@@ -433,7 +399,7 @@ namespace TT.Viewer.Views
                     }
                     else
                     {
-                        Shape shape = StrokeShapes[stroke].Find(s => (string)s.Tag == TAG_DIRECTION);
+                        Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
                         GetPointForShapeRelativeToGrid(shape, PointType.Middle, gridOfStroke, out X1, out Y1);
                     }
 
@@ -463,10 +429,8 @@ namespace TT.Viewer.Views
 
                     strokeArrowTip = new Path();
                     ((Path)strokeArrowTip).Data = arrowTipGeometry;
-                    strokeArrowTip.Tag = TAG_ARROW_TIP;
-                    strokeArrowTip.Stroke = Brushes.Black;
-                    strokeArrowTip.Fill = Brushes.Black;
-                    strokeArrowTip.StrokeThickness = STROKE_THICKNESS;
+                    strokeArrowTip.Tag = ShapeType.Arrowtip;
+                    strokeArrowTip.StrokeThickness = StrokeThickness;
 
                     ApplyStyle(stroke, strokeArrowTip);
 
@@ -478,14 +442,14 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                    Debug.WriteLine("Arrowtip: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
                 }
             }
         }
 
         protected void AddServiceStrokesSpinArrows(Stroke stroke)
         {
-            Shape spinArrow = StrokeShapes[stroke].Find(s => (string)s.Tag == TAG_SPIN_ARROW);
+            Shape spinArrow = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.SpinArrow);
             if (spinArrow != null)
                 spinArrow.Visibility = Visibility.Visible;
 
@@ -530,9 +494,9 @@ namespace TT.Viewer.Views
 
                     spinArrow = new Path();
                     ((Path)spinArrow).Data = arrowTipGeometry;
-                    spinArrow.Tag = TAG_SPIN_ARROW;
+                    spinArrow.Tag = ShapeType.SpinArrow;
                     spinArrow.Stroke = Brushes.Blue;
-                    spinArrow.StrokeThickness = STROKE_THICKNESS_SPIN_ARROW;
+                    spinArrow.StrokeThickness = StrokeThicknessSpinArrow;
 
                     AttachEventHandlerToShape(spinArrow, stroke);
 
@@ -545,18 +509,18 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                    Debug.WriteLine("SpinArrow: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
                 }
             }
         }
 
-        private void HideShapesByTag(string tag)
+        private void HideShapesByTag(ShapeType tag)
         {
             foreach (List<Shape> shapes in StrokeShapes.Values)
             {
                 foreach (Shape shape in shapes)
                 {
-                    if ((string)shape.Tag == tag)
+                    if ((ShapeType)shape.Tag == tag)
                     {
                         shape.Visibility = Visibility.Hidden;
                     }
@@ -573,7 +537,7 @@ namespace TT.Viewer.Views
             double m, cpx, cpy, lineTwoThirdsX, lineTwoThirdsY;
 
             lineTwoThirdsY = Y1 - (2d / 3d) * (Y1 - Y2);
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if ((Y1 > Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand) || (Y1 <= Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Forehand))
             {
                 m = (X2 - X1) / (Y1 - Y2);
                 lineTwoThirdsX = X1 + (2d / 3d) * (X2 - X1);
@@ -608,7 +572,7 @@ namespace TT.Viewer.Views
             Path lobPath = new Path();
             lobPath.Data = lobGeometry;
 
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if (stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand)
             {
                 DoubleCollection dashes = new DoubleCollection();
                 dashes.Add(2);
@@ -622,7 +586,7 @@ namespace TT.Viewer.Views
             double m, cpx, cpy, lineNineteenTwentiethsX, lineNineteenTwentiethsY;
 
             lineNineteenTwentiethsY = Y1 - (19d / 20d) * (Y1 - Y2);
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if ((Y1 > Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand) || (Y1 <= Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Forehand))
             {
                 m = (X2 - X1) / (Y1 - Y2);
                 lineNineteenTwentiethsX = X1 + (19d / 20d) * (X2 - X1);
@@ -657,7 +621,7 @@ namespace TT.Viewer.Views
             Path chopPath = new Path();
             chopPath.Data = chopGeometry;
 
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if (stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand)
             {
                 DoubleCollection dashes = new DoubleCollection();
                 dashes.Add(2);
@@ -671,7 +635,7 @@ namespace TT.Viewer.Views
             double m, cpx, cpy, lineFourFifthsX, lineFourFifthsY;
 
             lineFourFifthsY = Y1 - (4d / 5d) * (Y1 - Y2);
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if ((Y1 > Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand) || (Y1 <= Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Forehand))
             {
                 m = (X2 - X1) / (Y1 - Y2);
                 lineFourFifthsX = X1 + (4d / 5d) * (X2 - X1);
@@ -706,7 +670,7 @@ namespace TT.Viewer.Views
             Path topSpinPath = new Path();
             topSpinPath.Data = topSpinGeometry;
 
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if (stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand)
             {
                 DoubleCollection dashes = new DoubleCollection();
                 dashes.Add(2);
@@ -719,10 +683,10 @@ namespace TT.Viewer.Views
         {
             double m, cpx, cpy, lineMiddleX;
 
-            // banana is always backhand -> left curvature
+            // banana is always backhand -> left curvature (but only on large table, on small table it depends on Y1, Y2)
             m = (X2 - X1) / (Y1 - Y2);
             lineMiddleX = (X2 + X1) / 2;
-            cpx = lineMiddleX - 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
+            cpx = lineMiddleX + (Y1 > Y2 ? -1 : 1) * 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
             cpy = (Y1 + Y2) / 2 - m * (lineMiddleX - cpx);
 
             //Debug.WriteLine("banana/flip {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
@@ -745,7 +709,7 @@ namespace TT.Viewer.Views
             Path bananaPath = new Path();
             bananaPath.Data = bananaGeometry;
 
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if (stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand)
             {
                 DoubleCollection dashes = new DoubleCollection();
                 dashes.Add(2);
@@ -761,7 +725,7 @@ namespace TT.Viewer.Views
 
             //Debug.WriteLine("stroke {5} of rally {4}: x1={0} y1={1} -> x2={2} y2={3}", x1, y1, x2, y2, stroke.Rally.Number, stroke.Number);
 
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND)
+            if (stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand)
             {
                 DoubleCollection dashes = new DoubleCollection();
                 dashes.Add(2);
@@ -779,56 +743,60 @@ namespace TT.Viewer.Views
             if (stroke.Number == 1)
             {
                 if (stroke.Spin != null && stroke.Spin.No != "1")
-                    ApplyStyle(shape, STROKE_ATTR_HAS_SPIN);
+                {
+                    shape.Stroke = Brushes.SaddleBrown;
+                    shape.Fill = Brushes.SaddleBrown;
+                }
+                else
+                {
+                    shape.Stroke = Brushes.Black;
+                    shape.Fill = Brushes.Black;
+                }
             }
             else
             {
-                ApplyStyle(shape, stroke.Stroketechnique.Type);
+                switch (stroke.Stroketechnique.EnumType)
+                {
+                    case Models.Util.Enums.Stroke.Technique.Push:
+                    case Models.Util.Enums.Stroke.Technique.Chop:
+                        shape.Stroke = Brushes.Red;
+                        if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                            shape.Fill = Brushes.Red;
+                        break;
+                    case Models.Util.Enums.Stroke.Technique.Flip:
+                    case Models.Util.Enums.Stroke.Technique.Banana:
+                        shape.Stroke = Brushes.Yellow;
+                        if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                            shape.Fill = Brushes.Yellow;
+                        break;
+                    case Models.Util.Enums.Stroke.Technique.Smash:
+                        shape.Stroke = Brushes.Blue;
+                        shape.Fill = Brushes.Blue;
+                        shape.StrokeThickness = StrokeThicknessSmash;
+                        break;
+                    case Models.Util.Enums.Stroke.Technique.Block:
+                    case Models.Util.Enums.Stroke.Technique.Counter:
+                        shape.Stroke = Brushes.Blue;
+                        shape.Fill = Brushes.Blue;
+                        break;
+                    case Models.Util.Enums.Stroke.Technique.Miscellaneous:
+                        shape.Stroke = Brushes.Green;
+                        if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                            shape.Fill = Brushes.Green;
+                        break;
+                    default:
+                        shape.Stroke = Brushes.Black;
+                        if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                            shape.Fill = Brushes.Black;
+                        break;
+                }
             }
 
-            if (stroke.Side == STROKE_ATTR_SIDE_BACKHAND && (string)shape.Tag != TAG_ARROW_TIP && (string)shape.Tag != TAG_INTERCEPT)
+            if (stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand && (ShapeType)shape.Tag != ShapeType.Arrowtip && (ShapeType)shape.Tag != ShapeType.Intercept)
             {
                 DoubleCollection dashes = new DoubleCollection();
                 dashes.Add(2);
                 shape.StrokeDashArray = dashes;
-            }
-        }
-
-        private void ApplyStyle(Shape shape, string style)
-        {
-            switch (style)
-            {                
-                case STROKE_ATTR_TECHNIQUE_PUSH:
-                case STROKE_ATTR_TECHNIQUE_CHOP:
-                    shape.Stroke = Brushes.Red;
-                    if (shape is Path && (string)shape.Tag != TAG_DIRECTION)
-                        shape.Fill = Brushes.Red;
-                    break;
-                case STROKE_ATTR_TECHNIQUE_FLIP:
-                case STROKE_ATTR_TECHNIQUE_OPTION_BANANA:
-                    shape.Stroke = Brushes.Yellow;
-                    if (shape is Path && (string)shape.Tag != TAG_DIRECTION)
-                        shape.Fill = Brushes.Yellow;
-                    break;
-                case STROKE_ATTR_TECHNIQUE_SMASH:
-                    shape.Stroke = Brushes.Blue;
-                    shape.Fill = Brushes.Blue;
-                    shape.StrokeThickness = STROKE_THICKNESS_SMASH;
-                    break;
-                case STROKE_ATTR_HAS_SPIN:
-                    shape.Stroke = Brushes.SaddleBrown;
-                    shape.Fill = Brushes.SaddleBrown;
-                    break;
-                case STROKE_ATTR_TECHNIQUE_BLOCK:
-                case STROKE_ATTR_TECHNIQUE_COUNTER:
-                    shape.Stroke = Brushes.Blue;
-                    shape.Fill = Brushes.Blue;
-                    break;
-                case STROKE_ATTR_TECHNIQUE_MISCELLANEOUS:
-                    shape.Stroke = Brushes.Green;
-                    if (shape is Path && (string)shape.Tag != TAG_DIRECTION)
-                        shape.Fill = Brushes.Green;
-                    break;
             }
         }
 
@@ -852,11 +820,11 @@ namespace TT.Viewer.Views
         {
             if (stroke.Number == 1)
                 return View_InnerFieldBehindGrid;
-            else if (stroke.PointOfContact == STROKE_ATTR_POC_OVER)
+            else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over)
                 return View_InnerFieldGrid;
-            else if (stroke.PointOfContact == STROKE_ATTR_POC_BEHIND)
+            else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Behind)
                 return View_InnerFieldBehindGrid;
-            else if (stroke.PointOfContact == STROKE_ATTR_POC_HALFDISTANCE)
+            else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.HalfDistance)
                 return View_InnerFieldHalfDistanceGrid;
             return null;
         }
@@ -966,7 +934,7 @@ namespace TT.Viewer.Views
 
         #endregion
 
-        private enum PointType { Start, Middle, End }
-
+        protected enum PointType { Start, Middle, End }
+        protected enum ShapeType { Direction, Arrowtip, Intercept, SpinArrow, Debug_preceding}
     }
 }

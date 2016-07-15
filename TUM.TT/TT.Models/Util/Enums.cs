@@ -262,13 +262,21 @@
             Smash,
             Lob,
             Chop,
-            Special
+            Special,
+            Miscellaneous
+        }
+
+        public enum PointOfContact
+        {
+            Over,
+            Behind,
+            HalfDistance
         }
 
         public enum Hand
         {
-            Fore,
-            Back,
+            Forehand,
+            Backhand,
             None,
             Both
         }

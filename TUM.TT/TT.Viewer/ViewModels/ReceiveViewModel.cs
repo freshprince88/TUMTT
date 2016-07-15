@@ -102,16 +102,16 @@ namespace TT.Viewer.ViewModels
                 if (source.IsChecked.Value)
                 {
                     if (Hand == Models.Util.Enums.Stroke.Hand.None)
-                        Hand = Models.Util.Enums.Stroke.Hand.Fore;
-                    else if (Hand == Models.Util.Enums.Stroke.Hand.Back)
+                        Hand = Models.Util.Enums.Stroke.Hand.Forehand;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Backhand)
                         Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == Models.Util.Enums.Stroke.Hand.Fore)
+                    if (Hand == Models.Util.Enums.Stroke.Hand.Forehand)
                         Hand = Models.Util.Enums.Stroke.Hand.None;
                     else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
-                        Hand = Models.Util.Enums.Stroke.Hand.Back;
+                        Hand = Models.Util.Enums.Stroke.Hand.Backhand;
                 }
             }
             else if (source.Name.ToLower().Contains("backhand"))
@@ -119,16 +119,16 @@ namespace TT.Viewer.ViewModels
                 if (source.IsChecked.Value)
                 {
                     if (Hand == Models.Util.Enums.Stroke.Hand.None)
-                        Hand = Models.Util.Enums.Stroke.Hand.Back;
-                    else if (Hand == Models.Util.Enums.Stroke.Hand.Fore)
+                        Hand = Models.Util.Enums.Stroke.Hand.Backhand;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Forehand)
                         Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == Models.Util.Enums.Stroke.Hand.Back)
+                    if (Hand == Models.Util.Enums.Stroke.Hand.Backhand)
                         Hand = Models.Util.Enums.Stroke.Hand.None;
                     else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
-                        Hand = Models.Util.Enums.Stroke.Hand.Fore;
+                        Hand = Models.Util.Enums.Stroke.Hand.Forehand;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
