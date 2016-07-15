@@ -88,6 +88,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legend.
+        /// </summary>
+        public static string table_legend_title {
+            get {
+                return ResourceManager.GetString("table_legend_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Small Tables.
         /// </summary>
         public static string table_small_tab_title {

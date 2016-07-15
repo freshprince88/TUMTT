@@ -270,7 +270,8 @@
         {
             Over,
             Behind,
-            HalfDistance
+            HalfDistance,
+            None
         }
 
         public enum Hand

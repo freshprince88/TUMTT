@@ -7,6 +7,11 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
+using System.Windows;
+using System.Dynamic;
+using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace TT.Viewer.ViewModels
 {
@@ -19,6 +24,7 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator Events;
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
+        private IWindowManager WindowManager;
         
         private ObservableCollection<Stroke> strokes;
         public ObservableCollection<Stroke> Strokes
@@ -51,12 +57,13 @@ namespace TT.Viewer.ViewModels
             // default constructor for caliburn design time integration
         }
 
-        public ResultLargeTableViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
+        public ResultLargeTableViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man, IWindowManager windowMan)
         {
             this.DisplayName = Properties.Resources.table_large_tab_title;
             Events = e;
             Dialogs = c;
             Manager = man;
+            WindowManager = windowMan;
             RallyLength = 1;
             Strokes = new ObservableCollection<Stroke>();
 
@@ -104,6 +111,15 @@ namespace TT.Viewer.ViewModels
             //strokes.ForEach(stroke => Strokes.Add(stroke));
 
             Strokes = new ObservableCollection<Stroke>(strokes);
+        }
+
+        public void ShowLegend(UIElement e)
+        {            
+            dynamic settings = new ExpandoObject();
+            settings.StaysOpen = false;
+            settings.PlacementTarget = e;
+            settings.Placement = PlacementMode.Bottom;
+            WindowManager.ShowPopup(new TableLegendViewModel(), null, settings);
         }
 
         #endregion

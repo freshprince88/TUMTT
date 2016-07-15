@@ -160,6 +160,8 @@ namespace TT.Models
         {
             get
             {
+                if (side == null || side.Length == 0)
+                    return Util.Enums.Stroke.Hand.None;
                 return (Util.Enums.Stroke.Hand)Enum.Parse(typeof(Util.Enums.Stroke.Hand), side, true);
             }
         }
@@ -198,6 +200,8 @@ namespace TT.Models
         {
             get
             {
+                if (pointOfContact == null || pointOfContact.Length == 0)
+                    return Util.Enums.Stroke.PointOfContact.None;
                 return (Util.Enums.Stroke.PointOfContact)Enum.Parse(typeof(Util.Enums.Stroke.PointOfContact), pointOfContact.Replace("-", ""), true);
             }
         }
@@ -1018,6 +1022,8 @@ namespace TT.Models
         public Util.Enums.Stroke.Technique EnumType {
             get
             {
+                if (type == null || type.Length == 0)
+                    return Util.Enums.Stroke.Technique.Miscellaneous;
                 return (Util.Enums.Stroke.Technique)Enum.Parse(typeof(Util.Enums.Stroke.Technique), type, true);
             }
         }

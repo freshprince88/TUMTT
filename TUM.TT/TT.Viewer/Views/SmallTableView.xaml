@@ -12,9 +12,9 @@
 
     <Grid Name="TableGrid" Width="252.5" Height="344" Background="Transparent" MouseEnter="Table_MouseEnter" MouseLeave="Table_MouseLeave" cal:Message.Attach="[Event MouseDown] = [Action RallySelected($dataContext)]">
         
-        <Border Name="SmallTableViewBorder" BorderThickness="1 1 1 1" BorderBrush="Gray"/>
+        <Border Name="SmallTableViewBorder" BorderThickness="1" BorderBrush="Gray"/>
         
-        <Border Name="TableBorder" Margin="50,35,50,35" BorderThickness="3 3 3 3"  BorderBrush="Black" Panel.ZIndex="-99">
+        <Border Name="TableBorder" Margin="50,35,50,35" BorderThickness="3"  BorderBrush="Black" Panel.ZIndex="-99">
             <Line X1="0" X2="{Binding ElementName=InnerFieldGrid, Path=ActualWidth}" Stroke="Black" StrokeThickness="3" VerticalAlignment="Center" Panel.ZIndex="-98" Margin="-22 0 -22 0"/>
         </Border>
 

@@ -187,10 +187,15 @@ namespace TT.Viewer.Views
 
                         if (precedingStartY > precedingEndY)    // bottom -> top
                             Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
-                        else
+                        else if (precedingStartY < precedingEndY)
                             Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+                        else
+                            Y1 = precedingEndY;
 
-                        X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
+                        if (precedingStartY != precedingEndY)
+                            X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
+                        else
+                            X1 = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;
 
                         if (ShowDebug)
                             AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
@@ -274,9 +279,15 @@ namespace TT.Viewer.Views
 
                             if (y1 > y2)
                                 yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 - 30 : 0;
-                            else
+                            else if (y1 < y2)
                                 yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 + 30 : followingStrokeGrid.ActualHeight;
-                            xE = GetLinearContinuationX(x1, y1, x2, y2, yE);
+                            else
+                                yE = y2;
+
+                            if (y1 != y2)
+                                xE = GetLinearContinuationX(x1, y1, x2, y2, yE);
+                            else
+                                xE = x2 > x1 ? followingStrokeGrid.ActualWidth : 0;
 
                             if (xE.Equals(double.NaN) || yE.Equals(double.NaN))
                             {
@@ -804,7 +815,7 @@ namespace TT.Viewer.Views
 
         #region Helper methods
 
-        protected abstract void AttachEventHandlerToShape(Shape interceptArrowTip, Stroke stroke);
+        protected abstract void AttachEventHandlerToShape(Shape shape, Stroke stroke);
 
         protected abstract double GetAdjustedX(Stroke stroke, double oldX);
 

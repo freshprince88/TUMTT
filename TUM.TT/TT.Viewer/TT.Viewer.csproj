@@ -182,6 +182,7 @@
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\TableKombiViewModel.cs" />
+    <Compile Include="ViewModels\TableLegendViewModel.cs" />
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
@@ -284,6 +285,9 @@
     </Compile>
     <Compile Include="Views\TableKombiView.xaml.cs">
       <DependentUpon>TableKombiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableLegendView.xaml.cs">
+      <DependentUpon>TableLegendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableServiceView.xaml.cs">
       <DependentUpon>TableServiceView.xaml</DependentUpon>
@@ -452,6 +456,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TableKombiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableLegendView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

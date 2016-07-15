@@ -62,7 +62,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:SmallTableView Strokes="{Binding Strokes}" Tag="SmallTable">
+                        <local:SmallTableView Strokes="{Binding Strokes}">
                             <local:TableView.ShowDirection>
                                 <Binding ElementName="CheckDirection" Path="IsChecked"/>
                             </local:TableView.ShowDirection>

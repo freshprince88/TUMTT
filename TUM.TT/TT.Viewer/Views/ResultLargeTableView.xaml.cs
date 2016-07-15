@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace TT.Viewer.Views
 {
@@ -11,6 +12,12 @@ namespace TT.Viewer.Views
         {
             InitializeComponent();
         }
-        
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {            
+            Window legendWindow = new Window();
+            legendWindow.Content = new TableLegendView();
+            legendWindow.Show();
+        }
     }
 }
