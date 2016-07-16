@@ -14,7 +14,6 @@
              d:DataContext="{d:DesignInstance Type=vm:ResultLargeTableViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
-        <conv:MathConverter x:Key="MathConverter" />
         <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
         <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
@@ -59,15 +58,15 @@
                 </local:TableView.ShowDebug>
             </local:LargeTableView>
         </Viewbox>
-        <Grid HorizontalAlignment="Right">
+        <!--<Grid HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>-->
             <!--<Border BorderBrush="Black" BorderThickness="1" CornerRadius="4" Margin="4">
                 <TextBlock Grid.Column="0" x:Name="Legend" HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding Path=table_legend_title, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Center" Margin="3" cal:Message.Attach="[Event Click] = [Action ShowLegend($source)]"/>
             </Border>-->
             <Button Grid.Column="1" x:Name="LegendButton" Content="{Binding Path=table_legend_title, Source={StaticResource LocalizedStrings}}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" cal:Message.Attach="[Event Click] = [Action ShowLegend($source)]"/>
-        </Grid>
+        <!--</Grid>-->
     </Grid>
 </UserControl>

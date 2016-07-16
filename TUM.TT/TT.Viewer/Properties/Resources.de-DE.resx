@@ -117,6 +117,48 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="legend_backhand_title" xml:space="preserve">
+    <value>Rückhand:</value>
+  </data>
+  <data name="legend_banana_flip_title" xml:space="preserve">
+    <value>Banane / Flip</value>
+  </data>
+  <data name="legend_block_counter_title" xml:space="preserve">
+    <value>Block / Konterball</value>
+  </data>
+  <data name="legend_chop_title" xml:space="preserve">
+    <value>Schupfball</value>
+  </data>
+  <data name="legend_forehand_title" xml:space="preserve">
+    <value>Vorhand:</value>
+  </data>
+  <data name="legend_lineexplanation_intercept_title" xml:space="preserve">
+    <value>Annahme</value>
+  </data>
+  <data name="legend_lineexplanation_poc_pl_title" xml:space="preserve">
+    <value>Annahmepunkt → Platzierung</value>
+  </data>
+  <data name="legend_lob_title" xml:space="preserve">
+    <value>Ballonabwehr</value>
+  </data>
+  <data name="legend_misc_title" xml:space="preserve">
+    <value>Sonstige</value>
+  </data>
+  <data name="legend_push_title" xml:space="preserve">
+    <value>Push</value>
+  </data>
+  <data name="legend_service_without_spin_title" xml:space="preserve">
+    <value>Aufschlag (ohne Spin)</value>
+  </data>
+  <data name="legend_service_with_spin_title" xml:space="preserve">
+    <value>Aufschlag (mit Spin)</value>
+  </data>
+  <data name="legend_smash_title" xml:space="preserve">
+    <value>Schuss</value>
+  </data>
+  <data name="legend_topspin_title" xml:space="preserve">
+    <value>Topspin</value>
+  </data>
   <data name="table_direction_title" xml:space="preserve">
     <value>Richtung</value>
   </data>

@@ -1,5 +1,4 @@
 ﻿using Caliburn.Micro;
-using MahApps.Metro;
 using System;
 using System.Collections.Generic;
 using System.Threading;

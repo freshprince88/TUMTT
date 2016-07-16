@@ -117,6 +117,48 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="legend_backhand_title" xml:space="preserve">
+    <value>Backhand:</value>
+  </data>
+  <data name="legend_banana_flip_title" xml:space="preserve">
+    <value>Banana / Flip</value>
+  </data>
+  <data name="legend_block_counter_title" xml:space="preserve">
+    <value>Block / Counter</value>
+  </data>
+  <data name="legend_chop_title" xml:space="preserve">
+    <value>Chop</value>
+  </data>
+  <data name="legend_forehand_title" xml:space="preserve">
+    <value>Forehand:</value>
+  </data>
+  <data name="legend_lineexplanation_intercept_title" xml:space="preserve">
+    <value>Intercept</value>
+  </data>
+  <data name="legend_lineexplanation_poc_pl_title" xml:space="preserve">
+    <value>Point of contact → Placement</value>
+  </data>
+  <data name="legend_lob_title" xml:space="preserve">
+    <value>Lob</value>
+  </data>
+  <data name="legend_misc_title" xml:space="preserve">
+    <value>Misc</value>
+  </data>
+  <data name="legend_push_title" xml:space="preserve">
+    <value>Push</value>
+  </data>
+  <data name="legend_service_without_spin_title" xml:space="preserve">
+    <value>Service (without spin)</value>
+  </data>
+  <data name="legend_service_with_spin_title" xml:space="preserve">
+    <value>Service (with spin)</value>
+  </data>
+  <data name="legend_smash_title" xml:space="preserve">
+    <value>Smash</value>
+  </data>
+  <data name="legend_topspin_title" xml:space="preserve">
+    <value>Topspin</value>
+  </data>
   <data name="table_direction_title" xml:space="preserve">
     <value>Direction</value>
   </data>

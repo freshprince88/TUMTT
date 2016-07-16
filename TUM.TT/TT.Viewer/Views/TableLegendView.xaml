@@ -5,62 +5,96 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TT.Viewer.Views"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:prop="clr-namespace:TT.Viewer.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="410" d:DesignWidth="200"
+             d:DesignHeight="510" d:DesignWidth="200"
              Strokes="{Binding Strokes}">
-    <Grid Height="410" Width="200" Background="White" Focusable="true"> <!--cal:Message.Attach="[Event MouseLeave] = [Action MouseLeft()]"-->
+
+    <UserControl.Resources>
+        <prop:Resources x:Key="LocalizedStrings"/>
+    </UserControl.Resources>
+    
+    <Grid Height="510" Width="200" Background="White" Focusable="true"> <!--cal:Message.Attach="[Event MouseLeave] = [Action MouseLeft()]"-->
         <Border Name="TableBorder" BorderThickness="1" BorderBrush="Black" Panel.ZIndex="-99"/>        
 
         <Grid Name="IFG1" Margin="20,10,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Service (without spin)"/>
+            <TextBlock Text="{Binding Path=legend_service_without_spin_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG1" Margin="20,10,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG2" Margin="20,50,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Service (with spin)"/>
+            <TextBlock Text="{Binding Path=legend_service_with_spin_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG2" Margin="20,50,20,0" Height="40" VerticalAlignment="Top"/>
         <Grid Name="IFSG2" Margin="10,50,20,0" Height="30" VerticalAlignment="Top"/>
 
         <Grid Name="IFG3"  Margin="20,90,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Push"/>
+            <TextBlock Text="{Binding Path=legend_push_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG3"  Margin="20,90,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG4"  Margin="20,130,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Chop"/>
+            <TextBlock Text="{Binding Path=legend_chop_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG4"  Margin="20,130,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG5"  Margin="20,170,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Lob"/>
+            <TextBlock Text="{Binding Path=legend_lob_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG5"  Margin="20,170,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG6"  Margin="20,210,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Topspin"/>
+            <TextBlock Text="{Binding Path=legend_topspin_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG6"  Margin="20,210,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG7"  Margin="20,250,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Banana / Flip"/>
+            <TextBlock Text="{Binding Path=legend_banana_flip_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG7"  Margin="20,250,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG8"  Margin="20,290,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Block / Counter"/>
+            <TextBlock Text="{Binding Path=legend_block_counter_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG8"  Margin="20,290,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG9"  Margin="20,330,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Smash"/>
+            <TextBlock Text="{Binding Path=legend_smash_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG9"  Margin="20,330,20,0" Height="40" VerticalAlignment="Top"/>
 
         <Grid Name="IFG10"  Margin="20,370,20,0" Height="40" VerticalAlignment="Top">
-            <TextBlock Text="Misc"/>
+            <TextBlock Text="{Binding Path=legend_misc_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG10"  Margin="20,370,20,0" Height="40" VerticalAlignment="Top"/>
 
+        <Grid Name="LineExplanationGrid" Margin="20,420,20,0" Height="30" VerticalAlignment="Top">
+            <Line X1="0" Y1="5" X2="120" Y2="5" StrokeThickness="1" Stroke="Black"/>
+            <Line X1="0" Y1="0" X2="0" Y2="10" StrokeThickness="1" Stroke="Black"/>
+            <Line X1="120" Y1="0" X2="120" Y2="10" StrokeThickness="1" Stroke="Black"/>
+            <TextBlock Text="{Binding Path=legend_lineexplanation_poc_pl_title, Source={StaticResource LocalizedStrings}}" FontSize="9" Margin="0,10,0,0" FontWeight="Light" Width="120" HorizontalAlignment="Left" TextAlignment="Center"/>
+
+            <Line X1="120" Y1="5" X2="160" Y2="5" StrokeThickness="1" Stroke="Black" StrokeDashArray="2"/>
+            <Line X1="120" Y1="0" X2="120" Y2="10" StrokeThickness="1" Stroke="Black"/>
+            <Line X1="159" Y1="0" X2="159" Y2="10" StrokeThickness="1" Stroke="Black"/>
+            <TextBlock Text="{Binding Path=legend_lineexplanation_intercept_title, Source={StaticResource LocalizedStrings}}" Margin="0,10,0,0" FontSize="10" FontWeight="Light" Width="40" HorizontalAlignment="Right" TextAlignment="Center"/>
+        </Grid>
+
+        <Grid Name="DashExplanationGrid" Margin="35,460,25,0" Height="Auto" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=legend_forehand_title, Source={StaticResource LocalizedStrings}}" FontSize="11" FontWeight="Light" HorizontalAlignment="Left"/>
+            <Grid Grid.Column="1" Grid.Row="0" Name="IFG11" Height="18" VerticalAlignment="Top" Margin="5,0,0,0"/>
+            <Grid Grid.Column="1" Grid.Row="0" Name="IFBG11" Height="18" VerticalAlignment="Top" Margin="5,0,0,0"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=legend_backhand_title, Source={StaticResource LocalizedStrings}}" FontSize="11" FontWeight="Light" HorizontalAlignment="Left"/>
+            <Grid Grid.Column="1" Grid.Row="1" Name="IFG12" Height="18" VerticalAlignment="Top" Margin="5,0,0,0"/>
+            <Grid Grid.Column="1" Grid.Row="1" Name="IFBG12" Height="18" VerticalAlignment="Top" Margin="5,0,0,0"/>
+        </Grid>
     </Grid>
 </local:TableView>

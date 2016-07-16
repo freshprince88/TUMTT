@@ -10,6 +10,9 @@ using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
 using System.Diagnostics;
+using System.Windows;
+using System.Dynamic;
+using System.Windows.Controls.Primitives;
 
 namespace TT.Viewer.ViewModels
 {
@@ -23,6 +26,7 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator Events;
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
+        private IWindowManager WindowManager;
 
         public ObservableCollection<Rally> Rallies { get; set; }
 
@@ -45,12 +49,13 @@ namespace TT.Viewer.ViewModels
             // default constructor for caliburn design time integration
         }
 
-        public ResultSmallTablesViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
+        public ResultSmallTablesViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man, IWindowManager winMan)
         {
             this.DisplayName = Properties.Resources.table_small_tab_title;
             Events = e;
             Dialogs = c;
             Manager = man;
+            WindowManager = winMan;
             RallyLength = 1;
             Rallies = new ObservableCollection<Rally>();
 
@@ -73,6 +78,15 @@ namespace TT.Viewer.ViewModels
         {
             Console.Out.WriteLine("Selected stroke {1} of rally: {0}", ((Stroke)dataContext).Rally.Number, ((Stroke)dataContext).Number);
             Manager.ActiveRally = (dataContext as Stroke).Rally;
+        }
+
+        public void ShowLegend(UIElement e)
+        {
+            dynamic settings = new ExpandoObject();
+            settings.StaysOpen = false;
+            settings.PlacementTarget = e;
+            settings.Placement = PlacementMode.Bottom;
+            WindowManager.ShowPopup(new TableLegendViewModel(), null, settings);
         }
 
         #region Event Handlers

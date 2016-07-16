@@ -1,18 +1,8 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Models;
 
@@ -47,29 +37,12 @@ namespace TT.Viewer.Views
             }
         }
 
-        public override Grid View_InnerFieldHalfDistanceGrid
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public override Grid View_InnerFieldSpinGrid
         {
             get
             {
                 return IFSG2;
             }
-        }
-
-        protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke)
-        {
-            // DEBUG
-            shape.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
-            shape.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
-            shape.DataContext = stroke;
-            // ---
         }
 
         protected override double GetAdjustedX(Stroke stroke, double oldX)
@@ -82,9 +55,47 @@ namespace TT.Viewer.Views
             return oldY;
         }
 
-        protected override double GetSecondStrokePrecedingStartY()
+        protected override Shape GetTopSpinShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
         {
-            throw new NotImplementedException();
+            return GetBezierPathShape(X1, Y1, X2, Y2, TopspinCurveRation * X2, 10);
+        }
+
+        protected override Shape GetBananaShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        {
+            return GetBezierPathShape(X1, Y1, X2, Y2, BananaCurveRation * X2, 10);
+        }
+
+        protected override Shape GetLobShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        {
+            return GetBezierPathShape(X1, Y1, X2, Y2, LobCurveRation * X2, 0);
+        }
+
+        protected override Shape GetChopShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        {
+            return GetBezierPathShape(X1, Y1, X2, Y2, ChopCurveRation * X2, 10);
+        }
+
+        private Shape GetBezierPathShape(double X1, double Y1, double X2, double Y2, double controlPointX, double controlPointY)
+        {
+            PathGeometry topSpinGeometry = new PathGeometry();
+
+            PathFigure pathFigure = new PathFigure();
+
+            Point startPoint = new Point(X1, Y1);
+            Point endPoint = new Point(X2, Y2);
+            Point controlPoint = new Point(controlPointX, controlPointY);
+
+            pathFigure.StartPoint = startPoint;
+
+            QuadraticBezierSegment segment = new QuadraticBezierSegment(controlPoint, endPoint, true);
+            pathFigure.Segments.Add(segment);
+
+            topSpinGeometry.Figures.Add(pathFigure);
+
+            Path topSpinPath = new Path();
+            topSpinPath.Data = topSpinGeometry;
+
+            return topSpinPath;
         }
 
         protected override void ProcessStrokes(List<Stroke> strokes)
@@ -93,6 +104,10 @@ namespace TT.Viewer.Views
 
             foreach (Stroke s in strokes)
             {
+                // For the legend, strokes are drawn in separate InnerFieldGrids
+                // The model creates rallies with decreasing rally numbers, going from -1, -2, -3, etc.
+                // Each rally corresponds to one painted stroke in the legend
+                // Before processing each stroke, set the currentInnerField(Behind)Grid so TableView can get it while adding the stroke shapes
                 currentInnerFieldGrid = (Grid)FindName("IFG" + (-1) * s.Rally.Number);
                 currentInnerFieldBehindGrid = (Grid)FindName("IFBG" + (-1) * s.Rally.Number);
 
@@ -100,31 +115,13 @@ namespace TT.Viewer.Views
                 AddStrokesDirectionShapes(s);
                 AddStrokesArrowtips(s);
                 AddInterceptArrows(s);
-
-                if (s.Playerposition == double.MinValue)
-                    s.Playerposition = 0;
                 AddServiceStrokesSpinArrows(s);
             }
         }
 
-        #region DEBUG
+        protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke) { /* not needed for legend */ }
+        protected override double GetSecondStrokePrecedingStartY() { /* not needed for legend */ throw new NotImplementedException(); }
+        public override Grid View_InnerFieldHalfDistanceGrid { get { /* not needed for legend */ throw new NotImplementedException(); }}
 
-        private void Stroke_MouseEnter(Object sender, MouseEventArgs e)
-        {
-            Shape shape = sender as Shape;
-            Stroke stroke = shape.DataContext as Stroke;
-
-            Debug.WriteLine("mouse enter on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);            
-        }
-
-        private void Stroke_MouseLeave(Object sender, MouseEventArgs e)
-        {
-            Shape shape = sender as Shape;
-            Stroke stroke = shape.DataContext as Stroke;
-
-            Debug.WriteLine("mouse leave on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);            
-        }
-
-        #endregion
     }
 }

@@ -10,7 +10,7 @@ using TT.Models;
 namespace TT.Viewer.Views
 {
     /// <summary>
-    /// Interaction logic for SmallTableView.xaml
+    /// Interaction logic for LargeTableView.xaml
     /// </summary>
     public partial class LargeTableView : TableView
     {

@@ -11,18 +11,6 @@ namespace TT.Viewer.Views
 {
     public abstract class TableView : UserControl
     {
-        protected Dictionary<Stroke, List<Shape>> StrokeShapes { get; private set; }
-
-        public abstract Grid View_InnerFieldGrid { get; }
-        public abstract Grid View_InnerFieldBehindGrid { get; }
-        public abstract Grid View_InnerFieldHalfDistanceGrid { get; }
-        public abstract Grid View_InnerFieldSpinGrid { get; }
-
-        public TableView()
-        {
-            StrokeShapes = new Dictionary<Stroke, List<Shape>>();
-        }
-
         #region Constants
 
         protected const double StrokeThickness = 1.75;
@@ -36,9 +24,26 @@ namespace TT.Viewer.Views
         protected const double StrokeThicknessIntercept = 1.0;
         protected const double StrokeThicknessInterceptHover = 1.7;
 
+        protected const double BananaCurveRation = 0.5;
+        protected const double TopspinCurveRation = 0.8;
+        protected const double ChopCurveRation = 0.95;
+        protected const double LobCurveRation = 2d / 3d;
+
         protected const string StrokeAttrTechniqueOptionBanana = "Banana";  // what is 'option'? TODO: convert to enum!        
 
         #endregion
+
+        protected Dictionary<Stroke, List<Shape>> StrokeShapes { get; private set; }
+
+        public abstract Grid View_InnerFieldGrid { get; }
+        public abstract Grid View_InnerFieldBehindGrid { get; }
+        public abstract Grid View_InnerFieldHalfDistanceGrid { get; }
+        public abstract Grid View_InnerFieldSpinGrid { get; }
+
+        public TableView()
+        {
+            StrokeShapes = new Dictionary<Stroke, List<Shape>>();
+        }
 
         #region Dependency Properties
 
@@ -157,15 +162,15 @@ namespace TT.Viewer.Views
 
                     if (isServiceStroke)
                     {
-                        if (stroke.Playerposition == double.MinValue)
+                        if (stroke.Playerposition == double.MinValue)   // service stroke in legend
                         {
                             X1 = 0;
-                            Y1 = stroke.Placement.WY; // service stroke for legend
+                            Y1 = stroke.Placement.WY;
                         }
-                        else
+                        else // else: service strokes start at the bottom
                         {
                             X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
-                            Y1 = View_InnerFieldBehindGrid.ActualHeight; // else: service strokes start at the bottom
+                            Y1 = View_InnerFieldBehindGrid.ActualHeight;
                         }
                     }
                     else
@@ -479,7 +484,11 @@ namespace TT.Viewer.Views
 
                     double X1, Y1;
 
-                    X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
+                    if (stroke.Playerposition == double.MinValue)   // service stroke in legend
+                        X1 = 0;
+                    else
+                        X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
+
                     Y1 = View_InnerFieldSpinGrid.ActualHeight - 1;
 
                     PathGeometry arrowTipGeometry = new PathGeometry();
@@ -549,22 +558,22 @@ namespace TT.Viewer.Views
 
         #region Shape creation
 
-        private Shape GetLobShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        protected virtual Shape GetLobShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
         {
             double m, cpx, cpy, lineTwoThirdsX, lineTwoThirdsY;
 
-            lineTwoThirdsY = Y1 - (2d / 3d) * (Y1 - Y2);
+            lineTwoThirdsY = Y1 - LobCurveRation * (Y1 - Y2);
             if ((Y1 > Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand) || (Y1 <= Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Forehand))
             {
                 m = (X2 - X1) / (Y1 - Y2);
-                lineTwoThirdsX = X1 + (2d / 3d) * (X2 - X1);
+                lineTwoThirdsX = X1 + LobCurveRation * (X2 - X1);
                 cpx = lineTwoThirdsX - 0.7 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
                 cpy = lineTwoThirdsY - m * (lineTwoThirdsX - cpx);
             }
             else
             {
                 m = (X1 - X2) / (Y1 - Y2);
-                lineTwoThirdsX = X1 - (2d / 3d) * (X1 - X2);
+                lineTwoThirdsX = X1 - LobCurveRation * (X1 - X2);
                 cpx = lineTwoThirdsX + 0.7 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
                 cpy = lineTwoThirdsY - m * (cpx - lineTwoThirdsX);
             }
@@ -598,22 +607,22 @@ namespace TT.Viewer.Views
             return lobPath;
         }
 
-        private Shape GetChopShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        protected virtual Shape GetChopShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
         {
             double m, cpx, cpy, lineNineteenTwentiethsX, lineNineteenTwentiethsY;
 
-            lineNineteenTwentiethsY = Y1 - (19d / 20d) * (Y1 - Y2);
+            lineNineteenTwentiethsY = Y1 - ChopCurveRation * (Y1 - Y2);
             if ((Y1 > Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand) || (Y1 <= Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Forehand))
             {
                 m = (X2 - X1) / (Y1 - Y2);
-                lineNineteenTwentiethsX = X1 + (19d / 20d) * (X2 - X1);
+                lineNineteenTwentiethsX = X1 + ChopCurveRation * (X2 - X1);
                 cpx = lineNineteenTwentiethsX - 0.2 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
                 cpy = lineNineteenTwentiethsY - m * (lineNineteenTwentiethsX - cpx);
             }
             else
             {
                 m = (X1 - X2) / (Y1 - Y2);
-                lineNineteenTwentiethsX = X1 - (19d / 20d) * (X1 - X2);
+                lineNineteenTwentiethsX = X1 - ChopCurveRation * (X1 - X2);
                 cpx = lineNineteenTwentiethsX + 0.2 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
                 cpy = lineNineteenTwentiethsY - m * (cpx - lineNineteenTwentiethsX);
             }
@@ -647,22 +656,22 @@ namespace TT.Viewer.Views
             return chopPath;
         }
 
-        private Shape GetTopSpinShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        protected virtual Shape GetTopSpinShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
         {
             double m, cpx, cpy, lineFourFifthsX, lineFourFifthsY;
 
-            lineFourFifthsY = Y1 - (4d / 5d) * (Y1 - Y2);
+            lineFourFifthsY = Y1 - TopspinCurveRation * (Y1 - Y2);
             if ((Y1 > Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Backhand) || (Y1 <= Y2 && stroke.EnumSide == Models.Util.Enums.Stroke.Hand.Forehand))
             {
                 m = (X2 - X1) / (Y1 - Y2);
-                lineFourFifthsX = X1 + (4d / 5d) * (X2 - X1);
+                lineFourFifthsX = X1 + TopspinCurveRation * (X2 - X1);
                 cpx = lineFourFifthsX - 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
                 cpy = lineFourFifthsY - m * (lineFourFifthsX - cpx);
             }
             else
             {
                 m = (X1 - X2) / (Y1 - Y2);
-                lineFourFifthsX = X1 - (4d / 5d) * (X1 - X2);
+                lineFourFifthsX = X1 - TopspinCurveRation * (X1 - X2);
                 cpx = lineFourFifthsX + 0.25 * Math.Sqrt(Math.Pow(X1 - X2, 2) + Math.Pow(Y1 - Y2, 2));
                 cpy = lineFourFifthsY - m * (cpx - lineFourFifthsX);
             }
@@ -696,15 +705,15 @@ namespace TT.Viewer.Views
             return topSpinPath;
         }
 
-        private Shape GetBananaShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
+        protected virtual Shape GetBananaShape(Stroke stroke, double X1, double Y1, double X2, double Y2)
         {
             double m, cpx, cpy, lineMiddleX;
 
             // banana is always backhand -> left curvature (but only on large table, on small table it depends on Y1, Y2)
             m = (X2 - X1) / (Y1 - Y2);
-            lineMiddleX = (X2 + X1) / 2;
+            lineMiddleX = (X2 + X1) * BananaCurveRation;
             cpx = lineMiddleX + (Y1 > Y2 ? -1 : 1) * 0.25 * Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y1 - Y2, 2));
-            cpy = (Y1 + Y2) / 2 - m * (lineMiddleX - cpx);
+            cpy = (Y1 + Y2) * BananaCurveRation - m * (lineMiddleX - cpx);
 
             //Debug.WriteLine("banana/flip {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
 

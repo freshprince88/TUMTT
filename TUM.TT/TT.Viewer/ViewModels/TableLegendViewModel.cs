@@ -1,20 +1,12 @@
 ﻿using Caliburn.Micro;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
     public class TableLegendViewModel : Screen
     {
-        private const int MiddleX = 25;
-        private const int StrokeLength = 120;
-
         public ObservableCollection<Stroke> Strokes { get; set; }
 
         public TableLegendViewModel()
@@ -35,43 +27,53 @@ namespace TT.Viewer.ViewModels
 
             rally = new Rally();
             rally.Number = -3;
-            rally.Strokes = CreatePushStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Push.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count-2]);
             
             rally = new Rally();
             rally.Number = -4;
-            rally.Strokes = CreateChopStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Chop.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count - 2]);
             
             rally = new Rally();
             rally.Number = -5;
-            rally.Strokes = CreateLobStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Lob.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count - 2]);
 
             rally = new Rally();
             rally.Number = -6;
-            rally.Strokes = CreateTopspinStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Topspin.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count - 2]);
 
             rally = new Rally();
             rally.Number = -7;
-            rally.Strokes = CreateBananaStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Flip.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count - 2]);
 
             rally = new Rally();
             rally.Number = -8;
-            rally.Strokes = CreateBlockStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Block.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count - 2]);
 
             rally = new Rally();
             rally.Number = -9;
-            rally.Strokes = CreateSmashStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Smash.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count - 2]);
 
             rally = new Rally();
             rally.Number = -10;
-            rally.Strokes = CreateMiscStrokeList(rally);
+            rally.Strokes = CreateStrokeListForStroketechnique(Models.Util.Enums.Stroke.Technique.Miscellaneous.ToString(), rally);
             Strokes.Add(rally.Strokes[rally.Strokes.Count - 2]);
+
+            rally = new Rally();
+            rally.Number = -11;
+            rally.Strokes = CreateForehandStrokeList(rally);
+            Strokes.Add(rally.Strokes.First());
+
+            rally = new Rally();
+            rally.Number = -12;
+            rally.Strokes = CreateBackhandStrokeList(rally);
+            Strokes.Add(rally.Strokes.First());
         }
 
         private Stroke CreateStroke(int number, double x, double y, string poc, string st, Rally rally)
@@ -95,11 +97,11 @@ namespace TT.Viewer.ViewModels
             Stroke stroke;
 
             // service without spin
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
+            stroke = CreateStroke(1, 120, 25, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
             stroke.Playerposition = double.MinValue;
             strokesTmp.Add(stroke);
 
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
+            stroke = CreateStroke(2, 0, 25, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
             strokesTmp.Add(stroke);
 
             return strokesTmp;
@@ -110,8 +112,8 @@ namespace TT.Viewer.ViewModels
             ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
             Stroke stroke;
 
-            // service without spin
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
+            // service with spin
+            stroke = CreateStroke(1, 120, 25, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
             stroke.Playerposition = double.MinValue;
             Spin spin = new Spin();
             spin.TS = "1";
@@ -119,208 +121,61 @@ namespace TT.Viewer.ViewModels
             stroke.Spin = spin;
             strokesTmp.Add(stroke);
 
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
+            stroke = CreateStroke(2, 0, 25, Models.Util.Enums.Stroke.PointOfContact.Behind.ToString(), "", rally);
             strokesTmp.Add(stroke);
 
             return strokesTmp;
         }
 
-        private ObservableCollection<Stroke> CreatePushStrokeList(Rally rally)
+        private ObservableCollection<Stroke> CreateStrokeListForStroketechnique(string stroketechnique, Rally rally)
         {
             ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
             Stroke stroke;
 
             // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
+            stroke = CreateStroke(1, 120, 25, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
             strokesTmp.Add(stroke);
 
             // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
+            stroke = CreateStroke(2, 0, 25, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
             strokesTmp.Add(stroke);
 
-            // third stroke (push)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Push.ToString(), rally);
+            // third stroke (actual stroke that will be drawn)
+            stroke = CreateStroke(3, 120, 25, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
+                stroketechnique, rally);
             strokesTmp.Add(stroke);
 
             // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
+            stroke = CreateStroke(4, 0, 25, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
             strokesTmp.Add(stroke);
 
             return strokesTmp;
         }
 
-        private ObservableCollection<Stroke> CreateChopStrokeList(Rally rally)
+        private ObservableCollection<Stroke> CreateForehandStrokeList(Rally rally)
         {
             ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
             Stroke stroke;
 
-            // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // third stroke (push)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Chop.ToString(), rally);
-            strokesTmp.Add(stroke);
-
-            // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
+            // forehand service spin
+            stroke = CreateStroke(1, 80, 8, "", "", rally);
+            stroke.Side = Models.Util.Enums.Stroke.Hand.Forehand.ToString();
+            stroke.Playerposition = double.MinValue;
             strokesTmp.Add(stroke);
 
             return strokesTmp;
         }
 
-        private ObservableCollection<Stroke> CreateLobStrokeList(Rally rally)
+        private ObservableCollection<Stroke> CreateBackhandStrokeList(Rally rally)
         {
             ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
             Stroke stroke;
 
-            // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // third stroke (push)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Lob.ToString(), rally);
-            strokesTmp.Add(stroke);
-
-            // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            return strokesTmp;
-        }
-
-        private ObservableCollection<Stroke> CreateTopspinStrokeList(Rally rally)
-        {
-            ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
-            Stroke stroke;
-
-            // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // third stroke (push)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Topspin.ToString(), rally);
-            strokesTmp.Add(stroke);
-
-            // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            return strokesTmp;
-        }
-
-        private ObservableCollection<Stroke> CreateBananaStrokeList(Rally rally)
-        {
-            ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
-            Stroke stroke;
-
-            // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // third stroke (banana)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Banana.ToString(), rally);
-            strokesTmp.Add(stroke);
-
-            // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            return strokesTmp;
-        }
-
-        private ObservableCollection<Stroke> CreateBlockStrokeList(Rally rally)
-        {
-            ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
-            Stroke stroke;
-
-            // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // third stroke (block)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Block.ToString(), rally);
-            strokesTmp.Add(stroke);
-
-            // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            return strokesTmp;
-        }
-
-        private ObservableCollection<Stroke> CreateSmashStrokeList(Rally rally)
-        {
-            ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
-            Stroke stroke;
-
-            // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // third stroke (push)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Smash.ToString(), rally);
-            strokesTmp.Add(stroke);
-
-            // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            return strokesTmp;
-        }
-
-        private ObservableCollection<Stroke> CreateMiscStrokeList(Rally rally)
-        {
-            ObservableCollection<Stroke> strokesTmp = new ObservableCollection<Stroke>();
-            Stroke stroke;
-
-            // first stroke
-            stroke = CreateStroke(1, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // second stroke
-            stroke = CreateStroke(2, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
-
-            // third stroke (push)
-            stroke = CreateStroke(3, StrokeLength, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(),
-                Models.Util.Enums.Stroke.Technique.Miscellaneous.ToString(), rally);
-            strokesTmp.Add(stroke);
-
-            // fourth stroke (for intercept arrow)
-            stroke = CreateStroke(4, 0, MiddleX, Models.Util.Enums.Stroke.PointOfContact.Over.ToString(), "", rally);
-            strokesTmp.Add(stroke);
+            // backhand service
+            stroke = CreateStroke(1, 80, 8, "", "", rally);
+            stroke.Side = Models.Util.Enums.Stroke.Hand.Backhand.ToString();
+            stroke.Playerposition = double.MinValue;
+            strokesTmp.Add(stroke);            
 
             return strokesTmp;
         }
