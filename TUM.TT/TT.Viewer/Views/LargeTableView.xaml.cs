@@ -86,7 +86,7 @@ namespace TT.Viewer.Views
 
         private double GetStrokeThicknessForStroke(ShapeType tag, Stroketechnique technique, bool hover)
         {
-            if (tag == ShapeType.SpinArrow)
+            if (tag == ShapeType.SpinShape)
                 return hover ? StrokeThicknessSpinArrowHover : StrokeThicknessSpinArrow;
             else if (tag == ShapeType.Intercept)
                 return hover ? StrokeThicknessInterceptHover : StrokeThicknessIntercept;
@@ -156,8 +156,7 @@ namespace TT.Viewer.Views
                 if (!PlacementValuesValid(s.Placement))
                     continue;
 
-                if (s.Number == 1)
-                    AddServiceStrokesSpinArrows(s);
+                AddServiceStrokesSpinShapes(s);
                 AddStrokesDirectionShapes(s);
                 AddInterceptArrows(s);
                 AddStrokesArrowtips(s);

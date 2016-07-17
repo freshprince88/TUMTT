@@ -272,6 +272,16 @@ namespace TT.Models
             }
         }
 
+        public Util.Enums.Stroke.Course EnumCourse
+        {
+            get
+            {
+                if (course == null || course.Length == 0)
+                    return Util.Enums.Stroke.Course.None;
+                return (Util.Enums.Stroke.Course)Enum.Parse(typeof(Util.Enums.Stroke.Course), course.Replace("/", ""), true);
+            }
+        }
+
         /// <remarks/>
         [XmlAttribute]
         public bool StepAround

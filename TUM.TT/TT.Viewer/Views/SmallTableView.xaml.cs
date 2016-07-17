@@ -55,6 +55,8 @@ namespace TT.Viewer.Views
 
         private static void OnActiveRallyPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
+            //Debug.WriteLine("SmallTableView: new active rally! was: {0}, is: {1}", e.OldValue == null ? "[none]" : ((Rally)e.OldValue).Number.ToString(), ((Rally)e.NewValue).Number);
+
             SmallTableView view = (SmallTableView)sender;
             if (view.thisRally.Number == view.ActiveRally.Number)
             {
@@ -105,7 +107,7 @@ namespace TT.Viewer.Views
                 if (maxStrokeDisplayCounter > MaxDisplayedStrokes)
                     break;
                 StrokeShapes[s] = new List<Shape>();
-                StrokeControls[s] = new List<Control>();
+                StrokeElements[s] = new List<FrameworkElement>();
             }
 
             // once size of this view changed, we know it's been fully added: add the actual stroke shapes (they need the actual size)
@@ -117,49 +119,14 @@ namespace TT.Viewer.Views
                 {                    
                     foreach (Stroke stroke in StrokeShapes.Keys)
                     {
-                        if (!PlacementValuesValid(stroke.Placement))
-                            continue;                        
-
-                        if (stroke.Number == 1)
-                            AddServiceStrokesSpinArrows(stroke);
+                        AddServiceStrokesSpinShapes(stroke);
                         AddStrokesDirectionShapes(stroke);
                         AddInterceptArrows(stroke);
                         AddStrokesArrowtips(stroke);
-                        AddLastStrokeXShape(stroke);
                         AddStrokeNumbers(stroke);
                     }
                 });
             })).Start();
-        }
-
-        private void AddLastStrokeXShape(Stroke stroke)
-        {
-            double X1, X2, Y1, Y2;
-            X1 = X2 = Y1 = Y2 = 0;
-
-            PathGeometry arrowTipGeometry = new PathGeometry();
-
-            PathFigure pathFigure = new PathFigure();
-            pathFigure.StartPoint = new Point(X2, Y2 - 6);
-
-            LineSegment ttb = new LineSegment(new Point(X2, Y2 + 6), true);
-            pathFigure.Segments.Add(ttb);
-
-            arrowTipGeometry.Figures.Add(pathFigure);
-
-            pathFigure = new PathFigure();
-            pathFigure.StartPoint = new Point(X2 - 6, Y2);
-
-            LineSegment ltr = new LineSegment(new Point(X2 + 6, Y2), true);
-            pathFigure.Segments.Add(ltr);
-
-            arrowTipGeometry.Figures.Add(pathFigure);
-
-            RotateTransform transform = new RotateTransform();
-            transform.Angle = 45;
-            transform.CenterX = X2;
-            transform.CenterY = Y2;
-            arrowTipGeometry.Transform = transform;
         }
 
         #region Helper methods
@@ -264,7 +231,7 @@ namespace TT.Viewer.Views
 
         private double GetStrokeThicknessForStroke(ShapeType tag, Stroketechnique technique, bool hover)
         {
-            if (tag == ShapeType.SpinArrow)
+            if (tag == ShapeType.SpinShape)
                 return hover ? StrokeThicknessSpinArrowHover : StrokeThicknessSpinArrow;
             else if (tag == ShapeType.Intercept)
                 return hover ? StrokeThicknessInterceptHover : StrokeThicknessIntercept;

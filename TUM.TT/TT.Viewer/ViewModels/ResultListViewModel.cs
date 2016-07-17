@@ -63,7 +63,7 @@ namespace TT.Viewer.ViewModels
         public void ListItemSelected(SelectionChangedEventArgs e)
         {
             ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
-            if (item != null)
+            if (item != null && Manager.ActiveRally != item.Rally)
             {
                 Manager.ActiveRally = item.Rally;
             }

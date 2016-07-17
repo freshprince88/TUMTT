@@ -25,7 +25,8 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
         private IWindowManager WindowManager;
-        
+
+        public ObservableCollection<Rally> Rallies { get; set; }
         private ObservableCollection<Stroke> strokes;
         public ObservableCollection<Stroke> Strokes
         {
@@ -67,9 +68,6 @@ namespace TT.Viewer.ViewModels
             RallyLength = 1;
             Strokes = new ObservableCollection<Stroke>();
 
-            // Subscribe ourself to the event bus
-            Events.Subscribe(this);
-
         }
 
         public byte GetOrderInResultView()
@@ -87,13 +85,14 @@ namespace TT.Viewer.ViewModels
 
         private void UpdateStrokeDisplay(IEnumerable<Rally> rallies)
         {
+            Rallies = new ObservableCollection<Rally>(rallies);
             var strokes = new List<Stroke>();            
-            foreach (var r in rallies)
+            foreach (var r in Rallies)
             {
                 Stroke stroke;
                 if (RallyLength == 5)
                 {
-                    stroke = r.Strokes.LastOrDefault();
+                    stroke = r.LastWinnerStroke();
                 }
                 else
                 {
@@ -128,8 +127,7 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(ResultsChangedEvent message)
         {
-            if (IsActive)
-                UpdateStrokeDisplay(message.Rallies);
+            UpdateStrokeDisplay(message.Rallies);
         }
 
         public void Handle(RallyLengthChangedEvent message)
@@ -139,6 +137,43 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MediaControlEvent message)
         {
+            if (message.Source == Models.Util.Enums.Media.Source.Viewer)
+            {
+                var idx = Rallies.IndexOf(Manager.ActiveRally);
+                switch (message.Ctrl)
+                {
+                    case Models.Util.Enums.Media.Control.Previous:
+                        var rallyP = idx - 1 >= 0 ? Rallies[idx - 1] : null;
+                        if (rallyP != null)
+                        {
+                            Manager.ActiveRally = rallyP;
+                        }
+                        break;
+                    case Models.Util.Enums.Media.Control.Next:
+                        if (Rallies.Count() != 0)
+                        {
+                            var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : Rallies[0];
+                            if (rallyN != null && rallyN != Rallies[0])
+                            {
+                                Manager.ActiveRally = rallyN;
+                            }
+                            else if (rallyN != null && rallyN == Rallies[0])
+                            {
+                                Events.PublishOnUIThread(new MediaControlEvent(Models.Util.Enums.Media.Control.Pause, Models.Util.Enums.Media.Source.Viewer));
+                            }
+
+                        }
+                        else
+                        {
+                            Events.PublishOnUIThread(new MediaControlEvent(Models.Util.Enums.Media.Control.Stop, Models.Util.Enums.Media.Source.Viewer));
+                        }
+                        break;
+                    case Models.Util.Enums.Media.Control.Stop:
+
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -148,19 +183,21 @@ namespace TT.Viewer.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            // Subscribe ourself to the event bus
+            Events.Subscribe(this);
         }
 
         protected override void OnDeactivate(bool close)
         {
-            if (close)
-                Events.Unsubscribe(this);
+            Events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
 
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);
-            UpdateStrokeDisplay(Manager. SelectedRallies);
+            RallyLength = Manager.CurrentRallyLength;
+            UpdateStrokeDisplay(Manager.SelectedRallies);
         }
 
         #endregion

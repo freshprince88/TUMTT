@@ -117,7 +117,7 @@ namespace TT.Viewer.Views
                 AddStrokesDirectionShapes(s);
                 AddStrokesArrowtips(s);
                 AddInterceptArrows(s);
-                AddServiceStrokesSpinArrows(s);
+                AddServiceStrokesSpinShapes(s);
             }
         }
 

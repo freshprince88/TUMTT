@@ -70,10 +70,7 @@ namespace TT.Viewer.ViewModels
             Manager = man;
             WindowManager = winMan;
             RallyLength = 1;
-            Rallies = new ObservableCollection<Rally>();
-
-            // Subscribe ourself to the event bus
-            Events.Subscribe(this);            
+            Rallies = new ObservableCollection<Rally>();         
         }
 
         public byte GetOrderInResultView()
@@ -84,6 +81,7 @@ namespace TT.Viewer.ViewModels
         public void RallySelected(object dataContext)
         {
             Debug.WriteLine("Selected rally {0}", ((Rally)dataContext).Number);
+            ActiveRally = (Rally)dataContext;
             Manager.ActiveRally = (Rally)dataContext;
         }
 
@@ -138,7 +136,7 @@ namespace TT.Viewer.ViewModels
                         var rallyP = idx - 1 >= 0 ? Rallies[idx - 1] : null;
                         if (rallyP != null)
                         {
-                            ActiveRally = rallyP;
+                            RallySelected(rallyP);
                         }
                         break;
                     case Media.Control.Next:
@@ -147,7 +145,7 @@ namespace TT.Viewer.ViewModels
                             var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : Rallies[0];
                             if (rallyN != null && rallyN != Rallies[0])
                             {
-                                ActiveRally = rallyN;
+                                RallySelected(rallyN);
                             }
                             else if (rallyN != null && rallyN == Rallies[0])
                             {
@@ -160,6 +158,8 @@ namespace TT.Viewer.ViewModels
                             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));
                         }
                         break;
+                    case Media.Control.Stop:
+
                     default:
                         break;
                 }
@@ -173,6 +173,7 @@ namespace TT.Viewer.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            // Subscribe ourself to the event bus
             Events.Subscribe(this);
         }
 
@@ -187,6 +188,9 @@ namespace TT.Viewer.ViewModels
         {
             base.OnViewReady(view);
             Rallies.Clear();
+
+            RallyLength = Manager.CurrentRallyLength;
+
             Manager.SelectedRallies.Apply(rally => Rallies.Add(rally));
 
             Rally activeRally = Manager.ActiveRally;

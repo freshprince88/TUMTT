@@ -34,7 +34,7 @@ namespace TT.Viewer.Views
         #endregion
 
         protected Dictionary<Stroke, List<Shape>> StrokeShapes { get; private set; }
-        protected Dictionary<Stroke, List<Control>> StrokeControls { get; private set; }
+        protected Dictionary<Stroke, List<FrameworkElement>> StrokeElements { get; private set; }
 
         public abstract Grid View_InnerFieldGrid { get; }
         public abstract Grid View_InnerFieldBehindGrid { get; }
@@ -44,7 +44,7 @@ namespace TT.Viewer.Views
         public TableView()
         {
             StrokeShapes = new Dictionary<Stroke, List<Shape>>();
-            StrokeControls = new Dictionary<Stroke, List<Control>>();
+            StrokeElements = new Dictionary<Stroke, List<FrameworkElement>>();
         }
 
         #region Dependency Properties
@@ -132,9 +132,9 @@ namespace TT.Viewer.Views
                 else if (e.Property == ShowSpinProperty)
                 {
                     if ((bool)e.NewValue)
-                        foreach (Stroke s in view.StrokeShapes.Keys) view.AddServiceStrokesSpinArrows(s);
+                        foreach (Stroke s in view.StrokeShapes.Keys) view.AddServiceStrokesSpinShapes(s);
                     else
-                        view.HideShapesByTag(ShapeType.SpinArrow);
+                        view.HideShapesByTag(ShapeType.SpinShape);
                 }
                 else if (e.Property == ShowDebugProperty)
                 {
@@ -154,7 +154,7 @@ namespace TT.Viewer.Views
                     if ((bool)e.NewValue)
                         foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokeNumbers(s);
                     else
-                        view.HideControlsByTag(ControlType.StrokeNumber);
+                        view.HideElementsByTag(ElementType.StrokeNumber);
                 }
             }
         }
@@ -175,7 +175,8 @@ namespace TT.Viewer.Views
             else
             {
                 bool isServiceStroke = stroke.Number == 1;
-                if (PlacementValuesValid(stroke.Placement))
+                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
+                if (PlacementValuesValid(stroke.Placement) || isNetOrOut)
                 {
                     double X1, X2, Y1, Y2;
 
@@ -253,12 +254,23 @@ namespace TT.Viewer.Views
                             AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                     }
 
-                    // this stroke's end is always the exact position of its placement
-                    X2 = GetAdjustedX(stroke, stroke.Placement.WX);
-                    Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
+                    if (isNetOrOut)
+                    {
+                        X2 = X1;
+                        if (Y1 > 137)
+                            Y2 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y1 - 40 : GetGridForStroke(stroke).ActualHeight - 40;
+                        else
+                            Y2 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y1 + 40 : 40;
+                    }
+                    else
+                    {
+                        // this stroke's end is always the exact position of its placement
+                        X2 = GetAdjustedX(stroke, stroke.Placement.WX);
+                        Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
+                    }
 
                     // now we have this stroke's start and end => get the shape (depends mostly on stroke technique)
-                    if (isServiceStroke)
+                    if (isServiceStroke || isNetOrOut)
                         shape = GetLineShape(stroke, X1, Y1, X2, Y2);
                     else
                         if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
@@ -458,7 +470,8 @@ namespace TT.Viewer.Views
             else
             {
                 bool isServiceStroke = stroke.Number == 1;
-                if (PlacementValuesValid(stroke.Placement))
+                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
+                if (PlacementValuesValid(stroke.Placement) || isNetOrOut)
                 {
                     double X1, X2, Y1, Y2;
                     X1 = Y1 = int.MinValue;
@@ -475,27 +488,63 @@ namespace TT.Viewer.Views
                         GetPointForShapeRelativeToGrid(shape, PointType.Middle, gridOfStroke, out X1, out Y1);
                     }
 
-                    X2 = GetAdjustedX(stroke, stroke.Placement.WX);
-                    Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
+                    if (isNetOrOut)
+                    {
+                        Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+                        GetPointForShapeRelativeToGrid(shape, PointType.End, gridOfStroke, out X2, out Y2);
+                    }
+                    else
+                    {
+                        X2 = GetAdjustedX(stroke, stroke.Placement.WX);
+                        Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
+                    }
 
                     PathGeometry arrowTipGeometry = new PathGeometry();
-
                     PathFigure pathFigure = new PathFigure();
-                    pathFigure.IsClosed = true;
-                    pathFigure.StartPoint = new Point(X2 - 3, Y2 - 3);
 
-                    LineSegment ltt = new LineSegment(new Point(X2, Y2), true);
-                    pathFigure.Segments.Add(ltt);
+                    if (isNetOrOut)
+                    {
+                        pathFigure.StartPoint = new Point(X2, Y2 - 6);
 
-                    LineSegment ttr = new LineSegment(new Point(X2 + 3, Y2 - 3), true);
-                    pathFigure.Segments.Add(ttr);
+                        LineSegment ttb = new LineSegment(new Point(X2, Y2 + 6), true);
+                        pathFigure.Segments.Add(ttb);
 
-                    double theta = Math.Atan2((Y2 - Y1), (X2 - X1)) * 180 / Math.PI;
-                    RotateTransform transform = new RotateTransform();
-                    transform.Angle = theta - 90;
-                    transform.CenterX = X2;
-                    transform.CenterY = Y2;
-                    arrowTipGeometry.Transform = transform;
+                        arrowTipGeometry.Figures.Add(pathFigure);
+
+                        pathFigure = new PathFigure();
+                        pathFigure.StartPoint = new Point(X2 - 6, Y2);
+
+                        LineSegment ltr = new LineSegment(new Point(X2 + 6, Y2), true);
+                        pathFigure.Segments.Add(ltr);
+
+                        arrowTipGeometry.Figures.Add(pathFigure);
+
+                        RotateTransform transform = new RotateTransform();
+                        transform.Angle = 45;
+                        transform.CenterX = X2;
+                        transform.CenterY = Y2;
+                        arrowTipGeometry.Transform = transform;
+                    }
+                    else
+                    {
+                        pathFigure = new PathFigure();
+                        pathFigure.IsClosed = true;
+                        pathFigure.StartPoint = new Point(X2 - 3, Y2 - 3);
+
+                        LineSegment ltt = new LineSegment(new Point(X2, Y2), true);
+                        pathFigure.Segments.Add(ltt);
+
+                        LineSegment ttr = new LineSegment(new Point(X2 + 3, Y2 - 3), true);
+                        pathFigure.Segments.Add(ttr);
+
+                        double theta = Math.Atan2((Y2 - Y1), (X2 - X1)) * 180 / Math.PI;
+                        RotateTransform transform = new RotateTransform();
+                        transform.Angle = theta - 90;
+                        transform.CenterX = X2;
+                        transform.CenterY = Y2;
+                        arrowTipGeometry.Transform = transform;
+
+                    }
 
                     arrowTipGeometry.Figures.Add(pathFigure);
 
@@ -519,9 +568,12 @@ namespace TT.Viewer.Views
             }
         }
 
-        protected void AddServiceStrokesSpinArrows(Stroke stroke)
+        protected void AddServiceStrokesSpinShapes(Stroke stroke)
         {
-            Shape spinArrow = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.SpinArrow);
+            if (stroke.Number != 1)
+                return;
+
+            Shape spinArrow = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.SpinShape);
             if (spinArrow != null)
                 spinArrow.Visibility = Visibility.Visible;
 
@@ -580,7 +632,7 @@ namespace TT.Viewer.Views
 
                     spinArrow = new Path();
                     ((Path)spinArrow).Data = spinGeometry;
-                    spinArrow.Tag = ShapeType.SpinArrow;
+                    spinArrow.Tag = ShapeType.SpinShape;
                     spinArrow.Stroke = Brushes.Blue;
                     spinArrow.StrokeThickness = StrokeThicknessSpinArrow;
 
@@ -602,13 +654,14 @@ namespace TT.Viewer.Views
 
         protected void AddStrokeNumbers(Stroke stroke)
         {
-            Control strokeNumber = StrokeControls[stroke].Find(s => (ControlType)s.Tag == ControlType.StrokeNumber);
+            FrameworkElement strokeNumber = StrokeElements[stroke].Find(s => (ElementType)s.Tag == ElementType.StrokeNumber);
             if (strokeNumber != null)
                 strokeNumber.Visibility = Visibility.Visible;
 
             else
             {
-                if (PlacementValuesValid(stroke.Placement))
+                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
+                if (PlacementValuesValid(stroke.Placement) || isNetOrOut)
                 {
                     TextBlock textBlock = new TextBlock();
                     textBlock.Text = stroke.Number.ToString();
@@ -644,11 +697,16 @@ namespace TT.Viewer.Views
                     textBlock.Margin = margin;
 
                     textBlock.FontWeight = FontWeights.Bold;
-                    textBlock.Foreground = Brushes.DarkOliveGreen;
+                    textBlock.Foreground = isNetOrOut ? Brushes.DarkRed : Brushes.DarkOliveGreen;
 
-                    textBlock.Tag = ControlType.StrokeNumber;
+                    textBlock.Tag = ElementType.StrokeNumber;
+
+                    StrokeElements[stroke].Add(textBlock);
 
                     gridOfStroke.Children.Add(textBlock);
+
+                    if (!ShowNumbers)
+                        textBlock.Visibility = Visibility.Hidden;
                 }
                 else
                 {
@@ -671,15 +729,15 @@ namespace TT.Viewer.Views
             }
         }
 
-        private void HideControlsByTag(ControlType tag)
+        private void HideElementsByTag(ElementType tag)
         {
-            foreach (List<Control> controls in StrokeControls.Values)
+            foreach (List<FrameworkElement> elements in StrokeElements.Values)
             {
-                foreach (Control control in controls)
+                foreach (FrameworkElement element in elements)
                 {
-                    if ((ControlType)control.Tag == tag)
+                    if ((ElementType)element.Tag == tag)
                     {
-                        control.Visibility = Visibility.Hidden;
+                        element.Visibility = Visibility.Hidden;
                     }
                 }
             }
@@ -1104,7 +1162,7 @@ namespace TT.Viewer.Views
         #endregion
 
         protected enum PointType { Start, Middle, End }
-        protected enum ShapeType { Direction, Arrowtip, Intercept, SpinArrow, Debug_preceding}
-        protected enum ControlType { StrokeNumber }
+        protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding}
+        protected enum ElementType { StrokeNumber }
     }
 }

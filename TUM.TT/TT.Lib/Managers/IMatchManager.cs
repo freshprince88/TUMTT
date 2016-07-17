@@ -12,6 +12,8 @@ namespace TT.Lib.Managers
 
         Rally ActiveRally { get; set; }
 
+        int CurrentRallyLength { get; set; }
+
         IEnumerable<Rally> SelectedRallies { get; set; }
 
         string FileName { get; set; }

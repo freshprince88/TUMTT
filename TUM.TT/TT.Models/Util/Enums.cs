@@ -246,6 +246,14 @@
             Both
         }
 
+        public enum Course
+        {
+            Continue,
+            Winner,
+            NetOut,
+            None
+        }
+
         public enum Technique
         {
             Push,
