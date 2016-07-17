@@ -176,8 +176,15 @@ namespace TT.Viewer.Views
             {
                 bool isServiceStroke = stroke.Number == 1;
                 bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
-                if (PlacementValuesValid(stroke.Placement) || isNetOrOut)
+
+                try
                 {
+                    if (!PlacementValuesValid(stroke.Placement) && !isNetOrOut)
+                    {
+                        Debug.WriteLine("Direction: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
+                        return;
+                    }
+
                     double X1, X2, Y1, Y2;
 
                     // here we figure out where the stroke should start, i.e. its X1 and Y1 coordinate
@@ -186,6 +193,9 @@ namespace TT.Viewer.Views
                         // service strokes get special treatment because they
                         // a. generally start from the bottom in most views (small/large)
                         // b. don't have any preceding strokes to base their starting point on
+
+                        if (stroke.Playerposition.Equals(double.NaN))
+                            return;
 
                         // double.MinValue as Playerposition indicates a service stroke in the Legend view
                         // since there the arrows are painted horizontally, we have to set special values here
@@ -198,7 +208,7 @@ namespace TT.Viewer.Views
                         // and their position is determined by Playerposition
                         else
                         {
-                            X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
+                            X1 = GetAdjustedX(stroke, stroke.Playerposition);
                             Y1 = View_InnerFieldBehindGrid.ActualHeight;
                         }
                     }
@@ -274,15 +284,15 @@ namespace TT.Viewer.Views
                         shape = GetLineShape(stroke, X1, Y1, X2, Y2);
                     else
                         if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
-                            shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
-                        else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
-                            shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
-                        else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Chop)
-                            shape = GetChopShape(stroke, X1, Y1, X2, Y2);
-                        else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Lob)
-                            shape = GetLobShape(stroke, X1, Y1, X2, Y2);
-                        else
-                            shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+                        shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
+                    else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
+                        shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
+                    else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Chop)
+                        shape = GetChopShape(stroke, X1, Y1, X2, Y2);
+                    else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Lob)
+                        shape = GetLobShape(stroke, X1, Y1, X2, Y2);
+                    else
+                        shape = GetLineShape(stroke, X1, Y1, X2, Y2);
 
                     // tag is needed to identify this shape in our map of strokes to shapes
                     shape.Tag = ShapeType.Direction;
@@ -315,9 +325,9 @@ namespace TT.Viewer.Views
                     if (!ShowDirection)
                         shape.Visibility = Visibility.Hidden;
                 }
-                else
+                catch(Exception e)
                 {
-                    Debug.WriteLine("Direction: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                    Debug.WriteLine(e);
                 }
             }
         }
@@ -485,12 +495,14 @@ namespace TT.Viewer.Views
                     else
                     {
                         Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+                        if (shape == null) return;
                         GetPointForShapeRelativeToGrid(shape, PointType.Middle, gridOfStroke, out X1, out Y1);
                     }
 
                     if (isNetOrOut)
                     {
                         Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+                        if (shape == null) return;
                         GetPointForShapeRelativeToGrid(shape, PointType.End, gridOfStroke, out X2, out Y2);
                     }
                     else
@@ -563,7 +575,7 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("Arrowtip: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                    Debug.WriteLine("Arrowtip: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
                 }
             }
         }
@@ -647,7 +659,7 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("SpinArrow: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                    Debug.WriteLine("SpinArrow: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
                 }
             }
         }
@@ -683,6 +695,7 @@ namespace TT.Viewer.Views
                     else
                     {
                         Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+                        if (shape == null) return;
                         GetPointForShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
                     }
 
@@ -710,7 +723,7 @@ namespace TT.Viewer.Views
                 }
                 else
                 {
-                    Debug.WriteLine("StrokeNumber: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                    Debug.WriteLine("StrokeNumber: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
                 }
             }
         }
@@ -969,7 +982,7 @@ namespace TT.Viewer.Views
                 }
 
             }
-            else
+            else if (stroke.Stroketechnique != null)
             {
                 switch (stroke.Stroketechnique.EnumType)
                 {
@@ -1042,7 +1055,8 @@ namespace TT.Viewer.Views
                 return View_InnerFieldBehindGrid;
             else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.HalfDistance)
                 return View_InnerFieldHalfDistanceGrid;
-            return null;
+            else
+                return View_InnerFieldGrid;
         }
 
 
@@ -1132,10 +1146,8 @@ namespace TT.Viewer.Views
             }
 
             Grid parent = (Grid)shape.Parent;
-            if (parent.Name != grid.Name)
-            {
-                y -= grid.Margin.Top - parent.Margin.Top;
-            }
+            if (parent != null && parent.Name != grid.Name)
+                y -= grid.Margin.Top - parent.Margin.Top;            
         }
 
         private double GetLinearContinuationX(double x1, double y1, double x2, double y2, double targetY)
@@ -1145,7 +1157,7 @@ namespace TT.Viewer.Views
 
         protected static bool PlacementValuesValid(Placement placement)
         {
-            return placement.WX != double.NaN && placement.WX > 0 && placement.WY != double.NaN && placement.WY > 0;
+            return placement != null && placement.WX != double.NaN && placement.WX > 0 && placement.WY != double.NaN && placement.WY > 0;
         }
 
         protected bool IsStrokeBottomToTop(Stroke stroke)
