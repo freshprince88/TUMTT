@@ -102,7 +102,7 @@ namespace TT.Viewer.Views
         {
             Grid grid = GetGridForStroke(stroke);
             //Debug.WriteLine("{0} : aw={1} mr={2} ml={3}", stroke.Rally.Number, grid.ActualWidth, grid.Margin.Right, grid.Margin.Left);
-            if (stroke.Placement.WY < 137)
+            if (IsStrokeBottomToTop(stroke))
             {
                 // stroke in the upper half of table
                 return oldX + (TableBorder.Margin.Left - grid.Margin.Left);
@@ -118,7 +118,7 @@ namespace TT.Viewer.Views
         {
             Grid grid = GetGridForStroke(stroke);
             //Debug.WriteLine("{0} : ah={1} mb={2} mt={3}", stroke.Rally.Number, grid.ActualHeight, grid.Margin.Bottom, grid.Margin.Top);
-            if (stroke.Placement.WY < 137)
+            if (IsStrokeBottomToTop(stroke))
             {
                 // stroke in the upper half of table
                 return oldY + (TableBorder.Margin.Top - grid.Margin.Top);

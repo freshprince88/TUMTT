@@ -21,6 +21,7 @@
             <TextBlock Text="{Binding Path=legend_service_without_spin_title, Source={StaticResource LocalizedStrings}}"/>
         </Grid>
         <Grid Name="IFBG1" Margin="20,10,20,0" Height="40" VerticalAlignment="Top"/>
+        <Grid Name="IFSG1" Margin="10,10,20,0" Height="30" VerticalAlignment="Top"/>
 
         <Grid Name="IFG2" Margin="20,50,20,0" Height="40" VerticalAlignment="Top">
             <TextBlock Text="{Binding Path=legend_service_with_spin_title, Source={StaticResource LocalizedStrings}}"/>

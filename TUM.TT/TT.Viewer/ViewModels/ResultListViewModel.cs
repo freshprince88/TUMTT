@@ -177,19 +177,23 @@ namespace TT.Viewer.ViewModels
             Events.Subscribe(this);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-
-            if (Manager.ActiveRally != null)
-                Events.PublishOnUIThread(new ResultListControlEvent(Manager.ActiveRally));
         }
 
         protected override void OnDeactivate(bool close)
         {
-            if (close)
-            {
-                Events.Unsubscribe(this);
-                Items.Clear();
-            }
+            Events.Unsubscribe(this);
+            Items.Clear();
             base.OnDeactivate(close);
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            Items.Clear();
+            Manager.SelectedRallies.Apply(rally => Items.Add(new ResultListItem(rally)));
+            
+            if (Manager.ActiveRally != null)
+                Events.PublishOnUIThread(new ResultListControlEvent(Manager.ActiveRally));
         }
 
         #endregion

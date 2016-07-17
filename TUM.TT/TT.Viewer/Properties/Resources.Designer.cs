@@ -223,6 +223,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Numbers.
+        /// </summary>
+        public static string table_numbers_title {
+            get {
+                return ResourceManager.GetString("table_numbers_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Small Tables.
         /// </summary>
         public static string table_small_tab_title {

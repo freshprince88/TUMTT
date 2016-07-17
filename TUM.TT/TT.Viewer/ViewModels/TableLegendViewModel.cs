@@ -161,6 +161,9 @@ namespace TT.Viewer.ViewModels
             stroke = CreateStroke(1, 80, 8, "", "", rally);
             stroke.Side = Models.Util.Enums.Stroke.Hand.Forehand.ToString();
             stroke.Playerposition = double.MinValue;
+            stroke.Spin = new Spin();
+            stroke.Spin.SL = "1";
+            stroke.Spin.SR = "1";
             strokesTmp.Add(stroke);
 
             return strokesTmp;
@@ -175,6 +178,9 @@ namespace TT.Viewer.ViewModels
             stroke = CreateStroke(1, 80, 8, "", "", rally);
             stroke.Side = Models.Util.Enums.Stroke.Hand.Backhand.ToString();
             stroke.Playerposition = double.MinValue;
+            stroke.Spin = new Spin();
+            stroke.Spin.SL = "1";
+            stroke.Spin.SR = "1";
             strokesTmp.Add(stroke);            
 
             return strokesTmp;

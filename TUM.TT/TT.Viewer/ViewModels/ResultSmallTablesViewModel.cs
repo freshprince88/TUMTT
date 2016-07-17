@@ -1,18 +1,16 @@
 ﻿using Caliburn.Micro;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Lib.Managers;
-using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models;
 using System.Diagnostics;
 using System.Windows;
 using System.Dynamic;
 using System.Windows.Controls.Primitives;
+using TT.Models.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {
@@ -20,7 +18,8 @@ namespace TT.Viewer.ViewModels
         IHandle<ResultsChangedEvent>,
         IHandle<RallyLengthChangedEvent>,
         IHandle<FullscreenEvent>,
-        IHandle<MediaControlEvent>
+        IHandle<MediaControlEvent>,
+        IHandle<ActiveRallyChangedEvent>
     {
         
         private IEventAggregator Events;
@@ -29,6 +28,20 @@ namespace TT.Viewer.ViewModels
         private IWindowManager WindowManager;
 
         public ObservableCollection<Rally> Rallies { get; set; }
+
+        private Rally activeRally;
+        public Rally ActiveRally
+        {
+            get
+            {
+                return activeRally;
+            }
+            set
+            {
+                activeRally = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         private int rallyLength;
         public int RallyLength
@@ -76,8 +89,8 @@ namespace TT.Viewer.ViewModels
 
         public void StrokeSelected(object dataContext)
         {
-            Console.Out.WriteLine("Selected stroke {1} of rally: {0}", ((Stroke)dataContext).Rally.Number, ((Stroke)dataContext).Number);
-            Manager.ActiveRally = (dataContext as Stroke).Rally;
+            Console.Out.WriteLine("Selected stroke {1} of rally: {0}", ((Models.Stroke)dataContext).Rally.Number, ((Models.Stroke)dataContext).Number);
+            Manager.ActiveRally = (dataContext as Models.Stroke).Rally;
         }
 
         public void ShowLegend(UIElement e)
@@ -100,6 +113,11 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public void Handle(ActiveRallyChangedEvent message)
+        {
+            ActiveRally = message.Current;
+        }
+
         public void Handle(RallyLengthChangedEvent message)
         {
             RallyLength = message;
@@ -111,6 +129,41 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(MediaControlEvent message)
         {
+            if (message.Source == Media.Source.Viewer)
+            {
+                var idx = Rallies.IndexOf(Manager.ActiveRally);
+                switch (message.Ctrl)
+                {
+                    case Media.Control.Previous:
+                        var rallyP = idx - 1 >= 0 ? Rallies[idx - 1] : null;
+                        if (rallyP != null)
+                        {
+                            ActiveRally = rallyP;
+                        }
+                        break;
+                    case Media.Control.Next:
+                        if (Rallies.Count() != 0)
+                        {
+                            var rallyN = idx + 1 < Rallies.Count ? Rallies[idx + 1] : Rallies[0];
+                            if (rallyN != null && rallyN != Rallies[0])
+                            {
+                                ActiveRally = rallyN;
+                            }
+                            else if (rallyN != null && rallyN == Rallies[0])
+                            {
+                                Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+                            }
+
+                        }
+                        else
+                        {
+                            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -120,12 +173,13 @@ namespace TT.Viewer.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            Events.Subscribe(this);
         }
 
         protected override void OnDeactivate(bool close)
         {
-            if (close)
-                Events.Unsubscribe(this);
+            Events.Unsubscribe(this);
+            Rallies.Clear();
             base.OnDeactivate(close);
         }
 
@@ -134,6 +188,10 @@ namespace TT.Viewer.ViewModels
             base.OnViewReady(view);
             Rallies.Clear();
             Manager.SelectedRallies.Apply(rally => Rallies.Add(rally));
+
+            Rally activeRally = Manager.ActiveRally;
+            if (activeRally != null)
+                ActiveRally = activeRally;
         }
 
         #endregion

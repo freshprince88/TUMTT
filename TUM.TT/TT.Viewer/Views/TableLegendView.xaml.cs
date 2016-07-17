@@ -20,6 +20,7 @@ namespace TT.Viewer.Views
 
         private Grid currentInnerFieldGrid;
         private Grid currentInnerFieldBehindGrid;
+        private Grid currentInnerFieldSpinGrid;
 
         public override Grid View_InnerFieldBehindGrid
         {
@@ -41,7 +42,7 @@ namespace TT.Viewer.Views
         {
             get
             {
-                return IFSG2;
+                return currentInnerFieldSpinGrid != null ? currentInnerFieldSpinGrid : IFSG1;
             }
         }
 
@@ -110,6 +111,7 @@ namespace TT.Viewer.Views
                 // Before processing each stroke, set the currentInnerField(Behind)Grid so TableView can get it while adding the stroke shapes
                 currentInnerFieldGrid = (Grid)FindName("IFG" + (-1) * s.Rally.Number);
                 currentInnerFieldBehindGrid = (Grid)FindName("IFBG" + (-1) * s.Rally.Number);
+                currentInnerFieldSpinGrid = (Grid)FindName("IFSG" + (-1) * s.Rally.Number);
 
                 StrokeShapes[s] = new List<Shape>();
                 AddStrokesDirectionShapes(s);

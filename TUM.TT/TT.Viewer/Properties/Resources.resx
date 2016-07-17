@@ -177,4 +177,7 @@
   <data name="table_spin_title" xml:space="preserve">
     <value>Spin</value>
   </data>
+  <data name="table_numbers_title" xml:space="preserve">
+    <value>Numbers</value>
+  </data>
 </root>

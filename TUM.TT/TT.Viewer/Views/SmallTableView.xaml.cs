@@ -21,11 +21,21 @@ namespace TT.Viewer.Views
         private static BrushConverter brushConverter = new BrushConverter();
 
         private AutoResetEvent sizeChangedWaitEvent;
+        private Rally thisRally;
 
         public override Grid View_InnerFieldGrid { get { return InnerFieldGrid; } }
         public override Grid View_InnerFieldBehindGrid { get { return InnerFieldBehindGrid; } }
         public override Grid View_InnerFieldHalfDistanceGrid { get { return InnerFieldHalfDistanceGrid; } }
         public override Grid View_InnerFieldSpinGrid { get { return InnerFieldSpinGrid; } }
+
+        public Rally ActiveRally
+        {
+            get { return (Rally)GetValue(ActiveRallyProperty); }
+            set { SetValue(ActiveRallyProperty, value); }
+        }
+
+        public static DependencyProperty ActiveRallyProperty = DependencyProperty.Register(
+            "ActiveRally", typeof(Rally), typeof(SmallTableView), new PropertyMetadata(default(Rally), new PropertyChangedCallback(OnActiveRallyPropertyChanged)));
 
         public SmallTableView()
         {            
@@ -43,6 +53,21 @@ namespace TT.Viewer.Views
 
         #region Event handlers
 
+        private static void OnActiveRallyPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            SmallTableView view = (SmallTableView)sender;
+            if (view.thisRally.Number == view.ActiveRally.Number)
+            {
+                view.SmallTableViewBorder.BorderThickness = new Thickness(2);
+                view.TableGrid.Background = (Brush)brushConverter.ConvertFrom("#e2e7e0");
+            }
+            else
+            {
+                view.SmallTableViewBorder.BorderThickness = new Thickness(1);
+                view.TableGrid.Background = Brushes.Transparent;
+            }
+        }
+
         private void Table_MouseEnter(object sender, MouseEventArgs e)
         {
             SmallTableViewBorder.BorderThickness = new Thickness(2);
@@ -51,8 +76,11 @@ namespace TT.Viewer.Views
 
         private void Table_MouseLeave(object sender, MouseEventArgs e)
         {
-            SmallTableViewBorder.BorderThickness = new Thickness(1);
-            TableGrid.Background = Brushes.Transparent;
+            if (ActiveRally == null || ActiveRally.Number != thisRally.Number)
+            {
+                SmallTableViewBorder.BorderThickness = new Thickness(1);
+                TableGrid.Background = Brushes.Transparent;
+            }
         }
 
         #endregion
@@ -66,15 +94,18 @@ namespace TT.Viewer.Views
                     (p as Grid).Children.Clear();
             }
             StrokeShapes.Clear();
-
+            
             // add new lists of shapes for each stroke - up to MaxDisplayedStrokes many for small table!
             int maxStrokeDisplayCounter = 0;
             foreach (Stroke s in strokes)
             {
+                thisRally = s.Rally;
+
                 maxStrokeDisplayCounter++;
                 if (maxStrokeDisplayCounter > MaxDisplayedStrokes)
                     break;
                 StrokeShapes[s] = new List<Shape>();
+                StrokeControls[s] = new List<Control>();
             }
 
             // once size of this view changed, we know it's been fully added: add the actual stroke shapes (they need the actual size)
@@ -94,9 +125,41 @@ namespace TT.Viewer.Views
                         AddStrokesDirectionShapes(stroke);
                         AddInterceptArrows(stroke);
                         AddStrokesArrowtips(stroke);
+                        AddLastStrokeXShape(stroke);
+                        AddStrokeNumbers(stroke);
                     }
                 });
             })).Start();
+        }
+
+        private void AddLastStrokeXShape(Stroke stroke)
+        {
+            double X1, X2, Y1, Y2;
+            X1 = X2 = Y1 = Y2 = 0;
+
+            PathGeometry arrowTipGeometry = new PathGeometry();
+
+            PathFigure pathFigure = new PathFigure();
+            pathFigure.StartPoint = new Point(X2, Y2 - 6);
+
+            LineSegment ttb = new LineSegment(new Point(X2, Y2 + 6), true);
+            pathFigure.Segments.Add(ttb);
+
+            arrowTipGeometry.Figures.Add(pathFigure);
+
+            pathFigure = new PathFigure();
+            pathFigure.StartPoint = new Point(X2 - 6, Y2);
+
+            LineSegment ltr = new LineSegment(new Point(X2 + 6, Y2), true);
+            pathFigure.Segments.Add(ltr);
+
+            arrowTipGeometry.Figures.Add(pathFigure);
+
+            RotateTransform transform = new RotateTransform();
+            transform.Angle = 45;
+            transform.CenterX = X2;
+            transform.CenterY = Y2;
+            arrowTipGeometry.Transform = transform;
         }
 
         #region Helper methods
@@ -105,7 +168,7 @@ namespace TT.Viewer.Views
         {
             Grid grid = GetGridForStroke(stroke);
             //Debug.WriteLine("{0} : aw={1} mr={2} ml={3}", stroke.Rally.Number, grid.ActualWidth, grid.Margin.Right, grid.Margin.Left);
-            if (stroke.Placement.WY < 137)
+            if (IsStrokeBottomToTop(stroke))
             {
                 // stroke in the upper half of table
                 return stroke.Number % 2 == 1 ? oldX + (TableBorder.Margin.Left - grid.Margin.Left) : grid.ActualWidth - oldX - (TableBorder.Margin.Left - grid.Margin.Left);
@@ -118,10 +181,10 @@ namespace TT.Viewer.Views
         }
 
         protected override double GetAdjustedY(Stroke stroke, double oldY)
-        {            
+        {
             Grid grid = GetGridForStroke(stroke);
             //Debug.WriteLine("{0} : ah={1} mb={2} mt={3}", stroke.Rally.Number, grid.ActualHeight, grid.Margin.Bottom, grid.Margin.Top);
-            if (stroke.Placement.WY < 137)
+            if (IsStrokeBottomToTop(stroke))
             {
                 // stroke in the upper half of table, flip y for even-numbered strokes
                 return stroke.Number % 2 == 1 ? oldY + (TableBorder.Margin.Top - grid.Margin.Top) : grid.ActualHeight - oldY - (TableBorder.Margin.Bottom - grid.Margin.Bottom);

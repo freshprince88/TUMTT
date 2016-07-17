@@ -10,7 +10,7 @@
              xmlns:vm="clr-namespace:TT.Viewer.ViewModels"
              xmlns:prop="clr-namespace:TT.Viewer.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="400"
+             d:DesignHeight="500" d:DesignWidth="354"
              d:DataContext="{d:DesignInstance Type=vm:ResultLargeTableViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
@@ -24,24 +24,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="CheckGrid" Grid.Row="0" HorizontalAlignment="Left">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
+        <WrapPanel>
+            <Button Grid.Column="5" x:Name="LegendButton" Content="{Binding Path=table_legend_title, Source={StaticResource LocalizedStrings}}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" cal:Message.Attach="[Event Click] = [Action ShowLegend($source)]"/>
             <CheckBox Grid.Column="0" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDirection" IsChecked="True"
                         Content="{Binding Path=table_direction_title, Source={StaticResource LocalizedStrings}}"/>
             <CheckBox Grid.Column="1" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckSpin" IsChecked="True"
                         Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}" Visibility="{Binding RallyLength, Converter={StaticResource RallyLengthToVisibilityConverter}}"/>
             <CheckBox Grid.Column="2" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckIntercept" IsChecked="True"
                         Content="{Binding Path=table_intercept_title, Source={StaticResource LocalizedStrings}}"/>
-            <CheckBox Grid.Column="3" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDebug" IsChecked="True" Content="debug"/>
-
-        </Grid>
-
+            <CheckBox Grid.Column="3" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" x:Name="CheckDebug" IsChecked="True" Content="debug"/>            
+        </WrapPanel>
+        
         <Viewbox Grid.Row="1" Stretch="Uniform">
             <local:LargeTableView x:Name="LargeTableView" Strokes="{Binding Strokes}">
                 <local:TableView.ShowDirection>
@@ -57,16 +50,6 @@
                     <Binding ElementName="CheckDebug" Path="IsChecked"/>
                 </local:TableView.ShowDebug>
             </local:LargeTableView>
-        </Viewbox>
-        <!--<Grid HorizontalAlignment="Right">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>-->
-            <!--<Border BorderBrush="Black" BorderThickness="1" CornerRadius="4" Margin="4">
-                <TextBlock Grid.Column="0" x:Name="Legend" HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding Path=table_legend_title, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Center" Margin="3" cal:Message.Attach="[Event Click] = [Action ShowLegend($source)]"/>
-            </Border>-->
-            <Button Grid.Column="1" x:Name="LegendButton" Content="{Binding Path=table_legend_title, Source={StaticResource LocalizedStrings}}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" cal:Message.Attach="[Event Click] = [Action ShowLegend($source)]"/>
-        <!--</Grid>-->
+        </Viewbox>            
     </Grid>
 </UserControl>

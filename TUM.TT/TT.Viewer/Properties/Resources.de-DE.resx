@@ -127,7 +127,7 @@
     <value>Block / Konterball</value>
   </data>
   <data name="legend_chop_title" xml:space="preserve">
-    <value>Schupfball</value>
+    <value>Schnittabwehr</value>
   </data>
   <data name="legend_forehand_title" xml:space="preserve">
     <value>Vorhand:</value>
@@ -145,7 +145,7 @@
     <value>Sonstige</value>
   </data>
   <data name="legend_push_title" xml:space="preserve">
-    <value>Push</value>
+    <value>Schupfball</value>
   </data>
   <data name="legend_service_without_spin_title" xml:space="preserve">
     <value>Aufschlag (ohne Spin)</value>
@@ -176,5 +176,8 @@
   </data>
   <data name="table_spin_title" xml:space="preserve">
     <value>Drehung</value>
+  </data>
+  <data name="table_numbers_title" xml:space="preserve">
+    <value>Zahlen</value>
   </data>
 </root>

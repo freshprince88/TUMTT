@@ -34,6 +34,7 @@ namespace TT.Viewer.Views
         #endregion
 
         protected Dictionary<Stroke, List<Shape>> StrokeShapes { get; private set; }
+        protected Dictionary<Stroke, List<Control>> StrokeControls { get; private set; }
 
         public abstract Grid View_InnerFieldGrid { get; }
         public abstract Grid View_InnerFieldBehindGrid { get; }
@@ -43,6 +44,7 @@ namespace TT.Viewer.Views
         public TableView()
         {
             StrokeShapes = new Dictionary<Stroke, List<Shape>>();
+            StrokeControls = new Dictionary<Stroke, List<Control>>();
         }
 
         #region Dependency Properties
@@ -77,6 +79,12 @@ namespace TT.Viewer.Views
             set { SetValue(ShowInterceptProperty, value); }
         }
 
+        public bool ShowNumbers
+        {
+            get { return (bool)GetValue(ShowNumbersProperty); }
+            set { SetValue(ShowNumbersProperty, value); }
+        }
+
         public static DependencyProperty StrokesProperty = DependencyProperty.Register(
             "Strokes", typeof(ICollection<Stroke>), typeof(TableView), new PropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
 
@@ -92,10 +100,13 @@ namespace TT.Viewer.Views
         public static DependencyProperty ShowInterceptProperty = DependencyProperty.Register(
             "ShowIntercept", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
 
+        public static DependencyProperty ShowNumbersProperty = DependencyProperty.Register(
+            "ShowNumbers", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
         #endregion
 
         #region Event handlers
-        
+
         private static void OnStrokesPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             //Debug.WriteLine("OnStrokesPropertyChanged sender={0}, sender.Tag={3} e.ov={1}, e.nv={2}", sender, e.OldValue, e.NewValue, ((TableView)sender).Tag);
@@ -138,6 +149,13 @@ namespace TT.Viewer.Views
                     else
                         view.HideShapesByTag(ShapeType.Intercept);
                 }
+                else if (e.Property == ShowNumbersProperty)
+                {
+                    if ((bool)e.NewValue)
+                        foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokeNumbers(s);
+                    else
+                        view.HideControlsByTag(ControlType.StrokeNumber);
+                }
             }
         }
 
@@ -149,6 +167,7 @@ namespace TT.Viewer.Views
 
         protected void AddStrokesDirectionShapes(Stroke stroke)
         {
+            // first check if we already created a direction shape for this stroke. if so, display it and we're done
             Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
             if (shape != null)
                 shape.Visibility = Visibility.Visible;
@@ -160,14 +179,23 @@ namespace TT.Viewer.Views
                 {
                     double X1, X2, Y1, Y2;
 
+                    // here we figure out where the stroke should start, i.e. its X1 and Y1 coordinate
                     if (isServiceStroke)
                     {
-                        if (stroke.Playerposition == double.MinValue)   // service stroke in legend
+                        // service strokes get special treatment because they
+                        // a. generally start from the bottom in most views (small/large)
+                        // b. don't have any preceding strokes to base their starting point on
+
+                        // double.MinValue as Playerposition indicates a service stroke in the Legend view
+                        // since there the arrows are painted horizontally, we have to set special values here
+                        if (stroke.Playerposition == double.MinValue)
                         {
                             X1 = 0;
                             Y1 = stroke.Placement.WY;
                         }
-                        else // else: service strokes start at the bottom
+                        // other than that, service strokes start from the bottom (height of the grid they will be added to)
+                        // and their position is determined by Playerposition
+                        else
                         {
                             X1 = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, stroke.Playerposition);
                             Y1 = View_InnerFieldBehindGrid.ActualHeight;
@@ -175,20 +203,28 @@ namespace TT.Viewer.Views
                     }
                     else
                     {
+                        // we don't have a service stroke on our hands, that means we base this strokes starting point
+                        // on one or more of his predecessors
+
                         var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
                         double precedingStartX, precedingStartY, precedingEndX, precedingEndY;
 
                         if (precedingStroke.Number == 1)
                         {
-                            precedingStartX = GetAdjustedX(stroke, precedingStroke.Playerposition);
-                            precedingStartY = GetSecondStrokePrecedingStartY(); // magic
+                            // the immediate predecessor is a service stroke.
+                            // again, this calls for special treatment
+                            precedingStartX = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, precedingStroke.Playerposition);
+                            precedingStartY = GetSecondStrokePrecedingStartY(); // this cannot be generalized, both small and large view return different (even opposing) values
                         }
                         else
                         {
+                            // the preceding stroke was not a service stroke, i.e. it has at least one other preceding stroke
+                            // whose placement (WX, WY) we can take for an approximation of this strokes starting point
                             precedingStartX = GetAdjustedX(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WX);
                             precedingStartY = GetAdjustedY(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WY);
                         }
 
+                        // the end point for this strokes starting point approximation is always the preceding stroke's placement
                         precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
                         precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
 
@@ -196,26 +232,35 @@ namespace TT.Viewer.Views
                         if (ShowDebug)
                             AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
 
+                        // depending on whether we draw the stroke from top to bottom or vice versa, the stroke will start at Y '0' (top)
+                        // or the height of the grid the stroke is going to be added to (bottom).
+                        // in the case that its point of contact is OVER the table, we need the height of the previous stroke (we add/subtract arbitrarilly '30' for realism)
                         if (precedingStartY > precedingEndY)    // bottom -> top
                             Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
                         else if (precedingStartY < precedingEndY)
                             Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
                         else
-                            Y1 = precedingEndY;
+                            Y1 = precedingEndY; // means the preceding stroke didn't change the Y coordinate -> reserved for special cases (e.g. horizontal strokes in Legend)
 
+                        // now we have the starting and end point (both X and Y) of the previous stroke and the height at which this stroke should end
+                        // -> extrapolate its X-coordinate
                         if (precedingStartY != precedingEndY)
                             X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
                         else
-                            X1 = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;
+                            X1 = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;    // equal preceding stroke's Y coordinate -> horizontal
 
                         if (ShowDebug)
                             AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                     }
 
+                    // this stroke's end is always the exact position of its placement
                     X2 = GetAdjustedX(stroke, stroke.Placement.WX);
                     Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
 
-                    if (!isServiceStroke)
+                    // now we have this stroke's start and end => get the shape (depends mostly on stroke technique)
+                    if (isServiceStroke)
+                        shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+                    else
                         if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
                             shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
                         else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
@@ -226,18 +271,22 @@ namespace TT.Viewer.Views
                             shape = GetLobShape(stroke, X1, Y1, X2, Y2);
                         else
                             shape = GetLineShape(stroke, X1, Y1, X2, Y2);
-                    else
-                        shape = GetLineShape(stroke, X1, Y1, X2, Y2);
 
+                    // tag is needed to identify this shape in our map of strokes to shapes
                     shape.Tag = ShapeType.Direction;
+
                     shape.StrokeThickness = StrokeThickness;
 
+                    // if this view needs to receive event notifications when user interacts with the stroke shape
                     AttachEventHandlerToShape(shape, stroke);
 
+                    // add the stroke to our map so we can find it later
                     StrokeShapes[stroke].Add(shape);
 
+                    // apply style (also depends mostly on stroke technique, but also side - forehand/backhand - and other)
                     ApplyStyle(stroke, shape);
 
+                    // now add it to the respective grid
                     if (isServiceStroke)
                         View_InnerFieldBehindGrid.Children.Add(shape);
                     else
@@ -250,6 +299,7 @@ namespace TT.Viewer.Views
                             View_InnerFieldGrid.Children.Add(shape);
                     }
 
+                    // hide it immediately, if the "Direction" checkbox is unchecked
                     if (!ShowDirection)
                         shape.Visibility = Visibility.Hidden;
                 }
@@ -479,9 +529,6 @@ namespace TT.Viewer.Views
             {
                 if (PlacementValuesValid(stroke.Placement))
                 {
-                    if (stroke.Spin == null || stroke.Spin.No == "1")
-                        return;
-
                     double X1, Y1;
 
                     if (stroke.Playerposition == double.MinValue)   // service stroke in legend
@@ -491,35 +538,48 @@ namespace TT.Viewer.Views
 
                     Y1 = View_InnerFieldSpinGrid.ActualHeight - 1;
 
-                    PathGeometry arrowTipGeometry = new PathGeometry();
+                    Geometry spinGeometry;
 
-                    RotateTransform transform = new RotateTransform();
-                    transform.Angle = GetRotationAngleForSpin(stroke.Spin);
-                    transform.CenterX = X1;
-                    transform.CenterY = Y1 - 4;
-                    arrowTipGeometry.Transform = transform;
+                    if (stroke.Spin == null || stroke.Spin.No == "1" || (stroke.Spin.SL == "1" && stroke.Spin.SR == "1"))
+                    {
+                        spinGeometry = new EllipseGeometry();
+                        EllipseGeometry ellipseGeometry = (EllipseGeometry)spinGeometry;
+                        ellipseGeometry.Center = new Point(X1, Y1 - 4);
+                        ellipseGeometry.RadiusX = 3;
+                        ellipseGeometry.RadiusY = 3;
+                    }
+                    else
+                    {
+                        spinGeometry = new PathGeometry();
 
-                    PathFigure pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(X1 - 3, Y1 - 5);
+                        RotateTransform transform = new RotateTransform();
+                        transform.Angle = GetRotationAngleForSpin(stroke.Spin);
+                        transform.CenterX = X1;
+                        transform.CenterY = Y1 - 4;
+                        spinGeometry.Transform = transform;
 
-                    LineSegment btt = new LineSegment(new Point(X1, Y1 - 8), true);
-                    pathFigure.Segments.Add(btt);
+                        PathFigure pathFigure = new PathFigure();
+                        pathFigure.StartPoint = new Point(X1 - 3, Y1 - 5);
 
-                    LineSegment ttl = new LineSegment(new Point(X1 + 3, Y1 - 5), true);
-                    pathFigure.Segments.Add(ttl);
+                        LineSegment btt = new LineSegment(new Point(X1, Y1 - 8), true);
+                        pathFigure.Segments.Add(btt);
 
-                    arrowTipGeometry.Figures.Add(pathFigure);
+                        LineSegment ttl = new LineSegment(new Point(X1 + 3, Y1 - 5), true);
+                        pathFigure.Segments.Add(ttl);
 
-                    pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(X1, Y1);
+                        ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
 
-                    LineSegment ttr = new LineSegment(new Point(X1, Y1 - 8), true);
-                    pathFigure.Segments.Add(ttr);
+                        pathFigure = new PathFigure();
+                        pathFigure.StartPoint = new Point(X1, Y1);
 
-                    arrowTipGeometry.Figures.Add(pathFigure);
+                        LineSegment ttr = new LineSegment(new Point(X1, Y1 - 8), true);
+                        pathFigure.Segments.Add(ttr);
+
+                        ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
+                    }
 
                     spinArrow = new Path();
-                    ((Path)spinArrow).Data = arrowTipGeometry;
+                    ((Path)spinArrow).Data = spinGeometry;
                     spinArrow.Tag = ShapeType.SpinArrow;
                     spinArrow.Stroke = Brushes.Blue;
                     spinArrow.StrokeThickness = StrokeThicknessSpinArrow;
@@ -540,6 +600,63 @@ namespace TT.Viewer.Views
             }
         }
 
+        protected void AddStrokeNumbers(Stroke stroke)
+        {
+            Control strokeNumber = StrokeControls[stroke].Find(s => (ControlType)s.Tag == ControlType.StrokeNumber);
+            if (strokeNumber != null)
+                strokeNumber.Visibility = Visibility.Visible;
+
+            else
+            {
+                if (PlacementValuesValid(stroke.Placement))
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.Text = stroke.Number.ToString();
+
+                    textBlock.Width = 10;
+                    textBlock.Height = 15;
+                    textBlock.HorizontalAlignment = HorizontalAlignment.Left;
+                    textBlock.VerticalAlignment = VerticalAlignment.Top;
+
+                    double X1, Y1;
+
+                    Grid gridOfStroke = GetGridForStroke(stroke);
+
+                    if (stroke.Number == 1)
+                    {
+                        X1 = GetAdjustedX(stroke, stroke.Playerposition);
+                        Y1 = View_InnerFieldBehindGrid.ActualHeight - textBlock.Height;
+                    }
+                    else
+                    {
+                        Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+                        GetPointForShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
+                    }
+
+                    X1 = (X1.Equals(double.NaN) ? 0 : X1) + 5;
+                    Y1 = (Y1.Equals(double.NaN) ? 0 : Y1);
+
+                    Thickness margin = new Thickness(
+                        Math.Min(X1, gridOfStroke.ActualWidth - textBlock.Width),
+                        Math.Min(Y1, gridOfStroke.ActualHeight - textBlock.Height), 
+                        0, 
+                        0);
+                    textBlock.Margin = margin;
+
+                    textBlock.FontWeight = FontWeights.Bold;
+                    textBlock.Foreground = Brushes.DarkOliveGreen;
+
+                    textBlock.Tag = ControlType.StrokeNumber;
+
+                    gridOfStroke.Children.Add(textBlock);
+                }
+                else
+                {
+                    Debug.WriteLine("StrokeNumber: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement.WX, stroke.Placement.WY, stroke.Rally.Number);
+                }
+            }
+        }
+
         private void HideShapesByTag(ShapeType tag)
         {
             foreach (List<Shape> shapes in StrokeShapes.Values)
@@ -549,6 +666,20 @@ namespace TT.Viewer.Views
                     if ((ShapeType)shape.Tag == tag)
                     {
                         shape.Visibility = Visibility.Hidden;
+                    }
+                }
+            }
+        }
+
+        private void HideControlsByTag(ControlType tag)
+        {
+            foreach (List<Control> controls in StrokeControls.Values)
+            {
+                foreach (Control control in controls)
+                {
+                    if ((ControlType)control.Tag == tag)
+                    {
+                        control.Visibility = Visibility.Hidden;
                     }
                 }
             }
@@ -768,16 +899,17 @@ namespace TT.Viewer.Views
         {
             if (stroke.Number == 1)
             {
-                if (stroke.Spin != null && stroke.Spin.No != "1")
-                {
-                    shape.Stroke = Brushes.SaddleBrown;
-                    shape.Fill = Brushes.SaddleBrown;
-                }
-                else
+                if (stroke.Spin != null && stroke.Spin.SL == "1" && stroke.Spin.SR == "1")    // special cases (e.g. Legend)
                 {
                     shape.Stroke = Brushes.Black;
                     shape.Fill = Brushes.Black;
                 }
+                else
+                {
+                    shape.Stroke = Brushes.SaddleBrown;
+                    shape.Fill = Brushes.SaddleBrown;
+                }
+
             }
             else
             {
@@ -958,9 +1090,21 @@ namespace TT.Viewer.Views
             return placement.WX != double.NaN && placement.WX > 0 && placement.WY != double.NaN && placement.WY > 0;
         }
 
+        protected bool IsStrokeBottomToTop(Stroke stroke)
+        {
+            Stroke firstStrokeOfRally = stroke.Rally.Strokes[0];
+            if (firstStrokeOfRally.Placement.WY.Equals(double.NaN))
+            {
+                Debug.WriteLine("first stroke of rally {0} has NaN Y-placement. assuming bottom-to-top direction.", stroke.Rally.Number);
+                return true;
+            }
+            return stroke.Number % 2 == (firstStrokeOfRally.Placement.WY < 137 ? 1 : 0);
+        }
+
         #endregion
 
         protected enum PointType { Start, Middle, End }
         protected enum ShapeType { Direction, Arrowtip, Intercept, SpinArrow, Debug_preceding}
+        protected enum ControlType { StrokeNumber }
     }
 }
