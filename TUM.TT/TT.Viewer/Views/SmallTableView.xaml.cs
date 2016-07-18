@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,8 +35,93 @@ namespace TT.Viewer.Views
             set { SetValue(ActiveRallyProperty, value); }
         }
 
+        public bool ShowNumbers
+        {
+            get { return (bool)GetValue(ShowNumbersProperty); }
+            set { SetValue(ShowNumbersProperty, value); }
+        }
+
+        public bool ShowStroke1
+        {
+            get { return (bool)GetValue(ShowStroke1Property); }
+            set { SetValue(ShowStroke1Property, value); }
+        }
+
+        public bool ShowStroke2
+        {
+            get { return (bool)GetValue(ShowStroke2Property); }
+            set { SetValue(ShowStroke2Property, value); }
+        }
+
+        public bool ShowStroke3
+        {
+            get { return (bool)GetValue(ShowStroke3Property); }
+            set { SetValue(ShowStroke3Property, value); }
+        }
+
+        public bool ShowStroke4
+        {
+            get { return (bool)GetValue(ShowStroke4Property); }
+            set { SetValue(ShowStroke4Property, value); }
+        }
+
         public static DependencyProperty ActiveRallyProperty = DependencyProperty.Register(
             "ActiveRally", typeof(Rally), typeof(SmallTableView), new PropertyMetadata(default(Rally), new PropertyChangedCallback(OnActiveRallyPropertyChanged)));
+        
+        public static DependencyProperty ShowNumbersProperty = DependencyProperty.Register(
+            "ShowNumbers", typeof(bool), typeof(SmallTableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        public static DependencyProperty ShowStroke1Property = DependencyProperty.Register(
+            "ShowStroke1", typeof(bool), typeof(SmallTableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        public static DependencyProperty ShowStroke2Property = DependencyProperty.Register(
+            "ShowStroke2", typeof(bool), typeof(SmallTableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        public static DependencyProperty ShowStroke3Property = DependencyProperty.Register(
+            "ShowStroke3", typeof(bool), typeof(SmallTableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        public static DependencyProperty ShowStroke4Property = DependencyProperty.Register(
+            "ShowStroke4", typeof(bool), typeof(SmallTableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+
+        private static void OnDisplayTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            SmallTableView view = (SmallTableView)sender;
+            if (e.Property == ShowNumbersProperty)
+            {
+                if ((bool)e.NewValue)
+                    foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokeNumbers(s);
+                else
+                    view.HideElementsByTag(ElementType.StrokeNumber);
+            }
+            else if (e.Property == ShowStroke1Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 1) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(1);
+            }
+            else if (e.Property == ShowStroke2Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 2) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(2);
+            }
+            else if (e.Property == ShowStroke3Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 3) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(3);
+            }
+            else if (e.Property == ShowStroke4Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 4) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(4);
+            }
+        }
 
         public SmallTableView()
         {            
@@ -117,16 +203,83 @@ namespace TT.Viewer.Views
 
                 Dispatcher.Invoke(() =>
                 {                    
-                    foreach (Stroke stroke in StrokeShapes.Keys)
+                    foreach (Stroke stroke in thisRally.Strokes)
                     {
-                        AddServiceStrokesSpinShapes(stroke);
-                        AddStrokesDirectionShapes(stroke);
-                        AddInterceptArrows(stroke);
-                        AddStrokesArrowtips(stroke);
-                        AddStrokeNumbers(stroke);
+                        if (stroke.Number == 1 && ShowStroke1 || stroke.Number == 2 && ShowStroke2 ||
+                            stroke.Number == 3 && ShowStroke3 || stroke.Number == 4 && ShowStroke4)
+                        AddStroke(stroke);
                     }
                 });
             })).Start();
+        }
+
+        private void AddStroke(Stroke stroke)
+        {
+            AddServiceStrokesSpinShapes(stroke);
+            AddStrokesDirectionShapes(stroke);
+            AddInterceptArrows(stroke);
+            AddStrokesArrowtips(stroke);
+            AddStrokeNumbers(stroke);
+        }
+
+        private void AddStrokeNumbers(Stroke stroke)
+        {
+            FrameworkElement strokeNumber = StrokeElements[stroke].Find(s => (ElementType)s.Tag == ElementType.StrokeNumber);
+            if (strokeNumber != null)
+                strokeNumber.Visibility = Visibility.Visible;
+
+            else
+            {
+                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
+                if (PlacementValuesValid(stroke.Placement) || isNetOrOut)
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.Text = stroke.Number.ToString();
+
+                    textBlock.Width = 10;
+                    textBlock.Height = 15;
+                    textBlock.HorizontalAlignment = HorizontalAlignment.Left;
+                    textBlock.VerticalAlignment = VerticalAlignment.Top;
+
+                    double X1, Y1;
+
+                    Grid gridOfStroke = GetGridForStroke(stroke);
+
+                    Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip);
+                    if (shape == null) return;
+                    GetPointForShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
+
+                    if (X1.Equals(double.NaN) || Y1.Equals(double.NaN))
+                        return;
+
+                    // arbitrary positioning relative to stroke arrow
+                    X1 = X1 + 7;
+                    Y1 = Y1 - 2;
+
+                    Thickness margin = new Thickness(
+                        Math.Min(X1, gridOfStroke.ActualWidth - textBlock.Width),
+                        Math.Min(Y1, gridOfStroke.ActualHeight - textBlock.Height),
+                        0,
+                        0);
+                    textBlock.Margin = margin;
+
+                    textBlock.FontWeight = FontWeights.Bold;
+                    textBlock.Foreground = isNetOrOut ? Brushes.DarkRed : Brushes.DarkOliveGreen;
+
+                    textBlock.Tag = ElementType.StrokeNumber;
+
+                    StrokeElements[stroke].Add(textBlock);
+
+                    gridOfStroke.Children.Add(textBlock);
+
+                    if (!ShowNumbers)
+                        textBlock.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    Debug.WriteLine("StrokeNumber: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
+                }
+            }
         }
 
         #region Helper methods
@@ -178,6 +331,38 @@ namespace TT.Viewer.Views
             shape.DataContext = stroke;
             Message.SetAttach(shape, "StrokeSelected($DataContext)");
             // ---
+        }
+
+        private void HideElementsByTag(ElementType tag)
+        {
+            foreach (List<FrameworkElement> elements in StrokeElements.Values)
+            {
+                foreach (FrameworkElement element in elements)
+                {
+                    if ((ElementType)element.Tag == tag)
+                    {
+                        element.Visibility = Visibility.Hidden;
+                    }
+                }
+            }
+        }
+
+        private void HideStrokeByNumber(int number)
+        {
+            foreach (Stroke stroke in StrokeShapes.Keys)
+            {
+                if (stroke.Number == number)
+                {
+                    foreach (Shape shape in StrokeShapes[stroke])
+                    {
+                        shape.Visibility = Visibility.Hidden;
+                    }
+                    foreach (FrameworkElement element in StrokeElements[stroke])
+                    {
+                        element.Visibility = Visibility.Hidden;
+                    }
+                }
+            }
         }
 
         #endregion

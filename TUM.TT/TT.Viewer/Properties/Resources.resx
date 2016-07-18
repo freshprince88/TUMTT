@@ -180,4 +180,16 @@
   <data name="table_numbers_title" xml:space="preserve">
     <value>Numbers</value>
   </data>
+  <data name="table_stroke_1_title" xml:space="preserve">
+    <value>Stroke 1</value>
+  </data>
+  <data name="table_stroke_2_title" xml:space="preserve">
+    <value>Stroke 2</value>
+  </data>
+  <data name="table_stroke_3_title" xml:space="preserve">
+    <value>Stroke 3</value>
+  </data>
+  <data name="table_stroke_4_title" xml:space="preserve">
+    <value>Stroke 4</value>
+  </data>
 </root>

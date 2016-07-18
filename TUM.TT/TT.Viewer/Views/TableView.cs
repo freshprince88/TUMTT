@@ -55,11 +55,11 @@ namespace TT.Viewer.Views
             set { SetValue(StrokesProperty, value); }
         }
 
-        public bool ShowDebug
-        {
-            get { return (bool)GetValue(ShowDebugProperty); }
-            set { SetValue(ShowDebugProperty, value); }
-        }
+        //public bool ShowDebug
+        //{
+        //    get { return (bool)GetValue(ShowDebugProperty); }
+        //    set { SetValue(ShowDebugProperty, value); }
+        //}
 
         public bool ShowDirection
         {
@@ -79,17 +79,11 @@ namespace TT.Viewer.Views
             set { SetValue(ShowInterceptProperty, value); }
         }
 
-        public bool ShowNumbers
-        {
-            get { return (bool)GetValue(ShowNumbersProperty); }
-            set { SetValue(ShowNumbersProperty, value); }
-        }
-
         public static DependencyProperty StrokesProperty = DependencyProperty.Register(
             "Strokes", typeof(ICollection<Stroke>), typeof(TableView), new PropertyMetadata(default(ICollection<Stroke>), new PropertyChangedCallback(OnStrokesPropertyChanged)));
 
-        public static DependencyProperty ShowDebugProperty = DependencyProperty.Register(
-            "ShowDebug", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
+        //public static DependencyProperty ShowDebugProperty = DependencyProperty.Register(
+        //    "ShowDebug", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
 
         public static DependencyProperty ShowDirectionProperty = DependencyProperty.Register(
             "ShowDirection", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
@@ -99,9 +93,6 @@ namespace TT.Viewer.Views
 
         public static DependencyProperty ShowInterceptProperty = DependencyProperty.Register(
             "ShowIntercept", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
-
-        public static DependencyProperty ShowNumbersProperty = DependencyProperty.Register(
-            "ShowNumbers", typeof(bool), typeof(TableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
 
         #endregion
 
@@ -136,25 +127,18 @@ namespace TT.Viewer.Views
                     else
                         view.HideShapesByTag(ShapeType.SpinShape);
                 }
-                else if (e.Property == ShowDebugProperty)
-                {
-                    // you'll have to reload the view to display debug lines again :(
-                    if (!(bool)e.NewValue)
-                        view.HideShapesByTag(ShapeType.Debug_preceding);
-                }
+                //else if (e.Property == ShowDebugProperty)
+                //{
+                //    // you'll have to reload the view to display debug lines again :(
+                //    if (!(bool)e.NewValue)
+                //        view.HideShapesByTag(ShapeType.Debug_preceding);
+                //}
                 else if (e.Property == ShowInterceptProperty)
                 {
                     if ((bool)e.NewValue)
                         foreach (Stroke s in view.StrokeShapes.Keys) view.AddInterceptArrows(s);
                     else
                         view.HideShapesByTag(ShapeType.Intercept);
-                }
-                else if (e.Property == ShowNumbersProperty)
-                {
-                    if ((bool)e.NewValue)
-                        foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokeNumbers(s);
-                    else
-                        view.HideElementsByTag(ElementType.StrokeNumber);
                 }
             }
         }
@@ -240,8 +224,8 @@ namespace TT.Viewer.Views
                         precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
 
 
-                        if (ShowDebug)
-                            AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
+                        //if (ShowDebug)
+                        //    AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
 
                         // depending on whether we draw the stroke from top to bottom or vice versa, the stroke will start at Y '0' (top)
                         // or the height of the grid the stroke is going to be added to (bottom).
@@ -260,8 +244,8 @@ namespace TT.Viewer.Views
                         else
                             X1 = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;    // equal preceding stroke's Y coordinate -> horizontal
 
-                        if (ShowDebug)
-                            AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
+                        //if (ShowDebug)
+                        //    AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                     }
 
                     if (isNetOrOut)
@@ -664,70 +648,6 @@ namespace TT.Viewer.Views
             }
         }
 
-        protected void AddStrokeNumbers(Stroke stroke)
-        {
-            FrameworkElement strokeNumber = StrokeElements[stroke].Find(s => (ElementType)s.Tag == ElementType.StrokeNumber);
-            if (strokeNumber != null)
-                strokeNumber.Visibility = Visibility.Visible;
-
-            else
-            {
-                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
-                if (PlacementValuesValid(stroke.Placement) || isNetOrOut)
-                {
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Text = stroke.Number.ToString();
-
-                    textBlock.Width = 10;
-                    textBlock.Height = 15;
-                    textBlock.HorizontalAlignment = HorizontalAlignment.Left;
-                    textBlock.VerticalAlignment = VerticalAlignment.Top;
-
-                    double X1, Y1;
-
-                    Grid gridOfStroke = GetGridForStroke(stroke);
-
-                    if (stroke.Number == 1)
-                    {
-                        X1 = GetAdjustedX(stroke, stroke.Playerposition);
-                        Y1 = View_InnerFieldBehindGrid.ActualHeight - textBlock.Height;
-                    }
-                    else
-                    {
-                        Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
-                        if (shape == null) return;
-                        GetPointForShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
-                    }
-
-                    X1 = (X1.Equals(double.NaN) ? 0 : X1) + 5;
-                    Y1 = (Y1.Equals(double.NaN) ? 0 : Y1);
-
-                    Thickness margin = new Thickness(
-                        Math.Min(X1, gridOfStroke.ActualWidth - textBlock.Width),
-                        Math.Min(Y1, gridOfStroke.ActualHeight - textBlock.Height), 
-                        0, 
-                        0);
-                    textBlock.Margin = margin;
-
-                    textBlock.FontWeight = FontWeights.Bold;
-                    textBlock.Foreground = isNetOrOut ? Brushes.DarkRed : Brushes.DarkOliveGreen;
-
-                    textBlock.Tag = ElementType.StrokeNumber;
-
-                    StrokeElements[stroke].Add(textBlock);
-
-                    gridOfStroke.Children.Add(textBlock);
-
-                    if (!ShowNumbers)
-                        textBlock.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    Debug.WriteLine("StrokeNumber: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
-                }
-            }
-        }
-
         private void HideShapesByTag(ShapeType tag)
         {
             foreach (List<Shape> shapes in StrokeShapes.Values)
@@ -737,20 +657,6 @@ namespace TT.Viewer.Views
                     if ((ShapeType)shape.Tag == tag)
                     {
                         shape.Visibility = Visibility.Hidden;
-                    }
-                }
-            }
-        }
-
-        private void HideElementsByTag(ElementType tag)
-        {
-            foreach (List<FrameworkElement> elements in StrokeElements.Values)
-            {
-                foreach (FrameworkElement element in elements)
-                {
-                    if ((ElementType)element.Tag == tag)
-                    {
-                        element.Visibility = Visibility.Hidden;
                     }
                 }
             }
@@ -1082,7 +988,7 @@ namespace TT.Viewer.Views
                 return 0;
         }
 
-        private void GetPointForShapeRelativeToGrid(Shape shape, PointType which, Grid grid, out double x, out double y)
+        protected void GetPointForShapeRelativeToGrid(Shape shape, PointType which, Grid grid, out double x, out double y)
         {
             if (shape is Path)
             {

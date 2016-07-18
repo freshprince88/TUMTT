@@ -248,5 +248,41 @@ namespace TT.Viewer.Properties {
                 return ResourceManager.GetString("table_spin_title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stroke 1.
+        /// </summary>
+        public static string table_stroke_1_title {
+            get {
+                return ResourceManager.GetString("table_stroke_1_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stroke 2.
+        /// </summary>
+        public static string table_stroke_2_title {
+            get {
+                return ResourceManager.GetString("table_stroke_2_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stroke 3.
+        /// </summary>
+        public static string table_stroke_3_title {
+            get {
+                return ResourceManager.GetString("table_stroke_3_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stroke 4.
+        /// </summary>
+        public static string table_stroke_4_title {
+            get {
+                return ResourceManager.GetString("table_stroke_4_title", resourceCulture);
+            }
+        }
     }
 }

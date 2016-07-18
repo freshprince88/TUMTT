@@ -175,9 +175,21 @@
     <value>Kleine Tische</value>
   </data>
   <data name="table_spin_title" xml:space="preserve">
-    <value>Drehung</value>
+    <value>Spin</value>
   </data>
   <data name="table_numbers_title" xml:space="preserve">
     <value>Zahlen</value>
+  </data>
+  <data name="table_stroke_1_title" xml:space="preserve">
+    <value>Schlag 1</value>
+  </data>
+  <data name="table_stroke_2_title" xml:space="preserve">
+    <value>Schlag 2</value>
+  </data>
+  <data name="table_stroke_3_title" xml:space="preserve">
+    <value>Schlag 3</value>
+  </data>
+  <data name="table_stroke_4_title" xml:space="preserve">
+    <value>Schlag 4</value>
   </data>
 </root>
