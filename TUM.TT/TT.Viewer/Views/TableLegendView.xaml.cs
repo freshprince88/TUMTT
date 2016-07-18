@@ -123,6 +123,22 @@ namespace TT.Viewer.Views
 
         protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke) { /* not needed for legend */ }
         protected override double GetSecondStrokePrecedingStartY() { /* not needed for legend */ throw new NotImplementedException(); }
+
+        protected override bool ShowDirectionForStroke(Stroke stroke)
+        {
+            return true;
+        }
+
+        protected override bool ShowSpinForStroke(Stroke stroke)
+        {
+            return true;
+        }
+
+        protected override bool ShowInterceptForStroke(Stroke stroke)
+        {
+            return true;
+        }
+
         public override Grid View_InnerFieldHalfDistanceGrid { get { /* not needed for legend */ throw new NotImplementedException(); }}
 
     }

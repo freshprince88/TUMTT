@@ -151,6 +151,9 @@ namespace TT.Viewer.Views
 
         protected void AddStrokesDirectionShapes(Stroke stroke)
         {
+            if (!ShowDirectionForStroke(stroke))
+                return;
+
             // first check if we already created a direction shape for this stroke. if so, display it and we're done
             Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
             if (shape != null)
@@ -318,6 +321,9 @@ namespace TT.Viewer.Views
 
         protected void AddInterceptArrows(Stroke stroke)
         {
+            if (!ShowInterceptForStroke(stroke))
+                return;
+
             List<Shape> interceptShapes = StrokeShapes[stroke].FindAll(s => (ShapeType)s.Tag == ShapeType.Intercept);
             if (interceptShapes != null && interceptShapes.Count != 0)
                 foreach (Shape interceptShape in interceptShapes)
@@ -566,7 +572,7 @@ namespace TT.Viewer.Views
 
         protected void AddServiceStrokesSpinShapes(Stroke stroke)
         {
-            if (stroke.Number != 1)
+            if (stroke.Number != 1 ||  !ShowSpinForStroke(stroke))
                 return;
 
             Shape spinArrow = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.SpinShape);
@@ -940,10 +946,11 @@ namespace TT.Viewer.Views
         #region Helper methods
 
         protected abstract void AttachEventHandlerToShape(Shape shape, Stroke stroke);
-
         protected abstract double GetAdjustedX(Stroke stroke, double oldX);
-
-        protected abstract double GetAdjustedY(Stroke stroke, double oldY);
+        protected abstract double GetAdjustedY(Stroke stroke, double oldY);        
+        protected abstract bool ShowDirectionForStroke(Stroke stroke);
+        protected abstract bool ShowSpinForStroke(Stroke stroke);
+        protected abstract bool ShowInterceptForStroke(Stroke stroke);
 
         /// <summary>
         /// Not 100% sure why, but we need this method - small and large table need exact opposite values,

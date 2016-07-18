@@ -12,12 +12,5 @@ namespace TT.Viewer.Views
         {
             InitializeComponent();
         }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {            
-            Window legendWindow = new Window();
-            legendWindow.Content = new TableLegendView();
-            legendWindow.Show();
-        }
     }
 }

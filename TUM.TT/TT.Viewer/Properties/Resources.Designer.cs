@@ -232,6 +232,42 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rally:.
+        /// </summary>
+        public static string table_rally_title {
+            get {
+                return ResourceManager.GetString("table_rally_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rally score:.
+        /// </summary>
+        public static string table_score_rally_title {
+            get {
+                return ResourceManager.GetString("table_score_rally_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set score:.
+        /// </summary>
+        public static string table_score_set_title {
+            get {
+                return ResourceManager.GetString("table_score_set_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strokes:.
+        /// </summary>
+        public static string table_show_strokes_title {
+            get {
+                return ResourceManager.GetString("table_show_strokes_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Small Tables.
         /// </summary>
         public static string table_small_tab_title {

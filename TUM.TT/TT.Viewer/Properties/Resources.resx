@@ -180,6 +180,18 @@
   <data name="table_numbers_title" xml:space="preserve">
     <value>Numbers</value>
   </data>
+  <data name="table_rally_title" xml:space="preserve">
+    <value>Rally:</value>
+  </data>
+  <data name="table_score_rally_title" xml:space="preserve">
+    <value>Rally score:</value>
+  </data>
+  <data name="table_score_set_title" xml:space="preserve">
+    <value>Set score:</value>
+  </data>
+  <data name="table_show_strokes_title" xml:space="preserve">
+    <value>Strokes:</value>
+  </data>
   <data name="table_stroke_1_title" xml:space="preserve">
     <value>Stroke 1</value>
   </data>

@@ -29,6 +29,8 @@ namespace TT.Viewer.Views
         public override Grid View_InnerFieldHalfDistanceGrid { get { return InnerFieldHalfDistanceGrid; } }
         public override Grid View_InnerFieldSpinGrid { get { return InnerFieldSpinGrid; } }
 
+        #region Dependency properties
+
         public Rally ActiveRally
         {
             get { return (Rally)GetValue(ActiveRallyProperty); }
@@ -67,7 +69,7 @@ namespace TT.Viewer.Views
 
         public static DependencyProperty ActiveRallyProperty = DependencyProperty.Register(
             "ActiveRally", typeof(Rally), typeof(SmallTableView), new PropertyMetadata(default(Rally), new PropertyChangedCallback(OnActiveRallyPropertyChanged)));
-        
+
         public static DependencyProperty ShowNumbersProperty = DependencyProperty.Register(
             "ShowNumbers", typeof(bool), typeof(SmallTableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
 
@@ -83,45 +85,7 @@ namespace TT.Viewer.Views
         public static DependencyProperty ShowStroke4Property = DependencyProperty.Register(
             "ShowStroke4", typeof(bool), typeof(SmallTableView), new PropertyMetadata(true, new PropertyChangedCallback(OnDisplayTypePropertyChanged)));
 
-        private static void OnDisplayTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            SmallTableView view = (SmallTableView)sender;
-            if (e.Property == ShowNumbersProperty)
-            {
-                if ((bool)e.NewValue)
-                    foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokeNumbers(s);
-                else
-                    view.HideElementsByTag(ElementType.StrokeNumber);
-            }
-            else if (e.Property == ShowStroke1Property)
-            {
-                if ((bool)e.NewValue)
-                    view.thisRally.Strokes.Apply(s => { if (s.Number == 1) view.AddStroke(s); });
-                else
-                    view.HideStrokeByNumber(1);
-            }
-            else if (e.Property == ShowStroke2Property)
-            {
-                if ((bool)e.NewValue)
-                    view.thisRally.Strokes.Apply(s => { if (s.Number == 2) view.AddStroke(s); });
-                else
-                    view.HideStrokeByNumber(2);
-            }
-            else if (e.Property == ShowStroke3Property)
-            {
-                if ((bool)e.NewValue)
-                    view.thisRally.Strokes.Apply(s => { if (s.Number == 3) view.AddStroke(s); });
-                else
-                    view.HideStrokeByNumber(3);
-            }
-            else if (e.Property == ShowStroke4Property)
-            {
-                if ((bool)e.NewValue)
-                    view.thisRally.Strokes.Apply(s => { if (s.Number == 4) view.AddStroke(s); });
-                else
-                    view.HideStrokeByNumber(4);
-            }
-        }
+        #endregion
 
         public SmallTableView()
         {            
@@ -143,31 +107,70 @@ namespace TT.Viewer.Views
         {
             //Debug.WriteLine("SmallTableView: new active rally! was: {0}, is: {1}", e.OldValue == null ? "[none]" : ((Rally)e.OldValue).Number.ToString(), ((Rally)e.NewValue).Number);
 
-            SmallTableView view = (SmallTableView)sender;
-            if (view.thisRally.Number == view.ActiveRally.Number)
+            SmallTableView smallTableView = (SmallTableView)sender;
+
+            if (smallTableView.thisRally.Number == smallTableView.ActiveRally.Number)
             {
-                view.SmallTableViewBorder.BorderThickness = new Thickness(2);
-                view.TableGrid.Background = (Brush)brushConverter.ConvertFrom("#e2e7e0");
+                ((Grid)smallTableView.Parent).Background = (Brush)brushConverter.ConvertFrom("#e2e7e0");
             }
             else
             {
-                view.SmallTableViewBorder.BorderThickness = new Thickness(1);
-                view.TableGrid.Background = Brushes.Transparent;
+                ((Grid)smallTableView.Parent).Background = Brushes.Transparent;
             }
         }
 
-        private void Table_MouseEnter(object sender, MouseEventArgs e)
+        private static void OnDisplayTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            SmallTableViewBorder.BorderThickness = new Thickness(2);
-            TableGrid.Background = (Brush) brushConverter.ConvertFrom("#e2e7e0");
+            SmallTableView view = (SmallTableView)sender;
+            if (e.Property == ShowNumbersProperty)
+            {
+                if ((bool)e.NewValue)
+                    foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokeNumbers(s);
+                else
+                    view.HideElementsByTag(ElementType.StrokeNumber);
+            }
+            else if (e.Property == ShowStroke1Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 1 && view.ShowStroke1) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(1);
+            }
+            else if (e.Property == ShowStroke2Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 2 && view.ShowStroke2) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(2);
+            }
+            else if (e.Property == ShowStroke3Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 3 && view.ShowStroke3) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(3);
+            }
+            else if (e.Property == ShowStroke4Property)
+            {
+                if ((bool)e.NewValue)
+                    view.thisRally.Strokes.Apply(s => { if (s.Number == 4 && view.ShowStroke4) view.AddStroke(s); });
+                else
+                    view.HideStrokeByNumber(4);
+            }
         }
 
-        private void Table_MouseLeave(object sender, MouseEventArgs e)
+        private void SmallTable_MouseEnter(object sender, MouseEventArgs e)
         {
+            Grid parentGrid = (Grid)((SmallTableView)((Grid)sender).Parent).Parent;
+            parentGrid.Background = (Brush)brushConverter.ConvertFrom("#e2e7e0");
+        }
+
+        private void SmallTable_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Grid parentGrid = (Grid)((SmallTableView)((Grid)sender).Parent).Parent;
             if (ActiveRally == null || ActiveRally.Number != thisRally.Number)
             {
-                SmallTableViewBorder.BorderThickness = new Thickness(1);
-                TableGrid.Background = Brushes.Transparent;
+                parentGrid.Background = Brushes.Transparent;
             }
         }
 
@@ -202,13 +205,8 @@ namespace TT.Viewer.Views
                 sizeChangedWaitEvent.WaitOne();
 
                 Dispatcher.Invoke(() =>
-                {                    
-                    foreach (Stroke stroke in thisRally.Strokes)
-                    {
-                        if (stroke.Number == 1 && ShowStroke1 || stroke.Number == 2 && ShowStroke2 ||
-                            stroke.Number == 3 && ShowStroke3 || stroke.Number == 4 && ShowStroke4)
-                        AddStroke(stroke);
-                    }
+                {
+                    StrokeShapes.Keys.Apply(s => AddStroke(s));                    
                 });
             })).Start();
         }
@@ -224,6 +222,9 @@ namespace TT.Viewer.Views
 
         private void AddStrokeNumbers(Stroke stroke)
         {
+            if (!ShowNumbersForStroke(stroke))
+                return;
+
             FrameworkElement strokeNumber = StrokeElements[stroke].Find(s => (ElementType)s.Tag == ElementType.StrokeNumber);
             if (strokeNumber != null)
                 strokeNumber.Visibility = Visibility.Visible;
@@ -316,6 +317,46 @@ namespace TT.Viewer.Views
             }
         }
 
+        protected override bool ShowDirectionForStroke(Stroke stroke)
+        {
+            return ShowDirection && (
+                stroke.Number == 1 && ShowStroke1 ||
+                stroke.Number == 2 && ShowStroke2 ||
+                stroke.Number == 3 && ShowStroke3 ||
+                stroke.Number == 4 && ShowStroke4
+                );
+        }
+
+        protected override bool ShowInterceptForStroke(Stroke stroke)
+        {
+            return ShowIntercept && (
+                stroke.Number == 1 && ShowStroke1 ||
+                stroke.Number == 2 && ShowStroke2 ||
+                stroke.Number == 3 && ShowStroke3 ||
+                stroke.Number == 4 && ShowStroke4
+                );
+        }
+
+        protected override bool ShowSpinForStroke(Stroke stroke)
+        {
+            return ShowSpin && (
+                stroke.Number == 1 && ShowStroke1 ||
+                stroke.Number == 2 && ShowStroke2 ||
+                stroke.Number == 3 && ShowStroke3 ||
+                stroke.Number == 4 && ShowStroke4
+                );
+        }
+
+        private bool ShowNumbersForStroke(Stroke stroke)
+        {
+            return ShowNumbers && (
+                stroke.Number == 1 && ShowStroke1 ||
+                stroke.Number == 2 && ShowStroke2 ||
+                stroke.Number == 3 && ShowStroke3 ||
+                stroke.Number == 4 && ShowStroke4
+                );
+        }
+
         protected override double GetSecondStrokePrecedingStartY()
         {
             return InnerFieldBehindGrid.ActualHeight;
@@ -323,14 +364,7 @@ namespace TT.Viewer.Views
 
         protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke)
         {
-            // no event handlers on strokes in small table view
-            
-            // DEBUG
-            shape.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
-            shape.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
-            shape.DataContext = stroke;
-            Message.SetAttach(shape, "StrokeSelected($DataContext)");
-            // ---
+            // no event handlers on strokes in small table view            
         }
 
         private void HideElementsByTag(ElementType tag)
@@ -363,69 +397,6 @@ namespace TT.Viewer.Views
                     }
                 }
             }
-        }
-
-        #endregion
-
-        #region DEBUG
-        private void Stroke_MouseEnter(Object sender, MouseEventArgs e)
-        {
-            Shape shape = sender as Shape;
-            Stroke stroke = shape.DataContext as Stroke;
-
-            //Debug.WriteLine("mouse enter on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
-
-            foreach (var strokeShape in StrokeShapes)
-            {
-                foreach (var s in strokeShape.Value)
-                {
-                    if (strokeShape.Key.Equals(stroke))
-                    {
-                        s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, true);
-                    }
-                    else
-                    {
-                        s.Opacity = 0.1;
-                    }
-                }
-            }
-        }
-
-        private void Stroke_MouseLeave(Object sender, MouseEventArgs e)
-        {
-            Shape shape = sender as Shape;
-            Stroke stroke = shape.DataContext as Stroke;
-
-            //Debug.WriteLine("mouse leave on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
-
-            foreach (var strokeShape in StrokeShapes)
-            {
-                foreach (var s in strokeShape.Value)
-                {
-                    if (strokeShape.Key.Equals(stroke))
-                    {
-                        s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, false);
-                    }
-                    else
-                    {
-                        s.Opacity = 1;
-                    }
-                }
-            }
-        }
-
-        private double GetStrokeThicknessForStroke(ShapeType tag, Stroketechnique technique, bool hover)
-        {
-            if (tag == ShapeType.SpinShape)
-                return hover ? StrokeThicknessSpinArrowHover : StrokeThicknessSpinArrow;
-            else if (tag == ShapeType.Intercept)
-                return hover ? StrokeThicknessInterceptHover : StrokeThicknessIntercept;
-            else if (tag == ShapeType.Debug_preceding)
-                return hover ? StrokeThicknessPrecedingHover_Debug : StrokeThicknessPreceding_Debug;
-            else if (technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
-                return hover ? StrokeThicknessSmashHover : StrokeThicknessSmash;
-            else
-                return hover ? StrokeThicknessHover : StrokeThickness;
         }
 
         #endregion

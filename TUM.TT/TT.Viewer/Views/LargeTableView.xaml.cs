@@ -83,6 +83,21 @@ namespace TT.Viewer.Views
         #endregion
 
         #region Helper methods
+        
+        protected override bool ShowDirectionForStroke(Stroke stroke)
+        {
+            return ShowDirection;
+        }
+
+        protected override bool ShowSpinForStroke(Stroke stroke)
+        {
+            return ShowSpin;
+        }
+
+        protected override bool ShowInterceptForStroke(Stroke stroke)
+        {
+            return ShowIntercept;
+        }
 
         private double GetStrokeThicknessForStroke(ShapeType tag, Stroketechnique technique, bool hover)
         {
