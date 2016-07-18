@@ -341,6 +341,8 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange("LiveView.FirstServerSet");
                 MatchManager.MatchModified = true;
                 CurrentRally.UpdateServerAndScore();
+                IsNewRally = true;
+                IsWinnerEnabled = false;
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("FirstServerSet");
             }
@@ -356,7 +358,10 @@ namespace TT.Scouter.ViewModels
                 Rallies.Add(new Rally());
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
+                IsNewRally = true;
+                IsWinnerEnabled = false;
                 MatchManager.MatchModified = true;
+               
                 NotifyOfPropertyChange("FirstServerSet");
             }
             
