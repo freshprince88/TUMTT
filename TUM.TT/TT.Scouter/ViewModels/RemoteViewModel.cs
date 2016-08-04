@@ -170,7 +170,7 @@ namespace TT.Scouter.ViewModels
             {
                 if (_rally != value)
                 {
-
+                    MatchManager.ActiveRally = value;
 
                     if (SchlagView == null || PositionsRallyView == null)
                     {

@@ -257,8 +257,8 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _showTopTable = value;
-                if (_showTopTable) heightTopRow = 150; else heightTopRow = 0;
-                if (_showTopTable) widthTopColumn = 50; else heightTopRow = 0;
+                if (_showTopTable) heightBotRow = 150; else heightBotRow = 0;
+                if (_showTopTable) widthBotColumn = 50; else widthBotColumn = 0;
                 NotifyOfPropertyChange("showTopTable");
             }
         }
@@ -270,8 +270,8 @@ namespace TT.Scouter.ViewModels
             set
             {
                 _showBotTable = value;
-                if (_showBotTable) heightBotRow = 150; else heightBotRow = 0;
-                if (_showBotTable) widthBotColumn = 50; else widthBotColumn = 0;
+                if (_showBotTable) heightTopRow = 150; else heightTopRow = 0;
+                if (_showBotTable) widthTopColumn = 50; else heightTopRow = 0;
                 NotifyOfPropertyChange("showBotTable");
             }
         }
@@ -341,9 +341,9 @@ namespace TT.Scouter.ViewModels
                 _behind = true;
 
             if (s.Player == Models.MatchPlayer.First)
-                showTopTable = (m.CurrentTableEndFirstPlayer == Models.CurrentTableEnd.Top);
+                showTopTable = !(m.CurrentTableEndFirstPlayer == Models.CurrentTableEnd.Top);
             else
-                showTopTable = (m.CurrentTableEndSecondPlayer == Models.CurrentTableEnd.Top);
+                showTopTable = !(m.CurrentTableEndSecondPlayer == Models.CurrentTableEnd.Top);
             showBotTable = !showTopTable;
 
             if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))
