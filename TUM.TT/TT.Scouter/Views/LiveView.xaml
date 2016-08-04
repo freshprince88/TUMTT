@@ -115,7 +115,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Comment" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap" Grid.Row="1" Text="{Binding Path=CurrentRally.Kommentar}"/>
+            <TextBox AcceptsReturn="True" TextWrapping="Wrap" Grid.Row="1" Text="{Binding Path=CurrentRally.Comment}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
                 <CheckBox IsChecked="{Binding Path=Markiert}" VerticalAlignment="Center" />
