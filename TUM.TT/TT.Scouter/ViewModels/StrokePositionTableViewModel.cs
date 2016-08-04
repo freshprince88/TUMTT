@@ -308,7 +308,7 @@ namespace TT.Scouter.ViewModels
             {
                 _showBotTable = value;
                 if (_showBotTable) heightTopRow = 150; else heightTopRow = 0;
-                if (_showBotTable) widthTopColumn = 50; else heightTopRow = 0;
+                if (_showBotTable) widthTopColumn = 50; else widthTopColumn = 0;
                 NotifyOfPropertyChange("showBotTable");
             }
         }
