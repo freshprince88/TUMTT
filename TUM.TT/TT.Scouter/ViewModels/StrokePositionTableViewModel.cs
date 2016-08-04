@@ -47,27 +47,6 @@ namespace TT.Scouter.ViewModels
         #endregion
 
         #region Placement Properties
-        private bool _showTopTable;
-        public bool showTopTable
-        {
-            get { return _showTopTable; }
-            set
-            {
-                _showTopTable = value;
-                NotifyOfPropertyChange("showTopTable");
-            }
-        }
-
-        private bool _showBotTable;
-        public bool showBotTable
-        {
-            get { return _showBotTable; }
-            set
-            {
-                _showBotTable = value;
-                NotifyOfPropertyChange("showBotTable");
-            }
-        }
 
         private bool _placeTopLeft_top;
         public bool placeTopLeft_top
@@ -269,6 +248,80 @@ namespace TT.Scouter.ViewModels
 
         #endregion
 
+        #region top_bot
+
+        private bool _showTopTable;
+        public bool showTopTable
+        {
+            get { return _showTopTable; }
+            set
+            {
+                _showTopTable = value;
+                if (_showTopTable) heightTopRow = 150; else heightTopRow = 0;
+                if (_showTopTable) widthTopColumn = 50; else heightTopRow = 0;
+                NotifyOfPropertyChange("showTopTable");
+            }
+        }
+
+        private bool _showBotTable;
+        public bool showBotTable
+        {
+            get { return _showBotTable; }
+            set
+            {
+                _showBotTable = value;
+                if (_showBotTable) heightBotRow = 150; else heightBotRow = 0;
+                if (_showBotTable) widthBotColumn = 50; else widthBotColumn = 0;
+                NotifyOfPropertyChange("showBotTable");
+            }
+        }
+
+        private double _heightTopRow;
+        public double heightTopRow
+        {
+            get { return _heightTopRow; }
+            set
+            {
+                _heightTopRow = value;
+                NotifyOfPropertyChange("heightTopRow");
+            }
+        }
+
+        private double _heightBotRow;
+        public double heightBotRow
+        {
+            get { return _heightBotRow; }
+            set
+            {
+                _heightBotRow = value;
+                NotifyOfPropertyChange("heightBotRow");
+            }
+        }
+
+        private double _widthTopColumn;
+        public double widthTopColumn
+        {
+            get { return _widthTopColumn; }
+            set
+            {
+                _widthTopColumn = value;
+                NotifyOfPropertyChange("widthTopColumn");
+            }
+        }
+
+        private double _widthBotColumn;
+        public double widthBotColumn
+        {
+            get { return _widthBotColumn; }
+            set
+            {
+                _widthBotColumn = value;
+                NotifyOfPropertyChange("widthBotColumn");
+            }
+        }
+
+        #endregion
+
 
         public StrokePositionTableViewModel(Models.Stroke s, IMatchManager m)
         {
@@ -288,9 +341,9 @@ namespace TT.Scouter.ViewModels
                 _behind = true;
 
             if (s.Player == Models.MatchPlayer.First)
-                showTopTable = (m.Match.FirstPlayer.StartingTableEnd == Models.StartingTableEnd.Top);
+                showTopTable = (m.CurrentTableEndFirstPlayer == Models.CurrentTableEnd.Top);
             else
-                showTopTable = (m.Match.SecondPlayer.StartingTableEnd == Models.StartingTableEnd.Top);
+                showTopTable = (m.CurrentTableEndSecondPlayer == Models.CurrentTableEnd.Top);
             showBotTable = !showTopTable;
 
             if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))

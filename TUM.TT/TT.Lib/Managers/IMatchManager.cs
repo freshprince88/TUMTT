@@ -12,6 +12,10 @@ namespace TT.Lib.Managers
 
         Rally ActiveRally { get; set; }
 
+        CurrentTableEnd CurrentTableEndFirstPlayer { get; }
+
+        CurrentTableEnd CurrentTableEndSecondPlayer { get; }
+
         IEnumerable<Rally> SelectedRallies { get; set; }
 
         string FileName { get; set; }

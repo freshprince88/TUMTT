@@ -25,18 +25,18 @@
     <Viewbox Stretch="Uniform">
         <Grid Name="OuterFieldGrid" Width="394" Height="750">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Name="TopPointOfContactCol" Width="{Binding widthBotColumn}"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Name="BotPointOfContactCol" Width="{Binding widthTopColumn}"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="5"/>
+                <RowDefinition Name="TopPointOfContactRow" Height="{Binding heightTopRow}"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition Name="ButtomPointOfContactRow" Height="{Binding heightBotRow}"/>
             </Grid.RowDefinitions>
 
-                <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
+                <Grid Name="PointOfContactBottom" Grid.Row="2" Grid.RowSpan="2" Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5*"/>
                         <RowDefinition Height="2*"/>
@@ -47,10 +47,26 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <RadioButton x:Name="Short" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding over}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('over')]"/>
-                    <RadioButton x:Name="Half" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
-                    <RadioButton x:Name="Long" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding behind}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
+                <RadioButton x:Name="ShortB" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding over}" Visibility="{Binding showTopTable}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('over')]"/>
+                <RadioButton x:Name="HalfB" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half}" Visibility="{Binding showTopTable}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
+                <RadioButton x:Name="LongB" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding behind}" Visibility="{Binding showTopTable}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
                 </Grid>
+
+            <Grid Name="PointOfContactTop" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="ShortT" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding over}" Visibility="{Binding showBotTable}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('over')]"/>
+                <RadioButton x:Name="HalfT" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half}" Visibility="{Binding showBotTable}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
+                <RadioButton x:Name="LongT" GroupName="length" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding behind}" Visibility="{Binding showBotTable}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
+            </Grid>
 
             <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White">
                 <Grid Name="InnerFieldGrid" Background="{DynamicResource AccentColorBrush}" IsHitTestVisible="True" cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]" >
