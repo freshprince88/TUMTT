@@ -4,10 +4,11 @@ using TT.Lib.Managers;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows;
+using System.ComponentModel;
 
 namespace TT.Scouter.ViewModels
 {
-    public class StrokePositionTableViewModel : Screen
+    public class StrokePositionTableViewModel : Screen, INotifyPropertyChanged
     {
         public Models.Stroke Stroke { get; set; }
 
@@ -47,6 +48,42 @@ namespace TT.Scouter.ViewModels
         #endregion
 
         #region Placement Properties
+
+        private double canvasWidth = 338;
+        private double canvasHeight = 594;
+
+        private Visibility _placementVisibilty;
+        public Visibility placementVisibilty
+        {
+            get { return _placementVisibilty; }
+            set
+            {
+                _placementVisibilty = value;
+                NotifyOfPropertyChange("placementVisibilty");
+            }
+        }
+
+        private double _widthHeight;
+        public double widthHeight
+        {
+            get { return _widthHeight; }
+            set
+            {
+                _widthHeight = value;
+                NotifyOfPropertyChange("widthHeight");
+            }
+        }
+
+        private Thickness _currentPlacementPosition;
+        public Thickness currentPlacementPosition
+        {
+            get { return _currentPlacementPosition; }
+            set
+            {
+                _currentPlacementPosition = value;
+                NotifyOfPropertyChange("currentPlacementPosition");
+            }
+        }
 
         private bool _placeTopLeft_top;
         public bool placeTopLeft_top
@@ -347,9 +384,12 @@ namespace TT.Scouter.ViewModels
             showBotTable = !showTopTable;
 
             if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))
-                makeAllFalse();
+                uncheckAllRadioButtons();
             else
-                makeRightRight(new Point(s.Placement.WX, s.Placement.WY));
+                checkRadioButtonAtFieldPosition(new Point(s.Placement.WX, s.Placement.WY));
+
+            widthHeight = 20;
+            placementVisibilty = Visibility.Hidden;
 
         }
 
@@ -385,9 +425,17 @@ namespace TT.Scouter.ViewModels
 
         public void OnPlacementChanged(object sender, EventArgs e)
         {
-            makeAllFalse();
+            uncheckAllRadioButtons();
 
-            makeRightRight(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
+            double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
+            double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
+            double left = x - (widthHeight / 2);
+            double top = y - (widthHeight / 2);
+            currentPlacementPosition = new Thickness(left, top, 0, 0);
+
+            checkRadioButtonAtFieldPosition(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
+
+            placementVisibilty = Visibility.Visible;
         }
 
         public void GridClicked(object sender, MouseButtonEventArgs e)
@@ -398,7 +446,7 @@ namespace TT.Scouter.ViewModels
             ChangePositionStroke(fieldPosition.X, fieldPosition.Y);
         }
 
-        private void makeAllFalse()
+        private void uncheckAllRadioButtons()
         {
             placeTopLeft_top = false;
             placeTopMid_top = false;
@@ -419,7 +467,7 @@ namespace TT.Scouter.ViewModels
             placeTopMid_bot = false;
             placeTopLeft_bot = false;
         }
-        private void makeRightRight(Point fieldPosition)
+        private void checkRadioButtonAtFieldPosition(Point fieldPosition)
         {
             if (fieldPosition.X < 51 && fieldPosition.Y < 46)
                 placeTopLeft_top = true;
@@ -466,6 +514,12 @@ namespace TT.Scouter.ViewModels
             p.WX = X;
             p.WY = Y;
             Stroke.Placement = p;
+        }
+
+        public void SetCanvasSize(double w, double h)
+        {
+            canvasWidth = w;
+            canvasHeight = h;
         }
 
         #endregion
