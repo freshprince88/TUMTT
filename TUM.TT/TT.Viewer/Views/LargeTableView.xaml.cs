@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,10 +15,17 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class LargeTableView : TableView
     {
+
+        private const double StrokeOpacity = 1.0;
+        private const double StrokeOpacityHover = 0.7;
+        private const double StrokeOpacityDisabled = 0.18;
+
         public override Grid View_InnerFieldGrid { get { return InnerFieldGrid; } }
         public override Grid View_InnerFieldBehindGrid { get { return InnerFieldBehindGrid; } }
         public override Grid View_InnerFieldHalfDistanceGrid { get { return InnerFieldHalfDistanceGrid; } }
         public override Grid View_InnerFieldSpinGrid { get { return InnerFieldSpinGrid; } }
+
+        private Stroke SelectedStroke;
 
         public LargeTableView()
         {
@@ -40,10 +48,14 @@ namespace TT.Viewer.Views
                     if (strokeShape.Key.Equals(stroke))
                     {
                         s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, true);
+                        if (stroke != SelectedStroke)
+                        {
+                            s.Opacity = StrokeOpacityHover;
+                        }
                     }
                     else
                     {
-                        s.Opacity = 0.1;
+                        s.Opacity = StrokeOpacityDisabled;
                     }
                 }
             }
@@ -63,12 +75,31 @@ namespace TT.Viewer.Views
                     if (strokeShape.Key.Equals(stroke))
                     {
                         s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, stroke.Stroketechnique, false);
+                        if (stroke != SelectedStroke)
+                        {
+                            s.Opacity = StrokeOpacityDisabled;
+                        }
                     }
                     else
                     {
-                        s.Opacity = 1;
+                        s.Opacity = SelectedStroke != null ? StrokeOpacityDisabled : StrokeOpacity;
                     }
                 }
+            }
+        }
+
+        private void Stroke_MouseDown(Object sender, MouseButtonEventArgs e)
+        {
+            Shape shape = sender as Shape;
+            Stroke stroke = shape.DataContext as Stroke;
+
+            //Debug.WriteLine("mouse down on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
+
+            SelectedStroke = stroke;
+
+            foreach (Shape s in StrokeShapes[stroke])
+            {
+                s.Opacity = StrokeOpacity;
             }
         }
 
@@ -76,6 +107,7 @@ namespace TT.Viewer.Views
         {
             shape.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
             shape.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
+            shape.MouseDown += new MouseButtonEventHandler(Stroke_MouseDown);
             shape.DataContext = stroke;
             Message.SetAttach(shape, "StrokeSelected($DataContext)");
         }
@@ -99,13 +131,13 @@ namespace TT.Viewer.Views
             return ShowIntercept;
         }
 
-        private double GetStrokeThicknessForStroke(ShapeType tag, Stroketechnique technique, bool hover)
+        private double GetStrokeThicknessForStroke(ShapeType type, Stroketechnique technique, bool hover)
         {
-            if (tag == ShapeType.SpinShape)
+            if (type == ShapeType.SpinShape)
                 return hover ? StrokeThicknessSpinArrowHover : StrokeThicknessSpinArrow;
-            else if (tag == ShapeType.Intercept)
+            else if (type == ShapeType.Intercept)
                 return hover ? StrokeThicknessInterceptHover : StrokeThicknessIntercept;
-            else if (tag == ShapeType.Debug_preceding)
+            else if (type == ShapeType.Debug_preceding)
                 return hover ? StrokeThicknessPrecedingHover_Debug : StrokeThicknessPreceding_Debug;
             else if (technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
                 return hover ? StrokeThicknessSmashHover : StrokeThicknessSmash;

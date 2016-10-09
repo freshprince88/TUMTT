@@ -157,165 +157,165 @@ namespace TT.Viewer.Views
             // first check if we already created a direction shape for this stroke. if so, display it and we're done
             Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
             if (shape != null)
-                shape.Visibility = Visibility.Visible;
-
-            else
             {
-                bool isServiceStroke = stroke.Number == 1;
-                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
+                shape.Visibility = Visibility.Visible;
+                return;
+            }
+            
+            bool isServiceStroke = stroke.Number == 1;
+            bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
 
-                try
+            try
+            {
+                if (!PlacementValuesValid(stroke.Placement) && !isNetOrOut)
                 {
-                    if (!PlacementValuesValid(stroke.Placement) && !isNetOrOut)
-                    {
-                        Debug.WriteLine("Direction: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
+                    Debug.WriteLine("Direction: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
+                    return;
+                }
+
+                double X1, X2, Y1, Y2;
+
+                // first we figure out where the stroke should start, i.e. its X1 and Y1 coordinate
+                if (isServiceStroke)
+                {
+                    // service strokes get special treatment because they
+                    // a. generally start from the bottom in most views (small/large)
+                    // b. don't have any preceding strokes to base their starting point on
+
+                    if (stroke.Playerposition.Equals(double.NaN))
                         return;
-                    }
 
-                    double X1, X2, Y1, Y2;
-
-                    // here we figure out where the stroke should start, i.e. its X1 and Y1 coordinate
-                    if (isServiceStroke)
+                    // double.MinValue as Playerposition indicates a service stroke in the Legend view
+                    // since there the arrows are painted horizontally, we have to set special values here
+                    if (stroke.Playerposition == double.MinValue)
                     {
-                        // service strokes get special treatment because they
-                        // a. generally start from the bottom in most views (small/large)
-                        // b. don't have any preceding strokes to base their starting point on
-
-                        if (stroke.Playerposition.Equals(double.NaN))
-                            return;
-
-                        // double.MinValue as Playerposition indicates a service stroke in the Legend view
-                        // since there the arrows are painted horizontally, we have to set special values here
-                        if (stroke.Playerposition == double.MinValue)
-                        {
-                            X1 = 0;
-                            Y1 = stroke.Placement.WY;
-                        }
-                        // other than that, service strokes start from the bottom (height of the grid they will be added to)
-                        // and their position is determined by Playerposition
-                        else
-                        {
-                            X1 = GetAdjustedX(stroke, stroke.Playerposition);
-                            Y1 = View_InnerFieldBehindGrid.ActualHeight;
-                        }
+                        X1 = 0;
+                        Y1 = stroke.Placement.WY;
                     }
+                    // other than that, service strokes start from the bottom (height of the grid they will be added to)
+                    // and their position is determined by Playerposition
                     else
                     {
-                        // we don't have a service stroke on our hands, that means we base this strokes starting point
-                        // on one or more of his predecessors
-
-                        var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
-                        double precedingStartX, precedingStartY, precedingEndX, precedingEndY;
-
-                        if (precedingStroke.Number == 1)
-                        {
-                            // the immediate predecessor is a service stroke.
-                            // again, this calls for special treatment
-                            precedingStartX = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, precedingStroke.Playerposition);
-                            precedingStartY = GetSecondStrokePrecedingStartY(); // this cannot be generalized, both small and large view return different (even opposing) values
-                        }
-                        else
-                        {
-                            // the preceding stroke was not a service stroke, i.e. it has at least one other preceding stroke
-                            // whose placement (WX, WY) we can take for an approximation of this strokes starting point
-                            precedingStartX = GetAdjustedX(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WX);
-                            precedingStartY = GetAdjustedY(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WY);
-                        }
-
-                        // the end point for this strokes starting point approximation is always the preceding stroke's placement
-                        precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
-                        precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
-
-
-                        //if (ShowDebug)
-                        //    AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
-
-                        // depending on whether we draw the stroke from top to bottom or vice versa, the stroke will start at Y '0' (top)
-                        // or the height of the grid the stroke is going to be added to (bottom).
-                        // in the case that its point of contact is OVER the table, we need the height of the previous stroke (we add/subtract arbitrarilly '30' for realism)
-                        if (precedingStartY > precedingEndY)    // bottom -> top
-                            Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
-                        else if (precedingStartY < precedingEndY)
-                            Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
-                        else
-                            Y1 = precedingEndY; // means the preceding stroke didn't change the Y coordinate -> reserved for special cases (e.g. horizontal strokes in Legend)
-
-                        // now we have the starting and end point (both X and Y) of the previous stroke and the height at which this stroke should end
-                        // -> extrapolate its X-coordinate
-                        if (precedingStartY != precedingEndY)
-                            X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
-                        else
-                            X1 = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;    // equal preceding stroke's Y coordinate -> horizontal
-
-                        //if (ShowDebug)
-                        //    AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
+                        X1 = GetAdjustedX(stroke, stroke.Playerposition);
+                        Y1 = View_InnerFieldBehindGrid.ActualHeight;
                     }
-
-                    if (isNetOrOut)
-                    {
-                        X2 = X1;
-                        if (Y1 > 137)
-                            Y2 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y1 - 40 : GetGridForStroke(stroke).ActualHeight - 40;
-                        else
-                            Y2 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y1 + 40 : 40;
-                    }
-                    else
-                    {
-                        // this stroke's end is always the exact position of its placement
-                        X2 = GetAdjustedX(stroke, stroke.Placement.WX);
-                        Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
-                    }
-
-                    // now we have this stroke's start and end => get the shape (depends mostly on stroke technique)
-                    if (isServiceStroke || isNetOrOut)
-                        shape = GetLineShape(stroke, X1, Y1, X2, Y2);
-                    else
-                        if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
-                        shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
-                    else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
-                        shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
-                    else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Chop)
-                        shape = GetChopShape(stroke, X1, Y1, X2, Y2);
-                    else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Lob)
-                        shape = GetLobShape(stroke, X1, Y1, X2, Y2);
-                    else
-                        shape = GetLineShape(stroke, X1, Y1, X2, Y2);
-
-                    // tag is needed to identify this shape in our map of strokes to shapes
-                    shape.Tag = ShapeType.Direction;
-
-                    shape.StrokeThickness = StrokeThickness;
-
-                    // if this view needs to receive event notifications when user interacts with the stroke shape
-                    AttachEventHandlerToShape(shape, stroke);
-
-                    // add the stroke to our map so we can find it later
-                    StrokeShapes[stroke].Add(shape);
-
-                    // apply style (also depends mostly on stroke technique, but also side - forehand/backhand - and other)
-                    ApplyStyle(stroke, shape);
-
-                    // now add it to the respective grid
-                    if (isServiceStroke)
-                        View_InnerFieldBehindGrid.Children.Add(shape);
-                    else
-                    {
-                        if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Behind)
-                            View_InnerFieldBehindGrid.Children.Add(shape);
-                        else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.HalfDistance)
-                            View_InnerFieldHalfDistanceGrid.Children.Add(shape);
-                        else
-                            View_InnerFieldGrid.Children.Add(shape);
-                    }
-
-                    // hide it immediately, if the "Direction" checkbox is unchecked
-                    if (!ShowDirection)
-                        shape.Visibility = Visibility.Hidden;
                 }
-                catch(Exception e)
+                else
                 {
-                    Debug.WriteLine(e);
+                    // we don't have a service stroke on our hands, that means we base this strokes starting point
+                    // on one or more of his predecessors
+
+                    var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
+                    double precedingStartX, precedingStartY, precedingEndX, precedingEndY;
+
+                    if (precedingStroke.Number == 1)
+                    {
+                        // the immediate predecessor is a service stroke.
+                        // again, this calls for special treatment
+                        precedingStartX = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, precedingStroke.Playerposition);
+                        precedingStartY = GetSecondStrokePrecedingStartY(); // this cannot be generalized, both small and large view return different (even opposing) values
+                    }
+                    else
+                    {
+                        // the preceding stroke was not a service stroke, i.e. it has at least one other preceding stroke
+                        // whose placement (WX, WY) we can take for an approximation of this strokes starting point
+                        precedingStartX = GetAdjustedX(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WX);
+                        precedingStartY = GetAdjustedY(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WY);
+                    }
+
+                    // the end point for this strokes starting point approximation is always the preceding stroke's placement
+                    precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
+                    precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
+
+
+                    //if (ShowDebug)
+                    //    AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
+
+                    // depending on whether we draw the stroke from top to bottom or vice versa, the stroke will start at Y '0' (top)
+                    // or the height of the grid the stroke is going to be added to (bottom).
+                    // in the case that its point of contact is OVER the table, we need the height of the previous stroke (we add/subtract arbitrarilly '30' for realism)
+                    if (precedingStartY > precedingEndY)    // bottom -> top
+                        Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
+                    else if (precedingStartY < precedingEndY)
+                        Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+                    else
+                        Y1 = precedingEndY; // means the preceding stroke didn't change the Y coordinate -> reserved for special cases (e.g. horizontal strokes in Legend)
+
+                    // now we have the starting and end point (both X and Y) of the previous stroke and the height at which this stroke should end
+                    // -> extrapolate its X-coordinate
+                    if (precedingStartY != precedingEndY)
+                        X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
+                    else
+                        X1 = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;    // equal preceding stroke's Y coordinate -> horizontal
+
+                    //if (ShowDebug)
+                    //    AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                 }
+
+                if (isNetOrOut)
+                {
+                    X2 = X1;
+                    if (Y1 > 137)
+                        Y2 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y1 - 40 : GetGridForStroke(stroke).ActualHeight - 40;
+                    else
+                        Y2 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y1 + 40 : 40;
+                }
+                else
+                {
+                    // this stroke's end is always the exact position of its placement
+                    X2 = GetAdjustedX(stroke, stroke.Placement.WX);
+                    Y2 = GetAdjustedY(stroke, stroke.Placement.WY);
+                }
+
+                // now we have this stroke's start and end => get the shape (depends mostly on stroke technique)
+                if (isServiceStroke || isNetOrOut)
+                    shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+                else
+                    if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
+                    shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
+                else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
+                    shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
+                else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Chop)
+                    shape = GetChopShape(stroke, X1, Y1, X2, Y2);
+                else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Lob)
+                    shape = GetLobShape(stroke, X1, Y1, X2, Y2);
+                else
+                    shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+
+                // tag is needed to identify this shape in our map of strokes to shapes
+                shape.Tag = ShapeType.Direction;
+
+                shape.StrokeThickness = StrokeThickness;
+
+                // if this view needs to receive event notifications when user interacts with the stroke shape
+                AttachEventHandlerToShape(shape, stroke);
+
+                // add the stroke to our map so we can find it later
+                StrokeShapes[stroke].Add(shape);
+
+                // apply style (also depends mostly on stroke technique, but also side - forehand/backhand - and other)
+                ApplyStyle(stroke, shape);
+
+                // now add it to the respective grid
+                if (isServiceStroke)
+                    View_InnerFieldBehindGrid.Children.Add(shape);
+                else
+                {
+                    if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Behind)
+                        View_InnerFieldBehindGrid.Children.Add(shape);
+                    else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.HalfDistance)
+                        View_InnerFieldHalfDistanceGrid.Children.Add(shape);
+                    else
+                        View_InnerFieldGrid.Children.Add(shape);
+                }
+
+                // hide it immediately, if the "Direction" checkbox is unchecked
+                if (!ShowDirection)
+                    shape.Visibility = Visibility.Hidden;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
             }
         }
 
@@ -423,7 +423,7 @@ namespace TT.Viewer.Views
 
                             ApplyStyle(stroke, interceptArrowTip);
 
-                            AttachEventHandlerToShape(interceptArrowTip, stroke);                            
+                            AttachEventHandlerToShape(interceptArrowTip, stroke);
 
                             StrokeShapes[stroke].Add(interceptArrowTip);
 
@@ -572,7 +572,7 @@ namespace TT.Viewer.Views
 
         protected void AddServiceStrokesSpinShapes(Stroke stroke)
         {
-            if (stroke.Number != 1 ||  !ShowSpinForStroke(stroke))
+            if (stroke.Number != 1 || !ShowSpinForStroke(stroke))
                 return;
 
             Shape spinArrow = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.SpinShape);
@@ -947,7 +947,7 @@ namespace TT.Viewer.Views
 
         protected abstract void AttachEventHandlerToShape(Shape shape, Stroke stroke);
         protected abstract double GetAdjustedX(Stroke stroke, double oldX);
-        protected abstract double GetAdjustedY(Stroke stroke, double oldY);        
+        protected abstract double GetAdjustedY(Stroke stroke, double oldY);
         protected abstract bool ShowDirectionForStroke(Stroke stroke);
         protected abstract bool ShowSpinForStroke(Stroke stroke);
         protected abstract bool ShowInterceptForStroke(Stroke stroke);
@@ -1060,7 +1060,7 @@ namespace TT.Viewer.Views
 
             Grid parent = (Grid)shape.Parent;
             if (parent != null && parent.Name != grid.Name)
-                y -= grid.Margin.Top - parent.Margin.Top;            
+                y -= grid.Margin.Top - parent.Margin.Top;
         }
 
         private double GetLinearContinuationX(double x1, double y1, double x2, double y2, double targetY)
@@ -1087,7 +1087,7 @@ namespace TT.Viewer.Views
         #endregion
 
         protected enum PointType { Start, Middle, End }
-        protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding}
+        protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding }
         protected enum ElementType { StrokeNumber }
     }
 }
