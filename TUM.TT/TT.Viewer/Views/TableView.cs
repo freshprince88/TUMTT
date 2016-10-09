@@ -692,7 +692,7 @@ namespace TT.Viewer.Views
                 cpy = lineTwoThirdsY - m * (cpx - lineTwoThirdsX);
             }
 
-            //Debug.WriteLine("chop {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
+            //Debug.WriteLine("lob {7} of rally {6}: x1={0} y1={1} -> x2={2} y2={3} (cp: x={4} y={5})", X1, Y1, X2, Y2, cpx, cpy, stroke.Rally.Number, stroke.Number);
 
             PathGeometry lobGeometry = new PathGeometry();
 
@@ -906,9 +906,9 @@ namespace TT.Viewer.Views
                         break;
                     case Models.Util.Enums.Stroke.Technique.Flip:
                     case Models.Util.Enums.Stroke.Technique.Banana:
-                        shape.Stroke = Brushes.Yellow;
+                        shape.Stroke = Brushes.Gold;
                         if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
-                            shape.Fill = Brushes.Yellow;
+                            shape.Fill = Brushes.Gold;
                         break;
                     case Models.Util.Enums.Stroke.Technique.Smash:
                         shape.Stroke = Brushes.Blue;
@@ -1088,6 +1088,7 @@ namespace TT.Viewer.Views
 
         protected enum PointType { Start, Middle, End }
         protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding }
+        protected enum StrokeInteraction { Normal, Hover, Selected }
         protected enum ElementType { StrokeNumber }
     }
 }
