@@ -14,15 +14,12 @@ namespace TT.Viewer.Views
         #region Constants
 
         protected const double StrokeThickness = 1.75;
-        protected const double StrokeThicknessHover = 2.5;
         protected const double StrokeThicknessSpinArrow = 1;
-        protected const double StrokeThicknessSpinArrowHover = 2;
         protected const double StrokeThicknessSmash = 3.5;
-        protected const double StrokeThicknessSmashHover = 5;
+        protected const double StrokeThicknessSmashIntercept = 2;
         protected const double StrokeThicknessPreceding_Debug = 0.5;
         protected const double StrokeThicknessPrecedingHover_Debug = 0.7;
         protected const double StrokeThicknessIntercept = 1.0;
-        protected const double StrokeThicknessInterceptHover = 1.7;
 
         protected const double BananaCurveRation = 0.5;
         protected const double TopspinCurveRation = 0.8;
@@ -118,7 +115,10 @@ namespace TT.Viewer.Views
                     if ((bool)e.NewValue)
                         foreach (Stroke s in view.StrokeShapes.Keys) view.AddStrokesDirectionShapes(s);
                     else
+                    {
                         view.HideShapesByTag(ShapeType.Direction);
+                        view.DirectionShapesHidden();
+                    }
                 }
                 else if (e.Property == ShowSpinProperty)
                 {
@@ -159,6 +159,7 @@ namespace TT.Viewer.Views
             if (shape != null)
             {
                 shape.Visibility = Visibility.Visible;
+                ApplyStyle(stroke, StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip));
                 return;
             }
             
@@ -290,7 +291,7 @@ namespace TT.Viewer.Views
                 // if this view needs to receive event notifications when user interacts with the stroke shape
                 AttachEventHandlerToShape(shape, stroke);
 
-                // add the stroke to our map so we can find it later
+                // add the shape to our map so we can find it later
                 StrokeShapes[stroke].Add(shape);
 
                 // apply style (also depends mostly on stroke technique, but also side - forehand/backhand - and other)
@@ -326,115 +327,115 @@ namespace TT.Viewer.Views
 
             List<Shape> interceptShapes = StrokeShapes[stroke].FindAll(s => (ShapeType)s.Tag == ShapeType.Intercept);
             if (interceptShapes != null && interceptShapes.Count != 0)
+            {
                 foreach (Shape interceptShape in interceptShapes)
                     interceptShape.Visibility = Visibility.Visible;
-
-            else
+                return;
+            }           
+             
+            bool isServiceStroke = stroke.Number == 1;
+            if (PlacementValuesValid(stroke.Placement))
             {
-                bool isServiceStroke = stroke.Number == 1;
-                if (PlacementValuesValid(stroke.Placement))
+                foreach (Shape shape in StrokeShapes[stroke])
                 {
-                    foreach (Shape shape in StrokeShapes[stroke])
+                    if ((ShapeType)shape.Tag == ShapeType.Direction)
                     {
-                        if ((ShapeType)shape.Tag == ShapeType.Direction)
+                        if (stroke.Number >= stroke.Rally.Strokes.Count)
+                            return;
+
+                        Stroke followingStroke = stroke.Rally.Strokes[stroke.Number];
+                        Grid followingStrokeGrid = GetGridForStroke(followingStroke);
+
+                        double x1, y1, x2, y2;
+                        GetPointForShapeRelativeToGrid(shape, PointType.Start, followingStrokeGrid, out x1, out y1);
+                        GetPointForShapeRelativeToGrid(shape, PointType.End, followingStrokeGrid, out x2, out y2);
+
+                        double xE, yE;
+
+                        if (y1 > y2)
+                            yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 - 30 : 0;
+                        else if (y1 < y2)
+                            yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 + 30 : followingStrokeGrid.ActualHeight;
+                        else
+                            yE = y2;
+
+                        if (y1 != y2)
+                            xE = GetLinearContinuationX(x1, y1, x2, y2, yE);
+                        else
+                            xE = x2 > x1 ? followingStrokeGrid.ActualWidth : 0;
+
+                        if (xE.Equals(double.NaN) || yE.Equals(double.NaN))
                         {
-                            if (stroke.Number >= stroke.Rally.Strokes.Count)
-                                return;
-
-                            Stroke followingStroke = stroke.Rally.Strokes[stroke.Number];
-                            Grid followingStrokeGrid = GetGridForStroke(followingStroke);
-
-                            double x1, y1, x2, y2;
-                            GetPointForShapeRelativeToGrid(shape, PointType.Start, followingStrokeGrid, out x1, out y1);
-                            GetPointForShapeRelativeToGrid(shape, PointType.End, followingStrokeGrid, out x2, out y2);
-
-                            double xE, yE;
-
-                            if (y1 > y2)
-                                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 - 30 : 0;
-                            else if (y1 < y2)
-                                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 + 30 : followingStrokeGrid.ActualHeight;
-                            else
-                                yE = y2;
-
-                            if (y1 != y2)
-                                xE = GetLinearContinuationX(x1, y1, x2, y2, yE);
-                            else
-                                xE = x2 > x1 ? followingStrokeGrid.ActualWidth : 0;
-
-                            if (xE.Equals(double.NaN) || yE.Equals(double.NaN))
-                            {
-                                Debug.WriteLine("Intercept: NaN extrapolated values (xE={2} yE={3}) for stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number, xE, yE);
-                                return;
-                            }
-
-                            // line
-                            Line interceptLine = new Line();
-                            interceptLine.X1 = x2;
-                            interceptLine.Y1 = y2;
-                            interceptLine.X2 = xE;
-                            interceptLine.Y2 = yE;
-
-                            interceptLine.Tag = ShapeType.Intercept;
-                            interceptLine.StrokeThickness = StrokeThicknessIntercept;
-
-                            DoubleCollection dashes = new DoubleCollection();
-                            dashes.Add(1);
-                            interceptLine.StrokeDashArray = dashes;
-
-                            ApplyStyle(stroke, interceptLine);
-
-                            AttachEventHandlerToShape(interceptLine, stroke);
-
-                            StrokeShapes[stroke].Add(interceptLine);
-
-                            if (!ShowIntercept)
-                                interceptLine.Visibility = Visibility.Hidden;
-
-                            followingStrokeGrid.Children.Add(interceptLine);
-                            // ---
-
-                            // arrow tip
-                            PathGeometry arrowTipGeometry = new PathGeometry();
-
-                            PathFigure pathFigure = new PathFigure();
-                            pathFigure.IsClosed = true;
-                            pathFigure.StartPoint = new Point(xE - 1.5, yE - 3.5);
-
-                            LineSegment ltt = new LineSegment(new Point(xE, yE), true);
-                            pathFigure.Segments.Add(ltt);
-
-                            LineSegment ttr = new LineSegment(new Point(xE + 1.5, yE - 3.5), true);
-                            pathFigure.Segments.Add(ttr);
-
-                            double theta = Math.Atan2((yE - y2), (xE - x2)) * 180 / Math.PI;
-                            RotateTransform transform = new RotateTransform();
-                            transform.Angle = theta - 90;
-                            transform.CenterX = xE;
-                            transform.CenterY = yE;
-                            arrowTipGeometry.Transform = transform;
-
-                            arrowTipGeometry.Figures.Add(pathFigure);
-
-                            Path interceptArrowTip = new Path();
-                            interceptArrowTip.Data = arrowTipGeometry;
-                            interceptArrowTip.Tag = ShapeType.Intercept;
-                            interceptArrowTip.StrokeThickness = StrokeThicknessIntercept;
-
-                            ApplyStyle(stroke, interceptArrowTip);
-
-                            AttachEventHandlerToShape(interceptArrowTip, stroke);
-
-                            StrokeShapes[stroke].Add(interceptArrowTip);
-
-                            if (!ShowIntercept)
-                                interceptArrowTip.Visibility = Visibility.Hidden;
-
-                            followingStrokeGrid.Children.Add(interceptArrowTip);
-                            // ---
-
+                            Debug.WriteLine("Intercept: NaN extrapolated values (xE={2} yE={3}) for stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number, xE, yE);
                             return;
                         }
+
+                        // line
+                        Line interceptLine = new Line();
+                        interceptLine.X1 = x2;
+                        interceptLine.Y1 = y2;
+                        interceptLine.X2 = xE;
+                        interceptLine.Y2 = yE;
+
+                        interceptLine.Tag = ShapeType.Intercept;
+                        interceptLine.StrokeThickness = StrokeThicknessIntercept;
+
+                        DoubleCollection dashes = new DoubleCollection();
+                        dashes.Add(1);
+                        interceptLine.StrokeDashArray = dashes;
+
+                        ApplyStyle(stroke, interceptLine);
+
+                        AttachEventHandlerToShape(interceptLine, stroke);
+
+                        StrokeShapes[stroke].Add(interceptLine);
+
+                        if (!ShowIntercept)
+                            interceptLine.Visibility = Visibility.Hidden;
+
+                        followingStrokeGrid.Children.Add(interceptLine);
+                        // ---
+
+                        // arrow tip
+                        PathGeometry arrowTipGeometry = new PathGeometry();
+
+                        PathFigure pathFigure = new PathFigure();
+                        pathFigure.IsClosed = true;
+                        pathFigure.StartPoint = new Point(xE - 1.5, yE - 3.5);
+
+                        LineSegment ltt = new LineSegment(new Point(xE, yE), true);
+                        pathFigure.Segments.Add(ltt);
+
+                        LineSegment ttr = new LineSegment(new Point(xE + 1.5, yE - 3.5), true);
+                        pathFigure.Segments.Add(ttr);
+
+                        double theta = Math.Atan2((yE - y2), (xE - x2)) * 180 / Math.PI;
+                        RotateTransform transform = new RotateTransform();
+                        transform.Angle = theta - 90;
+                        transform.CenterX = xE;
+                        transform.CenterY = yE;
+                        arrowTipGeometry.Transform = transform;
+
+                        arrowTipGeometry.Figures.Add(pathFigure);
+
+                        Path interceptArrowTip = new Path();
+                        interceptArrowTip.Data = arrowTipGeometry;
+                        interceptArrowTip.Tag = ShapeType.Intercept;
+                        interceptArrowTip.StrokeThickness = StrokeThicknessIntercept;
+
+                        ApplyStyle(stroke, interceptArrowTip);
+
+                        AttachEventHandlerToShape(interceptArrowTip, stroke);
+
+                        StrokeShapes[stroke].Add(interceptArrowTip);
+
+                        if (!ShowIntercept)
+                            interceptArrowTip.Visibility = Visibility.Hidden;
+
+                        followingStrokeGrid.Children.Add(interceptArrowTip);
+                        // ---
+
+                        return;
                     }
                 }
             }
@@ -465,7 +466,10 @@ namespace TT.Viewer.Views
         {
             Shape strokeArrowTip = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip);
             if (strokeArrowTip != null)
+            {
                 strokeArrowTip.Visibility = Visibility.Visible;
+                return;
+            }
 
             else
             {
@@ -521,11 +525,7 @@ namespace TT.Viewer.Views
 
                         arrowTipGeometry.Figures.Add(pathFigure);
 
-                        RotateTransform transform = new RotateTransform();
-                        transform.Angle = 45;
-                        transform.CenterX = X2;
-                        transform.CenterY = Y2;
-                        arrowTipGeometry.Transform = transform;
+                        arrowTipGeometry.Transform = new RotateTransform(45, X2, Y2);
                     }
                     else
                     {
@@ -540,12 +540,7 @@ namespace TT.Viewer.Views
                         pathFigure.Segments.Add(ttr);
 
                         double theta = Math.Atan2((Y2 - Y1), (X2 - X1)) * 180 / Math.PI;
-                        RotateTransform transform = new RotateTransform();
-                        transform.Angle = theta - 90;
-                        transform.CenterX = X2;
-                        transform.CenterY = Y2;
-                        arrowTipGeometry.Transform = transform;
-
+                        arrowTipGeometry.Transform = new RotateTransform(theta - 90, X2, Y2);
                     }
 
                     arrowTipGeometry.Figures.Add(pathFigure);
@@ -554,6 +549,9 @@ namespace TT.Viewer.Views
                     ((Path)strokeArrowTip).Data = arrowTipGeometry;
                     strokeArrowTip.Tag = ShapeType.Arrowtip;
                     strokeArrowTip.StrokeThickness = StrokeThickness;
+
+                    // ScaleTranform as RenderTransform for changing size of arrow tips later (with correct center point)
+                    strokeArrowTip.RenderTransform = new ScaleTransform(1, 1, X2, Y2);
 
                     ApplyStyle(stroke, strokeArrowTip);
 
@@ -666,6 +664,11 @@ namespace TT.Viewer.Views
                     }
                 }
             }
+        }
+
+        protected virtual void DirectionShapesHidden()
+        {
+            // no standard handling of hiding direction shape. override if necessary.
         }
 
         #endregion
@@ -878,8 +881,12 @@ namespace TT.Viewer.Views
 
         #region Style
 
-        private void ApplyStyle(Stroke stroke, Shape shape)
+        protected virtual void ApplyStyle(Stroke stroke, Shape shape)
         {
+            // no work to do if shape is null :O
+            if (shape == null)
+                return;
+
             if (stroke.Number == 1)
             {
                 if (stroke.Spin != null && stroke.Spin.SL == "1" && stroke.Spin.SR == "1")    // special cases (e.g. Legend)
@@ -913,7 +920,7 @@ namespace TT.Viewer.Views
                     case Models.Util.Enums.Stroke.Technique.Smash:
                         shape.Stroke = Brushes.Blue;
                         shape.Fill = Brushes.Blue;
-                        shape.StrokeThickness = StrokeThicknessSmash;
+                        shape.StrokeThickness = (ShapeType)shape.Tag == ShapeType.Intercept ? StrokeThicknessSmashIntercept : StrokeThicknessSmash;
                         break;
                     case Models.Util.Enums.Stroke.Technique.Block:
                     case Models.Util.Enums.Stroke.Technique.Counter:

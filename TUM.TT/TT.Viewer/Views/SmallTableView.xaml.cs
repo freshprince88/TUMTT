@@ -19,6 +19,13 @@ namespace TT.Viewer.Views
     {
         private const int MaxDisplayedStrokes = 4;
 
+        protected new const double StrokeThickness = 4;
+        protected new const double StrokeThicknessSpinArrow = 2.25;
+        protected new const double StrokeThicknessSmash = 6.0;
+        protected new const double StrokeThicknessIntercept = 2.75;
+        protected new const double StrokeThicknessSmashIntercept = 4;
+        protected const double StrokeThicknessArrowtipNetOrOut = 3;
+
         private static BrushConverter brushConverter = new BrushConverter();
 
         private AutoResetEvent sizeChangedWaitEvent;
@@ -237,8 +244,8 @@ namespace TT.Viewer.Views
                     TextBlock textBlock = new TextBlock();
                     textBlock.Text = stroke.Number.ToString();
 
-                    textBlock.Width = 10;
-                    textBlock.Height = 15;
+                    textBlock.Width = 12;
+                    textBlock.Height = 17;
                     textBlock.HorizontalAlignment = HorizontalAlignment.Left;
                     textBlock.VerticalAlignment = VerticalAlignment.Top;
 
@@ -254,7 +261,7 @@ namespace TT.Viewer.Views
                         return;
 
                     // arbitrary positioning relative to stroke arrow
-                    X1 = X1 + 7;
+                    X1 = X1 + 10;
                     Y1 = Y1 - 2;
 
                     Thickness margin = new Thickness(
@@ -284,6 +291,36 @@ namespace TT.Viewer.Views
         }
 
         #region Helper methods
+
+        protected override void ApplyStyle(Stroke stroke, Shape shape)
+        {
+            base.ApplyStyle(stroke, shape);
+            switch ((ShapeType)shape.Tag)
+            {
+                case ShapeType.Arrowtip:
+                    if (stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut)
+                        shape.StrokeThickness = StrokeThicknessArrowtipNetOrOut;
+                    else
+                        shape.StrokeThickness = StrokeThickness;
+
+                    ScaleTransform scaleTransform = shape.RenderTransform as ScaleTransform;
+                    scaleTransform.ScaleX = ShowDirection ? 1.0 : 1.5;
+                    scaleTransform.ScaleY = ShowDirection ? 1.0 : 1.5;
+                    break;
+                case ShapeType.Intercept:
+                    if (stroke.Stroketechnique != null && stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                        shape.StrokeThickness = StrokeThicknessSmashIntercept;
+                    else
+                        shape.StrokeThickness = StrokeThicknessIntercept;
+                    break;
+                case ShapeType.SpinShape:
+                    shape.StrokeThickness = StrokeThicknessSpinArrow;
+                    break;
+                default:
+                    shape.StrokeThickness = StrokeThickness;
+                    break;
+            }
+        }
 
         protected override double GetAdjustedX(Stroke stroke, double oldX)
         {
@@ -394,6 +431,22 @@ namespace TT.Viewer.Views
                     foreach (FrameworkElement element in StrokeElements[stroke])
                     {
                         element.Visibility = Visibility.Hidden;
+                    }
+                }
+            }
+        }
+
+        protected override void DirectionShapesHidden()
+        {
+            foreach (List<Shape> shapes in StrokeShapes.Values)
+            {
+                foreach (Shape shape in shapes)
+                {
+                    if ((ShapeType)shape.Tag == ShapeType.Arrowtip)
+                    {
+                        ScaleTransform scaleTransform = shape.RenderTransform as ScaleTransform;
+                        scaleTransform.ScaleX = 1.5;
+                        scaleTransform.ScaleY = 1.5;
                     }
                 }
             }

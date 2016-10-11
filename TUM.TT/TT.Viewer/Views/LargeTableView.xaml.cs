@@ -16,6 +16,18 @@ namespace TT.Viewer.Views
     public partial class LargeTableView : TableView
     {
 
+        protected const double StrokeThicknessHover = 2.5;
+        protected const double StrokeThicknessSelected = 3;
+        protected const double StrokeThicknessInterceptHover = 1.7;
+        protected const double StrokeThicknessInterceptSelected = 2.0;
+        protected const double StrokeThicknessSpinArrowHover = 2;
+        protected const double StrokeThicknessSpinArrowSelected = 2.5;
+        protected const double StrokeThicknessSmashHover = 5;
+        protected const double StrokeThicknessSmashSelected = 6;
+        protected const double StrokeThicknessSmashInterceptHover = 2.3;
+        protected const double StrokeThicknessSmashInterceptSelected = 2.5;
+        protected const double StrokeThicknessPrecedingSelected_Debug = 1;
+
         private const double StrokeOpacity = 1.0;
         private const double StrokeOpacityHover = 0.7;
         private const double StrokeOpacityHoverUnselected = 0.25;
@@ -198,15 +210,21 @@ namespace TT.Viewer.Views
                     default:
                     case StrokeInteraction.Normal: return StrokeThicknessSpinArrow;
                     case StrokeInteraction.Hover: return StrokeThicknessSpinArrowHover;
-                    case StrokeInteraction.Selected: return 2.5;
+                    case StrokeInteraction.Selected: return StrokeThicknessSpinArrowSelected;
                 }
             else if (type == ShapeType.Intercept)
                 switch (thicknessType)
                 {
                     default:
-                    case StrokeInteraction.Normal: return StrokeThicknessIntercept;
-                    case StrokeInteraction.Hover: return StrokeThicknessInterceptHover;
-                    case StrokeInteraction.Selected: return 2.0;
+                    case StrokeInteraction.Normal:
+                        return technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash ? 
+                            StrokeThicknessSmashIntercept : StrokeThicknessIntercept;
+                    case StrokeInteraction.Hover:
+                        return technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash ? 
+                            StrokeThicknessSmashInterceptHover : StrokeThicknessInterceptHover;
+                    case StrokeInteraction.Selected:
+                        return technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash ? 
+                            StrokeThicknessSmashInterceptSelected : StrokeThicknessInterceptSelected;
                 }
             else if (type == ShapeType.Debug_preceding)
                 switch (thicknessType)
@@ -214,7 +232,7 @@ namespace TT.Viewer.Views
                     default:
                     case StrokeInteraction.Normal: return StrokeThicknessPreceding_Debug;
                     case StrokeInteraction.Hover: return StrokeThicknessPrecedingHover_Debug;
-                    case StrokeInteraction.Selected: return 1;
+                    case StrokeInteraction.Selected: return StrokeThicknessPrecedingSelected_Debug;
                 }
             else if (technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
                 switch (thicknessType)
@@ -222,7 +240,7 @@ namespace TT.Viewer.Views
                     default:
                     case StrokeInteraction.Normal: return StrokeThicknessSmash;
                     case StrokeInteraction.Hover: return StrokeThicknessSmashHover;
-                    case StrokeInteraction.Selected: return 6;
+                    case StrokeInteraction.Selected: return StrokeThicknessSmashSelected;
                 }
             else
                 switch (thicknessType)
@@ -230,7 +248,7 @@ namespace TT.Viewer.Views
                     default:
                     case StrokeInteraction.Normal: return StrokeThickness;
                     case StrokeInteraction.Hover: return StrokeThicknessHover;
-                    case StrokeInteraction.Selected: return 3;
+                    case StrokeInteraction.Selected: return StrokeThicknessSelected;
                 }
         }
 
