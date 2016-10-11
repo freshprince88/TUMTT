@@ -26,6 +26,8 @@ namespace TT.Viewer.Views
         protected new const double StrokeThicknessSmashIntercept = 4;
         protected const double StrokeThicknessArrowtipNetOrOut = 3;
 
+        protected const double ArrowtipScaleNoDirection = 1.5;
+
         private static BrushConverter brushConverter = new BrushConverter();
 
         private AutoResetEvent sizeChangedWaitEvent;
@@ -255,7 +257,7 @@ namespace TT.Viewer.Views
 
                     Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip);
                     if (shape == null) return;
-                    GetPointForShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
+                    GetPointOfShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
 
                     if (X1.Equals(double.NaN) || Y1.Equals(double.NaN))
                         return;
@@ -304,8 +306,9 @@ namespace TT.Viewer.Views
                         shape.StrokeThickness = StrokeThickness;
 
                     ScaleTransform scaleTransform = shape.RenderTransform as ScaleTransform;
-                    scaleTransform.ScaleX = ShowDirection ? 1.0 : 1.5;
-                    scaleTransform.ScaleY = ShowDirection ? 1.0 : 1.5;
+                    Shape direction = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+                    scaleTransform.ScaleX = ShowDirection && direction != null ? 1.0 : ArrowtipScaleNoDirection;
+                    scaleTransform.ScaleY = ShowDirection && direction != null ? 1.0 : ArrowtipScaleNoDirection;
                     break;
                 case ShapeType.Intercept:
                     if (stroke.Stroketechnique != null && stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
@@ -394,6 +397,18 @@ namespace TT.Viewer.Views
                 );
         }
 
+        protected override bool ShowStroke(Stroke stroke)
+        {
+            switch (stroke.Number)
+            {
+                case 1: return ShowStroke1;
+                case 2: return ShowStroke2;
+                case 3: return ShowStroke3;
+                case 4: return ShowStroke4;
+                default: return false;
+            }
+        }
+
         protected override double GetSecondStrokePrecedingStartY()
         {
             return InnerFieldBehindGrid.ActualHeight;
@@ -445,8 +460,8 @@ namespace TT.Viewer.Views
                     if ((ShapeType)shape.Tag == ShapeType.Arrowtip)
                     {
                         ScaleTransform scaleTransform = shape.RenderTransform as ScaleTransform;
-                        scaleTransform.ScaleX = 1.5;
-                        scaleTransform.ScaleY = 1.5;
+                        scaleTransform.ScaleX = ArrowtipScaleNoDirection;
+                        scaleTransform.ScaleY = ArrowtipScaleNoDirection;
                     }
                 }
             }
