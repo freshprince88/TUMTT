@@ -134,16 +134,7 @@ namespace TT.Viewer.ViewModels
                     Question = "The match is modified. Save changes?",
                     AllowCancel = true
                 };
-                yield return question;
-
-                var playlist = MatchManager.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-                var lastRally = playlist.Rallies.LastOrDefault();
-                //TODO
-                if (playlist.Rallies.Any())
-                {
-                    if (lastRally.Winner == MatchPlayer.None)
-                        playlist.Rallies.Remove(lastRally);
-                }
+                yield return question;                
 
                 if (question.Result)
                 {
