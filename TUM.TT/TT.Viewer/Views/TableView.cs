@@ -890,99 +890,114 @@ namespace TT.Viewer.Views
 
         private void GetStartPointOfStroke(Stroke stroke, out double x, out double y)
         {
-            double X1, Y1;
-            X1 = Y1 = x = y = double.MinValue;
+            double tempX, tempY;
 
             bool isServiceStroke = stroke.Number == 1;
             bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
 
-            try
+            // service strokes get special treatment because they
+            // a. generally start from the bottom in most views (small/large)
+            // b. don't have any preceding strokes to base their starting point on
+            if (isServiceStroke)
             {
-                if (!PlacementValuesValid(stroke.Placement) && !isNetOrOut)
-                {                    
-                    throw new NoStrokeStartingPointException("invalid Placement of stroke " + stroke.Number + " in rally " + stroke.Rally.Number + ": x=" + (stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]") + " y=" + (stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]"));
-                }
+                if (stroke.Playerposition.Equals(double.NaN))
+                    throw new NoStrokeStartingPointException("stroke is service and no playerposition was given");
 
-                // service strokes get special treatment because they
-                // a. generally start from the bottom in most views (small/large)
-                // b. don't have any preceding strokes to base their starting point on
-                if (isServiceStroke)
+                // double.MinValue as Playerposition indicates a service stroke in the Legend view
+                // since there the arrows are painted horizontally, we have to set special values here
+                if (stroke.Playerposition == double.MinValue)
                 {
-                    if (stroke.Playerposition.Equals(double.NaN))
-                        throw new NoStrokeStartingPointException("stroke is service and no playerposition was given");
+                    tempX = 0;
+                    tempY = stroke.Placement.WY;
+                }
+                // other than that, service strokes start from the bottom (height of the grid they will be added to)
+                // and their position is determined by Playerposition
+                else
+                {
+                    tempX = GetAdjustedX(stroke, stroke.Playerposition);
+                    tempY = View_InnerFieldBehindGrid.ActualHeight;
+                }
+            }
+            else
+            {
+                // we don't have a service stroke on our hands, that means we base this strokes starting point
+                // on one or more of his predecessors
 
-                    // double.MinValue as Playerposition indicates a service stroke in the Legend view
-                    // since there the arrows are painted horizontally, we have to set special values here
-                    if (stroke.Playerposition == double.MinValue)
-                    {
-                        X1 = 0;
-                        Y1 = stroke.Placement.WY;
-                    }
-                    // other than that, service strokes start from the bottom (height of the grid they will be added to)
-                    // and their position is determined by Playerposition
-                    else
-                    {
-                        X1 = GetAdjustedX(stroke, stroke.Playerposition);
-                        Y1 = View_InnerFieldBehindGrid.ActualHeight;
-                    }
+                var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
+                double precedingStartX, precedingStartY, precedingEndX, precedingEndY;
+
+                if (precedingStroke.Number == 1)
+                {
+                    // the immediate predecessor is a service stroke.
+                    // again, this calls for special treatment
+                    precedingStartX = stroke.Playerposition.Equals(double.NaN) ? double.MinValue : GetAdjustedX(stroke, precedingStroke.Playerposition);
+                    precedingStartY = GetSecondStrokePrecedingStartY(); // GetAdjustedY doesn't help here
                 }
                 else
                 {
-                    // we don't have a service stroke on our hands, that means we base this strokes starting point
-                    // on one or more of his predecessors
-
-                    var precedingStroke = stroke.Rally.Strokes[stroke.Number - 2];
-                    double precedingStartX, precedingStartY, precedingEndX, precedingEndY;
-
-                    if (precedingStroke.Number == 1)
+                    // the preceding stroke was not a service stroke, i.e. it has at least one other preceding stroke
+                    // whose placement (WX, WY) we can take for an approximation of this strokes starting point
+                    Placement placementSecondPreceding = stroke.Rally.Strokes[stroke.Number - 3].Placement;
+                    if (PlacementValuesValid(placementSecondPreceding))
                     {
-                        // the immediate predecessor is a service stroke.
-                        // again, this calls for special treatment
-                        precedingStartX = stroke.Playerposition.Equals(double.NaN) ? 0 : GetAdjustedX(stroke, precedingStroke.Playerposition);
-                        precedingStartY = GetSecondStrokePrecedingStartY(); // this cannot be generalized, both small and large view return different (even opposing) values
+                        precedingStartX = GetAdjustedX(stroke, placementSecondPreceding.WX);
+                        precedingStartY = GetAdjustedY(stroke, placementSecondPreceding.WY);
                     }
                     else
                     {
-                        // the preceding stroke was not a service stroke, i.e. it has at least one other preceding stroke
-                        // whose placement (WX, WY) we can take for an approximation of this strokes starting point
-                        precedingStartX = GetAdjustedX(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WX);
-                        precedingStartY = GetAdjustedY(stroke, stroke.Rally.Strokes[stroke.Number - 3].Placement.WY);
-                    }
+                        // no valid values of the second preceding stroke given - we won't be able to extrapolate beginning to end
+                        precedingStartX = double.MinValue;
+                        precedingStartY = double.MinValue;
+                    }   
+                }
 
+                if (PlacementValuesValid(precedingStroke.Placement))
+                {
                     // the end point for this strokes starting point approximation is always the preceding stroke's placement
                     precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
                     precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
+                }
+                else
+                    // no valid values of the immediate preceding stroke - we don't know where this stroke should start from!
+                    throw new NoStrokeStartingPointException("no endpoint of preceding stroke - unable to set start of this stroke");
 
+                //if (ShowDebug)
+                //    AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
 
-                    //if (ShowDebug)
-                    //    AddDebugLine(stroke, precedingStartX, precedingStartY, precedingEndX, precedingEndY, false);
-
-                    // depending on whether we draw the stroke from top to bottom or vice versa, the stroke will start at Y '0' (top)
+                if (precedingStartX != double.MinValue && precedingStartY != double.MinValue)
+                {
+                    if (precedingStartY == precedingEndY)
+                        tempY = precedingEndY; // means the preceding stroke didn't change the Y coordinate -> reserved for special cases (e.g. horizontal strokes in Legend)
+                    else
+                    // Depending on whether we draw the stroke from top to bottom or vice versa, the stroke will start at Y '0' (top)
                     // or the height of the grid the stroke is going to be added to (bottom).
                     // in the case that its point of contact is OVER the table, we need the height of the previous stroke (we add/subtract arbitrarilly '30' for realism)
-                    if (precedingStartY > precedingEndY)    // bottom -> top
-                        Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
-                    else if (precedingStartY < precedingEndY)
-                        Y1 = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+                    // At this point, precedingEndY has a sensible value, else an exception would have been thrown earlier.
+                    if (IsStrokeBottomToTop(stroke))
+                        tempY = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
                     else
-                        Y1 = precedingEndY; // means the preceding stroke didn't change the Y coordinate -> reserved for special cases (e.g. horizontal strokes in Legend)
+                        tempY = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
 
                     // now we have the starting and end point (both X and Y) of the previous stroke and the height at which this stroke should end
                     // -> extrapolate its X-coordinate
                     if (precedingStartY != precedingEndY)
-                        X1 = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, Y1);
+                        tempX = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, tempY);
                     else
-                        X1 = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;    // equal preceding stroke's Y coordinate -> horizontal
+                        tempX = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;    // equal preceding stroke's Y coordinate -> horizontal
 
                     //if (ShowDebug)
                     //    AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
                 }
-                x = X1; y = Y1;
+                else
+                {
+                    // we don't know where the preceding stroke originated so we base this stroke's start point on the
+                    // preceding stroke's exact end point (Placement)
+                    tempX = precedingEndX;
+                    tempY = precedingEndY;
+                }
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
+            x = tempX;
+            y = tempY;
         }
 
         private void GetEndPointOfStroke(Stroke stroke, double startPointX, double startPointY, out double x, out double y)
@@ -997,15 +1012,20 @@ namespace TT.Viewer.Views
             }
             else
             {
-                // this stroke's end is always the exact position of its placement
-                x = GetAdjustedX(stroke, stroke.Placement.WX);
-                y = GetAdjustedY(stroke, stroke.Placement.WY);
+                if (PlacementValuesValid(stroke.Placement))
+                {
+                    // this stroke's end is always the exact position of its placement
+                    x = GetAdjustedX(stroke, stroke.Placement.WX);
+                    y = GetAdjustedY(stroke, stroke.Placement.WY);                    
+                }
+                else
+                    throw new NoStrokeEndPointException("invalid Placement of stroke " + stroke.Number + " in rally " + stroke.Rally.Number + ": x=" + (stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]") + " y=" + (stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]"));
             }
         }
 
         /// <summary>
-        /// Not 100% sure why, but we need this method - small and large table need exact opposite values,
-        /// but only for second stroke
+        /// Not 100% sure why, but we need this method - small and large table need exactly opposite values,
+        /// but only for second stroke.
         /// </summary>
         protected abstract double GetSecondStrokePrecedingStartY();
 
@@ -1126,6 +1146,7 @@ namespace TT.Viewer.Views
 
         protected bool IsStrokeBottomToTop(Stroke stroke)
         {
+            // TODO loop through all stroke in rally
             Stroke firstStrokeOfRally = stroke.Rally.Strokes[0];
             if (firstStrokeOfRally.Placement.WY.Equals(double.NaN))
             {

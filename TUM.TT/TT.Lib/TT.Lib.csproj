@@ -194,6 +194,7 @@
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\ActiveRallyChangedEvent.cs" />
     <Compile Include="Events\WebBrowserEvent.cs" />
+    <Compile Include="Exceptions\NoStrokeEndPointException.cs" />
     <Compile Include="Exceptions\NoStrokeStartingPointException.cs" />
     <Compile Include="Interactivity\FocusBehavior.cs" />
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
