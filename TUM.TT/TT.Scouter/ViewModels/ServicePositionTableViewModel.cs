@@ -12,82 +12,75 @@ namespace TT.Scouter.ViewModels
         public Models.Stroke Stroke { get; set; }
 
         #region PointOfContact Properties
-        private bool _left;
-        public bool left
+        private bool _poc;
+        public bool poc
         {
-            get { return _left; }
+            get { return _poc; }
             set
             {
-                _left = value;
-                NotifyOfPropertyChange("left");
+                _poc = value;
+                NotifyOfPropertyChange("poc");
             }
         }
 
-        private bool _midleft;
-        public bool midleft
+        private bool _pocActive;
+        public bool pocActive
         {
-            get { return _midleft; }
+            get { return _pocActive; }
             set
             {
-                _midleft = value;
-                NotifyOfPropertyChange("midleft");
+                _pocActive = value;
+                NotifyOfPropertyChange("pocActive");
             }
         }
 
-        private bool _mid;
-        public bool mid
+        private Thickness _pocThickness;
+        public Thickness pocThickness
         {
-            get { return _mid; }
+            get { return _pocThickness; }
             set
             {
-                _mid = value;
-                NotifyOfPropertyChange("mid");
-            }
-        }
-
-        private bool _midright;
-        public bool midright
-        {
-            get { return _midright; }
-            set
-            {
-                _midright = value;
-                NotifyOfPropertyChange("midright");
-            }
-        }
-
-        private bool _right;
-        public bool right
-        {
-            get { return _right; }
-            set
-            {
-                _right = value;
-                NotifyOfPropertyChange("right");
+                _pocThickness = value;
+                NotifyOfPropertyChange("pocThickness");
             }
         }
         #endregion
 
         #region Placement Properties
-        private bool _showTopTable;
-        public bool showTopTable
+
+        private double canvasWidth = 338;
+        private double canvasHeight = 594;
+
+        private Visibility _placementVisibilty;
+        public Visibility placementVisibilty
         {
-            get { return _showTopTable; }
+            get { return _placementVisibilty; }
             set
             {
-                _showTopTable = value;
-                NotifyOfPropertyChange("showTopTable");
+                _placementVisibilty = value;
+                NotifyOfPropertyChange("placementVisibilty");
             }
         }
 
-        private bool _showBotTable;
-        public bool showBotTable
+        private double _widthHeight;
+        public double widthHeight
         {
-            get { return _showBotTable; }
+            get { return _widthHeight; }
             set
             {
-                _showBotTable = value;
-                NotifyOfPropertyChange("showBotTable");
+                _widthHeight = value;
+                NotifyOfPropertyChange("widthHeight");
+            }
+        }
+
+        private Thickness _currentPlacementPosition;
+        public Thickness currentPlacementPosition
+        {
+            get { return _currentPlacementPosition; }
+            set
+            {
+                _currentPlacementPosition = value;
+                NotifyOfPropertyChange("currentPlacementPosition");
             }
         }
 
@@ -291,6 +284,78 @@ namespace TT.Scouter.ViewModels
 
         #endregion
 
+        #region top_bot
+
+        private bool _showTopTable;
+        public bool showTopTable
+        {
+            get { return _showTopTable; }
+            set
+            {
+                _showTopTable = value;
+                if (_showTopTable) heightBotRow = 50; else heightBotRow = 0;
+                NotifyOfPropertyChange("showTopTable");
+            }
+        }
+
+        private bool _showBotTable;
+        public bool showBotTable
+        {
+            get { return _showBotTable; }
+            set
+            {
+                _showBotTable = value;
+                if (_showBotTable) heightTopRow = 50; else heightTopRow = 0;
+                NotifyOfPropertyChange("showBotTable");
+            }
+        }
+
+        private double _heightTopRow;
+        public double heightTopRow
+        {
+            get { return _heightTopRow; }
+            set
+            {
+                _heightTopRow = value;
+                NotifyOfPropertyChange("heightTopRow");
+            }
+        }
+
+        private double _heightBotRow;
+        public double heightBotRow
+        {
+            get { return _heightBotRow; }
+            set
+            {
+                _heightBotRow = value;
+                NotifyOfPropertyChange("heightBotRow");
+            }
+        }
+
+        private double _widthTopColumn;
+        public double widthTopColumn
+        {
+            get { return _widthTopColumn; }
+            set
+            {
+                _widthTopColumn = value;
+                NotifyOfPropertyChange("widthTopColumn");
+            }
+        }
+
+        private double _widthBotColumn;
+        public double widthBotColumn
+        {
+            get { return _widthBotColumn; }
+            set
+            {
+                _widthBotColumn = value;
+                NotifyOfPropertyChange("widthBotColumn");
+            }
+        }
+
+        #endregion
+
         public ServicePositionTableViewModel(Models.Stroke s, IMatchManager m)
         {
             Stroke = s;
@@ -300,15 +365,19 @@ namespace TT.Scouter.ViewModels
                 CheckPlayerPosition(s.Playerposition);
 
             if (s.Player == Models.MatchPlayer.First)
-                showTopTable = (m.Match.FirstPlayer.StartingTableEnd == Models.StartingTableEnd.Top);
+                showTopTable = !(m.CurrentTableEndFirstPlayer == Models.CurrentTableEnd.Top);
             else
-                showTopTable = (m.Match.SecondPlayer.StartingTableEnd == Models.StartingTableEnd.Top);
+                showTopTable = !(m.CurrentTableEndSecondPlayer == Models.CurrentTableEnd.Top);
             showBotTable = !showTopTable;
 
             if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))
-                makeAllFalse();
+                uncheckAllRadioButtons();
             else
-                makeRightRight(new Point(s.Placement.WX, s.Placement.WY));
+                checkRadioButtonAtFieldPosition(new Point(s.Placement.WX, s.Placement.WY));
+
+            // For Ball Placement
+            widthHeight = 20;
+            placementVisibilty = Visibility.Hidden;
         }
 
 
@@ -317,57 +386,38 @@ namespace TT.Scouter.ViewModels
         {
             if (position <= 0)
                 return;
-            else if (position <= 30.5)
-                left = true;
-            else if (position <= 61)
-                midleft = true;
-            else if (position <= 91.5)
-                mid = true;
-            else if (position <= 122)
-                midright = true;
-            else if (position > 122)
-                right = true;
+            else
+            {
+                poc = true;
+                pocActive = true;
+                pocThickness = new Thickness(0, 0,324-((double) position * (648/152.5)), 0);
+            }
         }
 
         public bool IsCheckPlayerPosition(double position)
         {
-            if (position >= 0 && position <= 30.5)
-                return left;
-            else if (position <= 61)
-                return midleft;
-            else if (position <= 91.5)
-                return mid;
-            else if (position <= 122)
-                return midright;
-            else if (position > 122)
-                return right;
+            if (position >= 0 && position < 152.5)
+                return poc;
             else
                 throw new System.Exception("Wrong Argument");
         }
 
         public void ChangePositionPlayer(object sender, MouseButtonEventArgs e)
         {
-            Grid grid = sender as Grid;
+            RadioButton grid = sender as RadioButton;
             Point position = e.GetPosition(grid);
             double playerPosition = (position.X / grid.ActualWidth * 152.5);
             if (IsCheckPlayerPosition(playerPosition))
             {
                 Stroke.Playerposition = double.NaN;
-                UncheckAllPlayerPositions();
-            }else {
+                poc = false;
+                pocActive = false;
+            }
+            else {
                 Stroke.Playerposition = playerPosition;
-                UncheckAllPlayerPositions();
+                poc = false;
                 CheckPlayerPosition(playerPosition);
             }
-        }
-
-        public void UncheckAllPlayerPositions()
-        {
-            left = false;
-            midleft = false;
-            mid = false;
-            midright = false;
-            right = false;
         }
 
         #endregion
@@ -377,9 +427,17 @@ namespace TT.Scouter.ViewModels
 
         public void OnPlacementChanged(object sender, EventArgs e)
         {
-            makeAllFalse();
+            uncheckAllRadioButtons();
 
-            makeRightRight(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
+            double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
+            double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
+            double left = x - (widthHeight / 2);
+            double top = y - (widthHeight / 2);
+            currentPlacementPosition = new Thickness(left, top, 0, 0);
+
+            checkRadioButtonAtFieldPosition(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
+
+            placementVisibilty = Visibility.Visible;
         }
 
         public void GridClicked(object sender, MouseButtonEventArgs e)
@@ -390,7 +448,7 @@ namespace TT.Scouter.ViewModels
             ChangePositionStroke(fieldPosition.X, fieldPosition.Y);
         }
 
-        private void makeAllFalse()
+        private void uncheckAllRadioButtons()
         {
             placeTopLeft_top = false;
             placeTopMid_top = false;
@@ -411,7 +469,7 @@ namespace TT.Scouter.ViewModels
             placeTopMid_bot = false;
             placeTopLeft_bot = false;
         }
-        private void makeRightRight(Point fieldPosition)
+        private void checkRadioButtonAtFieldPosition(Point fieldPosition)
         {
             if (fieldPosition.X < 51 && fieldPosition.Y < 46)
                 placeTopLeft_top = true;

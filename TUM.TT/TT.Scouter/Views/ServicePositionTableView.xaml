@@ -35,32 +35,35 @@
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="{Binding Path=heightTopRow}"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="{Binding Path=heightBotRow}"/>
                 </Grid.RowDefinitions>
-            <Grid Grid.Row="4" Grid.Column="1" IsHitTestVisible="True" Background="Black"  cal:Message.Attach="[Event MouseDown] = [Action ChangePositionPlayer($source, $eventargs)]">
+            <Grid Grid.Row="4" Grid.Column="1" Visibility="{Binding showTopTable, Converter={StaticResource converter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                <RadioButton x:Name="Left" GroupName="Server" Style="{StaticResource MetroAccentFlatGrayRadio}" IsHitTestVisible="False" Grid.Row="1" Grid.Column="0"  IsChecked="{Binding left}"/>
-                <RadioButton x:Name="HalfLeft" GroupName="Server" Style="{StaticResource MetroAccentFlatGrayRadio}" IsHitTestVisible="False" Grid.Row="1" Grid.Column="1" IsChecked="{Binding midleft}"/>
-                <RadioButton x:Name="Mid" GroupName="Server" Style="{StaticResource MetroAccentFlatGrayRadio}" IsHitTestVisible="False" Grid.Row="1" Grid.Column="2" IsChecked="{Binding mid}"/>
-                <RadioButton x:Name="HalfRight" GroupName="Server" Style="{StaticResource MetroAccentFlatGrayRadio}" IsHitTestVisible="False" Grid.Row="1" Grid.Column="3" IsChecked="{Binding midright}"/>
-                <RadioButton x:Name="Right" GroupName="Server" Style="{StaticResource MetroAccentFlatGrayRadio}"  IsHitTestVisible="False" Grid.Row="1" Grid.Column="4" IsChecked="{Binding right}"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="bot" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="0" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]"/>
+                <Rectangle Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
             </Grid>
 
-                <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
+            <Grid Grid.Row="0" Grid.Column="1" Visibility="{Binding showBotTable, Converter={StaticResource converter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <RadioButton x:Name="top" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]"/>
+                <Rectangle Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
+            </Grid>
+
+            <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}">
                 <Grid Name="InnerFieldGrid" Background="{DynamicResource AccentColorBrush}" IsHitTestVisible="True" cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]" >
                     <Grid.RowDefinitions>
                         <RowDefinition />
