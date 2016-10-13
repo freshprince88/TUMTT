@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using TT.Models;
 
@@ -302,6 +303,10 @@ namespace TT.Viewer.Views
             StrokeShapes.Clear();
             SelectedStroke = null;
 
+            var brusConverter = new BrushConverter();
+            Brush player1brush = (Brush)brusConverter.ConvertFromString("#804F81BD");
+            Brush player2brush = (Brush)brusConverter.ConvertFromString("#80C0504D");
+
             // add new lists of shapes for each stroke and also the strokes themselves 
             // (at this point the actual size of this view should be set)
             foreach (Stroke s in strokes)
@@ -315,6 +320,16 @@ namespace TT.Viewer.Views
                 AddStrokesDirectionShapes(s);
                 AddInterceptArrows(s);
                 AddStrokesArrowtips(s);
+
+                foreach (Shape shape in StrokeShapes[s])
+                {
+                    ToolTip tt = new ToolTip();
+                    tt.Background = s.Rally.Winner == MatchPlayer.First ? player1brush : player2brush;
+                    tt.Content = "#" + s.Rally.Number + " " +
+                        s.Rally.CurrentRallyScore.First + ":" + s.Rally.CurrentRallyScore.Second + " " +
+                        "(" + s.Rally.CurrentSetScore.First + ":" + s.Rally.CurrentSetScore.Second + ")";
+                    shape.ToolTip = tt;
+                }
             }
         }
     }
