@@ -166,185 +166,191 @@ namespace TT.Viewer.Views
             
             bool isServiceStroke = stroke.Number == 1;
             bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
-
+            
+            double X1, X2, Y1, Y2;
+            X1 = Y1 = -1;
             try
             {
-                double X1, X2, Y1, Y2;
-                X1 = Y1 = -1;
-                try
-                {
-                    GetStartPointOfStroke(stroke, out X1, out Y1);
-                    if (isNetOrOut)
-                        GetEndPointOfStrokeNetOrOut(stroke, X1, Y1, out X2, out Y2);
-                    else
-                        GetEndPointOfStroke(stroke, out X2, out Y2);
-                } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
-                {
-                    Debug.WriteLine("Adding direction to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
-                    return;
-                }
-
-                // now we have this stroke's start and end => get the shape (depends mostly on stroke technique)
-                if (isServiceStroke || isNetOrOut)
-                    shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+                GetStartPointOfStroke(stroke, out X1, out Y1);
+                if (isNetOrOut)
+                    GetEndPointOfStrokeNetOrOut(stroke, X1, Y1, out X2, out Y2);
                 else
-                    if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
-                    shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
-                else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
-                    shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
-                else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Chop)
-                    shape = GetChopShape(stroke, X1, Y1, X2, Y2);
-                else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Lob)
-                    shape = GetLobShape(stroke, X1, Y1, X2, Y2);
-                else
-                    shape = GetLineShape(stroke, X1, Y1, X2, Y2);
-
-                // tag is needed to identify this shape in our map of strokes to shapes
-                shape.Tag = ShapeType.Direction;
-
-                shape.StrokeThickness = StrokeThickness;
-
-                // if this view needs to receive event notifications when user interacts with the stroke shape
-                AttachEventHandlerToShape(shape, stroke);
-
-                // add the shape to our map so we can find it later
-                StrokeShapes[stroke].Add(shape);
-
-                // apply style (also depends mostly on stroke technique, but also side - forehand/backhand - and other)
-                ApplyStyle(stroke, shape);
-
-                // now add it to the respective grid
-                GetGridForStroke(stroke).Children.Add(shape);
-
-                // hide it immediately, if the "Direction" checkbox is unchecked
-                if (!ShowDirection)
-                    shape.Visibility = Visibility.Hidden;
-            }
-            catch (Exception e)
+                    GetEndPointOfStroke(stroke, out X2, out Y2);
+            } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
             {
-                Debug.WriteLine(e);
+                Debug.WriteLine("Adding direction to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
+                return;
             }
+
+            // now we have this stroke's start and end => get the shape (depends mostly on stroke technique)
+            if (isServiceStroke || isNetOrOut)
+                shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+            else
+                if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip || stroke.Stroketechnique.Option == StrokeAttrTechniqueOptionBanana)
+                shape = GetBananaShape(stroke, X1, Y1, X2, Y2);
+            else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Topspin)
+                shape = GetTopSpinShape(stroke, X1, Y1, X2, Y2);
+            else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Chop)
+                shape = GetChopShape(stroke, X1, Y1, X2, Y2);
+            else if (stroke.Stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Lob)
+                shape = GetLobShape(stroke, X1, Y1, X2, Y2);
+            else
+                shape = GetLineShape(stroke, X1, Y1, X2, Y2);
+
+            // tag is needed to identify this shape in our map of strokes to shapes
+            shape.Tag = ShapeType.Direction;
+
+            shape.StrokeThickness = StrokeThickness;
+
+            // if this view needs to receive event notifications when user interacts with the stroke shape
+            AttachEventHandlerToShape(shape, stroke);
+
+            // add the shape to our map so we can find it later
+            StrokeShapes[stroke].Add(shape);
+
+            // apply style (also depends mostly on stroke technique, but also side - forehand/backhand - and other)
+            ApplyStyle(stroke, shape);
+
+            // now add it to the respective grid
+            GetGridForStroke(stroke).Children.Add(shape);
+
+            // hide it immediately, if the "Direction" checkbox is unchecked
+            if (!ShowDirection)
+                shape.Visibility = Visibility.Hidden;
         }
 
         protected void AddInterceptArrows(Stroke stroke)
         {
+            // if "Intercept" checkbox isn't checked (or some other reason), do nothing
             if (!ShowInterceptForStroke(stroke))
                 return;
 
+            // first look for intercept shapes already in out map, if there are some, display them and return
             List<Shape> interceptShapes = StrokeShapes[stroke].FindAll(s => (ShapeType)s.Tag == ShapeType.Intercept);
-            if (interceptShapes != null && interceptShapes.Count != 0)
+            if (interceptShapes != null && interceptShapes.Count > 0)
             {
                 foreach (Shape interceptShape in interceptShapes)
                     interceptShape.Visibility = Visibility.Visible;
                 return;
-            }           
-             
-            bool isServiceStroke = stroke.Number == 1;
-            if (PlacementValuesValid(stroke.Placement))
+            }
+
+            // no intercept shapes for stroke that went net/out or are winner strokes (have no successors)
+            if (stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut || stroke.Number >= stroke.Rally.Strokes.Count)
+                return;
+
+            Stroke followingStroke = stroke.Rally.Strokes[stroke.Number];
+            Grid followingStrokeGrid = GetGridForStroke(followingStroke);
+
+            double X1, Y1, X2, Y2;
+
+            // if there is already a direction shape painted, get the start and end point from it
+            Shape directionShape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+            if (directionShape != null)
             {
-                foreach (Shape shape in StrokeShapes[stroke])
+                GetPointOfShapeRelativeToGrid(directionShape, PointType.Start, followingStrokeGrid, out X1, out Y1);
+                GetPointOfShapeRelativeToGrid(directionShape, PointType.End, followingStrokeGrid, out X2, out Y2);
+            }
+            else
+            {
+                // else try getting start and end point of this stroke 'manually'
+                try
                 {
-                    if ((ShapeType)shape.Tag == ShapeType.Direction)
-                    {
-                        if (stroke.Number >= stroke.Rally.Strokes.Count)
-                            return;
-
-                        Stroke followingStroke = stroke.Rally.Strokes[stroke.Number];
-                        Grid followingStrokeGrid = GetGridForStroke(followingStroke);
-
-                        double x1, y1, x2, y2;
-                        GetPointOfShapeRelativeToGrid(shape, PointType.Start, followingStrokeGrid, out x1, out y1);
-                        GetPointOfShapeRelativeToGrid(shape, PointType.End, followingStrokeGrid, out x2, out y2);
-
-                        double xE, yE;
-
-                        if (y1 > y2)
-                            yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 - 30 : 0;
-                        else if (y1 < y2)
-                            yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? y2 + 30 : followingStrokeGrid.ActualHeight;
-                        else
-                            yE = y2;
-
-                        if (y1 != y2)
-                            xE = GetLinearContinuationX(x1, y1, x2, y2, yE);
-                        else
-                            xE = x2 > x1 ? followingStrokeGrid.ActualWidth : 0;
-
-                        if (xE.Equals(double.NaN) || yE.Equals(double.NaN))
-                        {
-                            Debug.WriteLine("Intercept: NaN extrapolated values (xE={2} yE={3}) for stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number, xE, yE);
-                            return;
-                        }
-
-                        // line
-                        Line interceptLine = new Line();
-                        interceptLine.X1 = x2;
-                        interceptLine.Y1 = y2;
-                        interceptLine.X2 = xE;
-                        interceptLine.Y2 = yE;
-
-                        interceptLine.Tag = ShapeType.Intercept;
-                        interceptLine.StrokeThickness = StrokeThicknessIntercept;
-
-                        DoubleCollection dashes = new DoubleCollection();
-                        dashes.Add(1);
-                        interceptLine.StrokeDashArray = dashes;
-
-                        ApplyStyle(stroke, interceptLine);
-
-                        AttachEventHandlerToShape(interceptLine, stroke);
-
-                        StrokeShapes[stroke].Add(interceptLine);
-
-                        if (!ShowIntercept)
-                            interceptLine.Visibility = Visibility.Hidden;
-
-                        followingStrokeGrid.Children.Add(interceptLine);
-                        // ---
-
-                        // arrow tip
-                        PathGeometry arrowTipGeometry = new PathGeometry();
-
-                        PathFigure pathFigure = new PathFigure();
-                        pathFigure.IsClosed = true;
-                        pathFigure.StartPoint = new Point(xE - 1.5, yE - 3.5);
-
-                        LineSegment ltt = new LineSegment(new Point(xE, yE), true);
-                        pathFigure.Segments.Add(ltt);
-
-                        LineSegment ttr = new LineSegment(new Point(xE + 1.5, yE - 3.5), true);
-                        pathFigure.Segments.Add(ttr);
-
-                        double theta = Math.Atan2((yE - y2), (xE - x2)) * 180 / Math.PI;
-                        RotateTransform transform = new RotateTransform();
-                        transform.Angle = theta - 90;
-                        transform.CenterX = xE;
-                        transform.CenterY = yE;
-                        arrowTipGeometry.Transform = transform;
-
-                        arrowTipGeometry.Figures.Add(pathFigure);
-
-                        Path interceptArrowTip = new Path();
-                        interceptArrowTip.Data = arrowTipGeometry;
-                        interceptArrowTip.Tag = ShapeType.Intercept;
-                        interceptArrowTip.StrokeThickness = StrokeThicknessIntercept;
-
-                        ApplyStyle(stroke, interceptArrowTip);
-
-                        AttachEventHandlerToShape(interceptArrowTip, stroke);
-
-                        StrokeShapes[stroke].Add(interceptArrowTip);
-
-                        if (!ShowIntercept)
-                            interceptArrowTip.Visibility = Visibility.Hidden;
-
-                        followingStrokeGrid.Children.Add(interceptArrowTip);
-                        // ---
-
-                        return;
-                    }
+                    GetStartPointOfStroke(stroke, out X1, out Y1);
+                    GetEndPointOfStroke(stroke, out X2, out Y2);
+                } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
+                {
+                    Debug.WriteLine("Adding intercept arrow to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
+                    return;
                 }
             }
+            
+            double xE, yE;
+
+            // 'extrapolate' y-coordinate (usually 0 or height of grid or some arbitrary point on the table if the contact point was 'Over'
+            if (Y1 > Y2)
+                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 - 30 : 0;
+            else if (Y1 < Y2)
+                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 + 30 : followingStrokeGrid.ActualHeight;
+            else
+                yE = Y2;    // special case: horizontal stroke (e.g. legend view)
+
+            if (Y1 != Y2)
+            {
+                // extrapolate x-coordinate (linear continuation)
+                xE = GetLinearContinuationX(X1, Y1, X2, Y2, yE);
+                if (xE.Equals(double.NaN))
+                {
+                    Debug.WriteLine("Adding intercept arrow to stroke {0} of rally {1} failed (NaN extrapolated value (xE={2})", stroke.Number, stroke.Rally.Number, xE);
+                    return;
+                }
+            }
+            else
+                xE = X2 > X1 ? followingStrokeGrid.ActualWidth : 0; // special case: horizontal stroke (e.g. legend view)
+
+            // line shape part of intercept arrow
+            Line interceptLine = new Line();
+            interceptLine.X1 = X2;
+            interceptLine.Y1 = Y2;
+            interceptLine.X2 = xE;
+            interceptLine.Y2 = yE;
+
+            interceptLine.Tag = ShapeType.Intercept;
+            interceptLine.StrokeThickness = StrokeThicknessIntercept;
+
+            DoubleCollection dashes = new DoubleCollection();
+            dashes.Add(1);
+            interceptLine.StrokeDashArray = dashes;
+
+            ApplyStyle(stroke, interceptLine);
+
+            AttachEventHandlerToShape(interceptLine, stroke);
+
+            StrokeShapes[stroke].Add(interceptLine);
+
+            if (!ShowIntercept)
+                interceptLine.Visibility = Visibility.Hidden;
+
+            followingStrokeGrid.Children.Add(interceptLine);
+            // ---
+
+            // arrow tip part of intercept arrow
+            PathGeometry arrowTipGeometry = new PathGeometry();
+
+            PathFigure pathFigure = new PathFigure();
+            pathFigure.IsClosed = true;
+            pathFigure.StartPoint = new Point(xE - 1.5, yE - 3.5);
+
+            LineSegment ltt = new LineSegment(new Point(xE, yE), true);
+            pathFigure.Segments.Add(ltt);
+
+            LineSegment ttr = new LineSegment(new Point(xE + 1.5, yE - 3.5), true);
+            pathFigure.Segments.Add(ttr);
+
+            double theta = Math.Atan2((yE - Y2), (xE - X2)) * 180 / Math.PI;
+            RotateTransform transform = new RotateTransform();
+            transform.Angle = theta - 90;
+            transform.CenterX = xE;
+            transform.CenterY = yE;
+            arrowTipGeometry.Transform = transform;
+
+            arrowTipGeometry.Figures.Add(pathFigure);
+
+            Path interceptArrowTip = new Path();
+            interceptArrowTip.Data = arrowTipGeometry;
+            interceptArrowTip.Tag = ShapeType.Intercept;
+            interceptArrowTip.StrokeThickness = StrokeThicknessIntercept;
+
+            ApplyStyle(stroke, interceptArrowTip);
+
+            AttachEventHandlerToShape(interceptArrowTip, stroke);
+
+            StrokeShapes[stroke].Add(interceptArrowTip);
+
+            if (!ShowIntercept)
+                interceptArrowTip.Visibility = Visibility.Hidden;
+
+            followingStrokeGrid.Children.Add(interceptArrowTip);
+            // ---            
         }
 
         protected void AddDebugLine(Stroke stroke, double precedingStartX, double precedingStartY, double precedingEndX, double precedingEndY, bool dashed)
@@ -377,101 +383,101 @@ namespace TT.Viewer.Views
                 return;
             }
 
-            else
+            Grid gridOfStroke = GetGridForStroke(stroke);
+            double X1, X2, Y1, Y2;
+
+            try
             {
-                Grid gridOfStroke = GetGridForStroke(stroke);
-                double X1, X2, Y1, Y2;
-
-                try
-                {
-                    Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
-                    if (stroke.Number == 1 || shape == null)
-                        GetStartPointOfStroke(stroke, out X1, out Y1);
-                    else
-                        GetPointOfShapeRelativeToGrid(shape, PointType.Middle, gridOfStroke, out X1, out Y1);
-                } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
-                {
-                    Debug.WriteLine("Adding arrowtips to stroke {0} of rally {1} inaccurate ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
-                    X1 = Y1 = -1;
-                }
-
-                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
-                try
-                {
-                    if (isNetOrOut)
-                        GetEndPointOfStrokeNetOrOut(stroke, X1, Y1, out X2, out Y2);
-                    else
-                        GetEndPointOfStroke(stroke, out X2, out Y2);
-                } catch (NoStrokeEndPointException ex)
-                {
-                    Debug.WriteLine("Adding arrowtips to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
-                    return;
-                }
-
-                PathGeometry arrowTipGeometry = new PathGeometry();
-                PathFigure pathFigure = new PathFigure();
-
-                if (isNetOrOut)
-                {
-                    pathFigure.StartPoint = new Point(X2, Y2 - 6);
-
-                    LineSegment ttb = new LineSegment(new Point(X2, Y2 + 6), true);
-                    pathFigure.Segments.Add(ttb);
-
-                    arrowTipGeometry.Figures.Add(pathFigure);
-
-                    pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(X2 - 6, Y2);
-
-                    LineSegment ltr = new LineSegment(new Point(X2 + 6, Y2), true);
-                    pathFigure.Segments.Add(ltr);
-
-                    arrowTipGeometry.Figures.Add(pathFigure);
-
-                    arrowTipGeometry.Transform = new RotateTransform(45, X2, Y2);
-                }
+                Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Direction);
+                if (stroke.Number == 1 || shape == null)
+                    GetStartPointOfStroke(stroke, out X1, out Y1);
                 else
-                {
-                    pathFigure = new PathFigure();
-                    pathFigure.IsClosed = true;
-                    pathFigure.StartPoint = new Point(X2 - 3, Y2 - 3);
+                    GetPointOfShapeRelativeToGrid(shape, PointType.Middle, gridOfStroke, out X1, out Y1);
+            } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
+            {
+                Debug.WriteLine("Adding arrowtips to stroke {0} of rally {1} inaccurate ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
+                X1 = Y1 = -1;
+            }
 
-                    LineSegment ltt = new LineSegment(new Point(X2, Y2), true);
-                    pathFigure.Segments.Add(ltt);
+            bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
+            try
+            {
+                if (isNetOrOut)
+                    GetEndPointOfStrokeNetOrOut(stroke, X1, Y1, out X2, out Y2);
+                else
+                    GetEndPointOfStroke(stroke, out X2, out Y2);
+            } catch (NoStrokeEndPointException ex)
+            {
+                Debug.WriteLine("Adding arrowtips to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
+                return;
+            }
 
-                    LineSegment ttr = new LineSegment(new Point(X2 + 3, Y2 - 3), true);
-                    pathFigure.Segments.Add(ttr);
+            PathGeometry arrowTipGeometry = new PathGeometry();
+            PathFigure pathFigure = new PathFigure();
 
-                    if (X1 != -1 && Y1 != -1)
-                    {
-                        double theta = Math.Atan2((Y2 - Y1), (X2 - X1)) * 180 / Math.PI;
-                        arrowTipGeometry.Transform = new RotateTransform(theta - 90, X2, Y2);
-                    }
-                    else
-                        arrowTipGeometry.Transform = new RotateTransform(Y2 > 137 ? 0 : 180, X2, Y2);
-                }
+            if (isNetOrOut)
+            {
+                // rotated cross shape
+
+                pathFigure.StartPoint = new Point(X2, Y2 - 6);
+
+                LineSegment ttb = new LineSegment(new Point(X2, Y2 + 6), true);
+                pathFigure.Segments.Add(ttb);
 
                 arrowTipGeometry.Figures.Add(pathFigure);
 
-                strokeArrowTip = new Path();
-                ((Path)strokeArrowTip).Data = arrowTipGeometry;
-                strokeArrowTip.Tag = ShapeType.Arrowtip;
-                strokeArrowTip.StrokeThickness = StrokeThickness;
+                pathFigure = new PathFigure();
+                pathFigure.StartPoint = new Point(X2 - 6, Y2);
 
-                // ScaleTranform as RenderTransform for changing size of arrow tips later (with correct center point)
-                strokeArrowTip.RenderTransform = new ScaleTransform(1, 1, X2, Y2);
+                LineSegment ltr = new LineSegment(new Point(X2 + 6, Y2), true);
+                pathFigure.Segments.Add(ltr);
 
-                ApplyStyle(stroke, strokeArrowTip);
+                arrowTipGeometry.Figures.Add(pathFigure);
 
-                AttachEventHandlerToShape(strokeArrowTip, stroke);
-
-                StrokeShapes[stroke].Add(strokeArrowTip);
-
-                gridOfStroke.Children.Add(strokeArrowTip);
-
-                if (!ShowStroke(stroke))
-                    strokeArrowTip.Visibility = Visibility.Hidden;
+                arrowTipGeometry.Transform = new RotateTransform(45, X2, Y2);
             }
+            else
+            {
+                // triangle shape
+
+                pathFigure.StartPoint = new Point(X2 - 3, Y2 - 3);
+                pathFigure.IsClosed = true;
+
+                LineSegment ltt = new LineSegment(new Point(X2, Y2), true);
+                pathFigure.Segments.Add(ltt);
+
+                LineSegment ttr = new LineSegment(new Point(X2 + 3, Y2 - 3), true);
+                pathFigure.Segments.Add(ttr);
+
+                if (X1 != -1 && Y1 != -1)
+                {
+                    double theta = Math.Atan2((Y2 - Y1), (X2 - X1)) * 180 / Math.PI;
+                    arrowTipGeometry.Transform = new RotateTransform(theta - 90, X2, Y2);
+                }
+                else
+                    arrowTipGeometry.Transform = new RotateTransform(Y2 > 137 ? 0 : 180, X2, Y2);
+            }
+
+            arrowTipGeometry.Figures.Add(pathFigure);
+
+            strokeArrowTip = new Path();
+            ((Path)strokeArrowTip).Data = arrowTipGeometry;
+            strokeArrowTip.Tag = ShapeType.Arrowtip;
+            strokeArrowTip.StrokeThickness = StrokeThickness;
+
+            // ScaleTranform as RenderTransform for changing size of arrow tips later (with correct center point)
+            strokeArrowTip.RenderTransform = new ScaleTransform(1, 1, X2, Y2);
+
+            ApplyStyle(stroke, strokeArrowTip);
+
+            AttachEventHandlerToShape(strokeArrowTip, stroke);
+
+            StrokeShapes[stroke].Add(strokeArrowTip);
+
+            gridOfStroke.Children.Add(strokeArrowTip);
+
+            if (!ShowStroke(stroke))
+                strokeArrowTip.Visibility = Visibility.Hidden;
         }
 
         protected void AddServiceStrokesSpinShapes(Stroke stroke)
@@ -481,79 +487,80 @@ namespace TT.Viewer.Views
 
             Shape spinArrow = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.SpinShape);
             if (spinArrow != null)
+            {
                 spinArrow.Visibility = Visibility.Visible;
+                return;
+            }
 
+            double X1, Y1;
+            try
+            {
+                GetStartPointOfStroke(stroke, out X1, out Y1);
+                Y1 = View_InnerFieldSpinGrid.ActualHeight - 1;
+            }
+            catch (NoStrokeStartingPointException ex)
+            {
+                Debug.WriteLine("Adding spin arrow to service stroke of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
+                return;
+            }
+
+            if (stroke.Playerposition == double.MinValue)   // service stroke in legend
+                X1 = 0;
+
+            Geometry spinGeometry;
+
+            if (stroke.Spin == null || stroke.Spin.No == "1" || (stroke.Spin.SL == "1" && stroke.Spin.SR == "1"))
+            {
+                spinGeometry = new EllipseGeometry();
+                EllipseGeometry ellipseGeometry = (EllipseGeometry)spinGeometry;
+                ellipseGeometry.Center = new Point(X1, Y1 - 4);
+                ellipseGeometry.RadiusX = 3;
+                ellipseGeometry.RadiusY = 3;
+            }
             else
             {
-                double X1, Y1;
-                try
-                {
-                    GetStartPointOfStroke(stroke, out X1, out Y1);
-                    Y1 = View_InnerFieldSpinGrid.ActualHeight - 1;
-                } catch (NoStrokeStartingPointException ex)
-                {
-                    Debug.WriteLine("Adding spin arrow to service stroke of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
-                    return;
-                }
+                spinGeometry = new PathGeometry();
 
-                if (stroke.Playerposition == double.MinValue)   // service stroke in legend
-                    X1 = 0;
+                RotateTransform transform = new RotateTransform();
+                transform.Angle = GetRotationAngleForSpin(stroke.Spin);
+                transform.CenterX = X1;
+                transform.CenterY = Y1 - 4;
+                spinGeometry.Transform = transform;
 
-                Geometry spinGeometry;
+                PathFigure pathFigure = new PathFigure();
+                pathFigure.StartPoint = new Point(X1 - 3, Y1 - 5);
 
-                if (stroke.Spin == null || stroke.Spin.No == "1" || (stroke.Spin.SL == "1" && stroke.Spin.SR == "1"))
-                {
-                    spinGeometry = new EllipseGeometry();
-                    EllipseGeometry ellipseGeometry = (EllipseGeometry)spinGeometry;
-                    ellipseGeometry.Center = new Point(X1, Y1 - 4);
-                    ellipseGeometry.RadiusX = 3;
-                    ellipseGeometry.RadiusY = 3;
-                }
-                else
-                {
-                    spinGeometry = new PathGeometry();
+                LineSegment btt = new LineSegment(new Point(X1, Y1 - 8), true);
+                pathFigure.Segments.Add(btt);
 
-                    RotateTransform transform = new RotateTransform();
-                    transform.Angle = GetRotationAngleForSpin(stroke.Spin);
-                    transform.CenterX = X1;
-                    transform.CenterY = Y1 - 4;
-                    spinGeometry.Transform = transform;
+                LineSegment ttl = new LineSegment(new Point(X1 + 3, Y1 - 5), true);
+                pathFigure.Segments.Add(ttl);
 
-                    PathFigure pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(X1 - 3, Y1 - 5);
+                ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
 
-                    LineSegment btt = new LineSegment(new Point(X1, Y1 - 8), true);
-                    pathFigure.Segments.Add(btt);
+                pathFigure = new PathFigure();
+                pathFigure.StartPoint = new Point(X1, Y1);
 
-                    LineSegment ttl = new LineSegment(new Point(X1 + 3, Y1 - 5), true);
-                    pathFigure.Segments.Add(ttl);
+                LineSegment ttr = new LineSegment(new Point(X1, Y1 - 8), true);
+                pathFigure.Segments.Add(ttr);
 
-                    ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
-
-                    pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(X1, Y1);
-
-                    LineSegment ttr = new LineSegment(new Point(X1, Y1 - 8), true);
-                    pathFigure.Segments.Add(ttr);
-
-                    ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
-                }
-
-                spinArrow = new Path();
-                ((Path)spinArrow).Data = spinGeometry;
-                spinArrow.Tag = ShapeType.SpinShape;
-                spinArrow.Stroke = Brushes.Blue;
-                spinArrow.StrokeThickness = StrokeThicknessSpinArrow;
-
-                AttachEventHandlerToShape(spinArrow, stroke);
-
-                StrokeShapes[stroke].Add(spinArrow);
-
-                if (!ShowSpin)
-                    spinArrow.Visibility = Visibility.Hidden;
-
-                View_InnerFieldSpinGrid.Children.Add(spinArrow);
+                ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
             }
+
+            spinArrow = new Path();
+            ((Path)spinArrow).Data = spinGeometry;
+            spinArrow.Tag = ShapeType.SpinShape;
+            spinArrow.Stroke = Brushes.Blue;
+            spinArrow.StrokeThickness = StrokeThicknessSpinArrow;
+
+            AttachEventHandlerToShape(spinArrow, stroke);
+
+            StrokeShapes[stroke].Add(spinArrow);
+
+            if (!ShowSpin)
+                spinArrow.Visibility = Visibility.Hidden;
+
+            View_InnerFieldSpinGrid.Children.Add(spinArrow);
         }
 
         protected virtual bool ShowStroke(Stroke stroke)
@@ -881,7 +888,7 @@ namespace TT.Viewer.Views
             if (isServiceStroke)
             {
                 if (stroke.Playerposition.Equals(double.NaN))
-                    throw new NoStrokeStartingPointException("stroke is service and no playerposition was given");
+                    throw new NoStrokeStartingPointException("Stroke is service and no '" + nameof(stroke.Playerposition) + "' was given");
 
                 // double.MinValue as Playerposition indicates a service stroke in the Legend view
                 // since there the arrows are painted horizontally, we have to set special values here
@@ -910,7 +917,7 @@ namespace TT.Viewer.Views
                 {
                     // the immediate predecessor is a service stroke.
                     // again, this calls for special treatment
-                    precedingStartX = stroke.Playerposition.Equals(double.NaN) ? double.MinValue : GetAdjustedX(stroke, precedingStroke.Playerposition);
+                    precedingStartX = precedingStroke.Playerposition.Equals(double.NaN) ? double.MinValue : GetAdjustedX(stroke, precedingStroke.Playerposition);
                     precedingStartY = GetSecondStrokePrecedingStartY(); // GetAdjustedY doesn't help here
                 }
                 else
@@ -933,7 +940,7 @@ namespace TT.Viewer.Views
 
                 if (PlacementValuesValid(precedingStroke.Placement))
                 {
-                    // the end point for this strokes starting point approximation is always the preceding stroke's placement
+                    // the end point for this stroke's starting point approximation is always the preceding stroke's placement
                     precedingEndX = GetAdjustedX(stroke, precedingStroke.Placement.WX);
                     precedingEndY = GetAdjustedY(stroke, precedingStroke.Placement.WY);
                 }
@@ -973,6 +980,8 @@ namespace TT.Viewer.Views
                     // we don't know where the preceding stroke originated so we base this stroke's start point on the
                     // preceding stroke's exact end point (Placement). preceding stroke's Placement is valid or else
                     // an exception would have gotten thrown earlier
+                    Debug.WriteLine("Starting point of stroke {0} of rally {1} inaccurate (Start point of preceding stroke undefined - extrapolation impossible). " +
+                        "Settings starting point to placement of preceding stroke.", stroke.Number, stroke.Rally.Number);
                     tempX = precedingEndX;
                     tempY = precedingEndY;
                 }
@@ -1130,14 +1139,23 @@ namespace TT.Viewer.Views
 
         protected bool IsStrokeBottomToTop(Stroke stroke)
         {
-            // TODO loop through all stroke in rally
-            Stroke firstStrokeOfRally = stroke.Rally.Strokes[0];
-            if (firstStrokeOfRally.Placement.WY.Equals(double.NaN))
+            for (int i = 0; i < stroke.Rally.Strokes.Count; i++)
             {
-                Debug.WriteLine("first stroke of rally {0} has NaN Y-placement. assuming bottom-to-top direction.", stroke.Rally.Number);
-                return true;
+                Stroke iThStroke = stroke.Rally.Strokes[i];
+                if (!PlacementValuesValid(iThStroke.Placement))
+                    continue;
+
+                switch (i % 2)
+                {
+                    default:
+                    case 0: return stroke.Number % 2 == (iThStroke.Placement.WY < 137 ? 1 : 0);
+                    case 1: return stroke.Number % 2 == (iThStroke.Placement.WY < 137 ? 0 : 1);
+                }
             }
-            return stroke.Number % 2 == (firstStrokeOfRally.Placement.WY < 137 ? 1 : 0);
+
+            string direction = stroke.Number % 2 == 1 ? "bottom-to-top" : "top-to-bottom";
+            Debug.WriteLine("No strokes with valid placement found in rally {0}. Assuming {1} direction of stroke {2}.", stroke.Rally.Number, direction, stroke.Number);
+            return stroke.Number % 2 == 1;
         }
 
         #endregion
