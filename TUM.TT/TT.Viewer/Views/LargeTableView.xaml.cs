@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using TT.Lib.Converters;
 using TT.Models;
 
 namespace TT.Viewer.Views
@@ -42,6 +43,8 @@ namespace TT.Viewer.Views
         public override Grid View_InnerFieldSpinGrid { get { return InnerFieldSpinGrid; } }
 
         private Stroke SelectedStroke;
+
+        private static RallyWinnerToBrushConverter rallyWinnerToBrushConverter = new RallyWinnerToBrushConverter();
 
         public LargeTableView()
         {
@@ -303,10 +306,6 @@ namespace TT.Viewer.Views
             StrokeShapes.Clear();
             SelectedStroke = null;
 
-            var brusConverter = new BrushConverter();
-            Brush player1brush = (Brush)brusConverter.ConvertFromString("#804F81BD");
-            Brush player2brush = (Brush)brusConverter.ConvertFromString("#80C0504D");
-
             // add new lists of shapes for each stroke and also the strokes themselves 
             // (at this point the actual size of this view should be set)
             foreach (Stroke s in strokes)
@@ -324,7 +323,7 @@ namespace TT.Viewer.Views
                 foreach (Shape shape in StrokeShapes[s])
                 {
                     ToolTip tt = new ToolTip();
-                    tt.Background = s.Rally.Winner == MatchPlayer.First ? player1brush : player2brush;
+                    tt.Background = (Brush)rallyWinnerToBrushConverter.Convert(s.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
                     tt.Content = "#" + s.Rally.Number + " " +
                         s.Rally.CurrentRallyScore.First + ":" + s.Rally.CurrentRallyScore.Second + " " +
                         "(" + s.Rally.CurrentSetScore.First + ":" + s.Rally.CurrentSetScore.Second + ")";

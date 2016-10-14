@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using TT.Lib.Converters;
 using TT.Models;
 
 namespace TT.Viewer.Views
@@ -28,7 +29,11 @@ namespace TT.Viewer.Views
 
         protected const double ArrowtipScaleNoDirection = 1.5;
 
+        protected const string SelectedRallyBackgroundColor = "#e2e7e0";
+        protected const string HoveredRallyBackgroundColor = "#f0f5ed";
+
         private static BrushConverter brushConverter = new BrushConverter();
+        private static RallyWinnerToBrushConverter rallyWinnerToBrushConverter = new RallyWinnerToBrushConverter();
 
         private AutoResetEvent sizeChangedWaitEvent;
         private Rally thisRally;
@@ -120,7 +125,7 @@ namespace TT.Viewer.Views
 
             if (smallTableView.thisRally.Number == smallTableView.ActiveRally.Number)
             {
-                ((Grid)smallTableView.Parent).Background = (Brush)brushConverter.ConvertFrom("#e2e7e0");
+                ((Grid)smallTableView.Parent).Background = (Brush)brushConverter.ConvertFrom(SelectedRallyBackgroundColor);
             }
             else
             {
@@ -171,13 +176,17 @@ namespace TT.Viewer.Views
         private void SmallTable_MouseEnter(object sender, MouseEventArgs e)
         {
             Grid parentGrid = (Grid)((SmallTableView)((Grid)sender).Parent).Parent;
-            parentGrid.Background = (Brush)brushConverter.ConvertFrom("#e2e7e0");
+            parentGrid.Background = (Brush)brushConverter.ConvertFrom(HoveredRallyBackgroundColor);
         }
 
         private void SmallTable_MouseLeave(object sender, MouseEventArgs e)
         {
             Grid parentGrid = (Grid)((SmallTableView)((Grid)sender).Parent).Parent;
-            if (ActiveRally == null || ActiveRally.Number != thisRally.Number)
+            if (ActiveRally != null && ActiveRally.Number == thisRally.Number)
+            {
+                parentGrid.Background = (Brush)brushConverter.ConvertFrom(SelectedRallyBackgroundColor);
+            }
+            else
             {
                 parentGrid.Background = Brushes.Transparent;
             }
@@ -227,6 +236,13 @@ namespace TT.Viewer.Views
             AddInterceptArrows(stroke);
             AddStrokesArrowtips(stroke);
             AddStrokeNumbers(stroke);
+            
+            ToolTip tt = new ToolTip();
+            tt.Background = (Brush) rallyWinnerToBrushConverter.Convert(stroke.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
+            tt.Content = "#" + stroke.Rally.Number + " " +
+                stroke.Rally.CurrentRallyScore.First + ":" + stroke.Rally.CurrentRallyScore.Second + " " +
+                "(" + stroke.Rally.CurrentSetScore.First + ":" + stroke.Rally.CurrentSetScore.Second + ")";
+            TableGrid.ToolTip = tt;
         }
 
         private void AddStrokeNumbers(Stroke stroke)
@@ -236,60 +252,61 @@ namespace TT.Viewer.Views
 
             FrameworkElement strokeNumber = StrokeElements[stroke].Find(s => (ElementType)s.Tag == ElementType.StrokeNumber);
             if (strokeNumber != null)
-                strokeNumber.Visibility = Visibility.Visible;
-
-            else
             {
-                bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
-                if (PlacementValuesValid(stroke.Placement) || isNetOrOut)
-                {
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Text = stroke.Number.ToString();
-
-                    textBlock.Width = 12;
-                    textBlock.Height = 17;
-                    textBlock.HorizontalAlignment = HorizontalAlignment.Left;
-                    textBlock.VerticalAlignment = VerticalAlignment.Top;
-
-                    double X1, Y1;
-
-                    Grid gridOfStroke = GetGridForStroke(stroke);
-
-                    Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip);
-                    if (shape == null) return;
-                    GetPointOfShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
-
-                    if (X1.Equals(double.NaN) || Y1.Equals(double.NaN))
-                        return;
-
-                    // arbitrary positioning relative to stroke arrow
-                    X1 = X1 + 10;
-                    Y1 = Y1 - 2;
-
-                    Thickness margin = new Thickness(
-                        Math.Min(X1, gridOfStroke.ActualWidth - textBlock.Width),
-                        Math.Min(Y1, gridOfStroke.ActualHeight - textBlock.Height),
-                        0,
-                        0);
-                    textBlock.Margin = margin;
-
-                    textBlock.FontWeight = FontWeights.Bold;
-                    textBlock.Foreground = isNetOrOut ? Brushes.DarkRed : Brushes.DarkOliveGreen;
-
-                    textBlock.Tag = ElementType.StrokeNumber;
-
-                    StrokeElements[stroke].Add(textBlock);
-
-                    gridOfStroke.Children.Add(textBlock);
-
-                    if (!ShowNumbers)
-                        textBlock.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    Debug.WriteLine("StrokeNumber: invalid Placement of stroke {0} in rally {3}: x={1} y={2}", stroke.Number, stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]", stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]", stroke.Rally.Number);
-                }
+                strokeNumber.Visibility = Visibility.Visible;
+                return;
             }
+
+            bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
+            
+            double X1, Y1;
+
+            Grid gridOfStroke = GetGridForStroke(stroke);
+
+            Shape shape = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip);
+            if (shape == null)
+            {
+                Debug.WriteLine("Adding stroke number to stroke {0} of rally {1} failed - no arrow tip shape found.", stroke.Number, stroke.Rally.Number);
+                return;
+            }
+            GetPointOfShapeRelativeToGrid(shape, PointType.Start, gridOfStroke, out X1, out Y1);
+
+            if (X1.Equals(double.NaN) || Y1.Equals(double.NaN))
+            {
+                Debug.WriteLine("Adding stroke number to stroke {0} of rally {2} failed - arrow tip has NaN coordinates (x={3} y={4})", stroke.Number, stroke.Rally.Number, X1, Y1);
+                return;
+            }
+
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = stroke.Number.ToString();
+
+            textBlock.Width = 12;
+            textBlock.Height = 17;
+            textBlock.HorizontalAlignment = HorizontalAlignment.Left;
+            textBlock.VerticalAlignment = VerticalAlignment.Top;
+
+            // arbitrary positioning relative to stroke arrow
+            X1 = X1 + 10;
+            Y1 = Y1 - 2;
+
+            Thickness margin = new Thickness(
+                Math.Min(X1, gridOfStroke.ActualWidth - textBlock.Width),
+                Math.Min(Y1, gridOfStroke.ActualHeight - textBlock.Height),
+                0,
+                0);
+            textBlock.Margin = margin;
+
+            textBlock.FontWeight = FontWeights.Bold;
+            textBlock.Foreground = isNetOrOut ? Brushes.DarkRed : Brushes.DarkOliveGreen;
+
+            textBlock.Tag = ElementType.StrokeNumber;
+
+            StrokeElements[stroke].Add(textBlock);
+
+            gridOfStroke.Children.Add(textBlock);
+
+            if (!ShowNumbers)
+                textBlock.Visibility = Visibility.Hidden;
         }
 
         #region Helper methods
