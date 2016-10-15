@@ -364,18 +364,21 @@ namespace TT.Scouter.ViewModels
         {
             Stroke = s;
             s.StrokePlacementChanged += OnPlacementChanged;
-            _over = false;
-            half = false;
-            _behind = false;
             if (s.PointOfContact == null)
                 s.PointOfContact = "";
 
             if (s.PointOfContact.Equals("over"))
-                _over = true;
+            {
+                over = true;
+            }
             else if (s.PointOfContact.Equals("half-distance"))
+            {
                 half = true;
+            }
             else if (s.PointOfContact.Equals("behind"))
-                _behind = true;
+            {
+                behind = true;
+            }
 
             if (s.Player == Models.MatchPlayer.First)
                 showTopTable = !(m.CurrentTableEndFirstPlayer == Models.CurrentTableEnd.Top);
@@ -384,12 +387,17 @@ namespace TT.Scouter.ViewModels
             showBotTable = !showTopTable;
 
             if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))
+            {
                 uncheckAllRadioButtons();
+                placementVisibilty = Visibility.Hidden;
+            }
             else
+            {
                 checkRadioButtonAtFieldPosition(new Point(s.Placement.WX, s.Placement.WY));
+                placementVisibilty = Visibility.Visible;
+            }
 
             widthHeight = 20;
-            placementVisibilty = Visibility.Hidden;
 
         }
 
@@ -400,24 +408,40 @@ namespace TT.Scouter.ViewModels
             if (Stroke.PointOfContact.Equals(pointOfContact))
             {
                 if (pointOfContact.Equals("over"))
+                {
                     over = !over;
+                    pointOfContact = "";
+                }
                 else if (pointOfContact.Equals("half-distance"))
+                {
                     half = !half;
+                    pointOfContact = "";
+                }
                 else if (pointOfContact.Equals("behind"))
+                {
                     behind = !behind;
+                    pointOfContact = "";
+                }
             }
-            OnPointOfContactChange();
+            OnPointOfContactChange(pointOfContact);
         }
-        private void OnPointOfContactChange()
+        private void OnPointOfContactChange(string pointOfContact)
         {
-            if (over)
+            if (pointOfContact.Equals("over"))
                 Stroke.PointOfContact = "over";
-            else if (half)
+            else if (pointOfContact.Equals("half-distance"))
                 Stroke.PointOfContact = "half-distance";
-            else if (behind)
+            else if (pointOfContact.Equals("behind"))
                 Stroke.PointOfContact = "behind";
             else
                 Stroke.PointOfContact = "";
+        }
+
+        private void uncheckAllPoCButtons()
+        {
+            over = false;
+            half = false;
+            behind = false;
         }
         #endregion
 
@@ -426,12 +450,6 @@ namespace TT.Scouter.ViewModels
         public void OnPlacementChanged(object sender, EventArgs e)
         {
             uncheckAllRadioButtons();
-
-            double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
-            double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
-            double left = x - (widthHeight / 2);
-            double top = y - (widthHeight / 2);
-            currentPlacementPosition = new Thickness(left, top, 0, 0);
 
             checkRadioButtonAtFieldPosition(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
 
@@ -469,6 +487,13 @@ namespace TT.Scouter.ViewModels
         }
         private void checkRadioButtonAtFieldPosition(Point fieldPosition)
         {
+
+            double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
+            double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
+            double left = x - (widthHeight / 2);
+            double top = y - (widthHeight / 2);
+            currentPlacementPosition = new Thickness(left, top, 0, 0);
+
             if (fieldPosition.X < 51 && fieldPosition.Y < 46)
                 placeTopLeft_top = true;
             else if (fieldPosition.X < 102 && fieldPosition.Y < 46)
