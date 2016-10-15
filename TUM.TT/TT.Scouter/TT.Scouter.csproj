@@ -397,6 +397,21 @@
   <ItemGroup>
     <Folder Include="Util\Interfaces\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\arrowLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\arrowRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\visible.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\hidden.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\calibration.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

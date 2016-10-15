@@ -23,6 +23,10 @@ namespace TT.Scouter.Util.Model
 
         public event StrokePositionCalculatedEventHandler StrokePositionCalculated;
 
+        public delegate void PointAddedEventHandler(object source, PointAddedEventArgs args);
+
+        public event PointAddedEventHandler PointAdded;
+
 
         public Calibration()
         {
@@ -38,11 +42,15 @@ namespace TT.Scouter.Util.Model
             Points.Clear();
             Lines.Clear();
             isCalibrating = true;
+
+
         }
 
         public void AddPoint(Point p)
         {
             Points.Add(p);
+
+            OnPointAdded(Points.Count);
 
             if (Points.Count < 2)
                 return;
@@ -96,6 +104,14 @@ namespace TT.Scouter.Util.Model
             if (StrokePositionCalculated != null)
             {
                 StrokePositionCalculated(this, new StrokePositionCalculatedEventArgs(p));
+            }
+        }
+
+        protected virtual void OnPointAdded(int numberOfPoints)
+        {
+            if (PointAdded != null)
+            {
+                PointAdded(this, new PointAddedEventArgs(numberOfPoints));
             }
         }
 

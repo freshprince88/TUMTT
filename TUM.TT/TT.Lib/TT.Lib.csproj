@@ -158,6 +158,7 @@
     <Compile Include="Converters\TechniqueToBoolConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
     <Compile Include="Converters\TwoBoolToBoolConverter.cs" />
+    <Compile Include="Events\PointAddedEventArgs.cs" />
     <Compile Include="Events\StrokePositionCalculatedEventArgs.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\DeactivationEvent.cs" />

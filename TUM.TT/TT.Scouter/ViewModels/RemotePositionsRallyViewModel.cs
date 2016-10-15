@@ -17,7 +17,7 @@ namespace TT.Scouter.ViewModels
 
         private bool isEllipseDragged = false;
 
-        public string ToogleCalibrationButtonText { get; private set; }
+        public string ToogleCalibrationButtonImage { get; private set; }
 
         private ObservableCollection<DrawElement> _drawnStrokes;
 
@@ -34,7 +34,50 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
-        
+
+        private bool _showTopRightArrow;
+        public bool showTopRightArrow
+        {
+            get { return _showTopRightArrow; }
+            set
+            {
+                _showTopRightArrow = value;
+                NotifyOfPropertyChange("showTopRightArrow");
+            }
+        }
+
+        private bool _showBottomRightArrow;
+        public bool showBottomRightArrow
+        {
+            get { return _showBottomRightArrow; }
+            set
+            {
+                _showBottomRightArrow = value;
+                NotifyOfPropertyChange("showBottomRightArrow");
+            }
+        }
+
+        private bool _showBottomLeftArrow;
+        public bool showBottomLeftArrow
+        {
+            get { return _showBottomLeftArrow; }
+            set
+            {
+                _showBottomLeftArrow = value;
+                NotifyOfPropertyChange("showBottomLeftArrow");
+            }
+        }
+
+        private bool _showTopLeftArrow;
+        public bool showTopLeftArrow
+        {
+            get { return _showTopLeftArrow; }
+            set
+            {
+                _showTopLeftArrow = value;
+                NotifyOfPropertyChange("showTopLeftArrow");
+            }
+        }
 
         public Stroke CurrentStroke
         {
@@ -57,8 +100,16 @@ namespace TT.Scouter.ViewModels
             this.remoteViewModel = remoteViewModel;
             
             cal.StrokePositionCalculated += OnStrokePositionCalculated;
-            ToogleCalibrationButtonText = "Hide Calibration";
+            cal.PointAdded += OnPointAdded;
+
+
+            ToogleCalibrationButtonImage = "/resources/visible.png";
             DrawnStrokes = new ObservableCollection<DrawElement>();
+
+            showBottomLeftArrow = false;
+            showBottomRightArrow = false;
+            showTopLeftArrow = false;
+            showTopRightArrow = false;
         }
 
         public void OnNewStrokes()
@@ -91,22 +142,31 @@ namespace TT.Scouter.ViewModels
 
         public void CalibrateTable()
         {
+            resetCalibrationStatus();
             remoteViewModel.CalibrateTable();
 
-            if (ToogleCalibrationButtonText.Equals("Show Calibration"))
-                ToogleCalibrationButtonText = "Hide Calibration";
-            NotifyOfPropertyChange("ToogleCalibrationButtonText");
+            if (ToogleCalibrationButtonImage.Equals("/resources/visible.png"))
+                ToogleCalibrationButtonImage = "/resources/hidden.png";
+            NotifyOfPropertyChange("ToogleCalibrationButtonImage");
         }
 
         public void ToogleCalibration()
         {
             remoteViewModel.ToogleCalibration();
 
-            if (ToogleCalibrationButtonText.Equals("Hide Calibration"))
-                ToogleCalibrationButtonText = "Show Calibration";
+            if (ToogleCalibrationButtonImage.Equals("/resources/hidden.png"))
+                ToogleCalibrationButtonImage = "/resources/visible.png";
             else
-                ToogleCalibrationButtonText = "Hide Calibration";
-            NotifyOfPropertyChange("ToogleCalibrationButtonText");
+                ToogleCalibrationButtonImage = "/resources/hidden.png";
+            NotifyOfPropertyChange("ToogleCalibrationButtonImage");
+        }
+
+        private void resetCalibrationStatus()
+        {
+            showTopLeftArrow = true;
+            showTopRightArrow = false;
+            showBottomLeftArrow = false;
+            showBottomRightArrow = false;
         }
 
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)
@@ -123,6 +183,26 @@ namespace TT.Scouter.ViewModels
             dE.text = CurrentStroke.Number.ToString();
             putGridToPosition(args.Position, dE);
             dE.g.Visibility = Visibility.Visible;
+        }
+
+        private void OnPointAdded(object source, PointAddedEventArgs args)
+        {
+            if (args.numberOfPoints == 1)
+            {
+                showTopLeftArrow = false;
+                showTopRightArrow = true;
+            } else if (args.numberOfPoints == 2)
+            {
+                showTopRightArrow = false;
+                showBottomRightArrow = true;
+            } else if (args.numberOfPoints == 3)
+            {
+                showBottomRightArrow = false;
+                showBottomLeftArrow = true;
+            } else if (args.numberOfPoints == 4)
+            {
+                showBottomLeftArrow = false;
+            }
         }
 
         private DrawElement putGridToPosition(Point Position, DrawElement drawElement)
