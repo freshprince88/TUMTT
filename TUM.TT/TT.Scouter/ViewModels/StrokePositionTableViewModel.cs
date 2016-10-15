@@ -397,6 +397,7 @@ namespace TT.Scouter.ViewModels
                 placementVisibilty = Visibility.Visible;
             }
 
+            // For Ball Placement
             widthHeight = 20;
 
         }
@@ -450,6 +451,11 @@ namespace TT.Scouter.ViewModels
         public void OnPlacementChanged(object sender, EventArgs e)
         {
             uncheckAllRadioButtons();
+            if (Stroke.Placement == null)
+            {
+                placementVisibilty = Visibility.Hidden;
+                return;
+            }
 
             checkRadioButtonAtFieldPosition(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
 
@@ -458,9 +464,18 @@ namespace TT.Scouter.ViewModels
 
         public void GridClicked(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                uncheckAllRadioButtons();
+                placementVisibilty = Visibility.Hidden;
+                Stroke.Placement = null;
+                return;
+            }
             Grid grid = sender as Grid;
             Point position = e.GetPosition(grid);
             Point fieldPosition = new Point(position.X / grid.ActualWidth * 152.5, position.Y / grid.ActualHeight * 274);
+            if ((showTopTable && fieldPosition.Y > 137) || (showBotTable && fieldPosition.Y < 137))
+                return;
             ChangePositionStroke(fieldPosition.X, fieldPosition.Y);
         }
 

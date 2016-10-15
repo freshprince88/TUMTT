@@ -361,8 +361,13 @@ namespace TT.Scouter.ViewModels
             Stroke = s;
             s.StrokePlacementChanged += OnPlacementChanged;
 
+            poc = false;
+            pocActive = false;
+
             if (!double.IsNaN(s.Playerposition))
+            {
                 CheckPlayerPosition(s.Playerposition);
+            }
 
             if (s.Player == Models.MatchPlayer.First)
                 showTopTable = !(m.CurrentTableEndFirstPlayer == Models.CurrentTableEnd.Top);
@@ -371,13 +376,18 @@ namespace TT.Scouter.ViewModels
             showBotTable = !showTopTable;
 
             if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))
+            {
                 uncheckAllRadioButtons();
+                placementVisibilty = Visibility.Hidden;
+            }
             else
+            {
                 checkRadioButtonAtFieldPosition(new Point(s.Placement.WX, s.Placement.WY));
+                placementVisibilty = Visibility.Visible;
+            }
 
             // For Ball Placement
             widthHeight = 20;
-            placementVisibilty = Visibility.Hidden;
         }
 
 
@@ -394,11 +404,9 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        public bool IsCheckPlayerPosition(double position)
+        public void IsCheckPlayerPosition(double position)
         {
-            if (position >= 0 && position < 152.5)
-                return poc;
-            else
+            if (!(position >= 0 && position < 152.5))
                 throw new System.Exception("Wrong Argument");
         }
 
@@ -407,16 +415,22 @@ namespace TT.Scouter.ViewModels
             RadioButton grid = sender as RadioButton;
             Point position = e.GetPosition(grid);
             double playerPosition = (position.X / grid.ActualWidth * 152.5);
-            if (IsCheckPlayerPosition(playerPosition))
+            IsCheckPlayerPosition(playerPosition);
+            Stroke.Playerposition = playerPosition;
+        }
+
+        public void ChangePositionPlayerFinal()
+        {
+            if (poc)
             {
                 Stroke.Playerposition = double.NaN;
                 poc = false;
                 pocActive = false;
             }
-            else {
-                Stroke.Playerposition = playerPosition;
+            else
+            {
                 poc = false;
-                CheckPlayerPosition(playerPosition);
+                CheckPlayerPosition(Stroke.Playerposition);
             }
         }
 
@@ -428,12 +442,11 @@ namespace TT.Scouter.ViewModels
         public void OnPlacementChanged(object sender, EventArgs e)
         {
             uncheckAllRadioButtons();
-
-            double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
-            double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
-            double left = x - (widthHeight / 2);
-            double top = y - (widthHeight / 2);
-            currentPlacementPosition = new Thickness(left, top, 0, 0);
+            if (Stroke.Placement == null)
+            {
+                placementVisibilty = Visibility.Hidden;
+                return;
+            }
 
             checkRadioButtonAtFieldPosition(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
 
@@ -442,9 +455,18 @@ namespace TT.Scouter.ViewModels
 
         public void GridClicked(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                uncheckAllRadioButtons();
+                placementVisibilty = Visibility.Hidden;
+                Stroke.Placement = null;
+                return;
+            }
             Grid grid = sender as Grid;
             Point position = e.GetPosition(grid);
             Point fieldPosition = new Point(position.X / grid.ActualWidth * 152.5, position.Y / grid.ActualHeight * 274);
+            if ((showTopTable && fieldPosition.Y > 137) || (showBotTable && fieldPosition.Y < 137))
+                return;
             ChangePositionStroke(fieldPosition.X, fieldPosition.Y);
         }
 
@@ -471,6 +493,13 @@ namespace TT.Scouter.ViewModels
         }
         private void checkRadioButtonAtFieldPosition(Point fieldPosition)
         {
+
+            double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
+            double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
+            double left = x - (widthHeight / 2);
+            double top = y - (widthHeight / 2);
+            currentPlacementPosition = new Thickness(left, top, 0, 0);
+
             if (fieldPosition.X < 51 && fieldPosition.Y < 46)
                 placeTopLeft_top = true;
             else if (fieldPosition.X < 102 && fieldPosition.Y < 46)

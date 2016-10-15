@@ -76,7 +76,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" IsHitTestVisible="{Binding showBotTable}" Visibility="{Binding showTopTable, Converter={StaticResource converter}}">
+                    <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="{Binding showTopTable, Converter={StaticResource converter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -97,7 +97,7 @@
                         <RadioButton x:Name="BotLeft_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotLeft_top}"/>
                         <RadioButton x:Name="BotMid_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotMid_top}"/>
                         <RadioButton x:Name="BotRight_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotRight_top}"/>
-                        </Grid>
+                    </Grid>
 
                     <Grid x:Name="BottomField" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True" IsHitTestVisible="{Binding showTopTable}" Visibility="{Binding showBotTable, Converter={StaticResource converter}}">
                             <Grid.RowDefinitions>
