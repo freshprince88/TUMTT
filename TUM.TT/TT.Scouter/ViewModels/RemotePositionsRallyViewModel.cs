@@ -131,8 +131,14 @@ namespace TT.Scouter.ViewModels
 
         private void S_StrokePlacementChanged(object source, EventArgs args)
         {
-            Point pos = new Point(((Stroke)source).Placement.WX, ((Stroke)source).Placement.WY);
-            OnStrokePositionCalculated(source, new StrokePositionCalculatedEventArgs(pos));
+            Stroke s = ((Stroke)source);
+            if (s.Placement != null)
+            {
+                Point pos = new Point(s.Placement.WX, s.Placement.WY);
+                OnStrokePositionCalculated(source, new StrokePositionCalculatedEventArgs(pos));
+            } else {
+                OnStrokePositionDeleted(source, new EventArgs());
+            }
         }
 
         protected override void OnActivate()
@@ -203,6 +209,13 @@ namespace TT.Scouter.ViewModels
             {
                 showBottomLeftArrow = false;
             }
+        }
+
+        private void OnStrokePositionDeleted(object source, EventArgs args)
+        {
+            Stroke s = (Stroke)source;
+            DrawElement dE = DrawnStrokes[s.Number - 1];
+            dE.g.Visibility = Visibility.Hidden;
         }
 
         private DrawElement putGridToPosition(Point Position, DrawElement drawElement)

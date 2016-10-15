@@ -81,7 +81,10 @@ namespace TT.Models
             }
             set
             {
-                placementField = value;
+                Placement p = new Placement();
+                p.WX = Math.Round(value.WX, 3);
+                p.WY = Math.Round(value.WY, 3);
+                placementField = p;
                 OnPlacementChanged();
             }
         }
@@ -199,7 +202,7 @@ namespace TT.Models
                 RaiseAndSetIfChanged(ref pointOfContact, value);
             }
         }
-
+        
         /// <remarks/>
         [XmlAttribute]
         public string Quality
@@ -231,7 +234,7 @@ namespace TT.Models
             }
             set
             {
-                RaiseAndSetIfChanged(ref playerposition, value);
+                RaiseAndSetIfChanged(ref playerposition, Math.Round(value, 3));
             }
         }
 
