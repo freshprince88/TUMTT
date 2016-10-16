@@ -151,6 +151,13 @@ namespace TT.Scouter.ViewModels
         public void OnCurrentStrokeChanged()
         {
             showCorrectStrokes();
+            try
+            {
+                for (int i = 0; i < DrawnStrokes.Count; i++)
+                    DrawnStrokes[i].e.Fill = System.Windows.Media.Brushes.Transparent;
+                DrawnStrokes[CurrentStroke.Number - 1].e.Fill = System.Windows.Media.Brushes.Black;
+            }
+            catch (Exception e) { }
         }
 
         private void S_StrokePlacementChanged(object source, EventArgs args)

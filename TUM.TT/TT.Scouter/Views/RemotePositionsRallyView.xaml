@@ -98,7 +98,7 @@
                                     <DataTemplate>
                                         <Grid Width="{Binding g.Width}" Height="{Binding g.Height}" Background="Transparent" IsHitTestVisible="True" Margin="{Binding g.Margin}" Visibility="{Binding g.Visibility}"
                                               cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]; [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]">
-                                            <Ellipse Stroke="{Binding e.Stroke}" StrokeThickness="{Binding e.StrokeThickness}" Visibility="{Binding g.Visibility}"></Ellipse>
+                                            <Ellipse Stroke="{Binding e.Stroke}" StrokeThickness="{Binding e.StrokeThickness}" Visibility="{Binding g.Visibility}" Fill="{Binding e.Fill}"></Ellipse>
                                             <TextBlock HorizontalAlignment="Center" Text="{Binding text}" TextAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
                                         </Grid>
                                     </DataTemplate>
