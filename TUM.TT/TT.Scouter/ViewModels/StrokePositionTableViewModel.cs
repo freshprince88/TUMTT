@@ -451,8 +451,18 @@ namespace TT.Scouter.ViewModels
         public void OnPlacementChanged(object sender, EventArgs e)
         {
             uncheckAllRadioButtons();
+
+            // checks if Stroke.Placement = null -> Hide the Shot and let all positions unchecked
             if (Stroke.Placement == null)
             {
+                placementVisibilty = Visibility.Hidden;
+                return;
+            }
+
+            // checks if Stroke.Placement is on the correct side of the Table
+            if ((showTopTable && Stroke.Placement.WY > 137) || (showBotTable && Stroke.Placement.WY < 137))
+            {
+                Stroke.Placement = null;
                 placementVisibilty = Visibility.Hidden;
                 return;
             }
@@ -464,6 +474,7 @@ namespace TT.Scouter.ViewModels
 
         public void GridClicked(object sender, MouseButtonEventArgs e)
         {
+            // Delete Placement Information on Right Click
             if (e.ChangedButton == MouseButton.Right)
             {
                 uncheckAllRadioButtons();
@@ -471,11 +482,16 @@ namespace TT.Scouter.ViewModels
                 Stroke.Placement = null;
                 return;
             }
+
+            // else: calc clicked Position relative to Table (152,5 * 274)
             Grid grid = sender as Grid;
             Point position = e.GetPosition(grid);
             Point fieldPosition = new Point(position.X / grid.ActualWidth * 152.5, position.Y / grid.ActualHeight * 274);
+            
+            // check if Placement is on the right Position
             if ((showTopTable && fieldPosition.Y > 137) || (showBotTable && fieldPosition.Y < 137))
                 return;
+
             ChangePositionStroke(fieldPosition.X, fieldPosition.Y);
         }
 
@@ -502,13 +518,14 @@ namespace TT.Scouter.ViewModels
         }
         private void checkRadioButtonAtFieldPosition(Point fieldPosition)
         {
-
+            // Set the Position of the "Position Indicator"
             double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
             double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
             double left = x - (widthHeight / 2);
             double top = y - (widthHeight / 2);
             currentPlacementPosition = new Thickness(left, top, 0, 0);
 
+            // check the correct Field
             if (fieldPosition.X < 51 && fieldPosition.Y < 46)
                 placeTopLeft_top = true;
             else if (fieldPosition.X < 102 && fieldPosition.Y < 46)

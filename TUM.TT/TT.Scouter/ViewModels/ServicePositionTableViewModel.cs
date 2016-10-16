@@ -442,8 +442,18 @@ namespace TT.Scouter.ViewModels
         public void OnPlacementChanged(object sender, EventArgs e)
         {
             uncheckAllRadioButtons();
+
+            // checks if Stroke.Placement = null -> Hide the Shot and let all positions unchecked
             if (Stroke.Placement == null)
             {
+                placementVisibilty = Visibility.Hidden;
+                return;
+            }
+
+            // checks if Stroke.Placement is on the correct side of the Table
+            if ((showTopTable && Stroke.Placement.WY > 137) || (showBotTable && Stroke.Placement.WY < 137))
+            {
+                Stroke.Placement = null;
                 placementVisibilty = Visibility.Hidden;
                 return;
             }

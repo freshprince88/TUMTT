@@ -82,8 +82,16 @@ namespace TT.Models
             set
             {
                 Placement p = new Placement();
-                p.WX = Math.Round(value.WX, 3);
-                p.WY = Math.Round(value.WY, 3);
+                // round Placement to 3 digits so numbers in save-file are not to long
+                if (value != null)
+                {
+                    p.WX = Math.Round(value.WX, 3);
+                    p.WY = Math.Round(value.WY, 3);
+                }
+                else
+                {
+                    p = value;
+                }
                 placementField = p;
                 OnPlacementChanged();
             }
