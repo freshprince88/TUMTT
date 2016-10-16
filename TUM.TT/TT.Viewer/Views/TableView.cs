@@ -257,6 +257,11 @@ namespace TT.Viewer.Views
                 {
                     GetStartPointOfStroke(stroke, out X1, out Y1);
                     GetEndPointOfStroke(stroke, out X2, out Y2);
+
+                    // same adjustment as in GetPointOfShapeRelativeToGrid - prevents some intercept shapes starting from wrong y-values
+                    Grid strokeGrid = GetGridForStroke(stroke);
+                    if (strokeGrid != null && strokeGrid.Name != followingStrokeGrid.Name)
+                        Y2 -= followingStrokeGrid.Margin.Top - strokeGrid.Margin.Top;
                 } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
                 {
                     Debug.WriteLine("Adding intercept arrow to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
@@ -266,7 +271,7 @@ namespace TT.Viewer.Views
             
             double xE, yE;
 
-            // 'extrapolate' y-coordinate (usually 0 or height of grid or some arbitrary point on the table if the contact point was 'Over'
+            // 'extrapolate' y-coordinate (usually 0 or height of grid or some arbitrary point on the table if the contact point was 'Over')
             if (Y1 > Y2)
                 yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 - 30 : 0;
             else if (Y1 < Y2)

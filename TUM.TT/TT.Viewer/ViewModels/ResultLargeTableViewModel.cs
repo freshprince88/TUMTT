@@ -53,6 +53,17 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        private Rally activeRally;
+        public Rally ActiveRally
+        {
+            get { return activeRally; }
+            set
+            {
+                activeRally = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         public ResultLargeTableViewModel()
         {
             // default constructor for caliburn design time integration
@@ -75,12 +86,29 @@ namespace TT.Viewer.ViewModels
             return 1;
         }
 
+        public string GetTabTitle(bool getShortTitle)
+        {
+            if (getShortTitle)
+                return Properties.Resources.table_large_tab_title_short;
+            else
+                return Properties.Resources.table_large_tab_title;
+        }
+
         #region View Methods
-        
+
         public void StrokeSelected(object dataContext)
         {
-            Console.Out.WriteLine("Selected stroke {1} of rally: {0}", ((Stroke) dataContext).Rally.Number, ((Stroke)dataContext).Number);
-            Manager.ActiveRally = (dataContext as Stroke).Rally;
+            if (dataContext == null)
+            {
+                Console.Out.WriteLine("No stroke selected");
+                ActiveRally = null;
+                return;
+            }
+
+            Stroke selectedStroke = (Stroke)dataContext;
+            Console.Out.WriteLine("Selected stroke {1} of rally: {0}", selectedStroke.Rally.Number, selectedStroke.Number);
+            ActiveRally = selectedStroke.Rally;
+            Manager.ActiveRally = selectedStroke.Rally;
         }
 
         private void UpdateStrokeDisplay(IEnumerable<Rally> rallies)

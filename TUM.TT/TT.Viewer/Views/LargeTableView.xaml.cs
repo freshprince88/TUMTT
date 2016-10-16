@@ -43,18 +43,21 @@ namespace TT.Viewer.Views
         public override Grid View_InnerFieldSpinGrid { get { return InnerFieldSpinGrid; } }
 
         private Stroke SelectedStroke;
+        private int handledEventTime;
 
-        private static RallyWinnerToBrushConverter rallyWinnerToBrushConverter = new RallyWinnerToBrushConverter();
+        private static MatchPlayerToBrushConverter matchPlayerToBrushConverter = new MatchPlayerToBrushConverter();
+        private static ScoreToStringConverter scoreToStringConverter = new ScoreToStringConverter();
 
         public LargeTableView()
         {
             InitializeComponent();
             AddHandler(MouseDownEvent, new MouseButtonEventHandler(Background_MouseDown));
+            Message.SetAttach(this, "[Event MouseDown] = [Action StrokeSelected(null)]");
         }
 
         #region Event handlers
 
-        private void Stroke_MouseEnter(Object sender, MouseEventArgs e)
+        private void Stroke_MouseEnter(object sender, MouseEventArgs e)
         {
             Shape hoveredShape = sender as Shape;
             Stroke stroke = hoveredShape.DataContext as Stroke;
@@ -106,7 +109,7 @@ namespace TT.Viewer.Views
             }
         }
 
-        private void Stroke_MouseLeave(Object sender, MouseEventArgs e)
+        private void Stroke_MouseLeave(object sender, MouseEventArgs e)
         {
             Shape hoveredShape = sender as Shape;
             Stroke stroke = hoveredShape.DataContext as Stroke;
@@ -134,10 +137,10 @@ namespace TT.Viewer.Views
             }
         }
 
-        private void Stroke_MouseDown(Object sender, MouseButtonEventArgs e)
+        private void Stroke_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Shape hoveredShape = sender as Shape;
-            Stroke stroke = hoveredShape.DataContext as Stroke;
+            Shape clickedShape = sender as Shape;
+            Stroke stroke = clickedShape.DataContext as Stroke;
 
             //Debug.WriteLine("mouse down on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
 
@@ -160,11 +163,17 @@ namespace TT.Viewer.Views
 
             SelectedStroke = stroke;
 
-            e.Handled = true;
+            handledEventTime = e.Timestamp;
         }
 
-        private void Background_MouseDown(Object sender, MouseButtonEventArgs e)
+        private void Background_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.Timestamp == handledEventTime)
+            {
+                e.Handled = true;
+                return;
+            }
+
             if (SelectedStroke != null)
             {
                 SelectedStroke = null;
@@ -181,11 +190,12 @@ namespace TT.Viewer.Views
 
         protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke)
         {
+            shape.DataContext = stroke;
+            Message.SetAttach(shape, "[Event MouseDown] = [Action StrokeSelected($DataContext)]");
+
             shape.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
             shape.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
             shape.MouseDown += new MouseButtonEventHandler(Stroke_MouseDown);
-            shape.DataContext = stroke;
-            Message.SetAttach(shape, "StrokeSelected($DataContext)");
         }
 
         #endregion
@@ -194,7 +204,7 @@ namespace TT.Viewer.Views
         
         protected override bool ShowDirectionForStroke(Stroke stroke)
         {
-            return ShowDirection;
+            return ShowDirection && stroke.EnumCourse != Models.Util.Enums.Stroke.Course.NetOut;
         }
 
         protected override bool ShowSpinForStroke(Stroke stroke)
@@ -254,6 +264,30 @@ namespace TT.Viewer.Views
                     case StrokeInteraction.Hover: return StrokeThicknessHover;
                     case StrokeInteraction.Selected: return StrokeThicknessSelected;
                 }
+        }
+
+        protected override void ApplyStyle(Stroke stroke, Shape shape)
+        {
+            base.ApplyStyle(stroke, shape);
+
+            if (SelectedStroke == null)
+            {
+                shape.Opacity = StrokeOpacity;
+                if (shape.DataContext != null)
+                    shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+            }
+            else if (stroke.Equals(SelectedStroke))
+            {
+                shape.Opacity = StrokeOpacity;
+                if (shape.DataContext != null)
+                    shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
+            }
+            else
+            {
+                shape.Opacity = (ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
+                if (shape.DataContext != null)
+                    shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+            }
         }
 
         protected override double GetAdjustedX(Stroke stroke, double oldX)
@@ -323,10 +357,9 @@ namespace TT.Viewer.Views
                 foreach (Shape shape in StrokeShapes[s])
                 {
                     ToolTip tt = new ToolTip();
-                    tt.Background = (Brush)rallyWinnerToBrushConverter.Convert(s.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
+                    tt.Background = (Brush)matchPlayerToBrushConverter.Convert(s.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
                     tt.Content = "#" + s.Rally.Number + " " +
-                        s.Rally.CurrentRallyScore.First + ":" + s.Rally.CurrentRallyScore.Second + " " +
-                        "(" + s.Rally.CurrentSetScore.First + ":" + s.Rally.CurrentSetScore.Second + ")";
+                        scoreToStringConverter.Convert(new object[] { s.Rally.CurrentRallyScore, s.Rally.CurrentSetScore }, typeof(string), false, System.Globalization.CultureInfo.CurrentCulture);
                     shape.ToolTip = tt;
                 }
             }

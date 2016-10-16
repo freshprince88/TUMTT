@@ -33,7 +33,8 @@ namespace TT.Viewer.Views
         protected const string HoveredRallyBackgroundColor = "#f0f5ed";
 
         private static BrushConverter brushConverter = new BrushConverter();
-        private static RallyWinnerToBrushConverter rallyWinnerToBrushConverter = new RallyWinnerToBrushConverter();
+        private static MatchPlayerToBrushConverter rallyWinnerToBrushConverter = new MatchPlayerToBrushConverter();
+        private static ScoreToStringConverter scoreToStringConverter = new ScoreToStringConverter();
 
         private AutoResetEvent sizeChangedWaitEvent;
         private Rally thisRally;
@@ -240,8 +241,7 @@ namespace TT.Viewer.Views
             ToolTip tt = new ToolTip();
             tt.Background = (Brush) rallyWinnerToBrushConverter.Convert(stroke.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
             tt.Content = "#" + stroke.Rally.Number + " " +
-                stroke.Rally.CurrentRallyScore.First + ":" + stroke.Rally.CurrentRallyScore.Second + " " +
-                "(" + stroke.Rally.CurrentSetScore.First + ":" + stroke.Rally.CurrentSetScore.Second + ")";
+                        scoreToStringConverter.Convert(new object[] { stroke.Rally.CurrentRallyScore, stroke.Rally.CurrentSetScore }, typeof(string), false, System.Globalization.CultureInfo.CurrentCulture);
             TableGrid.ToolTip = tt;
         }
 

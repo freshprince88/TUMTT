@@ -30,7 +30,7 @@ namespace TT.Viewer.ViewModels
             manager = man;
             //Items.AddRange(tabs);
             MiniStatistic = new ResultMiniStatisticViewModel(this.Events, manager);
-            ResultTabView = new ResultTabViewModel(tabs);
+            ResultTabView = new ResultTabViewModel(tabs, e);
         }
 
         protected override void OnActivate()

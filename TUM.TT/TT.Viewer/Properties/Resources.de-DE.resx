@@ -204,4 +204,31 @@
   <data name="table_stroke_4_title" xml:space="preserve">
     <value>Schlag 4</value>
   </data>
+  <data name="table_score_title" xml:space="preserve">
+    <value>Score:</value>
+  </data>
+  <data name="table_tooltip_rally_point" xml:space="preserve">
+    <value>Punkt:</value>
+  </data>
+  <data name="table_tooltip_rally_server" xml:space="preserve">
+    <value>Aufschlag:</value>
+  </data>
+  <data name="table_tooltip_score_rally" xml:space="preserve">
+    <value>Punktestand Spiel</value>
+  </data>
+  <data name="table_tooltip_score_set" xml:space="preserve">
+    <value>Punktestand Satz</value>
+  </data>
+  <data name="result_list_tab_title" xml:space="preserve">
+    <value>Hitlist</value>
+  </data>
+  <data name="result_list_tab_title_short" xml:space="preserve">
+    <value>H</value>
+  </data>
+  <data name="table_large_tab_title_short" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="table_small_tab_title_short" xml:space="preserve">
+    <value>K</value>
+  </data>
 </root>

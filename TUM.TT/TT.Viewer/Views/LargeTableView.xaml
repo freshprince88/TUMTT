@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:TT.Viewer.Views"             
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"             
              xmlns:prop="clr-namespace:TT.Viewer.Properties"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="344" d:DesignWidth="252.5">
 
     <Grid Name="TableGrid" Width="252.5" Height="344" Background="Transparent">
-        
+
         <Border Name="TableBorder" Margin="50,35,50,35" BorderThickness="3"  BorderBrush="Black" Panel.ZIndex="-99">
             <Line X1="0" X2="{Binding ElementName=InnerFieldGrid, Path=ActualWidth}" Stroke="Black" StrokeThickness="3" VerticalAlignment="Center" Panel.ZIndex="-98" Margin="-22 0 -22 0"/>
         </Border>

@@ -16,7 +16,7 @@
         <conv:RoundingConverter x:Key="RoundingConverter" />
         <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
         <conv:ScoreToStringConverter x:Key="ScoreToStringConverter" />
-        <conv:RallyWinnerToBrushConverter x:Key="RallyWinnerToBrushConverter" />
+        <conv:MatchPlayerToBrushConverter x:Key="MatchPlayerToBrushConverter" />
         <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
 
@@ -68,7 +68,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Name="SmallTableViewBorder" BorderThickness="1" BorderBrush="{Binding Winner, Converter={StaticResource RallyWinnerToBrushConverter}}" Margin="2,0,2,5" >
+                        <Border Name="SmallTableViewBorder" BorderThickness="1" BorderBrush="{Binding Winner, Converter={StaticResource MatchPlayerToBrushConverter}}" Margin="2,0,2,5" >
                             <Grid Background="Transparent">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -108,7 +108,7 @@
                                     </local:SmallTableView.ShowStroke4>
                                 </local:SmallTableView>
 
-                                <Grid Grid.Row="1" Background="{Binding Winner, Converter={StaticResource RallyWinnerToBrushConverter}}">
+                                <Grid Grid.Row="1" Background="{Binding Winner, Converter={StaticResource MatchPlayerToBrushConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition/>

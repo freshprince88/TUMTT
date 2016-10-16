@@ -204,4 +204,38 @@
   <data name="table_stroke_4_title" xml:space="preserve">
     <value>Stroke 4</value>
   </data>
+  <data name="table_score_title" xml:space="preserve">
+    <value>Score:</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="rally_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rally_server.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rally_winner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rally_winner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="table_tooltip_rally_point" xml:space="preserve">
+    <value>Point:</value>
+  </data>
+  <data name="table_tooltip_rally_server" xml:space="preserve">
+    <value>Server:</value>
+  </data>
+  <data name="table_tooltip_score_rally" xml:space="preserve">
+    <value>Rally score</value>
+  </data>
+  <data name="table_tooltip_score_set" xml:space="preserve">
+    <value>Set score</value>
+  </data>
+  <data name="result_list_tab_title" xml:space="preserve">
+    <value>Hitlist</value>
+  </data>
+  <data name="result_list_tab_title_short" xml:space="preserve">
+    <value>H</value>
+  </data>
+  <data name="table_large_tab_title_short" xml:space="preserve">
+    <value>L</value>
+  </data>
+  <data name="table_small_tab_title_short" xml:space="preserve">
+    <value>S</value>
+  </data>
 </root>

@@ -58,6 +58,14 @@ namespace TT.Viewer.ViewModels
             return 0;
         }
 
+        public string GetTabTitle(bool getShortTitle)
+        {
+            if (getShortTitle)
+                return Properties.Resources.result_list_tab_title_short;
+            else
+                return Properties.Resources.result_list_tab_title;
+        }
+
         #region View Methods
 
         public void ListItemSelected(SelectionChangedEventArgs e)
@@ -112,11 +120,11 @@ namespace TT.Viewer.ViewModels
             switch (message.Fullscreen)
             {
                 case true:
-                    this.DisplayName = "R(" + count + ")";
+                    //this.DisplayName = "R(" + count + ")";
                     Header = "R(" + count + ")";
                     break;
                 case false:
-                    this.DisplayName = "Hitlist (" + count + ")";
+                    //this.DisplayName = "Hitlist (" + count + ")";
                     Header = "Hitlist (" + count + ")";
                     break;
                 default:

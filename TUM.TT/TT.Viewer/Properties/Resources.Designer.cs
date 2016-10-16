@@ -187,6 +187,44 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap rally_server {
+            get {
+                object obj = ResourceManager.GetObject("rally_server", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap rally_winner {
+            get {
+                object obj = ResourceManager.GetObject("rally_winner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hitlist.
+        /// </summary>
+        public static string result_list_tab_title {
+            get {
+                return ResourceManager.GetString("result_list_tab_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H.
+        /// </summary>
+        public static string result_list_tab_title_short {
+            get {
+                return ResourceManager.GetString("result_list_tab_title_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Direction.
         /// </summary>
         public static string table_direction_title {
@@ -210,6 +248,15 @@ namespace TT.Viewer.Properties {
         public static string table_large_tab_title {
             get {
                 return ResourceManager.GetString("table_large_tab_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L.
+        /// </summary>
+        public static string table_large_tab_title_short {
+            get {
+                return ResourceManager.GetString("table_large_tab_title_short", resourceCulture);
             }
         }
         
@@ -259,6 +306,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Score:.
+        /// </summary>
+        public static string table_score_title {
+            get {
+                return ResourceManager.GetString("table_score_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Strokes:.
         /// </summary>
         public static string table_show_strokes_title {
@@ -273,6 +329,15 @@ namespace TT.Viewer.Properties {
         public static string table_small_tab_title {
             get {
                 return ResourceManager.GetString("table_small_tab_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to S.
+        /// </summary>
+        public static string table_small_tab_title_short {
+            get {
+                return ResourceManager.GetString("table_small_tab_title_short", resourceCulture);
             }
         }
         
@@ -318,6 +383,42 @@ namespace TT.Viewer.Properties {
         public static string table_stroke_4_title {
             get {
                 return ResourceManager.GetString("table_stroke_4_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point:.
+        /// </summary>
+        public static string table_tooltip_rally_point {
+            get {
+                return ResourceManager.GetString("table_tooltip_rally_point", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server:.
+        /// </summary>
+        public static string table_tooltip_rally_server {
+            get {
+                return ResourceManager.GetString("table_tooltip_rally_server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rally score.
+        /// </summary>
+        public static string table_tooltip_score_rally {
+            get {
+                return ResourceManager.GetString("table_tooltip_score_rally", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set score.
+        /// </summary>
+        public static string table_tooltip_score_set {
+            get {
+                return ResourceManager.GetString("table_tooltip_score_set", resourceCulture);
             }
         }
     }

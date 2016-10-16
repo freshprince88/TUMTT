@@ -17,7 +17,6 @@ namespace TT.Viewer.ViewModels
     public class ResultSmallTablesViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
         IHandle<RallyLengthChangedEvent>,
-        IHandle<FullscreenEvent>,
         IHandle<MediaControlEvent>,
         IHandle<ActiveRallyChangedEvent>
     {
@@ -77,7 +76,15 @@ namespace TT.Viewer.ViewModels
         {
             return 2;
         }
-        
+
+        public string GetTabTitle(bool getShortTitle)
+        {
+            if (getShortTitle)
+                return Properties.Resources.table_small_tab_title_short;
+            else
+                return Properties.Resources.table_small_tab_title;
+        }
+
         public void RallySelected(object dataContext)
         {
             Debug.WriteLine("Selected rally {0}", ((Rally)dataContext).Number);
@@ -119,10 +126,6 @@ namespace TT.Viewer.ViewModels
         public void Handle(RallyLengthChangedEvent message)
         {
             RallyLength = message;
-        }
-
-        public void Handle(FullscreenEvent message)
-        {
         }
 
         public void Handle(MediaControlEvent message)

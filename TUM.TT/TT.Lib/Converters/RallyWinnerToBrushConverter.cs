@@ -7,7 +7,7 @@ using TT.Models;
 namespace TT.Lib.Converters
 {
     [ValueConversion(typeof(MatchPlayer), typeof(Brush))]
-    public class RallyWinnerToBrushConverter : BaseConverter, IValueConverter
+    public class MatchPlayerToBrushConverter : BaseConverter, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -20,7 +20,7 @@ namespace TT.Lib.Converters
                 // new colors: saturation - 25, brightness + 10
                 default:
                 case MatchPlayer.First: return (Brush)brushConverter.ConvertFromString("#ff90afd6");
-                case MatchPlayer.Second: return (Brush)brushConverter.ConvertFromString("#ffd98f8d"); 
+                case MatchPlayer.Second: return (Brush)brushConverter.ConvertFromString("#ffd98f8d");
             }
         }
 

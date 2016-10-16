@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace TT.Viewer.Views
@@ -11,6 +12,11 @@ namespace TT.Viewer.Views
         public ResultLargeTableView()
         {
             InitializeComponent();
+        }
+
+        private void TopStatusGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            CheckBoxesWrapPanel.Width = Math.Max(0, TopStatusGrid.ActualWidth - (SelectedStrokeInfoGrid.Visibility == Visibility.Collapsed ? 0 : SelectedStrokeInfoGrid.ActualWidth));
         }
     }
 }
