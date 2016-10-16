@@ -20,7 +20,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition Height="5"/>
             <RowDefinition Height="6*"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Viewbox StretchDirection="DownOnly" Grid.Row="0">
@@ -29,15 +31,16 @@
         <!-- Platzhalter für Platzierungsfeld -->
 
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition />
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
@@ -51,19 +54,19 @@
                     <Image Source="{Binding ToogleCalibrationButtonImage}"/>
                 </Button>
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
-                <Image x:Name="arrowTopLeft" Grid.Column="0" Grid.Row="0" Source="/resources/arrowRight.png" Visibility= "{Binding showTopLeftArrow, Converter={StaticResource converter}}"/>
-                <Image x:Name="arrowBottomLeft" Grid.Column="0" Grid.Row="2" Source="/resources/arrowRight.png" Visibility= "{Binding showBottomLeftArrow, Converter={StaticResource converter}}"/>
+                <Image x:Name="arrowTopLeft" Grid.Column="0" Grid.Row="0" Source="/resources/arrowRight.png" Visibility= "{Binding showTopLeftArrow, Converter={StaticResource converter}}" HorizontalAlignment="Right"/>
+                <Image x:Name="arrowBottomLeft" Grid.Column="0" Grid.Row="2" Source="/resources/arrowRight.png" Visibility= "{Binding showBottomLeftArrow, Converter={StaticResource converter}}" HorizontalAlignment="Right"/>
 
             </Grid>
 
-            <Grid Grid.Column="2">
+            <Grid Grid.Column="3">
                 <Viewbox Stretch="Uniform">
                     <Border x:Name="Table" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}" >
                         <Grid Name="InnerFieldGrid" ShowGridLines="True" Height="548" Width="305">
@@ -93,15 +96,15 @@
                 </Viewbox>
             </Grid>
 
-            <Grid Grid.Column="3">
+            <Grid Grid.Column="4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
-                <Image x:Name="arrowTopRight" Grid.Column="0" Grid.Row="0" Source="/resources/arrowLeft.png"  Visibility= "{Binding showTopRightArrow, Converter={StaticResource converter}}"/>
-                <Image x:Name="arrowBottomRight" Grid.Column="0" Grid.Row="2" Source="/resources/arrowLeft.png" Visibility="{Binding showBottomRightArrow, Converter={StaticResource converter}}"/>
+                <Image x:Name="arrowTopRight" Grid.Column="0" Grid.Row="0" Source="/resources/arrowLeft.png"  Visibility= "{Binding showTopRightArrow, Converter={StaticResource converter}}" HorizontalAlignment="Left"/>
+                <Image x:Name="arrowBottomRight" Grid.Column="0" Grid.Row="2" Source="/resources/arrowLeft.png" Visibility="{Binding showBottomRightArrow, Converter={StaticResource converter}}" HorizontalAlignment="Left"/>
             </Grid>
         </Grid>
 
