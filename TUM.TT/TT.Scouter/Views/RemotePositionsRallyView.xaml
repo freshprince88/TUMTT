@@ -44,10 +44,10 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="CalibrateTable"  Grid.Column="0" Grid.Row="0" cal:Message.Attach="[Event Click] = [Action CalibrateTable()]" VerticalAlignment="Top">
+                <Button x:Name="CalibrateTable"  Grid.Column="0" Grid.Row="0" cal:Message.Attach="[Event Click] = [Action CalibrateTable()]" VerticalAlignment="Top" Focusable="False">
                     <Image Source="/resources/calibration.png"/>
                 </Button>
-                <Button x:Name="ToogleCalibration" Grid.Column="0" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action ToogleCalibration()]" VerticalAlignment="Bottom">
+                <Button x:Name="ToogleCalibration" Grid.Column="0" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action ToogleCalibration()]" VerticalAlignment="Bottom" Focusable="False">
                     <Image Source="{Binding ToogleCalibrationButtonImage}"/>
                 </Button>
             </Grid>
