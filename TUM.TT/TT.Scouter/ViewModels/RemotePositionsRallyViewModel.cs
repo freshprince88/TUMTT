@@ -79,10 +79,27 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private int _maxVisibleStrokes;
+        public string maxVisibleStrokes
+        {
+            get { return _maxVisibleStrokes.ToString(); }
+            set
+            {
+                if (value == null || value.Equals("ALL"))
+                {
+                    _maxVisibleStrokes = int.MaxValue;
+                }
+                else
+                {
+                    _maxVisibleStrokes = int.Parse(value);
+                }
+            }
+        }
+
         public Stroke CurrentStroke
         {
             get { return remoteViewModel.SchlagView.CurrentStroke; }
-            set { remoteViewModel.SchlagView.CurrentStroke = value;  }
+            set { remoteViewModel.SchlagView.CurrentStroke = value; }
         }
 
         public ObservableCollection<Stroke> Strokes
@@ -110,6 +127,8 @@ namespace TT.Scouter.ViewModels
             showBottomRightArrow = false;
             showTopLeftArrow = false;
             showTopRightArrow = false;
+
+            maxVisibleStrokes = "ALL";
         }
 
         public void OnNewStrokes()
@@ -127,6 +146,11 @@ namespace TT.Scouter.ViewModels
                 }
                 DrawnStrokes.Add(dE);
             }
+        }
+
+        public void OnCurrentStrokeChanged()
+        {
+            showCorrectStrokes();
         }
 
         private void S_StrokePlacementChanged(object source, EventArgs args)
@@ -189,6 +213,8 @@ namespace TT.Scouter.ViewModels
             dE.text = CurrentStroke.Number.ToString();
             putGridToPosition(args.Position, dE);
             dE.g.Visibility = Visibility.Visible;
+
+            showCorrectStrokes();
         }
 
         private void OnPointAdded(object source, PointAddedEventArgs args)
@@ -292,6 +318,25 @@ namespace TT.Scouter.ViewModels
 
             CurrentStroke = Strokes[int.Parse(number) - 1];
             isEllipseDragged = true;
+        }
+
+        public void OnMaxStrokesChanged()
+        {
+            showCorrectStrokes();
+        }
+
+        private void showCorrectStrokes()
+        {
+            for (int i = 0; i < DrawnStrokes.Count; i++)
+            {
+                if (Math.Abs((CurrentStroke.Number - 1 - i)) <= (_maxVisibleStrokes - 1) / 2)
+                {
+                    if (Strokes[i].Placement != null) DrawnStrokes[i].g.Visibility = Visibility.Visible;
+                } else
+                {
+                    DrawnStrokes[i].g.Visibility = Visibility.Hidden;
+                }
+            }
         }
 
     }

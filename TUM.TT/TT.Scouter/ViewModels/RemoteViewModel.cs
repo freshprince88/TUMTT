@@ -176,7 +176,7 @@ namespace TT.Scouter.ViewModels
                     {
                         // Positioning IMPORTANT - this way PositionsRallyView gets notified about a calculated Stroke before SchlagView and PositionRallyView depends on the Schlagviewstate
                         if (PositionsRallyView == null) PositionsRallyView = new RemotePositionsRallyViewModel(this, calibration);
-                        if (SchlagView == null) SchlagView = new RemoteStrokeViewModel(MatchManager, value, calibration);
+                        if (SchlagView == null) SchlagView = new RemoteStrokeViewModel(this, MatchManager, value, calibration);
                     }
                     else
                     {
@@ -270,7 +270,7 @@ namespace TT.Scouter.ViewModels
             get { return _stroke; }
             set
             {
-                if (_stroke != value && value != null)
+                if (_stroke != value && value != null && CurrentRally != null)
                 {
                     _stroke = value;
                     NotifyOfPropertyChange("CurrentStroke");
@@ -283,6 +283,8 @@ namespace TT.Scouter.ViewModels
                     {
                         SchlagView.ActivateItem(new StrokeDetailViewModel(CurrentStroke, MatchManager, CurrentRally));
                     }
+
+                    PositionsRallyView.OnCurrentStrokeChanged();
                 }
             }
         }

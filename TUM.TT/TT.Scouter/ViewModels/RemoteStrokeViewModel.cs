@@ -10,6 +10,7 @@ namespace TT.Scouter.ViewModels
 {
     public class RemoteStrokeViewModel : Conductor<IScreen>.Collection.OneActive
     {
+        private RemoteViewModel remoteViewModel;
         private IMatchManager MatchManager;
         private ObservableCollection<Stroke> _strokes;
         public ObservableCollection<Stroke> Strokes
@@ -24,7 +25,6 @@ namespace TT.Scouter.ViewModels
                     NotifyOfPropertyChange("Strokes");
                     NotifyOfPropertyChange("CurrentRally");
                     NotifyOfPropertyChange("CurrentStroke");
-                    Strokes_CollectionChanged();
 
                 }
             }
@@ -33,28 +33,24 @@ namespace TT.Scouter.ViewModels
 
         public Screen SchlagDetail { get; set; }
 
-        private Stroke _stroke;
+
         public Stroke CurrentStroke
         {
-            get { return _stroke; }
+            get { return remoteViewModel.CurrentStroke; }
             set
             {
-                if (_stroke != value)
+                remoteViewModel.CurrentStroke = value;
+                NotifyOfPropertyChange("CurrentStroke");
+
+                if (remoteViewModel.CurrentStroke == null || remoteViewModel.CurrentStroke.Number == 1)
                 {
-                    _stroke = value;
-                    NotifyOfPropertyChange("CurrentStroke");
-
-                    if (_stroke == null || _stroke.Number == 1)
-                    {
-                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally);                       
-                        NotifyOfPropertyChange("SchlagDetail");
-                    }
-                    else
-                    {
-                        SchlagDetail = new StrokeDetailViewModel(CurrentStroke, MatchManager, CurrentRally);
-                        NotifyOfPropertyChange("SchlagDetail");
-                    }
-
+                    SchlagDetail = new ServiceDetailViewModel(value, MatchManager, CurrentRally);                       
+                    NotifyOfPropertyChange("SchlagDetail");
+                }
+                else
+                {
+                    SchlagDetail = new StrokeDetailViewModel(value, MatchManager, CurrentRally);
+                    NotifyOfPropertyChange("SchlagDetail");
                 }
             }
         }
@@ -69,25 +65,20 @@ namespace TT.Scouter.ViewModels
                 {
                     _rally = value;
                     Strokes = _rally.Strokes != null ? new ObservableCollection<Stroke>(_rally.Strokes) : new ObservableCollection<Stroke>();
-                    CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
                     NotifyOfPropertyChange("CurrentRally");
                 }
             }
         }
 
-        public RemoteStrokeViewModel(IMatchManager man, Rally r, Calibration cal)
+        public RemoteStrokeViewModel(RemoteViewModel remoteViewModel, IMatchManager man, Rally r, Calibration cal)
         {
+            this.remoteViewModel = remoteViewModel;
             Events = IoC.Get<IEventAggregator>();
             MatchManager = man;
             CurrentRally = r;
 
             Strokes = r.Strokes;
             cal.StrokePositionCalculated += OnStrokePositionCalculated;
-        }
-
-        private void Strokes_CollectionChanged()
-        {
-            CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
         }
 
         protected override void OnActivate()
