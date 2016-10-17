@@ -62,11 +62,7 @@ namespace TT.Viewer.Views
             Shape hoveredShape = sender as Shape;
             Stroke hoveredStroke = hoveredShape.DataContext as Stroke;
 
-            //Debug.WriteLine("mouse enter on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
-
-            Brush fill;
-            double opacity;
-            double strokeThickness;
+            //Debug.WriteLine("mouse enter on stroke {0} of rally {1}", hoveredStroke.Number, hoveredStroke.Rally.Number);
 
             foreach (var strokeShape in StrokeShapes)
             {
@@ -76,14 +72,11 @@ namespace TT.Viewer.Views
                     {
                         if (strokeShape.Key.Equals(hoveredStroke))
                         {
-                            //shape.Fill = GetShapeFillForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover, out fill, out opacity, out strokeThickness);
-                            shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover); //StrokeOpacity;
-                            shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
+                            SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
                         }
                         else
                         {
-                            shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal); //(ShapeType) shape.Tag == ShapeType.SpinShape ? StrokeOpacityHoverUnselectedSpin : StrokeOpacityHoverUnselected;
-                            shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                            SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.HoverOther);
                         }
                     }
                     else
@@ -92,21 +85,18 @@ namespace TT.Viewer.Views
                         {
                             if (!SelectedStroke.Equals(strokeShape.Key))
                             {
-                                shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover); //StrokeOpacityHover;
-                                shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
+                                SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
                             }
                         }
                         else
                         {
                             if (SelectedStroke.Equals(strokeShape.Key))
                             {
-                                shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected); //StrokeOpacity;
-                                shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
+                                SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
                             }
                             else
                             {
-                                shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);  //(ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
-                                shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                                SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.HoverOther);
                             }
                         }
                     }
@@ -119,7 +109,7 @@ namespace TT.Viewer.Views
             Shape leftShape = sender as Shape;
             Stroke leftStroke = leftShape.DataContext as Stroke;
 
-            //Debug.WriteLine("mouse leave on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
+            //Debug.WriteLine("mouse leave on stroke {0} of rally {1}", leftStroke.Number, leftStroke.Rally.Number);
 
             foreach (var strokeShape in StrokeShapes)
             {
@@ -127,15 +117,13 @@ namespace TT.Viewer.Views
                 {
                     if (SelectedStroke == null)
                     {
-                        shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal); //StrokeOpacity;
-                        shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
                     }
                     else
                     {
                         if (!strokeShape.Key.Equals(SelectedStroke))
                         {
-                            shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal); //(ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
-                            shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                            SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
                         }
                     }
                 }
@@ -147,7 +135,9 @@ namespace TT.Viewer.Views
             Shape clickedShape = sender as Shape;
             Stroke clickedStroke = clickedShape.DataContext as Stroke;
 
-            //Debug.WriteLine("mouse down on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
+            //Debug.WriteLine("mouse down on stroke {0} of rally {1}", clickedStroke.Number, clickedStroke.Rally.Number);
+
+            SelectedStroke = clickedStroke;
 
             foreach (var strokeShape in StrokeShapes)
             {
@@ -155,18 +145,14 @@ namespace TT.Viewer.Views
                 {
                     if (strokeShape.Key.Equals(clickedStroke))
                     {
-                        shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected); //StrokeOpacity;
-                        shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
+                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
                     }
                     else
                     {
-                        shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);  //(ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
-                        shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.HoverOther);
                     }
                 }
             }
-
-            SelectedStroke = clickedStroke;
 
             handledEventTime = e.Timestamp;
         }
@@ -186,8 +172,7 @@ namespace TT.Viewer.Views
                 {
                     foreach (var s in strokeShape.Value)
                     {
-                        s.Opacity = StrokeOpacity;
-                        s.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)s.Tag, ((Stroke)s.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                        SetShapeStyleForInteractionType(s, ((Stroke)s.DataContext).Stroketechnique, StrokeInteraction.Normal);
                     }
                 }
             }
@@ -222,199 +207,185 @@ namespace TT.Viewer.Views
             return ShowIntercept;
         }
 
-        private double GetStrokeThicknessForStroke(ShapeType type, Stroketechnique technique, StrokeInteraction thicknessType)
+        private void SetShapeStyleForInteractionType(Shape shape, Stroketechnique stroketechnique, StrokeInteraction interactionType)
         {
-            if (type == ShapeType.SpinShape)
-                switch(thicknessType) {
-                    default:
-                    case StrokeInteraction.Normal: return StrokeThicknessSpinArrow;
-                    case StrokeInteraction.Hover: return StrokeThicknessSpinArrowHover;
-                    case StrokeInteraction.Selected: return StrokeThicknessSpinArrowSelected;
-                }
-            else if (type == ShapeType.Intercept)
-                switch (thicknessType)
-                {
-                    default:
-                    case StrokeInteraction.Normal:
-                        return technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash ? 
-                            StrokeThicknessSmashIntercept : StrokeThicknessIntercept;
-                    case StrokeInteraction.Hover:
-                        return technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash ? 
-                            StrokeThicknessSmashInterceptHover : StrokeThicknessInterceptHover;
-                    case StrokeInteraction.Selected:
-                        return technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash ? 
-                            StrokeThicknessSmashInterceptSelected : StrokeThicknessInterceptSelected;
-                }
-            else if (type == ShapeType.Debug_preceding)
-                switch (thicknessType)
-                {
-                    default:
-                    case StrokeInteraction.Normal: return StrokeThicknessPreceding_Debug;
-                    case StrokeInteraction.Hover: return StrokeThicknessPrecedingHover_Debug;
-                    case StrokeInteraction.Selected: return StrokeThicknessPrecedingSelected_Debug;
-                }
-            else if (technique != null && technique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
-                switch (thicknessType)
-                {
-                    default:
-                    case StrokeInteraction.Normal: return StrokeThicknessSmash;
-                    case StrokeInteraction.Hover: return StrokeThicknessSmashHover;
-                    case StrokeInteraction.Selected: return StrokeThicknessSmashSelected;
-                }
-            else
-                switch (thicknessType)
-                {
-                    default:
-                    case StrokeInteraction.Normal: return StrokeThickness;
-                    case StrokeInteraction.Hover: return StrokeThicknessHover;
-                    case StrokeInteraction.Selected: return StrokeThicknessSelected;
-                }
-        }
+            Brush fill = shape.Fill;
+            Brush stroke = shape.Stroke;
+            double opacity = shape.Opacity;
+            double strokeThickness = shape.StrokeThickness;
 
-        private double GetShapeOpacityForInteractionType(ShapeType shapeType, Stroketechnique stroketechnique, StrokeInteraction interactionType)
-        {
-            if (SelectedStroke == null)
+            switch (interactionType)
             {
-                if (interactionType == StrokeInteraction.Normal)
-                    if (shapeType == ShapeType.SpinShape)
-                        return StrokeOpacityHoverUnselectedSpin;
+                case StrokeInteraction.Normal:
+                    if (SelectedStroke == null)
+                    {
+                        opacity = StrokeOpacity;
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip)
+                        {
+                            stroke = StrokeBrushBanana;
+                            if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                                fill = StrokeBrushBanana;
+                        }
+                    }
                     else
-                        return StrokeOpacityHoverUnselected;
-                else
-                    return StrokeOpacity;
-            }
-            else
-            {
-                if (interactionType == StrokeInteraction.Selected)
-                    return StrokeOpacity;
-                else if (interactionType == StrokeInteraction.Hover)
-                    return StrokeOpacityHover;
-                else if (shapeType == ShapeType.SpinShape)
-                    return StrokeOpacityDisabledSpin;
-                //else if (stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Banana)
-                //    return StrokeOpacityDisabledBanana;
-                else
-                    return StrokeOpacityDisabled;
-            }
-        }
+                    {
+                        if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                            opacity = StrokeOpacityDisabledSpin;
+                        else
+                            opacity = StrokeOpacityDisabled;
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip)
+                        {
+                            stroke = StrokeBrushBananaDisabled;
+                            if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                                fill = StrokeBrushBananaDisabled;
+                        }
+                    }
 
-        private Brush GetShapeFillForInteractionType(Shape shape, Stroketechnique stroketechnique, StrokeInteraction interactionType, out Brush fill, out double opacity, out double strokeThickness)
-        {
-            if (interactionType == StrokeInteraction.Normal)
-            {
-                if (SelectedStroke == null)
-                {
-                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                    if ((ShapeType)shape.Tag == ShapeType.Intercept)
                     {
-                        opacity = StrokeOpacityHoverUnselectedSpin;
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                            strokeThickness = StrokeThicknessSmashIntercept;
+                        else
+                            strokeThickness = StrokeThicknessIntercept;
+                    }
+                    else if ((ShapeType)shape.Tag == ShapeType.Debug_preceding)
+                    {
+                        strokeThickness = StrokeThicknessPreceding_Debug;
                     }
                     else
                     {
-                        opacity = StrokeOpacityHoverUnselected;
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                            strokeThickness = StrokeThicknessSmash;
+                        else
+                            strokeThickness = StrokeThickness;
                     }
-                }
-                else
-                {
-                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                    break;
+
+                case StrokeInteraction.Hover:
+                    if (SelectedStroke == null)
                     {
-                        opacity = StrokeOpacityDisabledSpin;
+                        opacity = StrokeOpacity;
                     }
                     else
                     {
-                        opacity = StrokeOpacityDisabled;
+                        opacity = StrokeOpacityHover;
                     }
-                    if (stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Banana)
-                        fill = StrokeFillDisabledBanana;
-                }
-            }
-            else if (interactionType == StrokeInteraction.Hover)
-            {
-                if (SelectedStroke != null)
-                {
-                    opacity = StrokeOpacityHover;
-                }
-            }
-            else if (interactionType == StrokeInteraction.Selected)
-            {
-                if (SelectedStroke != null)
-                {
+
+                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                        strokeThickness = StrokeThicknessSpinArrowHover;
+                    else if ((ShapeType)shape.Tag == ShapeType.Intercept)
+                    {
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                            strokeThickness = StrokeThicknessSmashInterceptHover;
+                        else
+                            strokeThickness = StrokeThicknessInterceptHover;
+                    }
+                    else if ((ShapeType)shape.Tag == ShapeType.Debug_preceding)
+                    {
+                        strokeThickness = StrokeThicknessPrecedingHover_Debug;
+                    }
+                    else
+                    {
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                            strokeThickness = StrokeThicknessSmashHover;
+                        else
+                            strokeThickness = StrokeThicknessHover;
+                    }
+
+                    if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip)
+                    {
+                        stroke = StrokeBrushBanana;
+                        if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                            fill = StrokeBrushBanana;
+                    }
+                    break;
+
+                case StrokeInteraction.HoverOther:
+                    if (SelectedStroke == null)
+                    {
+                        if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                        {
+                            opacity = StrokeOpacityHoverUnselectedSpin;
+                            strokeThickness = StrokeThicknessSpinArrow;
+                        }
+                        else
+                        {
+                            opacity = StrokeOpacityHoverUnselected;
+                        }
+                    }
+                    else
+                    {
+                        if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                        {
+                            opacity = StrokeOpacityDisabledSpin;
+                            strokeThickness = StrokeThicknessSpinArrow;
+                        }
+                        else
+                        {
+                            opacity = StrokeOpacityDisabled;
+                        }
+                    }
+                    break;
+
+                case StrokeInteraction.Selected:
                     opacity = StrokeOpacity;
-                }
-            }
-            else
-            {
-                if (SelectedStroke == null)
-                {
-                    opacity = StrokeOpacity;
-                }
+
+                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                        strokeThickness = StrokeThicknessSpinArrowSelected;
+                    else if ((ShapeType)shape.Tag == ShapeType.Intercept)
+                    {
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                            strokeThickness = StrokeThicknessSmashInterceptSelected;
+                        else
+                            strokeThickness = StrokeThicknessInterceptSelected;
+                    }
+                    else if ((ShapeType)shape.Tag == ShapeType.Debug_preceding)
+                    {
+                        strokeThickness = StrokeThicknessPrecedingSelected_Debug;
+                    }
+                    else
+                    {
+                        if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
+                            strokeThickness = StrokeThicknessSmashSelected;
+                        else
+                            strokeThickness = StrokeThicknessSelected;
+                    }
+
+                    if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip)
+                    {
+                        stroke = StrokeBrushBanana;
+                        if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                            fill = StrokeBrushBanana;
+                    }
+                    break;
             }
 
-
-            // old
-            if (SelectedStroke == null)
-            {
-                if (interactionType == StrokeInteraction.Normal)
-                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
-                    {
-                        opacity = StrokeOpacityHoverUnselectedSpin;
-                    }
-                    else
-                    {
-                        opacity = StrokeOpacityHoverUnselected;
-                    }
-                else
-                {
-                    opacity = StrokeOpacity;
-                }
-            }
-            else
-            {
-                if (interactionType == StrokeInteraction.Selected)
-                {
-                    opacity = StrokeOpacity;
-                }
-                else if (interactionType == StrokeInteraction.Hover)
-                {
-                    opacity = StrokeOpacityHover;
-                }
-                else
-                {
-                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
-                    {
-                        opacity = StrokeOpacityDisabledSpin;
-                    }
-                    else
-                    {
-                        opacity = StrokeOpacityDisabled;
-                    }
-                    if (stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Banana)
-                        fill = StrokeFillDisabledBanana;
-                }
-            }
-            // ---
+            shape.Fill = fill;
+            shape.Stroke = stroke;
+            shape.Opacity = opacity;
+            shape.StrokeThickness = strokeThickness;
         }
 
         protected override void ApplyStyle(Stroke stroke, Shape shape)
         {
             base.ApplyStyle(stroke, shape);
-
             if (SelectedStroke == null)
             {
                 shape.Opacity = StrokeOpacity;
                 if (shape.DataContext != null)
-                    shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                    SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
             }
             else if (stroke.Equals(SelectedStroke))
             {
                 shape.Opacity = StrokeOpacity;
                 if (shape.DataContext != null)
-                    shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
+                    SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
             }
             else
             {
                 shape.Opacity = (ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
                 if (shape.DataContext != null)
-                    shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                    SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
             }
         }
 

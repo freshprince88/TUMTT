@@ -27,6 +27,9 @@ namespace TT.Viewer.Views
         protected const double ChopCurveRation = 0.95;
         protected const double LobCurveRation = 2d / 3d;
 
+        protected readonly Brush StrokeBrushBanana = Brushes.Gold;
+        protected readonly Brush StrokeBrushBananaDisabled = Brushes.Goldenrod;
+
         protected const string StrokeAttrTechniqueOptionBanana = "Banana";  // what is 'option'? TODO: convert to enum!        
 
         #endregion
@@ -834,9 +837,9 @@ namespace TT.Viewer.Views
                         break;
                     case Models.Util.Enums.Stroke.Technique.Flip:
                     case Models.Util.Enums.Stroke.Technique.Banana:
-                        shape.Stroke = Brushes.Gold;
+                        shape.Stroke = StrokeBrushBanana;
                         if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
-                            shape.Fill = Brushes.Gold;
+                            shape.Fill = StrokeBrushBanana;
                         break;
                     case Models.Util.Enums.Stroke.Technique.Smash:
                         shape.Stroke = Brushes.Blue;
@@ -1167,7 +1170,9 @@ namespace TT.Viewer.Views
 
         protected enum PointType { Start, Middle, End }
         protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding }
-        protected enum StrokeInteraction { Normal, Hover, Selected }
+        protected enum StrokeInteraction { Normal, Hover, Selected,
+            HoverOther
+        }
         protected enum ElementType { StrokeNumber }
     }
 }
