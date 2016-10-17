@@ -60,9 +60,13 @@ namespace TT.Viewer.Views
         private void Stroke_MouseEnter(object sender, MouseEventArgs e)
         {
             Shape hoveredShape = sender as Shape;
-            Stroke stroke = hoveredShape.DataContext as Stroke;
+            Stroke hoveredStroke = hoveredShape.DataContext as Stroke;
 
             //Debug.WriteLine("mouse enter on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
+
+            Brush fill;
+            double opacity;
+            double strokeThickness;
 
             foreach (var strokeShape in StrokeShapes)
             {
@@ -70,24 +74,25 @@ namespace TT.Viewer.Views
                 {
                     if (SelectedStroke == null)
                     {
-                        if (strokeShape.Key.Equals(stroke))
+                        if (strokeShape.Key.Equals(hoveredStroke))
                         {
-                            shape.Opacity = StrokeOpacity;
+                            //shape.Fill = GetShapeFillForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover, out fill, out opacity, out strokeThickness);
+                            shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover); //StrokeOpacity;
                             shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
                         }
                         else
                         {
-                            shape.Opacity = (ShapeType) shape.Tag == ShapeType.SpinShape ? StrokeOpacityHoverUnselectedSpin : StrokeOpacityHoverUnselected;
+                            shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal); //(ShapeType) shape.Tag == ShapeType.SpinShape ? StrokeOpacityHoverUnselectedSpin : StrokeOpacityHoverUnselected;
                             shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
                         }
                     }
                     else
                     {
-                        if (strokeShape.Key.Equals(stroke))
+                        if (strokeShape.Key.Equals(hoveredStroke))
                         {
                             if (!SelectedStroke.Equals(strokeShape.Key))
                             {
-                                shape.Opacity = StrokeOpacityHover;
+                                shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover); //StrokeOpacityHover;
                                 shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
                             }
                         }
@@ -95,12 +100,12 @@ namespace TT.Viewer.Views
                         {
                             if (SelectedStroke.Equals(strokeShape.Key))
                             {
-                                shape.Opacity = StrokeOpacity;
+                                shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected); //StrokeOpacity;
                                 shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
                             }
                             else
                             {
-                                shape.Opacity = (ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
+                                shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);  //(ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
                                 shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
                             }
                         }
@@ -111,8 +116,8 @@ namespace TT.Viewer.Views
 
         private void Stroke_MouseLeave(object sender, MouseEventArgs e)
         {
-            Shape hoveredShape = sender as Shape;
-            Stroke stroke = hoveredShape.DataContext as Stroke;
+            Shape leftShape = sender as Shape;
+            Stroke leftStroke = leftShape.DataContext as Stroke;
 
             //Debug.WriteLine("mouse leave on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
 
@@ -122,14 +127,14 @@ namespace TT.Viewer.Views
                 {
                     if (SelectedStroke == null)
                     {
-                        shape.Opacity = StrokeOpacity;
+                        shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal); //StrokeOpacity;
                         shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
                     }
                     else
                     {
                         if (!strokeShape.Key.Equals(SelectedStroke))
                         {
-                            shape.Opacity = (ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
+                            shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal); //(ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
                             shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
                         }
                     }
@@ -140,7 +145,7 @@ namespace TT.Viewer.Views
         private void Stroke_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Shape clickedShape = sender as Shape;
-            Stroke stroke = clickedShape.DataContext as Stroke;
+            Stroke clickedStroke = clickedShape.DataContext as Stroke;
 
             //Debug.WriteLine("mouse down on stroke {0} of rally {1}", stroke.Number, stroke.Rally.Number);
 
@@ -148,20 +153,20 @@ namespace TT.Viewer.Views
             {
                 foreach (var shape in strokeShape.Value)
                 {
-                    if (strokeShape.Key.Equals(stroke))
+                    if (strokeShape.Key.Equals(clickedStroke))
                     {
-                        shape.Opacity = StrokeOpacity;
+                        shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected); //StrokeOpacity;
                         shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
                     }
                     else
                     {
-                        shape.Opacity = (ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
+                        shape.Opacity = GetShapeOpacityForInteractionType((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);  //(ShapeType)shape.Tag == ShapeType.SpinShape ? StrokeOpacityDisabledSpin : StrokeOpacityDisabled;
                         shape.StrokeThickness = GetStrokeThicknessForStroke((ShapeType)shape.Tag, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
                     }
                 }
             }
 
-            SelectedStroke = stroke;
+            SelectedStroke = clickedStroke;
 
             handledEventTime = e.Timestamp;
         }
@@ -264,6 +269,129 @@ namespace TT.Viewer.Views
                     case StrokeInteraction.Hover: return StrokeThicknessHover;
                     case StrokeInteraction.Selected: return StrokeThicknessSelected;
                 }
+        }
+
+        private double GetShapeOpacityForInteractionType(ShapeType shapeType, Stroketechnique stroketechnique, StrokeInteraction interactionType)
+        {
+            if (SelectedStroke == null)
+            {
+                if (interactionType == StrokeInteraction.Normal)
+                    if (shapeType == ShapeType.SpinShape)
+                        return StrokeOpacityHoverUnselectedSpin;
+                    else
+                        return StrokeOpacityHoverUnselected;
+                else
+                    return StrokeOpacity;
+            }
+            else
+            {
+                if (interactionType == StrokeInteraction.Selected)
+                    return StrokeOpacity;
+                else if (interactionType == StrokeInteraction.Hover)
+                    return StrokeOpacityHover;
+                else if (shapeType == ShapeType.SpinShape)
+                    return StrokeOpacityDisabledSpin;
+                //else if (stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Banana)
+                //    return StrokeOpacityDisabledBanana;
+                else
+                    return StrokeOpacityDisabled;
+            }
+        }
+
+        private Brush GetShapeFillForInteractionType(Shape shape, Stroketechnique stroketechnique, StrokeInteraction interactionType, out Brush fill, out double opacity, out double strokeThickness)
+        {
+            if (interactionType == StrokeInteraction.Normal)
+            {
+                if (SelectedStroke == null)
+                {
+                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                    {
+                        opacity = StrokeOpacityHoverUnselectedSpin;
+                    }
+                    else
+                    {
+                        opacity = StrokeOpacityHoverUnselected;
+                    }
+                }
+                else
+                {
+                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                    {
+                        opacity = StrokeOpacityDisabledSpin;
+                    }
+                    else
+                    {
+                        opacity = StrokeOpacityDisabled;
+                    }
+                    if (stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Banana)
+                        fill = StrokeFillDisabledBanana;
+                }
+            }
+            else if (interactionType == StrokeInteraction.Hover)
+            {
+                if (SelectedStroke != null)
+                {
+                    opacity = StrokeOpacityHover;
+                }
+            }
+            else if (interactionType == StrokeInteraction.Selected)
+            {
+                if (SelectedStroke != null)
+                {
+                    opacity = StrokeOpacity;
+                }
+            }
+            else
+            {
+                if (SelectedStroke == null)
+                {
+                    opacity = StrokeOpacity;
+                }
+            }
+
+
+            // old
+            if (SelectedStroke == null)
+            {
+                if (interactionType == StrokeInteraction.Normal)
+                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                    {
+                        opacity = StrokeOpacityHoverUnselectedSpin;
+                    }
+                    else
+                    {
+                        opacity = StrokeOpacityHoverUnselected;
+                    }
+                else
+                {
+                    opacity = StrokeOpacity;
+                }
+            }
+            else
+            {
+                if (interactionType == StrokeInteraction.Selected)
+                {
+                    opacity = StrokeOpacity;
+                }
+                else if (interactionType == StrokeInteraction.Hover)
+                {
+                    opacity = StrokeOpacityHover;
+                }
+                else
+                {
+                    if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                    {
+                        opacity = StrokeOpacityDisabledSpin;
+                    }
+                    else
+                    {
+                        opacity = StrokeOpacityDisabled;
+                    }
+                    if (stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Banana)
+                        fill = StrokeFillDisabledBanana;
+                }
+            }
+            // ---
         }
 
         protected override void ApplyStyle(Stroke stroke, Shape shape)
