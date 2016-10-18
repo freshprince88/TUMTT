@@ -270,6 +270,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Net/Out:.
+        /// </summary>
+        public static string table_netout_label {
+            get {
+                return ResourceManager.GetString("table_netout_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Numbers.
         /// </summary>
         public static string table_numbers_title {

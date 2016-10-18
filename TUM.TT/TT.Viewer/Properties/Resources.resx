@@ -238,4 +238,7 @@
   <data name="table_small_tab_title_short" xml:space="preserve">
     <value>S</value>
   </data>
+  <data name="table_netout_label" xml:space="preserve">
+    <value>Net/Out:</value>
+  </data>
 </root>

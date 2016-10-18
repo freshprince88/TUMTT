@@ -10,6 +10,9 @@ using TT.Lib.Exceptions;
 
 namespace TT.Viewer.Views
 {
+    //
+    // Summary:
+    //     Abstract class for schematic table display.
     public abstract class TableView : UserControl
     {
         #region Constants
@@ -228,7 +231,7 @@ namespace TT.Viewer.Views
             if (!ShowInterceptForStroke(stroke))
                 return;
 
-            // first look for intercept shapes already in out map, if there are some, display them and return
+            // first look for intercept shapes already in our map, if there are some, display them and return
             List<Shape> interceptShapes = StrokeShapes[stroke].FindAll(s => (ShapeType)s.Tag == ShapeType.Intercept);
             if (interceptShapes != null && interceptShapes.Count > 0)
             {
@@ -274,11 +277,25 @@ namespace TT.Viewer.Views
             
             double xE, yE;
 
+            // account for possibly missing information on PointOfContact on the following stroke
+            Models.Util.Enums.Stroke.PointOfContact realPointOfContact;
+            if (followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.None)
+            {
+                if (stroke.IsShort() || stroke.IsHalfLong())
+                    realPointOfContact = Models.Util.Enums.Stroke.PointOfContact.Over;
+                else
+                    realPointOfContact = Models.Util.Enums.Stroke.PointOfContact.Behind;
+            }
+            else
+            {
+                realPointOfContact = followingStroke.EnumPointOfContact;
+            }
+
             // 'extrapolate' y-coordinate (usually 0 or height of grid or some arbitrary point on the table if the contact point was 'Over')
             if (Y1 > Y2)
-                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 - 30 : 0;
+                yE = realPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 - 30 : 0;
             else if (Y1 < Y2)
-                yE = followingStroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 + 30 : followingStrokeGrid.ActualHeight;
+                yE = realPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 + 30 : followingStrokeGrid.ActualHeight;
             else
                 yE = Y2;    // special case: horizontal stroke (e.g. legend view)
 
@@ -1041,7 +1058,12 @@ namespace TT.Viewer.Views
             else if (stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.HalfDistance)
                 return View_InnerFieldHalfDistanceGrid;
             else
-                return View_InnerFieldGrid;
+            {
+                if (stroke.IsShort() || stroke.IsHalfLong())
+                    return View_InnerFieldGrid;
+                else
+                    return View_InnerFieldBehindGrid;
+            }
         }
 
 
@@ -1169,7 +1191,7 @@ namespace TT.Viewer.Views
         #endregion
 
         protected enum PointType { Start, Middle, End }
-        protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding }
+        protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding, NetOut }
         protected enum StrokeInteraction { Normal, Hover, HoverOther, Selected, None }
         protected enum ElementType { StrokeNumber }
     }

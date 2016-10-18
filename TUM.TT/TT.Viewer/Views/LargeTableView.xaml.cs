@@ -174,6 +174,56 @@ namespace TT.Viewer.Views
 
         #region Helper methods
         
+        private void AddNetOutShape(Stroke stroke)
+        {
+            double width = NetOutStrokesGrid.Width;
+            double height = width;
+
+            Path netOutShape = new Path();
+            PathGeometry pathGeometry = new PathGeometry();
+            PathFigure pathFigure = new PathFigure();
+
+            pathFigure.StartPoint = new Point(width * 0.6, 0);
+
+            QuadraticBezierSegment tr = new QuadraticBezierSegment(new Point(width, 0), new Point(width, height * 0.4), false);
+            pathFigure.Segments.Add(tr);
+            LineSegment r = new LineSegment(new Point(width, height * 0.6), false);
+            pathFigure.Segments.Add(r);
+            QuadraticBezierSegment rb = new QuadraticBezierSegment(new Point(width, height), new Point(width * 0.6, height), false);
+            pathFigure.Segments.Add(rb);
+            LineSegment b = new LineSegment(new Point(width * 0.4, height), false);
+            pathFigure.Segments.Add(b);
+            QuadraticBezierSegment bl = new QuadraticBezierSegment(new Point(0, height), new Point(0, height * 0.6), false);
+            pathFigure.Segments.Add(bl);
+            LineSegment l = new LineSegment(new Point(0, height * 0.4), false);
+            pathFigure.Segments.Add(l);
+            QuadraticBezierSegment lt = new QuadraticBezierSegment(new Point(0, 0), new Point(width * 0.4, 0), false);
+            pathFigure.Segments.Add(lt);
+            LineSegment t = new LineSegment(new Point(width * 0.6, 0), false);
+            pathFigure.Segments.Add(t);
+
+            pathFigure.IsClosed = true;
+
+            pathGeometry.Figures.Add(pathFigure);
+
+            double topMargin = 2;
+
+            netOutShape.Data = pathGeometry;
+            netOutShape.Tag = ShapeType.NetOut;
+            netOutShape.Margin = new Thickness(0, topMargin, 0, 0);
+
+            ApplyStyle(stroke, netOutShape);
+            AttachEventHandlerToShape(netOutShape, stroke);
+            StrokeShapes[stroke].Add(netOutShape);
+
+            Grid.SetRow(netOutShape, NetOutStrokesGrid.Children.Count);
+            RowDefinition row = new RowDefinition();
+            row.Height = new GridLength(height + topMargin);
+            NetOutStrokesGrid.RowDefinitions.Add(row);
+
+            NetOutStrokesGrid.Children.Add(netOutShape);
+        }
+
         protected override bool ShowDirectionForStroke(Stroke stroke)
         {
             return ShowDirection && stroke.EnumCourse != Models.Util.Enums.Stroke.Course.NetOut;
@@ -426,9 +476,14 @@ namespace TT.Viewer.Views
             // clear all previous strokes
             foreach (UIElement p in TableGrid.Children)
             {
-                if (p is Grid)
+                if (p is Grid && p != NetOutStrokesContainerGrid)
                     (p as Grid).Children.Clear();
             }
+
+            NetOutStrokesContainerGrid.Visibility = Visibility.Collapsed;
+            NetOutStrokesGrid.Children.Clear();
+            NetOutStrokesGrid.RowDefinitions.Clear();
+
             StrokeShapes.Clear();
             SelectedStroke = null;
 
@@ -438,13 +493,20 @@ namespace TT.Viewer.Views
             {
                 StrokeShapes[s] = new List<Shape>();
 
-                if (!PlacementValuesValid(s.Placement))
+                if (s.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut)
+                {
+                    AddNetOutShape(s);
+                    NetOutStrokesContainerGrid.Visibility = Visibility.Visible;
+                }
+                else if (!PlacementValuesValid(s.Placement))
                     continue;
-
-                AddServiceStrokesSpinShapes(s);
-                AddStrokesDirectionShapes(s);
-                AddInterceptArrows(s);
-                AddStrokesArrowtips(s);
+                else
+                {
+                    AddServiceStrokesSpinShapes(s);
+                    AddStrokesDirectionShapes(s);
+                    AddInterceptArrows(s);
+                    AddStrokesArrowtips(s);
+                }
 
                 foreach (Shape shape in StrokeShapes[s])
                 {

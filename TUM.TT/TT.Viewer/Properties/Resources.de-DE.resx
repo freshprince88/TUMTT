@@ -231,4 +231,7 @@
   <data name="table_small_tab_title_short" xml:space="preserve">
     <value>K</value>
   </data>
+  <data name="table_netout_label" xml:space="preserve">
+    <value>Netz/Aus:</value>
+  </data>
 </root>

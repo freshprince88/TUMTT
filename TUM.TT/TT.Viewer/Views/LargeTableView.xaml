@@ -10,6 +10,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="344" d:DesignWidth="252.5">
 
+    <UserControl.Resources>
+        <prop:Resources x:Key="LocalizedStrings"/>
+    </UserControl.Resources>
+    
     <Grid Name="TableGrid" Width="252.5" Height="344" Background="Transparent">
 
         <Border Name="TableBorder" Margin="50,35,50,35" BorderThickness="3"  BorderBrush="Black" Panel.ZIndex="-99">
@@ -21,6 +25,16 @@
         <Grid Name="InnerFieldHalfDistanceGrid" Margin="0,0,0,0"/>
         <Grid Name="InnerFieldSpinGrid" Margin="0,6,0,6"/>
 
+        <Grid Name="NetOutStrokesContainerGrid" Width="35" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Viewbox>
+                <TextBlock Grid.Row="0" Name="NetOutLabelName" Text="{Binding Path=table_netout_label, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top"/>
+            </Viewbox>
+            <Grid Grid.Row="1" Name="NetOutStrokesGrid" Width="10" Height="Auto" HorizontalAlignment="Center" Margin="4,0,4,0"/>
+        </Grid>
     </Grid>
     
 </local:TableView>
