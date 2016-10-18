@@ -1170,9 +1170,7 @@ namespace TT.Viewer.Views
 
         protected enum PointType { Start, Middle, End }
         protected enum ShapeType { Direction, Arrowtip, Intercept, SpinShape, Debug_preceding }
-        protected enum StrokeInteraction { Normal, Hover, Selected,
-            HoverOther
-        }
+        protected enum StrokeInteraction { Normal, Hover, HoverOther, Selected, None }
         protected enum ElementType { StrokeNumber }
     }
 }

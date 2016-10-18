@@ -68,38 +68,22 @@ namespace TT.Viewer.Views
             {
                 foreach (var shape in strokeShape.Value)
                 {
-                    if (SelectedStroke == null)
+                    StrokeInteraction interactionType = StrokeInteraction.None;
+                    if (strokeShape.Key.Equals(hoveredStroke))
                     {
-                        if (strokeShape.Key.Equals(hoveredStroke))
-                        {
-                            SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
-                        }
-                        else
-                        {
-                            SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.HoverOther);
-                        }
+                        if (SelectedStroke == null || !strokeShape.Key.Equals(SelectedStroke))
+                            interactionType = StrokeInteraction.Hover;
                     }
                     else
                     {
-                        if (strokeShape.Key.Equals(hoveredStroke))
-                        {
-                            if (!SelectedStroke.Equals(strokeShape.Key))
-                            {
-                                SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Hover);
-                            }
-                        }
+                        if (SelectedStroke != null && strokeShape.Key.Equals(SelectedStroke))
+                            interactionType = StrokeInteraction.Selected;
                         else
-                        {
-                            if (SelectedStroke.Equals(strokeShape.Key))
-                            {
-                                SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
-                            }
-                            else
-                            {
-                                SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.HoverOther);
-                            }
-                        }
+                            interactionType = StrokeInteraction.HoverOther;
                     }
+
+                    if (interactionType != StrokeInteraction.None)
+                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, interactionType);
                 }
             }
         }
@@ -115,17 +99,15 @@ namespace TT.Viewer.Views
             {
                 foreach (var shape in strokeShape.Value)
                 {
+                    StrokeInteraction interactionType = StrokeInteraction.None;
                     if (SelectedStroke == null)
-                    {
-                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
-                    }
+                        interactionType = StrokeInteraction.Normal;
                     else
-                    {
                         if (!strokeShape.Key.Equals(SelectedStroke))
-                        {
-                            SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Normal);
-                        }
-                    }
+                            interactionType = StrokeInteraction.Normal;
+
+                    if (interactionType != StrokeInteraction.None)
+                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, interactionType);
                 }
             }
         }
@@ -143,14 +125,14 @@ namespace TT.Viewer.Views
             {
                 foreach (var shape in strokeShape.Value)
                 {
+                    StrokeInteraction interactionType = StrokeInteraction.None;
                     if (strokeShape.Key.Equals(clickedStroke))
-                    {
-                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.Selected);
-                    }
+                        interactionType = StrokeInteraction.Selected;
                     else
-                    {
-                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, StrokeInteraction.HoverOther);
-                    }
+                        interactionType = StrokeInteraction.HoverOther;
+
+                    if (interactionType != StrokeInteraction.None)
+                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, interactionType);
                 }
             }
 
@@ -252,6 +234,10 @@ namespace TT.Viewer.Views
                     {
                         strokeThickness = StrokeThicknessPreceding_Debug;
                     }
+                    else if ((ShapeType)shape.Tag == ShapeType.SpinShape)
+                    {
+                        strokeThickness = StrokeThicknessSpinArrow;
+                    }
                     else
                     {
                         if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Smash)
@@ -324,6 +310,13 @@ namespace TT.Viewer.Views
                         {
                             opacity = StrokeOpacityDisabled;
                         }
+                    }
+
+                    if (stroketechnique != null && stroketechnique.EnumType == Models.Util.Enums.Stroke.Technique.Flip)
+                    {
+                        stroke = StrokeBrushBananaDisabled;
+                        if (shape is Path && (ShapeType)shape.Tag != ShapeType.Direction)
+                            fill = StrokeBrushBananaDisabled;
                     }
                     break;
 
