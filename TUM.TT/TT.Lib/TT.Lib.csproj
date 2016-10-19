@@ -127,7 +127,7 @@
     <Compile Include="Converters\CurrentRallyServerToBallIsVisibleConverter.cs" />
     <Compile Include="Converters\CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
     <Compile Include="Converters\ForeBackHandToBoolConverter.cs" />
-    <Compile Include="Converters\RallyWinnerToBrushConverter.cs" />
+    <Compile Include="Converters\MatchPlayerToBrushConverter.cs" />
     <Compile Include="Converters\ScoreToStringConverter.cs" />
     <Compile Include="Converters\MatchPlayerToVisibilityConverter.cs" />
     <Compile Include="Converters\MinRallyLengthToVisibleConverter.cs" />
