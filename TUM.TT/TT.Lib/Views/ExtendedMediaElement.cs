@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.ComponentModel;
 using TT.Lib.Events;
-
+using System.Diagnostics;
 
 namespace TT.Lib.Views
 {
@@ -66,8 +66,11 @@ namespace TT.Lib.Views
             ((ExtendedMediaElement)obj).MediaPositionChanged((TimeSpan)e.NewValue);
         }
 
-        readonly DispatcherTimer mediaTimer;
-        bool positionChangedByTimer;
+        private readonly DispatcherTimer mediaTimer;
+        private bool positionChangedByTimer;
+        private bool firstStart = true;
+        private bool mediaOpened = false;
+        private TimeSpan? userMediaPosition;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -108,13 +111,26 @@ namespace TT.Lib.Views
             mediaTimer = new DispatcherTimer();
             mediaTimer.Interval = TimeSpan.FromMilliseconds(100);
             mediaTimer.Tick += MediaTimerTickHandler;
-            mediaTimer.Start();            
+            mediaTimer.Start();
         }
 
         private void MediaOpenedHandler(object sender, RoutedEventArgs routedEventArgs)
         {
-            if(NaturalDuration.HasTimeSpan)
+            Debug.WriteLine("{2} MediaOpenedHandler sender={0} routedEventArgs={1} userMediaPosition={3} IsLoaded={4}", sender, routedEventArgs, DateTime.Now.TimeOfDay, userMediaPosition, IsLoaded);
+            // don't set anything if the media isn't loaded (can happen here)
+            if (!IsLoaded)
+                return;
+
+            if (NaturalDuration.HasTimeSpan)
                 MediaLength = NaturalDuration.TimeSpan;
+
+            // if the user tried to set position but the media wasn't opened, set it now
+            if (userMediaPosition != null)
+            {
+                Position = (TimeSpan)userMediaPosition;
+                userMediaPosition = null;
+            }
+            mediaOpened = true;
         }
 
         private void MediaEndedHandler(object sender, RoutedEventArgs routedEventArgs)
@@ -124,9 +140,17 @@ namespace TT.Lib.Views
 
         private void MediaPositionChanged(TimeSpan newValue)
         {
+            //Debug.WriteLine("{2} MediaPositionChanged newValue={0} positionChangedByTimer={1}", newValue, positionChangedByTimer, DateTime.Now.TimeOfDay);
             if (positionChangedByTimer)
             {
                 positionChangedByTimer = false;
+                return;
+            }
+
+            // if the media isn't opened yet, save the position
+            if (!mediaOpened)
+            {
+                userMediaPosition = newValue;
                 return;
             }
 
@@ -137,6 +161,21 @@ namespace TT.Lib.Views
         {
             if (!IsPlaying)
                 return;
+
+            //Debug.WriteLine("{2} MediaTimerTickHandler sender={0} Position={1} mediaOpened={3}", sender, Position, DateTime.Now.TimeOfDay, mediaOpened);
+            
+            // don't set any positions if the media isn't loaded yet after Play()
+            if (!mediaOpened)
+                return;
+
+            // this is a workaround for the bug that video playback always starts at 0 for the first rally that gets selected
+            if (firstStart)
+            {
+                Debug.WriteLine("{2} MediaTimerTickHandler firstStart=true Position={0} MediaPosition={1}", Position, MediaPosition, DateTime.Now.TimeOfDay);
+                if (Position.TotalMilliseconds != MediaPosition.TotalMilliseconds)
+                    Position = MediaPosition;
+                firstStart = false;
+            }
 
             positionChangedByTimer = true;
             MediaPosition = Position;
