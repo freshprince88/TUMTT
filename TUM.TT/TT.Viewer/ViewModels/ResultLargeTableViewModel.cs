@@ -18,7 +18,8 @@ namespace TT.Viewer.ViewModels
     public class ResultLargeTableViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
         IHandle<RallyLengthChangedEvent>,
-        IHandle<MediaControlEvent>
+        IHandle<MediaControlEvent>,
+        IHandle<ActiveRallyChangedEvent>
     {
         
         private IEventAggregator Events;
@@ -204,6 +205,11 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public void Handle(ActiveRallyChangedEvent message)
+        {
+            ActiveRally = message.Current;
+        }
+
         #endregion
 
         #region Caliburn Hooks
@@ -225,6 +231,7 @@ namespace TT.Viewer.ViewModels
         {
             base.OnViewReady(view);
             RallyLength = Manager.CurrentRallyLength;
+            ActiveRally = Manager.ActiveRally;
             UpdateStrokeDisplay(Manager.SelectedRallies);
         }
 

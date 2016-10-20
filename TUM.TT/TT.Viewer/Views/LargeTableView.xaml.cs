@@ -48,14 +48,48 @@ namespace TT.Viewer.Views
         private static MatchPlayerToBrushConverter matchPlayerToBrushConverter = new MatchPlayerToBrushConverter();
         private static ScoreToStringConverter scoreToStringConverter = new ScoreToStringConverter();
 
+        #region Dependency Properties
+
+        public Rally ActiveRally
+        {
+            get { return (Rally)GetValue(ActiveRallyProperty); }
+            set { SetValue(ActiveRallyProperty, value); }
+        }
+
+        public static DependencyProperty ActiveRallyProperty = DependencyProperty.Register(
+            "ActiveRally", typeof(Rally), typeof(LargeTableView), new PropertyMetadata(default(Rally), new PropertyChangedCallback(OnActiveRallyPropertyChanged)));
+
+        #endregion
+
         public LargeTableView()
         {
             InitializeComponent();
+            ActiveRally = null;
             AddHandler(MouseDownEvent, new MouseButtonEventHandler(Background_MouseDown));
             Message.SetAttach(this, "[Event MouseDown] = [Action StrokeSelected(null)]");
+
+            Loaded += OnLoaded;
         }
 
         #region Event handlers
+
+        private static void OnActiveRallyPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            Debug.WriteLine("LargeTableView: new active rally! was: {0}, is: {1}", e.OldValue == null ? "[none]" : ((Rally)e.OldValue).Number.ToString(), e.NewValue == null ? "[none]" : ((Rally)e.NewValue).Number.ToString());
+
+            LargeTableView largeTableView = (LargeTableView)sender;
+            if (e.NewValue != null)
+                largeTableView.SelectRally(e.NewValue as Rally);
+            else
+                largeTableView.DeselectAll();
+        }
+
+        private void OnLoaded(object sender, EventArgs e)
+        {
+            //Debug.WriteLine("OnLoaded ActiveRally=" + (ActiveRally != null ? ActiveRally.Number.ToString() : "[none]"));
+            if (ActiveRally != null)
+                SelectRally(ActiveRally);
+        }
 
         private void Stroke_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -119,22 +153,7 @@ namespace TT.Viewer.Views
 
             //Debug.WriteLine("mouse down on stroke {0} of rally {1}", clickedStroke.Number, clickedStroke.Rally.Number);
 
-            SelectedStroke = clickedStroke;
-
-            foreach (var strokeShape in StrokeShapes)
-            {
-                foreach (var shape in strokeShape.Value)
-                {
-                    StrokeInteraction interactionType = StrokeInteraction.None;
-                    if (strokeShape.Key.Equals(clickedStroke))
-                        interactionType = StrokeInteraction.Selected;
-                    else
-                        interactionType = StrokeInteraction.HoverOther;
-
-                    if (interactionType != StrokeInteraction.None)
-                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, interactionType);
-                }
-            }
+            SelectStroke(clickedStroke);
 
             handledEventTime = e.Timestamp;
         }
@@ -147,17 +166,7 @@ namespace TT.Viewer.Views
                 return;
             }
 
-            if (SelectedStroke != null)
-            {
-                SelectedStroke = null;
-                foreach (var strokeShape in StrokeShapes)
-                {
-                    foreach (var s in strokeShape.Value)
-                    {
-                        SetShapeStyleForInteractionType(s, ((Stroke)s.DataContext).Stroketechnique, StrokeInteraction.Normal);
-                    }
-                }
-            }
+            DeselectAll();
         }
 
         protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke)
@@ -174,6 +183,48 @@ namespace TT.Viewer.Views
 
         #region Helper methods
         
+        private void SelectRally(Rally rally)
+        {
+            foreach (Stroke stroke in StrokeShapes.Keys)
+                if (stroke.Rally.Number == rally.Number)
+                    SelectStroke(stroke);
+        }
+
+        private void SelectStroke(Stroke stroke)
+        {
+            SelectedStroke = stroke;
+
+            foreach (var strokeShape in StrokeShapes)
+            {
+                foreach (var shape in strokeShape.Value)
+                {
+                    StrokeInteraction interactionType = StrokeInteraction.None;
+                    if (strokeShape.Key.Equals(stroke))
+                        interactionType = StrokeInteraction.Selected;
+                    else
+                        interactionType = StrokeInteraction.HoverOther;
+
+                    if (interactionType != StrokeInteraction.None)
+                        SetShapeStyleForInteractionType(shape, ((Stroke)shape.DataContext).Stroketechnique, interactionType);
+                }
+            }
+        }
+
+        private void DeselectAll()
+        {
+            if (SelectedStroke != null)
+            {
+                SelectedStroke = null;
+                foreach (var strokeShape in StrokeShapes)
+                {
+                    foreach (var s in strokeShape.Value)
+                    {
+                        SetShapeStyleForInteractionType(s, ((Stroke)s.DataContext).Stroketechnique, StrokeInteraction.Normal);
+                    }
+                }
+            }
+        }
+
         private void AddNetOutShape(Stroke stroke)
         {
             double width = NetOutStrokesGrid.Width;
@@ -516,6 +567,12 @@ namespace TT.Viewer.Views
                         scoreToStringConverter.Convert(new object[] { s.Rally.CurrentRallyScore, s.Rally.CurrentSetScore }, typeof(string), false, System.Globalization.CultureInfo.CurrentCulture);
                     shape.ToolTip = tt;
                 }
+            }
+
+            foreach (Stroke stroke in strokes)
+            {
+                if (ActiveRally != null && stroke.Rally.Number == ActiveRally.Number)
+                    SelectStroke(stroke);
             }
         }
     }
