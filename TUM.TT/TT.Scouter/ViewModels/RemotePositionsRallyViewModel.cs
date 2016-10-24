@@ -209,6 +209,13 @@ namespace TT.Scouter.ViewModels
             showBottomRightArrow = false;
         }
 
+        public void DeleteStroke()
+        {
+            //Strokes.Remove(CurrentStroke);
+            //OnStrokePositionDeleted(CurrentStroke, new EventArgs());
+            CurrentStroke.Placement = null;
+        }
+
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)
         {
             if (CurrentStroke.Number > DrawnStrokes.Count)
