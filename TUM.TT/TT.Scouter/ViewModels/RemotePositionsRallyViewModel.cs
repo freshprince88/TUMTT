@@ -211,8 +211,6 @@ namespace TT.Scouter.ViewModels
 
         public void DeleteStroke()
         {
-            //Strokes.Remove(CurrentStroke);
-            //OnStrokePositionDeleted(CurrentStroke, new EventArgs());
             CurrentStroke.Placement = null;
         }
 
