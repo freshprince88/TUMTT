@@ -150,6 +150,9 @@ namespace TT.Scouter.ViewModels
 
         public void OnCurrentStrokeChanged()
         {
+            CurrentStroke.StrokePlacementChanged += S_StrokePlacementChanged;
+
+
             showCorrectStrokes();
             try
             {
@@ -204,6 +207,11 @@ namespace TT.Scouter.ViewModels
             showTopRightArrow = false;
             showBottomLeftArrow = false;
             showBottomRightArrow = false;
+        }
+
+        public void DeleteStroke()
+        {
+            CurrentStroke.Placement = null;
         }
 
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)
