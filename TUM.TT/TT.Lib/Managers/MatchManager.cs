@@ -117,12 +117,17 @@ namespace TT.Lib.Managers
                 if ((int)StartingTableEnd.Top != 1 || (int)StartingTableEnd.Bottom != 2 || (int)CurrentTableEnd.Top != 1 || (int)CurrentTableEnd.Bottom != 2)
                     throw new System.Exception("That doesnt work anymore if you change the values of the enums for StartingTableEnd");
 
-                int magicResult = (((int)Match.FirstPlayer.StartingTableEnd - 1 + ActiveRally.CurrentSetScore.Total - 1) % 2) + 1;
+                int magicResult = ((((int)Match.FirstPlayer.StartingTableEnd + (ActiveRally.CurrentSetScore.Total % 2)) + 1) % 2) + 1;
 
                 // If its the last set calculation is more complicated
                 bool isLastSet = ((MatchModeExtensions.RequiredSets(Match.Mode) - 1) * 2) == ActiveRally.CurrentSetScore.Total;
                 if (isLastSet)
-                    magicResult = (int)Math.Floor(ActiveRally.CurrentRallyScore.Total / 5.0) % 2 + (int)Match.FirstPlayer.StartingTableEnd;
+                {
+                    if (ActiveRally.CurrentRallyScore.Highest < 5)
+                        magicResult = ((((int)Match.FirstPlayer.StartingTableEnd + (ActiveRally.CurrentSetScore.Total % 2)) + 1) % 2) + 1;
+                    else
+                        magicResult = (((((int)Match.FirstPlayer.StartingTableEnd + 1) % 2 + (ActiveRally.CurrentSetScore.Total % 2)) + 1) % 2) + 1;
+                }
                 return ((CurrentTableEnd)magicResult);
             }
         }
