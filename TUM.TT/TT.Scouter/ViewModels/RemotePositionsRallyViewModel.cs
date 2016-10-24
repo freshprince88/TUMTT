@@ -150,6 +150,9 @@ namespace TT.Scouter.ViewModels
 
         public void OnCurrentStrokeChanged()
         {
+            CurrentStroke.StrokePlacementChanged += S_StrokePlacementChanged;
+
+
             showCorrectStrokes();
             try
             {
