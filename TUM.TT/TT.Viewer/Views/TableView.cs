@@ -510,6 +510,10 @@ namespace TT.Viewer.Views
             if (stroke.Number != 1 || !ShowSpinForStroke(stroke))
                 return;
 
+            double rotationAngle = GetRotationAngleForSpin(stroke.Spin);
+            if (rotationAngle == int.MaxValue)   // int.MaxValue means no spin analyzed
+                return;
+
             Shape spinArrow = StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.SpinShape);
             if (spinArrow != null)
             {
@@ -542,12 +546,35 @@ namespace TT.Viewer.Views
                 ellipseGeometry.RadiusX = 3;
                 ellipseGeometry.RadiusY = 3;
             }
+            else if (rotationAngle == int.MinValue) // int.MinValue means spin was "hidden"
+            {
+                Y1 -= 3;
+                spinGeometry = new PathGeometry();
+                PathFigure pathFigure = new PathFigure();
+
+                pathFigure.StartPoint = new Point(X1, Y1 - 4);
+
+                LineSegment ttb = new LineSegment(new Point(X1, Y1 + 4), true);
+                pathFigure.Segments.Add(ttb);
+
+                ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
+
+                pathFigure = new PathFigure();
+                pathFigure.StartPoint = new Point(X1 - 4, Y1);
+
+                LineSegment ltr = new LineSegment(new Point(X1 + 4, Y1), true);
+                pathFigure.Segments.Add(ltr);
+
+                ((PathGeometry)spinGeometry).Figures.Add(pathFigure);
+
+                spinGeometry.Transform = new RotateTransform(45, X1, Y1);
+            }
             else
             {
                 spinGeometry = new PathGeometry();
 
                 RotateTransform transform = new RotateTransform();
-                transform.Angle = GetRotationAngleForSpin(stroke.Spin);
+                transform.Angle = rotationAngle;
                 transform.CenterX = X1;
                 transform.CenterY = Y1 - 4;
                 spinGeometry.Transform = transform;
@@ -1085,8 +1112,10 @@ namespace TT.Viewer.Views
                 return 0;
             else if (spin.US == "1")
                 return 180;
+            else if (spin.US == "0" && spin.TS == "0" && spin.SL == "0" && spin.SR == "0" && spin.No == "0")
+                return int.MaxValue;
             else
-                return 0;
+                return int.MinValue;
         }
 
         protected void GetPointOfShapeRelativeToGrid(Shape shape, PointType which, Grid grid, out double x, out double y)
