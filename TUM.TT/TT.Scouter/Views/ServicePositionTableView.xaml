@@ -49,7 +49,7 @@
                     <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <RadioButton x:Name="bot" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="0" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]"/>
+                <RadioButton x:Name="bot" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="0" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]; [Event Click] = [Action ChangePositionPlayerFinal()]"/>
                 <Rectangle Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
             </Grid>
 
