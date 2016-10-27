@@ -11,35 +11,32 @@ namespace TT.Lib.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var firstColor = System.Drawing.Color.FromArgb(0xff, 0x4f, 0x81, 0xbd);
-            var secondColor = System.Drawing.Color.FromArgb(0xff, 0xc0, 0x50, 0x4d);
-
             float saturationFactor;
             float brightnessFactor;
             if (parameter == null || (int)parameter == 0)
             {
-                saturationFactor = -0.25f;
-                brightnessFactor = 0.1f;
+                saturationFactor = -0.15f;
+                brightnessFactor = 0.10f;
             } else if ((int)parameter == 1)
             {
-                saturationFactor = -0.4f;
-                brightnessFactor = 0.2f;
+                saturationFactor = -0.25f;
+                brightnessFactor = 0.35f;
             } else
             {
-                saturationFactor = -0.6f;
-                brightnessFactor = 0.3f;
+                saturationFactor = -0.38f;
+                brightnessFactor = 0.42f;
             }
 
             var brushConverter = new BrushConverter();
             switch ((MatchPlayer) value)
             {
-                // original player colors from report:
-                // First:   #FF4F81BD"
-                // Second:  #FFC0504D"
-                // new colors: saturation - 25, brightness + 10
                 default:
-                case MatchPlayer.First: return new SolidColorBrush(HSL2RGB(firstColor.GetHue(), firstColor.GetSaturation() + saturationFactor, firstColor.GetBrightness() + brightnessFactor)); //(Brush)brushConverter.ConvertFromString("#ff90afd6");
-                case MatchPlayer.Second: return new SolidColorBrush(HSL2RGB(secondColor.GetHue(), secondColor.GetSaturation() + saturationFactor, secondColor.GetBrightness() + brightnessFactor));//(Brush)brushConverter.ConvertFromString("#ffd98f8d");
+                case MatchPlayer.First:
+                    var firstColor = System.Drawing.Color.FromArgb(0xff, 0x4f, 0x81, 0xbd);
+                    return new SolidColorBrush(FromAhsb(firstColor.A, firstColor.GetHue(), firstColor.GetSaturation() + saturationFactor, firstColor.GetBrightness() + brightnessFactor));
+                case MatchPlayer.Second:
+                    var secondColor = System.Drawing.Color.FromArgb(0xff, 0xc0, 0x50, 0x4d);
+                    return new SolidColorBrush(FromAhsb(secondColor.A, secondColor.GetHue(), secondColor.GetSaturation() + saturationFactor, secondColor.GetBrightness() + brightnessFactor));
             }
         }
 
@@ -48,70 +45,82 @@ namespace TT.Lib.Converters
             throw new NotImplementedException();
         }
 
-        public static Color HSL2RGB(double h, double sl, double l)
+        /// <summary>
+        /// Creates a Color from alpha, hue, saturation and brightness.
+        /// </summary>
+        /// <param name="alpha">The alpha channel value.</param>
+        /// <param name="hue">The hue value.</param>
+        /// <param name="saturation">The saturation value.</param>
+        /// <param name="brightness">The brightness value.</param>
+        /// <returns>A Color with the given values.</returns>
+        public static Color FromAhsb(byte alpha, float hue, float saturation, float brightness)
         {
-            double v;
-            double r, g, b;
+            alpha = Math.Min(Math.Max(alpha, (byte)0), (byte)255);
+            hue = Math.Min(Math.Max(hue, 0), 360);
+            saturation = Math.Min(Math.Max(saturation, 0), 1);
+            brightness = Math.Min(Math.Max(brightness, 0), 1);
 
-            r = l;   // default to gray
-            g = l;
-            b = l;
-            v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
-            if (v > 0)
+            if (0 == saturation)
             {
-                double m;
-                double sv;
-                int sextant;
-                double fract, vsf, mid1, mid2;
-
-                m = l + l - v;
-                sv = (v - m) / v;
-                h *= 6.0;
-                sextant = (int)h;
-                fract = h - sextant;
-                vsf = v * sv * fract;
-                mid1 = m + vsf;
-                mid2 = v - vsf;
-                switch (sextant)
-                {
-                    case 0:
-                        r = v;
-                        g = mid1;
-                        b = m;
-                        break;
-                    case 1:
-                        r = mid2;
-                        g = v;
-                        b = m;
-                        break;
-                    case 2:
-                        r = m;
-                        g = v;
-                        b = mid1;
-                        break;
-                    case 3:
-                        r = m;
-                        g = mid2;
-                        b = v;
-                        break;
-                    case 4:
-                        r = mid1;
-                        g = m;
-                        b = v;
-                        break;
-                    case 5:
-                        r = v;
-                        g = m;
-                        b = mid2;
-                        break;
-                }
+                return Color.FromArgb(
+                                    alpha,
+                                    System.Convert.ToByte(brightness * 255),
+                                    System.Convert.ToByte(brightness * 255),
+                                    System.Convert.ToByte(brightness * 255));
             }
-            Color rgb = new Color();
-            rgb.R = System.Convert.ToByte(r * 255.0f);
-            rgb.G = System.Convert.ToByte(g * 255.0f);
-            rgb.B = System.Convert.ToByte(b * 255.0f);
-            return rgb;
-        }
+
+            float fMax, fMid, fMin;
+            int iSextant;
+            byte iMax, iMid, iMin;
+
+            if (0.5 < brightness)
+            {
+                fMax = brightness - (brightness * saturation) + saturation;
+                fMin = brightness + (brightness * saturation) - saturation;
+            }
+            else
+            {
+                fMax = brightness + (brightness * saturation);
+                fMin = brightness - (brightness * saturation);
+            }
+
+            iSextant = (int)Math.Floor(hue / 60f);
+            if (300f <= hue)
+            {
+                hue -= 360f;
+            }
+
+            hue /= 60f;
+            hue -= 2f * (float)Math.Floor(((iSextant + 1f) % 6f) / 2f);
+            if (0 == iSextant % 2)
+            {
+                fMid = (hue * (fMax - fMin)) + fMin;
+            }
+            else
+            {
+                fMid = fMin - (hue * (fMax - fMin));
+            }
+
+            iMax = System.Convert.ToByte(fMax * 255);
+            iMid = System.Convert.ToByte(fMid * 255);
+            iMin = System.Convert.ToByte(fMin * 255);
+
+            switch (iSextant)
+            {
+                case 1:
+                    return Color.FromArgb(alpha, iMid, iMax, iMin);
+                case 2:
+                    return Color.FromArgb(alpha, iMin, iMax, iMid);
+                case 3:
+                    return Color.FromArgb(alpha, iMin, iMid, iMax);
+                case 4:
+                    return Color.FromArgb(alpha, iMid, iMin, iMax);
+                case 5:
+                    return Color.FromArgb(alpha, iMax, iMin, iMid);
+                default:
+                    return Color.FromArgb(alpha, iMax, iMid, iMin);
+            }
+        }        
     }
 }
 

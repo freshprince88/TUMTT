@@ -1096,7 +1096,9 @@ namespace TT.Viewer.Views
 
         private double GetRotationAngleForSpin(Spin spin)
         {
-            if (spin.SL == "1" && spin.TS == "1")
+            if (spin == null || spin.TS == "1")
+                return 0;
+            else if (spin.SL == "1" && spin.TS == "1")
                 return -45;
             else if (spin.SL == "1" && spin.US == "1")
                 return -135;
@@ -1108,8 +1110,6 @@ namespace TT.Viewer.Views
                 return 135;
             else if (spin.SR == "1")
                 return 90;
-            else if (spin.TS == "1")
-                return 0;
             else if (spin.US == "1")
                 return 180;
             else if (spin.US == "0" && spin.TS == "0" && spin.SL == "0" && spin.SR == "0" && spin.No == "0")
