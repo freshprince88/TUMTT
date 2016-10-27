@@ -33,7 +33,7 @@ namespace TT.Viewer.Views
         protected const string HoveredRallyBackgroundColor = "#f0f5ed";
 
         private static BrushConverter brushConverter = new BrushConverter();
-        private static MatchPlayerToBrushConverter rallyWinnerToBrushConverter = new MatchPlayerToBrushConverter();
+        private static MatchPlayerToBrushConverter matchPlayerToBrushConverter = new MatchPlayerToBrushConverter();
         private static ScoreToStringConverter scoreToStringConverter = new ScoreToStringConverter();
 
         private AutoResetEvent sizeChangedWaitEvent;
@@ -126,7 +126,7 @@ namespace TT.Viewer.Views
 
             if (smallTableView.thisRally.Number == smallTableView.ActiveRally.Number)
             {
-                ((Grid)smallTableView.Parent).Background = (Brush)brushConverter.ConvertFrom(SelectedRallyBackgroundColor);
+                ((Grid)smallTableView.Parent).Background = (Brush)matchPlayerToBrushConverter.Convert(smallTableView.thisRally.Winner, typeof(Brush), 1, System.Globalization.CultureInfo.CurrentCulture);
             }
             else
             {
@@ -177,7 +177,7 @@ namespace TT.Viewer.Views
         private void SmallTable_MouseEnter(object sender, MouseEventArgs e)
         {
             Grid parentGrid = (Grid)((SmallTableView)((Grid)sender).Parent).Parent;
-            parentGrid.Background = (Brush)brushConverter.ConvertFrom(HoveredRallyBackgroundColor);
+            parentGrid.Background = (Brush)matchPlayerToBrushConverter.Convert(thisRally.Winner, typeof(Brush), 2, System.Globalization.CultureInfo.CurrentCulture);
         }
 
         private void SmallTable_MouseLeave(object sender, MouseEventArgs e)
@@ -185,7 +185,7 @@ namespace TT.Viewer.Views
             Grid parentGrid = (Grid)((SmallTableView)((Grid)sender).Parent).Parent;
             if (ActiveRally != null && ActiveRally.Number == thisRally.Number)
             {
-                parentGrid.Background = (Brush)brushConverter.ConvertFrom(SelectedRallyBackgroundColor);
+                parentGrid.Background = (Brush)matchPlayerToBrushConverter.Convert(thisRally.Winner, typeof(Brush), 1, System.Globalization.CultureInfo.CurrentCulture);
             }
             else
             {
@@ -239,7 +239,7 @@ namespace TT.Viewer.Views
             AddStrokeNumbers(stroke);
             
             ToolTip tt = new ToolTip();
-            tt.Background = (Brush) rallyWinnerToBrushConverter.Convert(stroke.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
+            tt.Background = (Brush) matchPlayerToBrushConverter.Convert(stroke.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
             tt.Content = "#" + stroke.Rally.Number + " " +
                         scoreToStringConverter.Convert(new object[] { stroke.Rally.CurrentRallyScore, stroke.Rally.CurrentSetScore }, typeof(string), false, System.Globalization.CultureInfo.CurrentCulture);
             TableGrid.ToolTip = tt;
