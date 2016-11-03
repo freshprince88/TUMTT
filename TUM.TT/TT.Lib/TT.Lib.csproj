@@ -113,6 +113,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\MatchPlayerToColorConverter.cs" />
+    <Compile Include="Converters\RallyToVisibilityConverter.cs" />
     <Compile Include="Converters\AggressivenessToBoolConverter.cs" />
     <Compile Include="Converters\AggressivenessToBoolScouterConverter.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
@@ -125,6 +127,8 @@
     <Compile Include="Converters\CurrentRallyServerToBallIsVisibleConverter.cs" />
     <Compile Include="Converters\CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
     <Compile Include="Converters\ForeBackHandToBoolConverter.cs" />
+    <Compile Include="Converters\MatchPlayerToBrushConverter.cs" />
+    <Compile Include="Converters\ScoreToStringConverter.cs" />
     <Compile Include="Converters\MatchPlayerToVisibilityConverter.cs" />
     <Compile Include="Converters\MinRallyLengthToVisibleConverter.cs" />
     <Compile Include="Converters\NumAndLengthToLastVisibilityConverter.cs" />
@@ -132,12 +136,14 @@
     <Compile Include="Converters\PointP1P2ToBoolConverter.cs" />
     <Compile Include="Converters\QualityToBoolConverter.cs" />
     <Compile Include="Converters\QualityToBoolScouterConverter.cs" />
+    <Compile Include="Converters\RallyLengthToVisibilityConverter.cs" />
     <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
     <Compile Include="Converters\MatchPlayerToStringConverter.cs" />
     <Compile Include="Converters\MSToTimeConverter.cs" />
     <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
     <Compile Include="Converters\NumToPrevVisibleConverter.cs" />
     <Compile Include="Converters\RallyLengthToBoolConverter.cs" />
+    <Compile Include="Converters\RoundingConverter.cs" />
     <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
     <Compile Include="Converters\ServiceToBoolConverter.cs" />
     <Compile Include="Converters\ServiceToBoolScouterConverter.cs" />
@@ -191,6 +197,8 @@
     <Compile Include="Events\VideoLoadedEvent.cs" />
     <Compile Include="Events\ActiveRallyChangedEvent.cs" />
     <Compile Include="Events\WebBrowserEvent.cs" />
+    <Compile Include="Exceptions\NoStrokeEndPointException.cs" />
+    <Compile Include="Exceptions\NoStrokeStartingPointException.cs" />
     <Compile Include="Interactivity\FocusBehavior.cs" />
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
     <Compile Include="Interactivity\InputBindingTrigger.cs" />

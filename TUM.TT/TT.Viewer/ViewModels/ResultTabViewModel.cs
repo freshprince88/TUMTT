@@ -16,13 +16,26 @@ using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ResultTabViewModel : Conductor<IResultViewTabItem>.Collection.OneActive
+    public class ResultTabViewModel : Conductor<IResultViewTabItem>.Collection.OneActive,
+        IHandle<FullscreenEvent>
     {
 
-        public ResultTabViewModel(IEnumerable<IResultViewTabItem> tabs)
-        {
+        private IEventAggregator Events;
 
+        public ResultTabViewModel(IEnumerable<IResultViewTabItem> tabs, IEventAggregator e)
+        {
             Items.AddRange(tabs);
+
+            Events = e;
+            Events.Subscribe(this);
+        }
+
+        public void Handle(FullscreenEvent message)
+        {
+            foreach (IResultViewTabItem tab in Items)
+            {
+                tab.DisplayName = tab.GetTabTitle(message.Fullscreen);
+            }
         }
 
         protected override void OnActivate()

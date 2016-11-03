@@ -53,12 +53,25 @@ namespace TT.Viewer.ViewModels
             Rallies = new List<Rally>();
         }
 
+        public byte GetOrderInResultView()
+        {
+            return 0;
+        }
+
+        public string GetTabTitle(bool getShortTitle)
+        {
+            if (getShortTitle)
+                return Properties.Resources.result_list_tab_title_short;
+            else
+                return Properties.Resources.result_list_tab_title;
+        }
+
         #region View Methods
 
         public void ListItemSelected(SelectionChangedEventArgs e)
         {
             ResultListItem item = e.AddedItems.Count > 0 ? (ResultListItem)e.AddedItems[0] : null;
-            if (item != null)
+            if (item != null && Manager.ActiveRally != item.Rally)
             {
                 Manager.ActiveRally = item.Rally;
             }
@@ -107,11 +120,11 @@ namespace TT.Viewer.ViewModels
             switch (message.Fullscreen)
             {
                 case true:
-                    this.DisplayName = "R(" + count + ")";
+                    //this.DisplayName = "R(" + count + ")";
                     Header = "R(" + count + ")";
                     break;
                 case false:
-                    this.DisplayName = "Hitlist (" + count + ")";
+                    //this.DisplayName = "Hitlist (" + count + ")";
                     Header = "Hitlist (" + count + ")";
                     break;
                 default:
@@ -179,6 +192,16 @@ namespace TT.Viewer.ViewModels
             Events.Unsubscribe(this);
             Items.Clear();
             base.OnDeactivate(close);
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            Items.Clear();
+            Manager.SelectedRallies.Apply(rally => Items.Add(new ResultListItem(rally)));
+            
+            if (Manager.ActiveRally != null)
+                Events.PublishOnUIThread(new ResultListControlEvent(Manager.ActiveRally));
         }
 
         #endregion

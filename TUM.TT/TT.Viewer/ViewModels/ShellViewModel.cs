@@ -199,7 +199,7 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanSaveMatch);
             NotifyOfPropertyChange(() => this.CanShowPlayer);
             NotifyOfPropertyChange(() => this.CanShowCompetition);
-            ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>(), MatchManager, DialogCoordinator));
+            this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
         }
         #endregion
 

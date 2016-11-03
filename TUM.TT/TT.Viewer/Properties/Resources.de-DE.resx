@@ -118,67 +118,67 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="legend_backhand_title" xml:space="preserve">
-    <value>Backhand:</value>
+    <value>Rückhand:</value>
   </data>
   <data name="legend_banana_flip_title" xml:space="preserve">
-    <value>Banana / Flip</value>
+    <value>Banane / Flip</value>
   </data>
   <data name="legend_block_counter_title" xml:space="preserve">
-    <value>Block / Counter</value>
+    <value>Block / Konterball</value>
   </data>
   <data name="legend_chop_title" xml:space="preserve">
-    <value>Chop</value>
+    <value>Schnittabwehr</value>
   </data>
   <data name="legend_forehand_title" xml:space="preserve">
-    <value>Forehand:</value>
+    <value>Vorhand:</value>
   </data>
   <data name="legend_lineexplanation_intercept_title" xml:space="preserve">
-    <value>Intercept</value>
+    <value>Annahme</value>
   </data>
   <data name="legend_lineexplanation_poc_pl_title" xml:space="preserve">
-    <value>Point of contact → Placement</value>
+    <value>Annahmepunkt → Platzierung</value>
   </data>
   <data name="legend_lob_title" xml:space="preserve">
-    <value>Lob</value>
+    <value>Ballonabwehr</value>
   </data>
   <data name="legend_misc_title" xml:space="preserve">
-    <value>Misc</value>
+    <value>Sonstige</value>
   </data>
   <data name="legend_push_title" xml:space="preserve">
-    <value>Push</value>
+    <value>Schupfball</value>
   </data>
   <data name="legend_service_without_spin_title" xml:space="preserve">
-    <value>Service (without spin)</value>
+    <value>Aufschlag (ohne Spin)</value>
   </data>
   <data name="legend_service_with_spin_title" xml:space="preserve">
-    <value>Service (with spin)</value>
+    <value>Aufschlag (mit Spin)</value>
   </data>
   <data name="legend_smash_title" xml:space="preserve">
-    <value>Smash</value>
+    <value>Schuss</value>
   </data>
   <data name="legend_topspin_title" xml:space="preserve">
     <value>Topspin</value>
   </data>
   <data name="table_direction_title" xml:space="preserve">
-    <value>Direction</value>
+    <value>Richtung</value>
   </data>
   <data name="table_intercept_title" xml:space="preserve">
-    <value>Intercept</value>
+    <value>Annahme</value>
   </data>
   <data name="table_large_tab_title" xml:space="preserve">
-    <value>Large Table</value>
+    <value>Großer Tisch</value>
   </data>
   <data name="table_legend_title" xml:space="preserve">
-    <value>Legend</value>
+    <value>Legende</value>
   </data>
   <data name="table_small_tab_title" xml:space="preserve">
-    <value>Small Tables</value>
+    <value>Kleine Tische</value>
   </data>
   <data name="table_spin_title" xml:space="preserve">
     <value>Spin</value>
   </data>
   <data name="table_numbers_title" xml:space="preserve">
-    <value>Numbers</value>
+    <value>Zahlen</value>
   </data>
   <data name="table_rally_title" xml:space="preserve">
     <value>Rally:</value>
@@ -187,44 +187,37 @@
     <value>Rally score:</value>
   </data>
   <data name="table_score_set_title" xml:space="preserve">
-    <value>Set score:</value>
+    <value>Satz score:</value>
   </data>
   <data name="table_show_strokes_title" xml:space="preserve">
-    <value>Strokes:</value>
+    <value>Schläge:</value>
   </data>
   <data name="table_stroke_1_title" xml:space="preserve">
-    <value>Stroke 1</value>
+    <value>Schlag 1</value>
   </data>
   <data name="table_stroke_2_title" xml:space="preserve">
-    <value>Stroke 2</value>
+    <value>Schlag 2</value>
   </data>
   <data name="table_stroke_3_title" xml:space="preserve">
-    <value>Stroke 3</value>
+    <value>Schlag 3</value>
   </data>
   <data name="table_stroke_4_title" xml:space="preserve">
-    <value>Stroke 4</value>
+    <value>Schlag 4</value>
   </data>
   <data name="table_score_title" xml:space="preserve">
     <value>Score:</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="rally_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rally_server.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rally_winner" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rally_winner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="table_tooltip_rally_point" xml:space="preserve">
-    <value>Point:</value>
+    <value>Punkt:</value>
   </data>
   <data name="table_tooltip_rally_server" xml:space="preserve">
-    <value>Server:</value>
+    <value>Aufschlag:</value>
   </data>
   <data name="table_tooltip_score_rally" xml:space="preserve">
-    <value>Rally score</value>
+    <value>Punktestand Spiel</value>
   </data>
   <data name="table_tooltip_score_set" xml:space="preserve">
-    <value>Set score</value>
+    <value>Punktestand Satz</value>
   </data>
   <data name="result_list_tab_title" xml:space="preserve">
     <value>Hitlist</value>
@@ -233,12 +226,12 @@
     <value>H</value>
   </data>
   <data name="table_large_tab_title_short" xml:space="preserve">
-    <value>L</value>
+    <value>G</value>
   </data>
   <data name="table_small_tab_title_short" xml:space="preserve">
-    <value>S</value>
+    <value>K</value>
   </data>
   <data name="table_netout_label" xml:space="preserve">
-    <value>Net/Out:</value>
+    <value>Netz/Aus:</value>
   </data>
 </root>
