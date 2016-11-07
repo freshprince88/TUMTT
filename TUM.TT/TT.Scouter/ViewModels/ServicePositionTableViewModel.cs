@@ -410,6 +410,7 @@ namespace TT.Scouter.ViewModels
                 throw new System.Exception("Wrong Argument");
         }
 
+        // Called the moment before(!) user clicked on the Radiobutton
         public void ChangePositionPlayer(object sender, MouseButtonEventArgs e)
         {
             RadioButton grid = sender as RadioButton;
@@ -429,6 +430,7 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        // Called by View after(!) user clicked on the RadioButton
         public void ChangePositionPlayerFinal()
         {
             CheckPlayerPosition(Stroke.Playerposition);
