@@ -394,7 +394,7 @@ namespace TT.Scouter.ViewModels
         #region PlayerPosition Functions
         public void CheckPlayerPosition(double position)
         {
-            if (position <= 0)
+            if (position < 0)
                 return;
             else
             {
@@ -415,7 +415,7 @@ namespace TT.Scouter.ViewModels
         {
             RadioButton grid = sender as RadioButton;
             Point position = e.GetPosition(grid);
-            double playerPosition = (position.X / grid.ActualWidth * 152.5);
+            double playerPosition = Math.Floor((position.X / grid.ActualWidth * 152.5));
             IsCheckPlayerPosition(playerPosition);
 
             if (e.RightButton == MouseButtonState.Pressed)
