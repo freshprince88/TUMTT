@@ -416,11 +416,25 @@ namespace TT.Scouter.ViewModels
             Point position = e.GetPosition(grid);
             double playerPosition = (position.X / grid.ActualWidth * 152.5);
             IsCheckPlayerPosition(playerPosition);
-            Stroke.Playerposition = playerPosition;
+
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                Stroke.Playerposition = double.NaN;
+                poc = false;
+                pocActive = false;
+            }
+            else
+            {
+                Stroke.Playerposition = playerPosition;
+            }
         }
 
         public void ChangePositionPlayerFinal()
         {
+            CheckPlayerPosition(Stroke.Playerposition);
+            /*
+             * old code does not only work on right click
+             * 
             if (poc)
             {
                 Stroke.Playerposition = double.NaN;
@@ -432,6 +446,7 @@ namespace TT.Scouter.ViewModels
                 poc = false;
                 CheckPlayerPosition(Stroke.Playerposition);
             }
+            */
         }
 
         #endregion
