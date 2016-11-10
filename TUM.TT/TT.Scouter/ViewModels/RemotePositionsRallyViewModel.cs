@@ -346,7 +346,7 @@ namespace TT.Scouter.ViewModels
             {
                 if (Math.Abs((CurrentStroke.Number - 1 - i)) <= (_maxVisibleStrokes - 1) / 2)
                 {
-                    if (Strokes[i].Placement != null) DrawnStrokes[i].g.Visibility = Visibility.Visible;
+                    if (Strokes.Count > 0 && Strokes[i].Placement != null) DrawnStrokes[i].g.Visibility = Visibility.Visible;
                 } else
                 {
                     DrawnStrokes[i].g.Visibility = Visibility.Hidden;

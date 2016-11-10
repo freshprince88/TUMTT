@@ -400,7 +400,7 @@ namespace TT.Scouter.ViewModels
             {
                 poc = true;
                 pocActive = true;
-                pocThickness = new Thickness(0, 0,324-((double) position * (648/152.5)), 0);
+                pocThickness = new Thickness(0, 0,324-((double)(position * 1.003) * (648/152.5)), 0);; // 1,003 * 152 = 152,48 ~ 152,5
             }
         }
 
