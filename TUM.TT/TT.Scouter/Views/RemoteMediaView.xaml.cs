@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Views;
 using TT.Models.Util.Enums;
 
 namespace TT.Scouter.Views
@@ -22,7 +23,7 @@ namespace TT.Scouter.Views
     /// <summary>
     /// Interaction logic for RemoteMediaView.xaml
     /// </summary>
-    public partial class RemoteMediaView : UserControl,
+    public partial class RemoteMediaView : ControlWithBindableKeyGestures,
         IHandle<MediaControlEvent>,
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>,

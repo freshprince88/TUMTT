@@ -7,9 +7,6 @@ using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
-
-using TT.Lib.Views;
-
 using TT.Models;
 
 
@@ -246,6 +243,19 @@ namespace TT.Viewer.ViewModels
             else
             {
                 _windowManager.ShowWindow(new ShowCompetitionViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
+            }
+        }
+
+        public void ShowKeyBindingEditor()
+        {
+            if (IsWindowOpen<Window>("KeyBindingEditor"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "KeyBindingEditor").FirstOrDefault().Focus();
+
+            }
+            else
+            {
+                _windowManager.ShowWindow(new KeyBindingEditorViewModel(_windowManager, Events, DialogCoordinator));
             }
         }
 

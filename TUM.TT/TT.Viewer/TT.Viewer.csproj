@@ -147,6 +147,7 @@
     <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\KeyBindingEditorViewModel.cs" />
     <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsTableViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsViewModel.cs" />
@@ -213,6 +214,9 @@
     </Compile>
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KeyBindingEditorView.xaml.cs">
+      <DependentUpon>KeyBindingEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LastBallStatisticsView.xaml.cs">
       <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
@@ -354,6 +358,10 @@
     <Page Include="Views\FourthBallView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\KeyBindingEditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\LastBallStatisticsView.xaml">
       <SubType>Designer</SubType>

@@ -205,6 +205,9 @@
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
     <Compile Include="Util\ObservableSortedList.cs" />
+    <Compile Include="Util\ShortcutFactory.cs" />
+    <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
+    <Compile Include="Views\ExtendedMediaElement.cs" />
     <Compile Include="Webbrowser\Test.cs" />
     <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />
@@ -218,7 +221,6 @@
     <Compile Include="Results\YesNoCloseQuestionResult.cs" />
     <Compile Include="Util\CustomClosableComboDialog.cs" />
     <Compile Include="Util\MatchExtensions.cs" />
-    <Compile Include="Views\ExtendedMediaElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\BusyIndicatorResult.cs" />
     <Compile Include="Results\DeserializeMatchResult.cs" />

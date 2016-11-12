@@ -126,6 +126,7 @@
     <Compile Include="ViewModels\ChoiceOfEndsViewModel.cs" />
     <Compile Include="ViewModels\ChoiceOfServiceReceiveViewModel.cs" />
     <Compile Include="ViewModels\IttvDownloadViewModel.cs" />
+    <Compile Include="ViewModels\KeyBindingEditorViewModel.cs" />
     <Compile Include="ViewModels\LiveScoutingViewModel.cs" />
     <Compile Include="ViewModels\LiveTimerViewModel.cs" />
     <Compile Include="ViewModels\LiveViewModel.cs" />
@@ -159,6 +160,9 @@
     </Compile>
     <Compile Include="Views\IttvDownloadView.xaml.cs">
       <DependentUpon>IttvDownloadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KeyBindingEditorView.xaml.cs">
+      <DependentUpon>KeyBindingEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LiveMediaView.xaml.cs">
       <DependentUpon>LiveMediaView.xaml</DependentUpon>
@@ -243,6 +247,10 @@
     <Page Include="Views\IttvDownloadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\KeyBindingEditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\LiveMediaView.xaml">
       <Generator>MSBuild:Compile</Generator>
