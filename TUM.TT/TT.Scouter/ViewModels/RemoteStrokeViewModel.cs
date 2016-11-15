@@ -2,11 +2,41 @@
 using System.Collections.ObjectModel;
 using TT.Lib.Managers;
 using TT.Models;
+using MahApps.Metro.Controls;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using TT.Lib.Events;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Input;
+using TT.Lib.Util;
+using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels
 {
     public class RemoteStrokeViewModel : Conductor<IScreen>.Collection.OneActive
     {
+
+        #region Properties
+
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyGesture> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
+            }
+            set { }
+        }
         private IMatchManager MatchManager;
         private ObservableCollection<Stroke> _strokes;
         public ObservableCollection<Stroke> Strokes
@@ -42,7 +72,7 @@ namespace TT.Scouter.ViewModels
 
                     if (_stroke == null || _stroke.Number == 1)
                     {
-                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally);                       
+                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally);
                         NotifyOfPropertyChange("SchlagDetail");
                     }
                     else
@@ -70,6 +100,7 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
+        #endregion
 
         public RemoteStrokeViewModel(IMatchManager man, Rally r)
         {
@@ -94,13 +125,19 @@ namespace TT.Scouter.ViewModels
         #region View Methods
         public void NextStroke()
         {
-            CurrentStroke = Strokes[CurrentStroke.Number];
+            if (CurrentStroke.Number < CurrentRally.Length)
+            {
+                CurrentStroke = Strokes[CurrentStroke.Number];
+            }
         }
 
         public void PreviousStroke()
         {
-            var idx = CurrentStroke.Number - 1;
-            CurrentStroke = Strokes[idx - 1];
+            if (CurrentStroke.Number != 1)
+            {
+                var idx = CurrentStroke.Number - 1;
+                CurrentStroke = Strokes[idx - 1];
+            }
         }
 
         public void FirstStroke()

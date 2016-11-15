@@ -39,7 +39,7 @@ namespace TT.Lib.Util
             var dictionary = new Dictionary<string, InputGesture>
             {
                 {"PreviousRally", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.None)},
-                {"StartRallyAtBeginning", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.Alt)},
+                {"StartRallyAtBeginning", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.Control)},
                 {"Previous5Frames", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.Shift)},
                 {"PreviousFrame", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.Alt)},
                 {"PlayPause", new KeyGesture(Key.MediaPlayPause, ModifierKeys.None)},
@@ -49,7 +49,9 @@ namespace TT.Lib.Util
                 {"FullscreenHelper", new KeyGesture(Key.F, ModifierKeys.Alt)},
                 {"PlayModeHelper", new KeyGesture(Key.R, ModifierKeys.Alt)},
                 {"SelectForehand", new KeyGesture(Key.V, ModifierKeys.Alt)},
-                {"SelectBackhand", new KeyGesture(Key.B, ModifierKeys.Alt)}
+                {"SelectBackhand", new KeyGesture(Key.B, ModifierKeys.Alt)},
+                {"NextStroke", new KeyGesture(Key.Right, ModifierKeys.Alt)},
+                {"PreviousStroke", new KeyGesture(Key.Left, ModifierKeys.Alt)}
 
             };
             return dictionary;

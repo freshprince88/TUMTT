@@ -5,11 +5,37 @@ using System.Windows.Controls.Primitives;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Input;
+using TT.Lib.Util;
+using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels
 {
     public class StrokeDetailViewModel : Conductor<IScreen>.Collection.AllActive
     {
+        #region Properties
+        
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyGesture> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
+            }
+            set { }
+        }
+
         private Stroke _stroke;
         public Stroke Stroke
         {
@@ -47,6 +73,7 @@ namespace TT.Scouter.ViewModels
 
 
 
+        #endregion
 
         public StrokeDetailViewModel(Stroke s, IMatchManager man, Rally cr)
         {
@@ -72,6 +99,38 @@ namespace TT.Scouter.ViewModels
             Events.Subscribe(this);
         }
         #region View Methods
+        public void SelectForehand()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Side == "Forehand")
+            {
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectBackhand()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Side == "Backhand")
+            {
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Side = "Backhand";
+            }
+        }
         public void SelectSide(ToggleButton source)
         {
             if (Stroke == null)
