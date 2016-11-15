@@ -47,7 +47,10 @@ namespace TT.Lib.Util
                 {"Next5Frames", new KeyGesture(Key.MediaNextTrack, ModifierKeys.Shift)},
                 {"NextRally", new KeyGesture(Key.MediaNextTrack, ModifierKeys.None)},
                 {"FullscreenHelper", new KeyGesture(Key.F, ModifierKeys.Alt)},
-                {"PlayModeHelper", new KeyGesture(Key.R, ModifierKeys.Alt)}
+                {"PlayModeHelper", new KeyGesture(Key.R, ModifierKeys.Alt)},
+                {"SelectForehand", new KeyGesture(Key.V, ModifierKeys.Alt)},
+                {"SelectBackhand", new KeyGesture(Key.B, ModifierKeys.Alt)}
+
             };
             return dictionary;
         }

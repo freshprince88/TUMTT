@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TT.Lib.Views;
 
 namespace TT.Scouter.Views
 {
     /// <summary>
     /// Interaction logic for ServiceDetailView.xaml
     /// </summary>
-    public partial class ServiceDetailView : UserControl
+    public partial class ServiceDetailView : ControlWithBindableKeyGestures
     {
         public ServiceDetailView()
         {
