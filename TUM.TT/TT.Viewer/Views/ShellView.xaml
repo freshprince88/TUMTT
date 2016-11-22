@@ -141,11 +141,22 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
-                        <Controls:Tile Title="Generate Report" cal:Message.Attach="[Event Click] = [Action GenerateReport()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                        <Controls:Tile Title="Generate Report" cal:Message.Attach="[Event Click] = [Action GenerateReport()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle}">
                             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_book_list}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Controls:Tile>
+                        <Controls:Tile Style="{StaticResource SmallTileStyle}" Margin="-3,0,2,0" Width="20">
+                            <Rectangle Width="10" Height="7" Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                                <Rectangle.OpacityMask>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <GeometryDrawing Geometry="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" Brush="White" />
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
