@@ -10,6 +10,7 @@ namespace TT.Viewer.Views
         public KeyBindingEditorView()
         {
             InitializeComponent();
+            Name = "KeyBindingEditor";
         }
     }
 }
