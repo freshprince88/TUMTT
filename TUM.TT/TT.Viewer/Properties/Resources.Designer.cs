@@ -207,6 +207,33 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string report_settings_cancel {
+            get {
+                return ResourceManager.GetString("report_settings_cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string report_settings_ok {
+            get {
+                return ResourceManager.GetString("report_settings_ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Settings.
+        /// </summary>
+        public static string report_settings_title {
+            get {
+                return ResourceManager.GetString("report_settings_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hitlist.
         /// </summary>
         public static string result_list_tab_title {

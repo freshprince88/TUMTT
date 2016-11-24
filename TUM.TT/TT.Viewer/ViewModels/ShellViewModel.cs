@@ -259,6 +259,19 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public void ShowReportSettings()
+        {
+            if (IsWindowOpen<Window>("ReportSettings"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ReportSettings").FirstOrDefault().Focus();
+
+            }
+            else
+            {
+                _windowManager.ShowWindow(new ReportSettingsViewModel(_windowManager, Events, DialogCoordinator));
+            }
+        }
+
         #endregion
 
     }

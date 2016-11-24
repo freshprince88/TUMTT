@@ -241,4 +241,13 @@
   <data name="table_netout_label" xml:space="preserve">
     <value>Net/Out:</value>
   </data>
+  <data name="report_settings_title" xml:space="preserve">
+    <value>Report Settings</value>
+  </data>
+  <data name="report_settings_cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="report_settings_ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
 </root>

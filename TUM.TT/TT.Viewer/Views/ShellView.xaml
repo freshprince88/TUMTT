@@ -149,7 +149,10 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
-                        <Controls:Tile Style="{StaticResource SmallTileStyle}" Margin="-3,0,2,0" Width="20">
+                        
+                        <Rectangle Fill="{DynamicResource HighlightBrush}" Width="1" Height="Auto" Margin="-4 5 0 5"/>
+
+                        <Controls:Tile Style="{StaticResource SmallTileStyle}" Margin="-1,0,2,0" Width="20" cal:Message.Attach="[Event Click] = [Action ShowReportSettings()]">
                             <Rectangle Width="10" Height="7" Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>
                                     <DrawingBrush>
