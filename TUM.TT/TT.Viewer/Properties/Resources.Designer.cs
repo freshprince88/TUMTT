@@ -216,11 +216,38 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ok.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string report_settings_ok {
             get {
                 return ResourceManager.GetString("report_settings_ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save &amp; Generate.
+        /// </summary>
+        public static string report_settings_ok_generate {
+            get {
+                return ResourceManager.GetString("report_settings_ok_generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Both.
+        /// </summary>
+        public static string report_settings_playerchoice_both {
+            get {
+                return ResourceManager.GetString("report_settings_playerchoice_both", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player.
+        /// </summary>
+        public static string report_settings_playerchoice_title {
+            get {
+                return ResourceManager.GetString("report_settings_playerchoice_title", resourceCulture);
             }
         }
         

@@ -241,6 +241,15 @@
     <value>Abbrechen</value>
   </data>
   <data name="report_settings_ok" xml:space="preserve">
-    <value>Ok</value>
+    <value>Speichern</value>
+  </data>
+  <data name="report_settings_ok_generate" xml:space="preserve">
+    <value>Speichern &amp; Erstellen</value>
+  </data>
+  <data name="report_settings_playerchoice_both" xml:space="preserve">
+    <value>Beide</value>
+  </data>
+  <data name="report_settings_playerchoice_title" xml:space="preserve">
+    <value>Spieler</value>
   </data>
 </root>

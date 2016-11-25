@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Windows;
 using TT.Lib;
@@ -268,7 +269,12 @@ namespace TT.Viewer.ViewModels
             }
             else
             {
-                _windowManager.ShowWindow(new ReportSettingsViewModel(_windowManager, Events, DialogCoordinator));
+                dynamic settings = new ExpandoObject();
+                settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                settings.ResizeMode = ResizeMode.CanResizeWithGrip;
+                settings.Width = 800;
+                settings.Height = 500;
+                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, _windowManager, Events, DialogCoordinator), null, settings);
             }
         }
 

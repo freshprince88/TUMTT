@@ -4,36 +4,65 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:prop="clr-namespace:TT.Viewer.Properties"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"             
              Dialog:DialogParticipation.Register="{Binding}"
-             mc:Ignorable="d" 
-             ResizeMode="CanResizeWithGrip" 
-             d:DesignWidth="755.831" 
-             d:DesignHeight="437.372">
+             mc:Ignorable="d"
+             d:DesignWidth="800" 
+             d:DesignHeight="500">
 
     <Controls:MetroWindow.Resources>
         <prop:Resources x:Key="LocalizedStrings"/>
+        <conv:PlayerToStringConverter x:Key="PlayerToStringConverter"/>
+        <conv:StringMatchToBooleanConverter x:Key="StringMatchToBooleanConverter"/>
     </Controls:MetroWindow.Resources>
 
-    <Grid Margin="10">
+    <Grid Name="ReportSettingsGrid" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="{Binding Path=report_settings_title, Source={StaticResource LocalizedStrings}}" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"/>
+        <Label Name="ReportSettings_Title" Grid.Row="0" Content="{Binding Path=report_settings_title, Source={StaticResource LocalizedStrings}}" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"/>
 
-        <Grid Grid.Row="2" HorizontalAlignment="Right">
+        <Grid Name="ReportSettingsGrid_Content" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Name="ReportSettingsGrid_Content_Players" HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Content="{Binding Path=report_settings_playerchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+                <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Players_Checkboxes" Margin="5 5 0 0">                    
+                    <RadioButton Tag="first" Content="{Binding MatchManager.Match.FirstPlayer, Converter={StaticResource PlayerToStringConverter}, ConverterParameter=last}"
+                                 IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=first}"/>
+                    <RadioButton Tag="second" Content="{Binding MatchManager.Match.SecondPlayer, Converter={StaticResource PlayerToStringConverter},ConverterParameter=last}" Margin="8 0 0 0"
+                                 IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=second}"/>
+                    <RadioButton Tag="both" Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
+                                 IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=both}"/>
+                </WrapPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Name="ReportSettingsGrid_Buttons" Grid.Row="2" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition MinWidth="80"/>
+                <ColumnDefinition MinWidth="80"/>
+                <ColumnDefinition MinWidth="80"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="{Binding Path=report_settings_ok, Source={StaticResource LocalizedStrings}}" Width="80" cal:Message.Attach="OnOkClick()"/>
-            <Button Grid.Column="1" Content="{Binding Path=report_settings_cancel, Source={StaticResource LocalizedStrings}}" Width="80" Margin="5 0 0 0" cal:Message.Attach="OnCancelClick()"/>
+            <Button Grid.Column="0" Content="{Binding Path=report_settings_cancel, Source={StaticResource LocalizedStrings}}" cal:Message.Attach="OnCancelClick()"/>
+            <Button Grid.Column="1" Content="{Binding Path=report_settings_ok, Source={StaticResource LocalizedStrings}}" Margin="5 0 0 0" cal:Message.Attach="OnOkClick()"/>
+            <Button Grid.Column="2" Content="{Binding Path=report_settings_ok_generate, Source={StaticResource LocalizedStrings}}"  Margin="5 0 0 0" cal:Message.Attach="OnOkGenerateClick()"/>
 
         </Grid>
 

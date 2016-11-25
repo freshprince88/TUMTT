@@ -113,7 +113,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\StringMatchToBooleanConverter.cs" />
     <Compile Include="Converters\MatchPlayerToColorConverter.cs" />
+    <Compile Include="Converters\PlayerToStringConverter.cs" />
     <Compile Include="Converters\RallyToVisibilityConverter.cs" />
     <Compile Include="Converters\AggressivenessToBoolConverter.cs" />
     <Compile Include="Converters\AggressivenessToBoolScouterConverter.cs" />

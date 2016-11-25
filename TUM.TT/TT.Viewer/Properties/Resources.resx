@@ -248,6 +248,15 @@
     <value>Cancel</value>
   </data>
   <data name="report_settings_ok" xml:space="preserve">
-    <value>Ok</value>
+    <value>Save</value>
+  </data>
+  <data name="report_settings_ok_generate" xml:space="preserve">
+    <value>Save &amp; Generate</value>
+  </data>
+  <data name="report_settings_playerchoice_both" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="report_settings_playerchoice_title" xml:space="preserve">
+    <value>Player</value>
   </data>
 </root>

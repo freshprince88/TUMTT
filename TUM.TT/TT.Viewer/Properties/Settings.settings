@@ -17,5 +17,8 @@
     <Setting Name="WindowState" Type="System.Windows.WindowState" Scope="User">
       <Value Profile="(Default)">Normal</Value>
     </Setting>
+    <Setting Name="ReportGenerator_Playerchoice" Type="System.String" Scope="User">
+      <Value Profile="(Default)">both</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
