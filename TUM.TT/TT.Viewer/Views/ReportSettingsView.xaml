@@ -43,11 +43,11 @@
                 
                 <Label Grid.Row="0" Content="{Binding Path=report_settings_playerchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
                 <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Players_Checkboxes" Margin="5 5 0 0">                    
-                    <RadioButton Tag="first" Content="{Binding MatchManager.Match.FirstPlayer, Converter={StaticResource PlayerToStringConverter}, ConverterParameter=last}"
+                    <RadioButton Content="{Binding MatchManager.Match.FirstPlayer, Converter={StaticResource PlayerToStringConverter}, ConverterParameter=last}"
                                  IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=first}"/>
-                    <RadioButton Tag="second" Content="{Binding MatchManager.Match.SecondPlayer, Converter={StaticResource PlayerToStringConverter},ConverterParameter=last}" Margin="8 0 0 0"
+                    <RadioButton Content="{Binding MatchManager.Match.SecondPlayer, Converter={StaticResource PlayerToStringConverter},ConverterParameter=last}" Margin="8 0 0 0"
                                  IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=second}"/>
-                    <RadioButton Tag="both" Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
+                    <RadioButton Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
                                  IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=both}"/>
                 </WrapPanel>
             </Grid>
