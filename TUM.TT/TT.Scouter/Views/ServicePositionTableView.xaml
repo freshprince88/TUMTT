@@ -121,7 +121,8 @@
 
                 </Grid>
             </Border>
-                <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
+            <Line X1="00" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" X2="0" Y2="0" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Stroke="White" StrokeThickness="1" HorizontalAlignment="Center"></Line>
+            <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
             </Grid>
 
     </Viewbox>
