@@ -19,15 +19,15 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="0"/> <!-- Platzhalter für ggf. Überschrift -->
             <RowDefinition Height="5"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
-        <Viewbox StretchDirection="DownOnly" Grid.Row="0">
+        <!--Viewbox StretchDirection="DownOnly" Grid.Row="0">
             <TextBlock Text="Platzierungen" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
-        </Viewbox>
+        </-->
         <!-- Platzhalter für Platzierungsfeld -->
 
 
