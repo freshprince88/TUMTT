@@ -166,12 +166,15 @@ namespace TT.Scouter.ViewModels
         private void S_StrokePlacementChanged(object source, EventArgs args)
         {
             Stroke s = ((Stroke)source);
-            if (s.Placement != null)
+            if (!s.Course.Equals("Net/Out"))
             {
-                Point pos = new Point(s.Placement.WX, s.Placement.WY);
-                OnStrokePositionCalculated(source, new StrokePositionCalculatedEventArgs(pos));
-            } else {
-                OnStrokePositionDeleted(source, new EventArgs());
+                if (s.Placement != null)
+                {
+                    Point pos = new Point(s.Placement.WX, s.Placement.WY);
+                    OnStrokePositionCalculated(source, new StrokePositionCalculatedEventArgs(pos));
+                } else {
+                    OnStrokePositionDeleted(source, new EventArgs());
+                }
             }
         }
 
@@ -216,20 +219,23 @@ namespace TT.Scouter.ViewModels
 
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)
         {
-            if (CurrentStroke.Number > DrawnStrokes.Count)
+            if (!CurrentStroke.Course.Equals("Net/Out"))
             {
-                while (CurrentStroke.Number > DrawnStrokes.Count)
+                if (CurrentStroke.Number > DrawnStrokes.Count)
                 {
-                    DrawnStrokes.Add(createDrawElement(Visibility.Hidden));
+                    while (CurrentStroke.Number > DrawnStrokes.Count)
+                    {
+                        DrawnStrokes.Add(createDrawElement(Visibility.Hidden));
+                    }
                 }
+
+                DrawElement dE = DrawnStrokes[CurrentStroke.Number - 1];
+                dE.text = CurrentStroke.Number.ToString();
+                putGridToPosition(args.Position, dE);
+                dE.g.Visibility = Visibility.Visible;
+
+                showCorrectStrokes();
             }
-
-            DrawElement dE = DrawnStrokes[CurrentStroke.Number - 1];
-            dE.text = CurrentStroke.Number.ToString();
-            putGridToPosition(args.Position, dE);
-            dE.g.Visibility = Visibility.Visible;
-
-            showCorrectStrokes();
         }
 
         private void OnPointAdded(object source, PointAddedEventArgs args)
