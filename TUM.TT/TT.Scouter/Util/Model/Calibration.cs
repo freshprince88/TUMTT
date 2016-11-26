@@ -18,6 +18,8 @@ namespace TT.Scouter.Util.Model
 
         public bool isCalibrated { get; private set; }
         public bool isCalibrating { get; private set; }
+        public bool isVisible { get; private set; }
+        public bool isMidlinesVisible { get; private set; }
 
         public delegate void StrokePositionCalculatedEventHandler(object source, StrokePositionCalculatedEventArgs args);
 
@@ -59,15 +61,18 @@ namespace TT.Scouter.Util.Model
             Point p2 = Points[Points.Count - 2];
 
             Line newLine = createLine(p2, p);
+            newLine.IsHitTestVisible = false;
             Lines.Add(newLine);
 
             if (Points.Count == 4)
             {
                 Line endLine = createLine(p, Points[0]);
+                endLine.IsHitTestVisible = false;
 
                 // finish Calibrating
                 isCalibrating = false;
                 isCalibrated = true;
+                isVisible = true;
                 Lines.Add(endLine);
             }
         }
@@ -102,29 +107,95 @@ namespace TT.Scouter.Util.Model
             OnStrokePositionCalculated(new Point(u * 152.5, v * 274));
         }
 
-        public void reverseCalcPointPositionOnTable(Point p)
+        public void drawMidlines()
         {
-            if(p == null)
+            if (Points.Count != 4)
             {
                 return;
             }
+            Point p1v;
+            Point p2v;
 
-            double u = p.X / 152.5;
-            double v = p.Y / 274;
+            Point p1h;
+            Point p2h;
 
-            Point a = Points[0];
-            Point b = Points[1];
-            Point c = Points[2];
-            Point d = Points[3];
+            double x;
+            double y;
 
-            double p1x = a.X + (b.X - a.X) * u;
-            double p2x = d.X + (c.X - d.X) * u;
+            x = (Points[0].X + Points[1].X) / 2;
+            y = (Points[0].Y + Points[1].Y) / 2;
+            p1v = new Point(x, y);
 
-            double px = v * (p2x - p1x) + p1x;
-            double py = (a.X * c.Y * Math.Pow(u, 2.0) - a.X * c.Y * u - a.X * d.Y * Math.Pow(u, 2.0) + 2.0 * a.X * d.Y * u - a.X * d.Y - b.X * c.Y * Math.Pow(u, 2.0) + b.X * d.Y * Math.Pow(u, 2.0) - b.X * d.Y * u - c.X * a.Y * Math.Pow(u, 2.0) + c.X * a.Y * u + c.X * b.Y * Math.Pow(u, 2.0) + d.X * a.Y * Math.Pow(u, 2.0) - 2.0 * d.X * a.Y * u + d.X * a.Y - d.X * b.Y * Math.Pow(u, 2.0) + d.X * b.Y * u + a.Y * u * p.X - a.Y * p.X - b.Y * u * p.X + c.Y * u * p.X - d.Y * u * p.X + d.Y * p.X) / (a.X * u - a.X - b.X * u + c.X * u - d.X * u + d.X);
+            x = (Points[2].X + Points[3].X) / 2;
+            y = (Points[2].Y + Points[3].Y) / 2;
+            p2v = new Point(x, y);
 
-            Point x = new Point(px, py);
-            Console.WriteLine(x);
+            Line newLineVertical = createLine(p1v, p2v);
+            newLineVertical.IsHitTestVisible = false;
+            Lines.Add(newLineVertical);
+
+            x = (Points[1].X + Points[2].X) / 2;
+            y = (Points[1].Y + Points[2].Y) / 2;
+            p1h = new Point(x, y);
+
+            x = (Points[0].X + Points[3].X) / 2;
+            y = (Points[0].Y + Points[3].Y) / 2;
+            p2h = new Point(x, y);
+
+            Line newLineHorizontal = createLine(p1h, p2h);
+            newLineHorizontal.IsHitTestVisible = false;
+            Lines.Add(newLineHorizontal);
+            isMidlinesVisible = true;
+        }
+
+        public void toggleMidlines()
+        {
+            if (Lines.Count != 6 || isVisible == false)
+            {
+                return;
+            }
+            if (Lines[4].Visibility == Visibility.Hidden && Lines[5].Visibility == Visibility.Hidden)
+            {
+                Lines[4].Visibility = Visibility.Visible;
+                Lines[5].Visibility = Visibility.Visible;
+                isMidlinesVisible = true;
+            } else if (Lines[4].Visibility == Visibility.Visible && Lines[5].Visibility == Visibility.Visible)
+            {
+                Lines[4].Visibility = Visibility.Hidden;
+                Lines[5].Visibility = Visibility.Hidden;
+                isMidlinesVisible = false;
+            }
+        }
+
+        public void toggleCalibration()
+        {
+            if (isMidlinesVisible)
+            {
+                foreach (Line l in Lines)
+                {
+                    if (l.Visibility == Visibility.Visible)
+                    {
+                        l.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        l.Visibility = Visibility.Visible;
+                    }
+
+                }
+            } else
+            {
+                for (int i = 0; i<4; i++)
+                {
+                    if (Lines[i].Visibility == Visibility.Visible)
+                    {
+                        Lines[i].Visibility = Visibility.Hidden;
+                    }
+                    else
+                        Lines[i].Visibility = Visibility.Visible;
+                }
+            }
+            isVisible = !isVisible;
         }
 
         protected virtual void OnStrokePositionCalculated(Point p)

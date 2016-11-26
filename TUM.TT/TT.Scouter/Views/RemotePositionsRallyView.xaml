@@ -7,7 +7,7 @@
              xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
              xmlns:local="clr-namespace:TT.Scouter.Views"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="400">
+             d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -40,9 +40,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="65"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="30"/>
@@ -51,42 +53,56 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
+                <Label Grid.Row="0">Calibration</Label>
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                     <Button x:Name="CalibrateTable" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" cal:Message.Attach="[Event Click] = [Action CalibrateTable()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
                         <Image Source="/resources/calibration.png"/>
                     </Button>
                     <Button x:Name="ToogleCalibration"  Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="0" cal:Message.Attach="[Event Click] = [Action ToogleCalibration()]" VerticalAlignment="Bottom" Focusable="False">
                         <Image Source="{Binding ToogleCalibrationButtonImage}"/>
                     </Button>
+
+                    <Button x:Name="ToggleMidlines" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action toggleMidlines()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                        <Image Source="/resources/highlight.png"/>
+                    </Button>
                 </Grid>
-                <Label Grid.Row="2">Visible Strokes</Label>
-                <ComboBox x:Name="MaxStrokeNumberVisible" MinWidth="30" MaxWidth="100" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3" SelectedIndex="4" SelectedValue="{Binding maxVisibleStrokes, Mode=OneWayToSource}" SelectedValuePath="Content" cal:Message.Attach="[Event SelectionChanged] = [Action OnMaxStrokesChanged()]">
-                    <ComboBoxItem>3</ComboBoxItem>
-                    <ComboBoxItem>5</ComboBoxItem>
-                    <ComboBoxItem>7</ComboBoxItem>
-                    <ComboBoxItem>9</ComboBoxItem>
-                    <ComboBoxItem>ALL</ComboBoxItem>
-                </ComboBox>
-                <Label Grid.Row="4">Delete Stroke</Label>
-                <Grid Grid.Row="5">
+                
+                <Label Grid.Row="3">Visible Strokes</Label>
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="MaxStrokeNumberVisible" MinWidth="30" MaxWidth="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" SelectedIndex="4" SelectedValue="{Binding maxVisibleStrokes, Mode=OneWayToSource}" SelectedValuePath="Content" cal:Message.Attach="[Event SelectionChanged] = [Action OnMaxStrokesChanged()]">
+                        <ComboBoxItem>3</ComboBoxItem>
+                        <ComboBoxItem>5</ComboBoxItem>
+                        <ComboBoxItem>7</ComboBoxItem>
+                        <ComboBoxItem>9</ComboBoxItem>
+                        <ComboBoxItem>ALL</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                <Label Grid.Row="5">Delete Stroke</Label>
+                <Grid Grid.Row="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                   <Button x:Name="DeleteStroke" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="5" cal:Message.Attach="[Event Click] = [Action DeleteStroke()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                   <Button x:Name="DeleteStroke" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="9" cal:Message.Attach="[Event Click] = [Action DeleteStroke()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
                     <Image Source="/resources/delete.png"/>
                 </Button>
-                    <Button x:Name="TestAlgorithm" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="5" cal:Message.Attach="[Event Click] = [Action TestAlgorithm()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
-                        <Image Source="/resources/highlight.png"/>
-                    </Button>
                 </Grid>
                 
             </Grid>

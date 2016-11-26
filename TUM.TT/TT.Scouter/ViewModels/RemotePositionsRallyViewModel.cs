@@ -219,9 +219,19 @@ namespace TT.Scouter.ViewModels
             CurrentStroke.Placement = null;
         }
 
-        public void TestAlgorithm()
+        public void toggleMidlines()
         {
-            cal.reverseCalcPointPositionOnTable(new Point(CurrentStroke.Placement.WX, CurrentStroke.Placement.WY));
+            switch (cal.Lines.Count)
+            {
+                case 4:
+                    cal.drawMidlines();
+                    break;
+                case 6:
+                    cal.toggleMidlines();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)

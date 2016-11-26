@@ -337,13 +337,7 @@ namespace TT.Scouter.ViewModels
         {
             if (calibration.isCalibrated)
             {
-                foreach(Line l in calibration.Lines)
-                {
-                    if (l.Visibility == Visibility.Visible)
-                        l.Visibility = Visibility.Hidden;
-                    else
-                        l.Visibility = Visibility.Visible;
-                }
+                calibration.toggleCalibration();
             }
         }
 
