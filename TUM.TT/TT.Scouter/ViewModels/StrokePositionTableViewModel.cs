@@ -364,6 +364,11 @@ namespace TT.Scouter.ViewModels
         {
             Stroke = s;
             s.StrokePlacementChanged += OnPlacementChanged;
+
+            // For Ball Placement
+            widthHeight = 20;
+
+
             if (s.PointOfContact == null)
                 s.PointOfContact = "";
 
@@ -396,9 +401,6 @@ namespace TT.Scouter.ViewModels
                 checkRadioButtonAtFieldPosition(new Point(s.Placement.WX, s.Placement.WY));
                 placementVisibilty = Visibility.Visible;
             }
-
-            // For Ball Placement
-            widthHeight = 20;
 
         }
 

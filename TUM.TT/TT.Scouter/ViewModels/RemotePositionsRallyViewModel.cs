@@ -364,7 +364,6 @@ namespace TT.Scouter.ViewModels
             if (int.Parse(number) != CurrentStroke.Number)
             {
                 CurrentStroke = Strokes[int.Parse(number) - 1];
-                changePlacementOfCurrentStroke();
             }
             isEllipseDragged = true;
         }
