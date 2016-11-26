@@ -319,12 +319,20 @@ namespace TT.Scouter.ViewModels
                 Grid g = DrawnStrokes[CurrentStroke.Number - 1].g;
 
                 Point p = e.GetPosition((IInputElement)sender);
+                ItemsControl ele = (ItemsControl)sender;
 
-                double x = p.X;
-                double y = p.Y;
-                double left = x - (g.Width / 2);
-                double top = y - (g.Height / 2);
-                g.Margin = new Thickness(left, top, 0, 0);
+                if (p.X <= ele.ActualWidth && p.Y <= ele.ActualHeight && p.X >= 0 && p.Y >= 0)
+                {
+                    double x = p.X;
+                    double y = p.Y;
+                    double left = x - (g.Width / 2);
+                    double top = y - (g.Height / 2);
+                    g.Margin = new Thickness(left, top, 0, 0);
+                }else
+                {
+                    GridUnclicked(null, null);
+                }
+
             }
         }
 
