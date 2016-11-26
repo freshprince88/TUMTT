@@ -48,8 +48,8 @@ namespace TT.Scouter.ViewModels
 
         #region Placement Properties
 
-        private double canvasWidth = 328;
-        private double canvasHeight = 594;
+        private double canvasWidth = 334;
+        private double canvasHeight = 600;
 
         private Visibility _placementVisibilty;
         public Visibility placementVisibilty
@@ -364,6 +364,9 @@ namespace TT.Scouter.ViewModels
             poc = false;
             pocActive = false;
 
+            // For Ball Placement
+            widthHeight = 20;
+
             if (!double.IsNaN(s.Playerposition))
             {
                 CheckPlayerPosition(s.Playerposition);
@@ -385,9 +388,7 @@ namespace TT.Scouter.ViewModels
                 checkRadioButtonAtFieldPosition(new Point(s.Placement.WX, s.Placement.WY));
                 placementVisibilty = Visibility.Visible;
             }
-
-            // For Ball Placement
-            widthHeight = 20;
+            
         }
 
 
@@ -520,7 +521,6 @@ namespace TT.Scouter.ViewModels
         }
         private void checkRadioButtonAtFieldPosition(Point fieldPosition)
         {
-
             double x = Stroke.Placement.WX * ((double)canvasWidth / 152.5);
             double y = Stroke.Placement.WY * ((double)canvasHeight / (double)274);
             double left = x - (widthHeight / 2);

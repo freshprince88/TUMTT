@@ -69,65 +69,69 @@
                 <RadioButton x:Name="ShortT" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding over, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('over')]"/>
             </Grid>
 
-            <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White">
-                <Grid Name="InnerFieldGrid" Background="{DynamicResource AccentColorBrush}" IsHitTestVisible="True" cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]" >
+            <Grid Name="InnerFieldGrid" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Background="{DynamicResource AccentColorBrush}" IsHitTestVisible="True" cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]" >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="{Binding showTopTable, Converter={StaticResource converter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                    <Grid x:Name="TopField" Grid.Row="0" Grid.ColumnSpan="3" ShowGridLines="True" Visibility="{Binding showTopTable, Converter={StaticResource converter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <RadioButton x:Name="TopLeft_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopLeft_top}"/>
-                        <RadioButton x:Name="TopMid_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="1" FontSize="30"  Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopMid_top}"/>
-                        <RadioButton x:Name="TopRight_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopRight_top}"/>
-                        <RadioButton x:Name="MidLeft_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidLeft_top}"/>
-                        <RadioButton x:Name="MidMid_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidMid_top}"/>
-                        <RadioButton x:Name="MidRight_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidRight_top}"/>
-                        <RadioButton x:Name="BotLeft_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotLeft_top}"/>
-                        <RadioButton x:Name="BotMid_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotMid_top}"/>
-                        <RadioButton x:Name="BotRight_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotRight_top}"/>
-                    </Grid>
-
-                    <Grid x:Name="BottomField" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True" IsHitTestVisible="{Binding showTopTable}" Visibility="{Binding showBotTable, Converter={StaticResource converter}}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                        <RadioButton x:Name="BotRight_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotRight_bot}"/>
-                        <RadioButton x:Name="BotMid_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotMid_bot}"/>
-                        <RadioButton x:Name="BotLeft_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotLeft_bot}"/>
-                        <RadioButton x:Name="MidRight_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidRight_bot}"/>
-                        <RadioButton x:Name="MidMid_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidMid_bot}"/>
-                        <RadioButton x:Name="MidLeft_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidLef_bot}"/>
-                        <RadioButton x:Name="TopRight_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopRight_bot}"/>
-                        <RadioButton x:Name="TopMid_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopMid_bot}"/>
-                        <RadioButton x:Name="TopLeft_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopLeft_bot}"/>
-                    </Grid>
-
-                    <Canvas Background="Transparent" cal:Message.Attach="[Event SizeChanged] = [Action SetCanvasSize( ActualWidth, ActualHeight)]">
-                        <Ellipse Stroke="Black" Fill="White" StrokeThickness="5" Height="{Binding Path=widthHeight}" Width="{Binding Path=widthHeight}" Visibility="{Binding Path=placementVisibilty}" Margin="{Binding Path=currentPlacementPosition}"/>
-                    </Canvas>
-
+                    <RadioButton x:Name="TopLeft_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopLeft_top}"/>
+                    <RadioButton x:Name="TopMid_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="1" FontSize="30"  Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopMid_top}"/>
+                    <RadioButton x:Name="TopRight_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopRight_top}"/>
+                    <RadioButton x:Name="MidLeft_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidLeft_top}"/>
+                    <RadioButton x:Name="MidMid_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidMid_top}"/>
+                    <RadioButton x:Name="MidRight_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidRight_top}"/>
+                    <RadioButton x:Name="BotLeft_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotLeft_top}"/>
+                    <RadioButton x:Name="BotMid_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotMid_top}"/>
+                    <RadioButton x:Name="BotRight_top" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotRight_top}"/>
                 </Grid>
-            </Border>
-            <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
+
+                <Grid x:Name="BottomField" Grid.Row="1" Grid.ColumnSpan="3" ShowGridLines="True" IsHitTestVisible="{Binding showTopTable}" Visibility="{Binding showBotTable, Converter={StaticResource converter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <RadioButton x:Name="BotRight_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotRight_bot}"/>
+                    <RadioButton x:Name="BotMid_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotMid_bot}"/>
+                    <RadioButton x:Name="BotLeft_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="0" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeBotLeft_bot}"/>
+                    <RadioButton x:Name="MidRight_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidRight_bot}"/>
+                    <RadioButton x:Name="MidMid_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidMid_bot}"/>
+                    <RadioButton x:Name="MidLeft_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="1" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeMidLef_bot}"/>
+                    <RadioButton x:Name="TopRight_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="0" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopRight_bot}"/>
+                    <RadioButton x:Name="TopMid_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="1" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopMid_bot}"/>
+                    <RadioButton x:Name="TopLeft_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopLeft_bot}"/>
+                </Grid>
+
+                <Border BorderThickness="3 3 3 1.5" IsHitTestVisible="False" BorderBrush="White" />
+                <Border Grid.Row="2" BorderThickness="3 3 3 1.5" IsHitTestVisible="False" BorderBrush="White" />
+
+                <Canvas Background="Transparent" IsHitTestVisible="False" cal:Message.Attach="[Event SizeChanged] = [Action SetCanvasSize( ActualWidth, ActualHeight)]">
+                    <Ellipse Stroke="Black" Fill="White" StrokeThickness="5" IsHitTestVisible="False" Height="{Binding Path=widthHeight}" Width="{Binding Path=widthHeight}" Visibility="{Binding Path=placementVisibilty}" Margin="{Binding Path=currentPlacementPosition}"/>
+                </Canvas>
+
+            </Grid>
+
+            <Line X1="00" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" X2="0" Y2="0" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Stroke="White" StrokeThickness="1" HorizontalAlignment="Center" IsHitTestVisible="False"></Line>
+            <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom" IsHitTestVisible="False"></Line>
+
         </Grid>
     </Viewbox>
 </UserControl>

@@ -123,7 +123,7 @@
                     <Border x:Name="Table" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}" >
                         <Grid Name="InnerFieldGrid" ShowGridLines="False" Height="548" Width="305">
                             <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="0" Grid.Column="0" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
-                            <ItemsControl Grid.RowSpan="2" x:Name="ItemControl" cal:Message.Attach="[Event MouseMove] = [Action MouseMoved($source, $eventArgs)];
+                            <ItemsControl Grid.RowSpan="2" x:Name="ItemControl" cal:Message.Attach="[Event MouseMove] = [Action MouseMoved($source, $eventArgs)];  [Event MouseLeave] = [Action GridUnclicked($source, $eventArgs)];
                                           [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]" ItemsSource="{Binding Path=DrawnStrokes}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -133,7 +133,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Width="{Binding g.Width}" Height="{Binding g.Height}" Background="Transparent" IsHitTestVisible="True" Margin="{Binding g.Margin}" Visibility="{Binding g.Visibility}"
-                                              cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]; [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]; [Event MouseLeave] = [Action GridUnclicked($source, $eventArgs)]">
+                                              cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]; [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]">
                                             <Ellipse Stroke="{Binding e.Stroke}" StrokeThickness="{Binding e.StrokeThickness}" Visibility="{Binding g.Visibility}" Fill="{Binding e.Fill}"></Ellipse>
                                             <TextBlock HorizontalAlignment="Center" Text="{Binding text}" TextAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
                                         </Grid>

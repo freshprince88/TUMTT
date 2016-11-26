@@ -317,16 +317,22 @@ namespace TT.Scouter.ViewModels
             if (isEllipseDragged)
             {
                 isEllipseDragged = false;
-                Grid draggedGrid = DrawnStrokes[CurrentStroke.Number - 1].g;
-
-                Placement p = new Placement();
-                // reversed the Method putEllipseToPosition()
-                double x = draggedGrid.Margin.Left + (draggedGrid.Width / 2);
-                double y = draggedGrid.Margin.Top + (draggedGrid.Height / 2);
-                p.WX = x / ((double)305/152.5);
-                p.WY = y / ((double)548 / (double)274);
-                CurrentStroke.Placement = p;
+                changePlacementOfCurrentStroke();
             }
+        }
+
+        private void changePlacementOfCurrentStroke()
+        {
+            Grid draggedGrid = DrawnStrokes[CurrentStroke.Number - 1].g;
+
+            Placement p = new Placement();
+
+            // reversed the Method putEllipseToPosition()
+            double x = draggedGrid.Margin.Left + (draggedGrid.Width / 2);
+            double y = draggedGrid.Margin.Top + (draggedGrid.Height / 2);
+            p.WX = x / ((double)305 / 152.5);
+            p.WY = y / ((double)548 / (double)274);
+            CurrentStroke.Placement = p;
         }
 
         public void MouseMoved(object sender, MouseEventArgs e)
@@ -345,7 +351,9 @@ namespace TT.Scouter.ViewModels
                     double left = x - (g.Width / 2);
                     double top = y - (g.Height / 2);
                     g.Margin = new Thickness(left, top, 0, 0);
-                }else
+                    changePlacementOfCurrentStroke();
+                }
+                else
                 {
                     GridUnclicked(null, null);
                 }
@@ -362,7 +370,11 @@ namespace TT.Scouter.ViewModels
                 if (t.GetType() == typeof(TextBlock)) number = ((TextBlock)t).Text;
             }
 
-            CurrentStroke = Strokes[int.Parse(number) - 1];
+            // if clicked on another stroke change current Stroke
+            if (int.Parse(number) != CurrentStroke.Number)
+            {
+                CurrentStroke = Strokes[int.Parse(number) - 1];
+            }
             isEllipseDragged = true;
         }
 
