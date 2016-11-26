@@ -386,7 +386,7 @@ namespace TT.Scouter.ViewModels
                 showTopTable = !(m.CurrentTableEndSecondPlayer == Models.CurrentTableEnd.Top);
             showBotTable = !showTopTable;
 
-            if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))
+            if (s.Placement == null || (s.Placement.WX == -1 && s.Placement.WY == -1))
             {
                 uncheckAllRadioButtons();
                 placementVisibilty = Visibility.Hidden;
@@ -450,26 +450,29 @@ namespace TT.Scouter.ViewModels
 
         public void OnPlacementChanged(object sender, EventArgs e)
         {
-            uncheckAllRadioButtons();
-
-            // checks if Stroke.Placement = null -> Hide the Shot and let all positions unchecked
-            if (Stroke.Placement == null)
+            if (!Stroke.Course.Equals("Net/Out"))
             {
-                placementVisibilty = Visibility.Hidden;
-                return;
+                uncheckAllRadioButtons();
+
+                // checks if Stroke.Placement = null -> Hide the Shot and let all positions unchecked
+                if (Stroke.Placement == null)
+                {
+                    placementVisibilty = Visibility.Hidden;
+                    return;
+                }
+
+                // checks if Stroke.Placement is on the correct side of the Table
+                if ((showTopTable && Stroke.Placement.WY > 137) || (showBotTable && Stroke.Placement.WY < 137))
+                {
+                    Stroke.Placement = null;
+                    placementVisibilty = Visibility.Hidden;
+                    return;
+                }
+
+                checkRadioButtonAtFieldPosition(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
+
+                placementVisibilty = Visibility.Visible;
             }
-
-            // checks if Stroke.Placement is on the correct side of the Table
-            if ((showTopTable && Stroke.Placement.WY > 137) || (showBotTable && Stroke.Placement.WY < 137))
-            {
-                Stroke.Placement = null;
-                placementVisibilty = Visibility.Hidden;
-                return;
-            }
-
-            checkRadioButtonAtFieldPosition(new Point(Stroke.Placement.WX, Stroke.Placement.WY));
-
-            placementVisibilty = Visibility.Visible;
         }
 
         public void GridClicked(object sender, MouseButtonEventArgs e)

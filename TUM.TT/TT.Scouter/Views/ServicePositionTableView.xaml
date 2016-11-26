@@ -49,8 +49,8 @@
                     <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <RadioButton x:Name="bot" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="0" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]; [Event Click] = [Action ChangePositionPlayerFinal()]"/>
-                <Rectangle Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
+                <RadioButton x:Name="bot" Width="334" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="0" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]; [Event Click] = [Action ChangePositionPlayerFinal()]"/>
+                <Rectangle IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1" Visibility="{Binding showBotTable, Converter={StaticResource converter}}">
@@ -59,8 +59,8 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <RadioButton x:Name="top" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]; [Event Click] = [Action ChangePositionPlayerFinal()]"/>
-                <Rectangle Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
+                <RadioButton x:Name="top" Width="334" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]; [Event Click] = [Action ChangePositionPlayerFinal()]"/>
+                <Rectangle IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
             </Grid>
 
             <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3 3 3 3"  BorderBrush="White">
@@ -121,7 +121,8 @@
 
                 </Grid>
             </Border>
-                <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
+            <Line X1="00" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" X2="0" Y2="0" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Stroke="White" StrokeThickness="1" HorizontalAlignment="Center"></Line>
+            <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
             </Grid>
 
     </Viewbox>

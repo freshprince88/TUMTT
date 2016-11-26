@@ -47,6 +47,11 @@ namespace TT.Models
 
         public event StrokePlacementChangedEventHandler StrokePlacementChanged;
 
+        public Stroke()
+        {
+            playerposition = -1;
+        }
+
 
         public Stroketechnique Stroketechnique
         {

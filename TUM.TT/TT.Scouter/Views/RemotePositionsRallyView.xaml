@@ -19,15 +19,15 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="0"/> <!-- Platzhalter für ggf. Überschrift -->
             <RowDefinition Height="5"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
-        <Viewbox StretchDirection="DownOnly" Grid.Row="0">
+        <!--Viewbox StretchDirection="DownOnly" Grid.Row="0">
             <TextBlock Text="Platzierungen" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
-        </Viewbox>
+        </-->
         <!-- Platzhalter für Platzierungsfeld -->
 
 
@@ -105,7 +105,8 @@
             <Grid Grid.Column="3">
                 <Viewbox Stretch="Uniform">
                     <Border x:Name="Table" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}" >
-                        <Grid Name="InnerFieldGrid" ShowGridLines="True" Height="548" Width="305">
+                        <Grid Name="InnerFieldGrid" ShowGridLines="False" Height="548" Width="305">
+                            <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="0" Grid.Column="0" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
                             <ItemsControl Grid.RowSpan="2" x:Name="ItemControl" cal:Message.Attach="[Event MouseMove] = [Action MouseMoved($source, $eventArgs)];
                                           [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]" ItemsSource="{Binding Path=DrawnStrokes}">
                                 <ItemsControl.ItemsPanel>
@@ -130,6 +131,7 @@
                         </Grid>
                     </Border>
                 </Viewbox>
+                <Line X1="00" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" X2="0" Y2="0" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Stroke="White" StrokeThickness="0.5" HorizontalAlignment="Center"></Line>
             </Grid>
 
             <Grid Grid.Column="4">

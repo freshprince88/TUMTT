@@ -141,7 +141,7 @@ namespace TT.Scouter.ViewModels
                 DrawElement dE = createDrawElement(Visibility.Hidden);
                 dE.text = s.Number.ToString();
                 s.StrokePlacementChanged += S_StrokePlacementChanged;
-                if (s.Placement != null)
+                if (s.Placement != null && s.Placement.WX >= 0 && s.Placement.WY >= 0)
                 {
                     dE.g.Visibility = Visibility.Visible;
                     putGridToPosition(new Point(s.Placement.WX, s.Placement.WY), dE);
@@ -168,12 +168,15 @@ namespace TT.Scouter.ViewModels
         private void S_StrokePlacementChanged(object source, EventArgs args)
         {
             Stroke s = ((Stroke)source);
-            if (s.Placement != null)
+            if (!s.Course.Equals("Net/Out"))
             {
-                Point pos = new Point(s.Placement.WX, s.Placement.WY);
-                OnStrokePositionCalculated(source, new StrokePositionCalculatedEventArgs(pos));
-            } else {
-                OnStrokePositionDeleted(source, new EventArgs());
+                if (s.Placement != null && s.Placement.WX >= 0 && s.Placement.WY >= 0)
+                {
+                    Point pos = new Point(s.Placement.WX, s.Placement.WY);
+                    OnStrokePositionCalculated(source, new StrokePositionCalculatedEventArgs(pos));
+                } else {
+                    OnStrokePositionDeleted(source, new EventArgs());
+                }
             }
         }
 
@@ -223,20 +226,23 @@ namespace TT.Scouter.ViewModels
 
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)
         {
-            if (CurrentStroke.Number > DrawnStrokes.Count)
+            if (!CurrentStroke.Course.Equals("Net/Out"))
             {
-                while (CurrentStroke.Number > DrawnStrokes.Count)
+                if (CurrentStroke.Number > DrawnStrokes.Count)
                 {
-                    DrawnStrokes.Add(createDrawElement(Visibility.Hidden));
+                    while (CurrentStroke.Number > DrawnStrokes.Count)
+                    {
+                        DrawnStrokes.Add(createDrawElement(Visibility.Hidden));
+                    }
                 }
+
+                DrawElement dE = DrawnStrokes[CurrentStroke.Number - 1];
+                dE.text = CurrentStroke.Number.ToString();
+                putGridToPosition(args.Position, dE);
+                dE.g.Visibility = Visibility.Visible;
+
+                showCorrectStrokes();
             }
-
-            DrawElement dE = DrawnStrokes[CurrentStroke.Number - 1];
-            dE.text = CurrentStroke.Number.ToString();
-            putGridToPosition(args.Position, dE);
-            dE.g.Visibility = Visibility.Visible;
-
-            showCorrectStrokes();
         }
 
         private void OnPointAdded(object source, PointAddedEventArgs args)
@@ -320,12 +326,20 @@ namespace TT.Scouter.ViewModels
                 Grid g = DrawnStrokes[CurrentStroke.Number - 1].g;
 
                 Point p = e.GetPosition((IInputElement)sender);
+                ItemsControl ele = (ItemsControl)sender;
 
-                double x = p.X;
-                double y = p.Y;
-                double left = x - (g.Width / 2);
-                double top = y - (g.Height / 2);
-                g.Margin = new Thickness(left, top, 0, 0);
+                if (p.X <= ele.ActualWidth && p.Y <= ele.ActualHeight && p.X >= 0 && p.Y >= 0)
+                {
+                    double x = p.X;
+                    double y = p.Y;
+                    double left = x - (g.Width / 2);
+                    double top = y - (g.Height / 2);
+                    g.Margin = new Thickness(left, top, 0, 0);
+                }else
+                {
+                    GridUnclicked(null, null);
+                }
+
             }
         }
 
@@ -353,7 +367,7 @@ namespace TT.Scouter.ViewModels
             {
                 if (Math.Abs((CurrentStroke.Number - 1 - i)) <= (_maxVisibleStrokes - 1) / 2)
                 {
-                    if (Strokes[i].Placement != null) DrawnStrokes[i].g.Visibility = Visibility.Visible;
+                    if (Strokes.Count > 0 && Strokes[i].Placement != null && Strokes[i].Placement.WX >= 0 && Strokes[i].Placement.WY >= 0) DrawnStrokes[i].g.Visibility = Visibility.Visible;
                 } else
                 {
                     DrawnStrokes[i].g.Visibility = Visibility.Hidden;
