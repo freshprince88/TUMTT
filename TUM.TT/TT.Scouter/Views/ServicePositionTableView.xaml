@@ -115,8 +115,8 @@
                         <RadioButton x:Name="TopLeft_bot" Content="" Background="Transparent" IsHitTestVisible="False" Grid.Row="2" Grid.Column="2" FontSize="30" Style="{StaticResource MetroAccentFlatRadio}" IsChecked="{Binding placeTopLeft_bot}"/>
                     </Grid>
 
-                    <Canvas Background="Transparent" cal:Message.Attach="[Event SizeChanged] = [Action SetCanvasSize( ActualWidth, ActualHeight)]">
-                        <Ellipse Stroke="Black" Fill="White" StrokeThickness="5" Height="{Binding Path=widthHeight}" Width="{Binding Path=widthHeight}" Visibility="{Binding Path=placementVisibilty}" Margin="{Binding Path=currentPlacementPosition}"/>
+                    <Canvas Background="Transparent" IsHitTestVisible="False" cal:Message.Attach="[Event SizeChanged] = [Action SetCanvasSize( ActualWidth, ActualHeight)]">
+                        <Ellipse Stroke="Black" Fill="White" StrokeThickness="5" IsHitTestVisible="False" Height="{Binding Path=widthHeight}" Width="{Binding Path=widthHeight}" Visibility="{Binding Path=placementVisibilty}" Margin="{Binding Path=currentPlacementPosition}"/>
                     </Canvas>
 
                 </Grid>
