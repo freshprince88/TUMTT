@@ -386,7 +386,7 @@ namespace TT.Scouter.ViewModels
                 showTopTable = !(m.CurrentTableEndSecondPlayer == Models.CurrentTableEnd.Top);
             showBotTable = !showTopTable;
 
-            if (s.Placement == null || (s.Placement.WX == 0 && s.Placement.WY == 0))
+            if (s.Placement == null || (s.Placement.WX == -1 && s.Placement.WY == -1))
             {
                 uncheckAllRadioButtons();
                 placementVisibilty = Visibility.Hidden;
