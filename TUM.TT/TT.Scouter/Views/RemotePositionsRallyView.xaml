@@ -77,11 +77,16 @@
                 <Grid Grid.Row="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="Auto"/>                    
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                    <Button x:Name="DeleteStroke" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="5" cal:Message.Attach="[Event Click] = [Action DeleteStroke()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
                     <Image Source="/resources/delete.png"/>
                 </Button>
+                    <Button x:Name="TestAlgorithm" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="5" cal:Message.Attach="[Event Click] = [Action TestAlgorithm()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                        <Image Source="/resources/highlight.png"/>
+                    </Button>
                 </Grid>
                 
             </Grid>
