@@ -16,6 +16,7 @@ namespace TT.Scouter.ViewModels
         private RemoteViewModel remoteViewModel;
 
         private bool isEllipseDragged = false;
+        private Calibration cal;
 
         public string ToogleCalibrationButtonImage { get; private set; }
 
@@ -115,7 +116,8 @@ namespace TT.Scouter.ViewModels
         public RemotePositionsRallyViewModel(RemoteViewModel remoteViewModel, Calibration cal)
         {
             this.remoteViewModel = remoteViewModel;
-            
+
+            this.cal = cal;
             cal.StrokePositionCalculated += OnStrokePositionCalculated;
             cal.PointAdded += OnPointAdded;
 
@@ -215,6 +217,11 @@ namespace TT.Scouter.ViewModels
         public void DeleteStroke()
         {
             CurrentStroke.Placement = null;
+        }
+
+        public void TestAlgorithm()
+        {
+            cal.reverseCalcPointPositionOnTable(new Point(CurrentStroke.Placement.WX, CurrentStroke.Placement.WY));
         }
 
         private void OnStrokePositionCalculated(object source, StrokePositionCalculatedEventArgs args)

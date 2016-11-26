@@ -74,8 +74,11 @@ namespace TT.Scouter.Util.Model
 
         public void calcPointPositionOnTable(Point p)
         {
+
             if (!IsPointInPolygon(p))
                 return;
+
+            Console.WriteLine(p);
 
             Point a = Points[0];
             Point b = Points[1];
@@ -97,6 +100,31 @@ namespace TT.Scouter.Util.Model
             double v = (px - p1x) / (p2x - p1x);
 
             OnStrokePositionCalculated(new Point(u * 152.5, v * 274));
+        }
+
+        public void reverseCalcPointPositionOnTable(Point p)
+        {
+            if(p == null)
+            {
+                return;
+            }
+
+            double u = p.X / 152.5;
+            double v = p.Y / 274;
+
+            Point a = Points[0];
+            Point b = Points[1];
+            Point c = Points[2];
+            Point d = Points[3];
+
+            double p1x = a.X + (b.X - a.X) * u;
+            double p2x = d.X + (c.X - d.X) * u;
+
+            double px = v * (p2x - p1x) + p1x;
+            double py = (a.X * c.Y * Math.Pow(u, 2.0) - a.X * c.Y * u - a.X * d.Y * Math.Pow(u, 2.0) + 2.0 * a.X * d.Y * u - a.X * d.Y - b.X * c.Y * Math.Pow(u, 2.0) + b.X * d.Y * Math.Pow(u, 2.0) - b.X * d.Y * u - c.X * a.Y * Math.Pow(u, 2.0) + c.X * a.Y * u + c.X * b.Y * Math.Pow(u, 2.0) + d.X * a.Y * Math.Pow(u, 2.0) - 2.0 * d.X * a.Y * u + d.X * a.Y - d.X * b.Y * Math.Pow(u, 2.0) + d.X * b.Y * u + a.Y * u * p.X - a.Y * p.X - b.Y * u * p.X + c.Y * u * p.X - d.Y * u * p.X + d.Y * p.X) / (a.X * u - a.X - b.X * u + c.X * u - d.X * u + d.X);
+
+            Point x = new Point(px, py);
+            Console.WriteLine(x);
         }
 
         protected virtual void OnStrokePositionCalculated(Point p)
