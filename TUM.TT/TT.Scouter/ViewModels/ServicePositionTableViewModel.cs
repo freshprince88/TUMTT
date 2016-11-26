@@ -48,8 +48,8 @@ namespace TT.Scouter.ViewModels
 
         #region Placement Properties
 
-        private double canvasWidth = 328;
-        private double canvasHeight = 594;
+        private double canvasWidth = 334;
+        private double canvasHeight = 600;
 
         private Visibility _placementVisibilty;
         public Visibility placementVisibilty
