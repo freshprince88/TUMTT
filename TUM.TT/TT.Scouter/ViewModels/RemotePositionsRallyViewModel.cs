@@ -221,13 +221,28 @@ namespace TT.Scouter.ViewModels
 
         public void toggleMidlines()
         {
-            switch (cal.Lines.Count)
+            switch (cal.MidLines.Count)
             {
-                case 4:
+                case 0:
                     cal.drawMidlines();
                     break;
-                case 6:
+                case 2:
                     cal.toggleMidlines();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void toggleGridlines()
+        {
+            switch (cal.GridLines.Count)
+            {
+                case 0:
+                    cal.drawGridlines();
+                    break;
+                case 7:
+                    cal.toggleGridlines();
                     break;
                 default:
                     break;

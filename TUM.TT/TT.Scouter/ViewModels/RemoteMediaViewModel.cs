@@ -178,6 +178,8 @@ namespace TT.Scouter.ViewModels
             IsPlaying = false;
             calibration = cal;
             calibration.Lines.CollectionChanged += Lines_CollectionChanged;
+            calibration.MidLines.CollectionChanged += Lines_CollectionChanged;
+            calibration.GridLines.CollectionChanged += Lines_CollectionChanged;
         }
         
 
@@ -329,6 +331,10 @@ namespace TT.Scouter.ViewModels
             {
                 Events.BeginPublishOnUIThread(new DeleteLinesEvent(calibration.Lines.ToList<Line>()));
                 calibration.Lines.Clear();
+                Events.BeginPublishOnUIThread(new DeleteLinesEvent(calibration.MidLines.ToList<Line>()));
+                calibration.MidLines.Clear();
+                Events.BeginPublishOnUIThread(new DeleteLinesEvent(calibration.GridLines.ToList<Line>()));
+                calibration.GridLines.Clear();
             }
             calibration.startCalibrating();
         }

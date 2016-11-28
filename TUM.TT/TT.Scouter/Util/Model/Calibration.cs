@@ -15,11 +15,14 @@ namespace TT.Scouter.Util.Model
         // 1. Point: Topleft; 2. Point: TopRight; 3. Point: BottomRight; 4. Point: BottomLeft;
         public List<Point> Points  {get; }
         public ObservableCollection<Line> Lines { get; }
+        public ObservableCollection<Line> MidLines { get; }
+        public ObservableCollection<Line> GridLines { get; }
 
         public bool isCalibrated { get; private set; }
         public bool isCalibrating { get; private set; }
         public bool isVisible { get; private set; }
         public bool isMidlinesVisible { get; private set; }
+        public bool isGridlinesVisible { get; private set; }
 
         public delegate void StrokePositionCalculatedEventHandler(object source, StrokePositionCalculatedEventArgs args);
 
@@ -36,6 +39,8 @@ namespace TT.Scouter.Util.Model
             isCalibrating = false;
             Points = new List<Point>();
             Lines = new ObservableCollection<Line>();
+            MidLines = new ObservableCollection<Line>();
+            GridLines = new ObservableCollection<Line>();
         }
 
         public void startCalibrating()
@@ -132,7 +137,7 @@ namespace TT.Scouter.Util.Model
 
             Line newLineVertical = createLine(p1v, p2v);
             newLineVertical.IsHitTestVisible = false;
-            Lines.Add(newLineVertical);
+            MidLines.Add(newLineVertical);
 
             x = (Points[1].X + Points[2].X) / 2;
             y = (Points[1].Y + Points[2].Y) / 2;
@@ -144,34 +149,172 @@ namespace TT.Scouter.Util.Model
 
             Line newLineHorizontal = createLine(p1h, p2h);
             newLineHorizontal.IsHitTestVisible = false;
-            Lines.Add(newLineHorizontal);
+            MidLines.Add(newLineHorizontal);
             isMidlinesVisible = true;
+        }
+
+        public void drawGridlines()
+        {
+            if (Points.Count != 4)
+            {
+                return;
+            }
+            Point p1, p2, p1h, p2h;
+            Line newLine;
+
+            double x;
+            double y;
+
+            // Vertical Lines    
+
+            x = ((Points[0].X*2) + Points[1].X) / 3;
+            y = ((Points[0].Y*2) + Points[1].Y) / 3;
+            p1 = new Point(x, y);
+
+            x = ((Points[3].X*2) + Points[2].X) / 3;
+            y = ((Points[3].Y*2) + Points[2].Y) / 3;
+            p2 = new Point(x, y);
+
+            newLine = createLine(p1, p2);
+            GridLines.Add(newLine);
+
+            x = (Points[0].X + (Points[1].X)*2) / 3;
+            y = (Points[0].Y + (Points[1].Y)*2) / 3;
+            p1 = new Point(x, y);
+
+            x = (Points[3].X + (Points[2].X)*2) / 3;
+            y = (Points[3].Y + (Points[2].Y)*2) / 3;
+            p2 = new Point(x, y);
+
+            newLine = createLine(p1, p2);
+            GridLines.Add(newLine);
+
+            // Horizontal Lines
+            // Mid
+            x = (Points[1].X + Points[2].X) / 2;
+            y = (Points[1].Y + Points[2].Y) / 2;
+            p1h = new Point(x, y);
+
+            x = (Points[0].X + Points[3].X) / 2;
+            y = (Points[0].Y + Points[3].Y) / 2;
+            p2h = new Point(x, y);
+
+            newLine = createLine(p1h, p2h);
+            GridLines.Add(newLine);
+
+            // 1/3 Top
+            x = (Points[0].X*2 + p2h.X) / 3;
+            y = (Points[0].Y*2 + p2h.Y) / 3;
+            p1 = new Point(x, y);
+
+            x = (Points[1].X*2 + p1h.X) / 3;
+            y = (Points[1].Y*2 + p1h.Y) / 3;
+            p2 = new Point(x, y);
+
+            newLine = createLine(p1, p2);
+            GridLines.Add(newLine);
+
+            // 2/3 Top
+            x = (Points[0].X + p2h.X * 2) / 3;
+            y = (Points[0].Y + p2h.Y * 2) / 3;
+            p1 = new Point(x, y);
+
+            x = (Points[1].X + p1h.X * 2) / 3;
+            y = (Points[1].Y + p1h.Y * 2) / 3;
+            p2 = new Point(x, y);
+
+            newLine = createLine(p1, p2);
+            GridLines.Add(newLine);
+
+            // 1/3 Bottom
+            x = (p2h.X * 2 + Points[3].X) / 3;
+            y = (p2h.Y * 2 + Points[3].Y) / 3;
+            p1 = new Point(x, y);
+
+            x = (p1h.X * 2 + Points[2].X) / 3;
+            y = (p1h.Y * 2 + Points[2].Y) / 3;
+            p2 = new Point(x, y);
+
+            newLine = createLine(p1, p2);
+            GridLines.Add(newLine);
+
+            // 2/3 Bottom
+            x = (p2h.X + Points[3].X * 2) / 3;
+            y = (p2h.Y + Points[3].Y * 2) / 3;
+            p1 = new Point(x, y);
+
+            x = (p1h.X + Points[2].X * 2) / 3;
+            y = (p1h.Y + Points[2].Y * 2) / 3;
+            p2 = new Point(x, y);
+
+            newLine = createLine(p1, p2);
+            GridLines.Add(newLine);
+
+            foreach (Line l in GridLines)
+            {
+                l.IsHitTestVisible = false;
+                l.StrokeThickness = 1.5;
+            }
+
+            isGridlinesVisible = true;
         }
 
         public void toggleMidlines()
         {
-            if (Lines.Count != 6 || isVisible == false)
+            if (MidLines.Count != 2 || isVisible == false)
             {
                 return;
             }
-            if (Lines[4].Visibility == Visibility.Hidden && Lines[5].Visibility == Visibility.Hidden)
+            foreach (Line l in MidLines)
             {
-                Lines[4].Visibility = Visibility.Visible;
-                Lines[5].Visibility = Visibility.Visible;
-                isMidlinesVisible = true;
-            } else if (Lines[4].Visibility == Visibility.Visible && Lines[5].Visibility == Visibility.Visible)
-            {
-                Lines[4].Visibility = Visibility.Hidden;
-                Lines[5].Visibility = Visibility.Hidden;
-                isMidlinesVisible = false;
+                if (l.Visibility == Visibility.Hidden)
+                {
+                    l.Visibility = Visibility.Visible;
+                }
+                else if (l.Visibility == Visibility.Visible)
+                {
+                    l.Visibility = Visibility.Hidden;
+                }
             }
+            isMidlinesVisible = !isMidlinesVisible;
+        }
+
+        public void toggleGridlines()
+        {
+            if (GridLines.Count != 7 || isVisible == false)
+            {
+                return;
+            }
+            foreach (Line l in GridLines)
+            {
+                if (l.Visibility == Visibility.Hidden)
+                {
+                    l.Visibility = Visibility.Visible;
+                }
+                else if (l.Visibility == Visibility.Visible)
+                {
+                    l.Visibility = Visibility.Hidden;
+                }
+            }
+            isGridlinesVisible = !isGridlinesVisible;
         }
 
         public void toggleCalibration()
         {
+            foreach (Line l in Lines)
+            {
+                if (l.Visibility == Visibility.Visible)
+                {
+                    l.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    l.Visibility = Visibility.Visible;
+                }
+            }
             if (isMidlinesVisible)
             {
-                foreach (Line l in Lines)
+                foreach (Line l in MidLines)
                 {
                     if (l.Visibility == Visibility.Visible)
                     {
@@ -181,18 +324,20 @@ namespace TT.Scouter.Util.Model
                     {
                         l.Visibility = Visibility.Visible;
                     }
-
                 }
-            } else
+            }
+            if (isGridlinesVisible)
             {
-                for (int i = 0; i<4; i++)
+                foreach (Line l in GridLines)
                 {
-                    if (Lines[i].Visibility == Visibility.Visible)
+                    if (l.Visibility == Visibility.Visible)
                     {
-                        Lines[i].Visibility = Visibility.Hidden;
+                        l.Visibility = Visibility.Hidden;
                     }
                     else
-                        Lines[i].Visibility = Visibility.Visible;
+                    {
+                        l.Visibility = Visibility.Visible;
+                    }
                 }
             }
             isVisible = !isVisible;

@@ -418,6 +418,10 @@
   <ItemGroup>
     <Resource Include="Resources\highlight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\grid.png" />
+    <Resource Include="Resources\midlines.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

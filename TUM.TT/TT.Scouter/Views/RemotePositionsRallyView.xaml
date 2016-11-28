@@ -74,7 +74,10 @@
                     </Button>
 
                     <Button x:Name="ToggleMidlines" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action toggleMidlines()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
-                        <Image Source="/resources/highlight.png"/>
+                        <Image Source="/resources/midlines.png"/>
+                    </Button>
+                    <Button x:Name="ToggleGridlines" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action toggleGridlines()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                        <Image Source="/resources/grid.png"/>
                     </Button>
                 </Grid>
                 
