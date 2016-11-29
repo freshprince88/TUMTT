@@ -113,59 +113,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\StringMatchToBooleanConverter.cs" />
-    <Compile Include="Converters\MatchPlayerToColorConverter.cs" />
-    <Compile Include="Converters\PlayerToStringConverter.cs" />
-    <Compile Include="Converters\RallyToVisibilityConverter.cs" />
-    <Compile Include="Converters\AggressivenessToBoolConverter.cs" />
-    <Compile Include="Converters\AggressivenessToBoolScouterConverter.cs" />
-    <Compile Include="Converters\BaseConverter.cs" />
-    <Compile Include="Converters\BoolNotConverter.cs" />
-    <Compile Include="Converters\BoolNotToVisibilityConverter.cs" />
-    <Compile Include="Converters\BoolToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converters\CourseToBoolScouterConverter.cs" />
-    <Compile Include="Converters\CrunchToBoolConverter.cs" />
-    <Compile Include="Converters\CurrentRallyServerToBallIsVisibleConverter.cs" />
-    <Compile Include="Converters\CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
-    <Compile Include="Converters\ForeBackHandToBoolConverter.cs" />
-    <Compile Include="Converters\MatchPlayerToBrushConverter.cs" />
-    <Compile Include="Converters\ScoreToStringConverter.cs" />
-    <Compile Include="Converters\MatchPlayerToVisibilityConverter.cs" />
-    <Compile Include="Converters\MinRallyLengthToVisibleConverter.cs" />
-    <Compile Include="Converters\NumAndLengthToLastVisibilityConverter.cs" />
-    <Compile Include="Converters\PlayerP1P2ToBoolConverter.cs" />
-    <Compile Include="Converters\PointP1P2ToBoolConverter.cs" />
-    <Compile Include="Converters\QualityToBoolConverter.cs" />
-    <Compile Include="Converters\QualityToBoolScouterConverter.cs" />
-    <Compile Include="Converters\RallyLengthToVisibilityConverter.cs" />
-    <Compile Include="Converters\RallyLengthToCheckedConverter.cs" />
-    <Compile Include="Converters\MatchPlayerToStringConverter.cs" />
-    <Compile Include="Converters\MSToTimeConverter.cs" />
-    <Compile Include="Converters\RallyExpressionToCountConverter.cs" />
-    <Compile Include="Converters\NumToPrevVisibleConverter.cs" />
-    <Compile Include="Converters\RallyLengthToBoolConverter.cs" />
-    <Compile Include="Converters\RoundingConverter.cs" />
-    <Compile Include="Converters\ServerPositionToCheckedConverter.cs" />
-    <Compile Include="Converters\ServiceToBoolConverter.cs" />
-    <Compile Include="Converters\ServiceToBoolScouterConverter.cs" />
-    <Compile Include="Converters\SetToBoolConverter.cs" />
-    <Compile Include="Converters\SideToBoolScouterConverter.cs" />
-    <Compile Include="Converters\SpecialToBoolConverter.cs" />
-    <Compile Include="Converters\SpinToBoolScouterConverter.cs" />
-    <Compile Include="Converters\SpinToCheckedConverter.cs" />
-    <Compile Include="Converters\NumAndLengthToNextVisibilityConverter.cs" />
-    <Compile Include="Converters\StepAroundToBoolConverter.cs" />
-    <Compile Include="Converters\StrokeTechniqueToBoolScouterConverter.cs" />
-    <Compile Include="Converters\TableLengthToCheckedConverter.cs" />
-    <Compile Include="Converters\TablePositionCountConverter.cs" />
-    <Compile Include="Converters\TablePositionToCheckedConverter.cs" />
-    <Compile Include="Converters\LabelBackhandForehandRowConverter.cs" />
-    <Compile Include="Converters\TechniqueCountToRankingRowConverter.cs" />
-    <Compile Include="Converters\TechniqueCountToRankingColumnConverter.cs" />
-    <Compile Include="Converters\TechniqueToBoolConverter.cs" />
-    <Compile Include="Converters\TimeSpanToMillisecondsConverter.cs" />
-    <Compile Include="Converters\TwoBoolToBoolConverter.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\DeactivationEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />
@@ -242,16 +189,11 @@
     <Compile Include="Templates\CircleBorder.xaml.cs">
       <DependentUpon>CircleBorder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\CircleMarginConverter .cs" />
-    <Compile Include="Converters\Column2TabConverter.cs" />
     <Compile Include="Util\Dynamic.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Util\FrameworkElementExtension.cs" />
     <Compile Include="Util\GridViewSort.cs" />
-    <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Converters\TabSizeConverter.cs" />
-    <Compile Include="Converters\Visibility2BoolConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />

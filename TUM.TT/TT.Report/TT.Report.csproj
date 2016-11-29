@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generators\CustomizedReportGenerator.cs" />
     <Compile Include="Generators\DefaultReportGenerator.cs" />
     <Compile Include="Generators\IReportGenerator.cs" />
     <Compile Include="IReportVisitor.cs" />
@@ -108,6 +109,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TT.Converters\TT.Converters.csproj">
+      <Project>{257f3b3f-ee44-4b7b-a629-218f37047d49}</Project>
+      <Name>TT.Converters</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TT.Models\TT.Models.csproj">
       <Project>{bfdd82b6-73a9-4408-a183-4acc3dc7e2c0}</Project>
       <Name>TT.Models</Name>
