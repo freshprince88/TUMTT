@@ -30,7 +30,8 @@ namespace TT.Viewer {
             container.Singleton<IDialogCoordinator, DialogCoordinator>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
             // Report generation
-            container.Singleton<IReportGenerator, DefaultReportGenerator>();
+            container.Singleton<IReportGenerator, DefaultReportGenerator>("default");
+            container.Singleton<IReportGenerator, CustomizedReportGenerator>("customized");
             // Report rendering
             container.Singleton<IReportRenderer, PdfRenderer>("PDF");
         }

@@ -25,10 +25,11 @@ namespace TT.Lib.Results
         /// </summary>
         /// <param name="match">The match to generate a report for.</param>
         /// <param name="fileName">The file to save the report to.</param>
-        public GenerateReportResult(Match match, string fileName)
+        public GenerateReportResult(Match match, string fileName, string type)
         {
             this.Match = match;
             this.FileName = fileName;
+            this.GeneratorType = type;
         }
 
         /// <summary>
@@ -47,6 +48,11 @@ namespace TT.Lib.Results
         public string FileName { get; private set; }
 
         /// <summary>
+        /// Gets the type of report that should be generated.
+        /// </summary>
+        public string GeneratorType { get; private set; }
+
+        /// <summary>
         /// Executes this action
         /// </summary>
         /// <param name="context">The execution context.</param>
@@ -63,7 +69,7 @@ namespace TT.Lib.Results
             // Get hands on the report generator            
             try
             {
-                var generator = IoC.Get<IReportGenerator>();
+                var generator = IoC.Get<IReportGenerator>(this.GeneratorType);
                 var report = generator.GenerateReport(this.Match);
 
                 var renderer = IoC.Get<IReportRenderer>("PDF");

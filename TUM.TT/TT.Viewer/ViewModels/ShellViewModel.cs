@@ -182,7 +182,7 @@ namespace TT.Viewer.ViewModels
 
         public IEnumerable<IResult> GenerateReport()
         {
-            return MatchManager.GenerateReport();
+            return MatchManager.GenerateReport("default");
         }
 
         #endregion

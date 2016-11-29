@@ -70,7 +70,7 @@ namespace TT.Viewer.ViewModels
         {
             Debug.WriteLine("OnOkGenerateClick");
             Save();
-            foreach (IResult result in MatchManager.GenerateReport())
+            foreach (IResult result in MatchManager.GenerateReport("customized"))
                 yield return result;
             TryClose();            
         }

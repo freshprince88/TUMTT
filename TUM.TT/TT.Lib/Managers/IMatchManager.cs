@@ -24,7 +24,7 @@ namespace TT.Lib.Managers
 
         void RenamePlaylist(string oldName, string newName);
 
-        IEnumerable<IResult> GenerateReport();
+        IEnumerable<IResult> GenerateReport(string type);
 
         IEnumerable<IResult> SaveMatch();
 

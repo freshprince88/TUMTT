@@ -325,7 +325,7 @@ namespace TT.Lib.Managers
         /// Generates a PDF report.
         /// </summary>
         /// <returns>The actions to generate the report.</returns>
-        public IEnumerable<IResult> GenerateReport()
+        public IEnumerable<IResult> GenerateReport(string type)
         {
             var dialog = new SaveFileDialogResult()
             {
@@ -337,7 +337,7 @@ namespace TT.Lib.Managers
 
             var fileName = dialog.Result;
 
-            yield return new GenerateReportResult(this.Match, fileName)
+            yield return new GenerateReportResult(this.Match, fileName, type)
                 .Rescue()
                 .WithMessage("Error generating report", string.Format("Could not save the report to {0}.", fileName))
                 .Propagate();
