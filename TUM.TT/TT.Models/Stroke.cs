@@ -547,17 +547,17 @@ namespace TT.Models
 
         public bool IsOverTheTable()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : this.PointOfContact.ToLower() == "über";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : this.PointOfContact.ToLower() == "over";
         }
 
         public bool IsAtTheTable()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "hinter";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "behind";
         }
 
         public bool IsHalfDistance()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "halbdistanz";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "half-distance";
         }
 
 
