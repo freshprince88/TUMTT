@@ -14,9 +14,11 @@
              d:DesignHeight="500">
 
     <Controls:MetroWindow.Resources>
-        <prop:Resources x:Key="LocalizedStrings"/>
-        <conv:PlayerToStringConverter x:Key="PlayerToStringConverter"/>
-        <conv:StringMatchToBooleanConverter x:Key="StringMatchToBooleanConverter"/>
+        <ResourceDictionary>
+            <prop:Resources x:Key="LocalizedStrings"/>
+            <conv:PlayerToStringConverter x:Key="PlayerToStringConverter"/>
+            <conv:StringMatchToBooleanConverter x:Key="StringMatchToBooleanConverter"/>
+        </ResourceDictionary>
     </Controls:MetroWindow.Resources>
 
     <Grid Name="ReportSettingsGrid" Margin="10">
