@@ -14,7 +14,7 @@ namespace TT.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Brush brush = (Brush) matchPlayerToBrushConverter.Convert(value, typeof(Brush), null, CultureInfo.CurrentCulture);
+            Brush brush = (Brush) matchPlayerToBrushConverter.Convert(value, typeof(Brush), parameter, CultureInfo.CurrentCulture);
             return ((SolidColorBrush)brush).Color;
         }
 

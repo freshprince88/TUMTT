@@ -562,7 +562,7 @@ namespace TT.Viewer.Views
                 foreach (Shape shape in StrokeShapes[s])
                 {
                     ToolTip tt = new ToolTip();
-                    tt.Background = (Brush)matchPlayerToBrushConverter.Convert(s.Rally.Winner, typeof(Brush), null, System.Globalization.CultureInfo.CurrentCulture);
+                    tt.Background = (Brush)matchPlayerToBrushConverter.Convert(s.Rally.Winner, typeof(Brush), 1, System.Globalization.CultureInfo.CurrentCulture);
                     tt.Content = "#" + s.Rally.Number + " " +
                         scoreToStringConverter.Convert(new object[] { s.Rally.CurrentRallyScore, s.Rally.CurrentSetScore }, typeof(string), false, System.Globalization.CultureInfo.CurrentCulture);
                     shape.ToolTip = tt;

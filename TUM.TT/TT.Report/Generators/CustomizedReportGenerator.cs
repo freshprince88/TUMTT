@@ -3,6 +3,7 @@ using TT.Converters;
 using TT.Models;
 using TT.Report.Plots;
 using TT.Report.Sections;
+using System.Windows.Media;
 
 namespace TT.Report.Generators
 {
@@ -12,11 +13,11 @@ namespace TT.Report.Generators
     public class CustomizedReportGenerator : IReportGenerator
     {
 
-        private MatchPlayerToColorConverter conv;
+        private MatchPlayerToColorConverter matchPlayerToColorConverter;
 
         public CustomizedReportGenerator()
         {
-            this.conv = new MatchPlayerToColorConverter();
+            this.matchPlayerToColorConverter = new MatchPlayerToColorConverter();
         }
 
         /// <summary>
@@ -26,6 +27,9 @@ namespace TT.Report.Generators
         /// <returns>The generated report.</returns>
         public Report GenerateReport(Match match)
         {
+            var firstPlayerColor = matchPlayerToColorConverter.Convert(MatchPlayer.First, typeof(Color), null, System.Globalization.CultureInfo.CurrentCulture);
+            var secondPlayerColor = matchPlayerToColorConverter.Convert(MatchPlayer.Second, typeof(Color), null, System.Globalization.CultureInfo.CurrentCulture);
+
             var plotStyle = new PlotStyle()
             {
                 TextFont = "Calibri",
@@ -33,8 +37,8 @@ namespace TT.Report.Generators
                 TextColor = OxyColors.Black,
                 BorderColor = OxyColors.DarkGray,
                 GridlineColor = OxyColors.LightGray,
-                FirstPlayerColor = OxyColor.Parse("#4F81BD"),
-                SecondPlayerColor = OxyColor.Parse("#C0504D"),
+                FirstPlayerColor = OxyColor.Parse(firstPlayerColor.ToString()),
+                SecondPlayerColor = OxyColor.Parse(secondPlayerColor.ToString())
             };
             
             var report = new Report();

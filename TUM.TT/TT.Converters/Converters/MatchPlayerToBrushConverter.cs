@@ -11,20 +11,34 @@ namespace TT.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            float saturationFactor;
-            float brightnessFactor;
-            if (parameter == null || (int)parameter == 0)
+            float saturationFactor = 0;
+            float brightnessFactor = 0;
+
+            if (parameter != null)
             {
-                saturationFactor = -0.15f;
-                brightnessFactor = 0.10f;
-            } else if ((int)parameter == 1)
-            {
-                saturationFactor = -0.25f;
-                brightnessFactor = 0.35f;
-            } else
-            {
-                saturationFactor = -0.38f;
-                brightnessFactor = 0.42f;
+                int colorTransformType;
+                if (parameter is string)
+                    colorTransformType = int.Parse((string)parameter);
+                else if (parameter is int)
+                    colorTransformType = (int)parameter;
+                else
+                    throw new ArgumentException("check the type of the parameter!");
+
+                if (colorTransformType == 1)
+                {
+                    saturationFactor = -0.15f;
+                    brightnessFactor = 0.10f;
+                }
+                else if (colorTransformType == 2)
+                {
+                    saturationFactor = -0.25f;
+                    brightnessFactor = 0.35f;
+                }
+                else if (colorTransformType == 3)
+                {
+                    saturationFactor = -0.38f;
+                    brightnessFactor = 0.42f;
+                }
             }
 
             var brushConverter = new BrushConverter();

@@ -70,7 +70,7 @@
                         </TextBlock>
                     </Rectangle.ToolTip>
                     <Rectangle.Fill>
-                        <SolidColorBrush Color="{Binding ActiveRally.Server, Converter={StaticResource MatchPlayerToColorConverter}}"/>
+                        <SolidColorBrush Color="{Binding ActiveRally.Server, Converter={StaticResource MatchPlayerToColorConverter}, ConverterParameter=1}"/>
                     </Rectangle.Fill>
                     <Rectangle.OpacityMask>
                         <ImageBrush ImageSource="/Resources/rally_server.png"/>
@@ -89,7 +89,7 @@
                         </TextBlock>
                     </Rectangle.ToolTip>
                     <Rectangle.Fill>
-                        <SolidColorBrush Color="{Binding ActiveRally.Winner, Converter={StaticResource MatchPlayerToColorConverter}}"/>
+                        <SolidColorBrush Color="{Binding ActiveRally.Winner, Converter={StaticResource MatchPlayerToColorConverter}, ConverterParameter=1}"/>
                     </Rectangle.Fill>
                     <Rectangle.OpacityMask>
                         <ImageBrush ImageSource="/Resources/rally_winner.png"/>
