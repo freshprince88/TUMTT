@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     public class TabSizeConverter : BaseConverter, IMultiValueConverter
     {

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:template="clr-namespace:TT.Lib.Templates;assembly=TT.Lib"
-             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="410" d:DesignWidth="360">

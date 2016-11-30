@@ -4,7 +4,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(MatchPlayer), typeof(Color))]
     public class MatchPlayerToColorConverter : BaseConverter, IValueConverter

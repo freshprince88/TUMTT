@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:TT.Viewer.Views" x:Class="TT.Viewer.Views.ResultLargeTableView"
              xmlns:cal="http://www.caliburnproject.org"
@@ -17,7 +17,6 @@
         <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
         <conv:ScoreToStringConverter x:Key="ScoreToStringConverter" />
         <conv:MatchPlayerToColorConverter x:Key="MatchPlayerToColorConverter" />
-        <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter" />
         <conv:RallyToVisibilityConverter x:Key="RallyToVisibilityConverter" />
         <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
@@ -65,7 +64,7 @@
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="table_tooltip_rally_server" Source="{StaticResource LocalizedStrings}"/>
-                                    <Binding Path="ActiveRally.Server" Converter="{StaticResource MatchPlayerToStringConverter}"/>
+                                    <Binding Path="RallyServer"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -84,7 +83,7 @@
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="table_tooltip_rally_point" Source="{StaticResource LocalizedStrings}"/>
-                                    <Binding Path="ActiveRally.Winner" Converter="{StaticResource MatchPlayerToStringConverter}"/>
+                                    <Binding Path="RallyWinner"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>

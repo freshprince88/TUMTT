@@ -1,26 +1,32 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Lib.Managers;
 using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(MatchPlayer), typeof(string))]
     public class MatchPlayerToStringConverter : BaseConverter, IValueConverter
     {
+        private Player firstPlayer;
+        private Player secondPlayer;
+
+        public MatchPlayerToStringConverter(Player firstPlayer, Player secondPlayer)
+        {
+            this.firstPlayer = firstPlayer;
+            this.secondPlayer = secondPlayer;
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             MatchPlayer player = (MatchPlayer)value;
-            IMatchManager manager = IoC.Get<IMatchManager>();
 
             switch (player)
             {
                 case MatchPlayer.First:
-                    return manager.Match.FirstPlayer.Name;
+                    return firstPlayer.Name;
                 case MatchPlayer.Second:
-                    return manager.Match.SecondPlayer.Name;
+                    return secondPlayer.Name;
                 default:
                     return "None";
             }
@@ -28,12 +34,11 @@ namespace TT.Lib.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            IMatchManager manager = IoC.Get<IMatchManager>();
             string name = (string)value;
 
-            if (value.Equals(manager.Match.FirstPlayer.Name))
+            if (value.Equals(firstPlayer.Name))
                 return MatchPlayer.First;
-            else if (value.Equals(manager.Match.SecondPlayer.Name))
+            else if (value.Equals(secondPlayer.Name))
                 return MatchPlayer.Second;
             else
                 return MatchPlayer.None;

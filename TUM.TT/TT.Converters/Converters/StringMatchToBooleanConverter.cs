@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(string), typeof(bool))]
     public class StringMatchToBooleanConverter : BaseConverter, IValueConverter

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(TimeSpan), typeof(double))]
     public class TimeSpanToMillisecondsConverter : BaseConverter, IValueConverter

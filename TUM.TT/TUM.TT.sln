@@ -17,6 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CA8155
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Report", "TT.Report\TT.Report.csproj", "{9F1FD7DD-1706-4327-89F1-722284FBBDB9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{257F3B3F-EE44-4B7B-A629-218F37047D49} = {257F3B3F-EE44-4B7B-A629-218F37047D49}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.ReportGenerator", "TT.ReportGenerator\TT.ReportGenerator.csproj", "{0954508B-5CEA-418A-B145-FAADF659E181}"
 EndProject

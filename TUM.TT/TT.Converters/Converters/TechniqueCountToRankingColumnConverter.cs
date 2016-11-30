@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 using Zhucai.LambdaParser;
-using Zhucai.LambdaParser.ObjectDynamicExtension;
 using System.Linq;
 using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(object), typeof(int))]
     public class TechniqueCountToRankingColumnConverter : BaseConverter, IMultiValueConverter

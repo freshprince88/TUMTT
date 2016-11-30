@@ -1,12 +1,10 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using TT.Lib.Managers;
 using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(Score), typeof(string))]
     public class ScoreToStringConverter : BaseConverter, IMultiValueConverter, IValueConverter

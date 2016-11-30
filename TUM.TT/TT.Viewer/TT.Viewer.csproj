@@ -540,6 +540,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TT.Converters\TT.Converters.csproj">
+      <Project>{257f3b3f-ee44-4b7b-a629-218f37047d49}</Project>
+      <Name>TT.Converters</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TT.Lib\TT.Lib.csproj">
       <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
       <Name>TT.Lib</Name>

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Data;
 using TT.Models.Util.Enums;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(HashSet<Stroke.Services>), typeof(bool))]
     public class TechniqueToBoolConverter : BaseConverter, IMultiValueConverter

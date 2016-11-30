@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Data;
 using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     public class NumAndLengthToLastVisibilityConverter : BaseConverter, IMultiValueConverter
     {

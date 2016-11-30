@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(Dictionary<string, int>), typeof(int))]
     public class TablePositionCountConverter : BaseConverter, IMultiValueConverter

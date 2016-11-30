@@ -3,9 +3,8 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using TT.Models;
-using TT.Models.Util.Enums;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(MatchPlayer), typeof(bool))]
     public class CurrentRallyWinnerToButtonIsEnabledConverter : BaseConverter, IMultiValueConverter

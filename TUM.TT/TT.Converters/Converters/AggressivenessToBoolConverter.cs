@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Models;
-using TT.Models.Util.Enums;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 
 {
     [ValueConversion(typeof(HashSet<Models.Util.Enums.Stroke.Services>), typeof(bool))]

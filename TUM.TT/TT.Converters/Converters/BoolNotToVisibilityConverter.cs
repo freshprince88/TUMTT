@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolNotToVisibilityConverter : BaseConverter, IValueConverter

@@ -3,9 +3,8 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using TT.Models;
-using TT.Models.Util.Enums;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(MatchPlayer), typeof(Visibility))]
     public class CurrentRallyServerToBallIsVisibleConverter : BaseConverter, IMultiValueConverter

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using TT.Models;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     [ValueConversion(typeof(Rally), typeof(Visibility))]
     public class RallyToVisibilityConverter : BaseConverter, IValueConverter

@@ -12,6 +12,7 @@ using System.Dynamic;
 using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TT.Converters;
 
 namespace TT.Viewer.ViewModels
 {
@@ -26,6 +27,8 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
         private IWindowManager WindowManager;
+
+        private MatchPlayerToStringConverter matchPlayerToStringConverter;
 
         public ObservableCollection<Rally> Rallies { get; set; }
         private ObservableCollection<Stroke> strokes;
@@ -64,6 +67,9 @@ namespace TT.Viewer.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+        
+        public string RallyServer { get; private set; }
+        public string RallyWinner { get; private set; }
 
         public ResultLargeTableViewModel()
         {
@@ -80,6 +86,7 @@ namespace TT.Viewer.ViewModels
             RallyLength = 1;
             Strokes = new ObservableCollection<Stroke>();
 
+            matchPlayerToStringConverter = new MatchPlayerToStringConverter(Manager.Match.FirstPlayer, Manager.Match.SecondPlayer);
         }
 
         public byte GetOrderInResultView()
@@ -208,6 +215,8 @@ namespace TT.Viewer.ViewModels
         public void Handle(ActiveRallyChangedEvent message)
         {
             ActiveRally = message.Current;
+            RallyServer = matchPlayerToStringConverter.Convert(ActiveRally.Server, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) as string;
+            RallyWinner = matchPlayerToStringConverter.Convert(ActiveRally.Winner, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) as string;
         }
 
         #endregion

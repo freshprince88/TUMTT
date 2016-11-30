@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace TT.Lib.Converters
+namespace TT.Converters
 {
     /// <summary>
     /// Value converter that performs arithmetic calculations over its argument(s)
