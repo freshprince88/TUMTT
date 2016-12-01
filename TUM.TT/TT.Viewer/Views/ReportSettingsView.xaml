@@ -10,8 +10,8 @@
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"             
              Dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d"
-             d:DesignWidth="800" 
-             d:DesignHeight="500">
+             d:DesignWidth="1200" 
+             d:DesignHeight="860">
 
     <Controls:MetroWindow.Resources>
         <ResourceDictionary>
@@ -30,31 +30,49 @@
 
         <Label Name="ReportSettings_Title" Grid.Row="0" Content="{Binding Path=report_settings_title, Source={StaticResource LocalizedStrings}}" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"/>
 
-        <Grid Name="ReportSettingsGrid_Content" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition MinWidth="750"/>
+            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Name="ReportSettingsGrid_Content_Players" HorizontalAlignment="Left">
+            <Grid Name="ReportSettingsGrid_Content" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                
-                <Label Grid.Row="0" Content="{Binding Path=report_settings_playerchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
-                <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Players_Checkboxes" Margin="5 5 0 0">                    
-                    <RadioButton Content="{Binding MatchManager.Match.FirstPlayer, Converter={StaticResource PlayerToStringConverter}, ConverterParameter=last}"
-                                 IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=first}"/>
-                    <RadioButton Content="{Binding MatchManager.Match.SecondPlayer, Converter={StaticResource PlayerToStringConverter},ConverterParameter=last}" Margin="8 0 0 0"
-                                 IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=second}"/>
-                    <RadioButton Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
-                                 IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=both}"/>
-                </WrapPanel>
-            </Grid>
-        </Grid>
 
+                <CheckBox Grid.Row="0" Content="BitmapEffect" x:Name="BitmapEffectCheckbox"/>
+
+                <Grid Grid.Row="1" Name="ReportSettingsGrid_Content_Players" HorizontalAlignment="Left">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Content="{Binding Path=report_settings_playerchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+                    <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Players_Checkboxes" Margin="5 5 0 0">
+                        <RadioButton Content="{Binding MatchManager.Match.FirstPlayer, Converter={StaticResource PlayerToStringConverter}, ConverterParameter=last}"
+                                     IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=first}"/>
+                        <RadioButton Content="{Binding MatchManager.Match.SecondPlayer, Converter={StaticResource PlayerToStringConverter},ConverterParameter=last}" Margin="8 0 0 0"
+                                     IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=second}"/>
+                        <RadioButton Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
+                                     IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=both}"/>
+                    </WrapPanel>
+                </Grid>
+
+            </Grid>
+            
+            <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox">
+                <Grid>
+                    <WebBrowser x:Name="ReportPreviewControl" Source="pack://siteoforigin:,,,/Resources/report_tmp.pdf#toolbar=0&amp;navpanes=0"/>
+                    <Image x:Name="PreviewOverlay" ClipToBounds="True" Visibility="Hidden"/>
+                </Grid>
+            </GroupBox>
+
+
+        </Grid>
         <Grid Name="ReportSettingsGrid_Buttons" Grid.Row="2" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="80"/>

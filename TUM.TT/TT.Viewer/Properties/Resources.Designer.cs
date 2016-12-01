@@ -261,6 +261,16 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] report_tmp {
+            get {
+                object obj = ResourceManager.GetObject("report_tmp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hitlist.
         /// </summary>
         public static string result_list_tab_title {

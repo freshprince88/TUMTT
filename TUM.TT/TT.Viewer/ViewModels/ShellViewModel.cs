@@ -272,8 +272,8 @@ namespace TT.Viewer.ViewModels
                 dynamic settings = new ExpandoObject();
                 settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 settings.ResizeMode = ResizeMode.CanResizeWithGrip;
-                settings.Width = 800;
-                settings.Height = 500;
+                settings.Width = 1200;
+                settings.Height = 860;
                 _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, _windowManager, Events, DialogCoordinator), null, settings);
             }
         }

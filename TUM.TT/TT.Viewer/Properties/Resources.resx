@@ -259,4 +259,7 @@
   <data name="report_settings_playerchoice_title" xml:space="preserve">
     <value>Player</value>
   </data>
+  <data name="report_tmp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\report_tmp.pdf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
