@@ -127,13 +127,16 @@ namespace TT.Scouter.ViewModels
 
         public void OnStrokePositionCalculated(object sender, StrokePositionCalculatedEventArgs args)
         {
-            Placement newPosition = new Placement();
-            newPosition.WX = args.Position.X;
-            newPosition.WY = args.Position.Y;
-            CurrentStroke.Placement = newPosition;
-            Console.WriteLine(args.Position.X);
-            Console.WriteLine(args.Position.Y);
-            NextStroke();
+            if (!CurrentStroke.Course.Equals("Net/Out"))
+            {
+                Placement newPosition = new Placement();
+                newPosition.WX = args.Position.X;
+                newPosition.WY = args.Position.Y;
+                CurrentStroke.Placement = newPosition;
+                Console.WriteLine(args.Position.X);
+                Console.WriteLine(args.Position.Y);
+                NextStroke();
+            }
         }
     }
 }
