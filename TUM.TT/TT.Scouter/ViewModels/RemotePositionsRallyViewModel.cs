@@ -390,7 +390,15 @@ namespace TT.Scouter.ViewModels
             {
                 CurrentStroke = Strokes[int.Parse(number) - 1];
             }
-            isEllipseDragged = true;
+
+            // when left mouse button is clicked then drag ellipse, when right button is clicked delete placement
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                isEllipseDragged = true;
+            } else if(e.ChangedButton== MouseButton.Right)
+            {
+                DeleteStroke();
+            }
         }
 
         public void OnMaxStrokesChanged()
