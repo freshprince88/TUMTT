@@ -571,12 +571,15 @@ namespace TT.Scouter.ViewModels
 
         public void ChangePositionStroke(double X, double Y)
         {
-            Models.Placement p = new Models.Placement();
-            p.WX = X;
-            p.WY = Y;
-            Stroke.Placement = p;
+            if (!Stroke.Course.Equals("Net/Out"))
+            {
+                Models.Placement p = new Models.Placement();
+                p.WX = X;
+                p.WY = Y;
+                Stroke.Placement = p;
+            }
         }
 
-        #endregion
+            #endregion
     }
 }
