@@ -48,8 +48,8 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <RadioButton x:Name="ShortB" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding over, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('over')]"/>
-                <RadioButton x:Name="HalfB" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
-                <RadioButton x:Name="LongB" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding behind, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
+                <RadioButton x:Name="HalfB" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
+                <RadioButton x:Name="LongB" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding behind, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
 
             </Grid>
 
@@ -64,8 +64,8 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <RadioButton x:Name="LongT" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding behind, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
-                <RadioButton x:Name="HalfT" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
+                <RadioButton x:Name="LongT" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="0" Grid.Column="1" IsChecked="{Binding behind, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('half-distance')]"/>
+                <RadioButton x:Name="HalfT" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="1" IsChecked="{Binding half, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('behind')]"/>
                 <RadioButton x:Name="ShortT" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="2" Grid.Column="1" IsChecked="{Binding over, Mode=TwoWay}" cal:Message.Attach="[Event Click] = [Action ChangePointOfContact('over')]"/>
             </Grid>
 
