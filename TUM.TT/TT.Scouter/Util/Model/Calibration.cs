@@ -57,7 +57,7 @@ namespace TT.Scouter.Util.Model
         {
             Points.Add(p);
 
-            OnPointAdded(Points.Count);
+            OnPointAdded(Points.Count, p);
 
             if (Points.Count < 2)
                 return;
@@ -351,11 +351,11 @@ namespace TT.Scouter.Util.Model
             }
         }
 
-        protected virtual void OnPointAdded(int numberOfPoints)
+        protected virtual void OnPointAdded(int numberOfPoints, Point p)
         {
             if (PointAdded != null)
             {
-                PointAdded(this, new PointAddedEventArgs(numberOfPoints));
+                PointAdded(this, new PointAddedEventArgs(numberOfPoints, p));
             }
         }
 

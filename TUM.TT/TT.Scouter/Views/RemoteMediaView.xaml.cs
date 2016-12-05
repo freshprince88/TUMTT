@@ -28,11 +28,14 @@ namespace TT.Scouter.Views
         IHandle<MediaMuteEvent>,
         IHandle<VideoLoadedEvent>,
         IHandle<DrawLineEvent>,
-        IHandle<DeleteLinesEvent>
+        IHandle<DeleteLinesEvent>,
+        IHandle<FollowMouseEvent>
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
         TimeSpan currentTime;
+
+        private bool lineIsDisplayed = false;
 
         public RemoteMediaView()
         {
@@ -157,6 +160,44 @@ namespace TT.Scouter.Views
             }
         }
 
+        public void Handle(FollowMouseEvent message)
+        {
+            if (message.LastPosition.X == -1 && message.LastPosition.Y == -1)
+            {
+                interactiveLine.X1 = 0;
+                interactiveLine.Y1 = 0;
+                interactiveLine.Visibility = Visibility.Hidden;
+                lineIsDisplayed = false;
+            }else
+            {
+                interactiveLine.X1 = message.LastPosition.X;
+                interactiveLine.Y1 = message.LastPosition.Y;
+                interactiveLine.Visibility = Visibility.Visible;
+                lineIsDisplayed = true;
+            }
+        }
+
+        private void ContentControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Get the x and y coordinates of the mouse pointer.
+            System.Windows.Point position = e.GetPosition(MediaContainer);
+            interactiveLine.X2 = position.X;
+            interactiveLine.Y2 = position.Y;
+        }
+
         #endregion
+
+        private void ContentControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            interactiveLine.Visibility = Visibility.Hidden;
+        }
+
+        private void ContentControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (lineIsDisplayed)
+                interactiveLine.Visibility = Visibility.Visible;
+            else
+                interactiveLine.Visibility = Visibility.Hidden;
+        }
     }
 }

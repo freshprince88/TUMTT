@@ -177,11 +177,12 @@ namespace TT.Scouter.ViewModels
             PlayMode = false;             
             IsPlaying = false;
             calibration = cal;
+            calibration.PointAdded += Calibration_PointAdded;
             calibration.Lines.CollectionChanged += Lines_CollectionChanged;
             calibration.MidLines.CollectionChanged += Lines_CollectionChanged;
             calibration.GridLines.CollectionChanged += Lines_CollectionChanged;
         }
-        
+
 
         #region Media Methods
         public void Pause()
@@ -376,6 +377,18 @@ namespace TT.Scouter.ViewModels
                     }
                 }
                 break;
+            }
+        }
+        
+        private void Calibration_PointAdded(object source, PointAddedEventArgs args)
+        {
+            if (args.NumberOfPoints < 4)
+            {
+                Events.PublishOnUIThread(new FollowMouseEvent(args.LastPoint));
+            }
+            else
+            {
+                Events.PublishOnUIThread(new FollowMouseEvent(new Point(-1, -1)));
             }
         }
 

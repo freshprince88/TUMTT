@@ -162,7 +162,7 @@ namespace TT.Scouter.ViewModels
                     DrawnStrokes[i].e.Fill = System.Windows.Media.Brushes.Transparent;
                 DrawnStrokes[CurrentStroke.Number - 1].e.Fill = System.Windows.Media.Brushes.Black;
             }
-            catch (Exception e) { }
+            catch (Exception e) { Console.Write(e.Message); }
         }
 
         private void S_StrokePlacementChanged(object source, EventArgs args)
@@ -272,19 +272,19 @@ namespace TT.Scouter.ViewModels
 
         private void OnPointAdded(object source, PointAddedEventArgs args)
         {
-            if (args.numberOfPoints == 1)
+            if (args.NumberOfPoints == 1)
             {
                 showTopLeftArrow = false;
                 showTopRightArrow = true;
-            } else if (args.numberOfPoints == 2)
+            } else if (args.NumberOfPoints == 2)
             {
                 showTopRightArrow = false;
                 showBottomRightArrow = true;
-            } else if (args.numberOfPoints == 3)
+            } else if (args.NumberOfPoints == 3)
             {
                 showBottomRightArrow = false;
                 showBottomLeftArrow = true;
-            } else if (args.numberOfPoints == 4)
+            } else if (args.NumberOfPoints == 4)
             {
                 showBottomLeftArrow = false;
             }

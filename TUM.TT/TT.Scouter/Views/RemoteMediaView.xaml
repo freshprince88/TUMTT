@@ -34,7 +34,7 @@
 
 
         <Grid x:Name="MediaContainer">
-            <ContentControl>
+            <ContentControl MouseMove="ContentControl_MouseMove" MouseLeave="ContentControl_MouseLeave" MouseEnter="ContentControl_MouseEnter">
                 <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0" ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
                                     MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
                                     MediaPosition="{Binding MediaPosition, Mode=TwoWay}"
@@ -50,6 +50,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ContentControl>
+            <Line x:Name="interactiveLine" Stroke="Red" StrokeThickness="4" X1="0" Y1="0" Visibility="Hidden" IsHitTestVisible="False"/>
         </Grid>
 
 
