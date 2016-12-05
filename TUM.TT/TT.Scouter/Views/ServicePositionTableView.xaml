@@ -51,6 +51,13 @@
                 </Grid.ColumnDefinitions>
                 <RadioButton x:Name="bot" Width="334" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" Grid.Column="0" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]; [Event Click] = [Action ChangePositionPlayerFinal()]"/>
                 <Rectangle IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
+                <Grid Name="PlayerPositionSplitterBot" Grid.Row="1" ShowGridLines="True" IsHitTestVisible="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1" Visibility="{Binding showBotTable, Converter={StaticResource converter}}">
@@ -61,6 +68,13 @@
                 </Grid.RowDefinitions>
                 <RadioButton x:Name="top" Width="334" Style="{StaticResource MetroAccentFlatGrayRadio}" Grid.Row="1" IsChecked="{Binding poc, Mode=OneWay}" cal:Message.Attach="[Event PreviewMouseDown] = [Action ChangePositionPlayer($source, $eventargs)]; [Event Click] = [Action ChangePositionPlayerFinal()]"/>
                 <Rectangle IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Width="10" Fill="Black" Margin="{Binding pocThickness}" Visibility="{Binding pocActive, Converter={StaticResource converter}}" />
+                <Grid Name="PlayerPositionSplitterTop" Grid.Row="1" ShowGridLines="True" IsHitTestVisible="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
             </Grid>
 
             <Grid Name="InnerFieldGrid" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Background="{DynamicResource AccentColorBrush}" IsHitTestVisible="True" cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]" >
