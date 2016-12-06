@@ -13,6 +13,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TT.Converters;
+using System.Diagnostics;
 
 namespace TT.Viewer.ViewModels
 {
@@ -57,6 +58,8 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public Match Match { get; set; }
+
         private Rally activeRally;
         public Rally ActiveRally
         {
@@ -70,6 +73,7 @@ namespace TT.Viewer.ViewModels
         
         public string RallyServer { get; private set; }
         public string RallyWinner { get; private set; }
+        public string MyCar { get; set; }
 
         public ResultLargeTableViewModel()
         {
@@ -85,8 +89,12 @@ namespace TT.Viewer.ViewModels
             WindowManager = windowMan;
             RallyLength = 1;
             Strokes = new ObservableCollection<Stroke>();
+            Match = Manager.Match;
 
-            matchPlayerToStringConverter = new MatchPlayerToStringConverter(Manager.Match.FirstPlayer, Manager.Match.SecondPlayer);
+            MyCar = "vw golf";
+            object o = new MatchPlayerToStringConverter();
+            Debug.WriteLine("tostring {0}", o);
+            //matchPlayerToStringConverter = new MatchPlayerToStringConverter(Manager.Match.FirstPlayer, Manager.Match.SecondPlayer);
         }
 
         public byte GetOrderInResultView()
@@ -215,8 +223,8 @@ namespace TT.Viewer.ViewModels
         public void Handle(ActiveRallyChangedEvent message)
         {
             ActiveRally = message.Current;
-            RallyServer = matchPlayerToStringConverter.Convert(ActiveRally.Server, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) as string;
-            RallyWinner = matchPlayerToStringConverter.Convert(ActiveRally.Winner, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) as string;
+            //RallyServer = matchPlayerToStringConverter.Convert(ActiveRally.Server, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) as string;
+            //RallyWinner = matchPlayerToStringConverter.Convert(ActiveRally.Winner, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) as string;
         }
 
         #endregion

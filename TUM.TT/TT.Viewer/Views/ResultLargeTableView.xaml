@@ -18,6 +18,7 @@
         <conv:ScoreToStringConverter x:Key="ScoreToStringConverter" />
         <conv:MatchPlayerToColorConverter x:Key="MatchPlayerToColorConverter" />
         <conv:RallyToVisibilityConverter x:Key="RallyToVisibilityConverter" />
+        <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter" Car="{Binding MyCar}" Player1="{Binding Match.FirstPlayer}" Player2="{Binding Match.SecondPlayer}"/>
         <prop:Resources x:Key="LocalizedStrings"/>
     </UserControl.Resources>
 
@@ -64,7 +65,7 @@
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="table_tooltip_rally_server" Source="{StaticResource LocalizedStrings}"/>
-                                    <Binding Path="RallyServer"/>
+                                    <Binding Path="ActiveRally.Server" Converter="{StaticResource MatchPlayerToStringConverter}"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -83,7 +84,7 @@
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="table_tooltip_rally_point" Source="{StaticResource LocalizedStrings}"/>
-                                    <Binding Path="RallyWinner"/>
+                                    <Binding Path="ActiveRally.Winner" Converter="{StaticResource MatchPlayerToStringConverter}"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>

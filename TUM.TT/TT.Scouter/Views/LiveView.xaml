@@ -20,6 +20,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <conv:MatchPlayerToStringConverter Player1="{Binding Match.FirstPlayer}" Player2="{Binding Match.SecondPlayer}" x:Key="MatchPlayerToStringConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -58,7 +59,7 @@
                             <Label Content="{Binding Number}" />
                             <Label Content="{Binding CurrentRallyScore}" FontWeight="Bold"/>
                             <Label Content="{Binding CurrentSetScore, StringFormat=({0})}" />
-                            <Label Content="{Binding Winner, Converter={conv:MatchPlayerToStringConverter}}" />
+                            <Label Content="{Binding Winner, Converter={StaticResource MatchPlayerToStringConverter}}" />
                             <Label Content="{Binding Length, StringFormat='Länge {}'}" />
                         </StackPanel>
                     </DataTemplate>
