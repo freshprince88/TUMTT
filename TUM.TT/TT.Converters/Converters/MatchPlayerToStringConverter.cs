@@ -18,19 +18,12 @@ namespace TT.Converters
             get { return (Player)GetValue(Player2Property); }
             set { this.SetValue(Player2Property, value); }
         }
-        public string Car
-        {
-            get { return (string)GetValue(CarProperty); }
-            set { this.SetValue(CarProperty, value); }
-        }
 
         public static readonly DependencyProperty Player1Property = DependencyProperty.Register("Player1", typeof(Player), typeof(MatchPlayerToStringConverter), new PropertyMetadata(null));
-        public static readonly DependencyProperty Player2Property = DependencyProperty.Register("Player2", typeof(Player), typeof(MatchPlayerToStringConverter), new PropertyMetadata(null));
-        public static readonly DependencyProperty CarProperty = DependencyProperty.Register("Car", typeof(string), typeof(MatchPlayerToStringConverter), new PropertyMetadata(null));
+        public static readonly DependencyProperty Player2Property = DependencyProperty.Register("Player2", typeof(Player), typeof(MatchPlayerToStringConverter), new PropertyMetadata(null));        
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Console.Out.WriteLine("car={0}", Car);
             if (Player1 == null || Player2 == null)
                 throw new NullReferenceException("Player 1 or Player 2 properties wasn't set.");
 

@@ -13,14 +13,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024"
              Background="{DynamicResource AccentColorBrush4}"
-             Dialog:DialogParticipation.Register="{Binding}">
+             Dialog:DialogParticipation.Register="{Binding}"
+             x:Name="LiveViewRef">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <conv:MatchPlayerToStringConverter Player1="{Binding Match.FirstPlayer}" Player2="{Binding Match.SecondPlayer}" x:Key="MatchPlayerToStringConverter" />
+            <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter"
+                                               Player1="{Binding DataContext.Match.FirstPlayer, Source={x:Reference LiveViewRef}}" 
+                                               Player2="{Binding DataContext.Match.SecondPlayer, Source={x:Reference LiveViewRef}}" />
+            <!-- See 
+                 http://stackoverflow.com/questions/7445119/improved-ivalueconverter-markupextension-or-dependencyobject 
+                 http://stackoverflow.com/questions/21505449/binding-datacontext-in-resources
+                 on why the converter has to be a dependency object and why there has to be the x:Reference nonsense -->
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>

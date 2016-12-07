@@ -11,15 +11,22 @@
              xmlns:prop="clr-namespace:TT.Viewer.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="605.649" d:DesignWidth="429.314"
-             d:DataContext="{d:DesignInstance Type=vm:ResultLargeTableViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=vm:ResultLargeTableViewModel, IsDesignTimeCreatable=True}"
+             x:Name="ResultLargeTableViewRef">
 
     <UserControl.Resources>
+        <prop:Resources x:Key="LocalizedStrings"/>
         <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
         <conv:ScoreToStringConverter x:Key="ScoreToStringConverter" />
         <conv:MatchPlayerToColorConverter x:Key="MatchPlayerToColorConverter" />
         <conv:RallyToVisibilityConverter x:Key="RallyToVisibilityConverter" />
-        <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter" Car="{Binding MyCar}" Player1="{Binding Match.FirstPlayer}" Player2="{Binding Match.SecondPlayer}"/>
-        <prop:Resources x:Key="LocalizedStrings"/>
+        <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter" 
+                                           Player1="{Binding Path=DataContext.Match.FirstPlayer, Source={x:Reference ResultLargeTableViewRef}}" 
+                                           Player2="{Binding Path=DataContext.Match.SecondPlayer, Source={x:Reference ResultLargeTableViewRef}}"/>
+        <!-- See 
+             http://stackoverflow.com/questions/7445119/improved-ivalueconverter-markupextension-or-dependencyobject 
+             http://stackoverflow.com/questions/21505449/binding-datacontext-in-resources
+             on why the converter has to be a dependency object and why there has to be the x:Reference nonsense -->
     </UserControl.Resources>
 
     <Grid Name="LargeTableGrid">
