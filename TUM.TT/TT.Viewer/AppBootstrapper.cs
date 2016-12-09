@@ -26,6 +26,7 @@ namespace TT.Viewer {
             container.Singleton<IEventAggregator, EventAggregator>();
             container.Singleton<IMatchSerializer, XmlMatchSerializer>();
             container.Singleton<IMatchManager, MatchManager>();
+            container.Singleton<IReportSettingsQueueManager, ReportSettingsQueueManager>();
             container.Singleton<IShell, ShellViewModel>();
             container.Singleton<IDialogCoordinator, DialogCoordinator>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());

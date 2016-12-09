@@ -274,7 +274,7 @@ namespace TT.Viewer.ViewModels
                 settings.ResizeMode = ResizeMode.CanResizeWithGrip;
                 settings.Width = 1200;
                 settings.Height = 860;
-                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, _windowManager, Events, DialogCoordinator), null, settings);
+                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, IoC.Get<IReportSettingsQueueManager>(), _windowManager, Events, DialogCoordinator), null, settings);
             }
         }
 

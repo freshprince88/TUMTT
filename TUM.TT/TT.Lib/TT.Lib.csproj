@@ -152,6 +152,8 @@
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
     <Compile Include="Interactivity\InputBindingTrigger.cs" />
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
+    <Compile Include="Managers\IReportSettingsQueueManager.cs" />
+    <Compile Include="Managers\ReportSettingsQueueManager.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
     <Compile Include="Util\ObservableSortedList.cs" />
     <Compile Include="Util\ShortcutFactory.cs" />

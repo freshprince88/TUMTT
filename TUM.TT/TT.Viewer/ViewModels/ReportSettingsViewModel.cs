@@ -22,6 +22,7 @@ namespace TT.Viewer.ViewModels
         private readonly IWindowManager WindowManager;
         private IDialogCoordinator DialogCoordinator;
         public IMatchManager MatchManager { get; set; }
+        public IReportSettingsQueueManager ReportSettingsQueueManager { get; set; }
 
         private string playerChoice;
         public string PlayerChoice {
@@ -36,16 +37,30 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public ReportSettingsViewModel(IMatchManager matchManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
+        public ReportSettingsViewModel(IMatchManager matchManager, IReportSettingsQueueManager reportSettingsQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
         {
             this.MatchManager = matchManager;
+            this.ReportSettingsQueueManager = reportSettingsQueueManager;
             this.events = events;
             this.WindowManager = windowManager;
             this.DialogCoordinator = dialogCoordinator;
             
             DisplayName = "Report Settings";
+            PropertyChanged += ReportSettingsViewModel_PropertyChanged;
+
+            ReportSettingsQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
 
             Load();
+        }
+
+        private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
+        {
+            Debug.WriteLine("sender={0} report={1}", sender, e.Report);
+        }
+
+        private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Debug.WriteLine("sender={0} propname={1} propvalue={2}", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
         }
 
         public static bool IsWindowOpen<T>(string name = "") where T : Window
@@ -70,9 +85,11 @@ namespace TT.Viewer.ViewModels
         {
             Debug.WriteLine("OnOkGenerateClick");
             Save();
-            foreach (IResult result in MatchManager.GenerateReport("customized"))
-                yield return result;
-            TryClose();            
+            ReportSettingsQueueManager.Enqueue(new TT.Report.Generators.CustomizedReportGenerator());
+            //foreach (IResult result in MatchManager.GenerateReport("customized"))
+            //    yield return result;
+            TryClose();
+            return null;
         }
 
         private void Save()
