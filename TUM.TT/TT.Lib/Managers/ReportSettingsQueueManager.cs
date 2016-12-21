@@ -25,36 +25,46 @@ namespace TT.Lib.Managers
         private IMatchManager matchManager;
         private List<IReportGenerator> queue;
 
+        private object thisLock;
+
         public ReportSettingsQueueManager(IMatchManager matchManager)
         {
             this.matchManager = matchManager;
             this.queue = new List<IReportGenerator>(2);
+            this.thisLock = new object();
         }
 
         public void Enqueue(IReportGenerator reportGenerator)
         {
-            if (queue.Count == 0)
+            lock (thisLock)
             {
-                queue.Add(reportGenerator);
-                new Thread(new ThreadStart(GenerateReport)).Start();                
-            } else
-            {
-                queue[1] = reportGenerator;
+                if (queue.Count == 0)
+                {
+                    queue.Add(reportGenerator);
+                    new Thread(new ThreadStart(GenerateReport)).Start();
+                }
+                else
+                {
+                    queue[1] = reportGenerator;
+                }
             }
         }
 
         private void GenerateReport()
         {
             Report.Report report = queue[0].GenerateReport(matchManager.Match);
-            if (queue.Count == 1)
+            lock (thisLock)
             {
-                queue.Clear();
-                ReportGenerated(this, new ReportGeneratedEventArgs(report));
-            } else
-            {
-                queue[0] = queue[1];
-                queue[1] = null;
-                new Thread(new ThreadStart(GenerateReport)).Start();                
+                if (queue.Count == 1)
+                {
+                    queue.Clear();
+                    ReportGenerated(this, new ReportGeneratedEventArgs(report));
+                } else
+                {
+                    queue[0] = queue[1];
+                    queue[1] = null;
+                    new Thread(new ThreadStart(GenerateReport)).Start();                
+                }
             }
         }
     }

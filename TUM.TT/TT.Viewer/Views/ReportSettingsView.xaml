@@ -66,8 +66,8 @@
             
             <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox">
                 <Grid>
-                    <WebBrowser x:Name="ReportPreviewControl" Source="pack://siteoforigin:,,,/Resources/report_tmp.pdf#toolbar=0&amp;navpanes=0"/>
-                    <Image x:Name="PreviewOverlay" ClipToBounds="True" Visibility="Hidden"/>
+                    <WebBrowser x:Name="ReportPreviewControl" />
+                    <Image x:Name="PreviewOverlay" ClipToBounds="True" />
                 </Grid>
             </GroupBox>
 

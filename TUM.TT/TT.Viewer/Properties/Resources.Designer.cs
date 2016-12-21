@@ -187,6 +187,31 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html&gt;
+        ///
+        ///    &lt;head&gt;
+        ///        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=9&quot; &gt;
+        ///        &lt;title&gt;&lt;/title&gt;
+        ///    &lt;/head&gt;
+        ///
+        ///    &lt;body style=&quot;overflow:hidden;&quot;&gt;
+        ///        &lt;embed id=&quot;pdf_viewer&quot; src=&quot;report_tmp.pdf#toolbar=0&amp;amp;navpanes=0&quot;  style=&quot;height:100%;width:100%;&quot;/&gt;
+        ///
+        ///        &lt;!-- Including PDFScriptingAPI. See below for details --&gt;
+        ///        &lt;script&gt;
+        ///            // Copyright 2014 The Chromium Authors. All rights reserved.
+        ///            // Use of thi [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string pdf_preview_html {
+            get {
+                return ResourceManager.GetString("pdf_preview_html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap rally_server {
@@ -266,6 +291,16 @@ namespace TT.Viewer.Properties {
         public static byte[] report_tmp {
             get {
                 object obj = ResourceManager.GetObject("report_tmp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] report_tmp___Copy {
+            get {
+                object obj = ResourceManager.GetObject("report_tmp___Copy", resourceCulture);
                 return ((byte[])(obj));
             }
         }

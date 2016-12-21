@@ -13,16 +13,36 @@ using TT.Lib.Util;
 using System.Diagnostics;
 using TT.Lib.Managers;
 using TT.Lib.Results;
+using TT.Report.Renderers;
+using System.IO;
+using System.Threading;
+using TT.Lib.Events;
 
 namespace TT.Viewer.ViewModels
 {
     public class ReportSettingsViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx
     {
-        public IEventAggregator events { get; private set; }
+        private static readonly string PreviewReportPath = "pack://siteoforigin:,,,/Resources/report_tmp.pdf#toolbar=0&amp;navpanes=0";
+
+        public IEventAggregator Events { get; private set; }
         private readonly IWindowManager WindowManager;
         private IDialogCoordinator DialogCoordinator;
         public IMatchManager MatchManager { get; set; }
         public IReportSettingsQueueManager ReportSettingsQueueManager { get; set; }
+
+        private string previewReport;
+        public string PreviewReport
+        {
+            get
+            {
+                return previewReport;
+            }
+            set
+            {
+                previewReport = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         private string playerChoice;
         public string PlayerChoice {
@@ -41,7 +61,7 @@ namespace TT.Viewer.ViewModels
         {
             this.MatchManager = matchManager;
             this.ReportSettingsQueueManager = reportSettingsQueueManager;
-            this.events = events;
+            this.Events = events;
             this.WindowManager = windowManager;
             this.DialogCoordinator = dialogCoordinator;
             
@@ -51,16 +71,29 @@ namespace TT.Viewer.ViewModels
             ReportSettingsQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
 
             Load();
+
+            PreviewReport = PreviewReportPath;
         }
 
         private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
         {
-            Debug.WriteLine("sender={0} report={1}", sender, e.Report);
+            Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.Report);
+
+            Events.PublishOnUIThread(new ReportPreviewChangedEvent(PreviewReportPath));
+            //PreviewReport = null;
+            //var renderer = IoC.Get<IReportRenderer>("PDF");
+            //Thread.Sleep(1500);
+            //using (var sink = File.Create("Resources/report_tmp.pdf"))
+            //{
+            //    e.Report.RenderToStream(renderer, sink);
+            //    PreviewReport = PreviewReportPath;
+            //}
+            //PreviewReport = PreviewReportPath;
         }
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Debug.WriteLine("sender={0} propname={1} propvalue={2}", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
+            Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
         }
 
         public static bool IsWindowOpen<T>(string name = "") where T : Window
@@ -85,10 +118,12 @@ namespace TT.Viewer.ViewModels
         {
             Debug.WriteLine("OnOkGenerateClick");
             Save();
-            ReportSettingsQueueManager.Enqueue(new TT.Report.Generators.CustomizedReportGenerator());
+
             //foreach (IResult result in MatchManager.GenerateReport("customized"))
             //    yield return result;
-            TryClose();
+            //TryClose();
+
+            ReportSettingsQueueManager.Enqueue(new TT.Report.Generators.CustomizedReportGenerator());
             return null;
         }
 
