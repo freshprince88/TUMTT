@@ -36,6 +36,21 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private bool _lineVisibility = true;
+        public bool LineVisibility
+        {
+            get { return _lineVisibility; }
+            set
+            {
+                if (_lineVisibility != value)
+                {
+                    _lineVisibility = value;
+
+                    NotifyOfPropertyChange("LineVisibility");
+                }
+            }
+        }
+
         private bool _showTopRightArrow;
         public bool showTopRightArrow
         {
@@ -219,6 +234,18 @@ namespace TT.Scouter.ViewModels
             CurrentStroke.Placement = null;
         }
 
+        public void toggleOuterLines()
+        {
+            switch (cal.Lines.Count)
+            {
+                case 4:
+                    cal.toggleOuterLines();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void toggleMidlines()
         {
             switch (cal.MidLines.Count)
@@ -232,6 +259,11 @@ namespace TT.Scouter.ViewModels
                 default:
                     break;
             }
+        }
+
+        public void toggleTableMidLines()
+        {
+            LineVisibility = !LineVisibility;
         }
 
         public void toggleGridlines()

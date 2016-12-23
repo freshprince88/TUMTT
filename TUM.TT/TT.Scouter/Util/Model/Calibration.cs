@@ -23,6 +23,8 @@ namespace TT.Scouter.Util.Model
         public bool isVisible { get; private set; }
         public bool isMidlinesVisible { get; private set; }
         public bool isGridlinesVisible { get; private set; }
+        public bool isOuterlinesVisible { get; private set; }
+        public bool isTableMidlinesVisible { get; private set; }
 
         public delegate void StrokePositionCalculatedEventHandler(object source, StrokePositionCalculatedEventArgs args);
 
@@ -78,6 +80,7 @@ namespace TT.Scouter.Util.Model
                 isCalibrating = false;
                 isCalibrated = true;
                 isVisible = true;
+                isOuterlinesVisible = true;
                 Lines.Add(endLine);
             }
         }
@@ -258,6 +261,30 @@ namespace TT.Scouter.Util.Model
 
             isGridlinesVisible = true;
         }
+        public void toggleOuterLines()
+        {
+            if (Lines.Count != 4 || isVisible == false)
+            {
+                return;
+            }
+            foreach (Line l in Lines)
+            {
+                if (l.Visibility == Visibility.Hidden)
+                {
+                    l.Visibility = Visibility.Visible;
+                }
+                else if (l.Visibility == Visibility.Visible)
+                {
+                    l.Visibility = Visibility.Hidden;
+                }
+            }
+            isOuterlinesVisible = !isOuterlinesVisible;
+        }
+        public void toggleTableMidLines()
+        {
+
+        }
+
 
         public void toggleMidlines()
         {
@@ -301,15 +328,18 @@ namespace TT.Scouter.Util.Model
 
         public void toggleCalibration()
         {
-            foreach (Line l in Lines)
+            if (isOuterlinesVisible)
             {
-                if (l.Visibility == Visibility.Visible)
+                foreach (Line l in Lines)
                 {
-                    l.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    l.Visibility = Visibility.Visible;
+                    if (l.Visibility == Visibility.Visible)
+                    {
+                        l.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        l.Visibility = Visibility.Visible;
+                    }
                 }
             }
             if (isMidlinesVisible)
