@@ -22,28 +22,12 @@ namespace TT.Viewer.ViewModels
 {
     public class ReportSettingsViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx
     {
-        private static readonly string PreviewReportPath = "pack://siteoforigin:,,,/Resources/report_tmp.pdf#toolbar=0&amp;navpanes=0";
-
-        public IEventAggregator Events { get; private set; }
         private readonly IWindowManager WindowManager;
         private IDialogCoordinator DialogCoordinator;
-        public IMatchManager MatchManager { get; set; }
-        public IReportSettingsQueueManager ReportSettingsQueueManager { get; set; }
-
-        private string previewReport;
-        public string PreviewReport
-        {
-            get
-            {
-                return previewReport;
-            }
-            set
-            {
-                previewReport = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
+        public IMatchManager MatchManager { get; private set; }
+        public IEventAggregator Events { get; private set; }
+        public IReportSettingsQueueManager ReportSettingsQueueManager { get; private set; }
+        
         private string playerChoice;
         public string PlayerChoice {
             get
@@ -64,31 +48,31 @@ namespace TT.Viewer.ViewModels
             this.Events = events;
             this.WindowManager = windowManager;
             this.DialogCoordinator = dialogCoordinator;
-            
+
             DisplayName = "Report Settings";
             PropertyChanged += ReportSettingsViewModel_PropertyChanged;
 
             ReportSettingsQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
 
             Load();
-
-            PreviewReport = PreviewReportPath;
         }
 
         private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
         {
             Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.Report);
 
-            Events.PublishOnUIThread(new ReportPreviewChangedEvent(PreviewReportPath));
-            //PreviewReport = null;
-            //var renderer = IoC.Get<IReportRenderer>("PDF");
-            //Thread.Sleep(1500);
-            //using (var sink = File.Create("Resources/report_tmp.pdf"))
-            //{
-            //    e.Report.RenderToStream(renderer, sink);
-            //    PreviewReport = PreviewReportPath;
-            //}
-            //PreviewReport = PreviewReportPath;
+            var renderer = IoC.Get<IReportRenderer>("PDF");
+            string tmpReportPath = Path.GetTempPath() + "ttviewer_" + (e.MatchHash + e.ReportSettingsCode) + ".pdf";
+            bool fileExists = File.Exists(tmpReportPath);
+            Debug.WriteLine("report file (exists? {0}): {1}", fileExists, tmpReportPath);
+            if (!fileExists)
+            {
+                using (var sink = File.Create(tmpReportPath))
+                {
+                    e.Report.RenderToStream(renderer, sink);
+                }
+            }
+            Events.PublishOnUIThread(new ReportPreviewChangedEvent(tmpReportPath));
         }
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

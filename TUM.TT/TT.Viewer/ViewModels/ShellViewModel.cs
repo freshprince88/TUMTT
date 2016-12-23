@@ -1,7 +1,9 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using TT.Lib;
@@ -15,7 +17,8 @@ namespace TT.Viewer.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
         IShell,
-        IHandle<MatchOpenedEvent>
+        IHandle<MatchOpenedEvent>,
+        IHandle<ReportPreviewChangedEvent>
     {
         /// <summary>
         /// Gets the event bus of this shell.
@@ -24,10 +27,7 @@ namespace TT.Viewer.ViewModels
         public IMatchManager MatchManager { get; set; }
         private IDialogCoordinator DialogCoordinator;
         private readonly IWindowManager _windowManager;
-
-
-
-
+        private List<string> TmpFiles { get; set; }
 
         public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
         {
@@ -69,32 +69,10 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        protected override async void OnDeactivate(bool close)
+        protected override void OnDeactivate(bool close)
         {
             Events.Unsubscribe(this);
-            if (MatchManager.MatchModified)
-            {
-                var mySettings = new MetroDialogSettings()
-                {
-                    AffirmativeButtonText = "Save and Quit",
-                    NegativeButtonText = "Cancel",
-                    FirstAuxiliaryButtonText = "Quit Without Saving",
-                    AnimateShow = true,
-                    AnimateHide = false
-                };
-
-                var result = await DialogCoordinator.ShowMessageAsync(this, "Quit application?",
-                    "Sure you want to quit application?",
-                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
-
-                bool _shutdown = result == MessageDialogResult.Affirmative;
-
-                if (_shutdown)
-                {
-                    Coroutine.BeginExecute(MatchManager.SaveMatch().GetEnumerator(), new CoroutineExecutionContext() { View = this.GetView() });
-                    Application.Current.Shutdown();
-                }
-            }
+            if (close) TryDeleteTmpFiles();
         }
 
         /// <summary>
@@ -199,9 +177,27 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
         }
+        
+        public void Handle(ReportPreviewChangedEvent message)
+        {
+            if (TmpFiles == null)
+                TmpFiles = new List<string>();
+            if (!TmpFiles.Contains(message.ReportPreviewPath))
+                TmpFiles.Add(message.ReportPreviewPath);
+        }
         #endregion
 
         #region Helper Methods
+        private void TryDeleteTmpFiles()
+        {
+            if (TmpFiles != null)
+                foreach (string path in TmpFiles)
+                    try
+                    {
+                        File.Delete(path);
+                    } catch (Exception) { /* best effort */}
+        }
+
         public IEnumerable<IResult> OpenMatch()
         {
             return MatchManager.OpenMatch();
@@ -277,7 +273,6 @@ namespace TT.Viewer.ViewModels
                 _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, IoC.Get<IReportSettingsQueueManager>(), _windowManager, Events, DialogCoordinator), null, settings);
             }
         }
-
         #endregion
 
     }

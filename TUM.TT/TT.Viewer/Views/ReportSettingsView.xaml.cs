@@ -19,11 +19,6 @@ namespace TT.Viewer.Views
     public partial class ReportSettingsView : MetroWindow,
         IHandle<ReportPreviewChangedEvent>
     {
-
-        private string name1 = "report_tmp";
-        private string name2 = "report_tmp - Copy";
-        private bool isName1 = true;
-
         public IEventAggregator Events { get; private set; }
         
         public ReportSettingsView()
@@ -39,14 +34,20 @@ namespace TT.Viewer.Views
             BitmapEffectCheckbox.Unchecked += BitmapEffectCheckbox_CheckedChanged;
             
             ReportPreviewControl.LoadCompleted += ReportPreviewControl_LoadCompleted;
+            Closed += ReportSettingsView_Closed;
 
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
         }
 
+        private void ReportSettingsView_Closed(object sender, EventArgs e)
+        {
+            ReportPreviewControl.Navigate("about:blank");
+        }
+
         private void ReportPreviewControl_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            Debug.WriteLine("Load complete [uri={0}]", e.Uri.ToString());
+            Debug.WriteLine("Load complete [uri=" + e.Uri.ToString() + "]");
             new Thread(new ThreadStart(DisplayWebBrowserDelayed)).Start();
         }
 
@@ -72,21 +73,27 @@ namespace TT.Viewer.Views
             ReportPreviewControl.Visibility = Visibility.Hidden;
             ((BlurEffect)PreviewOverlay.Effect).Radius = 20;
 
-            new Thread(new ThreadStart(ClearWebBrowserSource)).Start();            
+            var pfc = new PreviewFileChange();
+            pfc.newPath = message.ReportPreviewPath;
+            pfc.view = this;
+            new Thread(new ThreadStart(pfc.ChangePreviewFile)).Start();
         }
 
-        private void ClearWebBrowserSource()
+        private class PreviewFileChange
         {
-            Thread.Sleep(500);
-            Dispatcher.Invoke(() =>
-            {
-                ReportPreviewGroupBox.IsEnabled = false;
+            internal string newPath;
+            internal ReportSettingsView view;
 
-                Debug.WriteLine("isName1 ? {0}", isName1);
-                ReportPreviewControl.Navigate("pack://siteoforigin:,,,/Resources/" + (isName1 ? name1 : name2) + ".pdf#toolbar=0&navpanes=0&messages=0&statusbar=0");
-                isName1 = !isName1;
-            });            
-        }
+            internal void ChangePreviewFile()
+            {
+                Thread.Sleep(500);
+                view.Dispatcher.Invoke(() =>
+                {
+                    view.ReportPreviewGroupBox.IsEnabled = false;
+                    view.ReportPreviewControl.Navigate(newPath + "#toolbar=0&navpanes=0&messages=0&statusbar=0");                    
+                });
+            }
+        }        
 
         private void DisplayWebBrowserDelayed()
         {
