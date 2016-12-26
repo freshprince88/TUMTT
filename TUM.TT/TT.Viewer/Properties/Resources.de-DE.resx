@@ -252,4 +252,13 @@
   <data name="report_settings_playerchoice_title" xml:space="preserve">
     <value>Spieler</value>
   </data>
+  <data name="report_settings_setchoice_all" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="report_settings_setchoice_pluscombi" xml:space="preserve">
+    <value>+Combi</value>
+  </data>
+  <data name="report_settings_setchoice_title" xml:space="preserve">
+    <value>Sätze</value>
+  </data>
 </root>

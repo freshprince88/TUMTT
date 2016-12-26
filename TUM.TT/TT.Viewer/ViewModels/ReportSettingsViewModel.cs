@@ -41,6 +41,24 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        private int setChoice;
+        public int SetChoice
+        {
+            get
+            {
+                return setChoice;
+            }
+            set
+            {
+                if ((setChoice & value) == value)
+                    setChoice -= value;
+                else
+                    setChoice += value;
+                Debug.WriteLine("set choice: {0}", setChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
         public ReportSettingsViewModel(IMatchManager matchManager, IReportSettingsQueueManager reportSettingsQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
         {
             this.MatchManager = matchManager;
@@ -114,11 +132,13 @@ namespace TT.Viewer.ViewModels
         private void Save()
         {
             Properties.Settings.Default.ReportGenerator_Playerchoice = PlayerChoice;
+            Properties.Settings.Default.ReportGenerator_Setchoice = SetChoice;
         }
 
         private void Load()
         {
             PlayerChoice = Properties.Settings.Default.ReportGenerator_Playerchoice;
+            SetChoice = Properties.Settings.Default.ReportGenerator_Setchoice;
         }
     }
 }

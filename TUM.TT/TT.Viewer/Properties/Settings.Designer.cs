@@ -94,5 +94,17 @@ namespace TT.Viewer.Properties {
                 this["ReportGenerator_Playerchoice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_Setchoice {
+            get {
+                return ((int)(this["ReportGenerator_Setchoice"]));
+            }
+            set {
+                this["ReportGenerator_Setchoice"] = value;
+            }
+        }
     }
 }

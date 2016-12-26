@@ -29,7 +29,7 @@ namespace TT.Viewer.Properties {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        public Resources() {
         }
         
         /// <summary>
@@ -248,6 +248,33 @@ namespace TT.Viewer.Properties {
         public static string report_settings_playerchoice_title {
             get {
                 return ResourceManager.GetString("report_settings_playerchoice_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string report_settings_setchoice_all {
+            get {
+                return ResourceManager.GetString("report_settings_setchoice_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to +Combi.
+        /// </summary>
+        public static string report_settings_setchoice_pluscombi {
+            get {
+                return ResourceManager.GetString("report_settings_setchoice_pluscombi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets.
+        /// </summary>
+        public static string report_settings_setchoice_title {
+            get {
+                return ResourceManager.GetString("report_settings_setchoice_title", resourceCulture);
             }
         }
         

@@ -20,5 +20,8 @@
     <Setting Name="ReportGenerator_Playerchoice" Type="System.String" Scope="User">
       <Value Profile="(Default)">both</Value>
     </Setting>
+    <Setting Name="ReportGenerator_Setchoice" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

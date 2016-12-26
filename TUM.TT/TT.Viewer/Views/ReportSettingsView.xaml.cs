@@ -29,9 +29,6 @@ namespace TT.Viewer.Views
             var blurEffect = new BlurEffect();
             blurEffect.Radius = 0;
             PreviewOverlay.Effect = blurEffect;
-
-            BitmapEffectCheckbox.Checked += BitmapEffectCheckbox_CheckedChanged;
-            BitmapEffectCheckbox.Unchecked += BitmapEffectCheckbox_CheckedChanged;
             
             ReportPreviewControl.LoadCompleted += ReportPreviewControl_LoadCompleted;
             Closed += ReportSettingsView_Closed;
@@ -49,11 +46,6 @@ namespace TT.Viewer.Views
         {
             Debug.WriteLine("Load complete [uri=" + e.Uri.ToString() + "]");
             new Thread(new ThreadStart(DisplayWebBrowserDelayed)).Start();
-        }
-
-        private void BitmapEffectCheckbox_CheckedChanged(object sender, RoutedEventArgs e)
-        {            
-            
         }
 
         public void Handle(ReportPreviewChangedEvent message)

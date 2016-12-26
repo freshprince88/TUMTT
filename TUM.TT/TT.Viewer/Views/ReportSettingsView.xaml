@@ -18,6 +18,7 @@
             <prop:Resources x:Key="LocalizedStrings"/>
             <conv:PlayerToStringConverter x:Key="PlayerToStringConverter"/>
             <conv:StringMatchToBooleanConverter x:Key="StringMatchToBooleanConverter"/>
+            <conv:IntMaskMatchToBooleanConverter x:Key="IntMaskMatchToBooleanConverter"/>
         </ResourceDictionary>
     </Controls:MetroWindow.Resources>
 
@@ -43,9 +44,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <CheckBox Grid.Row="0" Content="BitmapEffect" x:Name="BitmapEffectCheckbox"/>
-
-                <Grid Grid.Row="1" Name="ReportSettingsGrid_Content_Players" HorizontalAlignment="Left">
+                <Grid Grid.Row="0" Name="ReportSettingsGrid_Content_Players" HorizontalAlignment="Left">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
@@ -61,7 +60,52 @@
                                      IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=both}"/>
                     </WrapPanel>
                 </Grid>
+                
+                <Grid Grid.Row="1" Name="ReportSettingsGrid_Content_Sets" HorizontalAlignment="Left" Margin="0 10 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
+                    <Label Grid.Row="0" Content="{Binding Path=report_settings_setchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+                    <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Sets_Checkboxes" Margin="5 0 0 0">
+                        <ToggleButton x:Name="SetAll" Width="40" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
+                            <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="Set1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}">
+                            <TextBlock FontSize="12"><Run Text="1"/></TextBlock>                            
+                        </ToggleButton>
+                        <ToggleButton x:Name="Set2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}">
+                            <TextBlock FontSize="12"><Run Text="2"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="Set3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}">
+                            <TextBlock FontSize="12"><Run Text="3"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="Set4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}">
+                            <TextBlock FontSize="12"><Run Text="4"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="Set5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}">
+                            <TextBlock FontSize="12"><Run Text="5"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="Set6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=64}">
+                            <TextBlock FontSize="12"><Run Text="6"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="Set7" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                     IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=128}">
+                            <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="PlusCombi" Width="60" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_pluscombi, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
+                        </ToggleButton>
+                    </WrapPanel>
+                </Grid>
             </Grid>
             
             <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox">
