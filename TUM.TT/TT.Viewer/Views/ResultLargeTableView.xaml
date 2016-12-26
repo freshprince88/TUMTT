@@ -15,18 +15,20 @@
              x:Name="ResultLargeTableViewRef">
 
     <UserControl.Resources>
-        <prop:Resources x:Key="LocalizedStrings"/>
-        <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
-        <conv:ScoreToStringConverter x:Key="ScoreToStringConverter" />
-        <conv:MatchPlayerToColorConverter x:Key="MatchPlayerToColorConverter" />
-        <conv:RallyToVisibilityConverter x:Key="RallyToVisibilityConverter" />
-        <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter" 
-                                           Player1="{Binding Path=DataContext.Match.FirstPlayer, Source={x:Reference ResultLargeTableViewRef}}" 
-                                           Player2="{Binding Path=DataContext.Match.SecondPlayer, Source={x:Reference ResultLargeTableViewRef}}"/>
-        <!-- See 
-             http://stackoverflow.com/questions/7445119/improved-ivalueconverter-markupextension-or-dependencyobject 
-             http://stackoverflow.com/questions/21505449/binding-datacontext-in-resources
-             on why the converter has to be a dependency object and why there has to be the x:Reference nonsense -->
+        <ResourceDictionary>
+            <prop:Resources x:Key="LocalizedStrings"/>
+            <conv:RallyLengthToVisibilityConverter x:Key="RallyLengthToVisibilityConverter" />
+            <conv:ScoreToStringConverter x:Key="ScoreToStringConverter" />
+            <conv:MatchPlayerToColorConverter x:Key="MatchPlayerToColorConverter" />
+            <conv:RallyToVisibilityConverter x:Key="RallyToVisibilityConverter" />
+            <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter" 
+                                               Player1="{Binding Path=DataContext.Match.FirstPlayer, Source={x:Reference ResultLargeTableViewRef}}" 
+                                               Player2="{Binding Path=DataContext.Match.SecondPlayer, Source={x:Reference ResultLargeTableViewRef}}"/>
+            <!-- See 
+                 http://stackoverflow.com/questions/7445119/improved-ivalueconverter-markupextension-or-dependencyobject 
+                 http://stackoverflow.com/questions/21505449/binding-datacontext-in-resources
+                 on why the converter has to be a dependency object and why there has to be the x:Reference nonsense -->
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid Name="LargeTableGrid">
