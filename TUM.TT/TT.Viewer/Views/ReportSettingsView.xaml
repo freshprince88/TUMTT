@@ -19,6 +19,7 @@
             <conv:PlayerToStringConverter x:Key="PlayerToStringConverter"/>
             <conv:StringMatchToBooleanConverter x:Key="StringMatchToBooleanConverter"/>
             <conv:IntMaskMatchToBooleanConverter x:Key="IntMaskMatchToBooleanConverter"/>
+            <conv:MathConverter x:Key="MathConverter"/>
         </ResourceDictionary>
     </Controls:MetroWindow.Resources>
 
@@ -29,11 +30,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Name="ReportSettings_Title" Grid.Row="0" Content="{Binding Path=report_settings_title, Source={StaticResource LocalizedStrings}}" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"/>
+        <Label Name="ReportSettings_Title" Grid.Row="0" Content="{Binding Path=report_settings_title, Source={StaticResource LocalizedStrings}}" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" MouseDown="ReportSettings_Title_MouseDown"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition MaxWidth="320"/>
                 <ColumnDefinition MinWidth="750"/>
             </Grid.ColumnDefinitions>
 
@@ -52,15 +53,23 @@
 
                     <Label Grid.Row="0" Content="{Binding Path=report_settings_playerchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
                     <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Players_Checkboxes" Margin="5 5 0 0">
-                        <RadioButton Content="{Binding MatchManager.Match.FirstPlayer, Converter={StaticResource PlayerToStringConverter}, ConverterParameter=last}"
-                                     IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=first}"/>
-                        <RadioButton Content="{Binding MatchManager.Match.SecondPlayer, Converter={StaticResource PlayerToStringConverter},ConverterParameter=last}" Margin="8 0 0 0"
-                                     IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=second}"/>
+                        <RadioButton IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=first}">
+                            <PriorityBinding>
+                                <Binding Path="MatchManager.Match.FirstPlayer" Converter="{StaticResource PlayerToStringConverter}" ConverterParameter="last" />
+                                <Binding Path="player_1" Source="{StaticResource LocalizedStrings}" />
+                            </PriorityBinding>
+                        </RadioButton>
+                        <RadioButton Margin="8 0 0 0" IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=second}">
+                            <PriorityBinding>
+                                <Binding Path="MatchManager.Match.SecondPlayer" Converter="{StaticResource PlayerToStringConverter}" ConverterParameter="last" />
+                                <Binding Path="player_2" Source="{StaticResource LocalizedStrings}" />
+                            </PriorityBinding>
+                        </RadioButton>
                         <RadioButton Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
                                      IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=both}"/>
                     </WrapPanel>
                 </Grid>
-                
+
                 <Grid Grid.Row="1" Name="ReportSettingsGrid_Content_Sets" HorizontalAlignment="Left" Margin="0 10 0 0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -68,14 +77,14 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Content="{Binding Path=report_settings_setchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
-                    <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Sets_Checkboxes" Margin="5 0 0 0">
+                    <WrapPanel Grid.Row="1" x:Name="ReportSettingsGrid_Content_Sets_ToggleButtons" Margin="5 0 0 0">
                         <ToggleButton x:Name="SetAll" Width="40" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                                      IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
                             <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
                         </ToggleButton>
                         <ToggleButton x:Name="Set1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
                                      IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}">
-                            <TextBlock FontSize="12"><Run Text="1"/></TextBlock>                            
+                            <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
                         </ToggleButton>
                         <ToggleButton x:Name="Set2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                                      IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}">
@@ -101,13 +110,13 @@
                                      IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=128}">
                             <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
                         </ToggleButton>
-                        <ToggleButton x:Name="PlusCombi" Width="60" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton x:Name="PlusCombi" Width="64" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Click="PlusCombi_Click">
                             <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_pluscombi, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
                         </ToggleButton>
                     </WrapPanel>
                 </Grid>
             </Grid>
-            
+
             <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox">
                 <Grid>
                     <WebBrowser x:Name="ReportPreviewControl" />
@@ -130,6 +139,47 @@
 
         </Grid>
 
+        <Popup x:Name="PlusCombiPopup" Placement="Relative" PlacementTarget="{Binding ElementName=PlusCombi}" StaysOpen="False" Closed="PlusCombiPopup_Closed">
+            <Popup.VerticalOffset>
+                <Binding Path="ActualHeight" ElementName="PlusCombi" />
+            </Popup.VerticalOffset>
+            <Popup.HorizontalOffset>
+                <MultiBinding Converter="{StaticResource MathConverter}" ConverterParameter="-1/2 * x + 1/2 * y">
+                    <Binding Path="ActualWidth" ElementName="PlusCombiPopup_Border" />
+                    <Binding Path="ActualWidth" ElementName="PlusCombi" />
+                </MultiBinding>
+            </Popup.HorizontalOffset>
+            <Border x:Name="PlusCombiPopup_Border" BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="White">
+                    <WrapPanel x:Name="PlusCombiPopup_ToggleButtons">
+                        <ToggleButton x:Name="PopupSet1" Tag="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="PopupSet2" Tag="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="2"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="PopupSet3" Tag="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="3"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="PopupSet4" Tag="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="4"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="PopupSet5" Tag="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="5"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="PopupSet6" Tag="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="6"/></TextBlock>
+                        </ToggleButton>
+                        <ToggleButton x:Name="PopupSet7" Tag="7" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                            <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
+                        </ToggleButton>
+                        <Separator Margin="2"/>
+                        <Button x:Name="OkCombi" Width="30" Margin="2" Content="{Binding Path=affirmative1, Source={StaticResource LocalizedStrings}}" Click="OkCombi_Click"/>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+        </Popup>
+        
     </Grid>
 
 </Controls:MetroWindow>

@@ -268,4 +268,13 @@
   <data name="report_settings_setchoice_title" xml:space="preserve">
     <value>Sets</value>
   </data>
+  <data name="affirmative1" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="player_1" xml:space="preserve">
+    <value>Player 1</value>
+  </data>
+  <data name="player_2" xml:space="preserve">
+    <value>Player 2</value>
+  </data>
 </root>

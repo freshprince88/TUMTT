@@ -106,5 +106,16 @@ namespace TT.Viewer.Properties {
                 this["ReportGenerator_Setchoice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int[] ReportGenerator_Combis {
+            get {
+                return ((int[])(this["ReportGenerator_Combis"]));
+            }
+            set {
+                this["ReportGenerator_Combis"] = value;
+            }
+        }
     }
 }

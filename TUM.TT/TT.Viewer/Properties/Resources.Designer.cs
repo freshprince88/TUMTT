@@ -61,6 +61,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string affirmative1 {
+            get {
+                return ResourceManager.GetString("affirmative1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backhand:.
         /// </summary>
         public static string legend_backhand_title {
@@ -183,6 +192,24 @@ namespace TT.Viewer.Properties {
         public static string legend_topspin_title {
             get {
                 return ResourceManager.GetString("legend_topspin_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player 1.
+        /// </summary>
+        public static string player_1 {
+            get {
+                return ResourceManager.GetString("player_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player 2.
+        /// </summary>
+        public static string player_2 {
+            get {
+                return ResourceManager.GetString("player_2", resourceCulture);
             }
         }
         

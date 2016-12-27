@@ -58,18 +58,23 @@ namespace TT.Viewer.ViewModels
                 NotifyOfPropertyChange();
             }
         }
+        
+        public List<int> AvailableCombis{ get; set; }        
+        public List<int> SelectedCombis{ get; set; }
 
         public ReportSettingsViewModel(IMatchManager matchManager, IReportSettingsQueueManager reportSettingsQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
         {
-            this.MatchManager = matchManager;
-            this.ReportSettingsQueueManager = reportSettingsQueueManager;
-            this.Events = events;
-            this.WindowManager = windowManager;
-            this.DialogCoordinator = dialogCoordinator;
+            MatchManager = matchManager;
+            ReportSettingsQueueManager = reportSettingsQueueManager;
+            Events = events;
+            WindowManager = windowManager;
+            DialogCoordinator = dialogCoordinator;
 
             DisplayName = "Report Settings";
-            PropertyChanged += ReportSettingsViewModel_PropertyChanged;
+            AvailableCombis = new List<int>();
+            SelectedCombis = new List<int>();
 
+            PropertyChanged += ReportSettingsViewModel_PropertyChanged;
             ReportSettingsQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
 
             Load();
@@ -129,16 +134,41 @@ namespace TT.Viewer.ViewModels
             return null;
         }
 
+        public void AddCombi(int newCombi)
+        {
+            Debug.WriteLine("adding combi: {0}", newCombi);
+            if (!AvailableCombis.Contains(newCombi))
+                AvailableCombis.Add(newCombi);
+        }
+
+        public void SelectCombi(int combi, bool select)
+        {
+            Debug.WriteLine("selecting combi: {0} ({1})", combi, select);
+            if (select)
+            {
+                if (!SelectedCombis.Contains(combi))
+                    SelectedCombis.Add(combi);
+            }
+            else
+                SelectedCombis.Remove(combi);
+        }
+
         private void Save()
         {
             Properties.Settings.Default.ReportGenerator_Playerchoice = PlayerChoice;
             Properties.Settings.Default.ReportGenerator_Setchoice = SetChoice;
+            Properties.Settings.Default.ReportGenerator_Combis = SelectedCombis.ToArray();
         }
 
         private void Load()
         {
             PlayerChoice = Properties.Settings.Default.ReportGenerator_Playerchoice;
             SetChoice = Properties.Settings.Default.ReportGenerator_Setchoice;
+
+            var combis = Properties.Settings.Default.ReportGenerator_Combis;
+            if (combis != null) AvailableCombis.AddRange(combis);
+            combis = Properties.Settings.Default.ReportGenerator_Combis;
+            if (combis != null) SelectedCombis.AddRange(combis);
         }
     }
 }
