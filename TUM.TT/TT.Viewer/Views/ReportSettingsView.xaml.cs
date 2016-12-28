@@ -24,6 +24,7 @@ namespace TT.Viewer.Views
         IHandle<ReportPreviewChangedEvent>
     {
         public IEventAggregator Events { get; private set; }
+        private bool reflectCheckStateChange = true;
 
         public ReportSettingsView()
         {
@@ -61,7 +62,7 @@ namespace TT.Viewer.Views
             foreach (var i in ReportSettingsGrid_Content_Sets_ToggleButtons.Children)
             {
                 var tb = i as ToggleButton;
-                if (tb != null && tb.Tag is int && (int)tb.Tag == combi && !(bool)tb.IsChecked)
+                if (tb != null && tb.Tag is int && (int)tb.Tag == combi && tb.IsChecked.Value)
                     tb.IsChecked = true;
             }
         }
@@ -182,9 +183,9 @@ namespace TT.Viewer.Views
         private void PlusCombiPopup_Closed(object sender, EventArgs e)
         {
             foreach (var tb in PlusCombiPopup_ToggleButtons.Children)
-                if (tb is ToggleButton && (bool)((ToggleButton)tb).IsChecked)
+                if (tb is ToggleButton && ((ToggleButton)tb).IsChecked.Value)
                     ((ToggleButton)tb).IsChecked = false;
-            if ((bool)PlusCombi.IsChecked)
+            if (PlusCombi.IsChecked.Value)
                 PlusCombi.IsChecked = false;
         }
 
@@ -200,7 +201,7 @@ namespace TT.Viewer.Views
             foreach (var i in PlusCombiPopup_ToggleButtons.Children)
             {
                 var tb = i as ToggleButton;
-                if (tb != null && (bool)tb.IsChecked)
+                if (tb != null && tb.IsChecked.Value)
                 {
                     combiSets += (int)Math.Pow(2, int.Parse(tb.Tag as string));
                     combiSetsString += tb.Tag + ",";
@@ -221,7 +222,7 @@ namespace TT.Viewer.Views
             if (vm != null)
             {
                 var tb = (ToggleButton)sender;
-                vm.SelectCombi((int)tb.Tag, (bool)tb.IsChecked);
+                vm.SelectCombi((int)tb.Tag, tb.IsChecked.Value);
             }
         }
         
@@ -243,47 +244,114 @@ namespace TT.Viewer.Views
 
         private void SCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_SContainer, (bool)((CheckBox)sender).IsChecked);
+            ReflectChbxState(SAllCheckBox, ReportSettingsGrid_Content_Strokes_SContainer);
         }
 
         private void RCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_RContainer, (bool)((CheckBox)sender).IsChecked);
+            ReflectChbxState(RAllCheckBox, ReportSettingsGrid_Content_Strokes_RContainer);
         }
 
-        private void ThreeCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ThirdCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_3Container, (bool)((CheckBox)sender).IsChecked);
+            ReflectChbxState(ThirdAllCheckBox, ReportSettingsGrid_Content_Strokes_ThirdContainer);
         }
 
-        private void FourCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void FourthCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_4Container, (bool)((CheckBox)sender).IsChecked);
+            ReflectChbxState(FourthAllCheckBox, ReportSettingsGrid_Content_Strokes_FourthContainer);
         }
 
         private void LCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_LContainer, (bool)((CheckBox)sender).IsChecked);
+            ReflectChbxState(LAllCheckBox, ReportSettingsGrid_Content_Strokes_LContainer);
         }
 
         private void ACheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_AContainer, (bool)((CheckBox)sender).IsChecked);
+            ReflectChbxState(AAllCheckBox, ReportSettingsGrid_Content_Strokes_AContainer);
         }
 
-        private void CheckChildChbxs(Grid parent, bool check)
+        private void ReflectChbxState(CheckBox allChbx, Grid otherChbxs)
         {
+            if (reflectCheckStateChange)
+            {
+                bool allChecked = true;
+                bool allUnchecked = true;
+
+                foreach (var c in otherChbxs.Children)
+                {
+                    var chbx = c as CheckBox;
+                    if (chbx != null)
+                    {
+                        allChecked &= chbx.IsChecked.Value;
+                        allUnchecked &= !chbx.IsChecked.Value;
+                    }
+                }
+
+                if (allChecked)
+                { 
+                    if (allChbx.IsChecked == null || !allChbx.IsChecked.Value)
+                        allChbx.IsChecked = true;
+                }
+                else if (allUnchecked)
+                {
+                    if (allChbx.IsChecked == null || allChbx.IsChecked.Value)
+                        allChbx.IsChecked = false;
+                }
+                else if (!allChecked && !allUnchecked)
+                    allChbx.IsChecked = null;
+            }
+        }
+
+        private void SAllCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_SContainer, (CheckBox)sender);
+        }
+
+        private void RAllCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_RContainer, (CheckBox)sender);
+        }
+
+        private void ThirdAllCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_ThirdContainer, (CheckBox)sender);
+        }
+
+        private void FourthAllCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_FourthContainer, (CheckBox)sender);
+        }
+
+        private void LAllCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_LContainer, (CheckBox)sender);
+        }
+
+        private void AAllCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_AContainer, (CheckBox)sender);
+        }
+
+        private void CheckChildChbxs(Grid parent, CheckBox allChbx)
+        {
+            reflectCheckStateChange = false;
+
+            if (allChbx.IsChecked == null)
+                allChbx.IsChecked = false;
+
             foreach (var c in parent.Children)
             {
                 var strokeAttributeChbx = c as CheckBox;
                 if (strokeAttributeChbx != null)
                 {
-                    if (check && !(bool)strokeAttributeChbx.IsChecked)
-                        strokeAttributeChbx.IsChecked = true;
-                    else if (!check && (bool)strokeAttributeChbx.IsChecked)
-                        strokeAttributeChbx.IsChecked = false;
+                    if (strokeAttributeChbx.IsChecked.Value != allChbx.IsChecked.Value)
+                        strokeAttributeChbx.IsChecked = allChbx.IsChecked;
                 }
             }
+
+            reflectCheckStateChange = true;
         }
     }
 }

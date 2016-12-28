@@ -117,5 +117,89 @@ namespace TT.Viewer.Properties {
                 this["ReportGenerator_Combis"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_ServiceStatsChoice {
+            get {
+                return ((int)(this["ReportGenerator_ServiceStatsChoice"]));
+            }
+            set {
+                this["ReportGenerator_ServiceStatsChoice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_ReturnStatsChoice {
+            get {
+                return ((int)(this["ReportGenerator_ReturnStatsChoice"]));
+            }
+            set {
+                this["ReportGenerator_ReturnStatsChoice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_ThirdStatsChoice {
+            get {
+                return ((int)(this["ReportGenerator_ThirdStatsChoice"]));
+            }
+            set {
+                this["ReportGenerator_ThirdStatsChoice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_FourthStatsChoice {
+            get {
+                return ((int)(this["ReportGenerator_FourthStatsChoice"]));
+            }
+            set {
+                this["ReportGenerator_FourthStatsChoice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_LastStatsChoice {
+            get {
+                return ((int)(this["ReportGenerator_LastStatsChoice"]));
+            }
+            set {
+                this["ReportGenerator_LastStatsChoice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_AllStatsChoice {
+            get {
+                return ((int)(this["ReportGenerator_AllStatsChoice"]));
+            }
+            set {
+                this["ReportGenerator_AllStatsChoice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_ExpandState {
+            get {
+                return ((int)(this["ReportGenerator_ExpandState"]));
+            }
+            set {
+                this["ReportGenerator_ExpandState"] = value;
+            }
+        }
     }
 }

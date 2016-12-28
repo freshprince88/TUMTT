@@ -58,7 +58,133 @@ namespace TT.Viewer.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-        
+
+        private int serviceStatsChoice;
+        public int ServiceStatsChoice
+        {
+            get
+            {
+                return serviceStatsChoice;
+            }
+            set
+            {
+                if ((serviceStatsChoice & value) == value)
+                    serviceStatsChoice -= value;
+                else
+                    serviceStatsChoice += value;
+                Debug.WriteLine("service stats choice: {0}", serviceStatsChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int returnStatsChoice;
+        public int ReturnStatsChoice
+        {
+            get
+            {
+                return returnStatsChoice;
+            }
+            set
+            {
+                if ((returnStatsChoice & value) == value)
+                    returnStatsChoice -= value;
+                else
+                    returnStatsChoice += value;
+                Debug.WriteLine("return stats choice: {0}", returnStatsChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int thirdStatsChoice;
+        public int ThirdStatsChoice
+        {
+            get
+            {
+                return thirdStatsChoice;
+            }
+            set
+            {
+                if ((thirdStatsChoice & value) == value)
+                    thirdStatsChoice -= value;
+                else
+                    thirdStatsChoice += value;
+                Debug.WriteLine("third stats choice: {0}", thirdStatsChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int fourthStatsChoice;
+        public int FourthStatsChoice
+        {
+            get
+            {
+                return fourthStatsChoice;
+            }
+            set
+            {
+                if ((fourthStatsChoice & value) == value)
+                    fourthStatsChoice -= value;
+                else
+                    fourthStatsChoice += value;
+                Debug.WriteLine("fourth stats choice: {0}", fourthStatsChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int lastStatsChoice;
+        public int LastStatsChoice
+        {
+            get
+            {
+                return lastStatsChoice;
+            }
+            set
+            {
+                if ((lastStatsChoice & value) == value)
+                    lastStatsChoice -= value;
+                else
+                    lastStatsChoice += value;
+                Debug.WriteLine("last stats choice: {0}", lastStatsChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int allStatsChoice;
+        public int AllStatsChoice
+        {
+            get
+            {
+                return allStatsChoice;
+            }
+            set
+            {
+                if ((allStatsChoice & value) == value)
+                    allStatsChoice -= value;
+                else
+                    allStatsChoice += value;
+                Debug.WriteLine("all stats choice: {0}", allStatsChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int expandState;
+        public int ExpandState
+        {
+            get
+            {
+                return expandState;
+            }
+            set
+            {
+                if ((expandState & value) == value)
+                    expandState -= value;
+                else
+                    expandState += value;
+                Debug.WriteLine("expand state: {0}", allStatsChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
         public List<int> AvailableCombis{ get; set; }        
         public List<int> SelectedCombis{ get; set; }
 
@@ -153,12 +279,26 @@ namespace TT.Viewer.ViewModels
             Properties.Settings.Default.ReportGenerator_Playerchoice = PlayerChoice;
             Properties.Settings.Default.ReportGenerator_Setchoice = SetChoice;
             Properties.Settings.Default.ReportGenerator_Combis = SelectedCombis.ToArray();
+            Properties.Settings.Default.ReportGenerator_ServiceStatsChoice = ServiceStatsChoice;
+            Properties.Settings.Default.ReportGenerator_ReturnStatsChoice = ReturnStatsChoice;
+            Properties.Settings.Default.ReportGenerator_ThirdStatsChoice = ThirdStatsChoice;
+            Properties.Settings.Default.ReportGenerator_FourthStatsChoice = FourthStatsChoice;
+            Properties.Settings.Default.ReportGenerator_LastStatsChoice = LastStatsChoice;
+            Properties.Settings.Default.ReportGenerator_AllStatsChoice = AllStatsChoice;
+            Properties.Settings.Default.ReportGenerator_ExpandState = ExpandState;
         }
 
         private void Load()
         {
             PlayerChoice = Properties.Settings.Default.ReportGenerator_Playerchoice;
             SetChoice = Properties.Settings.Default.ReportGenerator_Setchoice;
+            ServiceStatsChoice = Properties.Settings.Default.ReportGenerator_ServiceStatsChoice;
+            ReturnStatsChoice = Properties.Settings.Default.ReportGenerator_ReturnStatsChoice;
+            ThirdStatsChoice = Properties.Settings.Default.ReportGenerator_ThirdStatsChoice;
+            FourthStatsChoice = Properties.Settings.Default.ReportGenerator_FourthStatsChoice;
+            LastStatsChoice = Properties.Settings.Default.ReportGenerator_LastStatsChoice;
+            AllStatsChoice = Properties.Settings.Default.ReportGenerator_AllStatsChoice;
+            ExpandState = Properties.Settings.Default.ReportGenerator_ExpandState;
 
             var combis = Properties.Settings.Default.ReportGenerator_Combis;
             if (combis != null) AvailableCombis.AddRange(combis);
