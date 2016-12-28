@@ -41,7 +41,8 @@
             <Grid Name="ReportSettingsGrid_Content" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
@@ -115,17 +116,195 @@
                         </ToggleButton>
                     </WrapPanel>
                 </Grid>
+
+                <Grid Grid.Row="2" Name="ReportSettingsGrid_Content_Strokes" Margin="0 10 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Row="0" Content="{Binding Path=report_settings_strokechoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+
+                    <ItemsControl Grid.Row="1">
+
+                        <Expander IsExpanded="True" Margin="0 1">
+                            <Expander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_service, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                    <CheckBox Grid.Column="1" HorizontalAlignment="Right" Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"/>
+                                </Grid>
+                            </Expander.Header>
+                            <Grid x:Name="ReportSettingsGrid_Content_Strokes_SContainer">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=report_settings_strokechoice_technique, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_placement, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=table_large_tab_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                            </Grid>
+                        </Expander>
+
+                        <Expander IsExpanded="True" Margin="0 1">
+                            <Expander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_return, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                    <CheckBox Grid.Column="1" HorizontalAlignment="Right" Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"/>
+                                </Grid>
+                            </Expander.Header>
+                            <Grid x:Name="ReportSettingsGrid_Content_Strokes_RContainer">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_technique, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=report_settings_strokechoice_placement, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_steparound, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=table_large_tab_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                            </Grid>
+                        </Expander>
+
+                        <Expander IsExpanded="True" Margin="0 1">
+                            <Expander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_third, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                    <CheckBox Grid.Column="1" HorizontalAlignment="Right" Checked="ThreeCheckBox_Checked" Unchecked="ThreeCheckBox_Checked"/>
+                                </Grid>
+                            </Expander.Header>
+                            <Grid x:Name="ReportSettingsGrid_Content_Strokes_3Container">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_technique, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=report_settings_strokechoice_placement, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_steparound, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=table_large_tab_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                            </Grid>
+                        </Expander>
+
+                        <Expander IsExpanded="True" Margin="0 1">
+                            <Expander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_fourth, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                    <CheckBox Grid.Column="1" HorizontalAlignment="Right" Checked="FourCheckBox_Checked" Unchecked="FourCheckBox_Checked"/>
+                                </Grid>
+                            </Expander.Header>
+                            <Grid x:Name="ReportSettingsGrid_Content_Strokes_4Container">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_technique, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=report_settings_strokechoice_placement, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_steparound, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=table_large_tab_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                            </Grid>
+                        </Expander>
+
+                        <Expander IsExpanded="True" Margin="0 1">
+                            <Expander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_last, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                    <CheckBox Grid.Column="1" HorizontalAlignment="Right" Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"/>
+                                </Grid>
+                            </Expander.Header>
+                            <Grid x:Name="ReportSettingsGrid_Content_Strokes_LContainer">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_technique, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=report_settings_strokechoice_placement, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_steparound, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=table_large_tab_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                            </Grid>
+                        </Expander>
+                        
+                        <Expander IsExpanded="True" Margin="0 1">
+                            <Expander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                    <CheckBox Grid.Column="1" HorizontalAlignment="Right" Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"/>
+                                </Grid>
+                            </Expander.Header>
+                            <Grid x:Name="ReportSettingsGrid_Content_Strokes_AContainer">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_technique, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=report_settings_strokechoice_placement, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=report_settings_strokechoice_steparound, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=table_large_tab_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                                <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=table_spin_title, Source={StaticResource LocalizedStrings}}" Margin="1" />
+                            </Grid>
+                        </Expander>
+                        
+                    </ItemsControl>
+                </Grid>
+
             </Grid>
 
             <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox">
-                <Grid>
-                    <WebBrowser x:Name="ReportPreviewControl" />
+                <Grid x:Name="ReportPreviewBrowserContainer">
+                    <WebBrowser x:Name="ReportPreviewControl" Source="about:blank" />
                     <Image x:Name="PreviewOverlay" ClipToBounds="True" />
                 </Grid>
             </GroupBox>
 
+        </Grid>        
 
-        </Grid>
         <Grid Name="ReportSettingsGrid_Buttons" Grid.Row="2" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="80"/>

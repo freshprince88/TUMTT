@@ -306,11 +306,101 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 4th.
+        /// </summary>
+        public static string report_settings_strokechoice_fourth {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_fourth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last.
+        /// </summary>
+        public static string report_settings_strokechoice_last {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_last", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placement.
+        /// </summary>
+        public static string report_settings_strokechoice_placement {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string report_settings_strokechoice_return {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        public static string report_settings_strokechoice_service {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step Around.
+        /// </summary>
+        public static string report_settings_strokechoice_steparound {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_steparound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technique.
+        /// </summary>
+        public static string report_settings_strokechoice_technique {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_technique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3rd.
+        /// </summary>
+        public static string report_settings_strokechoice_third {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_third", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strokes.
+        /// </summary>
+        public static string report_settings_strokechoice_title {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report Settings.
         /// </summary>
         public static string report_settings_title {
             get {
                 return ResourceManager.GetString("report_settings_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Settings.
+        /// </summary>
+        public static string report_settings_window_title {
+            get {
+                return ResourceManager.GetString("report_settings_window_title", resourceCulture);
             }
         }
         

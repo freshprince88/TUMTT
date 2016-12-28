@@ -22,7 +22,7 @@ namespace TT.Viewer.ViewModels
 {
     public class ReportSettingsViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx
     {
-        private readonly IWindowManager WindowManager;
+        private IWindowManager WindowManager;
         private IDialogCoordinator DialogCoordinator;
         public IMatchManager MatchManager { get; private set; }
         public IEventAggregator Events { get; private set; }
@@ -70,7 +70,7 @@ namespace TT.Viewer.ViewModels
             WindowManager = windowManager;
             DialogCoordinator = dialogCoordinator;
 
-            DisplayName = "Report Settings";
+            DisplayName = Properties.Resources.report_settings_window_title;
             AvailableCombis = new List<int>();
             SelectedCombis = new List<int>();
 
@@ -82,7 +82,7 @@ namespace TT.Viewer.ViewModels
 
         private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
         {
-            Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.Report);
+            Debug.WriteLine("report generated [this={2} sender={0} report={1}]", sender, e.Report, GetHashCode());
 
             var renderer = IoC.Get<IReportRenderer>("PDF");
             string tmpReportPath = Path.GetTempPath() + "ttviewer_" + (e.MatchHash + e.ReportSettingsCode) + ".pdf";
@@ -101,11 +101,6 @@ namespace TT.Viewer.ViewModels
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
-        }
-
-        public static bool IsWindowOpen<T>(string name = "") where T : Window
-        {
-            return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
         }
         
         public void OnOkClick()
@@ -169,6 +164,23 @@ namespace TT.Viewer.ViewModels
             if (combis != null) AvailableCombis.AddRange(combis);
             combis = Properties.Settings.Default.ReportGenerator_Combis;
             if (combis != null) SelectedCombis.AddRange(combis);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            if (close)
+            {
+                PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
+                ReportSettingsQueueManager.ReportGenerated -= ReportSettingsQueueManager_ReportGenerated;
+                Events.Unsubscribe(this);
+
+                WindowManager = null;
+                DialogCoordinator = null;
+                MatchManager = null;
+                Events = null;
+                ReportSettingsQueueManager = null;
+            }
         }
     }
 }

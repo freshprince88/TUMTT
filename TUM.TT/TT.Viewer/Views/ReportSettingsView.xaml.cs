@@ -107,7 +107,15 @@ namespace TT.Viewer.Views
 
         private void ReportSettingsView_Closed(object sender, EventArgs e)
         {
+            // navigate away and remove the webbrowser control for it to properly release its resources
+            // (so that we can delete the temporary pdf files on exit)
             ReportPreviewControl.Navigate("about:blank");
+            ReportPreviewBrowserContainer.Children.Remove(ReportPreviewControl);
+
+            DataContextChanged -= ReportSettingsView_DataContextChanged;
+            ReportPreviewControl.LoadCompleted -= ReportPreviewControl_LoadCompleted;
+            Closed -= ReportSettingsView_Closed;
+            Events.Unsubscribe(this);
         }
 
         private void ReportPreviewControl_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
@@ -231,6 +239,51 @@ namespace TT.Viewer.Views
             }
 
             return combiString.Substring(0, combiString.Length - 1);
+        }
+
+        private void SCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_SContainer, (bool)((CheckBox)sender).IsChecked);
+        }
+
+        private void RCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_RContainer, (bool)((CheckBox)sender).IsChecked);
+        }
+
+        private void ThreeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_3Container, (bool)((CheckBox)sender).IsChecked);
+        }
+
+        private void FourCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_4Container, (bool)((CheckBox)sender).IsChecked);
+        }
+
+        private void LCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_LContainer, (bool)((CheckBox)sender).IsChecked);
+        }
+
+        private void ACheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_AContainer, (bool)((CheckBox)sender).IsChecked);
+        }
+
+        private void CheckChildChbxs(Grid parent, bool check)
+        {
+            foreach (var c in parent.Children)
+            {
+                var strokeAttributeChbx = c as CheckBox;
+                if (strokeAttributeChbx != null)
+                {
+                    if (check && !(bool)strokeAttributeChbx.IsChecked)
+                        strokeAttributeChbx.IsChecked = true;
+                    else if (!check && (bool)strokeAttributeChbx.IsChecked)
+                        strokeAttributeChbx.IsChecked = false;
+                }
+            }
         }
     }
 }

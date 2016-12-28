@@ -277,4 +277,34 @@
   <data name="player_2" xml:space="preserve">
     <value>Player 2</value>
   </data>
+  <data name="report_settings_strokechoice_title" xml:space="preserve">
+    <value>Strokes</value>
+  </data>
+  <data name="report_settings_window_title" xml:space="preserve">
+    <value>Report Settings</value>
+  </data>
+  <data name="report_settings_strokechoice_fourth" xml:space="preserve">
+    <value>4th</value>
+  </data>
+  <data name="report_settings_strokechoice_last" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="report_settings_strokechoice_placement" xml:space="preserve">
+    <value>Placement</value>
+  </data>
+  <data name="report_settings_strokechoice_return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="report_settings_strokechoice_service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="report_settings_strokechoice_steparound" xml:space="preserve">
+    <value>Step Around</value>
+  </data>
+  <data name="report_settings_strokechoice_technique" xml:space="preserve">
+    <value>Technique</value>
+  </data>
+  <data name="report_settings_strokechoice_third" xml:space="preserve">
+    <value>3rd</value>
+  </data>
 </root>
