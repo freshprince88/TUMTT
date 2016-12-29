@@ -307,4 +307,7 @@
   <data name="report_settings_strokechoice_third" xml:space="preserve">
     <value>3rd</value>
   </data>
+  <data name="report_settings_strokechoice_number" xml:space="preserve">
+    <value>Number</value>
+  </data>
 </root>

@@ -17,6 +17,8 @@ using TT.Report.Renderers;
 using System.IO;
 using System.Threading;
 using TT.Lib.Events;
+using TT.Report.Generators;
+using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
@@ -28,6 +30,8 @@ namespace TT.Viewer.ViewModels
         public IEventAggregator Events { get; private set; }
         public IReportSettingsQueueManager ReportSettingsQueueManager { get; private set; }
         
+        public Dictionary<int, string[]> StrokeStats { get; private set; }
+
         private string playerChoice;
         public string PlayerChoice {
             get
@@ -196,6 +200,15 @@ namespace TT.Viewer.ViewModels
             WindowManager = windowManager;
             DialogCoordinator = dialogCoordinator;
 
+            StrokeStats = new Dictionary<int, string[]>();
+            StrokeStats[1] = new string[] { "placement", Properties.Resources.report_settings_strokechoice_placement };
+            StrokeStats[2] = new string[] { "technique", Properties.Resources.report_settings_strokechoice_technique };
+            StrokeStats[4] = new string[] { "table", Properties.Resources.table_large_tab_title };
+            StrokeStats[8] = new string[] { "steparound", Properties.Resources.report_settings_strokechoice_steparound };
+            StrokeStats[16] = new string[] { "spin", Properties.Resources.table_spin_title };
+            StrokeStats[32] = new string[] { "service", Properties.Resources.report_settings_strokechoice_service };
+            StrokeStats[64] = new string[] { "number", Properties.Resources.report_settings_strokechoice_number };
+
             DisplayName = Properties.Resources.report_settings_window_title;
             AvailableCombis = new List<int>();
             SelectedCombis = new List<int>();
@@ -251,8 +264,101 @@ namespace TT.Viewer.ViewModels
             //    yield return result;
             //TryClose();
 
-            ReportSettingsQueueManager.Enqueue(new TT.Report.Generators.CustomizedReportGenerator());
+            CustomizedReportGenerator gen = new CustomizedReportGenerator();
+            gen.Customization = GetCustomizationDictionary();
+            ReportSettingsQueueManager.Enqueue(gen);
+
             return null;
+        }
+
+        private Dictionary<string, object> GetCustomizationDictionary()
+        {
+            Dictionary<string, object> customizations = new Dictionary<string, object>();
+
+            List<Player> players = new List<Player>();
+            if (PlayerChoice == "first")
+                players.Add(MatchManager.Match.FirstPlayer);
+            else if (PlayerChoice == "second")
+                players.Add(MatchManager.Match.SecondPlayer);
+            else if (PlayerChoice == "both")
+            {
+                players.Add(MatchManager.Match.FirstPlayer);
+                players.Add(MatchManager.Match.SecondPlayer);
+            }
+            customizations["players"] = players;
+
+
+            Dictionary<string, List<Rally>> sets = new Dictionary<string, List<Rally>>();
+            // 'all' sets
+            if ((SetChoice & 1) == 1)
+                sets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
+
+            // sets 1-7
+            for (var i = 1; i < Math.Ceiling(Math.Log(SetChoice, 2)); i++)
+            {
+                int mask = 1 << i;
+                if ((mask & SetChoice) == mask)
+                {
+                    var rallyList = new List<Rally>();
+                    foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
+                    {
+                        if (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1 == i)
+                        {
+                            rallyList.Add(rally);
+                        }
+                    }
+                    sets[i.ToString()] = rallyList;
+                }
+            }
+
+            // set combis
+            foreach (var combi in SelectedCombis)
+            {
+                var combiName = "";
+                var rallyList = new List<Rally>();
+                for (var i = 1; i < Math.Ceiling(Math.Log(combi, 2)); i++)
+                {
+                    int mask = 1 << i;
+                    if ((mask & combi) == mask)
+                    {
+                        combiName += i + ",";
+                        foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
+                        {
+                            if (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1 == i)
+                            {
+                                rallyList.Add(rally);
+                            }
+                        }
+                    }
+                }
+                sets[combiName.Substring(0, combiName.Length - 1)] = rallyList;
+            }
+
+            customizations["sets"] = sets;
+
+            customizations["service_stats"] = new List<string>();
+            customizations["return_stats"] = new List<string>();
+            customizations["third_stats"] = new List<string>();
+            customizations["fourth_stats"] = new List<string>();
+            customizations["last_stats"] = new List<string>();
+            customizations["all_stats"] = new List<string>();
+            foreach (int key in StrokeStats.Keys)
+            {
+                if ((ServiceStatsChoice & key) == key)
+                    ((List<string>)customizations["service_stats"]).Add(StrokeStats[key][0]);
+                if ((ReturnStatsChoice & key) == key)
+                    ((List<string>)customizations["return_stats"]).Add(StrokeStats[key][0]);
+                if ((ThirdStatsChoice & key) == key)
+                    ((List<string>)customizations["third_stats"]).Add(StrokeStats[key][0]);
+                if ((FourthStatsChoice & key) == key)
+                    ((List<string>)customizations["fourth_stats"]).Add(StrokeStats[key][0]);
+                if ((LastStatsChoice & key) == key)
+                    ((List<string>)customizations["last_stats"]).Add(StrokeStats[key][0]);
+                if ((AllStatsChoice & key) == key)
+                    ((List<string>)customizations["all_stats"]).Add(StrokeStats[key][0]);
+            }
+
+            return customizations;
         }
 
         public void AddCombi(int newCombi)

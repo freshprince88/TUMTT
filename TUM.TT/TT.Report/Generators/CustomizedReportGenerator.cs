@@ -4,6 +4,7 @@ using TT.Models;
 using TT.Report.Plots;
 using TT.Report.Sections;
 using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace TT.Report.Generators
 {
@@ -14,6 +15,7 @@ namespace TT.Report.Generators
     {
 
         private MatchPlayerToColorConverter matchPlayerToColorConverter;
+        public Dictionary<string, object> Customization { get; set; }
 
         public CustomizedReportGenerator()
         {

@@ -203,15 +203,20 @@ namespace TT.Viewer.Views
                 var tb = i as ToggleButton;
                 if (tb != null && tb.IsChecked.Value)
                 {
-                    combiSets += (int)Math.Pow(2, int.Parse(tb.Tag as string));
+                    combiSets += 1 << int.Parse(tb.Tag as string);
                     combiSetsString += tb.Tag + ",";
                 }
             }
-            AddCombiView(combiSets, combiSetsString.Substring(0, combiSetsString.Length - 1));
 
-            var vm = DataContext as ReportSettingsViewModel;
-            if (vm != null)
-                vm.AddCombi(combiSets);
+            var combiSetsName = combiSetsString.Substring(0, combiSetsString.Length - 1);
+            if (combiSetsName.Contains(","))    // only add actual combis, not just one set
+            {
+                AddCombiView(combiSets, combiSetsName);
+
+                var vm = DataContext as ReportSettingsViewModel;
+                if (vm != null)
+                    vm.AddCombi(combiSets);
+            }
 
             PlusCombiPopup.IsOpen = false;
         }
@@ -234,7 +239,7 @@ namespace TT.Viewer.Views
             var combiString = "";
             for (var i = 0; i < Math.Ceiling(Math.Log(combi, 2)); i++)
             {
-                var mask = (int)Math.Pow(2, i);
+                var mask = 1 << i;
                 if ((mask & combi) == mask)
                     combiString += i + ",";
             }

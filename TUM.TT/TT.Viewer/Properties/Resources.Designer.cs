@@ -324,6 +324,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        public static string report_settings_strokechoice_number {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Placement.
         /// </summary>
         public static string report_settings_strokechoice_placement {
