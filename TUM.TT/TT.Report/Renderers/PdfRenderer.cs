@@ -518,6 +518,61 @@ namespace TT.Report.Renderers
             this.AddPlot(section.PlotByStriker, height: 250);
         }
 
+        public void Visit(PartSection section)
+        {
+            // each new part means new heading counters
+            this.ResetHeadingCounters();
+
+            bool isPlayerPart = section.Player != null;
+            var partName = string.Format(
+                isPlayerPart ? "{0} - {1}" : "{0}",
+                section.PartName,
+                isPlayerPart ? section.Player.Name : "");
+            var paragraph = this.Document.LastSection.AddParagraph(partName, OurStyleNames.PartTitle);
+
+            if (isPlayerPart)
+                paragraph.Format.SpaceBefore = 20;
+        }
+
+        public void Visit(StrokeStatsHeadingSection section)
+        {
+            this.AddHeading(1, section.StrokeName);
+        }
+
+        public void Visit(SideSection section)
+        {
+            this.AddHeading(2, Properties.Resources.section_side);
+            this.AddPlot(section.SidePlot);
+        }
+        
+        public void Visit(StepAroundSection section)
+        {
+        }
+
+        public void Visit(SpinSection section)
+        {
+        }
+
+        public void Visit(TechniqueSection section)
+        {
+        }
+
+        public void Visit(PlacementSection section)
+        {
+        }
+
+        public void Visit(LargeTableSection section)
+        {
+        }
+
+        public void Visit(LastStrokeNumberSection section)
+        {
+        }
+
+        public void Visit(LastStrokeServiceSection section)
+        {
+        }
+
         /// <summary>
         /// Saves the rendered PDF.
         /// </summary>
@@ -582,6 +637,15 @@ namespace TT.Report.Renderers
             subtitle.ParagraphFormat.Alignment = ParagraphAlignment.Center;
             subtitle.ParagraphFormat.SpaceAfter = 3;
             subtitle.ParagraphFormat.SpaceBefore = 3;
+
+            var partTitle = this.Document.Styles.AddStyle(
+                OurStyleNames.PartTitle, OurStyleNames.Title);
+            partTitle.Font.Size = 18;
+            partTitle.Font.Bold = true;
+            partTitle.ParagraphFormat.Borders.Bottom.Visible = false;
+            partTitle.ParagraphFormat.Alignment = ParagraphAlignment.Left;
+            partTitle.ParagraphFormat.SpaceAfter = 3;
+            partTitle.ParagraphFormat.SpaceBefore = 3;
 
             var heading1 = this.Document.Styles[StyleNames.Heading1];
             heading1.Font = title.Font.Clone();
@@ -902,6 +966,14 @@ namespace TT.Report.Renderers
             return table;
         }
 
+        private void ResetHeadingCounters()
+        {
+            for (var i = 0; i < this.headingCounters.Length; i++)
+            {
+                this.headingCounters[i] = 0;
+            }
+        }
+
         /// <summary>
         /// Creates a heading.
         /// </summary>
@@ -938,19 +1010,22 @@ namespace TT.Report.Renderers
         /// <param name="height">The height of the plot.</param>
         private Paragraph AddPlot(OxyPlot.PlotModel plot, double width = 450, double height = 300)
         {
-            // Fix up the plot text color.  For some insane reason, PDFSharp turns
-            // the plot's black into blue
-            if (plot.TextColor.Equals(OxyPlot.OxyColors.Black))
-            {
-                plot.TextColor = OxyPlot.OxyColor.FromArgb(255, 0, 0, 1);
-            }
-
-            var tempFile = this.GetTempFile();
-            PdfExporter.Export(plot, tempFile, width, height);
             var paragraph = this.Document.LastSection.AddParagraph();
-            var image = paragraph.AddImage(tempFile);
-            image.Width = width;
-            image.Height = height;
+            if (plot != null)
+            {
+                // Fix up the plot text color.  For some insane reason, PDFSharp turns
+                // the plot's black into blue
+                if (plot.TextColor.Equals(OxyPlot.OxyColors.Black))
+                {
+                    plot.TextColor = OxyPlot.OxyColor.FromArgb(255, 0, 0, 1);
+                }
+
+                var tempFile = this.GetTempFile();
+                PdfExporter.Export(plot, tempFile, width, height);
+                var image = paragraph.AddImage(tempFile);
+                image.Width = width;
+                image.Height = height;
+            }
             return paragraph;
         }
 

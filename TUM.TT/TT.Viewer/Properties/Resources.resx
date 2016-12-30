@@ -325,4 +325,7 @@
   <data name="report_settings_generalchoice_transitionmatrix" xml:space="preserve">
     <value>Transition matrix</value>
   </data>
+  <data name="report_settings_strokechoice_side" xml:space="preserve">
+    <value>Side</value>
+  </data>
 </root>

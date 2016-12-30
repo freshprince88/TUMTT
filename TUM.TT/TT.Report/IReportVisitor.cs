@@ -66,5 +66,66 @@ namespace TT.Report
         /// </summary>
         /// <param name="section">The section</param>
         void Visit(RelevanceOfStrokeSection section);
+
+        /// <summary>
+        /// Visits the part section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(PartSection section);
+
+        /// <summary>
+        /// Visits the stroke stats heading section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(StrokeStatsHeadingSection section);
+
+        /// <summary>
+        /// Visits the side section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(SideSection section);
+
+        /// <summary>
+        /// Visits the step around section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(StepAroundSection section);
+
+        /// <summary>
+        /// Visits the spin section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(SpinSection section);
+
+        /// <summary>
+        /// Visits the technique section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(TechniqueSection section);
+
+        /// <summary>
+        /// Visits the placement section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(PlacementSection section);
+
+        /// <summary>
+        /// Visits the large table section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(LargeTableSection section);
+
+        /// <summary>
+        /// Visits the last stroke number section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(LastStrokeNumberSection section);
+
+        /// <summary>
+        /// Visits the last stroke service section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(LastStrokeServiceSection section);
+        
     }
 }

@@ -6,7 +6,6 @@
 
 namespace TT.Report.Sections
 {
-    using TT.Models;
     using TT.Models.Statistics;
 
     /// <summary>

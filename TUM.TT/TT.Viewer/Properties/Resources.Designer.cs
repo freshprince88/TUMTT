@@ -405,6 +405,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Side.
+        /// </summary>
+        public static string report_settings_strokechoice_side {
+            get {
+                return ResourceManager.GetString("report_settings_strokechoice_side", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Step Around.
         /// </summary>
         public static string report_settings_strokechoice_steparound {

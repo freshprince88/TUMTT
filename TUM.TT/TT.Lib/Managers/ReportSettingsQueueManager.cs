@@ -1,24 +1,28 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using TT.Lib.Util;
 using TT.Report.Generators;
+using TT.Report.Renderers;
 
 namespace TT.Lib.Managers
 {
     public class ReportGeneratedEventArgs
     {
-        public Report.Report Report { get; private set; }
+        public string Report { get; private set; }
         public string MatchHash { get; private set; }
         public string ReportSettingsCode { get; private set; }
 
-        public ReportGeneratedEventArgs(Report.Report report) : this(report, MatchHashGenerator.GenerateMatchHash(null), "1")
+        public ReportGeneratedEventArgs(string reportPath) : this(reportPath, MatchHashGenerator.GenerateMatchHash(null), "1")
         {
         }
 
-        public ReportGeneratedEventArgs(Report.Report report, string matchHash, string reportSettingsCode)
+        public ReportGeneratedEventArgs(string reportPath, string matchHash, string reportSettingsCode)
         {
-            Report = report;
+            Report = reportPath;
             MatchHash = matchHash;
             ReportSettingsCode = reportSettingsCode;
         }
@@ -50,12 +54,25 @@ namespace TT.Lib.Managers
         private void GenerateReport()
         {
             Report.Report report = queue[0].GenerateReport(matchManager.Match);
+
+            var renderer = IoC.Get<IReportRenderer>("PDF");
+            string tmpReportPath = Path.GetTempPath() + "ttviewer_" + (MatchHashGenerator.GenerateMatchHash(null) + "1") + ".pdf";
+            bool fileExists = File.Exists(tmpReportPath);
+            Debug.WriteLine("report file (exists? {0}): {1}", fileExists, tmpReportPath);
+            if (!fileExists)
+            {
+                using (var sink = File.Create(tmpReportPath))
+                {
+                    report.RenderToStream(renderer, sink);
+                }
+            }
+
             lock (thisLock)
             {
                 if (queue.Count == 1)
                 {
                     queue.Clear();
-                    ReportGenerated(this, new ReportGeneratedEventArgs(report));
+                    ReportGenerated(this, new ReportGeneratedEventArgs(tmpReportPath));
                 } else
                 {
                     queue[0] = queue[1];

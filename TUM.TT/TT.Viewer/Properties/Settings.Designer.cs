@@ -85,10 +85,10 @@ namespace TT.Viewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("both")]
-        public string ReportGenerator_Playerchoice {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_Playerchoice {
             get {
-                return ((string)(this["ReportGenerator_Playerchoice"]));
+                return ((int)(this["ReportGenerator_Playerchoice"]));
             }
             set {
                 this["ReportGenerator_Playerchoice"] = value;

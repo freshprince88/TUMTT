@@ -33,15 +33,20 @@ namespace TT.Viewer.ViewModels
         public Dictionary<int, string[]> StrokeStats { get; private set; }
         public Dictionary<int, string[]> GeneralStats { get; private set; }
 
-        private string playerChoice;
-        public string PlayerChoice {
+        private int playerChoice;
+        public int PlayerChoice {
             get
             {
                 return playerChoice;
             }
             set
             {
-                playerChoice = value;
+                if ((playerChoice & value) == value)
+                    playerChoice -= value;
+                else
+                    playerChoice += value;
+
+                Debug.WriteLine("player choice: {0}", playerChoice);
                 NotifyOfPropertyChange();
             }
         }
@@ -220,13 +225,14 @@ namespace TT.Viewer.ViewModels
             DialogCoordinator = dialogCoordinator;
 
             StrokeStats = new Dictionary<int, string[]>();
-            StrokeStats[1] = new string[] { "placement", Properties.Resources.report_settings_strokechoice_placement };
-            StrokeStats[2] = new string[] { "technique", Properties.Resources.report_settings_strokechoice_technique };
-            StrokeStats[4] = new string[] { "table", Properties.Resources.table_large_tab_title };
-            StrokeStats[8] = new string[] { "steparound", Properties.Resources.report_settings_strokechoice_steparound };
-            StrokeStats[16] = new string[] { "spin", Properties.Resources.table_spin_title };
-            StrokeStats[32] = new string[] { "service", Properties.Resources.report_settings_strokechoice_service };
-            StrokeStats[64] = new string[] { "number", Properties.Resources.report_settings_strokechoice_number };
+            StrokeStats[1] = new string[] { "side", Properties.Resources.report_settings_strokechoice_side };
+            StrokeStats[2] = new string[] { "steparound", Properties.Resources.report_settings_strokechoice_steparound };
+            StrokeStats[4] = new string[] { "spin", Properties.Resources.table_spin_title };
+            StrokeStats[8] = new string[] { "technique", Properties.Resources.report_settings_strokechoice_technique };
+            StrokeStats[16] = new string[] { "placement", Properties.Resources.report_settings_strokechoice_placement };
+            StrokeStats[32] = new string[] { "table", Properties.Resources.table_large_tab_title };
+            StrokeStats[64] = new string[] { "service", Properties.Resources.report_settings_strokechoice_service };
+            StrokeStats[128] = new string[] { "number", Properties.Resources.report_settings_strokechoice_number };
 
             GeneralStats = new Dictionary<int, string[]>();
             GeneralStats[1] = new string[] { "rallylength", Properties.Resources.report_settings_generalchoice_rallylength };
@@ -248,18 +254,7 @@ namespace TT.Viewer.ViewModels
         {
             Debug.WriteLine("report generated [this={2} sender={0} report={1}]", sender, e.Report, GetHashCode());
 
-            var renderer = IoC.Get<IReportRenderer>("PDF");
-            string tmpReportPath = Path.GetTempPath() + "ttviewer_" + (e.MatchHash + e.ReportSettingsCode) + ".pdf";
-            bool fileExists = File.Exists(tmpReportPath);
-            Debug.WriteLine("report file (exists? {0}): {1}", fileExists, tmpReportPath);
-            if (!fileExists)
-            {
-                using (var sink = File.Create(tmpReportPath))
-                {
-                    e.Report.RenderToStream(renderer, sink);
-                }
-            }
-            Events.PublishOnUIThread(new ReportPreviewChangedEvent(tmpReportPath));
+            Events.PublishOnUIThread(new ReportPreviewChangedEvent(e.Report));
         }
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -300,15 +295,17 @@ namespace TT.Viewer.ViewModels
         {
             Dictionary<string, object> customizations = new Dictionary<string, object>();
 
-            List<Player> players = new List<Player>();
-            if (PlayerChoice == "first")
+            List<object> players = new List<object>();
+            if ((PlayerChoice & 1) == 1)
                 players.Add(MatchManager.Match.FirstPlayer);
-            else if (PlayerChoice == "second")
+            if ((PlayerChoice & 2) == 2)
                 players.Add(MatchManager.Match.SecondPlayer);
-            else if (PlayerChoice == "both")
+            if ((PlayerChoice & 4) == 4)
             {
-                players.Add(MatchManager.Match.FirstPlayer);
-                players.Add(MatchManager.Match.SecondPlayer);
+                List<Player> bothPlayers = new List<Player>();
+                bothPlayers.Add(MatchManager.Match.FirstPlayer);
+                bothPlayers.Add(MatchManager.Match.SecondPlayer);
+                players.Add(bothPlayers);
             }
             customizations["players"] = players;
 

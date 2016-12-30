@@ -73,7 +73,7 @@ namespace TT.Viewer.Views
 
             if (!string.IsNullOrEmpty(combiSetsString))
             {
-                var combiName = "Combi" + combiSetsString.Replace(",", "");
+                var combiName = "Combi" + combiSetsString.Replace("+", "");
 
                 var combiPresent = false;
                 foreach (var i in ReportSettingsGrid_Content_Sets_ToggleButtons.Children)
@@ -204,12 +204,12 @@ namespace TT.Viewer.Views
                 if (tb != null && tb.IsChecked.Value)
                 {
                     combiSets += 1 << int.Parse(tb.Tag as string);
-                    combiSetsString += tb.Tag + ",";
+                    combiSetsString += tb.Tag + "+";
                 }
             }
 
             var combiSetsName = combiSetsString.Substring(0, combiSetsString.Length - 1);
-            if (combiSetsName.Contains(","))    // only add actual combis, not just one set
+            if (combiSetsName.Contains("+"))    // only add actual combis, not just one set
             {
                 AddCombiView(combiSets, combiSetsName);
 
@@ -241,7 +241,7 @@ namespace TT.Viewer.Views
             {
                 var mask = 1 << i;
                 if ((mask & combi) == mask)
-                    combiString += i + ",";
+                    combiString += i + "+";
             }
 
             return combiString.Substring(0, combiString.Length - 1);

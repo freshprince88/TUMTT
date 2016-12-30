@@ -42,346 +42,371 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox x:Name="ReportOptionsGroupBox" Header="Options" Grid.Column="0" BorderThickness="1 1 1 0" Margin="10 5 2 0">
-                <Grid Name="ReportSettingsGrid_Content">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" Name="ReportSettingsGrid_Content_Players" HorizontalAlignment="Left">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <Grid Name="ReportSettingsGrid_Content">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Content="{Binding Path=report_settings_playerchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
-                        <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Players_Checkboxes" Margin="5 5 0 0">
-                            <RadioButton IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=first}">
-                                <PriorityBinding>
-                                    <Binding Path="MatchManager.Match.FirstPlayer" Converter="{StaticResource PlayerToStringConverter}" ConverterParameter="last" />
-                                    <Binding Path="player_1" Source="{StaticResource LocalizedStrings}" />
-                                </PriorityBinding>
-                            </RadioButton>
-                            <RadioButton Margin="8 0 0 0" IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=second}">
-                                <PriorityBinding>
-                                    <Binding Path="MatchManager.Match.SecondPlayer" Converter="{StaticResource PlayerToStringConverter}" ConverterParameter="last" />
-                                    <Binding Path="player_2" Source="{StaticResource LocalizedStrings}" />
-                                </PriorityBinding>
-                            </RadioButton>
-                            <RadioButton Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
-                                         IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource StringMatchToBooleanConverter}, ConverterParameter=both}"/>
-                        </WrapPanel>
-                    </Grid>
-
-                    <Grid Grid.Row="1" Name="ReportSettingsGrid_Content_Sets" HorizontalAlignment="Left" Margin="0 10 0 0">
-                        <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Content="{Binding Path=report_settings_setchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
-                        <WrapPanel Grid.Row="1" x:Name="ReportSettingsGrid_Content_Sets_ToggleButtons" Margin="5 0 0 0">
-                            <ToggleButton x:Name="SetAll" Width="40" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
-                                <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="Set1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}">
-                                <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="Set2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}">
-                                <TextBlock FontSize="12"><Run Text="2"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="Set3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}">
-                                <TextBlock FontSize="12"><Run Text="3"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="Set4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}">
-                                <TextBlock FontSize="12"><Run Text="4"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="Set5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}">
-                                <TextBlock FontSize="12"><Run Text="5"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="Set6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=64}">
-                                <TextBlock FontSize="12"><Run Text="6"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="Set7" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
-                                         IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=128}">
-                                <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
-                            </ToggleButton>
-                            <ToggleButton x:Name="PlusCombi" Width="64" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Click="PlusCombi_Click">
-                                <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_pluscombi, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
-                            </ToggleButton>
-                        </WrapPanel>
-                    </Grid>
-
-                    <Grid Grid.Row="2" Name="ReportSettingsGrid_Content_Strokes" Margin="0 10 0 0">
-                        <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                    
-                        <Label Grid.Row="0" Content="{Binding Path=report_settings_strokechoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
-
-                        <ItemsControl Grid.Row="1">
-
-                            <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
-                                <Expander.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_service, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
-                                        <CheckBox Grid.Column="1" x:Name="SAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="SAllCheckBox_Click" />
-                                    </Grid>
-                                </Expander.Header>
-                                <Grid x:Name="ReportSettingsGrid_Content_Strokes_SContainer">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1" 
-                                              Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
-                                              IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
-                                    </CheckBox>
-                                    <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
-                                              Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
-                                              IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[4][1]}" Margin="1"
-                                              Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
-                                              IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
-                                              Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
-                                              IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
-                                </Grid>
-                            </Expander>
-
-                            <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}">
-                                <Expander.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_return, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
-                                        <CheckBox Grid.Column="1" x:Name="RAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="RAllCheckBox_Click" />
-                                    </Grid>
-                                </Expander.Header>
-                                <Grid x:Name="ReportSettingsGrid_Content_Strokes_RContainer">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
-                                              Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
-                                              IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
-                                    <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
-                                              Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
-                                              IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[4][1]}" Margin="1"
-                                              Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
-                                              IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
-                                              Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
-                                              IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
-                                </Grid>
-                            </Expander>
-
-                            <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}">
-                                <Expander.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_third, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
-                                        <CheckBox Grid.Column="1" x:Name="ThirdAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="ThirdAllCheckBox_Click" />
-                                    </Grid>
-                                </Expander.Header>
-                                <Grid x:Name="ReportSettingsGrid_Content_Strokes_ThirdContainer">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
-                                              Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
-                                              IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
-                                    <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
-                                              Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
-                                              IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[4][1]}" Margin="1"
-                                              Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
-                                              IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
-                                              Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
-                                              IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
-                                </Grid>
-                            </Expander>
-
-                            <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}">
-                                <Expander.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_fourth, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
-                                        <CheckBox Grid.Column="1" x:Name="FourthAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="FourthAllCheckBox_Click" />
-                                    </Grid>
-                                </Expander.Header>
-                                <Grid x:Name="ReportSettingsGrid_Content_Strokes_FourthContainer">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
-                                              Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
-                                              IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
-                                    <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
-                                              Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
-                                              IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[4][1]}" Margin="1"
-                                              Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
-                                              IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
-                                              Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
-                                              IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
-                                </Grid>
-                            </Expander>
-
-                            <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}">
-                                <Expander.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_last, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
-                                        <CheckBox Grid.Column="1" x:Name="LAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="LAllCheckBox_Click" />
-                                    </Grid>
-                                </Expander.Header>
-                                <Grid x:Name="ReportSettingsGrid_Content_Strokes_LContainer">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[64][1]}" Margin="1"
-                                              Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
-                                              IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=64}" />
-                                    <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
-                                              Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
-                                              IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
-                                              Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
-                                              IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[4][1]}" Margin="1"
-                                              Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
-                                              IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" />
-                                    <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
-                                              Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
-                                              IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
-                                    <CheckBox Grid.Row="2" Grid.Column="1" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
-                                              Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
-                                              IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
-                                </Grid>
-                            </Expander>
-
-                            <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}">
-                                <Expander.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
-                                        <CheckBox Grid.Column="1" x:Name="AAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="AAllCheckBox_Click" />
-                                    </Grid>
-                                </Expander.Header>
-                                <Grid x:Name="ReportSettingsGrid_Content_Strokes_AContainer">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
-                                              Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
-                                              IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
-                                    <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
-                                              Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
-                                              IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[4][1]}" Margin="1"
-                                              Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
-                                              IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" />
-                                    <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
-                                              Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
-                                              IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
-                                    <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
-                                              Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
-                                              IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
-                                </Grid>
-                            </Expander>
-                        
-                        </ItemsControl>
-                    </Grid>
-
-                    <Grid Grid.Row="3" Margin="0 10 0 0">
-                        <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition />
                         </Grid.RowDefinitions>
-                    
-                        <Label Grid.Row="0" Content="{Binding Path=report_settings_generalchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
 
-                        <Grid Grid.Row="1" Margin="5 0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition />
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=GeneralStats[1][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" Margin="2"/>
-                            <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=GeneralStats[2][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" Margin="2"/>
-                            <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=GeneralStats[4][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" Margin="2"/>
-                            <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=GeneralStats[8][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" Margin="2"/>
-                        </Grid>
-                    
-                    </Grid>
 
-                </Grid>
+                            <Label Grid.Row="0" Content="{Binding Path=report_settings_generalchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+
+                            <Grid Grid.Row="1" Margin="5 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=GeneralStats[1][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" Margin="2"/>
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=GeneralStats[2][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" Margin="2"/>
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=GeneralStats[4][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" Margin="2"/>
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=GeneralStats[8][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" Margin="2"/>
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid Grid.Row="1" Name="ReportSettingsGrid_Content_Players" HorizontalAlignment="Left" Margin="0 10 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Content="{Binding Path=report_settings_playerchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+                            <WrapPanel Grid.Row="1" Name="ReportSettingsGrid_Content_Players_Checkboxes" Margin="5 5 0 0">
+                                <CheckBox IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
+                                    <PriorityBinding>
+                                        <Binding Path="MatchManager.Match.FirstPlayer" Converter="{StaticResource PlayerToStringConverter}" ConverterParameter="last" />
+                                        <Binding Path="player_1" Source="{StaticResource LocalizedStrings}" />
+                                    </PriorityBinding>
+                                </CheckBox>
+                                <CheckBox Margin="8 0 0 0" IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}">
+                                    <PriorityBinding>
+                                        <Binding Path="MatchManager.Match.SecondPlayer" Converter="{StaticResource PlayerToStringConverter}" ConverterParameter="last" />
+                                        <Binding Path="player_2" Source="{StaticResource LocalizedStrings}" />
+                                    </PriorityBinding>
+                                </CheckBox>
+                                <CheckBox Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
+                                             IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}"/>
+                            </WrapPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="2" Name="ReportSettingsGrid_Content_Sets" HorizontalAlignment="Left" Margin="0 10 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Content="{Binding Path=report_settings_setchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+                            <WrapPanel Grid.Row="1" x:Name="ReportSettingsGrid_Content_Sets_ToggleButtons" Margin="5 0 0 0">
+                                <ToggleButton x:Name="SetAll" Width="40" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
+                                    <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="Set1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}">
+                                    <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="Set2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}">
+                                    <TextBlock FontSize="12"><Run Text="2"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="Set3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}">
+                                    <TextBlock FontSize="12"><Run Text="3"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="Set4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}">
+                                    <TextBlock FontSize="12"><Run Text="4"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="Set5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}">
+                                    <TextBlock FontSize="12"><Run Text="5"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="Set6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=64}">
+                                    <TextBlock FontSize="12"><Run Text="6"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="Set7" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                             IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=128}">
+                                    <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
+                                </ToggleButton>
+                                <ToggleButton x:Name="PlusCombi" Width="64" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Click="PlusCombi_Click">
+                                    <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_pluscombi, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
+                                </ToggleButton>
+                            </WrapPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="3" Name="ReportSettingsGrid_Content_Strokes" Margin="0 10 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Content="{Binding Path=report_settings_strokechoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
+
+                            <ItemsControl Grid.Row="1">
+
+                                <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
+                                    <Expander.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_service, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                            <CheckBox Grid.Column="1" x:Name="SAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="SAllCheckBox_Click" />
+                                        </Grid>
+                                    </Expander.Header>
+                                    <Grid x:Name="ReportSettingsGrid_Content_Strokes_SContainer">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1" 
+                                                  Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
+                                                  IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
+                                        </CheckBox>
+                                        <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[4][1]}" Margin="1"
+                                                  Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
+                                                  IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
+                                                  Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
+                                                  IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
+                                                  Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
+                                                  IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
+                                                  Checked="SCheckBox_Checked" Unchecked="SCheckBox_Checked"
+                                                  IsChecked="{Binding ServiceStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
+                                    </Grid>
+                                </Expander>
+
+                                <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}">
+                                    <Expander.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_return, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                            <CheckBox Grid.Column="1" x:Name="RAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="RAllCheckBox_Click" />
+                                        </Grid>
+                                    </Expander.Header>
+                                    <Grid x:Name="ReportSettingsGrid_Content_Strokes_RContainer">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
+                                                  Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
+                                                  IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
+                                        <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
+                                                  Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
+                                                  IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
+                                                  Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
+                                                  IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
+                                                  Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
+                                                  IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
+                                                  Checked="RCheckBox_Checked" Unchecked="RCheckBox_Checked"
+                                                  IsChecked="{Binding ReturnStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
+                                    </Grid>
+                                </Expander>
+
+                                <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}">
+                                    <Expander.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_third, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                            <CheckBox Grid.Column="1" x:Name="ThirdAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="ThirdAllCheckBox_Click" />
+                                        </Grid>
+                                    </Expander.Header>
+                                    <Grid x:Name="ReportSettingsGrid_Content_Strokes_ThirdContainer">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
+                                                  Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
+                                                  IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
+                                        <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
+                                                  Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
+                                                  IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
+                                                  Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
+                                                  IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
+                                                  Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
+                                                  IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
+                                                  Checked="ThirdCheckBox_Checked" Unchecked="ThirdCheckBox_Checked"
+                                                  IsChecked="{Binding ThirdStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
+                                    </Grid>
+                                </Expander>
+
+                                <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}">
+                                    <Expander.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_fourth, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                            <CheckBox Grid.Column="1" x:Name="FourthAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="FourthAllCheckBox_Click" />
+                                        </Grid>
+                                    </Expander.Header>
+                                    <Grid x:Name="ReportSettingsGrid_Content_Strokes_FourthContainer">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
+                                                  Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
+                                                  IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
+                                        <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
+                                                  Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
+                                                  IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
+                                                  Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
+                                                  IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
+                                                  Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
+                                                  IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
+                                                  Checked="FourthCheckBox_Checked" Unchecked="FourthCheckBox_Checked"
+                                                  IsChecked="{Binding FourthStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
+                                    </Grid>
+                                </Expander>
+
+                                <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}">
+                                    <Expander.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_strokechoice_last, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                            <CheckBox Grid.Column="1" x:Name="LAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="LAllCheckBox_Click" />
+                                        </Grid>
+                                    </Expander.Header>
+                                    <Grid x:Name="ReportSettingsGrid_Content_Strokes_LContainer">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[128][1]}" Margin="1"
+                                                  Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=128}" />
+                                        <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
+                                                  Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
+                                                  Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
+                                                  Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
+                                                  Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="1" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
+                                                  Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
+                                        <CheckBox Grid.Row="3" Grid.Column="0" Content="{Binding Path=StrokeStats[64][1]}" Margin="1"
+                                                  Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=64}" />
+                                    </Grid>
+                                </Expander>
+
+                                <Expander Margin="0 1" IsExpanded="{Binding ExpandState, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}">
+                                    <Expander.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}}" Foreground="White"/>
+                                            <CheckBox Grid.Column="1" x:Name="AAllCheckBox" HorizontalAlignment="Right" IsThreeState="True" Click="AAllCheckBox_Click" />
+                                        </Grid>
+                                    </Expander.Header>
+                                    <Grid x:Name="ReportSettingsGrid_Content_Strokes_AContainer">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=StrokeStats[128][1]}" Margin="1"
+                                                  Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
+                                                  IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=128}" />
+                                        <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=StrokeStats[1][1]}" Margin="1"
+                                                  Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
+                                                  IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=StrokeStats[2][1]}" Margin="1"
+                                                  Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
+                                                  IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" />
+                                        <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=StrokeStats[8][1]}" Margin="1"
+                                                  Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
+                                                  IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="0" Content="{Binding Path=StrokeStats[16][1]}" Margin="1"
+                                                  Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
+                                                  IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=16}" />
+                                        <CheckBox Grid.Row="2" Grid.Column="1" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
+                                                  Checked="ACheckBox_Checked" Unchecked="ACheckBox_Checked"
+                                                  IsChecked="{Binding AllStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
+                                    </Grid>
+                                </Expander>
+
+                            </ItemsControl>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
+                
             </GroupBox>
             
 
