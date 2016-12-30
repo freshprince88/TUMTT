@@ -21,7 +21,6 @@
             <conv:StringMatchToBooleanConverter x:Key="StringMatchToBooleanConverter"/>
             <conv:IntMaskMatchToBooleanConverter x:Key="IntMaskMatchToBooleanConverter"/>
             <conv:MathConverter x:Key="MathConverter"/>
-            <conv:BitToStatNameConverter x:Key="BitToStatNameConverter" />
         </ResourceDictionary>
     </Controls:MetroWindow.Resources>
 
