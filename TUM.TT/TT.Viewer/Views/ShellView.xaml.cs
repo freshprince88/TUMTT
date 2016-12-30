@@ -56,6 +56,7 @@ namespace TT.Viewer.Views
                     Background = bg;
                     WindowState = WindowState.Maximized;
                     ShowTitleBar = false;
+                    Topmost = true;
                     IgnoreTaskbarOnMaximize = true;
                     MenuButton.Visibility = Visibility.Collapsed;
 
@@ -92,6 +93,7 @@ namespace TT.Viewer.Views
                     ClearValue(BackgroundProperty);
                     WindowState = currentStateNonFullscreen;
                     ShowTitleBar = true;
+                    Topmost = false;
                     IgnoreTaskbarOnMaximize = false;
                     MenuButton.Visibility = Visibility.Visible;
                     break;
