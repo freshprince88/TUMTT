@@ -97,7 +97,9 @@ namespace TT.Models
                 {
                     p = value;
                 }
-                placementField = p;
+                // placementField = p;
+                // Notify about changed Placement for Save Method
+                RaiseAndSetIfChanged(ref placementField, p);               
                 OnPlacementChanged();
             }
         }
