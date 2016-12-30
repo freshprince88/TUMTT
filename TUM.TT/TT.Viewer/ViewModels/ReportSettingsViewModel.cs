@@ -31,6 +31,7 @@ namespace TT.Viewer.ViewModels
         public IReportSettingsQueueManager ReportSettingsQueueManager { get; private set; }
         
         public Dictionary<int, string[]> StrokeStats { get; private set; }
+        public Dictionary<int, string[]> GeneralStats { get; private set; }
 
         private string playerChoice;
         public string PlayerChoice {
@@ -184,7 +185,25 @@ namespace TT.Viewer.ViewModels
                     expandState -= value;
                 else
                     expandState += value;
-                Debug.WriteLine("expand state: {0}", allStatsChoice);
+                Debug.WriteLine("expand state: {0}", expandState);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int generalChoice;
+        public int GeneralChoice
+        {
+            get
+            {
+                return generalChoice;
+            }
+            set
+            {
+                if ((generalChoice & value) == value)
+                    generalChoice -= value;
+                else
+                    generalChoice += value;
+                Debug.WriteLine("general choice: {0}", generalChoice);
                 NotifyOfPropertyChange();
             }
         }
@@ -208,6 +227,12 @@ namespace TT.Viewer.ViewModels
             StrokeStats[16] = new string[] { "spin", Properties.Resources.table_spin_title };
             StrokeStats[32] = new string[] { "service", Properties.Resources.report_settings_strokechoice_service };
             StrokeStats[64] = new string[] { "number", Properties.Resources.report_settings_strokechoice_number };
+
+            GeneralStats = new Dictionary<int, string[]>();
+            GeneralStats[1] = new string[] { "rallylength", Properties.Resources.report_settings_generalchoice_rallylength };
+            GeneralStats[2] = new string[] { "matchdynamics", Properties.Resources.report_settings_generalchoice_matchdynamics };
+            GeneralStats[4] = new string[] { "transitionmatrix", Properties.Resources.report_settings_generalchoice_transitionmatrix };
+            GeneralStats[8] = new string[] { "techefficiency", Properties.Resources.report_settings_generalchoice_techefficiency };
 
             DisplayName = Properties.Resources.report_settings_window_title;
             AvailableCombis = new List<int>();
@@ -358,6 +383,13 @@ namespace TT.Viewer.ViewModels
                     ((List<string>)customizations["all_stats"]).Add(StrokeStats[key][0]);
             }
 
+            customizations["general"] = new List<string>();
+            foreach (int key in GeneralStats.Keys)
+            {
+                if ((GeneralChoice & key) == key)
+                    ((List<string>)customizations["general"]).Add(GeneralStats[key][0]);
+            }
+
             return customizations;
         }
 
@@ -392,6 +424,7 @@ namespace TT.Viewer.ViewModels
             Properties.Settings.Default.ReportGenerator_LastStatsChoice = LastStatsChoice;
             Properties.Settings.Default.ReportGenerator_AllStatsChoice = AllStatsChoice;
             Properties.Settings.Default.ReportGenerator_ExpandState = ExpandState;
+            Properties.Settings.Default.ReportGenerator_GeneralChoice = GeneralChoice;
         }
 
         private void Load()
@@ -405,6 +438,7 @@ namespace TT.Viewer.ViewModels
             LastStatsChoice = Properties.Settings.Default.ReportGenerator_LastStatsChoice;
             AllStatsChoice = Properties.Settings.Default.ReportGenerator_AllStatsChoice;
             ExpandState = Properties.Settings.Default.ReportGenerator_ExpandState;
+            GeneralChoice = Properties.Settings.Default.ReportGenerator_GeneralChoice;
 
             var combis = Properties.Settings.Default.ReportGenerator_Combis;
             if (combis != null) AvailableCombis.AddRange(combis);

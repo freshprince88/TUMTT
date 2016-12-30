@@ -243,6 +243,51 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match dynamics.
+        /// </summary>
+        public static string report_settings_generalchoice_matchdynamics {
+            get {
+                return ResourceManager.GetString("report_settings_generalchoice_matchdynamics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rally length.
+        /// </summary>
+        public static string report_settings_generalchoice_rallylength {
+            get {
+                return ResourceManager.GetString("report_settings_generalchoice_rallylength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technical efficiency.
+        /// </summary>
+        public static string report_settings_generalchoice_techefficiency {
+            get {
+                return ResourceManager.GetString("report_settings_generalchoice_techefficiency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string report_settings_generalchoice_title {
+            get {
+                return ResourceManager.GetString("report_settings_generalchoice_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transition matrix.
+        /// </summary>
+        public static string report_settings_generalchoice_transitionmatrix {
+            get {
+                return ResourceManager.GetString("report_settings_generalchoice_transitionmatrix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string report_settings_ok {

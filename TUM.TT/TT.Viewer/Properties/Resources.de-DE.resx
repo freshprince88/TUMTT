@@ -303,4 +303,19 @@
   <data name="report_settings_strokechoice_number" xml:space="preserve">
     <value>Nummer</value>
   </data>
+  <data name="report_settings_generalchoice_matchdynamics" xml:space="preserve">
+    <value>Match-Dynamik</value>
+  </data>
+  <data name="report_settings_generalchoice_rallylength" xml:space="preserve">
+    <value>Ballwechsellänge</value>
+  </data>
+  <data name="report_settings_generalchoice_techefficiency" xml:space="preserve">
+    <value>Technische Effizienz</value>
+  </data>
+  <data name="report_settings_generalchoice_title" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="report_settings_generalchoice_transitionmatrix" xml:space="preserve">
+    <value>Übergangsmatrix</value>
+  </data>
 </root>

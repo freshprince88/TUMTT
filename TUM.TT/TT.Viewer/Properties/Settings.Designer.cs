@@ -201,5 +201,17 @@ namespace TT.Viewer.Properties {
                 this["ReportGenerator_ExpandState"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ReportGenerator_GeneralChoice {
+            get {
+                return ((int)(this["ReportGenerator_GeneralChoice"]));
+            }
+            set {
+                this["ReportGenerator_GeneralChoice"] = value;
+            }
+        }
     }
 }
