@@ -145,7 +145,7 @@
                     Style="{StaticResource MetroAccentFlatAccent}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
                 </Grid>
                 <WindowsFormsHost Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-                    <winForms:WebBrowser x:Name="MyWebBrowser" Url="http://www.ittf.com/ittv"   ScriptErrorsSuppressed="True"/>
+                    <winForms:WebBrowser x:Name="MyWebBrowser" Url="http://www.old.ittf.com/ittv"   ScriptErrorsSuppressed="True"/>
                 </WindowsFormsHost>
             </Grid>
         </Border>
