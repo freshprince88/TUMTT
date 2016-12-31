@@ -21,7 +21,8 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für ReportSettingsView.xaml
     /// </summary>
     public partial class ReportSettingsView : MetroWindow,
-        IHandle<ReportPreviewChangedEvent>
+        IHandle<ReportPreviewChangedEvent>,
+        IHandle<ReportSettingsChangedEvent>
     {
         public IEventAggregator Events { get; private set; }
         private bool reflectCheckStateChange = true;
@@ -40,7 +41,7 @@ namespace TT.Viewer.Views
             Closed += ReportSettingsView_Closed;
 
             Events = IoC.Get<IEventAggregator>();
-            Events.Subscribe(this);            
+            Events.Subscribe(this);
         }
 
         private void ReportSettingsView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -48,10 +49,14 @@ namespace TT.Viewer.Views
             var vm = DataContext as ReportSettingsViewModel;
             if (vm != null)
             {
+                // this happens only on first load of view
                 foreach (var combi in vm.AvailableCombis)
                     AddCombiView(combi, BinToString(combi));
                 foreach (var combi in vm.SelectedCombis)
                     SelectCombiView(combi);
+
+                // generate the report based on the initial settings
+                vm.GenerateReport();
             }
         }
 
@@ -125,23 +130,31 @@ namespace TT.Viewer.Views
             new Thread(new ThreadStart(DisplayWebBrowserDelayed)).Start();
         }
 
+        public void Handle(ReportSettingsChangedEvent message)
+        {
+            if (ReportPreviewGroupBox.IsEnabled && PresentationSource.FromVisual(ReportPreviewControl) != null)
+            {
+                var topLeftCorner = ReportPreviewControl.PointToScreen(new System.Windows.Point(0, 0));
+                var topLeftGdiPoint = new System.Drawing.Point((int)topLeftCorner.X, (int)topLeftCorner.Y);
+                var size = new System.Drawing.Size((int)ReportPreviewControl.ActualWidth, (int)ReportPreviewControl.ActualHeight);
+
+                var screenShot = new Bitmap((int)ReportPreviewControl.ActualWidth, (int)ReportPreviewControl.ActualHeight);
+
+                using (var graphics = Graphics.FromImage(screenShot))
+                {
+                    graphics.CopyFromScreen(topLeftGdiPoint, new System.Drawing.Point(), size, CopyPixelOperation.SourceCopy);
+                }
+
+                PreviewOverlay.Source = Imaging.CreateBitmapSourceFromHBitmap(screenShot.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                ReportPreviewControl.Visibility = Visibility.Hidden;
+                ((BlurEffect)PreviewOverlay.Effect).Radius = 20;
+
+                ReportPreviewGroupBox.IsEnabled = false;
+            }
+        }
+
         public void Handle(ReportPreviewChangedEvent message)
         {
-            var topLeftCorner = ReportPreviewControl.PointToScreen(new System.Windows.Point(0, 0));
-            var topLeftGdiPoint = new System.Drawing.Point((int)topLeftCorner.X, (int)topLeftCorner.Y);
-            var size = new System.Drawing.Size((int)ReportPreviewControl.ActualWidth, (int)ReportPreviewControl.ActualHeight);
-
-            var screenShot = new Bitmap((int)ReportPreviewControl.ActualWidth, (int)ReportPreviewControl.ActualHeight);
-
-            using (var graphics = Graphics.FromImage(screenShot))
-            {
-                graphics.CopyFromScreen(topLeftGdiPoint, new System.Drawing.Point(), size, CopyPixelOperation.SourceCopy);
-            }
-
-            PreviewOverlay.Source = Imaging.CreateBitmapSourceFromHBitmap(screenShot.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            ReportPreviewControl.Visibility = Visibility.Hidden;
-            ((BlurEffect)PreviewOverlay.Effect).Radius = 20;
-
             var pfc = new PreviewFileChange();
             pfc.newPath = message.ReportPreviewPath;
             pfc.view = this;
@@ -155,10 +168,8 @@ namespace TT.Viewer.Views
 
             internal void ChangePreviewFile()
             {
-                Thread.Sleep(500);
                 view.Dispatcher.Invoke(() =>
                 {
-                    view.ReportPreviewGroupBox.IsEnabled = false;
                     view.ReportPreviewControl.Navigate(newPath + "#toolbar=0&navpanes=0&messages=0&statusbar=0");                    
                 });
             }

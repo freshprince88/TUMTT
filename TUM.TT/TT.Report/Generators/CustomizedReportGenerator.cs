@@ -15,7 +15,21 @@ namespace TT.Report.Generators
     {
 
         private MatchPlayerToColorConverter matchPlayerToColorConverter;
-        public Dictionary<string, object> Customization { get; set; }
+
+        public string CustomizationId { get; private set; }
+
+        private Dictionary<string, object> customization;
+        public Dictionary<string, object> Customization {
+            get
+            {
+                return customization;
+            }
+            set
+            {
+                customization = value;
+                CustomizationId = (string)value["id"];
+            }
+        }
 
         public CustomizedReportGenerator()
         {

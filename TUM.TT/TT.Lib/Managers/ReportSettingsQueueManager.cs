@@ -12,99 +12,114 @@ namespace TT.Lib.Managers
 {
     public class ReportGeneratedEventArgs
     {
-        public string Report { get; private set; }
+        public string ReportPath { get; private set; }
         public string MatchHash { get; private set; }
         public string ReportSettingsCode { get; private set; }
-
-        public ReportGeneratedEventArgs(string reportPath) : this(reportPath, MatchHashGenerator.GenerateMatchHash(null), "1")
-        {
-        }
-
+        
         public ReportGeneratedEventArgs(string reportPath, string matchHash, string reportSettingsCode)
         {
-            Report = reportPath;
+            ReportPath = reportPath;
             MatchHash = matchHash;
             ReportSettingsCode = reportSettingsCode;
         }
-    }    
+    }
 
     public class ReportSettingsQueueManager : IReportSettingsQueueManager
     {
         public event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
 
         private IMatchManager matchManager;
-        private List<IReportGenerator> queue;
-
-        private object thisLock;
+        private QueueWorker queueWorker;
 
         public ReportSettingsQueueManager(IMatchManager matchManager)
         {
             this.matchManager = matchManager;
-            this.queue = new List<IReportGenerator>(2);
-            this.thisLock = new object();
+            this.queueWorker = new QueueWorker(this);
+            Start();
         }
 
         public void Enqueue(IReportGenerator reportGenerator)
         {
-            var enqueuing = new ReportGeneratorEnqueuing(this);
-            enqueuing.reportGenerator = reportGenerator;
-            new Thread(new ThreadStart(enqueuing.EnqueueReportGenerator)).Start();
+            this.queueWorker.AddReportGenerator(reportGenerator);
         }
 
-        private void GenerateReport()
+        public void Start()
         {
-            Report.Report report = queue[0].GenerateReport(matchManager.Match);
-
-            var renderer = IoC.Get<IReportRenderer>("PDF");
-            string tmpReportPath = Path.GetTempPath() + "ttviewer_" + (MatchHashGenerator.GenerateMatchHash(null) + "1") + ".pdf";
-            bool fileExists = File.Exists(tmpReportPath);
-            Debug.WriteLine("report file (exists? {0}): {1}", fileExists, tmpReportPath);
-            if (!fileExists)
+            if (!queueWorker.run)
             {
-                using (var sink = File.Create(tmpReportPath))
-                {
-                    report.RenderToStream(renderer, sink);
-                }
-            }
-
-            lock (thisLock)
-            {
-                if (queue.Count == 1)
-                {
-                    queue.Clear();
-                    ReportGenerated(this, new ReportGeneratedEventArgs(tmpReportPath));
-                } else
-                {
-                    queue[0] = queue[1];
-                    queue[1] = null;
-                    new Thread(new ThreadStart(GenerateReport)).Start();                
-                }
+                queueWorker.run = true;
+                new Thread(new ThreadStart(this.queueWorker.WorkTheQueue)).Start();
             }
         }
 
-        private class ReportGeneratorEnqueuing
+        public void Stop()
         {
-            internal IReportGenerator reportGenerator;
-            private ReportSettingsQueueManager man;
+            queueWorker.run = false;
+        }
 
-            internal ReportGeneratorEnqueuing(ReportSettingsQueueManager manager)
+        private class QueueWorker
+        {
+            internal List<IReportGenerator> workList;
+            internal ReportSettingsQueueManager man;
+            internal bool run;
+
+            internal QueueWorker(ReportSettingsQueueManager man)
             {
-                man = manager;
+                this.man = man;
+                this.workList = new List<IReportGenerator>();
             }
 
-            internal void EnqueueReportGenerator()
+            internal void AddReportGenerator(IReportGenerator repGen)
             {
-                lock (man.thisLock)
+                lock(man)
                 {
-                    if (man.queue.Count == 0)
+                    Debug.WriteLine("*QueueWorker: adding repGen={0} to queue", repGen);
+                    workList.Add(repGen);
+                }
+            }
+
+            internal void WorkTheQueue()
+            {
+                while (run)
+                {
+                    if (workList.Count != 0)
                     {
-                        man.queue.Add(reportGenerator);
-                        new Thread(new ThreadStart(man.GenerateReport)).Start();
+                        Debug.WriteLine("QueueWorker: queue not empty, starting report generation (queue.Count={0})", workList.Count);
+                        var repGen = workList[workList.Count - 1];
+                        var repGenCustomizationId = (repGen is CustomizedReportGenerator ? ((CustomizedReportGenerator)repGen).CustomizationId : "1");
+                        var matchHash = MatchHashGenerator.GenerateMatchHash(man.matchManager.Match);
+
+                        Report.Report report = repGen.GenerateReport(man.matchManager.Match);
+                        var renderer = IoC.Get<IReportRenderer>("PDF");
+                        string tmpReportPath = Path.GetTempPath() + "ttviewer_" + (matchHash + repGenCustomizationId) + ".pdf";
+                        bool fileExists = File.Exists(tmpReportPath);
+                        Debug.WriteLine("QueueWorker: report file (exists? {0}): {1}", fileExists, tmpReportPath);
+                        if (!fileExists)
+                        {
+                            using (var sink = File.Create(tmpReportPath))
+                            {
+                                report.RenderToStream(renderer, sink);
+                            }
+                        }
+
+                        lock(man)
+                        {
+                            if (workList.Count > 1)
+                            {
+                                Debug.WriteLine("QueueWorker: queue.Count > 1, reducing to last");
+                                var lastRg = workList[workList.Count - 1];
+                                workList.Clear();
+                                workList.Add(lastRg);
+                            }
+                            else
+                            {
+                                Debug.WriteLine("QueueWorker: queue not grown since, invoking ReportGenerated event");
+                                man.ReportGenerated(man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
+                                workList.Clear();
+                            }
+                        }
                     }
-                    else
-                    {
-                        man.queue[1] = reportGenerator;
-                    }
+                    Thread.Sleep(50);
                 }
             }
         }

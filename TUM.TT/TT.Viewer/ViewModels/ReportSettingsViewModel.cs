@@ -26,10 +26,12 @@ namespace TT.Viewer.ViewModels
     {
         private IWindowManager WindowManager;
         private IDialogCoordinator DialogCoordinator;
+        private string issuedReportId;
+        private Dictionary<string, object> generatedReport; 
+        
         public IMatchManager MatchManager { get; private set; }
         public IEventAggregator Events { get; private set; }
-        public IReportSettingsQueueManager ReportSettingsQueueManager { get; private set; }
-        
+        public IReportSettingsQueueManager ReportSettingsQueueManager { get; private set; }        
         public Dictionary<int, string[]> StrokeStats { get; private set; }
         public Dictionary<int, string[]> GeneralStats { get; private set; }
 
@@ -214,7 +216,7 @@ namespace TT.Viewer.ViewModels
         }
 
         public List<int> AvailableCombis{ get; set; }        
-        public List<int> SelectedCombis{ get; set; }
+        public List<int> SelectedCombis { get; set; }
 
         public ReportSettingsViewModel(IMatchManager matchManager, IReportSettingsQueueManager reportSettingsQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
         {
@@ -223,6 +225,8 @@ namespace TT.Viewer.ViewModels
             Events = events;
             WindowManager = windowManager;
             DialogCoordinator = dialogCoordinator;
+
+            generatedReport = new Dictionary<string, object>();
 
             StrokeStats = new Dictionary<int, string[]>();
             StrokeStats[1] = new string[] { "side", Properties.Resources.report_settings_strokechoice_side };
@@ -244,24 +248,46 @@ namespace TT.Viewer.ViewModels
             AvailableCombis = new List<int>();
             SelectedCombis = new List<int>();
 
+            Load();
+            ReportSettingsQueueManager.Start();
+
             PropertyChanged += ReportSettingsViewModel_PropertyChanged;
             ReportSettingsQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
-
-            Load();
         }
 
         private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
         {
-            Debug.WriteLine("report generated [this={2} sender={0} report={1}]", sender, e.Report, GetHashCode());
-
-            Events.PublishOnUIThread(new ReportPreviewChangedEvent(e.Report));
+            Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.ReportPath);
+            generatedReport["match"] = e.MatchHash;
+            generatedReport["reportid"] = e.ReportSettingsCode;
+            generatedReport["path"] = e.ReportPath;
+            if (Events != null) // this is null in some scenarios 
+                Events.PublishOnUIThread(new ReportPreviewChangedEvent(e.ReportPath));
         }
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
+            if (!(e.PropertyName == "IsInitialized" || e.PropertyName == "IsActive"))
+            {
+                Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
+                GenerateReport();
+            }
         }
         
+        public void GenerateReport()
+        {
+            bool matchOpened = MatchManager.Match != null;
+            Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened));
+
+            if (matchOpened)
+            {
+                CustomizedReportGenerator gen = new CustomizedReportGenerator();
+                gen.Customization = GetCustomizationDictionary();
+                issuedReportId = MatchHashGenerator.GenerateMatchHash(MatchManager.Match) + gen.CustomizationId;
+                ReportSettingsQueueManager.Enqueue(gen);
+            }
+        }
+
         public void OnOkClick()
         {
             Debug.WriteLine("OnOkClick");
@@ -280,20 +306,58 @@ namespace TT.Viewer.ViewModels
             Debug.WriteLine("OnOkGenerateClick");
             Save();
 
-            //foreach (IResult result in MatchManager.GenerateReport("customized"))
-            //    yield return result;
-            //TryClose();
+            foreach (var r in SaveGeneratedReport(false))
+                yield return r;
 
-            CustomizedReportGenerator gen = new CustomizedReportGenerator();
-            gen.Customization = GetCustomizationDictionary();
-            ReportSettingsQueueManager.Enqueue(gen);
+            TryClose();
+        }
 
-            return null;
+        public IEnumerable<IResult> SaveGeneratedReport(bool exitAfter)
+        {
+            if (issuedReportId == null && generatedReport.GetValueOrDefault("reportid") == null)
+                Debug.WriteLine("Saving generated report failed. Report neither generated nor issued.");
+            else
+            {
+                var sleepAbortCounter = 0;
+                while ((generatedReport.GetValueOrDefault("reportid") == null || generatedReport.GetValueOrDefault("match") == null) || ((string)generatedReport["match"] + (string)generatedReport["reportid"] != issuedReportId))
+                {
+                    Thread.Sleep(50);
+                    sleepAbortCounter++;
+                    if (sleepAbortCounter > 100)
+                    {
+                        Debug.WriteLine("Saving generated report failed. Timeout (5 s) for report generation reached.");
+                        if (exitAfter)
+                            OnDeactivate(true);
+                        yield break;
+                    }
+                }
+                var dialog = new SaveFileDialogResult()
+                {
+                    Title = "Choose a target for PDF report",
+                    Filter = "PDF reports|*.pdf",
+                    DefaultFileName = MatchManager.Match.DefaultFilename(),
+                };
+                yield return dialog;
+
+                var userChosenPath = dialog.Result;
+                Debug.WriteLine("userChosenPath={0}", userChosenPath, "");
+                try
+                {
+                    File.Copy((string)generatedReport["path"], userChosenPath, true);
+                    Process.Start(userChosenPath);
+                } catch (Exception)
+                { 
+                    // TODO alert when opened in another process 
+                }
+            }
+            if (exitAfter)
+                OnDeactivate(true);
         }
 
         private Dictionary<string, object> GetCustomizationDictionary()
         {
             Dictionary<string, object> customizations = new Dictionary<string, object>();
+            var customizationId = "";
 
             List<object> players = new List<object>();
             if ((PlayerChoice & 1) == 1)
@@ -308,6 +372,7 @@ namespace TT.Viewer.ViewModels
                 players.Add(bothPlayers);
             }
             customizations["players"] = players;
+            customizationId += PlayerChoice.ToString("X");
 
 
             Dictionary<string, List<Rally>> sets = new Dictionary<string, List<Rally>>();
@@ -332,9 +397,12 @@ namespace TT.Viewer.ViewModels
                     sets[i.ToString()] = rallyList;
                 }
             }
+            customizationId += SetChoice.ToString("X");
 
             // set combis
-            foreach (var combi in SelectedCombis)
+            var selectedCombisSorted = new List<int>(SelectedCombis);
+            selectedCombisSorted.Sort();
+            foreach (var combi in selectedCombisSorted)
             {
                 var combiName = "";
                 var rallyList = new List<Rally>();
@@ -354,6 +422,7 @@ namespace TT.Viewer.ViewModels
                     }
                 }
                 sets[combiName.Substring(0, combiName.Length - 1)] = rallyList;
+                customizationId += combi.ToString("X");
             }
 
             customizations["sets"] = sets;
@@ -380,13 +449,30 @@ namespace TT.Viewer.ViewModels
                     ((List<string>)customizations["all_stats"]).Add(StrokeStats[key][0]);
             }
 
+            if (ServiceStatsChoice != 0)
+                customizationId += ServiceStatsChoice.ToString("X");
+            if (ReturnStatsChoice != 0)
+                customizationId += ReturnStatsChoice.ToString("X");
+            if (ThirdStatsChoice != 0)
+                customizationId += ThirdStatsChoice.ToString("X");
+            if (FourthStatsChoice != 0)
+                customizationId += FourthStatsChoice.ToString("X");
+            if (LastStatsChoice != 0)
+                customizationId += LastStatsChoice.ToString("X");
+            if (AllStatsChoice != 0)
+                customizationId += AllStatsChoice.ToString("X");
+
             customizations["general"] = new List<string>();
             foreach (int key in GeneralStats.Keys)
             {
                 if ((GeneralChoice & key) == key)
                     ((List<string>)customizations["general"]).Add(GeneralStats[key][0]);
             }
+            customizationId += GeneralChoice.ToString("X");
+            
+            Debug.WriteLine("customization id={0}", customizationId, "");
 
+            customizations["id"] = customizationId;
             return customizations;
         }
 
@@ -403,10 +489,16 @@ namespace TT.Viewer.ViewModels
             if (select)
             {
                 if (!SelectedCombis.Contains(combi))
+                {
                     SelectedCombis.Add(combi);
+                    NotifyOfPropertyChange("SelectedCombis");
+                }
             }
             else
+            {
                 SelectedCombis.Remove(combi);
+                NotifyOfPropertyChange("SelectedCombis");
+            }
         }
 
         private void Save()
@@ -451,6 +543,8 @@ namespace TT.Viewer.ViewModels
                 PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
                 ReportSettingsQueueManager.ReportGenerated -= ReportSettingsQueueManager_ReportGenerated;
                 Events.Unsubscribe(this);
+
+                ReportSettingsQueueManager.Stop();
 
                 WindowManager = null;
                 DialogCoordinator = null;

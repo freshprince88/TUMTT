@@ -133,6 +133,7 @@
     <Compile Include="Events\RallyLengthChangedEvent.cs" />
     <Compile Include="Events\RallyOverEvent.cs" />
     <Compile Include="Events\ReportPreviewChangedEvent.cs" />
+    <Compile Include="Events\ReportSettingsChangedEvent.cs" />
     <Compile Include="Events\ResultListControlEvent.cs" />
     <Compile Include="Events\ResultsChangedEvent.cs" />
     <Compile Include="Events\ShowPlaylistSettingsEvent.cs" />

@@ -10,6 +10,8 @@ namespace TT.Lib.Managers
     public interface IReportSettingsQueueManager
     {
         void Enqueue(IReportGenerator reportGenerator);
+        void Start();
+        void Stop();
         event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
     }
 }

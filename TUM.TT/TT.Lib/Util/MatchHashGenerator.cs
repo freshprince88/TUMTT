@@ -15,7 +15,7 @@ namespace TT.Lib.Util
         {
             if (match != null)
             {
-                throw new NotImplementedException();
+                return match.GetHashCode().ToString("X");
             } else
             {
                 var random = new Random();

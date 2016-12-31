@@ -160,7 +160,9 @@ namespace TT.Viewer.ViewModels
 
         public IEnumerable<IResult> GenerateReport()
         {
-            return MatchManager.GenerateReport("default");
+            var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportSettingsQueueManager>(), _windowManager, Events, DialogCoordinator);
+            reportVm.GenerateReport();
+            return reportVm.SaveGeneratedReport(true);
         }
 
         #endregion
