@@ -9,6 +9,7 @@ using System.Windows.Controls.Primitives;
 using TT.Models;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using System.Windows.Controls;
 
 namespace TT.Viewer.ViewModels
 {
@@ -17,7 +18,10 @@ namespace TT.Viewer.ViewModels
     {
 
         #region Properties
-
+        public BasicFilterStatisticsViewModel BasicFilterStatisticsView { get; set; }
+        public string X { get; private set; }
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
         #endregion
 
 
@@ -31,9 +35,101 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
+            Player1 = "Player 1";
+            Player2 = "Player 2";
+            BasicFilterStatisticsView = new BasicFilterStatisticsViewModel(this.events, Manager)
+            {
+                MinRallyLength = 1,
+                LastStroke = true,
+                StrokeNumber = 0
+            };
         }
 
         #region View Methods
+        public void StatButtonClick(Grid parent, string btnName)
+        {
+            foreach (ToggleButton btn in parent.FindChildren<ToggleButton>())
+            {
+                if (btn.Name != btnName)
+                    btn.IsChecked = false;
+            }
+        }
+
+        public void SelectBasisInformation(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                X = source.Name;
+
+            }
+            else
+            {
+                X = "";
+            }
+
+            UpdateSelection(Manager.ActivePlaylist);
+
+        }
+
+        public void SelectPlacement(ToggleButton source)
+
+        {
+
+            if (source.IsChecked.Value)
+            {
+                X = source.Name;
+
+            }
+            else
+            {
+                X = "";
+            }
+
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void SelectContactPosition(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                X = source.Name;
+
+            }
+            else
+            {
+                X = "";
+            }
+
+            UpdateSelection(Manager.ActivePlaylist);
+
+        }
+        public void SelectTechnique(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                X = source.Name;
+
+            }
+            else
+            {
+                X = "";
+            }
+
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void SelectStepAround(ToggleButton source)
+        {
+            if (source.IsChecked.Value)
+            {
+                X = source.Name;
+
+            }
+            else
+            {
+                X = "";
+            }
+
+            UpdateSelection(Manager.ActivePlaylist);
+        }
 
 
         #endregion
@@ -43,24 +139,26 @@ namespace TT.Viewer.ViewModels
         /// <summary>
         /// Initializes this view model.
         /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-        }
-
         protected override void OnActivate()
         {
             base.OnActivate();
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
+            this.ActivateItem(BasicFilterStatisticsView);
             UpdateSelection(Manager.ActivePlaylist);
-
+            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
+        }
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
+            UpdateSelection(Manager.ActivePlaylist);
         }
 
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
-
+            this.DeactivateItem(BasicFilterStatisticsView, close);
             // Unsubscribe ourself to the event bus
             this.events.Unsubscribe(this);
         }
@@ -83,7 +181,12 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = Manager.ActivePlaylist.Rallies.ToList();
+                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 1 &&
+                r.HasPlacementStatistics((r.LastWinnerStroke().Number)-1, X) &&
+                r.HasBasisInformationStatistics(r.LastWinnerStroke().Number, X) &&
+                r.HasContactPositionStatistics((r.LastWinnerStroke().Number) - 1, X) &&
+                r.HasTechniqueStatistics((r.LastWinnerStroke().Number) - 1, X) &&
+                r.HasStepAroundStatistics((r.LastWinnerStroke().Number) - 1, X)).ToList();
                 Manager.SelectedRallies = results;
             }
         }

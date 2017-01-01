@@ -1562,7 +1562,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="OverTheTableTotalButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'over'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                            <ToggleButton x:Name="OverTheTableTotalButton" Tag="r => r.Strokes[3].PointOfContact == 'over'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1581,7 +1581,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="OverTheTablePointsWonButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'over' &amp;&amp; r.Strokes[3].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="OverTheTablePointsWonButton" Tag="r => r.Strokes[3].PointOfContact == 'over' &amp;&amp; r.Strokes[3].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1600,7 +1600,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="OverTheTableDirectPointsWonButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'over' &amp;&amp; r.Strokes[3].Player == r.Winner &amp;&amp;  r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="OverTheTableDirectPointsWonButton" Tag="r => r.Strokes[3].PointOfContact == 'over' &amp;&amp; r.Strokes[3].Player == r.Winner &amp;&amp;  r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1619,7 +1619,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="OverTheTablePointsLostButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'over' &amp;&amp; r.Strokes[3].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="OverTheTablePointsLostButton" Tag="r => r.Strokes[3].PointOfContact == 'over' &amp;&amp; r.Strokes[3].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1649,7 +1649,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="AtTheTableTotalButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'behind'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                            <ToggleButton x:Name="AtTheTableTotalButton" Tag="r => r.Strokes[3].PointOfContact == 'behind'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1668,7 +1668,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AtTheTablePointsWonButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'behind' &amp;&amp; r.Strokes[3].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="AtTheTablePointsWonButton" Tag="r => r.Strokes[3].PointOfContact == 'behind' &amp;&amp; r.Strokes[3].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1687,7 +1687,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AtTheTableDirectPointsWonButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'behind' &amp;&amp; r.Strokes[3].Player == r.Winner &amp;&amp;  r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="AtTheTableDirectPointsWonButton" Tag="r => r.Strokes[3].PointOfContact == 'behind' &amp;&amp; r.Strokes[3].Player == r.Winner &amp;&amp;  r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1706,7 +1706,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="AtTheTablePointsLostButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'behind' &amp;&amp; r.Strokes[3].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="AtTheTablePointsLostButton" Tag="r => r.Strokes[3].PointOfContact == 'behind' &amp;&amp; r.Strokes[3].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1736,7 +1736,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="HalfDistanceTotalButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'half-distance'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                            <ToggleButton x:Name="HalfDistanceTotalButton" Tag="r => r.Strokes[3].PointOfContact == 'half-distance'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1755,7 +1755,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="HalfDistancePointsWonButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'half-distance' &amp;&amp; r.Strokes[3].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="HalfDistancePointsWonButton" Tag="r => r.Strokes[3].PointOfContact == 'half-distance' &amp;&amp; r.Strokes[3].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1774,7 +1774,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="HalfDistanceDirectPointsWonButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'half-distance' &amp;&amp; r.Strokes[3].Player == r.Winner &amp;&amp;  r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="HalfDistanceDirectPointsWonButton" Tag="r => r.Strokes[3].PointOfContact == 'half-distance' &amp;&amp; r.Strokes[3].Player == r.Winner &amp;&amp;  r.Length &lt; 6" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
@@ -1793,7 +1793,7 @@
                                     </MultiBinding>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="HalfDistancePointsLostButton" Tag="r => r.Strokes[3].Balltreffpunkt == 'half-distance' &amp;&amp; r.Strokes[3].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="HalfDistancePointsLostButton" Tag="r => r.Strokes[3].PointOfContact == 'half-distance' &amp;&amp; r.Strokes[3].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <cal:ActionMessage MethodName="StatButtonClick">
