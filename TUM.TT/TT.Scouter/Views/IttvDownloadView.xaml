@@ -50,7 +50,7 @@
             <ObjectDataProvider x:Key="CompetitionFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}" >
                 <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="Models:MatchCompetition"/>
+                    <x:Type TypeName="Models:MatchCategory"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
         </ResourceDictionary>

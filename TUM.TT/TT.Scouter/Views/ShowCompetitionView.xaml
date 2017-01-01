@@ -33,6 +33,12 @@
                     <x:Type TypeName="Models:MatchMode"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+            <ObjectDataProvider x:Key="CategoryFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}" >
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MatchCategory"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
             <Style x:Key="LargeTileStyle"
                    TargetType="Controls:Tile">
                 <Setter Property="Width"
@@ -100,6 +106,8 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
@@ -113,16 +121,19 @@
         <Label Content="Tournament" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalContentAlignment="Center"/>
         <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="20" Text="{Binding Path=Match.Tournament}"/>
 
-        <Label Content="Round" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="20" VerticalContentAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="20" Text="{Binding Path=Match.Round}"/>
+        <Label Content="Category" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource CategoryFromEnum}}" SelectedItem="{Binding Path=Match.Category}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="20" />
 
-        <Label Content="Mode" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="20" VerticalContentAlignment="Center"/>
-        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedItem="{Binding Path=Match.Mode}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="20" />
+        <Label Content="Round" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="20" VerticalContentAlignment="Center"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="20" Text="{Binding Path=Match.Round}"/>
 
-        <Label Content="Date" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="20" VerticalContentAlignment="Center"/>
-        <DatePicker x:Name="TourneyDate" SelectedDate="{Binding Path=Match.DateTime}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="20" VerticalContentAlignment="Center"/>
+        <Label Content="Mode" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedItem="{Binding Path=Match.Mode}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="20" />
 
-        <Grid Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3">
+        <Label Content="Date" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="10" FontSize="20" VerticalContentAlignment="Center"/>
+        <DatePicker x:Name="TourneyDate" SelectedDate="{Binding Path=Match.DateTime}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="10" FontSize="20" VerticalContentAlignment="Center"/>
+
+        <Grid Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>

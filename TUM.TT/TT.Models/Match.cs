@@ -40,6 +40,11 @@ namespace TT.Models
         private string tournament;
 
         /// <summary>
+        /// Backs the <see cref="Category"/> property.
+        /// </summary>
+        private MatchCategory category = MatchCategory.Category;
+
+        /// <summary>
         /// Backs the <see cref="Round"/> property.
         /// </summary>
         private string round;
@@ -190,6 +195,16 @@ namespace TT.Models
         {
             get { return this.videoFile; }
             set { this.RaiseAndSetIfChanged(ref this.videoFile, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the category of the match.
+        /// </summary>
+        [XmlAttribute]
+        public MatchCategory Category
+        {
+            get { return this.category; }
+            set { this.RaiseAndSetIfChanged(ref this.category, value); }
         }
 
         /// <summary>

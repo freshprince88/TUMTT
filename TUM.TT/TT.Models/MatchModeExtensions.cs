@@ -86,15 +86,15 @@ namespace TT.Models
     }
 
     /// <summary>
-    /// The Round in a Tournament.
+    /// The Category in a Tournament.
     /// </summary>
-    public enum MatchCompetition
+    public enum MatchCategory
     {
         /// <summary>
-        /// Competition.
+        /// Category.
         /// </summary>
         [Description("Men's Singles")]
-        Competition,
+        Category,
         /// <summary>
         /// Men's Singles.
         /// </summary>
@@ -125,7 +125,17 @@ namespace TT.Models
         /// </summary>
         [Description("Women's Doubles")]
         WD,
-      
+        /// <summary>
+        /// Men's Team.
+        /// </summary>
+        [Description("Men's Doubles")]
+        MT,
+        /// <summary>
+        /// Women's Team.
+        /// </summary>
+        [Description("Women's Doubles")]
+        WT,
+
     }
 
 
