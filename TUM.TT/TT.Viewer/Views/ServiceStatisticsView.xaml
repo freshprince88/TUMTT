@@ -3785,7 +3785,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="NoUpDownAllTotalButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                            <ToggleButton x:Name="NoUpDownAllTotalButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0' &amp;&amp; (r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.No == '1' )" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -3804,7 +3804,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="NoUpDownAllPointsWonButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0') &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="NoUpDownAllPointsWonButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0' &amp;&amp; (r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.No == '1' )) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -3823,7 +3823,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="NoUpDownAllDirectPointsWonButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0') &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="NoUpDownAllDirectPointsWonButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0' &amp;&amp; (r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.No == '1' )) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -3842,7 +3842,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="NoUpDownAllPointsLostButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0') &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="NoUpDownAllPointsLostButton" Tag="r => (r.Strokes[0].Spin.TS == '0' &amp;&amp; r.Strokes[0].Spin.US == '0' &amp;&amp; (r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.SL == '1' || r.Strokes[0].Spin.No == '1' )) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -4307,7 +4307,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="NoSideAllTotalButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+                            <ToggleButton x:Name="NoSideAllTotalButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0' &amp;&amp; (r.Strokes[0].Spin.TS == '1' || r.Strokes[0].Spin.US == '1' || r.Strokes[0].Spin.No == '1' ))" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -4326,7 +4326,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="NoSideAllPointsWonButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0') &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="NoSideAllPointsWonButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0' &amp;&amp; (r.Strokes[0].Spin.TS == '1' || r.Strokes[0].Spin.US == '1' || r.Strokes[0].Spin.No == '1' )) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -4345,7 +4345,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="NoSideAllDirectPointsWonButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0') &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                            <ToggleButton x:Name="NoSideAllDirectPointsWonButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0' &amp;&amp; (r.Strokes[0].Spin.TS == '1' || r.Strokes[0].Spin.US == '1' || r.Strokes[0].Spin.No == '1' )) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
@@ -4364,7 +4364,7 @@
                                         </MultiBinding>
                                     </ToggleButton.Content>
                                 </ToggleButton>
-                                <ToggleButton x:Name="NoSideAllPointsLostButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0') &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                            <ToggleButton x:Name="NoSideAllPointsLostButton" Tag="r => (r.Strokes[0].Spin.SL == '0' &amp;&amp; r.Strokes[0].Spin.SR == '0' &amp;&amp; (r.Strokes[0].Spin.TS == '1' || r.Strokes[0].Spin.US == '1' || r.Strokes[0].Spin.No == '1' )) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <cal:ActionMessage MethodName="StatButtonClick">
