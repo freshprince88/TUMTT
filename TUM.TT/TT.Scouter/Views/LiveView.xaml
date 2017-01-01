@@ -104,6 +104,12 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="DeleteLastRally" />
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Ctrl" Key="OemMinus"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="DeleteLastRally"/>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
         </Grid>
