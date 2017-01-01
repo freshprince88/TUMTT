@@ -22,12 +22,12 @@ namespace TT.Scouter.ViewModels
             get
             {
                 return Match.FirstServer != MatchPlayer.None;
-                 
+
             }
 
-            
+
         }
-       
+
         public int LengthHelper
         {
             get
@@ -167,7 +167,7 @@ namespace TT.Scouter.ViewModels
 
             }
         }
-    
+
         public bool Markiert { get; set; }
         public ChoiceOfEndsViewModel ChoiceOfEnds { get; private set; }
         public ChoiceOfServiceReceiveViewModel ChoiceOfServiceReceive { get; private set; }
@@ -179,7 +179,7 @@ namespace TT.Scouter.ViewModels
             get { return _trans; }
             set
             {
-                if (_trans!=value)
+                if (_trans != value)
                 {
                     _trans = value;
                     NotifyOfPropertyChange();
@@ -190,7 +190,7 @@ namespace TT.Scouter.ViewModels
         public Screen CurrentScreen { get; set; }
 
         public LiveViewModel(IEventAggregator ev, IMatchManager man)
-        {          
+        {
             Events = ev;
             MatchManager = man;
             IsNewRally = true;
@@ -245,7 +245,7 @@ namespace TT.Scouter.ViewModels
 
         public void RallyWon(int player, int length)
         {
-        
+
             if (!IsNewRally)
             {
                 // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
@@ -269,7 +269,7 @@ namespace TT.Scouter.ViewModels
                 Server = CurrentRally.Server;
                 //LengthHelper = 0;
                 NotifyOfPropertyChange();
-                NotifyOfPropertyChange("Server");                               
+                NotifyOfPropertyChange("Server");
                 IsNewRally = true;
                 IsWinnerEnabled = false;
                 MatchManager.MatchModified = true;
@@ -290,6 +290,15 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        public void SetNewStart()
+        {
+            if (!IsNewRally)
+            {
+                CurrentRally.Start = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+                MatchManager.MatchModified = true;
+            }
+        }
+
         public IEnumerable<IResult> ShowServer()
         {
             var dialog = new CustomClosableComboDialog<Player>();
@@ -306,14 +315,14 @@ namespace TT.Scouter.ViewModels
             var result = new CustomDialogResult<Player>() { Title = "Server", DialogContent = dialog };
             yield return result;
 
-          
+
             NotifyOfPropertyChange("FirstServerSet");
             this.Server = MatchManager.ConvertPlayer(result.Result);
             CurrentRally.Server = this.Server;
             NotifyOfPropertyChange("Server");
         }
         public void SetFirstServer(Player p)
-        {          
+        {
             this.Server = MatchManager.ConvertPlayer(p);
             CurrentRally.Server = this.Server;
             NotifyOfPropertyChange("Server");
@@ -353,7 +362,7 @@ namespace TT.Scouter.ViewModels
                 {
                     Rallies.Remove(lastRally);
                     lastRally = Rallies.Last();
-                }                
+                }
                 Rallies.Remove(lastRally);
                 Rallies.Add(new Rally());
                 CurrentRally = Rallies.Last();
@@ -361,10 +370,10 @@ namespace TT.Scouter.ViewModels
                 IsNewRally = true;
                 IsWinnerEnabled = false;
                 MatchManager.MatchModified = true;
-               
+
                 NotifyOfPropertyChange("FirstServerSet");
             }
-            
+
         }
 
         public void FinalizeLiveMode()

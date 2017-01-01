@@ -45,6 +45,10 @@ namespace TT.Scouter.ViewModels
         {
             LiveView.StartRally();
         }
+        public void SetNewStart()
+        {
+            LiveView.SetNewStart();
+        }
         #endregion
     }
 }
