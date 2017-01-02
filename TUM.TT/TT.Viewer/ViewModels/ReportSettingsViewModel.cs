@@ -31,7 +31,7 @@ namespace TT.Viewer.ViewModels
         
         public IMatchManager MatchManager { get; private set; }
         public IEventAggregator Events { get; private set; }
-        public IReportSettingsQueueManager ReportSettingsQueueManager { get; private set; }        
+        public IReportGenerationQueueManager ReportGenerationQueueManager { get; private set; }        
         public Dictionary<int, string[]> StrokeStats { get; private set; }
         public Dictionary<int, string[]> GeneralStats { get; private set; }
 
@@ -218,10 +218,10 @@ namespace TT.Viewer.ViewModels
         public List<int> AvailableCombis{ get; set; }        
         public List<int> SelectedCombis { get; set; }
 
-        public ReportSettingsViewModel(IMatchManager matchManager, IReportSettingsQueueManager reportSettingsQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
+        public ReportSettingsViewModel(IMatchManager matchManager, IReportGenerationQueueManager reportGenerationQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
         {
             MatchManager = matchManager;
-            ReportSettingsQueueManager = reportSettingsQueueManager;
+            ReportGenerationQueueManager = reportGenerationQueueManager;
             Events = events;
             WindowManager = windowManager;
             DialogCoordinator = dialogCoordinator;
@@ -249,10 +249,10 @@ namespace TT.Viewer.ViewModels
             SelectedCombis = new List<int>();
 
             Load();
-            ReportSettingsQueueManager.Start();
+            ReportGenerationQueueManager.Start();
 
             PropertyChanged += ReportSettingsViewModel_PropertyChanged;
-            ReportSettingsQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
+            ReportGenerationQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
         }
 
         private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
@@ -267,7 +267,8 @@ namespace TT.Viewer.ViewModels
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!(e.PropertyName == "IsInitialized" || e.PropertyName == "IsActive"))
+            var ignoredProperties = new List<string> { "IsInitialized", "IsActive", "ExpandState" };
+            if (!ignoredProperties.Contains(e.PropertyName))
             {
                 Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
                 GenerateReport();
@@ -284,7 +285,7 @@ namespace TT.Viewer.ViewModels
                 CustomizedReportGenerator gen = new CustomizedReportGenerator();
                 gen.Customization = GetCustomizationDictionary();
                 issuedReportId = MatchHashGenerator.GenerateMatchHash(MatchManager.Match) + gen.CustomizationId;
-                ReportSettingsQueueManager.Enqueue(gen);
+                ReportGenerationQueueManager.Enqueue(gen);
             }
         }
 
@@ -381,7 +382,7 @@ namespace TT.Viewer.ViewModels
                 sets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
 
             // sets 1-7
-            for (var i = 1; i < Math.Ceiling(Math.Log(SetChoice, 2)); i++)
+            for (var i = 1; i <= Math.Ceiling(Math.Log(SetChoice, 2)); i++)
             {
                 int mask = 1 << i;
                 if ((mask & SetChoice) == mask)
@@ -541,16 +542,16 @@ namespace TT.Viewer.ViewModels
             if (close)
             {
                 PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
-                ReportSettingsQueueManager.ReportGenerated -= ReportSettingsQueueManager_ReportGenerated;
+                ReportGenerationQueueManager.ReportGenerated -= ReportSettingsQueueManager_ReportGenerated;
                 Events.Unsubscribe(this);
 
-                ReportSettingsQueueManager.Stop();
+                ReportGenerationQueueManager.Stop();
 
                 WindowManager = null;
                 DialogCoordinator = null;
                 MatchManager = null;
                 Events = null;
-                ReportSettingsQueueManager = null;
+                ReportGenerationQueueManager = null;
             }
         }
     }

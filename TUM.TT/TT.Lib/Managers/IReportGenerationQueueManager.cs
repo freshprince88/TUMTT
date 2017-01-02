@@ -7,7 +7,7 @@ using TT.Report.Generators;
 
 namespace TT.Lib.Managers
 {
-    public interface IReportSettingsQueueManager
+    public interface IReportGenerationQueueManager
     {
         void Enqueue(IReportGenerator reportGenerator);
         void Start();

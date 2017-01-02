@@ -422,7 +422,7 @@ namespace TT.Models
             {
                 StrokeNumber = Convert.ToInt32(Length) - 2;
             }
-            return Strokes[StrokeNumber];
+            return StrokeNumber >= 0 ? Strokes[StrokeNumber] : null;
         }
 
         /// <summary>

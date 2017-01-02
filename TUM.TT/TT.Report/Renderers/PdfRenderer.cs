@@ -22,6 +22,7 @@ namespace TT.Report.Renderers
     using TT.Models.Statistics;
     using TT.Report.Renderers.Pdf;
     using TT.Report.Sections;
+    using OxyPlot.Series;
 
     /// <summary>
     /// Renders a report to a PDF file.
@@ -542,7 +543,47 @@ namespace TT.Report.Renderers
         public void Visit(SideSection section)
         {
             this.AddHeading(2, Properties.Resources.section_side);
-            this.AddPlot(section.SidePlot);
+
+            int smallSize = 210;
+            int normalSize = 350;
+            Section sec = Document.LastSection;
+
+            Table table = sec.AddTable();
+            table.Borders.Visible = false;
+
+            Column col = table.AddColumn();
+            col.Width = section.SidePlots.Count > 1 ? smallSize : normalSize;
+            if (section.SidePlots.Count > 1)
+            {
+                col = table.AddColumn();
+                col.Width = smallSize;
+            }
+
+            int c = 0;
+            Row row = null;
+            foreach (var p in section.SidePlots)
+            {
+                int rowIndex = c % 2;
+                if (rowIndex == 0)
+                    row = table.AddRow();
+
+                int size;
+                if (section.SidePlots.Count > 1)
+                    size = smallSize;
+                else
+                    size = normalSize;
+
+                var tempFile = this.GetTempFile();
+                PdfExporter.Export(p, tempFile, size + 30, size);
+
+                row.Cells[rowIndex].AddParagraph().AddImage(tempFile);
+                row.Cells[rowIndex].Format.Alignment = ParagraphAlignment.Center;
+                c++;
+            }
+            if (section.SidePlots.Count > 1 && c % 2 == 1)
+            {
+                row.Cells[0].MergeRight = 1;
+            }
         }
         
         public void Visit(StepAroundSection section)

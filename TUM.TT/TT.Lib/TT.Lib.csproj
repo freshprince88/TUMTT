@@ -154,8 +154,8 @@
     <Compile Include="Interactivity\GlobalInputBindingTrigger.cs" />
     <Compile Include="Interactivity\InputBindingTrigger.cs" />
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
-    <Compile Include="Managers\IReportSettingsQueueManager.cs" />
-    <Compile Include="Managers\ReportSettingsQueueManager.cs" />
+    <Compile Include="Managers\IReportGenerationQueueManager.cs" />
+    <Compile Include="Managers\ReportGenerationQueueManager.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
     <Compile Include="Util\MatchHashGenerator.cs" />
     <Compile Include="Util\ObservableSortedList.cs" />

@@ -5,6 +5,7 @@ using TT.Report.Plots;
 using TT.Report.Sections;
 using System.Windows.Media;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace TT.Report.Generators
 {
@@ -102,7 +103,7 @@ namespace TT.Report.Generators
                 {
                     // add sections for requested players (1/2)
                     report.Sections.Add(new PartSection(Properties.Resources.section_part_player, p as Player));
-                    AddStrokeSections(report);
+                    AddStrokeSections(report, plotStyle, match, p);
                 }
                 else if (p is List<Player>)
                 {
@@ -113,7 +114,7 @@ namespace TT.Report.Generators
             return report;
         }
 
-        private void AddStrokeSections(Report report)
+        private void AddStrokeSections(Report report, PlotStyle plotStyle, Match match, object player)
         {
             var statsNames = new string[] { "service_stats", "return_stats", "third_stats", "fourth_stats", "last_stats", "all_stats" };
             foreach (var n in statsNames)
@@ -121,35 +122,36 @@ namespace TT.Report.Generators
                 var strokeStats = (List<string>)Customization[n];
                 if (strokeStats.Count > 0)
                 {
-                    report.Sections.Add(new StrokeStatsHeadingSection(GetStrokeStatsHeadingSectionName(n)));
+                    var headingNameAndNumber = GetStrokeStatsHeadingNameAndStrokeNr(n);
+                    report.Sections.Add(new StrokeStatsHeadingSection((string)headingNameAndNumber[0]));
                     foreach (var s in strokeStats)
                     {
-                        report.Sections.Add(GetStrokeSection(s));
+                        report.Sections.Add(GetStrokeSection(s, plotStyle, match, player, (int)headingNameAndNumber[1]));
                     }
 
                 }
             }
         }
 
-        private string GetStrokeStatsHeadingSectionName(string statsType)
+        private object[] GetStrokeStatsHeadingNameAndStrokeNr(string statsType)
         {
             switch (statsType)
             {
-                case "service_stats": return Properties.Resources.section_stroke_name_service;
-                case "return_stats": return Properties.Resources.section_stroke_name_return;
-                case "third_stats": return Properties.Resources.section_stroke_name_third;
-                case "fourth_stats": return Properties.Resources.section_stroke_name_fourth;
-                case "last_stats": return Properties.Resources.section_stroke_name_last;
-                case "all_stats": return Properties.Resources.section_stroke_name_all;
+                case "service_stats": return new object[] { Properties.Resources.section_stroke_name_service, 1 };
+                case "return_stats": return new object[] { Properties.Resources.section_stroke_name_return, 2 };
+                case "third_stats": return new object[] { Properties.Resources.section_stroke_name_third, 3 };
+                case "fourth_stats": return new object[] { Properties.Resources.section_stroke_name_fourth, 4 };
+                case "last_stats": return new object[] { Properties.Resources.section_stroke_name_last, int.MaxValue };
+                case "all_stats": return new object[] { Properties.Resources.section_stroke_name_all, -1 };
             }
             return null;
         }
 
-        private IReportSection GetStrokeSection(string sectionName)
+        private IReportSection GetStrokeSection(string sectionName, PlotStyle plotStyle, Match match, object player, int strokeNumber)
         {
             switch (sectionName)
             {
-                case "side": return new SideSection();
+                case "side": return new SideSection(plotStyle, strokeNumber, (IDictionary<string, List<Rally>>)Customization["sets"], match, player);
                 case "steparound": return new StepAroundSection();
                 case "spin": return new SpinSection();
                 case "technique": return new TechniqueSection();

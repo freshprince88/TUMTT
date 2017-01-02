@@ -126,7 +126,7 @@ namespace TT.Viewer.Views
 
         private void ReportPreviewControl_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            Debug.WriteLine("Load complete [uri=" + e.Uri.ToString() + "]");
+            Debug.WriteLine("Load complete [uri={0}]", e.Uri.ToString(), "");
             new Thread(new ThreadStart(DisplayWebBrowserDelayed)).Start();
         }
 
@@ -248,7 +248,7 @@ namespace TT.Viewer.Views
                 return "";
 
             var combiString = "";
-            for (var i = 0; i < Math.Ceiling(Math.Log(combi, 2)); i++)
+            for (var i = 0; i <= Math.Ceiling(Math.Log(combi, 2)); i++)
             {
                 var mask = 1 << i;
                 if ((mask & combi) == mask)

@@ -24,14 +24,14 @@ namespace TT.Lib.Managers
         }
     }
 
-    public class ReportSettingsQueueManager : IReportSettingsQueueManager
+    public class ReportGenerationQueueManager : IReportGenerationQueueManager
     {
         public event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
 
         private IMatchManager matchManager;
         private QueueWorker queueWorker;
 
-        public ReportSettingsQueueManager(IMatchManager matchManager)
+        public ReportGenerationQueueManager(IMatchManager matchManager)
         {
             this.matchManager = matchManager;
             this.queueWorker = new QueueWorker(this);
@@ -60,10 +60,10 @@ namespace TT.Lib.Managers
         private class QueueWorker
         {
             internal List<IReportGenerator> workList;
-            internal ReportSettingsQueueManager man;
+            internal ReportGenerationQueueManager man;
             internal bool run;
 
-            internal QueueWorker(ReportSettingsQueueManager man)
+            internal QueueWorker(ReportGenerationQueueManager man)
             {
                 this.man = man;
                 this.workList = new List<IReportGenerator>();
@@ -106,7 +106,7 @@ namespace TT.Lib.Managers
                         {
                             if (workList.Count > 1)
                             {
-                                Debug.WriteLine("QueueWorker: queue.Count > 1, reducing to last");
+                                Debug.WriteLine("QueueWorker: queue.Count={0}, reducing to last", workList.Count);
                                 var lastRg = workList[workList.Count - 1];
                                 workList.Clear();
                                 workList.Add(lastRg);

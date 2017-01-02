@@ -160,7 +160,7 @@ namespace TT.Viewer.ViewModels
 
         public IEnumerable<IResult> GenerateReport()
         {
-            var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportSettingsQueueManager>(), _windowManager, Events, DialogCoordinator);
+            var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator);
             reportVm.GenerateReport();
             return reportVm.SaveGeneratedReport(true);
         }
@@ -272,7 +272,7 @@ namespace TT.Viewer.ViewModels
                 settings.ResizeMode = ResizeMode.CanResizeWithGrip;
                 settings.Width = 1200;
                 settings.Height = 860;
-                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, IoC.Get<IReportSettingsQueueManager>(), _windowManager, Events, DialogCoordinator), null, settings);
+                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator), null, settings);
             }
         }
         #endregion
