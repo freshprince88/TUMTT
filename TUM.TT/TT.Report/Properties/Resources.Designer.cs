@@ -88,6 +88,69 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spin.
+        /// </summary>
+        public static string section_spin {
+            get {
+                return ResourceManager.GetString("section_spin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        public static string section_spin_down {
+            get {
+                return ResourceManager.GetString("section_spin_down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hidden.
+        /// </summary>
+        public static string section_spin_hidden {
+            get {
+                return ResourceManager.GetString("section_spin_hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lost.
+        /// </summary>
+        public static string section_spin_lost {
+            get {
+                return ResourceManager.GetString("section_spin_lost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string section_spin_no {
+            get {
+                return ResourceManager.GetString("section_spin_no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        public static string section_spin_up {
+            get {
+                return ResourceManager.GetString("section_spin_up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Won.
+        /// </summary>
+        public static string section_spin_won {
+            get {
+                return ResourceManager.GetString("section_spin_won", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All strokes.
         /// </summary>
         public static string section_stroke_name_all {
@@ -138,6 +201,24 @@ namespace TT.Report.Properties {
         public static string section_stroke_name_third {
             get {
                 return ResourceManager.GetString("section_stroke_name_third", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All sets.
+        /// </summary>
+        public static string sets_all {
+            get {
+                return ResourceManager.GetString("sets_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string sets_one {
+            get {
+                return ResourceManager.GetString("sets_one", resourceCulture);
             }
         }
     }

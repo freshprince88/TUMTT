@@ -126,6 +126,27 @@
   <data name="section_side" xml:space="preserve">
     <value>Side</value>
   </data>
+  <data name="section_spin" xml:space="preserve">
+    <value>Spin</value>
+  </data>
+  <data name="section_spin_down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="section_spin_hidden" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="section_spin_lost" xml:space="preserve">
+    <value>Lost</value>
+  </data>
+  <data name="section_spin_no" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="section_spin_up" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="section_spin_won" xml:space="preserve">
+    <value>Won</value>
+  </data>
   <data name="section_stroke_name_all" xml:space="preserve">
     <value>All strokes</value>
   </data>
@@ -143,5 +164,11 @@
   </data>
   <data name="section_stroke_name_third" xml:space="preserve">
     <value>Third stroke</value>
+  </data>
+  <data name="sets_all" xml:space="preserve">
+    <value>All sets</value>
+  </data>
+  <data name="sets_one" xml:space="preserve">
+    <value>Set</value>
   </data>
 </root>

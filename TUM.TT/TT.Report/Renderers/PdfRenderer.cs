@@ -592,6 +592,57 @@ namespace TT.Report.Renderers
 
         public void Visit(SpinSection section)
         {
+            AddHeading(2, Properties.Resources.section_spin);
+
+            int smallSizeWidth = 210;
+            int smallSizeHeight = 150;
+            int normalSizeWidth = 450;
+            int normalSizeHeight = 270;
+            bool multiplePlots = section.SpinPlots.Count > 1;
+            Section sec = Document.LastSection;
+
+            Table table = sec.AddTable();
+            table.Borders.Visible = false;
+
+            Column col = table.AddColumn();
+            col.Width = multiplePlots ? smallSizeWidth : normalSizeWidth;
+            if (multiplePlots)
+            {
+                col = table.AddColumn();
+                col.Width = smallSizeWidth;
+            }
+
+            int c = 0;
+            Row row = null;
+            foreach (var p in section.SpinPlots)
+            {
+                int rowIndex = c % 2;
+                if (rowIndex == 0)
+                    row = table.AddRow();
+
+                int sizeW, sizeH;
+                if (multiplePlots)
+                {
+                    sizeW = smallSizeWidth;
+                    sizeH = smallSizeHeight;
+                }
+                else
+                {
+                    sizeW = normalSizeWidth;
+                    sizeH = normalSizeHeight;
+                }
+
+                var tempFile = this.GetTempFile();
+                PdfExporter.Export(p, tempFile, sizeW, sizeH);
+
+                row.Cells[rowIndex].AddParagraph().AddImage(tempFile);
+                row.Cells[rowIndex].Format.Alignment = ParagraphAlignment.Center;
+                c++;
+            }
+            if (multiplePlots && c % 2 == 1)
+            {
+                row.Cells[0].MergeRight = 1;
+            }
         }
 
         public void Visit(TechniqueSection section)

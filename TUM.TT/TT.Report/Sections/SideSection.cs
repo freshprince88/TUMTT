@@ -13,7 +13,6 @@ namespace TT.Report.Sections
         private object player;
 
         public List<PlotModel> SidePlots { get; internal set; }
-        public IDictionary<string, SideStatistics> SideStatistics { get; private set; }
 
         public SideSection(PlotStyle plotStyle, int strokeNr, IDictionary<string, List<Rally>> sets, Match match, object player)
         {
@@ -28,8 +27,10 @@ namespace TT.Report.Sections
                     var statistics = new SideStatistics(match, player, strokeNr, sets[set]);
 
                     PlotModel plot = plotStyle.CreatePlot();
-                    plot.Title = set == "all" ? "All sets" : "Set " + set;
+                    plot.Title = set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set);
                     plot.TitleFontSize = 16;
+                    plot.LegendPlacement = LegendPlacement.Outside;
+                    plot.LegendPosition = LegendPosition.RightMiddle;
                     dynamic series = new PieSeries()
                     {
                         StrokeThickness = 2.0,

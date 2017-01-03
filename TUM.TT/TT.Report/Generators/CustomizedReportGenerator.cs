@@ -149,11 +149,12 @@ namespace TT.Report.Generators
 
         private IReportSection GetStrokeSection(string sectionName, PlotStyle plotStyle, Match match, object player, int strokeNumber)
         {
+            var sets = (IDictionary<string, List<Rally>>)Customization["sets"];
             switch (sectionName)
             {
-                case "side": return new SideSection(plotStyle, strokeNumber, (IDictionary<string, List<Rally>>)Customization["sets"], match, player);
+                case "side": return new SideSection(plotStyle, strokeNumber, sets, match, player);
                 case "steparound": return new StepAroundSection();
-                case "spin": return new SpinSection();
+                case "spin": return new SpinSection(plotStyle, sets, match, player);
                 case "technique": return new TechniqueSection();
                 case "placement": return new PlacementSection();
                 case "table": return new LargeTableSection();

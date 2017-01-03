@@ -81,6 +81,7 @@
     <Compile Include="Statistics\PlayerStatistics.cs" />
     <Compile Include="Statistics\RallyLengthStatistics.cs" />
     <Compile Include="Statistics\RelevanceOfStroke.cs" />
+    <Compile Include="Statistics\SpinStatistics.cs" />
     <Compile Include="Statistics\SideStatistics.cs" />
     <Compile Include="Statistics\TechnicalEfficiency.cs" />
     <Compile Include="Statistics\Transitions.cs" />
