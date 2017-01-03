@@ -337,7 +337,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
                 <Button.Visibility>
-                    <MultiBinding Converter="{conv:NumAndLengthToNextVisibilityConverter}" Mode="OneWay">
+                    <MultiBinding Converter="{conv:NumAndLengthToNextVisibilityConverter}" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding Path="CurrentRally.Number" />
                         <Binding Path="RallyCount" />
                     </MultiBinding>
