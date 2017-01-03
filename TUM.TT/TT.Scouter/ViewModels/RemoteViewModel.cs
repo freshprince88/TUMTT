@@ -42,20 +42,7 @@ namespace TT.Scouter.ViewModels
 
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
-        // public int RallyCount { get { return Rallies.Count(); } }
-        private int _rallycount;
-        public int RallyCount
-        {
-            get { return Rallies.Count(); }
-            set
-            {
-                if (_rallycount != value)
-                {
-                    _rallycount = value;
-                    NotifyOfPropertyChange("RallyCount");
-                }
-            }
-        }
+       
         public RemoteStrokeViewModel SchlagView { get; set;  }
         private bool _service;
         public bool ServiceChecked
