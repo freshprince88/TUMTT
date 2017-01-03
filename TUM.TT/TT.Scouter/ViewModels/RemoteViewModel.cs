@@ -22,7 +22,6 @@ namespace TT.Scouter.ViewModels
 
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
-        public int RallyCount { get { return Rallies.Count(); } }
         public RemoteStrokeViewModel SchlagView { get; set;  }
         private bool _service;
         public bool ServiceChecked
