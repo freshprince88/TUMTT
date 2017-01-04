@@ -155,9 +155,9 @@ namespace TT.Report.Generators
                 case "side": return new SideSection(plotStyle, strokeNumber, sets, match, player);
                 case "steparound": return new StepAroundSection();
                 case "spin": return new SpinSection(plotStyle, sets, match, player);
-                case "technique": return new TechniqueSection();
+                case "technique": return new TechniqueSection(strokeNumber, sets, match, player);
                 case "placement": return new PlacementSection();
-                case "table": return new LargeTableSection();
+                case "table": return new LargeTableSection(strokeNumber, sets, match, player);
                 case "service": return new LastStrokeServiceSection();
                 case "number": return new LastStrokeNumberSection();
             }

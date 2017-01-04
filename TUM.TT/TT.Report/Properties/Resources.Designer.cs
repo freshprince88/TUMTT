@@ -205,6 +205,15 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Table.
+        /// </summary>
+        public static string section_table {
+            get {
+                return ResourceManager.GetString("section_table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All sets.
         /// </summary>
         public static string sets_all {
@@ -219,6 +228,15 @@ namespace TT.Report.Properties {
         public static string sets_one {
             get {
                 return ResourceManager.GetString("sets_one", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Net/Out.
+        /// </summary>
+        public static string table_netout_label {
+            get {
+                return ResourceManager.GetString("table_netout_label", resourceCulture);
             }
         }
     }

@@ -23,6 +23,8 @@ namespace TT.Report.Renderers
     using TT.Report.Renderers.Pdf;
     using TT.Report.Sections;
     using OxyPlot.Series;
+    using System.Diagnostics;
+    using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Renders a report to a PDF file.
@@ -599,9 +601,8 @@ namespace TT.Report.Renderers
             int normalSizeWidth = 450;
             int normalSizeHeight = 270;
             bool multiplePlots = section.SpinPlots.Count > 1;
-            Section sec = Document.LastSection;
 
-            Table table = sec.AddTable();
+            Table table = Document.LastSection.AddTable();
             table.Borders.Visible = false;
 
             Column col = table.AddColumn();
@@ -655,6 +656,91 @@ namespace TT.Report.Renderers
 
         public void Visit(LargeTableSection section)
         {
+            AddHeading(2, Properties.Resources.section_table);
+
+            var tableImagesCount = section.TableImageBitmapFrames.Count;
+            int smallSizeWidth = 210;
+            int normalSizeWidth = 450;
+            bool multipleTables = tableImagesCount > 1;
+
+            Table table = Document.LastSection.AddTable();
+            table.Borders.Visible = false;
+
+            Column col = table.AddColumn();
+            col.Width = multipleTables ? smallSizeWidth : normalSizeWidth;
+
+            if (multipleTables)
+            {
+                col = table.AddColumn();
+                col.Width = smallSizeWidth;
+            }
+
+            Row row = null;
+            bool headerRow;
+            int i = 0;
+            var cellAmount = (tableImagesCount % 2 == 1 ? (tableImagesCount + 1) : tableImagesCount) * 2;
+            for (var c = 0; c < cellAmount; c++)
+            {
+                var set = section.TableImageBitmapFrames.Keys.ElementAtOrDefault(i);
+
+                int rowIndex = c % 2;
+                if (rowIndex == 0)
+                    row = table.AddRow();
+                if (c % 4 == 0 || c % 4 == 1)
+                {
+                    headerRow = true;
+                    row.KeepWith = 1;
+                }
+                else
+                    headerRow = false;
+
+                int sizeW;
+                if (multipleTables)
+                {
+                    sizeW = smallSizeWidth;
+                }
+                else
+                {
+                    sizeW = normalSizeWidth;
+                }
+                                
+                if (headerRow)
+                {
+                    if (set != null)
+                    {
+                        var setHeading = row.Cells[rowIndex].AddParagraph(set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set));
+                        setHeading.Format.Font.Size = multipleTables ? 16 : 18;
+                        setHeading.Format.Font.Bold = true;
+                        setHeading.Format.Alignment = ParagraphAlignment.Center;
+                        setHeading.Format.SpaceBefore = 10;
+                    }
+                    if (rowIndex == 1)
+                        i -= 2;
+                }
+                else
+                {
+                    if (set != null)
+                    {
+                        var encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(section.TableImageBitmapFrames[set]);
+
+                        var tempFile = this.GetTempFile();
+                        using (Stream stm = File.Create(tempFile))
+                            encoder.Save(stm);
+
+                        var image = row.Cells[rowIndex].AddParagraph().AddImage(tempFile);
+                        row.Cells[rowIndex].Format.Alignment = ParagraphAlignment.Center;
+                        image.LockAspectRatio = true;
+                        image.Width = sizeW;
+                    }
+                }                
+                i++;
+            }
+            if (multipleTables && row.Cells.Count == 1)
+            {
+                table.Rows[row.Index - 1].Cells[0].MergeRight = 1;
+                row.Cells[0].MergeRight = 1;
+            }            
         }
 
         public void Visit(LastStrokeNumberSection section)

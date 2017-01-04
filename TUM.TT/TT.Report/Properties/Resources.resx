@@ -165,10 +165,16 @@
   <data name="section_stroke_name_third" xml:space="preserve">
     <value>Third stroke</value>
   </data>
+  <data name="section_table" xml:space="preserve">
+    <value>Table</value>
+  </data>
   <data name="sets_all" xml:space="preserve">
     <value>All sets</value>
   </data>
   <data name="sets_one" xml:space="preserve">
     <value>Set</value>
+  </data>
+  <data name="table_netout_label" xml:space="preserve">
+    <value>Net/Out</value>
   </data>
 </root>

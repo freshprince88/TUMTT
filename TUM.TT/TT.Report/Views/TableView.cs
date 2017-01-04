@@ -8,11 +8,8 @@ using System.Windows.Shapes;
 using TT.Models;
 using TT.Models.Exceptions;
 
-namespace TT.Viewer.Views
+namespace TT.Report.Views
 {
-    //
-    // Summary:
-    //     Abstract class for schematic table display.
     public abstract class TableView : UserControl
     {
         #region Constants
@@ -105,8 +102,8 @@ namespace TT.Viewer.Views
         private static void OnStrokesPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             //Debug.WriteLine("OnStrokesPropertyChanged sender={0}, sender.Tag={3} e.ov={1}, e.nv={2}", sender, e.OldValue, e.NewValue, ((TableView)sender).Tag);
-            
-             ((TableView)sender).ProcessStrokes(new List<Stroke>((ICollection<Stroke>)e.NewValue));
+
+            ((TableView)sender).ProcessStrokes(e.NewValue == null ? new List<Stroke>() : new List<Stroke>((ICollection<Stroke>)e.NewValue));
         }
 
         private static void OnDisplayTypePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -169,10 +166,10 @@ namespace TT.Viewer.Views
                 ApplyStyle(stroke, StrokeShapes[stroke].Find(s => (ShapeType)s.Tag == ShapeType.Arrowtip));
                 return;
             }
-            
+
             bool isServiceStroke = stroke.Number == 1;
             bool isNetOrOut = stroke.EnumCourse == Models.Util.Enums.Stroke.Course.NetOut;
-            
+
             double X1, X2, Y1, Y2;
             X1 = Y1 = -1;
             try
@@ -182,7 +179,8 @@ namespace TT.Viewer.Views
                     GetEndPointOfStrokeNetOrOut(stroke, X1, Y1, out X2, out Y2);
                 else
                     GetEndPointOfStroke(stroke, out X2, out Y2);
-            } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
+            }
+            catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
             {
                 Debug.WriteLine("Adding direction to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
                 return;
@@ -268,13 +266,14 @@ namespace TT.Viewer.Views
                     Grid strokeGrid = GetGridForStroke(stroke);
                     if (strokeGrid != null && strokeGrid.Name != followingStrokeGrid.Name)
                         Y2 -= followingStrokeGrid.Margin.Top - strokeGrid.Margin.Top;
-                } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
+                }
+                catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
                 {
                     Debug.WriteLine("Adding intercept arrow to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
                     return;
                 }
             }
-            
+
             double xE, yE;
 
             // account for possibly missing information on PointOfContact on the following stroke
@@ -295,7 +294,7 @@ namespace TT.Viewer.Views
             if (Y1 > Y2)
                 yE = realPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 - 30 : 0;
             else if (Y1 < Y2)
-                yE = realPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 + 30 : followingStrokeGrid.ActualHeight;
+                yE = realPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? Y2 + 30 : followingStrokeGrid.Height;
             else
                 yE = Y2;    // special case: horizontal stroke (e.g. legend view)
 
@@ -310,7 +309,7 @@ namespace TT.Viewer.Views
                 }
             }
             else
-                xE = X2 > X1 ? followingStrokeGrid.ActualWidth : 0; // special case: horizontal stroke (e.g. legend view)
+                xE = X2 > X1 ? followingStrokeGrid.Width : 0; // special case: horizontal stroke (e.g. legend view)
 
             // line shape part of intercept arrow
             Line interceptLine = new Line();
@@ -418,7 +417,8 @@ namespace TT.Viewer.Views
                     GetStartPointOfStroke(stroke, out X1, out Y1);
                 else
                     GetPointOfShapeRelativeToGrid(shape, PointType.Middle, gridOfStroke, out X1, out Y1);
-            } catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
+            }
+            catch (Exception ex) when (ex is NoStrokeStartingPointException || ex is NoStrokeEndPointException)
             {
                 Debug.WriteLine("Adding arrowtips to stroke {0} of rally {1} inaccurate ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
                 X1 = Y1 = -1;
@@ -431,7 +431,8 @@ namespace TT.Viewer.Views
                     GetEndPointOfStrokeNetOrOut(stroke, X1, Y1, out X2, out Y2);
                 else
                     GetEndPointOfStroke(stroke, out X2, out Y2);
-            } catch (NoStrokeEndPointException ex)
+            }
+            catch (NoStrokeEndPointException ex)
             {
                 Debug.WriteLine("Adding arrowtips to stroke {0} of rally {1} not possible ({2}: {3})", stroke.Number, stroke.Rally.Number, ex.GetType().Name, ex.Message);
                 return;
@@ -525,7 +526,7 @@ namespace TT.Viewer.Views
             try
             {
                 GetStartPointOfStroke(stroke, out X1, out Y1);
-                Y1 = View_InnerFieldSpinGrid.ActualHeight - 1;
+                Y1 = View_InnerFieldSpinGrid.Height - 1;
             }
             catch (NoStrokeStartingPointException ex)
             {
@@ -954,7 +955,7 @@ namespace TT.Viewer.Views
                 else
                 {
                     tempX = GetAdjustedX(stroke, stroke.Playerposition);
-                    tempY = View_InnerFieldBehindGrid.ActualHeight;
+                    tempY = View_InnerFieldBehindGrid.Height;
                 }
             }
             else
@@ -987,7 +988,7 @@ namespace TT.Viewer.Views
                         // no valid values of the second preceding stroke given - we won't be able to extrapolate beginning to end
                         precedingStartX = double.MinValue;
                         precedingStartY = double.MinValue;
-                    }   
+                    }
                 }
 
                 if (PlacementValuesValid(precedingStroke.Placement))
@@ -1015,14 +1016,14 @@ namespace TT.Viewer.Views
                     if (precedingStartY > precedingEndY)    // preceding was bottom to top (relative to this stroke's direction). IsStrokeBottomToTop doesn't help here!
                         tempY = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY - 30 : 0;
                     else
-                        tempY = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).ActualHeight;
+                        tempY = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? precedingEndY + 30 : GetGridForStroke(stroke).Height;
 
                     // now we have the starting and end point (both X and Y) of the previous stroke and the height at which this stroke should end
                     // -> extrapolate its X-coordinate
                     if (precedingStartY != precedingEndY)
                         tempX = GetLinearContinuationX(precedingStartX, precedingStartY, precedingEndX, precedingEndY, tempY);
                     else
-                        tempX = precedingEndX > precedingStartX ? GetGridForStroke(stroke).ActualWidth : 0;    // equal preceding stroke's Y coordinate -> horizontal
+                        tempX = precedingEndX > precedingStartX ? GetGridForStroke(stroke).Width : 0;    // equal preceding stroke's Y coordinate -> horizontal
 
                     //if (ShowDebug)
                     //    AddDebugLine(stroke, precedingEndX, precedingEndY, X1, Y1, true);
@@ -1048,7 +1049,7 @@ namespace TT.Viewer.Views
             {
                 // this stroke's end is always the exact position of its placement
                 x = GetAdjustedX(stroke, stroke.Placement.WX);
-                y = GetAdjustedY(stroke, stroke.Placement.WY);                    
+                y = GetAdjustedY(stroke, stroke.Placement.WY);
             }
             else
                 throw new NoStrokeEndPointException("invalid Placement of stroke " + stroke.Number + " of rally " + stroke.Rally.Number + ": x=" + (stroke.Placement != null ? stroke.Placement.WX.ToString() : "[n/a]") + " y=" + (stroke.Placement != null ? stroke.Placement.WY.ToString() : "[n/a]"));
@@ -1060,7 +1061,7 @@ namespace TT.Viewer.Views
             {
                 x = startPointX;
                 if (startPointY > 137)
-                    y = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? startPointY - 40 : GetGridForStroke(stroke).ActualHeight - 40;
+                    y = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? startPointY - 40 : GetGridForStroke(stroke).Height - 40;
                 else
                     y = stroke.EnumPointOfContact == Models.Util.Enums.Stroke.PointOfContact.Over ? startPointY + 40 : 40;
             }

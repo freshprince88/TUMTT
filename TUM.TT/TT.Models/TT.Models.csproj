@@ -57,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\NoStrokeEndPointException.cs" />
+    <Compile Include="Exceptions\NoStrokeStartingPointException.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Report\AbsoluteNumberOfTransition.cs" />
     <Compile Include="MatchModeExtensions.cs" />

@@ -25,7 +25,7 @@ namespace TT.Models.Statistics
             {
                 foreach (var s in r.Strokes)
                 {
-                    if (CountStroke(s))
+                    if (CountStroke(s, Player))
                     {            
                         if (s.HasSpins(spinUpConsts))
                         {
@@ -62,9 +62,9 @@ namespace TT.Models.Statistics
         public int NotAnalysedWon { get; private set; }
         public MatchPlayer Player { get; private set; }
 
-        private bool CountStroke(Stroke stroke)
+        public override bool CountStroke(Stroke stroke, MatchPlayer player, int strokeNumber = -1)
         {
-            return stroke.Player == Player && stroke.Number == 1;
+            return stroke.Player == player && stroke.Number == 1;
         }
     }
 }

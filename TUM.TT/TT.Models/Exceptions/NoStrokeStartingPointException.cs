@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace TT.Lib.Exceptions
+namespace TT.Models.Exceptions
 {
     [Serializable]
     public class NoStrokeStartingPointException : Exception

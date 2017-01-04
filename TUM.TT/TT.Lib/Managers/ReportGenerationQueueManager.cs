@@ -48,7 +48,9 @@ namespace TT.Lib.Managers
             if (!queueWorker.run)
             {
                 queueWorker.run = true;
-                new Thread(new ThreadStart(this.queueWorker.WorkTheQueue)).Start();
+                Thread workerThread = new Thread(new ThreadStart(this.queueWorker.WorkTheQueue));
+                workerThread.SetApartmentState(ApartmentState.STA);
+                workerThread.Start();
             }
         }
 
