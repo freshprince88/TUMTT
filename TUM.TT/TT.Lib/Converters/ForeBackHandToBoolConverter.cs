@@ -15,9 +15,9 @@ namespace TT.Lib.Converters
 
             switch (hand)
             {
-                case Stroke.Hand.Back:                   
+                case Stroke.Hand.Backhand:                   
                         return btnName.ToString().ToLower() == "backhand";
-                case Stroke.Hand.Fore:
+                case Stroke.Hand.Forehand:
                     return btnName.ToString().ToLower() == "forehand";
                 case Stroke.Hand.Both:
                     return true;

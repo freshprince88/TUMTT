@@ -66,31 +66,31 @@ namespace TT.Viewer.ViewModels
             {
                 case "ServiceFilterTabHeader":
                     this.ActivateItem(ServiceView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
+                    Manager.CurrentRallyLength = 1;
                     break;
                 case "ReceiveFilterTabHeader":
                     this.ActivateItem(ReceiveView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
+                    Manager.CurrentRallyLength = 2;
                     break;
                 case "ThirdFilterTabHeader":
                     this.ActivateItem(ThirdBallView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
+                    Manager.CurrentRallyLength = 3;
                     break;
                 case "FourthFilterTabHeader":
                     this.ActivateItem(FourthBallView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
+                    Manager.CurrentRallyLength = 4;
                     break;
                 case "LastFilterTabHeader":
                     this.ActivateItem(LastBallView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
+                    Manager.CurrentRallyLength = 5;
                     break;
                 case "TotalMatchFilterTabHeader":
                     this.ActivateItem(TotalMatchView);
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
+                    Manager.CurrentRallyLength = 1;
                     break;
                 case "KombiFilterTabHeader":
                     this.ActivateItem(CombiView);
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
+                    Manager.CurrentRallyLength = 1;
                     break;
                 default:
                     break;

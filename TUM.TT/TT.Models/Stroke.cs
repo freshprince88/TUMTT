@@ -188,6 +188,16 @@ namespace TT.Models
             }
         }
 
+        public Util.Enums.Stroke.Hand EnumSide
+        {
+            get
+            {
+                if (side == null || side.Length == 0)
+                    return Util.Enums.Stroke.Hand.None;
+                return (Util.Enums.Stroke.Hand)Enum.Parse(typeof(Util.Enums.Stroke.Hand), side, true);
+            }
+        }
+
         /// <remarks/>
         [XmlAttribute]
         public string Servicetechnique
@@ -217,7 +227,17 @@ namespace TT.Models
                 RaiseAndSetIfChanged(ref pointOfContact, value);
             }
         }
-        
+
+        public Util.Enums.Stroke.PointOfContact EnumPointOfContact
+        {
+            get
+            {
+                if (pointOfContact == null || pointOfContact.Length == 0)
+                    return Util.Enums.Stroke.PointOfContact.None;
+                return (Util.Enums.Stroke.PointOfContact)Enum.Parse(typeof(Util.Enums.Stroke.PointOfContact), pointOfContact.Replace("-", ""), true);
+            }
+        }
+
         /// <remarks/>
         [XmlAttribute]
         public string Quality
@@ -281,6 +301,16 @@ namespace TT.Models
                     NotifyPropertyChanged("Course");
                     NotifyPropertyChanged();
                 }
+            }
+        }
+
+        public Util.Enums.Stroke.Course EnumCourse
+        {
+            get
+            {
+                if (course == null || course.Length == 0)
+                    return Util.Enums.Stroke.Course.None;
+                return (Util.Enums.Stroke.Course)Enum.Parse(typeof(Util.Enums.Stroke.Course), course.Replace("/", ""), true);
             }
         }
 
@@ -549,17 +579,17 @@ namespace TT.Models
 
         public bool IsOverTheTable()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : this.PointOfContact.ToLower() == "über";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : this.PointOfContact.ToLower() == "over";
         }
 
         public bool IsAtTheTable()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "hinter";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "behind";
         }
 
         public bool IsHalfDistance()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "halbdistanz";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "half-distance";
         }
 
 
@@ -569,9 +599,9 @@ namespace TT.Models
         {
             switch (h)
             {
-                case Util.Enums.Stroke.Hand.Fore:
+                case Util.Enums.Stroke.Hand.Forehand:
                     return Side == "Forehand";
-                case Util.Enums.Stroke.Hand.Back:
+                case Util.Enums.Stroke.Hand.Backhand:
                     return Side == "Backhand";
                 case Util.Enums.Stroke.Hand.None:
                     return true;
@@ -1028,6 +1058,15 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref type, value);
+            }
+        }
+
+        public Util.Enums.Stroke.Technique EnumType {
+            get
+            {
+                if (type == null || type.Length == 0)
+                    return Util.Enums.Stroke.Technique.Miscellaneous;
+                return (Util.Enums.Stroke.Technique)Enum.Parse(typeof(Util.Enums.Stroke.Technique), type, true);
             }
         }
 

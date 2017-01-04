@@ -1,12 +1,16 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Input;
 using TT.Models.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Interfaces;
+using TT.Lib.Util;
 
 namespace TT.Viewer.ViewModels
 {
@@ -14,6 +18,25 @@ namespace TT.Viewer.ViewModels
         IHandle<PlayModeEvent>, IHandle<MediaControlEvent>
     {
         #region Properties
+
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyGesture> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
+            }
+            set { }
+        }
 
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength

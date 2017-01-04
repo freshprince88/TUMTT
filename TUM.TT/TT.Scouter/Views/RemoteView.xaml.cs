@@ -4,13 +4,15 @@ using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
+using TT.Lib.Views;
+
 
 namespace TT.Scouter.Views
 {
     /// <summary>
     /// Interaction logic for RemoteView.xaml
     /// </summary>
-    public partial class RemoteView : UserControl,
+    public partial class RemoteView : ControlWithBindableKeyGestures,
         IHandle<ResultListControlEvent>
     {
         public IEventAggregator Events { get; private set; }

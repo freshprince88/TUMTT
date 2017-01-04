@@ -9,5 +9,7 @@ namespace TT.Viewer.ViewModels
 {
     public interface IResultViewTabItem : IScreen
     {
+        byte GetOrderInResultView();
+        string GetTabTitle(bool getShortTitle);
     }
 }

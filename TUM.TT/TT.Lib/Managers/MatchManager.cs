@@ -88,6 +88,21 @@ namespace TT.Lib.Managers
             }
         }
 
+        private int _currentRallyLength;
+        public int CurrentRallyLength
+        {
+            get { return _currentRallyLength; }
+            set
+            {
+                if (_currentRallyLength != value)
+                {
+                    _currentRallyLength = value;
+                    NotifyOfPropertyChange();
+                    Events.PublishOnUIThread(new RallyLengthChangedEvent(value));
+                }
+            }
+        }
+
         private IEnumerable<Rally> _selected;
         public IEnumerable<Rally> SelectedRallies
         {
@@ -153,6 +168,7 @@ namespace TT.Lib.Managers
         public MatchManager(IEventAggregator aggregator)
         {
             Events = aggregator;
+            CurrentRallyLength = 1;
             SelectedRallies = new List<Rally>();
         }
 

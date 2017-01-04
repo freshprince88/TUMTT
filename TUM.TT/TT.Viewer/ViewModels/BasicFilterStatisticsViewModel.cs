@@ -303,6 +303,7 @@ namespace TT.Viewer.ViewModels
 
         private bool HasPlayer(Rally r)
         {
+            if (LastStroke == false) { 
             switch (this.Player)
             {
                 case Models.Util.Enums.Stroke.Player.Player1:
@@ -315,6 +316,23 @@ namespace TT.Viewer.ViewModels
                     return true;
                 default:
                     return false;
+            }
+            }
+            else
+            {
+                switch (this.Player)
+                {
+                    case Models.Util.Enums.Stroke.Player.Player1:
+                        return r.LastWinnerStroke().Player == MatchPlayer.First;
+                    case Models.Util.Enums.Stroke.Player.Player2:
+                        return r.LastWinnerStroke().Player == MatchPlayer.Second;
+                    case Models.Util.Enums.Stroke.Player.None:
+                        return true;
+                    case Models.Util.Enums.Stroke.Player.Both:
+                        return true;
+                    default:
+                        return false;
+                }
             }
         }
 

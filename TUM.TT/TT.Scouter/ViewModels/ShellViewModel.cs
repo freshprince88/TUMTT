@@ -309,7 +309,18 @@ namespace TT.Scouter.ViewModels
                 _windowManager.ShowWindow(new IttvDownloadViewModel(_windowManager, Events, MatchManager, DialogCoordinator));
             }
         }
+        public void ShowKeyBindingEditor()
+        {
+            if (IsWindowOpen<Window>("KeyBindingEditor"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "KeyBindingEditor").FirstOrDefault().Focus();
 
+            }
+            else
+            {
+                _windowManager.ShowWindow(new KeyBindingEditorViewModel(_windowManager, Events, DialogCoordinator));
+            }
+        }
         
 
 

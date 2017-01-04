@@ -246,6 +246,14 @@
             Both
         }
 
+        public enum Course
+        {
+            Continue,
+            Winner,
+            NetOut,
+            None
+        }
+
         public enum Technique
         {
             Push,
@@ -262,13 +270,22 @@
             Smash,
             Lob,
             Chop,
-            Special
+            Special,
+            Miscellaneous
+        }
+
+        public enum PointOfContact
+        {
+            Over,
+            Behind,
+            HalfDistance,
+            None
         }
 
         public enum Hand
         {
-            Fore,
-            Back,
+            Forehand,
+            Backhand,
             None,
             Both
         }

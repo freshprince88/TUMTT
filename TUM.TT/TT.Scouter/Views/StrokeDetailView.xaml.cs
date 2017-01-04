@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TT.Lib.Views;
 
 namespace TT.Scouter.Views
 {
     /// <summary>
     /// Interaktionslogik für StrokeDetailView.xaml
     /// </summary>
-    public partial class StrokeDetailView : UserControl
+    public partial class StrokeDetailView : ControlWithBindableKeyGestures
     {
         public StrokeDetailView()
         {

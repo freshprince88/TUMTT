@@ -16,6 +16,8 @@ namespace TT.Lib.Managers
 
         CurrentTableEnd CurrentTableEndSecondPlayer { get; }
 
+        int CurrentRallyLength { get; set; }
+
         IEnumerable<Rally> SelectedRallies { get; set; }
 
         string FileName { get; set; }

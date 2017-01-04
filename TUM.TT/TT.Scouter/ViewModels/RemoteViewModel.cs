@@ -9,11 +9,33 @@ using TT.Lib.Managers;
 using TT.Models;
 using TT.Scouter.Util.Model;
 using TT.Lib.Interfaces;
+using System.Reflection;
+using System.Windows.Input;
+using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
     public class RemoteViewModel : Conductor<IScreen>.Collection.AllActive, IHandle<PlayModeEvent>
     {
+        #region Properties
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyGesture> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
+            }
+            set { }
+        }
         private IEventAggregator Events;
         private IMatchManager MatchManager;
         private Calibration calibration = new Calibration();
@@ -289,7 +311,7 @@ namespace TT.Scouter.ViewModels
         }
 
 
-
+        #endregion
         public RemoteViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
         {
             Events = ev;
@@ -316,6 +338,12 @@ namespace TT.Scouter.ViewModels
         {
             Events.Unsubscribe(this);
             base.OnDeactivate(close);
+        }
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            this.RallyCount = Rallies.Count();
+
         }
 
         #region View Methods

@@ -1,0 +1,58 @@
+﻿<controls:MetroWindow x:Class="TT.Viewer.Views.KeyBindingEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:cal="http://www.caliburnproject.org"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+            xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+            Dialog:DialogParticipation.Register="{Binding}"
+             mc:Ignorable="d" 
+             ResizeMode="CanResizeWithGrip"
+             Width="500"
+             Height="800"     >
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Shortcuts" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="50" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <Label Content="Methods" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="1" FontSize="20" VerticalContentAlignment="Center"/>
+        <ListBox Background="{DynamicResource AccentColorBrush2}" Grid.RowSpan="6"  Grid.Column="3" Grid.Row="1" FontSize="20" ItemsSource="{Binding Path=KeyBindings}" SelectedItem="{Binding Path=SelectedKeyBinding}"/>
+
+
+        <Label Content="Key Gesture" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="20" VerticalContentAlignment="Center"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" IsReadOnly="True" Text="{Binding Path=CurrentKeyGestureName ,Mode=OneWay}" Grid.Row="8" FontSize="20" cal:Message.Attach="[Event KeyDown] = [UpdateKey($executionContext)]" />
+
+        <Grid Grid.Row="9" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button  Content="Reset" Grid.Column="1" cal:Message.Attach="Reset"/>
+            <Button  Content="Accept" Grid.Column="2" cal:Message.Attach="Accept"/>
+        </Grid>       
+    </Grid>
+
+</controls:MetroWindow>
+

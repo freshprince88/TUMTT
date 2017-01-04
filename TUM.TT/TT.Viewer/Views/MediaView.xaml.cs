@@ -9,13 +9,15 @@ using System.Windows;
 using System.Windows.Input;
 using System.Linq;
 using System.Windows.Media;
+using TT.Lib.Views;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace TT.Viewer.Views
 {
     /// <summary>
     /// Interaktionslogik für MediaView.xaml
     /// </summary>
-    public partial class MediaView : System.Windows.Controls.UserControl,
+    public partial class MediaView : ControlWithBindableKeyGestures,
         IHandle<MediaControlEvent>,
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>,

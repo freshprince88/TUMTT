@@ -3,6 +3,9 @@ using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Windows;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Input;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
@@ -14,11 +17,32 @@ using System.Collections.ObjectModel;
 using TT.Scouter.Util.Model;
 using TT.Lib.Interfaces;
 using System.Linq;
+using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
     public class RemoteMediaViewModel : Screen, IMediaPosition
     {
+
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyGesture> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
+            }
+            set { }
+        }
+
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength
         {

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TT.Viewer.Views.MediaView"
+﻿<views:ControlWithBindableKeyGestures BindableKeyGestures="{Binding KeyBindings}" x:Class="TT.Viewer.Views.MediaView"
        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,6 +11,7 @@
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:viewer="clr-namespace:TT.Viewer"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="525"
 >
@@ -81,12 +82,6 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="PreviousRally"/>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Key="MediaPreviousTrack"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="PreviousRally"/>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="StartRallyAtBeginningButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
@@ -102,13 +97,6 @@
                         <cal:ActionMessage MethodName="StartRallyAtBeginning">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Alt" Key="MediaPreviousTrack"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="StartRallyAtBeginning">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="3">
@@ -124,13 +112,6 @@
                         <cal:ActionMessage MethodName="StartRallyAtBeginning">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Shift" Key="MediaPreviousTrack"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="Previous5Frames">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="PreviousFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="4">
@@ -146,13 +127,6 @@
                         <cal:ActionMessage MethodName="PreviousFrame">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Alt" Key="MediaPreviousTrack"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="PreviousFrame">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
 
@@ -171,13 +145,6 @@
                         <cal:ActionMessage MethodName="Play">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding  Key="MediaPlayPause"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="PlayPause">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="6"
@@ -195,13 +162,6 @@
                         <cal:ActionMessage MethodName="Pause">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding  Key="MediaPlayPause"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="PlayPause">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8">
@@ -217,13 +177,6 @@
                         <cal:ActionMessage MethodName="NextFrame">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Alt" Key="MediaNextTrack"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="NextFrame">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button  x:Name="Next5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="9">
@@ -239,13 +192,6 @@
                         <cal:ActionMessage MethodName="Next5Frames">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Shift" Key="MediaNextTrack"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="Next5Frames">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
 
@@ -267,12 +213,6 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="NextRally"/>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Key="MediaNextTrack"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="NextRally"/>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
 
@@ -337,13 +277,6 @@
 
             <ToggleButton IsThreeState="True" Grid.Column="8" Style="{StaticResource MetroAccentFlatRepeat2Toggle}" IsChecked="{Binding Path=PlayMode}">
                 <i:Interaction.Triggers>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Alt"  Key="R"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="PlayModeHelper">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
                 
             </ToggleButton>
@@ -384,13 +317,6 @@
                         <cal:ActionMessage MethodName="FullscreenOnOff">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Modifiers="Alt"  Key="F"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="FullscreenHelper">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="LoadButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="1" Grid.Column="11" ToolTip="Load Video"
@@ -406,5 +332,11 @@
         </Grid>
         <!--<ListBox x:Name="listBox1" Grid.Row="4"></ListBox>-->
     </Grid>
-</UserControl>
+</views:ControlWithBindableKeyGestures>
+
+
+
+
+
+
 

@@ -149,6 +149,14 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
+                        <Controls:Tile Title="Shortcuts" cal:Message.Attach="[Event Click] = [Action ShowKeyBindingEditor()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                            <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_input_keyboard}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Controls:Tile>
                     </WrapPanel>
                     <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
                             <Controls:Tile Title="Competition" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource BigTileStyle }">
