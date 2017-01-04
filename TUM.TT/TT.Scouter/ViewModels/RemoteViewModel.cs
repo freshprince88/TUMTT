@@ -342,7 +342,6 @@ namespace TT.Scouter.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            this.RallyCount = Rallies.Count();
 
         }
 
