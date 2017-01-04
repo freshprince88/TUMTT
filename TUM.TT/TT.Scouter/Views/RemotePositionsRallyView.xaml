@@ -78,7 +78,7 @@
                             <Image Source="/resources/rectangle.png"/>
                         </Button>
                         <Button x:Name="ToogleTableMidLines"  Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="4" cal:Message.Attach="[Event Click] = [Action toggleTableMidLines()]" VerticalAlignment="Bottom" Focusable="False" Margin="-1,0,1,0">
-                            <Image Source="/resources/tablemid.png"/>
+                            <Image Source="/resources/grid3.png"/>
                         </Button>
                         <Button x:Name="ToggleMidlines" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action toggleMidlines()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
                             <Image Source="/resources/midlines.png"/>
@@ -134,7 +134,7 @@
                     <Border x:Name="Table" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}" >
                         <Grid Name="InnerFieldGrid" ShowGridLines="False" Height="548" Width="305">
 
-                            <Grid Name="InnerTableGridDown" Grid.Row="1" ShowGridLines="True">
+                            <Grid Name="InnerTableGridDown" Grid.Row="1" ShowGridLines="{Binding LineVisibility}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -146,7 +146,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                             </Grid>
-                            <Grid Name="InnerTableGridUp" Grid.Row="0" ShowGridLines="True">
+                            <Grid Name="InnerTableGridUp" Grid.Row="0" ShowGridLines="{Binding LineVisibility}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -183,7 +183,7 @@
                         </Grid>
                     </Border>
                 </Viewbox>
-                <Line X1="0" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" X2="0" Y2="0" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Stroke="White" StrokeThickness="0.5" HorizontalAlignment="Center" Visibility= "{Binding LineVisibility, Converter={StaticResource converter}}"></Line>
+                <Line X1="0" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" X2="0" Y2="0" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Stroke="White" StrokeThickness="0.5" HorizontalAlignment="Center" Visibility= "Visible"></Line>
             </Grid>
 
             <Grid Grid.Column="4">
