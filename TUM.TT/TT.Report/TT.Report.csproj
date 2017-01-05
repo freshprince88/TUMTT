@@ -109,6 +109,7 @@
     <Compile Include="Generators\CustomizedReportGenerator.cs" />
     <Compile Include="Generators\DefaultReportGenerator.cs" />
     <Compile Include="Generators\IReportGenerator.cs" />
+    <Compile Include="Sections\ExistingStatisticsSection.cs" />
     <Compile Include="Sections\StrokeStatsHeadingSection.cs" />
     <Compile Include="Sections\PartSection.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -144,12 +145,15 @@
     <Compile Include="Sections\TechnicalEfficiencySection.cs" />
     <Compile Include="Sections\TransitionsSection.cs" />
     <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
-    <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ServiceStatisticsGridViewModel.cs" />
     <Compile Include="Views\LargeTableView.xaml.cs">
       <DependentUpon>LargeTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ServiceStatisticsView.xaml.cs">
-      <DependentUpon>ServiceStatisticsView.xaml</DependentUpon>
+    <Compile Include="Views\ServiceTechniqueGridView.xaml.cs">
+      <DependentUpon>ServiceTechniqueGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StrokePlacementGridView.xaml.cs">
+      <DependentUpon>StrokePlacementGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.cs" />
   </ItemGroup>
@@ -177,7 +181,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ServiceStatisticsView.xaml">
+    <Page Include="Views\ServiceTechniqueGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StrokePlacementGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

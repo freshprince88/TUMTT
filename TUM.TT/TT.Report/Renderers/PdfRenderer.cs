@@ -31,6 +31,8 @@ namespace TT.Report.Renderers
     /// </summary>
     public class PdfRenderer : IReportRenderer
     {
+        private readonly Func<object, int, int, string> bitmapFrameToTempFileFunction;
+
         /// <summary>
         /// Format for probability values.
         /// </summary>
@@ -95,6 +97,20 @@ namespace TT.Report.Renderers
         /// Gets the rendered document.
         /// </summary>
         public Document Document { get; private set; }
+
+        public PdfRenderer()
+        {
+            bitmapFrameToTempFileFunction = new Func<object, int, int, string>((item, width, height) =>
+            {
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add((BitmapFrame)(object)item);
+
+                var tempFile = this.GetTempFile();
+                using (Stream stm = File.Create(tempFile))
+                    encoder.Save(stm);
+                return tempFile;
+            });
+        }
 
         /// <summary>
         /// Initializes the renderer.
@@ -546,46 +562,14 @@ namespace TT.Report.Renderers
         {
             this.AddHeading(2, Properties.Resources.section_side);
 
-            int smallSize = 210;
-            int normalSize = 350;
-            Section sec = Document.LastSection;
-
-            Table table = sec.AddTable();
-            table.Borders.Visible = false;
-
-            Column col = table.AddColumn();
-            col.Width = section.SidePlots.Count > 1 ? smallSize : normalSize;
-            if (section.SidePlots.Count > 1)
+            var oxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
             {
-                col = table.AddColumn();
-                col.Width = smallSize;
-            }
+                var tempFile = GetTempFile();
+                PdfExporter.Export(plot, tempFile, width + 30, height);
+                return tempFile;
+            });
 
-            int c = 0;
-            Row row = null;
-            foreach (var p in section.SidePlots)
-            {
-                int rowIndex = c % 2;
-                if (rowIndex == 0)
-                    row = table.AddRow();
-
-                int size;
-                if (section.SidePlots.Count > 1)
-                    size = smallSize;
-                else
-                    size = normalSize;
-
-                var tempFile = this.GetTempFile();
-                PdfExporter.Export(p, tempFile, size + 30, size);
-
-                row.Cells[rowIndex].AddParagraph().AddImage(tempFile);
-                row.Cells[rowIndex].Format.Alignment = ParagraphAlignment.Center;
-                c++;
-            }
-            if (section.SidePlots.Count > 1 && c % 2 == 1)
-            {
-                row.Cells[0].MergeRight = 1;
-            }
+            AddItemsToTable(section.SidePlots, null, oxyPlotToTempFilePathFunction, 350, 210);            
         }
         
         public void Visit(StepAroundSection section)
@@ -596,151 +580,44 @@ namespace TT.Report.Renderers
         {
             AddHeading(2, Properties.Resources.section_spin);
 
-            int smallSizeWidth = 210;
-            int smallSizeHeight = 150;
-            int normalSizeWidth = 450;
-            int normalSizeHeight = 270;
-            bool multiplePlots = section.SpinPlots.Count > 1;
-
-            Table table = Document.LastSection.AddTable();
-            table.Borders.Visible = false;
-
-            Column col = table.AddColumn();
-            col.Width = multiplePlots ? smallSizeWidth : normalSizeWidth;
-            if (multiplePlots)
+            var oxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
             {
-                col = table.AddColumn();
-                col.Width = smallSizeWidth;
-            }
+                var tempFile = GetTempFile();
+                PdfExporter.Export(plot, tempFile, width, height);
+                return tempFile;
+            });
 
-            int c = 0;
-            Row row = null;
-            foreach (var p in section.SpinPlots)
-            {
-                int rowIndex = c % 2;
-                if (rowIndex == 0)
-                    row = table.AddRow();
-
-                int sizeW, sizeH;
-                if (multiplePlots)
-                {
-                    sizeW = smallSizeWidth;
-                    sizeH = smallSizeHeight;
-                }
-                else
-                {
-                    sizeW = normalSizeWidth;
-                    sizeH = normalSizeHeight;
-                }
-
-                var tempFile = this.GetTempFile();
-                PdfExporter.Export(p, tempFile, sizeW, sizeH);
-
-                row.Cells[rowIndex].AddParagraph().AddImage(tempFile);
-                row.Cells[rowIndex].Format.Alignment = ParagraphAlignment.Center;
-                c++;
-            }
-            if (multiplePlots && c % 2 == 1)
-            {
-                row.Cells[0].MergeRight = 1;
-            }
+            AddItemsToTable(section.SpinPlots, null, oxyPlotToTempFilePathFunction, 450, 210, 270, 150);
         }
 
         public void Visit(TechniqueSection section)
         {
+            AddHeading(2, Properties.Resources.section_technique);
+
+            var itemsList = new List<BitmapFrame>();
+            foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
+                itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
+            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
         }
 
         public void Visit(PlacementSection section)
         {
+            AddHeading(2, Properties.Resources.section_placement);
+
+            var itemsList = new List<BitmapFrame>();
+            foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
+                itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
+            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
         }
 
         public void Visit(LargeTableSection section)
         {
             AddHeading(2, Properties.Resources.section_table);
 
-            var tableImagesCount = section.TableImageBitmapFrames.Count;
-            int smallSizeWidth = 210;
-            int normalSizeWidth = 450;
-            bool multipleTables = tableImagesCount > 1;
-
-            Table table = Document.LastSection.AddTable();
-            table.Borders.Visible = false;
-
-            Column col = table.AddColumn();
-            col.Width = multipleTables ? smallSizeWidth : normalSizeWidth;
-
-            if (multipleTables)
-            {
-                col = table.AddColumn();
-                col.Width = smallSizeWidth;
-            }
-
-            Row row = null;
-            bool headerRow;
-            int i = 0;
-            var cellAmount = (tableImagesCount % 2 == 1 ? (tableImagesCount + 1) : tableImagesCount) * 2;
-            for (var c = 0; c < cellAmount; c++)
-            {
-                var set = section.TableImageBitmapFrames.Keys.ElementAtOrDefault(i);
-
-                int rowIndex = c % 2;
-                if (rowIndex == 0)
-                    row = table.AddRow();
-                if (c % 4 == 0 || c % 4 == 1)
-                {
-                    headerRow = true;
-                    row.KeepWith = 1;
-                }
-                else
-                    headerRow = false;
-
-                int sizeW;
-                if (multipleTables)
-                {
-                    sizeW = smallSizeWidth;
-                }
-                else
-                {
-                    sizeW = normalSizeWidth;
-                }
-                                
-                if (headerRow)
-                {
-                    if (set != null)
-                    {
-                        var setHeading = row.Cells[rowIndex].AddParagraph(set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set));
-                        setHeading.Format.Font.Size = multipleTables ? 16 : 18;
-                        setHeading.Format.Font.Bold = true;
-                        setHeading.Format.Alignment = ParagraphAlignment.Center;
-                        setHeading.Format.SpaceBefore = 10;
-                    }
-                    if (rowIndex == 1)
-                        i -= 2;
-                }
-                else
-                {
-                    if (set != null)
-                    {
-                        var encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(section.TableImageBitmapFrames[set]);
-
-                        var tempFile = this.GetTempFile();
-                        using (Stream stm = File.Create(tempFile))
-                            encoder.Save(stm);
-
-                        var image = row.Cells[rowIndex].AddParagraph().AddImage(tempFile);
-                        row.Cells[rowIndex].Format.Alignment = ParagraphAlignment.Center;
-                        image.LockAspectRatio = true;
-                        image.Width = sizeW;
-                    }
-                }                
-                i++;
-            }
-            if (multipleTables && row.Cells.Count == 1)
-            {
-                table.Rows[row.Index - 1].Cells[0].MergeRight = 1;
-                row.Cells[0].MergeRight = 1;
-            }            
+            var itemsList = new List<BitmapFrame>();
+            foreach (var set in section.TableImageBitmapFrames.Keys)
+                itemsList.Add(section.TableImageBitmapFrames[set]);
+            AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 450, 210);
         }
 
         public void Visit(LastStrokeNumberSection section)
@@ -1205,6 +1082,110 @@ namespace TT.Report.Renderers
                 image.Height = height;
             }
             return paragraph;
+        }
+
+        private Table AddItemsToTable<T>(List<T> items, 
+            List<string> setNumbers, 
+            Func<T, int, int, string> itemToTempFilePathFunction, 
+            int normalWidth, 
+            int smallWidth, 
+            int normalHeight = 0, 
+            int smallHeight = 0, 
+            int extraColWidth = 0)
+        {
+            var tableItemsCount = items.Count;
+            bool multipleItems = tableItemsCount > 1;
+
+            Table table = Document.LastSection.AddTable();
+            table.Borders.Visible = false;
+
+            Column col = table.AddColumn();
+            col.Width = (multipleItems ? smallWidth : normalWidth) + extraColWidth;
+
+            int sizeW, sizeH;
+            if (multipleItems)
+            {
+                sizeW = smallWidth;
+                sizeH = smallHeight;
+                col = table.AddColumn();
+                col.Width = smallWidth + extraColWidth;
+            }
+            else
+            {
+                sizeW = normalWidth;
+                sizeH = normalHeight;
+            }
+
+            int cellAmount;
+            if (setNumbers != null)
+                cellAmount = (tableItemsCount % 2 == 1 ? (tableItemsCount + 1) : tableItemsCount) * 2;
+            else
+                cellAmount = tableItemsCount + (tableItemsCount % 2 == 1 ? 1 : 0);
+
+            Row row = null;
+            bool headerRow = false;
+            int i = 0;
+            for (var c = 0; c < cellAmount; c++)
+            {
+                var set = setNumbers != null ? setNumbers.ElementAtOrDefault(i) : null;
+
+                int rowIndex = c % 2;
+                if (rowIndex == 0)
+                    row = table.AddRow();
+
+                if (setNumbers != null)
+                {
+                    if (c % 4 == 0 || c % 4 == 1)
+                    {
+                        headerRow = true;
+                        row.KeepWith = 1;
+                    }
+                    else
+                        headerRow = false;
+                }
+
+                if (headerRow)
+                {
+                    if (set != null)
+                    {
+                        var setHeading = row.Cells[rowIndex].AddParagraph(set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set));
+                        setHeading.Format.Font.Size = multipleItems ? 16 : 18;
+                        setHeading.Format.Font.Bold = true;
+                        setHeading.Format.Alignment = ParagraphAlignment.Center;
+                        setHeading.Format.SpaceBefore = 10;
+                    }
+                    if (rowIndex == 1)
+                        i -= 2;
+                }
+                else
+                {
+                    if (i < items.Count)
+                    {
+                        if (sizeH == 0)
+                            sizeH = sizeW;
+
+                        var tempFile = itemToTempFilePathFunction.Invoke(items.ElementAt(i), sizeW, sizeH);
+                        var image = row.Cells[rowIndex].AddParagraph().AddImage(tempFile);
+                        row.Cells[rowIndex].Format.Alignment = ParagraphAlignment.Center;
+
+                        if (sizeH == sizeW)
+                            image.LockAspectRatio = true;
+                        else
+                            image.Height = sizeH;
+
+                        image.Width = sizeW;
+                    }
+                }
+                i++;
+            }
+            if (multipleItems && row.Cells.Count == 1)
+            {
+                if (setNumbers != null)
+                    table.Rows[row.Index - 1].Cells[0].MergeRight = 1;
+                row.Cells[0].MergeRight = 1;
+            }
+
+            return table;
         }
 
         /// <summary>

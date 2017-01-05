@@ -37,7 +37,7 @@ namespace TT.Report.Sections
                         InsideLabelPosition = 0.7,
                         AngleSpan = 360,
                         StartAngle = 0,
-                        FontSize = sets.Count > 1 ? 12 : 16,
+                        FontSize = sets.Count > 1 ? 18 : 16,
                         InsideLabelFormat = "{1} ({0})",
                     };
 

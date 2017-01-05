@@ -123,6 +123,9 @@
   <data name="section_part_player" xml:space="preserve">
     <value>Player Section</value>
   </data>
+  <data name="section_placement" xml:space="preserve">
+    <value>Placement</value>
+  </data>
   <data name="section_side" xml:space="preserve">
     <value>Side</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="section_table" xml:space="preserve">
     <value>Table</value>
+  </data>
+  <data name="section_technique" xml:space="preserve">
+    <value>Technique</value>
   </data>
   <data name="sets_all" xml:space="preserve">
     <value>All sets</value>

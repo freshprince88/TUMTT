@@ -79,6 +79,15 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Placement.
+        /// </summary>
+        public static string section_placement {
+            get {
+                return ResourceManager.GetString("section_placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Side.
         /// </summary>
         public static string section_side {
@@ -210,6 +219,15 @@ namespace TT.Report.Properties {
         public static string section_table {
             get {
                 return ResourceManager.GetString("section_table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technique.
+        /// </summary>
+        public static string section_technique {
+            get {
+                return ResourceManager.GetString("section_technique", resourceCulture);
             }
         }
         

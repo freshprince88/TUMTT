@@ -1,0 +1,777 @@
+﻿<UserControl x:Class="TT.Report.Views.ServiceTechniqueGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:local="clr-namespace:TT.Report.Views"             
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="172" d:DesignWidth="315">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Olive.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid ShowGridLines="False" Height="172" Width="315" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" MinHeight="25"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="*" MinWidth="57"/>
+            <ColumnDefinition Width="*" MinWidth="57"/>
+            <ColumnDefinition Width="*" MinWidth="57"/>
+            <ColumnDefinition Width="*" MinWidth="57"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" Background="{DynamicResource GrayBrush5}"/>
+        <Border Grid.Row="3" Grid.Column="5" Background="{DynamicResource GrayBrush2}"/>
+        <Border Grid.Row="0" Grid.Column="5" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="2 0 0 0" />
+        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 2 0 0"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 0 0 1" />
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0 0 0 1"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="0 0 1 0" />
+        <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
+        <Border Grid.Row="0" Grid.Column="3" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
+        <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
+
+
+        <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Pendulum"/>
+        <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Reverse"/>
+        <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Tomahawk"/>
+        <TextBlock Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Special"/>
+        <TextBlock Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Text="∑"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Text="FH"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="BH"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Text="∑"/>
+
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0 0 0 1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="ForehandPendulumTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandPendulumPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandPendulumDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandPendulumPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1" Margin="0 0 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="BackhandPendulumTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandPendulumPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandPendulumDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandPendulumPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1" Margin="0 2 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="AllPendulumTotalButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand'|| r.Strokes[0].Side == null) &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllPendulumPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllPendulumDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllPendulumPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Pendulum' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2" Margin="1 0 0 1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="ForehandReversePendulumTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandReversePendulumPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandReversePendulumDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandReversePendulumPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="2" Margin="1 0 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="BackhandReversePendulumTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandReversePendulumPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandReversePendulumDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandReversePendulumPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="StatButtonClick">
+                            <cal:Parameter Value="{Binding ElementName=StatisticsContainer}" />
+                            <cal:Parameter Value="{Binding ElementName=BackhandReversePendulumPointsLostButton, Path=Name}" />
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="2" Margin=" 1 2 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="AllReversePendulumTotalButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllReversePendulumPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllReversePendulumDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllReversePendulumPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Reverse' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="3" Margin="1 0 0 1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="ForehandTomahawkTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandTomahawkPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandTomahawkDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandTomahawkPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="3" Margin="1 0 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="BackhandTomahawkTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandTomahawkPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandTomahawkDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandTomahawkPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="3" Margin="1 2 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="AllTomahawkTotalButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllTomahawkPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllTomahawkDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllTomahawkPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Tomahawk' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="4" Margin="1 0 0 1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="ForehandSpecialTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandSpecialPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandSpecialDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandSpecialPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="4" Margin="1 0 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="BackhandSpecialTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandSpecialPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandSpecialDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandSpecialPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="4" Margin="1 2 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="AllSpecialTotalButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Special'" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllSpecialPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllSpecialDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllSpecialPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Forehand' || r.Strokes[0].Side == 'Backhand') &amp;&amp; r.Strokes[0].Servicetechnique == 'Special' &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="5" Margin="2 0 0 1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="ForehandAllTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandAllPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandAllDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="ForehandAllPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Forehand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="5" Margin="2 0 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="BackhandAllTotalButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special')" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandAllPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandAllDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="BackhandAllPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].Side == 'Backhand' &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="5" Margin="2 2 0 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="AllServicesTotalButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Backhand' || r.Strokes[0].Side == 'Forehand') &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special')" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="32"   >
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllServicesPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Backhand' || r.Strokes[0].Side == 'Forehand') &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllServicesDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Backhand' || r.Strokes[0].Side == 'Forehand') &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+            <ToggleButton x:Name="AllServicesPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].Side == 'Backhand' || r.Strokes[0].Side == 'Forehand') &amp;&amp; (r.Strokes[0].Servicetechnique == 'Pendulum' || r.Strokes[0].Servicetechnique == 'Reverse' || r.Strokes[0].Servicetechnique == 'Tomahawk' || r.Strokes[0].Servicetechnique == 'Special') &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+                <ToggleButton.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+                    </MultiBinding>
+                </ToggleButton.Content>
+            </ToggleButton>
+        </Grid>
+    </Grid>
+
+</UserControl>
