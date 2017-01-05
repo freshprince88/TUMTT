@@ -12,7 +12,7 @@ namespace TT.Scouter.Views
     /// </summary>
     public partial class LiveMediaView : UserControl,
         IHandle<MediaControlEvent>,
-        IHandle<MediaSpeedEvent>,
+        IHandle<MediaLiveScouterSpeedEvent>,
         IHandle<MediaMuteEvent>
     {
         public IEventAggregator Events { get; set; }
@@ -38,7 +38,7 @@ namespace TT.Scouter.Views
 
         private void ExtendedMediaView_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            //Events.Unsubscribe(this);
+            Events.Unsubscribe(this);
         }
 
         public void Handle(MediaControlEvent message)
@@ -74,23 +74,23 @@ namespace TT.Scouter.Views
             
         }
 
-        public void Handle(MediaSpeedEvent message)
+        public void Handle(MediaLiveScouterSpeedEvent message)
         {
-            switch (message.Speed)
+            switch (message.LiveScouterSpeed)
             {
-                case Media.Speed.Quarter:
+                case Media.LiveScouterSpeed.Quarter:
                     MediaPlayer.SpeedRatio = 0.25;
                     break;
-                case Media.Speed.Half:
+                case Media.LiveScouterSpeed.Half:
                     MediaPlayer.SpeedRatio = 0.5;
                     break;
-                case Media.Speed.Third:
+                case Media.LiveScouterSpeed.Third:
                     MediaPlayer.SpeedRatio = 0.75;
                     break;
-                case Media.Speed.Full:
+                case Media.LiveScouterSpeed.Full:
                     MediaPlayer.SpeedRatio = 1;
                     break;
-                case Media.Speed.Faster:
+                case Media.LiveScouterSpeed.Faster:
                     MediaPlayer.SpeedRatio = 1.5;
                     break;
 
