@@ -69,6 +69,7 @@
     <Compile Include="MatchPlayerToStringConverter.cs" />
     <Compile Include="MatchPlayerToVisibilityConverter.cs" />
     <Compile Include="MathConverter.cs" />
+    <Compile Include="MediaSpeedToBoolConverter.cs" />
     <Compile Include="MinRallyLengthToVisibleConverter.cs" />
     <Compile Include="MSToTimeConverter.cs" />
     <Compile Include="NumAndLengthToLastVisibilityConverter.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="RallyExpressionToCountConverter.cs" />
     <Compile Include="RallyLengthToBoolConverter.cs" />
     <Compile Include="RallyLengthToCheckedConverter.cs" />
+    <Compile Include="RallyLengthToColSpanConverter.cs" />
     <Compile Include="RallyLengthToVisibilityConverter.cs" />
     <Compile Include="RallyToVisibilityConverter.cs" />
     <Compile Include="RoundingConverter.cs" />

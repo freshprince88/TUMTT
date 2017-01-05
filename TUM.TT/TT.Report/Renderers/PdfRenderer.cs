@@ -565,7 +565,7 @@ namespace TT.Report.Renderers
             var oxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
             {
                 var tempFile = GetTempFile();
-                PdfExporter.Export(plot, tempFile, width + 30, height);
+                PdfExporter.Export(plot, tempFile, width + 65, height + 15);
                 return tempFile;
             });
 

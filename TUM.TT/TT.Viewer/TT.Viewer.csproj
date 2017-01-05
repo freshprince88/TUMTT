@@ -159,6 +159,7 @@
     <Compile Include="ViewModels\FourthBallViewModel.cs" />
     <Compile Include="ViewModels\IResultViewTabItem.cs" />
     <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ReportSettingsViewModel.cs" />
     <Compile Include="ViewModels\ResultSmallTablesViewModel.cs" />
     <Compile Include="ViewModels\ResultListItem.cs" />
     <Compile Include="ViewModels\LastBallViewModel.cs" />
@@ -244,6 +245,9 @@
     </Compile>
     <Compile Include="Views\ReceiveView.xaml.cs">
       <DependentUpon>ReceiveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportSettingsView.xaml.cs">
+      <DependentUpon>ReportSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResultSmallTablesView.xaml.cs">
       <DependentUpon>ResultSmallTablesView.xaml</DependentUpon>
@@ -376,6 +380,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlayerInformationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReportSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
