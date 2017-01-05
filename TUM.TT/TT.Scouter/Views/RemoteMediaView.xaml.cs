@@ -89,6 +89,7 @@ namespace TT.Scouter.Views
 
             if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
             {
+               
                 MediaPlayer.StopWithState();
                 MediaPlayer.Close();
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
@@ -96,7 +97,7 @@ namespace TT.Scouter.Views
                 MediaPlayer.PlayWithState();
                                
                 MediaPlayer.PauseWithState();
-
+               
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
 
             }

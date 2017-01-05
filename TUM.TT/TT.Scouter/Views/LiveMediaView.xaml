@@ -53,15 +53,15 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <RadioButton x:Name="Slow150Button" Content="150%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="1" IsChecked="True"
+            <RadioButton x:Name="Slow150Button" Content="150%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="1"
                           cal:Message.Attach="[Event Checked] = [Action Slow(150)]"/>
-            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="2" IsChecked="True"
+            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="2" IsChecked="True"
                           cal:Message.Attach="[Event Checked] = [Action Slow(100)]"/>
-            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="3" 
+            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="3" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(75)]"/>
-            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
+            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(50)]"/>
-            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="5" 
+            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="5" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(25)]" />
             <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="7"
                     Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"

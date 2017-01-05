@@ -170,7 +170,7 @@ namespace TT.Scouter.ViewModels
                 {
                     _toRallyStart = value;
                     NotifyOfPropertyChange();
-                    NotifyOfPropertyChange("roRallyStart");
+                    NotifyOfPropertyChange("toRallyStart");
                 }
             }
         }
