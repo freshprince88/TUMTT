@@ -15,7 +15,8 @@ namespace TT.Scouter.Views
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>
     {
-        private IEventAggregator Events;
+        public IEventAggregator Events { get; set; }
+
         private IMatchManager Manager;
 
         public LiveMediaView()
@@ -37,7 +38,7 @@ namespace TT.Scouter.Views
 
         private void ExtendedMediaView_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            Events.Unsubscribe(this);
+            //Events.Unsubscribe(this);
         }
 
         public void Handle(MediaControlEvent message)

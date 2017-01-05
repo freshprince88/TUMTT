@@ -52,10 +52,13 @@ namespace TT.Scouter.ViewModels
                     }
                     if (_selectedTab == 1)
                     {
-                        if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
+                        if (LiveView.Rallies.Any())
                         {
-                            LiveView.Rallies.Remove(LiveView.Rallies.Last());
-                            
+                            if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
+                            {
+                                LiveView.Rallies.Remove(LiveView.Rallies.Last());
+
+                            }
                         }
                     }
                 }

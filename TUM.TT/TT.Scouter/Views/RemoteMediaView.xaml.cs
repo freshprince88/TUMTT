@@ -32,7 +32,8 @@ namespace TT.Scouter.Views
         IHandle<DeleteLinesEvent>,
         IHandle<FollowMouseEvent>
     {
-        private IEventAggregator Events;
+        public IEventAggregator Events { get; set; }
+
         private IMatchManager Manager;
         TimeSpan currentTime;
 
@@ -42,7 +43,7 @@ namespace TT.Scouter.Views
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
-            //Events.Subscribe(this);
+            Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
             this.Loaded += RemoteMediaView_Loaded;
             this.Unloaded += ExtendedMediaView_Unloaded;
@@ -58,7 +59,7 @@ namespace TT.Scouter.Views
 
         private void ExtendedMediaView_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            Events.Unsubscribe(this);
+            //Events.Unsubscribe(this);
             currentTime = MediaPlayer.Position;
         }
 
@@ -118,6 +119,9 @@ namespace TT.Scouter.Views
                     break;
                 case Media.Speed.Full:
                     MediaPlayer.SpeedRatio = 1;
+                    break;
+                case Media.Speed.Faster:
+                    MediaPlayer.SpeedRatio = 1.5;
                     break;
                 default:
                     break;

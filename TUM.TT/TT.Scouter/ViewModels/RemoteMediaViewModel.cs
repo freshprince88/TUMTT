@@ -11,17 +11,15 @@ using TT.Lib.Managers;
 using TT.Models;
 using TT.Lib.Results;
 using TT.Models.Util.Enums;
-using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using TT.Scouter.Util.Model;
 using TT.Lib.Interfaces;
-using System.Linq;
 using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
-    public class RemoteMediaViewModel : Screen, IMediaPosition
+    public class RemoteMediaViewModel : Screen, IMediaPosition, IHandle<MediaSpeedEvent>,IHandle<MediaMuteEvent>
     {
 
         /// <summary>
@@ -118,6 +116,21 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private int _mediaSpeed;
+        public int MediaSpeed
+        {
+            get
+            {
+                return _mediaSpeed;
+            }
+            set
+            {
+                if (_mediaSpeed != value)
+                    _mediaSpeed = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         private bool _playing;
         public bool IsPlaying
         {
@@ -198,6 +211,7 @@ namespace TT.Scouter.ViewModels
             syncStart = true;
             syncEnd = true;
             toRallyStart = true;
+            MediaSpeed = 100;
             PlayMode = false;             
             IsPlaying = false;
             calibration = cal;
@@ -207,6 +221,70 @@ namespace TT.Scouter.ViewModels
             calibration.GridLines.CollectionChanged += Lines_CollectionChanged;
         }
 
+        #region Caliburn hooks
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            Events.Subscribe(this);
+
+
+        }
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            Events.Subscribe(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
+        #endregion  
+        #region Event Handlers
+        public void Handle(MediaSpeedEvent message)
+        {
+            switch (message.Speed)
+            {
+                case Media.Speed.Quarter:
+                    MediaSpeed = 25;
+                    break;
+                case Media.Speed.Half:
+                    MediaSpeed = 50;
+                    break;
+                case Media.Speed.Third:
+                    MediaSpeed = 75;
+                    break;
+                case Media.Speed.Full:
+                    MediaSpeed = 100;
+                    break;
+                case Media.Speed.Faster:
+                    MediaSpeed = 150;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        public void Handle(MediaMuteEvent message)
+        {
+            switch (message.Mute)
+            {
+                case Media.Mute.Mute:
+                    IsMuted = true;
+                    break;
+                case Media.Mute.Unmute:
+                    IsMuted = false;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        #endregion
 
         #region Media Methods
         public void Pause()
