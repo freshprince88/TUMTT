@@ -6,10 +6,22 @@ using TT.Models;
 using TT.Models.Util.Enums;
 using TT.Lib.Interfaces;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Input;
+using TT.Lib.Results;
+using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using TT.Scouter.Util.Model;
+
+using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
-    public class LiveMediaViewModel : Screen, IMediaPosition
+    public class LiveMediaViewModel : Screen, IMediaPosition, IHandle<MediaSpeedEvent>,IHandle<MediaMuteEvent>
     {
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength
@@ -25,7 +37,6 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-
         private TimeSpan _mediaPos;
         public TimeSpan MediaPosition
         {
@@ -82,6 +93,21 @@ namespace TT.Scouter.ViewModels
             {
                 if (_max != value)
                     _max = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private int _mediaSpeed;
+        public int MediaSpeed
+        {
+            get
+            {
+                return _mediaSpeed;
+            }
+            set
+            {
+                if (_mediaSpeed != value)
+                    _mediaSpeed = value;
                 NotifyOfPropertyChange();
             }
         }
@@ -325,6 +351,7 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             Manager = man;
+            MediaSpeed = 100;
             OneBackwardsChecked = false;
             TwoBackwardsChecked = true;
             ThreeBackwardsChecked = false;
@@ -341,15 +368,69 @@ namespace TT.Scouter.ViewModels
             SevenForwardChecked = false;
         }
 
-        #region  Caliburn Hooks
-
-        //protected override void OnActivate()
-        //{
-        //    base.OnActivate();
-        //    //MediaPosition = TimeSpan.Zero;
-        //}
+        #region Caliburn hooks
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            Events.Subscribe(this);
 
 
+        }
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            Events.Subscribe(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
+        #endregion  
+
+        #region Event Handlers
+        public void Handle(MediaSpeedEvent message)
+        {
+            switch (message.Speed)
+            {
+                case Media.Speed.Quarter:
+                    MediaSpeed = 25;
+                    break;
+                case Media.Speed.Half:
+                    MediaSpeed = 50;
+                    break;
+                case Media.Speed.Third:
+                    MediaSpeed = 75;
+                    break;
+                case Media.Speed.Full:
+                    MediaSpeed = 100;
+                    break;
+                case Media.Speed.Faster:
+                    MediaSpeed = 150;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        public void Handle(MediaMuteEvent message)
+        {
+            switch (message.Mute)
+            {
+                case Media.Mute.Mute:
+                    IsMuted = true;
+                    break;
+                case Media.Mute.Unmute:
+                    IsMuted = false;
+                    break;
+                default:
+                    break;
+            }
+
+        }
         #endregion
 
         #region View Methods
