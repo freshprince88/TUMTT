@@ -531,13 +531,13 @@ namespace TT.Scouter.ViewModels
         public void Mute()
         {
             IsMuted = true;
-            Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Mute));
+            Events.PublishOnUIThread(new MediaLiveScouterMuteEvent(Media.Mute.Mute));
         }
 
         public void UnMute()
         {
             IsMuted = false;
-            Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Unmute));
+            Events.PublishOnUIThread(new MediaLiveScouterMuteEvent(Media.Mute.Unmute));
         }
 
         #endregion

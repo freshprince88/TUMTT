@@ -13,7 +13,7 @@ namespace TT.Scouter.Views
     public partial class LiveMediaView : UserControl,
         IHandle<MediaControlEvent>,
         IHandle<MediaLiveScouterSpeedEvent>,
-        IHandle<MediaMuteEvent>
+        IHandle<MediaLiveScouterMuteEvent>
     {
         public IEventAggregator Events { get; set; }
 
@@ -100,7 +100,7 @@ namespace TT.Scouter.Views
 
         }
 
-        public void Handle(MediaMuteEvent message)
+        public void Handle(MediaLiveScouterMuteEvent message)
         {
             switch (message.Mute)
             {

@@ -71,6 +71,8 @@ namespace TT.Scouter.ViewModels
             Manager = man;
             LiveView = new LiveViewModel(Events, Manager);
             RemoteView = new RemoteViewModel(Events, Manager, dia);
+            
+            
         }
 
 
