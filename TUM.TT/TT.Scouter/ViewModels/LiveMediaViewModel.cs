@@ -21,7 +21,7 @@ using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
-    public class LiveMediaViewModel : Screen, IMediaPosition, IHandle<MediaSpeedEvent>,IHandle<MediaMuteEvent>
+    public class LiveMediaViewModel : Screen, IMediaPosition, IHandle<MediaLiveScouterSpeedEvent>
     {
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength
@@ -392,23 +392,23 @@ namespace TT.Scouter.ViewModels
         #endregion  
 
         #region Event Handlers
-        public void Handle(MediaSpeedEvent message)
+        public void Handle(MediaLiveScouterSpeedEvent message)
         {
-            switch (message.Speed)
+            switch (message.LiveScouterSpeed)
             {
-                case Media.Speed.Quarter:
+                case Media.LiveScouterSpeed.Quarter:
                     MediaSpeed = 25;
                     break;
-                case Media.Speed.Half:
+                case Media.LiveScouterSpeed.Half:
                     MediaSpeed = 50;
                     break;
-                case Media.Speed.Third:
+                case Media.LiveScouterSpeed.Third:
                     MediaSpeed = 75;
                     break;
-                case Media.Speed.Full:
+                case Media.LiveScouterSpeed.Full:
                     MediaSpeed = 100;
                     break;
-                case Media.Speed.Faster:
+                case Media.LiveScouterSpeed.Faster:
                     MediaSpeed = 150;
                     break;
                 default:
@@ -416,21 +416,7 @@ namespace TT.Scouter.ViewModels
             }
 
         }
-        public void Handle(MediaMuteEvent message)
-        {
-            switch (message.Mute)
-            {
-                case Media.Mute.Mute:
-                    IsMuted = true;
-                    break;
-                case Media.Mute.Unmute:
-                    IsMuted = false;
-                    break;
-                default:
-                    break;
-            }
-
-        }
+     
         #endregion
 
         #region View Methods
@@ -454,15 +440,15 @@ namespace TT.Scouter.ViewModels
         public void Slow(int slow)
         {
             if (slow == 50)
-                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Half));
+                Events.PublishOnUIThread(new MediaLiveScouterSpeedEvent(Media.LiveScouterSpeed.Half));
             else if (slow == 75)
-                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Third));
+                Events.PublishOnUIThread(new MediaLiveScouterSpeedEvent(Media.LiveScouterSpeed.Third));
             else if (slow == 25)
-                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Quarter));
+                Events.PublishOnUIThread(new MediaLiveScouterSpeedEvent(Media.LiveScouterSpeed.Quarter));
             else if (slow == 150)
-                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Faster));
+                Events.PublishOnUIThread(new MediaLiveScouterSpeedEvent(Media.LiveScouterSpeed.Faster));
             else
-                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Full));
+                Events.PublishOnUIThread(new MediaLiveScouterSpeedEvent(Media.LiveScouterSpeed.Full));
         }
 
         public void SkipBackwards()
@@ -626,7 +612,7 @@ namespace TT.Scouter.ViewModels
                     break;
             }
         }
-    public void SetDefaultSkipForwardDuration(MenuItem m)
+        public void SetDefaultSkipForwardDuration(MenuItem m)
         {
             switch (m.Header.ToString())
             {
@@ -694,7 +680,10 @@ namespace TT.Scouter.ViewModels
                     SevenForwardChecked = true;
                     break;
             }
-            #endregion
-        }
+
+
+        }    
+        #endregion
     }
+
 }

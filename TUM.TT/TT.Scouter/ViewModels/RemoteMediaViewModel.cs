@@ -19,7 +19,7 @@ using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
-    public class RemoteMediaViewModel : Screen, IMediaPosition, IHandle<MediaSpeedEvent>,IHandle<MediaMuteEvent>
+    public class RemoteMediaViewModel : Screen, IMediaPosition, IHandle<MediaSpeedEvent>
     {
 
         ///// <summary>
@@ -260,29 +260,12 @@ namespace TT.Scouter.ViewModels
                 case Media.Speed.Full:
                     MediaSpeed = 100;
                     break;
-                case Media.Speed.Faster:
-                    MediaSpeed = 150;
-                    break;
                 default:
                     break;
             }
 
         }
-        public void Handle(MediaMuteEvent message)
-        {
-            switch (message.Mute)
-            {
-                case Media.Mute.Mute:
-                    IsMuted = true;
-                    break;
-                case Media.Mute.Unmute:
-                    IsMuted = false;
-                    break;
-                default:
-                    break;
-            }
-
-        }
+      
 
         #endregion
 
@@ -351,8 +334,6 @@ namespace TT.Scouter.ViewModels
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Third));
             else if (slow == 25)
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Quarter));
-            else if (slow == 150)
-                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Faster));
             else
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Full));
         }
