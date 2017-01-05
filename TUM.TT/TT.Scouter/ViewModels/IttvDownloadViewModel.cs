@@ -239,8 +239,8 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
-        private MatchCompetition competition = MatchCompetition.Competition;
-        public MatchCompetition Competition
+        private MatchCategory competition = MatchCategory.Category;
+        public MatchCategory Competition
         {
             get { return this.competition; }
             set
@@ -418,7 +418,7 @@ namespace TT.Scouter.ViewModels
             {
                 tempOutput = tempOutput + "_" + Year;
             }
-            if (Competition != MatchCompetition.Competition)
+            if (Competition != MatchCategory.Category)
             {
                 tempOutput = tempOutput + "_" + Competition.ToString();
             }

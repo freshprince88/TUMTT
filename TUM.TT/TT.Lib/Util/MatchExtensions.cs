@@ -36,10 +36,11 @@ namespace TT.Lib.Util
             var first = match.FirstPlayer ?? new Player();
             var second = match.SecondPlayer ?? new Player();
             return string.Format(
-                "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4}",
+                "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - {5}",
                 match.DateTime,
                 first.Name.WhenNullOrEmpty("A"),
                 second.Name.WhenNullOrEmpty("B"),
+                match.Category,
                 match.Round.WhenNullOrEmpty("Unknown round"),
                 match.Tournament.WhenNullOrEmpty("Unknown tournament"));
         }

@@ -1,0 +1,202 @@
+﻿<UserControl x:Class="TT.Scouter.Views.RemotePositionsRallyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:local="clr-namespace:TT.Scouter.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Olive.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <conv:BoolToVisibilityConverter x:Key="converter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/> <!-- Platzhalter für ggf. Überschrift -->
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <!--Viewbox StretchDirection="DownOnly" Grid.Row="0">
+            <TextBlock Text="Platzierungen" HorizontalAlignment="Center" FontSize="20" Foreground="White" />
+        </-->
+        <!-- Platzhalter für Platzierungsfeld -->
+
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0">Calibration</Label>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="CalibrateTable" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" cal:Message.Attach="[Event Click] = [Action CalibrateTable()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                            <Image Source="/resources/calibration.png"/>
+                        </Button>
+                        <Button x:Name="ToogleCalibration"  Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="0" cal:Message.Attach="[Event Click] = [Action ToogleCalibration()]" VerticalAlignment="Bottom" Focusable="False">
+                            <Image Source="{Binding ToogleCalibrationButtonImage}"/>
+                        </Button>
+                        <Button x:Name="ToogleOuterLines"  Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" cal:Message.Attach="[Event Click] = [Action toggleOuterLines()]" VerticalAlignment="Bottom" Focusable="False" Margin="-1,0,1,0">
+                            <Image Source="/resources/rectangle.png"/>
+                        </Button>
+                        <Button x:Name="ToogleTableMidLines"  Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="4" cal:Message.Attach="[Event Click] = [Action toggleTableMidLines()]" VerticalAlignment="Bottom" Focusable="False" Margin="-1,0,1,0">
+                            <Image Source="/resources/grid3.png"/>
+                        </Button>
+                        <Button x:Name="ToggleMidlines" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action toggleMidlines()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                            <Image Source="/resources/midlines.png"/>
+                        </Button>
+                        <Button x:Name="ToggleGridlines" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="2" cal:Message.Attach="[Event Click] = [Action toggleGridlines()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                            <Image Source="/resources/grid.png"/>
+                        </Button>
+                    </Grid>
+                
+                    <Label Grid.Row="3">Visible Strokes</Label>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="MaxStrokeNumberVisible" MinWidth="30" MaxWidth="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" SelectedIndex="4" SelectedValue="{Binding maxVisibleStrokes, Mode=OneWayToSource}" SelectedValuePath="Content" cal:Message.Attach="[Event SelectionChanged] = [Action OnMaxStrokesChanged()]">
+                            <ComboBoxItem>3</ComboBoxItem>
+                            <ComboBoxItem>5</ComboBoxItem>
+                            <ComboBoxItem>7</ComboBoxItem>
+                            <ComboBoxItem>9</ComboBoxItem>
+                            <ComboBoxItem>ALL</ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
+                    <Label Grid.Row="5">Delete Stroke</Label>
+                    <Grid Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                       <Button x:Name="DeleteStroke" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="9" cal:Message.Attach="[Event Click] = [Action DeleteStroke()]" VerticalAlignment="Top" Focusable="False" Margin="-1,0,1,0">
+                        <Image Source="/resources/delete.png"/>
+                    </Button>
+                    </Grid>
+                
+                </Grid>
+            </ScrollViewer>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Image x:Name="arrowTopLeft" Grid.Column="0" Grid.Row="0" Source="/resources/arrowRight.png" Visibility= "{Binding showTopLeftArrow, Converter={StaticResource converter}}" HorizontalAlignment="Right"/>
+                <Image x:Name="arrowBottomLeft" Grid.Column="0" Grid.Row="2" Source="/resources/arrowRight.png" Visibility= "{Binding showBottomLeftArrow, Converter={StaticResource converter}}" HorizontalAlignment="Right"/>
+
+            </Grid>
+
+            <Grid Grid.Column="3">
+                <Viewbox Stretch="Uniform">
+                    <Border x:Name="Table" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" BorderThickness="3 3 3 3"  BorderBrush="White" Background="{DynamicResource AccentColorBrush}" >
+                        <Grid Name="InnerFieldGrid" ShowGridLines="False" Height="548" Width="305">
+
+                            <Grid Name="InnerTableGridDown" Grid.Row="1" ShowGridLines="{Binding LineVisibility}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                            <Grid Name="InnerTableGridUp" Grid.Row="0" ShowGridLines="{Binding LineVisibility}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                            <Line X1="0" Y1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y2="0" Grid.Row="0" Grid.Column="0" Stroke="White" StrokeThickness="3" VerticalAlignment="Bottom"></Line>
+                            <ItemsControl Grid.RowSpan="2" x:Name="ItemControl" cal:Message.Attach="[Event MouseMove] = [Action MouseMoved($source, $eventArgs)];  [Event MouseLeave] = [Action GridUnclicked($source, $eventArgs)];
+                                          [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]" ItemsSource="{Binding Path=DrawnStrokes}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas Background="Transparent" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="{Binding g.Width}" Height="{Binding g.Height}" Background="Transparent" IsHitTestVisible="True" Margin="{Binding g.Margin}" Visibility="{Binding g.Visibility}"
+                                              cal:Message.Attach="[Event MouseDown] = [Action GridClicked($source, $eventArgs)]; [Event MouseUp] = [Action GridUnclicked($source, $eventArgs)]">
+                                            <Ellipse Stroke="{Binding e.Stroke}" StrokeThickness="{Binding e.StrokeThickness}" Visibility="{Binding g.Visibility}" Fill="{Binding e.Fill}"></Ellipse>
+                                            <TextBlock HorizontalAlignment="Center" Text="{Binding text}" TextAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </Border>
+                </Viewbox>
+                <Line X1="0" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" X2="0" Y2="0" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Stroke="White" StrokeThickness="0.5" HorizontalAlignment="Center" Visibility= "Visible"></Line>
+            </Grid>
+
+            <Grid Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Image x:Name="arrowTopRight" Grid.Column="0" Grid.Row="0" Source="/resources/arrowLeft.png"  Visibility= "{Binding showTopRightArrow, Converter={StaticResource converter}}" HorizontalAlignment="Left"/>
+                <Image x:Name="arrowBottomRight" Grid.Column="0" Grid.Row="2" Source="/resources/arrowLeft.png" Visibility="{Binding showBottomRightArrow, Converter={StaticResource converter}}" HorizontalAlignment="Left"/>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

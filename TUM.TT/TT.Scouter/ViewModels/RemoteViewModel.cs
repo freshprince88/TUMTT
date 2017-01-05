@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
+using TT.Scouter.Util.Model;
 using TT.Lib.Interfaces;
 using System.Reflection;
 using System.Windows.Input;
@@ -37,12 +38,12 @@ namespace TT.Scouter.ViewModels
         }
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+        private Calibration calibration = new Calibration();
 
         public IMediaPosition MediaPlayer { get; set; }
 
         public Match Match { get { return MatchManager.Match; } }
         public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
-        public int RallyCount { get { return Rallies.Count(); } }
         public RemoteStrokeViewModel SchlagView { get; set;  }
         private bool _service;
         public bool ServiceChecked
@@ -114,6 +115,7 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange("LastChecked");
             }
         }
+        public RemotePositionsRallyViewModel PositionsRallyView { get; set; }
 
 
 
@@ -189,15 +191,20 @@ namespace TT.Scouter.ViewModels
             {
                 if (_rally != value)
                 {
+                    MatchManager.ActiveRally = value;
 
-
-                    if (SchlagView == null)
-                        SchlagView = new RemoteStrokeViewModel(MatchManager, value);
+                    if (SchlagView == null || PositionsRallyView == null)
+                    {
+                        // Positioning IMPORTANT - this way PositionsRallyView gets notified about a calculated Stroke before SchlagView and PositionRallyView depends on the Schlagviewstate
+                        if (PositionsRallyView == null) PositionsRallyView = new RemotePositionsRallyViewModel(this, calibration);
+                        if (SchlagView == null) SchlagView = new RemoteStrokeViewModel(this, MatchManager, value, calibration);
+                    }
                     else
                     {
                         //TODO Hier kommt er nicht rein, wenn man die Länge verändert -> keine neuen Schläge werden erstellt!!!!
                         SchlagView.Strokes = value.Strokes;
                         SchlagView.CurrentRally = value;
+                        PositionsRallyView.OnNewStrokes();
                     }
                     _rally = value;
 
@@ -284,7 +291,7 @@ namespace TT.Scouter.ViewModels
             get { return _stroke; }
             set
             {
-                if (_stroke != value && value != null)
+                if (_stroke != value && value != null && CurrentRally != null)
                 {
                     _stroke = value;
                     NotifyOfPropertyChange("CurrentStroke");
@@ -297,6 +304,8 @@ namespace TT.Scouter.ViewModels
                     {
                         SchlagView.ActivateItem(new StrokeDetailViewModel(CurrentStroke, MatchManager, CurrentRally));
                     }
+
+                    PositionsRallyView.OnCurrentStrokeChanged();
                 }
             }
         }
@@ -308,7 +317,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             MatchManager = man;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.First();
-            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia);
+            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia, calibration);
             ServiceChecked = true;
             ReceiveChecked = false;
             ThirdChecked = false;
@@ -322,12 +331,18 @@ namespace TT.Scouter.ViewModels
             this.Events.Subscribe(this);
             this.ActivateItem(MediaPlayer);
             this.ActivateItem(SchlagView);
+            this.ActivateItem(PositionsRallyView);
         }
 
         protected override void OnDeactivate(bool close)
         {
             Events.Unsubscribe(this);
             base.OnDeactivate(close);
+        }
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+
         }
 
         #region View Methods
@@ -481,6 +496,15 @@ namespace TT.Scouter.ViewModels
                 default:
                     break;
             }
+        }
+        public void CalibrateTable()
+        {
+            ((RemoteMediaViewModel)MediaPlayer).CalibrateTable();
+        }
+
+        public void ToogleCalibration()
+        {
+            ((RemoteMediaViewModel)MediaPlayer).ToogleCalibration();
         }
 
         #endregion

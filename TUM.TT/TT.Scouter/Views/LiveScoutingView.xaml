@@ -231,6 +231,13 @@
                                 <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                             </cal:ActionMessage>
                         </ob:InputBindingTrigger>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Key="Down"/>
+                            </ob:InputBindingTrigger.InputBinding>
+                            <cal:ActionMessage MethodName="SetNewStart"/>
+
+                        </ob:InputBindingTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
                 <RadioButton GroupName="RallyLength" Content="n.a." FontSize="16" 

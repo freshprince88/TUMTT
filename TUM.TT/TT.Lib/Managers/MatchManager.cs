@@ -120,6 +120,51 @@ namespace TT.Lib.Managers
 
         #endregion
 
+        #region CalculatedProperties
+        public CurrentTableEnd CurrentTableEndFirstPlayer
+        {
+            get
+            {
+                // Return none if StartingTableEnd = None
+                if (Match.FirstPlayer.StartingTableEnd == StartingTableEnd.None) return CurrentTableEnd.None;
+
+                // Works ONLY if StartingTableEnd.Top == 1 && StartingTableEnd.Bottom == 2!!!
+                if ((int)StartingTableEnd.Top != 1 || (int)StartingTableEnd.Bottom != 2 || (int)CurrentTableEnd.Top != 1 || (int)CurrentTableEnd.Bottom != 2)
+                    throw new System.Exception("That doesnt work anymore if you change the values of the enums for StartingTableEnd");
+
+                int magicResult = ((((int)Match.FirstPlayer.StartingTableEnd + (ActiveRally.CurrentSetScore.Total % 2)) + 1) % 2) + 1;
+
+                // If its the last set calculation is more complicated
+                bool isLastSet = ((MatchModeExtensions.RequiredSets(Match.Mode) - 1) * 2) == ActiveRally.CurrentSetScore.Total;
+                if (isLastSet)
+                {
+                    if (ActiveRally.CurrentRallyScore.Highest < 5)
+                        magicResult = ((((int)Match.FirstPlayer.StartingTableEnd + (ActiveRally.CurrentSetScore.Total % 2)) + 1) % 2) + 1;
+                    else
+                        magicResult = (((((int)Match.FirstPlayer.StartingTableEnd + 1) % 2 + (ActiveRally.CurrentSetScore.Total % 2)) + 1) % 2) + 1;
+                }
+                return ((CurrentTableEnd)magicResult);
+            }
+        }
+
+        public CurrentTableEnd CurrentTableEndSecondPlayer
+        {
+            get
+            {
+                switch(CurrentTableEndFirstPlayer)
+                {
+                    case CurrentTableEnd.None:
+                        return CurrentTableEnd.None;
+                    case CurrentTableEnd.Top:
+                        return CurrentTableEnd.Bottom;
+                    case CurrentTableEnd.Bottom:
+                        return CurrentTableEnd.Top;
+                }
+                throw new Exception("This code should not be reachable");
+            }
+        }
+        #endregion
+
         public MatchManager(IEventAggregator aggregator)
         {
             Events = aggregator;

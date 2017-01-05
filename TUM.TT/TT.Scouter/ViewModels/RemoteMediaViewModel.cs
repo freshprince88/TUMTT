@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
 using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,32 +11,35 @@ using TT.Lib.Managers;
 using TT.Models;
 using TT.Lib.Results;
 using TT.Models.Util.Enums;
+using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using TT.Scouter.Util.Model;
 using TT.Lib.Interfaces;
 using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
-    public class RemoteMediaViewModel : Screen, IMediaPosition
+    public class RemoteMediaViewModel : Screen, IMediaPosition, IHandle<MediaSpeedEvent>
     {
 
-        /// <summary>
-        /// Sets key bindings for ControlWithBindableKeyGestures
-        /// </summary>
-        public Dictionary<string, KeyGesture> KeyBindings
-        {
-            get
-            {
-                //get all method names of this class
-                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+        ///// <summary>
+        ///// Sets key bindings for ControlWithBindableKeyGestures
+        ///// </summary>
+        //public Dictionary<string, KeyGesture> KeyBindings
+        //{
+        //    get
+        //    {
+        //        //get all method names of this class
+        //        var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
 
-                //get all existing key gestures that match the method names
-                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+        //        //get all existing key gestures that match the method names
+        //        var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
 
-                //return relevant key gestures
-                return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
-            }
-            set { }
-        }
+        //        //return relevant key gestures
+        //        return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
+        //    }
+        //    set { }
+        //}
 
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength
@@ -112,6 +116,21 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private int _mediaSpeed;
+        public int MediaSpeed
+        {
+            get
+            {
+                return _mediaSpeed;
+            }
+            set
+            {
+                if (_mediaSpeed != value)
+                    _mediaSpeed = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
         private bool _playing;
         public bool IsPlaying
         {
@@ -148,6 +167,7 @@ namespace TT.Scouter.ViewModels
         private IEventAggregator Events;
         private IMatchManager Manager;
         private IDialogCoordinator Dialogs;
+        private Calibration calibration;
         public bool syncStart { get; set; }
         public bool syncEnd { get; set; }
 
@@ -163,7 +183,7 @@ namespace TT.Scouter.ViewModels
                 {
                     _toRallyStart = value;
                     NotifyOfPropertyChange();
-                    NotifyOfPropertyChange("roRallyStart");
+                    NotifyOfPropertyChange("toRallyStart");
                 }
             }
         }
@@ -182,8 +202,8 @@ namespace TT.Scouter.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-
-        public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
+        
+        public RemoteMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor, Calibration cal)
         {
             Events = ev;
             Manager = man;
@@ -191,9 +211,63 @@ namespace TT.Scouter.ViewModels
             syncStart = true;
             syncEnd = true;
             toRallyStart = true;
+            MediaSpeed = 100;
             PlayMode = false;             
+            IsPlaying = false;
+            calibration = cal;
+            calibration.PointAdded += Calibration_PointAdded;
+            calibration.Lines.CollectionChanged += Lines_CollectionChanged;
+            calibration.MidLines.CollectionChanged += Lines_CollectionChanged;
+            calibration.GridLines.CollectionChanged += Lines_CollectionChanged;
         }
-        
+
+        #region Caliburn hooks
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            Events.Subscribe(this);
+
+
+        }
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            Events.Subscribe(this);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
+        #endregion  
+        #region Event Handlers
+        public void Handle(MediaSpeedEvent message)
+        {
+            switch (message.Speed)
+            {
+                case Media.Speed.Quarter:
+                    MediaSpeed = 25;
+                    break;
+                case Media.Speed.Half:
+                    MediaSpeed = 50;
+                    break;
+                case Media.Speed.Third:
+                    MediaSpeed = 75;
+                    break;
+                case Media.Speed.Full:
+                    MediaSpeed = 100;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+      
+
+        #endregion
 
         #region Media Methods
         public void Pause()
@@ -260,8 +334,6 @@ namespace TT.Scouter.ViewModels
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Third));
             else if (slow == 25)
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Quarter));
-            else if (slow == 150)
-                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Faster));
             else
                 Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Full));
         }
@@ -277,6 +349,7 @@ namespace TT.Scouter.ViewModels
             IsMuted = false;
             Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Unmute));
         }
+        #endregion
 
         public IEnumerable<IResult> Open()
         {
@@ -332,6 +405,74 @@ namespace TT.Scouter.ViewModels
             }
 
 
+        }
+
+        #region Calibration Methods
+
+        public void CalibrateTable()
+        {
+            if (calibration.Lines.Count > 0)
+            {
+                Events.BeginPublishOnUIThread(new DeleteLinesEvent(calibration.Lines.ToList<Line>()));
+                calibration.Lines.Clear();
+                Events.BeginPublishOnUIThread(new DeleteLinesEvent(calibration.MidLines.ToList<Line>()));
+                calibration.MidLines.Clear();
+                Events.BeginPublishOnUIThread(new DeleteLinesEvent(calibration.GridLines.ToList<Line>()));
+                calibration.GridLines.Clear();
+            }
+            calibration.startCalibrating();
+        }
+
+        public void ToogleCalibration()
+        {
+            if (calibration.isCalibrated)
+            {
+                calibration.toggleCalibration();
+            }
+        }
+
+        public void MouseDown(MouseButtonEventArgs e, System.Windows.Controls.Grid mediaContainer)
+        {
+            if (calibration.isCalibrating)
+            {
+                System.Windows.Point p = e.GetPosition(mediaContainer);
+
+                calibration.AddPoint(p);
+            }
+            else if(calibration.isCalibrated)
+            {
+                System.Windows.Point p = e.GetPosition(mediaContainer);
+
+                calibration.calcPointPositionOnTable(p);
+            }
+        }
+        
+
+        private void Lines_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch(e.Action)
+            {
+                case (System.Collections.Specialized.NotifyCollectionChangedAction.Add):
+                {
+                    foreach (Line l in e.NewItems)
+                    {
+                        Events.PublishOnUIThread(new DrawLineEvent(l));
+                    }
+                }
+                break;
+            }
+        }
+        
+        private void Calibration_PointAdded(object source, PointAddedEventArgs args)
+        {
+            if (args.NumberOfPoints < 4)
+            {
+                Events.PublishOnUIThread(new FollowMouseEvent(args.LastPoint));
+            }
+            else
+            {
+                Events.PublishOnUIThread(new FollowMouseEvent(new Point(-1, -1)));
+            }
         }
 
         #endregion

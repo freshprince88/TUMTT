@@ -123,6 +123,7 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Util\Converter\SchlagToViewConverter.cs" />
+    <Compile Include="Util\Model\Calibration.cs" />
     <Compile Include="ViewModels\ChoiceOfEndsViewModel.cs" />
     <Compile Include="ViewModels\ChoiceOfServiceReceiveViewModel.cs" />
     <Compile Include="ViewModels\IttvDownloadViewModel.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="ViewModels\PlayerInformationViewModel.cs" />
     <Compile Include="ViewModels\RemoteMediaViewModel.cs" />
     <Compile Include="ViewModels\RemoteStrokeViewModel.cs" />
+    <Compile Include="ViewModels\RemotePositionsRallyViewModel.cs" />
     <Compile Include="ViewModels\RemoteViewModel.cs" />
     <Compile Include="ViewModels\ServiceDetailViewModel.cs" />
     <Compile Include="ViewModels\ServicePositionTableViewModel.cs" />
@@ -190,6 +192,9 @@
     </Compile>
     <Compile Include="Views\RemoteMediaView.xaml.cs">
       <DependentUpon>RemoteMediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemotePositionsRallyView.xaml.cs">
+      <DependentUpon>RemotePositionsRallyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RemoteStrokeView.xaml.cs">
       <DependentUpon>RemoteStrokeView.xaml</DependentUpon>
@@ -285,6 +290,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\RemoteMediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RemotePositionsRallyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -397,7 +406,43 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Util\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\arrowLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\arrowRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\visible.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\hidden.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\calibration.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\highlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\grid.png" />
+    <Resource Include="Resources\midlines.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tablemid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\rectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\grid3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

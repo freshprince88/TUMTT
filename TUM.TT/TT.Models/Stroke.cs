@@ -43,6 +43,16 @@ namespace TT.Models
 
         private bool openingShot;
 
+        public delegate void StrokePlacementChangedEventHandler(object source, EventArgs args);
+
+        public event StrokePlacementChangedEventHandler StrokePlacementChanged;
+
+        public Stroke()
+        {
+            playerposition = -1;
+        }
+
+
         public Stroketechnique Stroketechnique
         {
             get
@@ -76,7 +86,29 @@ namespace TT.Models
             }
             set
             {
-                placementField = value;
+                Placement p = new Placement();
+                // round Placement to 3 digits so numbers in save-file are not to long
+                if (value != null)
+                {
+                    p.WX = Math.Round(value.WX, 3);
+                    p.WY = Math.Round(value.WY, 3);
+                }
+                else
+                {
+                    p = value;
+                }
+                // placementField = p;
+                // Notify about changed Placement for Save Method
+                RaiseAndSetIfChanged(ref placementField, p);               
+                OnPlacementChanged();
+            }
+        }
+
+        protected virtual void OnPlacementChanged()
+        {
+            if (StrokePlacementChanged != null)
+            {
+                StrokePlacementChanged(this, new EventArgs());
             }
         }
 
@@ -237,7 +269,7 @@ namespace TT.Models
             }
             set
             {
-                RaiseAndSetIfChanged(ref playerposition, value);
+                RaiseAndSetIfChanged(ref playerposition, Math.Round(value, 3));
             }
         }
 
@@ -547,17 +579,17 @@ namespace TT.Models
 
         public bool IsOverTheTable()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : this.PointOfContact.ToLower() == "über";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : this.PointOfContact.ToLower() == "over";
         }
 
         public bool IsAtTheTable()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "hinter";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "behind";
         }
 
         public bool IsHalfDistance()
         {
-            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "halbdistanz";
+            return string.IsNullOrWhiteSpace(PointOfContact) ? false : PointOfContact.ToLower() == "half-distance";
         }
 
 

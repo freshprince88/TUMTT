@@ -12,10 +12,11 @@ namespace TT.Scouter.Views
     /// </summary>
     public partial class LiveMediaView : UserControl,
         IHandle<MediaControlEvent>,
-        IHandle<MediaSpeedEvent>,
-        IHandle<MediaMuteEvent>
+        IHandle<MediaLiveScouterSpeedEvent>,
+        IHandle<MediaLiveScouterMuteEvent>
     {
-        private IEventAggregator Events;
+        public IEventAggregator Events { get; set; }
+
         private IMatchManager Manager;
 
         public LiveMediaView()
@@ -73,23 +74,23 @@ namespace TT.Scouter.Views
             
         }
 
-        public void Handle(MediaSpeedEvent message)
+        public void Handle(MediaLiveScouterSpeedEvent message)
         {
-            switch (message.Speed)
+            switch (message.LiveScouterSpeed)
             {
-                case Media.Speed.Quarter:
+                case Media.LiveScouterSpeed.Quarter:
                     MediaPlayer.SpeedRatio = 0.25;
                     break;
-                case Media.Speed.Half:
+                case Media.LiveScouterSpeed.Half:
                     MediaPlayer.SpeedRatio = 0.5;
                     break;
-                case Media.Speed.Third:
+                case Media.LiveScouterSpeed.Third:
                     MediaPlayer.SpeedRatio = 0.75;
                     break;
-                case Media.Speed.Full:
+                case Media.LiveScouterSpeed.Full:
                     MediaPlayer.SpeedRatio = 1;
                     break;
-                case Media.Speed.Faster:
+                case Media.LiveScouterSpeed.Faster:
                     MediaPlayer.SpeedRatio = 1.5;
                     break;
 
@@ -99,7 +100,7 @@ namespace TT.Scouter.Views
 
         }
 
-        public void Handle(MediaMuteEvent message)
+        public void Handle(MediaLiveScouterMuteEvent message)
         {
             switch (message.Mute)
             {

@@ -27,17 +27,23 @@ namespace TT.Scouter.Views
         IHandle<MediaControlEvent>,
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>,
-        IHandle<VideoLoadedEvent>
+        IHandle<VideoLoadedEvent>,
+        IHandle<DrawLineEvent>,
+        IHandle<DeleteLinesEvent>,
+        IHandle<FollowMouseEvent>
     {
-        private IEventAggregator Events;
+        public IEventAggregator Events { get; set; }
+
         private IMatchManager Manager;
         TimeSpan currentTime;
+
+        private bool lineIsDisplayed = false;
 
         public RemoteMediaView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
-            //Events.Subscribe(this);
+            Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
             this.Loaded += RemoteMediaView_Loaded;
             this.Unloaded += ExtendedMediaView_Unloaded;
@@ -84,6 +90,7 @@ namespace TT.Scouter.Views
 
             if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
             {
+               
                 MediaPlayer.StopWithState();
                 MediaPlayer.Close();
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
@@ -91,7 +98,7 @@ namespace TT.Scouter.Views
                 MediaPlayer.PlayWithState();
                                
                 MediaPlayer.PauseWithState();
-
+               
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
 
             }
@@ -143,6 +150,57 @@ namespace TT.Scouter.Views
             MediaPlayer.PauseWithState();
         }
 
+        public void Handle(DrawLineEvent message)
+        {
+            MediaContainer.Children.Add(message.Line);
+        }
+
+        public void Handle(DeleteLinesEvent message)
+        {
+            foreach(Line l in message.Lines)
+            {
+                MediaContainer.Children.Remove(l);
+            }
+        }
+
+        public void Handle(FollowMouseEvent message)
+        {
+            if (message.LastPosition.X == -1 && message.LastPosition.Y == -1)
+            {
+                interactiveLine.X1 = 0;
+                interactiveLine.Y1 = 0;
+                interactiveLine.Visibility = Visibility.Hidden;
+                lineIsDisplayed = false;
+            }else
+            {
+                interactiveLine.X1 = message.LastPosition.X;
+                interactiveLine.Y1 = message.LastPosition.Y;
+                interactiveLine.Visibility = Visibility.Visible;
+                lineIsDisplayed = true;
+            }
+        }
+
+        private void ContentControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Get the x and y coordinates of the mouse pointer.
+            System.Windows.Point position = e.GetPosition(MediaContainer);
+            interactiveLine.X2 = position.X;
+            interactiveLine.Y2 = position.Y;
+        }
+
         #endregion
+
+        private void ContentControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            interactiveLine.Visibility = Visibility.Hidden;
+        }
+
+        private void ContentControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (lineIsDisplayed)
+                interactiveLine.Visibility = Visibility.Visible;
+            else
+                interactiveLine.Visibility = Visibility.Hidden;
+        }
     }
 }

@@ -35,7 +35,18 @@ namespace TT.Scouter.ViewModels
             set { }
         }
 
-        public Stroke Stroke { get; set; }
+        private Stroke _stroke;
+        public Stroke Stroke {
+            get
+            {
+                return _stroke;
+            }
+            set
+            {
+                TableControl.Stroke = value;
+                _stroke = value;
+            }
+        }
         public IEventAggregator Events { get; set; }
         private IMatchManager MatchManager;
         private Rally _rally;
@@ -62,8 +73,8 @@ namespace TT.Scouter.ViewModels
         {
             Events = IoC.Get<IEventAggregator>();
             MatchManager = man;
-            Stroke = s;
-            TableControl = new ServicePositionTableViewModel();
+            _stroke = s;
+            TableControl = new ServicePositionTableViewModel(s, MatchManager);
             SpinControl = new SpinRadioViewModel(MatchManager, this);
             CurrentRally = cr;
             SetCourse();
@@ -78,6 +89,8 @@ namespace TT.Scouter.ViewModels
                 Events.PublishOnUIThread(new RalliesStrokesAddedEvent());
             }
 
+            TableControl = new ServicePositionTableViewModel(s, man);
+            SpinControl = new SpinRadioViewModel(man, this);
         }
 
         protected override void OnActivate()

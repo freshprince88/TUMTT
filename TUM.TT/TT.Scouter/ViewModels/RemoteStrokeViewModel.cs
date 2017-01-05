@@ -1,7 +1,10 @@
 ﻿using Caliburn.Micro;
 using System.Collections.ObjectModel;
 using TT.Lib.Managers;
+using TT.Lib.Events;
 using TT.Models;
+using System;
+using TT.Scouter.Util.Model;
 using MahApps.Metro.Controls;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -37,6 +40,7 @@ namespace TT.Scouter.ViewModels
             }
             set { }
         }
+        private RemoteViewModel remoteViewModel;
         private IMatchManager MatchManager;
         private ObservableCollection<Stroke> _strokes;
         public ObservableCollection<Stroke> Strokes
@@ -59,28 +63,24 @@ namespace TT.Scouter.ViewModels
 
         public Screen SchlagDetail { get; set; }
 
-        private Stroke _stroke;
+
         public Stroke CurrentStroke
         {
-            get { return _stroke; }
+            get { return remoteViewModel.CurrentStroke; }
             set
             {
-                if (_stroke != value)
+                remoteViewModel.CurrentStroke = value;
+                NotifyOfPropertyChange("CurrentStroke");
+
+                if (remoteViewModel.CurrentStroke == null || remoteViewModel.CurrentStroke.Number == 1)
                 {
-                    _stroke = value;
-                    NotifyOfPropertyChange("CurrentStroke");
-
-                    if (_stroke == null || _stroke.Number == 1)
-                    {
-                        SchlagDetail = new ServiceDetailViewModel(CurrentStroke, MatchManager, CurrentRally);
-                        NotifyOfPropertyChange("SchlagDetail");
-                    }
-                    else
-                    {
-                        SchlagDetail = new StrokeDetailViewModel(CurrentStroke, MatchManager, CurrentRally);
-                        NotifyOfPropertyChange("SchlagDetail");
-                    }
-
+                    SchlagDetail = new ServiceDetailViewModel(value, MatchManager, CurrentRally);                       
+                    NotifyOfPropertyChange("SchlagDetail");
+                }
+                else
+                {
+                    SchlagDetail = new StrokeDetailViewModel(value, MatchManager, CurrentRally);
+                    NotifyOfPropertyChange("SchlagDetail");
                 }
             }
         }
@@ -95,25 +95,21 @@ namespace TT.Scouter.ViewModels
                 {
                     _rally = value;
                     Strokes = _rally.Strokes != null ? new ObservableCollection<Stroke>(_rally.Strokes) : new ObservableCollection<Stroke>();
-                    CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
                     NotifyOfPropertyChange("CurrentRally");
                 }
             }
         }
         #endregion
 
-        public RemoteStrokeViewModel(IMatchManager man, Rally r)
+        public RemoteStrokeViewModel(RemoteViewModel remoteViewModel, IMatchManager man, Rally r, Calibration cal)
         {
+            this.remoteViewModel = remoteViewModel;
             Events = IoC.Get<IEventAggregator>();
             MatchManager = man;
             CurrentRally = r;
-            Strokes.CollectionChanged += Strokes_CollectionChanged;
 
-        }
-
-        private void Strokes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            CurrentStroke = Strokes.Count > 0 ? Strokes[0] : null;
+            Strokes = r.Strokes;
+            cal.StrokePositionCalculated += OnStrokePositionCalculated;
         }
 
         protected override void OnActivate()
@@ -125,10 +121,8 @@ namespace TT.Scouter.ViewModels
         #region View Methods
         public void NextStroke()
         {
-            if (CurrentStroke.Number < CurrentRally.Length)
-            {
+            if (CurrentStroke.Number < Strokes.Count)
                 CurrentStroke = Strokes[CurrentStroke.Number];
-            }
         }
 
         public void PreviousStroke()
@@ -164,5 +158,19 @@ namespace TT.Scouter.ViewModels
         }
 
         #endregion
+
+        public void OnStrokePositionCalculated(object sender, StrokePositionCalculatedEventArgs args)
+        {
+            if (!CurrentStroke.Course.Equals("Net/Out"))
+            {
+                Placement newPosition = new Placement();
+                newPosition.WX = args.Position.X;
+                newPosition.WY = args.Position.Y;
+                CurrentStroke.Placement = newPosition;
+                Console.WriteLine(args.Position.X);
+                Console.WriteLine(args.Position.Y);
+                NextStroke();
+            }
+        }
     }
 }

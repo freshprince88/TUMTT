@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:views="clr-namespace:TT.Lib.Views;assembly=TT.Lib"
              xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
-              xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
+             xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
@@ -31,14 +31,29 @@
             <RowDefinition Height="25"/>
 
         </Grid.RowDefinitions>
-        
 
-        <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0" ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
+
+        <Grid x:Name="MediaContainer">
+            <ContentControl MouseMove="ContentControl_MouseMove" MouseLeave="ContentControl_MouseLeave" MouseEnter="ContentControl_MouseEnter">
+                <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0" ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
                                     MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
                                     MediaPosition="{Binding MediaPosition, Mode=TwoWay}"
                                     EndPosition="{Binding EndPosition, Mode=OneWay}"
                                     IsPlaying="{Binding IsPlaying, Mode=OneWayToSource}"
                                     PlayMode="{Binding PlayMode, Mode=OneWay}"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <cal:ActionMessage MethodName="MouseDown">
+                            <cal:Parameter Value="$eventArgs"/>
+                            <cal:Parameter Value="{Binding ElementName=MediaContainer}"/>
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ContentControl>
+            <Line x:Name="interactiveLine" Stroke="Red" StrokeThickness="4" X1="0" Y1="0" Visibility="Hidden" IsHitTestVisible="False"/>
+        </Grid>
+
+
         <Slider x:Name="MediaSlider" Grid.Row="1" IsSnapToTickEnabled="False" IsMoveToPointEnabled="True"
                 Maximum="{Binding MediaLength, Converter={conv:TimeSpanToMillisecondsConverter}, Mode=OneWay}"
                 Value="{Binding MediaPosition, Converter={conv:TimeSpanToMillisecondsConverter}, Mode=TwoWay}"/>
@@ -76,14 +91,42 @@
                 <ColumnDefinition Width="2*" MaxWidth="30" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="1" IsChecked="True"
-                          cal:Message.Attach="[Event Checked] = [Action Slow(100)]"/>
-            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="2" 
-                          cal:Message.Attach="[Event Checked] = [Action Slow(75)]"/>
-            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="3" 
-                          cal:Message.Attach="[Event Checked] = [Action Slow(50)]"/>
-            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="4" 
-                          cal:Message.Attach="[Event Checked] = [Action Slow(25)]" />
+            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="1"
+                          cal:Message.Attach="[Event Checked] = [Action Slow(100)]">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
+                        <Binding Path="MediaSpeed" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
+            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="2" 
+                          cal:Message.Attach="[Event Checked] = [Action Slow(75)]">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
+                        <Binding Path="MediaSpeed" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
+            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="3" 
+                          cal:Message.Attach="[Event Checked] = [Action Slow(50)]">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
+                        <Binding Path="MediaSpeed" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
+            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="4" 
+                          cal:Message.Attach="[Event Checked] = [Action Slow(25)]">
+                <RadioButton.IsChecked>
+                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
+                        <Binding Path="MediaSpeed" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </RadioButton.IsChecked>
+            </RadioButton>
             <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="6"  Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">

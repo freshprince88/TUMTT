@@ -4,6 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using TT.Lib.Managers;
 using TT.Models;
+using System.Collections.Generic;
+using System.Windows;
+using TT.Models.Util.Enums;
 
 namespace TT.Scouter.ViewModels
 {

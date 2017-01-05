@@ -686,13 +686,13 @@ namespace TT.Viewer.ViewModels
                     return (r.Strokes[0].Spin.SR == "1" && r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0") && r.Strokes[0].Player != r.Winner;
 
                 case "NoUpDownAllTotalButton":
-                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0");
+                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0" && (r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.No == "1"));
                 case "NoUpDownAllPointsWonButton":
-                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0") && r.Strokes[0].Player == r.Winner;
+                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0" && (r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.No == "1")) && r.Strokes[0].Player == r.Winner;
                 case "NoUpDownAllDirectPointsWonButton":
-                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0") && r.Strokes[0].Player == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0" && (r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.No == "1")) && r.Strokes[0].Player == r.Winner && Convert.ToInt32(r.Length) < 3;
                 case "NoUpDownAllPointsLostButton":
-                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0") && r.Strokes[0].Player != r.Winner;
+                    return (r.Strokes[0].Spin.TS == "0" && r.Strokes[0].Spin.US == "0" && (r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.SL == "1" || r.Strokes[0].Spin.No == "1")) && r.Strokes[0].Player != r.Winner;
 
                 #endregion
 
@@ -752,13 +752,13 @@ namespace TT.Viewer.ViewModels
                 #region No SideSpin All
 
                 case "NoSideAllTotalButton":
-                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0");
+                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0" && (r.Strokes[0].Spin.TS == "1" || r.Strokes[0].Spin.US == "1" || r.Strokes[0].Spin.No == "1"));
                 case "NoSideAllPointsWonButton":
-                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0") && r.Strokes[0].Player == r.Winner;
+                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0" && (r.Strokes[0].Spin.TS == "1" || r.Strokes[0].Spin.US == "1" || r.Strokes[0].Spin.No == "1")) && r.Strokes[0].Player == r.Winner;
                 case "NoSideAllDirectPointsWonButton":
-                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0") && r.Strokes[0].Player == r.Winner && Convert.ToInt32(r.Length) < 3;
+                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0" && (r.Strokes[0].Spin.TS == "1" || r.Strokes[0].Spin.US == "1" || r.Strokes[0].Spin.No == "1")) && r.Strokes[0].Player == r.Winner && Convert.ToInt32(r.Length) < 3;
                 case "NoSideAllPointsLostButton":
-                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0") && r.Strokes[0].Player != r.Winner;
+                    return (r.Strokes[0].Spin.SL == "0" && r.Strokes[0].Spin.SR == "0" && (r.Strokes[0].Spin.TS == "1" || r.Strokes[0].Spin.US == "1" || r.Strokes[0].Spin.No == "1")) && r.Strokes[0].Player != r.Winner;
 
 
                 #endregion

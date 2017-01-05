@@ -64,6 +64,15 @@ namespace TT.Models
         Bottom=2
     }
 
+    public enum CurrentTableEnd
+    {
+        None=0,
+
+        Top=1,
+
+        Bottom=2
+    }
+
     /// <summary>
     /// Extensions for <see cref="MatchPlayer"/>.
     /// </summary>

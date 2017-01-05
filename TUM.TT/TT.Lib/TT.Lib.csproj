@@ -113,8 +113,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\FollowMouseEvent.cs" />
+    <Compile Include="Events\MediaLiveScouterMuteEvent.cs" />
+    <Compile Include="Events\MediaLiveScouterSpeedEvent.cs" />
+    <Compile Include="Events\PointAddedEventArgs.cs" />
+    <Compile Include="Events\StrokePositionCalculatedEventArgs.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\DeactivationEvent.cs" />
+    <Compile Include="Events\DeleteLinesEvent.cs" />
+    <Compile Include="Events\DrawLineEvent.cs" />
     <Compile Include="Events\FullscreenEvent.cs" />
     <Compile Include="Events\FullscreenHideAllEvent.cs" />
     <Compile Include="Events\HideMenuEvent.cs" />
