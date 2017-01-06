@@ -183,4 +183,7 @@
   <data name="table_netout_label" xml:space="preserve">
     <value>Netz/Aus</value>
   </data>
+  <data name="technique_pendulum" xml:space="preserve">
+    <value>Pendulum</value>
+  </data>
 </root>

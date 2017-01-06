@@ -372,8 +372,8 @@ namespace TT.Viewer.ViewModels
                 players.Add(bothPlayers);
             }
             customizations["players"] = players;
-            customizationId += PlayerChoice.ToString("X");
-
+            customizationId += "8" + PlayerChoice.ToString("X");
+            // adding a number in front ensures any two setting choices that are the same (e.g. 00010) will still get different encodings
 
             Dictionary<string, List<Rally>> sets = new Dictionary<string, List<Rally>>();
             // 'all' sets
@@ -397,11 +397,12 @@ namespace TT.Viewer.ViewModels
                     sets[i.ToString()] = rallyList;
                 }
             }
-            customizationId += SetChoice.ToString("X");
+            customizationId += "9" + SetChoice.ToString("X");
 
             // set combis
             var selectedCombisSorted = new List<int>(SelectedCombis);
             selectedCombisSorted.Sort();
+            customizationId += "A";
             foreach (var combi in selectedCombisSorted)
             {
                 var combiName = "";
@@ -450,17 +451,17 @@ namespace TT.Viewer.ViewModels
             }
 
             if (ServiceStatsChoice != 0)
-                customizationId += ServiceStatsChoice.ToString("X");
+                customizationId += "1" + ServiceStatsChoice.ToString("X");
             if (ReturnStatsChoice != 0)
-                customizationId += ReturnStatsChoice.ToString("X");
+                customizationId += "2" + ReturnStatsChoice.ToString("X");
             if (ThirdStatsChoice != 0)
-                customizationId += ThirdStatsChoice.ToString("X");
+                customizationId += "3" + ThirdStatsChoice.ToString("X");
             if (FourthStatsChoice != 0)
-                customizationId += FourthStatsChoice.ToString("X");
+                customizationId += "4" + FourthStatsChoice.ToString("X");
             if (LastStatsChoice != 0)
-                customizationId += LastStatsChoice.ToString("X");
+                customizationId += "5" + LastStatsChoice.ToString("X");
             if (AllStatsChoice != 0)
-                customizationId += AllStatsChoice.ToString("X");
+                customizationId += "6" + AllStatsChoice.ToString("X");
 
             customizations["general"] = new List<string>();
             foreach (int key in GeneralStats.Keys)
@@ -468,7 +469,7 @@ namespace TT.Viewer.ViewModels
                 if ((GeneralChoice & key) == key)
                     ((List<string>)customizations["general"]).Add(GeneralStats[key][0]);
             }
-            customizationId += GeneralChoice.ToString("X");
+            customizationId += "7" + GeneralChoice.ToString("X");
             
             Debug.WriteLine("customization id={0}", customizationId, "");
 

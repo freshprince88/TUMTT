@@ -14,59 +14,61 @@ namespace TT.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            List<Rally> rallies = (List<Rally>)values[0];
+            MatchPlayer? p = values.Length >= 14 ? (MatchPlayer?)values[13] : null;
+
+            IEnumerable<Rally> rallies = (IEnumerable<Rally>)values[0];
             string flipString = (string)values[1];
-            flipString = ReplaceExpression(flipString);
+            flipString = ReplaceExpression(flipString, param: parameter, player: p);
             Func<Rally, bool> func1 = ExpressionParser.Compile<Func<Rally, bool>>(flipString);            
             double flip = rallies.Where(func1).Count() + 0.11;
 
             string pushShortString = (string)values[2];
-            pushShortString = ReplaceExpression(pushShortString);
+            pushShortString = ReplaceExpression(pushShortString, param: parameter, player: p);
             Func<Rally, bool> func2 = ExpressionParser.Compile<Func<Rally, bool>>(pushShortString);
             double pushShort = rallies.Where(func2).Count() + 0.10;
 
             string pushHalfLongString = (string)values[3];
-            pushHalfLongString = ReplaceExpression(pushHalfLongString);
+            pushHalfLongString = ReplaceExpression(pushHalfLongString, param: parameter, player: p);
             Func<Rally, bool> func3 = ExpressionParser.Compile<Func<Rally, bool>>(pushHalfLongString);
             double pushHalfLong = rallies.Where(func3).Count() + 0.09;
 
             string pushLongString = (string)values[4];
-            pushLongString = ReplaceExpression(pushLongString);
+            pushLongString = ReplaceExpression(pushLongString, param: parameter, player: p);
             Func<Rally, bool> func4 = ExpressionParser.Compile<Func<Rally, bool>>(pushLongString);
             double pushLong = rallies.Where(func4).Count() + 0.08;
 
             string topspinDiagonalString = (string)values[5];
-            topspinDiagonalString = ReplaceExpression(topspinDiagonalString); ;
+            topspinDiagonalString = ReplaceExpression(topspinDiagonalString, param: parameter, player: p);
             Func<Rally, bool> func5 = ExpressionParser.Compile<Func<Rally, bool>>(topspinDiagonalString);
             double topspinDiagonal = rallies.Where(func5).Count() + 0.07;
 
             string topspinMiddleString = (string)values[6];
-            topspinMiddleString = ReplaceExpression(topspinMiddleString);
+            topspinMiddleString = ReplaceExpression(topspinMiddleString, param: parameter, player: p);
             Func<Rally, bool> func6 = ExpressionParser.Compile<Func<Rally, bool>>(topspinMiddleString);
             double topspinMiddle = rallies.Where(func6).Count() + 0.06;
 
             string topspinParallelString = (string)values[7];
-            topspinParallelString = ReplaceExpression(topspinParallelString);
+            topspinParallelString = ReplaceExpression(topspinParallelString, param: parameter, player: p);
             Func<Rally, bool> func7 = ExpressionParser.Compile<Func<Rally, bool>>(topspinParallelString);
             double topspinParallel = rallies.Where(func7).Count() + 0.05;
 
             string blockDiagonalString = (string)values[8];
-            blockDiagonalString = ReplaceExpression(blockDiagonalString); ;
+            blockDiagonalString = ReplaceExpression(blockDiagonalString, param: parameter, player: p);
             Func<Rally, bool> func8 = ExpressionParser.Compile<Func<Rally, bool>>(blockDiagonalString);
             double blockDiagonal = rallies.Where(func8).Count() + 0.04;
 
             string blockParallelString = (string)values[9];
-            blockParallelString = ReplaceExpression(blockParallelString);
+            blockParallelString = ReplaceExpression(blockParallelString, param: parameter, player: p);
             Func<Rally, bool> func9 = ExpressionParser.Compile<Func<Rally, bool>>(blockParallelString);
             double blockParallel = rallies.Where(func9).Count() + 0.02;
 
             string blockMiddleString = (string)values[10];
-            blockMiddleString = ReplaceExpression(blockMiddleString);
+            blockMiddleString = ReplaceExpression(blockMiddleString, param: parameter, player: p);
             Func<Rally, bool> func10 = ExpressionParser.Compile<Func<Rally, bool>>(blockMiddleString);
             double blockMiddle = rallies.Where(func10).Count() + 0.03;
 
             string chopString = (string)values[11];
-            chopString = ReplaceExpression(chopString);
+            chopString = ReplaceExpression(chopString, param: parameter, player: p);
             Func<Rally, bool> func11 = ExpressionParser.Compile<Func<Rally, bool>>(chopString);
             double chop = rallies.Where(func11).Count() + 0.01;
 

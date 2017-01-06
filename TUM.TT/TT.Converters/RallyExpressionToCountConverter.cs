@@ -15,13 +15,9 @@ namespace TT.Converters
         {
             IEnumerable<Rally> rallies = (IEnumerable<Rally>)values[0];
             string expression = (string)values[1];
-            MatchPlayer? player = values.Length > 2 ? (MatchPlayer?)values[2] : null;
-            
-            expression = expression.Replace("$$Player$$", player != null ? parameter.ToString() : "");
-            if (player != null)
-                expression = expression.Replace("$$PlayerString$$", player.Value.ToString());
+            MatchPlayer? p = values.Length > 2 ? (MatchPlayer?)values[2] : null;
 
-            expression = ReplaceExpression(expression);
+            expression = ReplaceExpression(expression, param: parameter, player: p);
 
             Func<Rally, bool> func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
 

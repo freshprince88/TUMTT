@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:local="clr-namespace:TT.Report.Views"             
+             xmlns:local="clr-namespace:TT.Report.Views"
+             xmlns:prop="clr-namespace:TT.Report.Properties"
              xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="172" d:DesignWidth="315">
@@ -13,6 +14,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <prop:Resources x:Key="LocalizedStrings" />
+                </ResourceDictionary>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
@@ -50,7 +54,7 @@
         <Border Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" BorderBrush="Black" BorderThickness="1 0 0 0"/>
 
 
-        <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Pendulum"/>
+        <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="{Binding Path=technique_pendulum, Source={StaticResource LocalizedStrings}}"/>
         <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Reverse"/>
         <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Tomahawk"/>
         <TextBlock Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10" Text="Special"/>

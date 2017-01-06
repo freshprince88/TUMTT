@@ -5,7 +5,6 @@ using TT.Report.Plots;
 using TT.Report.Sections;
 using System.Windows.Media;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace TT.Report.Generators
 {

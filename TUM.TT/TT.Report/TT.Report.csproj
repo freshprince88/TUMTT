@@ -156,6 +156,9 @@
       <DependentUpon>StrokePlacementGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.cs" />
+    <Compile Include="Views\TechniqueGridView.xaml.cs">
+      <DependentUpon>TechniqueGridView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -186,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StrokePlacementGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TechniqueGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

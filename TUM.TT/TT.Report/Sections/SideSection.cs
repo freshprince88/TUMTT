@@ -20,6 +20,7 @@ namespace TT.Report.Sections
             this.match = match;
             this.player = player;
 
+            // TODO change to horizontal bar diagram
             foreach (var set in sets.Keys)
             {
                 if (sets[set].Count > 0)

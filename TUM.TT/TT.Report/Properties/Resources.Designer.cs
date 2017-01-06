@@ -257,5 +257,14 @@ namespace TT.Report.Properties {
                 return ResourceManager.GetString("table_netout_label", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thingamabob.
+        /// </summary>
+        public static string technique_pendulum {
+            get {
+                return ResourceManager.GetString("technique_pendulum", resourceCulture);
+            }
+        }
     }
 }

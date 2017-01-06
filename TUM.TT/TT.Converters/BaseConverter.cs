@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Markup;
+using TT.Models;
 
 namespace TT.Converters
 {
@@ -10,8 +11,11 @@ namespace TT.Converters
             return this;
         }
 
-        public string ReplaceExpression(string expression)
+        public string ReplaceExpression(string expression, object param = null, MatchPlayer? player = null)
         {
+            expression = expression.Replace("$$Player$$", player != null ? param.ToString() : "");
+            if (player != null)
+                expression = expression.Replace("$$PlayerString$$", player.Value.ToString());
             expression = expression.Replace('\'', '"');
             expression = expression.Replace("MatchPlayer.None", "\"None\"");
             expression = expression.Replace("MatchPlayer.First", "\"First\"");

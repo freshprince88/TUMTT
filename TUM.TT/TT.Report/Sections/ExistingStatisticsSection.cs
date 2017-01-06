@@ -34,9 +34,9 @@ namespace TT.Report.Sections
                 {
                     continue;
                 }
-                if (strokeNumber == 1)
-                {
-                    // we have to create & re-populate new views because just switching SelectedRallies for some reason doesn't update the view
+                //if (strokeNumber == 1)
+                //{
+                    // we have to create & re-populate new viewmodels because just switching SelectedRallies for some reason doesn't update the view
                     ServiceStatisticsGridViewModel vm = new ServiceStatisticsGridViewModel()
                     {
                         Player = player,
@@ -63,7 +63,7 @@ namespace TT.Report.Sections
                     bmp.Render(view);
 
                     ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
-                }
+                //}
             }
         }
     }

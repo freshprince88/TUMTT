@@ -183,4 +183,7 @@
   <data name="table_netout_label" xml:space="preserve">
     <value>Net/Out</value>
   </data>
+  <data name="technique_pendulum" xml:space="preserve">
+    <value>Thingamabob</value>
+  </data>
 </root>
