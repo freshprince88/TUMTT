@@ -181,7 +181,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => Convert.ToInt32(r.Length) > 1 &&
+                var results = BasicFilterStatisticsView.SelectedRallies.Where(r => (Convert.ToInt32(r.Length) >2 || Convert.ToInt32(r.Length) == 2 && r.Winner != r.Server) &&
                 r.HasPlacementStatistics((r.LastWinnerStroke().Number)-1, X) &&
                 r.HasBasisInformationStatistics(r.LastWinnerStroke().Number, X) &&
                 r.HasContactPositionStatistics((r.LastWinnerStroke().Number) - 1, X) &&

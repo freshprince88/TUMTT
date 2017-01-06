@@ -568,6 +568,13 @@ namespace TT.Models
                     return Convert.ToInt32(this.Length) >= minlegth && this.Winner == MatchPlayer.First;
                 case "TotalFourthBallsCountPointPlayer2":
                     return Convert.ToInt32(this.Length) >= minlegth && this.Winner == MatchPlayer.Second;
+                case "TotalLastBallsCount":
+                    return Convert.ToInt32(this.Length) >= 1;
+                case "TotalLastBallsCountPointPlayer1":
+                    return Convert.ToInt32(this.Length) >= 1 && this.Winner == MatchPlayer.First;
+                case "TotalLastBallsCountPointPlayer2":
+                    return Convert.ToInt32(this.Length) >= 1 && this.Winner == MatchPlayer.Second;
+
 
                 default:
                     return true;
@@ -777,8 +784,8 @@ namespace TT.Models
 
         public bool HasTechniqueStatistics(int stroke, string name)
         {
-            if (this.Strokes[stroke].Stroketechnique != null)
-            {
+            //if (this.Strokes[stroke].Stroketechnique != null)
+            //{
                 switch (name)
                 {
                     case "":
@@ -1158,8 +1165,8 @@ namespace TT.Models
                 }
 
 
-            }
-            else return false;
+            //}
+            //else return false;
         }
         public bool HasContactPositionStatistics(int stroke, string name)
         {
