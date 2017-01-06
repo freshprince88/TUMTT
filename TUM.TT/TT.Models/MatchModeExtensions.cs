@@ -109,15 +109,36 @@ namespace TT.Models
         /// U21 Men's Singles.
         /// </summary>
         [Description("U21 Men's Singles")]
-        BS,
+        U21BS,
         /// <summary>
         /// U21 Women's Singles.
         /// </summary>
         [Description("U21 Women's Singles")]
-        GS,
+        U21GS,
+        /// <summary>
+        /// Junior Boys' Singles.
+        /// </summary>
+        [Description("Junior Boys' Singles")]
+        JBS,
+        /// <summary>
+        /// "Junior Girls' Singles".
+        /// </summary>
+        [Description("Junior Girls' Singles")]
+        JGS,
+        /// <summary>
+        /// Cadet Boys' Singles.
+        /// </summary>
+        [Description("Cadet Boys' Singles")]
+        CBS,
+        /// <summary>
+        /// "Cadet Girls' Singles".
+        /// </summary>
+        [Description("Cadet Girls' Singles")]
+        CGS,
         /// <summary>
         /// Men's Doubles.
         /// </summary>
+        /// 
         [Description("Men's Doubles")]
         MD,
         /// <summary>
@@ -125,6 +146,26 @@ namespace TT.Models
         /// </summary>
         [Description("Women's Doubles")]
         WD,
+        /// <summary>
+        /// Junior Boys' Doubles.
+        /// </summary>
+        [Description("Junior Boys' Doubles")]
+        JBD,
+        /// <summary>
+        /// "Junior Girls' Doubles".
+        /// </summary>
+        [Description("Junior Girls' Doubles")]
+        JGD,
+        /// <summary>
+        /// Cadet Boys' Doubles.
+        /// </summary>
+        [Description("Cadet Boys' Doubles")]
+        CBD,
+        /// <summary>
+        /// "Cadet Girls' Doubles".
+        /// </summary>
+        [Description("Cadet Girls' Doubles")]
+        CGD,
         /// <summary>
         /// Men's Team.
         /// </summary>
@@ -135,6 +176,27 @@ namespace TT.Models
         /// </summary>
         [Description("Women's Doubles")]
         WT,
+        /// <summary>
+        /// Junior Boys' Team.
+        /// </summary>
+        [Description("Junior Boys' Team")]
+        JBT,
+        /// <summary>
+        /// "Junior Girls' Team".
+        /// </summary>
+        [Description("Junior Girls' Team")]
+        JGT,
+        /// <summary>
+        /// Cadet Boys' Team.
+        /// </summary>
+        [Description("Cadet Boys' Team")]
+        CBT,
+        /// <summary>
+        /// "Cadet Girls' Team".
+        /// </summary>
+        [Description("Cadet Girls' Team")]
+        CGT,
+
 
     }
 
