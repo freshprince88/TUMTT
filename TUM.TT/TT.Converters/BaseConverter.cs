@@ -11,11 +11,13 @@ namespace TT.Converters
             return this;
         }
 
-        public string ReplaceExpression(string expression, object param = null, MatchPlayer? player = null)
+        public string ReplaceExpression(string expression, object param = null, MatchPlayer? player = null, int? strokeNumber = null)
         {
             expression = expression.Replace("$$Player$$", player != null ? param.ToString() : "");
             if (player != null)
                 expression = expression.Replace("$$PlayerString$$", player.Value.ToString());
+            if (strokeNumber != null)
+                expression = expression.Replace("$$StrokeNumber$$", (strokeNumber.Value - 1).ToString());
             expression = expression.Replace('\'', '"');
             expression = expression.Replace("MatchPlayer.None", "\"None\"");
             expression = expression.Replace("MatchPlayer.First", "\"First\"");

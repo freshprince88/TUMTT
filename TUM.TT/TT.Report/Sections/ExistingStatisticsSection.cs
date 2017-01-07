@@ -13,11 +13,11 @@ namespace TT.Report.Sections
 {
     public abstract class ExistingStatisticsSection
     {
-        public IDictionary<string, BitmapFrame> ExistingStatisticsImageBitmapFrames { get; private set; }
+        public IDictionary<string, object> ExistingStatisticsImageBitmapFrames { get; private set; }
 
         protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, UserControl view)
         {
-            this.ExistingStatisticsImageBitmapFrames = new Dictionary<string, BitmapFrame>();
+            this.ExistingStatisticsImageBitmapFrames = new Dictionary<string, object>();
 
             var player = MatchPlayer.None;
             if (match.FirstPlayer.Equals(p))
@@ -40,6 +40,7 @@ namespace TT.Report.Sections
                     ServiceStatisticsGridViewModel vm = new ServiceStatisticsGridViewModel()
                     {
                         Player = player,
+                        StrokeNumber = strokeNumber,
                         SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
                     };
                     ViewModelBinder.Bind(vm, view, null);

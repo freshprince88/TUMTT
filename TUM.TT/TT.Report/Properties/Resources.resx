@@ -138,17 +138,14 @@
   <data name="section_spin_hidden" xml:space="preserve">
     <value>Hidden</value>
   </data>
-  <data name="section_spin_lost" xml:space="preserve">
-    <value>Lost</value>
-  </data>
   <data name="section_spin_no" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="section_spin_up" xml:space="preserve">
     <value>Up</value>
   </data>
-  <data name="section_spin_won" xml:space="preserve">
-    <value>Won</value>
+  <data name="section_stroke_lost" xml:space="preserve">
+    <value>Lost</value>
   </data>
   <data name="section_stroke_name_all" xml:space="preserve">
     <value>All strokes</value>
@@ -168,11 +165,29 @@
   <data name="section_stroke_name_third" xml:space="preserve">
     <value>Third stroke</value>
   </data>
+  <data name="section_stroke_won" xml:space="preserve">
+    <value>Won</value>
+  </data>
   <data name="section_table" xml:space="preserve">
     <value>Table</value>
   </data>
   <data name="section_technique" xml:space="preserve">
     <value>Technique</value>
+  </data>
+  <data name="section_technique_flip" xml:space="preserve">
+    <value>Flip</value>
+  </data>
+  <data name="section_technique_misc" xml:space="preserve">
+    <value>Miscellaneous</value>
+  </data>
+  <data name="section_technique_push" xml:space="preserve">
+    <value>Push</value>
+  </data>
+  <data name="section_technique_smash" xml:space="preserve">
+    <value>Smash</value>
+  </data>
+  <data name="section_technique_topspin" xml:space="preserve">
+    <value>Topspin</value>
   </data>
   <data name="sets_all" xml:space="preserve">
     <value>All sets</value>

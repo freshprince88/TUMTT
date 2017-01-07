@@ -7,6 +7,7 @@ namespace TT.Report.ViewModels
     public class ServiceStatisticsGridViewModel : Screen
     {
         public MatchPlayer Player { get; set; }
+        public int StrokeNumber { get; set; }
 
         private ObservableCollection<Rally> selectedRallies;
         public ObservableCollection<Rally> SelectedRallies

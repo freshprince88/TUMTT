@@ -25,6 +25,7 @@ namespace TT.Report.Renderers
     using OxyPlot.Series;
     using System.Diagnostics;
     using System.Windows.Media.Imaging;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Renders a report to a PDF file.
@@ -32,6 +33,7 @@ namespace TT.Report.Renderers
     public class PdfRenderer : IReportRenderer
     {
         private readonly Func<object, int, int, string> bitmapFrameToTempFileFunction;
+        private readonly Func<object, int, int, string> oxyPlotToTempFilePathFunction;
 
         /// <summary>
         /// Format for probability values.
@@ -107,7 +109,15 @@ namespace TT.Report.Renderers
 
                 var tempFile = this.GetTempFile();
                 using (Stream stm = File.Create(tempFile))
+                {
                     encoder.Save(stm);
+                }
+                return tempFile;
+            });
+            oxyPlotToTempFilePathFunction = new Func<object, int, int, string>((plot, width, height) =>
+            {
+                var tempFile = GetTempFile();
+                PdfExporter.Export((OxyPlot.PlotModel)plot, tempFile, width, height);
                 return tempFile;
             });
         }
@@ -562,14 +572,14 @@ namespace TT.Report.Renderers
         {
             this.AddHeading(2, Properties.Resources.section_side);
 
-            var oxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
+            var customOxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
             {
                 var tempFile = GetTempFile();
                 PdfExporter.Export(plot, tempFile, width + 65, height + 15);
                 return tempFile;
             });
 
-            AddItemsToTable(section.SidePlots, null, oxyPlotToTempFilePathFunction, 350, 210);            
+            AddItemsToTable(section.SidePlots, null, customOxyPlotToTempFilePathFunction, 350, 210);            
         }
         
         public void Visit(StepAroundSection section)
@@ -580,31 +590,29 @@ namespace TT.Report.Renderers
         {
             AddHeading(2, Properties.Resources.section_spin);
 
-            var oxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
-            {
-                var tempFile = GetTempFile();
-                PdfExporter.Export(plot, tempFile, width, height);
-                return tempFile;
-            });
-
             AddItemsToTable(section.SpinPlots, null, oxyPlotToTempFilePathFunction, 450, 210, 270, 150);
         }
 
         public void Visit(TechniqueSection section)
         {
+            Debug.WriteLine("Visiting Technique section {0}", section);
             AddHeading(2, Properties.Resources.section_technique);
 
-            var itemsList = new List<BitmapFrame>();
+            var itemsList = new List<object>();
             foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
+
+            if (itemsList.Count > 0 && itemsList.ElementAt(0) is BitmapFrame)
+                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
+            else if (itemsList.Count > 0 && itemsList.ElementAt(0) is List<object>)
+                AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 250, 200, keepCol1AspectRation: false, keepCol2AspectRation: true, extraColWidth: 15);
         }
 
         public void Visit(PlacementSection section)
         {
             AddHeading(2, Properties.Resources.section_placement);
 
-            var itemsList = new List<BitmapFrame>();
+            var itemsList = new List<object>();
             foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
             AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
@@ -1188,6 +1196,71 @@ namespace TT.Report.Renderers
             return table;
         }
 
+        private Table AddItemsToTwoColTable<T>(List<T> items,
+            List<string> setNumbers,
+            Func<T, int, int, string> firstColItemToTempFilePathFunction,
+            Func<T, int, int, string> secondColItemToTempFilePathFunction,
+            int firstColWidth,
+            int secondColWidth,
+            int firstColHeight = 0,
+            int secondColHeight = 0,
+            bool keepCol1AspectRation = true,
+            bool keepCol2AspectRation = true,
+            int extraColWidth = 0)
+        {
+            Table table = Document.LastSection.AddTable();
+            table.Borders.Visible = false;
+
+            Column col1 = table.AddColumn();
+            col1.Width = firstColWidth + extraColWidth;
+
+            Column col2 = table.AddColumn();
+            col2.Width = secondColWidth + extraColWidth;
+            
+            int sizeH = Math.Max(firstColHeight, secondColHeight);
+            if (sizeH == 0)
+                sizeH = Math.Max(firstColWidth, secondColWidth);
+
+            int rowIndex = 0;
+            foreach (var colItems in items)
+            {
+                var colItemsList = (List<T>)(object)colItems;
+
+                Row row = table.AddRow();
+                var heading = row.Cells[0].AddParagraph(setNumbers[rowIndex] == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + setNumbers[rowIndex]));
+                heading.Format.SpaceBefore = 10;
+                heading.Format.Font.Size = 16;
+                heading.Format.Font.Bold = true;
+                heading.Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[0].MergeRight = 1;
+                row.KeepWith = 1;
+
+                row = table.AddRow();
+                var tempFile = firstColItemToTempFilePathFunction.Invoke(colItemsList.ElementAt(0), firstColWidth, sizeH);
+                var image = row.Cells[0].AddParagraph().AddImage(tempFile);
+                if (keepCol1AspectRation)
+                    image.LockAspectRatio = true;
+                else
+                    image.Height = sizeH;
+                image.Width = firstColWidth;
+                row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+
+                tempFile = secondColItemToTempFilePathFunction.Invoke(colItemsList.ElementAt(1), secondColWidth, sizeH);
+                image = row.Cells[1].AddParagraph().AddImage(tempFile);
+                if (keepCol2AspectRation)
+                    image.LockAspectRatio = true;
+                else
+                    image.Height = sizeH;
+                image.Width = secondColWidth;
+                row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+
+                rowIndex++;
+            }
+
+            return table;
+        }
         /// <summary>
         /// Gets a temporary file.
         /// </summary>

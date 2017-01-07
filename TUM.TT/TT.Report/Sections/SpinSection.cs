@@ -46,8 +46,8 @@ namespace TT.Report.Sections
                     barSeries2.IsStacked = true;
                     barSeries1.StrokeThickness = 1;
                     barSeries2.StrokeThickness = 1;
-                    barSeries1.Title = Properties.Resources.section_spin_won;
-                    barSeries2.Title = Properties.Resources.section_spin_lost;
+                    barSeries1.Title = Properties.Resources.section_stroke_won;
+                    barSeries2.Title = Properties.Resources.section_stroke_lost;
                     barSeries1.LabelPlacement = LabelPlacement.Inside;
                     barSeries2.LabelPlacement = LabelPlacement.Inside;
                     barSeries1.LabelMargin = 8;
@@ -56,30 +56,30 @@ namespace TT.Report.Sections
                     barSeries2.LabelFormatString = "{0}";
 
                     int categoryNr = 0;
-                    if (statistics.SpinUp > 0)
-                    {
+                    //if (statistics.SpinUp > 0)
+                    //{
                         categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_up, statistics.SpinUp));
                         barSeries1.Items.Add(new BarItem(statistics.SpinUpWon, categoryNr));
                         var spinUpLost = statistics.SpinUp - statistics.SpinUpWon;
                         if (spinUpLost > 0) barSeries2.Items.Add(new BarItem(spinUpLost, categoryNr));
                         categoryNr++;
-                    }
-                    if (statistics.NoSpin > 0)
-                    {
+                    //}
+                    //if (statistics.NoSpin > 0)
+                    //{
                         categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_no, statistics.NoSpin));
                         barSeries1.Items.Add(new BarItem(statistics.NoSpinWon, categoryNr));
                         var noSpinLost = statistics.NoSpin - statistics.NoSpinWon;
                         if (noSpinLost > 0) barSeries2.Items.Add(new BarItem(noSpinLost, categoryNr));
                         categoryNr++;
-                    }
-                    if (statistics.SpinDown > 0)
-                    {
+                    //}
+                    //if (statistics.SpinDown > 0)
+                    //{
                         categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_down, statistics.SpinDown));
                         barSeries1.Items.Add(new BarItem(statistics.SpinDownWon, categoryNr));
                         var spinDownLost = statistics.SpinDown - statistics.SpinDownWon;
                         if (spinDownLost > 0) barSeries2.Items.Add(new BarItem(spinDownLost, categoryNr));
                         categoryNr++;
-                    }
+                    //}
                     //if (statistics.NotAnalysed > 0)
                     //{
                     //    categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_hidden, statistics.NotAnalysed));
