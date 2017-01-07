@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Diagnostics;
+
 namespace TT.Models.Statistics
 {
     /// <summary>
@@ -25,8 +27,9 @@ namespace TT.Models.Statistics
         /// </summary>
         public Match Match { get; private set; }
 
-        public virtual bool CountStroke(Stroke stroke, MatchPlayer player, int strokeNumber)
+        public virtual bool CountStroke(Stroke stroke, MatchPlayer player, int strokeNumber, string stat = null)
         {
+            bool retVal;
             if (stroke.Player == player)
             {
                 switch (strokeNumber)
@@ -34,13 +37,21 @@ namespace TT.Models.Statistics
                     case int.MaxValue:
                         {
                             var lastWinnerStroke = stroke.Rally.LastWinnerStroke();
-                            return lastWinnerStroke != null && stroke.Number == lastWinnerStroke.Number;
+                            retVal = lastWinnerStroke != null && stroke.Number == lastWinnerStroke.Number;
+                            break;
                         }
-                    case -1: return true;
-                    default: return stroke.Number == strokeNumber;
+                    case -1: retVal = true; break;
+                    default: retVal = stroke.Number == strokeNumber; break;
                 }
             }
-            return false;
+            else
+                retVal = false;
+
+            if (stat != null && retVal)
+            {
+                Debug.WriteLine("Counting {4}-stat of stroke {0} of rally {1} - technique={2} lastWinnerStroke={3}", stroke.Number, stroke.Rally.Number, (stroke.Stroketechnique != null ? stroke.Stroketechnique.Type : "null"), (stroke.Rally.LastWinnerStroke() != null ? stroke.Rally.LastWinnerStroke().Number.ToString() : "null"), stat);
+            }
+            return retVal;
         }
     }
 }

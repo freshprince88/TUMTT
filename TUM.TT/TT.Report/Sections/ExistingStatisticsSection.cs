@@ -15,7 +15,7 @@ namespace TT.Report.Sections
     {
         public IDictionary<string, object> ExistingStatisticsImageBitmapFrames { get; private set; }
 
-        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, UserControl view)
+        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, System.Type v)
         {
             this.ExistingStatisticsImageBitmapFrames = new Dictionary<string, object>();
 
@@ -26,7 +26,6 @@ namespace TT.Report.Sections
                 player = MatchPlayer.Second;
 
             var statistics = new MatchStatistics(match);
-            var mainGrid = (Grid)view.Content;
 
             foreach (var set in sets.Keys)
             {
@@ -43,9 +42,11 @@ namespace TT.Report.Sections
                         StrokeNumber = strokeNumber,
                         SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
                     };
+                    var view = (UserControl)System.Activator.CreateInstance(v);
                     ViewModelBinder.Bind(vm, view, null);
                     ((IActivate)vm).Activate();
 
+                    var mainGrid = (Grid)view.Content;
                     var size = new Size(mainGrid.Width, mainGrid.Height);
                     var scale = sets.Count > 1 ? 1 : 2.5;
 

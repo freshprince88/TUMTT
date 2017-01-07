@@ -20,7 +20,7 @@ namespace TT.Report.Sections
         public TechniqueSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
         {
             if (strokeNumber == 1)
-                base.GetImageBitmapFrames(strokeNumber, sets, match, p, new ServiceTechniqueGridView());
+                base.GetImageBitmapFrames(strokeNumber, sets, match, p, typeof(ServiceTechniqueGridView));
             else
             {
                 // Dispatcher is needed here because TechniqueGridView modifies the Grid (Column/Rows) based on ordering of counts
@@ -28,7 +28,7 @@ namespace TT.Report.Sections
                 //Application.Current.Dispatcher.Invoke(() =>
                 Dispatcher.CurrentDispatcher.Invoke(() =>
                 {
-                    base.GetImageBitmapFrames(strokeNumber, sets, match, p, new TechniqueGridView());
+                    base.GetImageBitmapFrames(strokeNumber, sets, match, p, typeof(TechniqueGridView));
 
                     foreach (var set in sets.Keys)
                     {

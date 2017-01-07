@@ -16,25 +16,58 @@ namespace TT.Converters
             IEnumerable<Rally> rallies = (IEnumerable<Rally>)values[0];
             string expression = (string)values[1];
             MatchPlayer? p = values.Length >= 3 ? (MatchPlayer?)values[2] : null;
-            int? strokeNr = values.Length >= 4 ? (int?)values[3] : null;
-            if (strokeNr != null)
-                rallies = rallies.Where(r => r.Strokes.Count >= strokeNr.Value);
+            int? strokeNumber = values.Length >= 4 ? (int?)values[3] : null;
+            if (strokeNumber != null)
+                rallies = new List<Rally>(rallies.Where(r => strokeNumber == int.MaxValue || r.Strokes.Count >= strokeNumber.Value));
 
-            expression = ReplaceExpression(expression, param: parameter, player: p, strokeNumber: strokeNr);
-
+            expression = ReplaceExpression(expression, param: parameter, player: p, strokeNumber: strokeNumber);
             Func<Rally, bool> func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
 
-            try
-            {
-                var test = rallies.Where(func).Count();
-                return test;
-            }
-           catch (NullReferenceException)
-            {
-                return 0;
-            }
+            var count = 0;
 
+            int? originalStrokeNumber = strokeNumber;
+            int? lastUsedStrokeNumber = originalStrokeNumber;
+            foreach (var r in rallies)
+            {
+                var start = 0;
+                var limit = 1;
+                if (originalStrokeNumber != null)
+                {
+                    if (originalStrokeNumber.Value == -1)
+                        limit = r.Strokes.Count;
+                    else if (originalStrokeNumber.Value == int.MaxValue)
+                    {
+                        var lastWinnerStroke = r.LastWinnerStroke();
+                        if (lastWinnerStroke == null)
+                            continue;
+                        start = lastWinnerStroke.Number - 1;
+                        limit = lastWinnerStroke.Number;
+                    }
+                    else
+                    {
+                        start = originalStrokeNumber.Value - 1;
+                        limit = originalStrokeNumber.Value;
+                    }
+                }
+                for (int i = start; i < limit; i++)
+                {
+                    strokeNumber = i + 1;
 
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        expression = ReplaceExpression((string)values[1], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
+                    }
+                    try
+                    {
+                        count += func.Invoke(r) ? 1 : 0;
+                    }
+                    catch (NullReferenceException) { };
+
+                    lastUsedStrokeNumber = strokeNumber;
+                }
+            }
+            return count;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

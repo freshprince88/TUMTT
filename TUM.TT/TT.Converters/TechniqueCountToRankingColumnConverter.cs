@@ -19,87 +19,143 @@ namespace TT.Converters
             int? strokeNumber = values.Length >= 15 ? (int?)values[14] : null;
 
             if (strokeNumber != null)
-                rallies = rallies.Where(r => r.Strokes.Count >= strokeNumber.Value);
+                rallies = new List<Rally>(rallies.Where(r => strokeNumber.Value == int.MaxValue || r.Strokes.Count >= strokeNumber.Value));
+
+            string flipString = ReplaceExpression((string)values[1], param: parameter, player: p, strokeNumber: strokeNumber);
+            string pushShortString = ReplaceExpression((string)values[2], param: parameter, player: p, strokeNumber: strokeNumber);
+            string pushHalfLongString = ReplaceExpression((string)values[3], param: parameter, player: p, strokeNumber: strokeNumber);
+            string pushLongString = ReplaceExpression((string)values[4], param: parameter, player: p, strokeNumber: strokeNumber);
+            string topspinDiagonalString = ReplaceExpression((string)values[5], param: parameter, player: p, strokeNumber: strokeNumber);
+            string topspinMiddleString = ReplaceExpression((string)values[6], param: parameter, player: p, strokeNumber: strokeNumber);
+            string topspinParallelString = ReplaceExpression((string)values[7], param: parameter, player: p, strokeNumber: strokeNumber);
+            string blockDiagonalString = ReplaceExpression((string)values[8], param: parameter, player: p, strokeNumber: strokeNumber);
+            string blockParallelString = ReplaceExpression((string)values[9], param: parameter, player: p, strokeNumber: strokeNumber);
+            string blockMiddleString = ReplaceExpression((string)values[10], param: parameter, player: p, strokeNumber: strokeNumber);
+            string chopString = ReplaceExpression((string)values[11], param: parameter, player: p, strokeNumber: strokeNumber);
+
+            Func<Rally, bool> func1 = ExpressionParser.Compile<Func<Rally, bool>>(flipString);
+            Func<Rally, bool> func2 = ExpressionParser.Compile<Func<Rally, bool>>(pushShortString);
+            Func<Rally, bool> func3 = ExpressionParser.Compile<Func<Rally, bool>>(pushHalfLongString);
+            Func<Rally, bool> func4 = ExpressionParser.Compile<Func<Rally, bool>>(pushLongString);
+            Func<Rally, bool> func5 = ExpressionParser.Compile<Func<Rally, bool>>(topspinDiagonalString);
+            Func<Rally, bool> func6 = ExpressionParser.Compile<Func<Rally, bool>>(topspinMiddleString);
+            Func<Rally, bool> func7 = ExpressionParser.Compile<Func<Rally, bool>>(topspinParallelString);
+            Func<Rally, bool> func8 = ExpressionParser.Compile<Func<Rally, bool>>(blockDiagonalString);
+            Func<Rally, bool> func9 = ExpressionParser.Compile<Func<Rally, bool>>(blockParallelString);
+            Func<Rally, bool> func10 = ExpressionParser.Compile<Func<Rally, bool>>(blockMiddleString);
+            Func<Rally, bool> func11 = ExpressionParser.Compile<Func<Rally, bool>>(chopString);
 
             double flip, pushShort, pushHalfLong, pushLong, topspinDiagonal, topspinMiddle, topspinParallel, blockDiagonal, blockParallel, blockMiddle, chop;
             flip = pushShort = pushHalfLong = pushLong = topspinDiagonal = topspinMiddle = topspinParallel = blockDiagonal = blockParallel = blockMiddle = chop = 0;
+
+            int? originalStrokeNumber = strokeNumber;
+            int? lastUsedStrokeNumber = originalStrokeNumber;
             foreach (var r in rallies)
             {
                 var start = 0;
                 var limit = 1;
-                if (strokeNumber != null)
+                if (originalStrokeNumber != null)
                 {
-                    if (strokeNumber.Value == -1)
+                    if (originalStrokeNumber.Value == -1)
                         limit = r.Strokes.Count;
-                    else if (strokeNumber.Value == int.MaxValue)
+                    else if (originalStrokeNumber.Value == int.MaxValue)
                     {
-                        start = r.LastWinnerStroke().Number - 1;
-                        limit = r.LastWinnerStroke().Number;
+                        var lastWinnerStroke = r.LastWinnerStroke();
+                        if (lastWinnerStroke == null)
+                            continue;
+                        start = lastWinnerStroke.Number - 1;
+                        limit = lastWinnerStroke.Number;
                     }
                     else
                     {
-                        start = strokeNumber.Value - 1;
-                        limit = strokeNumber.Value;
+                        start = originalStrokeNumber.Value - 1;
+                        limit = originalStrokeNumber.Value;
                     }
                 }
                 for (int i = start; i < limit; i++)
                 {
                     strokeNumber = i + 1;
+                    if (originalStrokeNumber != null && strokeNumber == 1)
+                        continue;
 
-                    string flipString = (string)values[1];
-                    flipString = ReplaceExpression(flipString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func1 = ExpressionParser.Compile<Func<Rally, bool>>(flipString);
-                    flip += func1.Invoke(r) ? 1 : 0; // flip = rallies.Where(func1).Count() + 0.11;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        flipString = ReplaceExpression((string)values[1], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func1 = ExpressionParser.Compile<Func<Rally, bool>>(flipString);
+                    }
+                    flip += func1.Invoke(r) ? 1 : 0;
 
-                    string pushShortString = (string)values[2];
-                    pushShortString = ReplaceExpression(pushShortString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func2 = ExpressionParser.Compile<Func<Rally, bool>>(pushShortString);
-                    pushShort += func2.Invoke(r) ? 1 : 0; //pushShort = rallies.Where(func2).Count() + 0.10;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        pushShortString = ReplaceExpression((string)values[2], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func2 = ExpressionParser.Compile<Func<Rally, bool>>(pushShortString);
+                    }
+                    pushShort += func2.Invoke(r) ? 1 : 0;
 
-                    string pushHalfLongString = (string)values[3];
-                    pushHalfLongString = ReplaceExpression(pushHalfLongString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func3 = ExpressionParser.Compile<Func<Rally, bool>>(pushHalfLongString);
-                    pushHalfLong += func3.Invoke(r) ? 1 : 0; //pushHalfLong = rallies.Where(func3).Count() + 0.09;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        pushHalfLongString = ReplaceExpression((string)values[3], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func3 = ExpressionParser.Compile<Func<Rally, bool>>(pushHalfLongString);
+                    }
+                    pushHalfLong += func3.Invoke(r) ? 1 : 0;
 
-                    string pushLongString = (string)values[4];
-                    pushLongString = ReplaceExpression(pushLongString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func4 = ExpressionParser.Compile<Func<Rally, bool>>(pushLongString);
-                    pushLong += func4.Invoke(r) ? 1 : 0; //pushLong = rallies.Where(func4).Count() + 0.08;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        pushLongString = ReplaceExpression((string)values[4], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func4 = ExpressionParser.Compile<Func<Rally, bool>>(pushLongString);
+                    }
+                    pushLong += func4.Invoke(r) ? 1 : 0;
 
-                    string topspinDiagonalString = (string)values[5];
-                    topspinDiagonalString = ReplaceExpression(topspinDiagonalString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func5 = ExpressionParser.Compile<Func<Rally, bool>>(topspinDiagonalString);
-                    topspinDiagonal += func5.Invoke(r) ? 1 : 0; //topspinDiagonal = rallies.Where(func5).Count() + 0.07;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        topspinDiagonalString = ReplaceExpression((string)values[5], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func5 = ExpressionParser.Compile<Func<Rally, bool>>(topspinDiagonalString);
+                    }
+                    topspinDiagonal += func5.Invoke(r) ? 1 : 0;
 
-                    string topspinMiddleString = (string)values[6];
-                    topspinMiddleString = ReplaceExpression(topspinMiddleString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func6 = ExpressionParser.Compile<Func<Rally, bool>>(topspinMiddleString);
-                    topspinMiddle += func6.Invoke(r) ? 1 : 0; //topspinMiddle = rallies.Where(func6).Count() + 0.06;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        topspinMiddleString = ReplaceExpression((string)values[6], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func6 = ExpressionParser.Compile<Func<Rally, bool>>(topspinMiddleString);
+                    }
+                    topspinMiddle += func6.Invoke(r) ? 1 : 0;
 
-                    string topspinParallelString = (string)values[7];
-                    topspinParallelString = ReplaceExpression(topspinParallelString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func7 = ExpressionParser.Compile<Func<Rally, bool>>(topspinParallelString);
-                    topspinParallel += func7.Invoke(r) ? 1 : 0; //topspinParallel = rallies.Where(func7).Count() + 0.05;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        topspinParallelString = ReplaceExpression((string)values[7], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func7 = ExpressionParser.Compile<Func<Rally, bool>>(topspinParallelString);
+                    }
+                    topspinParallel += func7.Invoke(r) ? 1 : 0;
 
-                    string blockDiagonalString = (string)values[8];
-                    blockDiagonalString = ReplaceExpression(blockDiagonalString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func8 = ExpressionParser.Compile<Func<Rally, bool>>(blockDiagonalString);
-                    blockDiagonal += func8.Invoke(r) ? 1 : 0; //blockDiagonal = rallies.Where(func8).Count() + 0.04;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        blockDiagonalString = ReplaceExpression((string)values[8], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func8 = ExpressionParser.Compile<Func<Rally, bool>>(blockDiagonalString);
+                    }
+                    blockDiagonal += func8.Invoke(r) ? 1 : 0;
 
-                    string blockParallelString = (string)values[9];
-                    blockParallelString = ReplaceExpression(blockParallelString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func9 = ExpressionParser.Compile<Func<Rally, bool>>(blockParallelString);
-                    blockParallel += func9.Invoke(r) ? 1 : 0; //blockParallel = rallies.Where(func9).Count() + 0.02;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        blockParallelString = ReplaceExpression((string)values[9], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func9 = ExpressionParser.Compile<Func<Rally, bool>>(blockParallelString);
+                    }
+                    blockParallel += func9.Invoke(r) ? 1 : 0;
 
-                    string blockMiddleString = (string)values[10];
-                    blockMiddleString = ReplaceExpression(blockMiddleString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func10 = ExpressionParser.Compile<Func<Rally, bool>>(blockMiddleString);
-                    blockMiddle += func10.Invoke(r) ? 1 : 0; //blockMiddle = rallies.Where(func10).Count() + 0.03;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        blockMiddleString = ReplaceExpression((string)values[10], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func10 = ExpressionParser.Compile<Func<Rally, bool>>(blockMiddleString);
+                    }
+                    blockMiddle += func10.Invoke(r) ? 1 : 0;
 
-                    string chopString = (string)values[11];
-                    chopString = ReplaceExpression(chopString, param: parameter, player: p, strokeNumber: strokeNumber);
-                    Func<Rally, bool> func11 = ExpressionParser.Compile<Func<Rally, bool>>(chopString);
-                    chop += func11.Invoke(r) ? 1 : 0; //chop = rallies.Where(func11).Count() + 0.01;
+                    if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
+                    {
+                        chopString = ReplaceExpression((string)values[11], param: parameter, player: p, strokeNumber: strokeNumber);
+                        func11 = ExpressionParser.Compile<Func<Rally, bool>>(chopString);
+                    }
+                    chop += func11.Invoke(r) ? 1 : 0;
+
+                    lastUsedStrokeNumber = strokeNumber;
                 }
             }
             flip += 0.11; pushShort += 0.10; pushHalfLong += 0.09; pushLong += 0.08; topspinDiagonal += 0.07; topspinMiddle += 0.06;
