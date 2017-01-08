@@ -49,7 +49,7 @@ namespace TT.Models.Statistics
 
             if (stat != null && retVal)
             {
-                Debug.WriteLine("Counting {4}-stat of stroke {0} of rally {1} - technique={2} lastWinnerStroke={3}", stroke.Number, stroke.Rally.Number, (stroke.Stroketechnique != null ? stroke.Stroketechnique.Type : "null"), (stroke.Rally.LastWinnerStroke() != null ? stroke.Rally.LastWinnerStroke().Number.ToString() : "null"), stat);
+                Debug.WriteLine("Counting {4}-stat of stroke {0} of rally {1} - side={5} IsDiag={6} IsMid={7} IsPar={8} technique={2} lastWinnerStroke={3}", stroke.Number, stroke.Rally.Number, (stroke.Stroketechnique != null ? stroke.Stroketechnique.Type : "null"), (stroke.Rally.LastWinnerStroke() != null ? stroke.Rally.LastWinnerStroke().Number.ToString() : "null"), stat, stroke.Side, stroke.Rally.IsDiagonal(stroke.Number - 1), stroke.Rally.IsMiddle(stroke.Number - 1), stroke.Rally.IsParallel(stroke.Number - 1));
             }
             return retVal;
         }

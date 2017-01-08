@@ -158,7 +158,7 @@ namespace TT.Report.Generators
                 case "placement": return new PlacementSection(strokeNumber, sets, match, player);
                 case "table": return new LargeTableSection(strokeNumber, sets, match, player);
                 case "service": return new LastStrokeServiceSection();
-                case "number": return new LastStrokeNumberSection();
+                case "number": return new StrokeNumberSection(plotStyle, strokeNumber, sets, match, player);
             }
             return null;
         }

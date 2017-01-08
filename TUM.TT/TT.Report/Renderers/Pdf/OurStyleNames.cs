@@ -25,5 +25,10 @@ namespace TT.Report.Renderers.Pdf
         /// Name of the style for the document part title.
         /// </summary>
         public const string PartTitle = "PartTitle";
+
+        /// <summary>
+        /// Name of the style for the set names.
+        /// </summary>
+        public const string SetName = "SetName";
     }
 }

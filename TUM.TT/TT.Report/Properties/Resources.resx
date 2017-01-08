@@ -129,6 +129,12 @@
   <data name="section_side" xml:space="preserve">
     <value>Side</value>
   </data>
+  <data name="section_side_backhand" xml:space="preserve">
+    <value>Backhand</value>
+  </data>
+  <data name="section_side_forehand" xml:space="preserve">
+    <value>Forehand</value>
+  </data>
   <data name="section_spin" xml:space="preserve">
     <value>Spin</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="section_spin_up" xml:space="preserve">
     <value>Up</value>
+  </data>
+  <data name="section_strokenumber" xml:space="preserve">
+    <value>Stroke number</value>
   </data>
   <data name="section_stroke_lost" xml:space="preserve">
     <value>Lost</value>
@@ -174,20 +183,56 @@
   <data name="section_technique" xml:space="preserve">
     <value>Technique</value>
   </data>
+  <data name="section_technique_banana" xml:space="preserve">
+    <value>Banana</value>
+  </data>
+  <data name="section_technique_block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="section_technique_blockchop" xml:space="preserve">
+    <value>BlockChop</value>
+  </data>
+  <data name="section_technique_blocktempo" xml:space="preserve">
+    <value>BlockTempo</value>
+  </data>
+  <data name="section_technique_chop" xml:space="preserve">
+    <value>Chop</value>
+  </data>
+  <data name="section_technique_counter" xml:space="preserve">
+    <value>Counter</value>
+  </data>
   <data name="section_technique_flip" xml:space="preserve">
     <value>Flip</value>
   </data>
-  <data name="section_technique_misc" xml:space="preserve">
+  <data name="section_technique_lob" xml:space="preserve">
+    <value>Lob</value>
+  </data>
+  <data name="section_technique_miscellaneous" xml:space="preserve">
     <value>Miscellaneous</value>
+  </data>
+  <data name="section_technique_na" xml:space="preserve">
+    <value>N/A</value>
   </data>
   <data name="section_technique_push" xml:space="preserve">
     <value>Push</value>
   </data>
+  <data name="section_technique_pushaggressive" xml:space="preserve">
+    <value>PushAggressive</value>
+  </data>
   <data name="section_technique_smash" xml:space="preserve">
     <value>Smash</value>
   </data>
+  <data name="section_technique_special" xml:space="preserve">
+    <value>Special</value>
+  </data>
   <data name="section_technique_topspin" xml:space="preserve">
     <value>Topspin</value>
+  </data>
+  <data name="section_technique_topspinspin" xml:space="preserve">
+    <value>TopspinSpin</value>
+  </data>
+  <data name="section_technique_topspintempo" xml:space="preserve">
+    <value>TopspinTempo</value>
   </data>
   <data name="sets_all" xml:space="preserve">
     <value>All sets</value>

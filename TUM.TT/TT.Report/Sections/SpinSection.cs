@@ -27,6 +27,7 @@ namespace TT.Report.Sections
                     plot.LegendPosition = LegendPosition.BottomCenter;
                     plot.Title = set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set);
                     plot.TitleFontSize = 16;
+                    plot.PlotAreaBorderThickness = new OxyThickness(1, 0, 0, 1);
 
                     var categoryAxis1 = new CategoryAxis();
                     categoryAxis1.Position = AxisPosition.Left;
@@ -75,11 +76,14 @@ namespace TT.Report.Sections
                     if (spinDownLost > 0) barSeries2.Items.Add(new BarItem(spinDownLost, categoryNr));
                     categoryNr++;
 
-                    //categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_hidden, statistics.NotAnalysed));
-                    //barSeries1.Items.Add(new BarItem(statistics.NotAnalysedWon, categoryNr));
-                    //var notAnalysedLost = statistics.NotAnalysed - statistics.NotAnalysedWon;
-                    //if (notAnalysedLost > 0) barSeries2.Items.Add(new BarItem(notAnalysedLost, categoryNr));
-                    //categoryNr++;
+                    if (statistics.NotAnalysed > 0)
+                    {
+                        categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_hidden, statistics.NotAnalysed));
+                        barSeries1.Items.Add(new BarItem(statistics.NotAnalysedWon, categoryNr));
+                        var notAnalysedLost = statistics.NotAnalysed - statistics.NotAnalysedWon;
+                        if (notAnalysedLost > 0) barSeries2.Items.Add(new BarItem(notAnalysedLost, categoryNr));
+                        categoryNr++;
+                    }
 
                     plot.Series.Add(barSeries1);
                     plot.Series.Add(barSeries2);

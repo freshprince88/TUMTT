@@ -119,7 +119,7 @@ namespace TT.Report
         /// Visits the last stroke number section.
         /// </summary>
         /// <param name="section">The section</param>
-        void Visit(LastStrokeNumberSection section);
+        void Visit(StrokeNumberSection section);
 
         /// <summary>
         /// Visits the last stroke service section.

@@ -58,11 +58,11 @@ namespace TT.Converters
                         expression = ReplaceExpression((string)values[1], param: parameter, player: p, strokeNumber: strokeNumber);
                         func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
                     }
-                    try
-                    {
+                    //try
+                    //{
                         count += func.Invoke(r) ? 1 : 0;
-                    }
-                    catch (NullReferenceException) { };
+                    //}
+                    //catch (NullReferenceException) { };
 
                     lastUsedStrokeNumber = strokeNumber;
                 }

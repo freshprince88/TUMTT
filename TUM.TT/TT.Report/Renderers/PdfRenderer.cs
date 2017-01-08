@@ -56,6 +56,16 @@ namespace TT.Report.Renderers
         private static readonly Color BorderColor = Color.Parse("0xFF154171");
 
         /// <summary>
+        /// The color for titles.
+        /// </summary>
+        private static readonly Color TitleColor = Color.Parse("0xFF154171");
+
+        /// <summary>
+        /// A color for plot titles that matches TitleColor.
+        /// </summary>
+        private static readonly OxyPlot.OxyColor PlotTitleColor = OxyPlot.OxyColor.Parse("#FF154171");
+
+        /// <summary>
         /// The color for the first player.
         /// </summary>
         private static readonly Color FirstPlayerColor = Color.Parse("0xFF4F81BD");
@@ -114,10 +124,12 @@ namespace TT.Report.Renderers
                 }
                 return tempFile;
             });
-            oxyPlotToTempFilePathFunction = new Func<object, int, int, string>((plot, width, height) =>
+            oxyPlotToTempFilePathFunction = new Func<object, int, int, string>((p, width, height) =>
             {
+                var plot = (OxyPlot.PlotModel)p;
+                FixPlotColor(plot);
                 var tempFile = GetTempFile();
-                PdfExporter.Export((OxyPlot.PlotModel)plot, tempFile, width, height);
+                PdfExporter.Export(plot, tempFile, width, height);
                 return tempFile;
             });
         }
@@ -572,14 +584,7 @@ namespace TT.Report.Renderers
         {
             this.AddHeading(2, Properties.Resources.section_side);
 
-            var customOxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
-            {
-                var tempFile = GetTempFile();
-                PdfExporter.Export(plot, tempFile, width + 65, height + 15);
-                return tempFile;
-            });
-
-            AddItemsToTable(section.SidePlots, null, customOxyPlotToTempFilePathFunction, 350, 210);            
+            AddItemsToTable(section.SidePlots, null, oxyPlotToTempFilePathFunction, 450, 210, 270, 150);
         }
         
         public void Visit(StepAroundSection section)
@@ -605,7 +610,7 @@ namespace TT.Report.Renderers
             if (itemsList.Count > 0 && itemsList.ElementAt(0) is BitmapFrame)
                 AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
             else if (itemsList.Count > 0 && itemsList.ElementAt(0) is List<object>)
-                AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 250, 200, keepCol1AspectRation: false, keepCol2AspectRation: true, extraColWidth: 15);
+                AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 280, 190, keepCol1AspectRation: false, keepCol2AspectRation: true, extraColWidth: 15);
         }
 
         public void Visit(PlacementSection section)
@@ -628,8 +633,11 @@ namespace TT.Report.Renderers
             AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 450, 210);
         }
 
-        public void Visit(LastStrokeNumberSection section)
+        public void Visit(StrokeNumberSection section)
         {
+            AddHeading(2, Properties.Resources.section_strokenumber);
+
+            AddItemsToTable(section.NumberPlots, null, oxyPlotToTempFilePathFunction, 450, 210, 290, 190);
         }
 
         public void Visit(LastStrokeServiceSection section)
@@ -684,7 +692,7 @@ namespace TT.Report.Renderers
                 OurStyleNames.Title, StyleNames.Normal);
             title.Font.Name = "Calibri";
             title.Font.Size = 22;
-            title.Font.Color = Color.Parse("0xFF154171");
+            title.Font.Color = TitleColor;
             title.ParagraphFormat.Alignment = ParagraphAlignment.Center;
             title.ParagraphFormat.Borders.DistanceFromBottom = 2;
             title.ParagraphFormat.Borders.Bottom.Width = 1;
@@ -724,6 +732,13 @@ namespace TT.Report.Renderers
             heading2.Font.Size = 11.5;
             heading2.BaseStyle = StyleNames.Heading1;
             heading2.ParagraphFormat.PageBreakBefore = false;
+
+            var setName = this.Document.Styles.AddStyle(
+                OurStyleNames.SetName, OurStyleNames.PartTitle);
+            setName.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+            setName.ParagraphFormat.SpaceBefore = 10;
+            setName.ParagraphFormat.Font.Size = 16;
+            setName.ParagraphFormat.Font.Bold = true;
         }
 
         /// <summary>
@@ -1076,13 +1091,7 @@ namespace TT.Report.Renderers
             var paragraph = this.Document.LastSection.AddParagraph();
             if (plot != null)
             {
-                // Fix up the plot text color.  For some insane reason, PDFSharp turns
-                // the plot's black into blue
-                if (plot.TextColor.Equals(OxyPlot.OxyColors.Black))
-                {
-                    plot.TextColor = OxyPlot.OxyColor.FromArgb(255, 0, 0, 1);
-                }
-
+                FixPlotColor(plot);
                 var tempFile = this.GetTempFile();
                 PdfExporter.Export(plot, tempFile, width, height);
                 var image = paragraph.AddImage(tempFile);
@@ -1090,6 +1099,19 @@ namespace TT.Report.Renderers
                 image.Height = height;
             }
             return paragraph;
+        }
+
+        /// <summary>
+        /// Fix up the plot text color.  For some insane reason, PDFSharp turns
+        /// the plot's black into blue
+        /// </summary>
+        private void FixPlotColor(OxyPlot.PlotModel plot)
+        {            
+            if (plot.TextColor.Equals(OxyPlot.OxyColors.Black))
+            {
+                plot.TitleColor = PlotTitleColor;
+                plot.TextColor = OxyPlot.OxyColor.FromArgb(255, 0, 0, 1);
+            }
         }
 
         private Table AddItemsToTable<T>(List<T> items, 
@@ -1157,10 +1179,7 @@ namespace TT.Report.Renderers
                     if (set != null)
                     {
                         var setHeading = row.Cells[rowIndex].AddParagraph(set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set));
-                        setHeading.Format.Font.Size = multipleItems ? 16 : 18;
-                        setHeading.Format.Font.Bold = true;
-                        setHeading.Format.Alignment = ParagraphAlignment.Center;
-                        setHeading.Format.SpaceBefore = 10;
+                        setHeading.Style = OurStyleNames.SetName;
                     }
                     if (rowIndex == 1)
                         i -= 2;
@@ -1210,6 +1229,7 @@ namespace TT.Report.Renderers
         {
             Table table = Document.LastSection.AddTable();
             table.Borders.Visible = false;
+            table.Format.LeftIndent = Unit.FromCentimeter(-2.25);
 
             Column col1 = table.AddColumn();
             col1.Width = firstColWidth + extraColWidth;
@@ -1228,10 +1248,11 @@ namespace TT.Report.Renderers
 
                 Row row = table.AddRow();
                 var heading = row.Cells[0].AddParagraph(setNumbers[rowIndex] == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + setNumbers[rowIndex]));
-                heading.Format.SpaceBefore = 10;
-                heading.Format.Font.Size = 16;
-                heading.Format.Font.Bold = true;
-                heading.Format.Alignment = ParagraphAlignment.Center;
+                heading.Style = OurStyleNames.SetName;
+                //heading.Format.SpaceBefore = 10;
+                //heading.Format.Font.Size = 16;
+                //heading.Format.Font.Bold = true;
+                //heading.Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[0].MergeRight = 1;
                 row.KeepWith = 1;
 

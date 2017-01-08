@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TT.Models.Statistics
 {
@@ -21,18 +17,33 @@ namespace TT.Models.Statistics
                 foreach (var stroke in r.Strokes)
                 {
                     if (CountStroke(stroke, player, strokeNr))
-                    {            
-                        this.Forehand += stroke.EnumSide == Util.Enums.Stroke.Hand.Forehand ? 1 : 0;
-                        this.Backhand += stroke.EnumSide == Util.Enums.Stroke.Hand.Backhand ? 1 : 0;
-                        this.NotAnalysed += stroke.EnumSide == Util.Enums.Stroke.Hand.None ? 1 : 0;
+                    {
+                        if (stroke.EnumSide == Util.Enums.Stroke.Hand.Forehand)
+                        {
+                            Forehand++;
+                            ForehandWon += stroke.Rally.Winner == player ? 1 : 0;
+                        }
+                        if (stroke.EnumSide == Util.Enums.Stroke.Hand.Backhand)
+                        {
+                            Backhand++;
+                            BackhandWon += stroke.Rally.Winner == player ? 1 : 0;
+                        }
+                        if (stroke.EnumSide == Util.Enums.Stroke.Hand.None)
+                        {
+                            NotAnalysed++;
+                            NotAnalysedWon += stroke.Rally.Winner == player ? 1 : 0;
+                        }
                     }
                 }
             }
         }
 
         public int Backhand { get; private set; }
+        public int BackhandWon { get; private set; }
         public int Forehand { get; private set; }
+        public int ForehandWon { get; private set; }
         public int NotAnalysed { get; private set; }
+        public int NotAnalysedWon { get; private set; }
 
     }
 }

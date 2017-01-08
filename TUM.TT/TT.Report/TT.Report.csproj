@@ -118,7 +118,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Sections\LargeTableSection.cs" />
-    <Compile Include="Sections\LastStrokeNumberSection.cs" />
+    <Compile Include="Sections\StrokeNumberSection.cs" />
     <Compile Include="Sections\LastStrokeServiceSection.cs" />
     <Compile Include="Sections\PlacementSection.cs" />
     <Compile Include="Sections\SpinSection.cs" />
