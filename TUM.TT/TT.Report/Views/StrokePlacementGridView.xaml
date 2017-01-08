@@ -60,40 +60,44 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <ToggleButton x:Name="PlacementForehandAllTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsTopLeft() || r.Strokes[0].IsMidLeft() || r.Strokes[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
+            <ToggleButton x:Name="PlacementForehandAllTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopLeft() || r.Strokes[0].IsMidLeft() || r.Strokes[0].IsBotLeft()) &amp;&amp; r.Strokes[0].Player == r.Winner"  Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner"  Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopLeft() || r.Strokes[0].IsMidLeft() || r.Strokes[0].IsBotLeft()) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopLeft() || r.Strokes[0].IsMidLeft() || r.Strokes[0].IsBotLeft()) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -107,40 +111,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementForehandLongTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsTopLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementForehandLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsTopLeft() &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsTopLeft() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsTopLeft() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -154,40 +162,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementForehandHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsMidLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementForehandHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsMidLeft()) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsMidLeft() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsMidLeft() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -201,40 +213,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementForehandShortTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsBotLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementForehandShortTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsBotLeft() &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsBotLeft() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementForehandShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsBotLeft() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementForehandShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -248,40 +264,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementMiddleAllTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsTopMid() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsBotMid()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementMiddleAllTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopMid() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsBotMid()) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopMid() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsBotMid()) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
+            <ToggleButton x:Name="PlacementMiddleAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible" >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopMid() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsBotMid()) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -295,40 +315,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementMiddleLongTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsTopMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementMiddleLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsTopMid() &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsTopMid() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsTopMid() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -342,40 +366,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementMiddleHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsMidMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementMiddleHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleHalfLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsMidMid() &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleHalfLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsMidMid() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsMidMid() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -389,40 +417,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementMiddleShortTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsBotMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementMiddleShortTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsBotMid() &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsBotMid() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementMiddleShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsBotMid() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementMiddleShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -436,40 +468,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementBackhandAllTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsTopRight() || r.Strokes[0].IsMidRight() || r.Strokes[0].IsBotRight()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementBackhandAllTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopRight() || r.Strokes[0].IsMidRight() || r.Strokes[0].IsBotRight()) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopRight() || r.Strokes[0].IsMidRight() || r.Strokes[0].IsBotRight()) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopRight() || r.Strokes[0].IsMidRight() || r.Strokes[0].IsBotRight()) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -483,40 +519,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementBackhandLongTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsTopRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementBackhandLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsTopRight() &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsTopRight() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsTopRight() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -530,40 +570,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementBackhandHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsMidRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementBackhandHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsMidRight()) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsMidRight() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsMidRight() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -577,40 +621,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementBackhandShortTotalButton" Tag="r => $$Player$$ r.Strokes[0].IsBotRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementBackhandShortTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight()" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"  Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsBotRight() &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[0].IsBotRight() &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementBackhandShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[0].IsBotRight() &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementBackhandShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -624,40 +672,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementAllLongTotalButton"  Tag="r => $$Player$$ (r.Strokes[0].IsTopLeft() || r.Strokes[0].IsTopMid() || r.Strokes[0].IsTopRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementAllLongTotalButton"  Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopLeft() || r.Strokes[0].IsTopMid() || r.Strokes[0].IsTopRight()) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllLongDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopLeft() || r.Strokes[0].IsTopMid() || r.Strokes[0].IsTopRight()) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllLongDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllLongPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].IsTopLeft() || r.Strokes[0].IsTopMid() || r.Strokes[0].IsTopRight()) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllLongPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -671,40 +723,44 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementAllHalfLongTotalButton"  Tag="r => $$Player$$ (r.Strokes[0].IsMidLeft() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsMidRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementAllHalfLongTotalButton"  Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsMidLeft() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsMidRight()) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllHalfLongDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsMidLeft() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsMidRight()) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllHalfLongDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllHalfLongPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].IsMidLeft() || r.Strokes[0].IsMidMid() || r.Strokes[0].IsMidRight()) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllHalfLongPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
@@ -718,51 +774,56 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="PlacementAllShortTotalButton" Tag="r => $$Player$$ (r.Strokes[0].IsBotLeft() || r.Strokes[0].IsBotMid() || r.Strokes[0].IsBotRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
+            <ToggleButton x:Name="PlacementAllShortTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight())" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0"  FontSize="40"   >
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllShortPointsWonButton" Tag="r => $$Player$$ (r.Strokes[0].IsBotLeft() || r.Strokes[0].IsBotMid() || r.Strokes[0].IsBotRight()) &amp;&amp; r.Strokes[0].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllShortPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Padding="2 0 2 0"  FontWeight="Bold"    Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllShortDirectPointsWonButton"  Tag="r => $$Player$$ (r.Strokes[0].IsBotLeft() || r.Strokes[0].IsBotMid() || r.Strokes[0].IsBotRight()) &amp;&amp; r.Strokes[0].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllShortDirectPointsWonButton"  Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch"  Padding="1 0 1 0"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton x:Name="PlacementAllShortPointsLostButton" Tag="r => $$Player$$ (r.Strokes[0].IsBotLeft() || r.Strokes[0].IsBotMid() || r.Strokes[0].IsBotRight()) &amp;&amp; r.Strokes[0].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
+            <ToggleButton x:Name="PlacementAllShortPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Style="{DynamicResource MetroAccentFlatToggle}" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Stretch"  HorizontalAlignment="stretch" Padding="1 0 1 0" FontWeight="Bold"     Visibility="Visible">
                 <ToggleButton.Content>
-                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                    </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
                 </ToggleButton.Content>
             </ToggleButton>
         </Grid>
 
         <ToggleButton x:Name="PlacementAllServiceErrorsTotalButton" Tag="r => $$Player$$ (r.Server != r.Winner &amp;&amp; r.Length == 1)" Style="{DynamicResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" Padding="2 0 2 0" Margin="2 2 2 0"  FontSize="40"   >
             <ToggleButton.Content>
-                <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[0].Player == '$$PlayerString$$' &amp;&amp;">
+                <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                     <Binding Path="SelectedRallies" />
 						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
 						<Binding Path="Player" />
-                </MultiBinding>
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
             </ToggleButton.Content>
         </ToggleButton>
     </Grid>

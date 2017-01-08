@@ -5,12 +5,16 @@ using System.Windows.Data;
 using Zhucai.LambdaParser;
 using System.Linq;
 using TT.Models;
+using System.Diagnostics;
 
 namespace TT.Converters
 {
     [ValueConversion(typeof(IEnumerable<Rally>), typeof(int))]
     public class RallyExpressionToCountConverter : BaseConverter, IMultiValueConverter
     {
+        //private static int compilingCount;
+        //private static int invokingCount;
+
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             IEnumerable<Rally> rallies = (IEnumerable<Rally>)values[0];
@@ -55,14 +59,13 @@ namespace TT.Converters
 
                     if (originalStrokeNumber != null && lastUsedStrokeNumber != strokeNumber)
                     {
+
                         expression = ReplaceExpression((string)values[1], param: parameter, player: p, strokeNumber: strokeNumber);
                         func = ExpressionParser.Compile<Func<Rally, bool>>(expression);
+                        //Debug.WriteLine("Compiling new function ({0}) for stroke {2} based on Ex: {1}", ++compilingCount, expression, strokeNumber);
                     }
-                    //try
-                    //{
-                        count += func.Invoke(r) ? 1 : 0;
-                    //}
-                    //catch (NullReferenceException) { };
+                    count += func.Invoke(r) ? 1 : 0;
+                    //Debug.WriteLine("Invoking function ({0}) on Rally {1}", ++invokingCount, r.Number);
 
                     lastUsedStrokeNumber = strokeNumber;
                 }

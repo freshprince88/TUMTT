@@ -4,7 +4,7 @@ using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using TT.Models;
+using TT.Models.Util.Enums;
 using TT.Models.Statistics;
 using TT.Report.Plots;
 
@@ -13,8 +13,20 @@ namespace TT.Report.Sections
     public class StrokeNumberSection : IReportSection
     {
         public List<PlotModel> NumberPlots { get; internal set; }
+        private IDictionary<Stroke.TechniqueBasic, string> techniqueNames = new Dictionary<Stroke.TechniqueBasic, string>() {
+            { Stroke.TechniqueBasic.Push, Properties.Resources.section_technique_push },
+            { Stroke.TechniqueBasic.Flip, Properties.Resources.section_technique_flip },
+            { Stroke.TechniqueBasic.Topspin, Properties.Resources.section_technique_topspin },
+            { Stroke.TechniqueBasic.Block, Properties.Resources.section_technique_block },
+            { Stroke.TechniqueBasic.Counter, Properties.Resources.section_technique_counter },
+            { Stroke.TechniqueBasic.Smash, Properties.Resources.section_technique_smash },
+            { Stroke.TechniqueBasic.Lob, Properties.Resources.section_technique_lob },
+            { Stroke.TechniqueBasic.Chop, Properties.Resources.section_technique_chop },
+            { Stroke.TechniqueBasic.Special, Properties.Resources.section_technique_special },
+            { Stroke.TechniqueBasic.Miscellaneous, Properties.Resources.section_technique_miscellaneous },
+        };
 
-        public StrokeNumberSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
+        public StrokeNumberSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<TT.Models.Rally>> sets, TT.Models.Match match, object p)
         {
             NumberPlots = new List<PlotModel>();
 
@@ -104,21 +116,9 @@ namespace TT.Report.Sections
 
         private string GetSeriesTitleForTechnique(string technique)
         {
-            switch (technique)
-            {
-                case "Push": return Properties.Resources.section_technique_push;
-                case "Flip": return Properties.Resources.section_technique_flip;
-                case "Topspin": return Properties.Resources.section_technique_topspin;
-                case "Block": return Properties.Resources.section_technique_block;
-                case "Counter": return Properties.Resources.section_technique_counter;
-                case "Smash": return Properties.Resources.section_technique_smash;
-                case "Lob": return Properties.Resources.section_technique_lob;
-                case "Chop": return Properties.Resources.section_technique_chop;
-                case "Special": return Properties.Resources.section_technique_special;
-                case "Miscellaneous": return Properties.Resources.section_technique_miscellaneous;
-                case "N/A": return Properties.Resources.section_technique_na;
-            }
-            throw new ArgumentException("no technique '" + technique + "' defined");
+            if (technique.Equals("N/A"))
+                return Properties.Resources.section_technique_na;
+            return techniqueNames[(Stroke.TechniqueBasic)Enum.Parse(typeof(Stroke.TechniqueBasic), technique)];
         }
 
     }

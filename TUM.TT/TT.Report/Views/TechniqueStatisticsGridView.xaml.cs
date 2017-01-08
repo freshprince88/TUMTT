@@ -18,9 +18,9 @@ namespace TT.Report.Views
     /// <summary>
     /// Interaction logic for TechniqueGridView.xaml
     /// </summary>
-    public partial class TechniqueGridView : UserControl
+    public partial class TechniqueStatisticsGridView : UserControl
     {
-        public TechniqueGridView()
+        public TechniqueStatisticsGridView()
         {
             InitializeComponent();
         }

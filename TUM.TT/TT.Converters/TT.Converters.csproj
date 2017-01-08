@@ -108,7 +108,7 @@
     <Compile Include="TechniqueToBoolConverter.cs" />
     <Compile Include="TimeSpanToMilliSecondsConverter.cs" />
     <Compile Include="TwoBoolToBoolConverter.cs" />
-    <Compile Include="Visibility2BoolConverter.cs" />
+    <Compile Include="VisibilityToBoolConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

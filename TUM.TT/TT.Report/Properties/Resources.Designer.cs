@@ -97,24 +97,6 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backhand.
-        /// </summary>
-        public static string section_side_backhand {
-            get {
-                return ResourceManager.GetString("section_side_backhand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forehand.
-        /// </summary>
-        public static string section_side_forehand {
-            get {
-                return ResourceManager.GetString("section_side_forehand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Spin.
         /// </summary>
         public static string section_spin {
@@ -430,6 +412,42 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backhand.
+        /// </summary>
+        public static string side_backhand {
+            get {
+                return ResourceManager.GetString("side_backhand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BH.
+        /// </summary>
+        public static string side_backhand_short {
+            get {
+                return ResourceManager.GetString("side_backhand_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forehand.
+        /// </summary>
+        public static string side_forehand {
+            get {
+                return ResourceManager.GetString("side_forehand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FH.
+        /// </summary>
+        public static string side_forehand_short {
+            get {
+                return ResourceManager.GetString("side_forehand_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Net/Out.
         /// </summary>
         public static string table_netout_label {
@@ -439,11 +457,128 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thingamabob.
+        ///   Looks up a localized string similar to Blk.
+        /// </summary>
+        public static string technique_block_short {
+            get {
+                return ResourceManager.GetString("technique_block_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chp.
+        /// </summary>
+        public static string technique_chop_short {
+            get {
+                return ResourceManager.GetString("technique_chop_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cntr.
+        /// </summary>
+        public static string technique_counter_short {
+            get {
+                return ResourceManager.GetString("technique_counter_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flp.
+        /// </summary>
+        public static string technique_flip_short {
+            get {
+                return ResourceManager.GetString("technique_flip_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lb.
+        /// </summary>
+        public static string technique_lob_short {
+            get {
+                return ResourceManager.GetString("technique_lob_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Misc.
+        /// </summary>
+        public static string technique_miscellaneous_short {
+            get {
+                return ResourceManager.GetString("technique_miscellaneous_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pendulum.
         /// </summary>
         public static string technique_pendulum {
             get {
                 return ResourceManager.GetString("technique_pendulum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Psh.
+        /// </summary>
+        public static string technique_push_short {
+            get {
+                return ResourceManager.GetString("technique_push_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse.
+        /// </summary>
+        public static string technique_reverse {
+            get {
+                return ResourceManager.GetString("technique_reverse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sm.
+        /// </summary>
+        public static string technique_smash_short {
+            get {
+                return ResourceManager.GetString("technique_smash_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Special.
+        /// </summary>
+        public static string technique_special {
+            get {
+                return ResourceManager.GetString("technique_special", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spcl.
+        /// </summary>
+        public static string technique_special_short {
+            get {
+                return ResourceManager.GetString("technique_special_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tomahawk.
+        /// </summary>
+        public static string technique_Tomahawk {
+            get {
+                return ResourceManager.GetString("technique_Tomahawk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TS.
+        /// </summary>
+        public static string technique_topspin_short {
+            get {
+                return ResourceManager.GetString("technique_topspin_short", resourceCulture);
             }
         }
     }

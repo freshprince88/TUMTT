@@ -145,19 +145,19 @@
     <Compile Include="Sections\TechnicalEfficiencySection.cs" />
     <Compile Include="Sections\TransitionsSection.cs" />
     <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
-    <Compile Include="ViewModels\ServiceStatisticsGridViewModel.cs" />
+    <Compile Include="ViewModels\StatisticsGridViewModel.cs" />
     <Compile Include="Views\LargeTableView.xaml.cs">
       <DependentUpon>LargeTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ServiceTechniqueGridView.xaml.cs">
-      <DependentUpon>ServiceTechniqueGridView.xaml</DependentUpon>
+    <Compile Include="Views\ServiceTechniqueStatisticsGridView.xaml.cs">
+      <DependentUpon>ServiceTechniqueStatisticsGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StrokePlacementGridView.xaml.cs">
       <DependentUpon>StrokePlacementGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.cs" />
-    <Compile Include="Views\TechniqueGridView.xaml.cs">
-      <DependentUpon>TechniqueGridView.xaml</DependentUpon>
+    <Compile Include="Views\TechniqueStatisticsGridView.xaml.cs">
+      <DependentUpon>TechniqueStatisticsGridView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -184,7 +184,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ServiceTechniqueGridView.xaml">
+    <Page Include="Views\ServiceTechniqueStatisticsGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,7 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TechniqueGridView.xaml">
+    <Page Include="Views\TechniqueStatisticsGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

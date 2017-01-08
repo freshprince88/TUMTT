@@ -116,7 +116,7 @@ namespace TT.Lib.Managers
                             else
                             {
                                 Debug.WriteLine("QueueWorker: queue not grown since, invoking ReportGenerated event");
-                                man.ReportGenerated(man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
+                                man.ReportGenerated?.Invoke(man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
                                 workList.Clear();
                             }
                         }

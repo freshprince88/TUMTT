@@ -36,7 +36,7 @@ namespace TT.Report.Sections
                 //if (strokeNumber == 1)
                 //{
                     // we have to create & re-populate new viewmodels because just switching SelectedRallies for some reason doesn't update the view
-                    ServiceStatisticsGridViewModel vm = new ServiceStatisticsGridViewModel()
+                    StatisticsGridViewModel vm = new StatisticsGridViewModel()
                     {
                         Player = player,
                         StrokeNumber = strokeNumber,

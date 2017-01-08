@@ -283,6 +283,20 @@
             Miscellaneous
         }
 
+        public enum TechniqueBasic
+        {
+            Push,
+            Flip,
+            Topspin,
+            Block,
+            Counter,
+            Smash,
+            Lob,
+            Chop,
+            Special,
+            Miscellaneous
+        }
+
         public enum PointOfContact
         {
             Over,

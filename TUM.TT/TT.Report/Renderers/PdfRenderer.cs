@@ -608,7 +608,7 @@ namespace TT.Report.Renderers
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
 
             if (itemsList.Count > 0 && itemsList.ElementAt(0) is BitmapFrame)
-                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
+                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15, tableIndentLeft: 2.25);
             else if (itemsList.Count > 0 && itemsList.ElementAt(0) is List<object>)
                 AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 280, 190, keepCol1AspectRation: false, keepCol2AspectRation: true, extraColWidth: 15);
         }
@@ -620,7 +620,7 @@ namespace TT.Report.Renderers
             var itemsList = new List<object>();
             foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
+            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15, tableIndentLeft: 2.25);
         }
 
         public void Visit(LargeTableSection section)
@@ -630,7 +630,7 @@ namespace TT.Report.Renderers
             var itemsList = new List<BitmapFrame>();
             foreach (var set in section.TableImageBitmapFrames.Keys)
                 itemsList.Add(section.TableImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 450, 210);
+            AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 450, 210, twoColtableIndentLeft: 0.75);
         }
 
         public void Visit(StrokeNumberSection section)
@@ -1114,20 +1114,23 @@ namespace TT.Report.Renderers
             }
         }
 
-        private Table AddItemsToTable<T>(List<T> items, 
-            List<string> setNumbers, 
-            Func<T, int, int, string> itemToTempFilePathFunction, 
-            int normalWidth, 
-            int smallWidth, 
-            int normalHeight = 0, 
-            int smallHeight = 0, 
-            int extraColWidth = 0)
+        private Table AddItemsToTable<T>(List<T> items,
+            List<string> setNumbers,
+            Func<T, int, int, string> itemToTempFilePathFunction,
+            int normalWidth,
+            int smallWidth,
+            int normalHeight = 0,
+            int smallHeight = 0,
+            int extraColWidth = 0,
+            double tableIndentLeft = 0,
+            double twoColtableIndentLeft = 0)
         {
             var tableItemsCount = items.Count;
             bool multipleItems = tableItemsCount > 1;
 
             Table table = Document.LastSection.AddTable();
-            table.Borders.Visible = false;
+            table.Borders.Visible = false;            
+            table.Rows.LeftIndent = Unit.FromCentimeter(multipleItems ? twoColtableIndentLeft : tableIndentLeft);
 
             Column col = table.AddColumn();
             col.Width = (multipleItems ? smallWidth : normalWidth) + extraColWidth;
@@ -1229,7 +1232,7 @@ namespace TT.Report.Renderers
         {
             Table table = Document.LastSection.AddTable();
             table.Borders.Visible = false;
-            table.Format.LeftIndent = Unit.FromCentimeter(-2.25);
+            table.Rows.LeftIndent = Unit.FromCentimeter(-0.85);
 
             Column col1 = table.AddColumn();
             col1.Width = firstColWidth + extraColWidth;
@@ -1249,10 +1252,6 @@ namespace TT.Report.Renderers
                 Row row = table.AddRow();
                 var heading = row.Cells[0].AddParagraph(setNumbers[rowIndex] == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + setNumbers[rowIndex]));
                 heading.Style = OurStyleNames.SetName;
-                //heading.Format.SpaceBefore = 10;
-                //heading.Format.Font.Size = 16;
-                //heading.Format.Font.Bold = true;
-                //heading.Format.Alignment = ParagraphAlignment.Center;
                 row.Cells[0].MergeRight = 1;
                 row.KeepWith = 1;
 

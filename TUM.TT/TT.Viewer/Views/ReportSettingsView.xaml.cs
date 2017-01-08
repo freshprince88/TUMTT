@@ -34,7 +34,7 @@ namespace TT.Viewer.Views
 
             var blurEffect = new BlurEffect();
             blurEffect.Radius = 0;
-            PreviewOverlay.Effect = blurEffect;
+            PreviewOverlayImage.Effect = blurEffect;
 
             DataContextChanged += ReportSettingsView_DataContextChanged;
             ReportPreviewControl.LoadCompleted += ReportPreviewControl_LoadCompleted;
@@ -145,9 +145,9 @@ namespace TT.Viewer.Views
                     graphics.CopyFromScreen(topLeftGdiPoint, new System.Drawing.Point(), size, CopyPixelOperation.SourceCopy);
                 }
 
-                PreviewOverlay.Source = Imaging.CreateBitmapSourceFromHBitmap(screenShot.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                PreviewOverlayImage.Source = Imaging.CreateBitmapSourceFromHBitmap(screenShot.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                 ReportPreviewControl.Visibility = Visibility.Hidden;
-                ((BlurEffect)PreviewOverlay.Effect).Radius = 20;
+                ((BlurEffect)PreviewOverlayImage.Effect).Radius = 20;
 
                 ReportPreviewGroupBox.IsEnabled = false;
             }
@@ -181,7 +181,7 @@ namespace TT.Viewer.Views
             Dispatcher.Invoke(() =>
             {
                 ReportPreviewControl.Visibility = Visibility.Visible;
-                ((BlurEffect)PreviewOverlay.Effect).Radius = 0;
+                ((BlurEffect)PreviewOverlayImage.Effect).Radius = 0;
                 ReportPreviewGroupBox.IsEnabled = true;
             });
         }

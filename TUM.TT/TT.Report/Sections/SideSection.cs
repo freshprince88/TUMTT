@@ -59,13 +59,13 @@ namespace TT.Report.Sections
 
                     int categoryNr = 0;
 
-                    categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_side_forehand, statistics.Forehand));
+                    categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.side_forehand, statistics.Forehand));
                     barSeries1.Items.Add(new BarItem(statistics.ForehandWon, categoryNr));
                     var spinUpLost = statistics.Forehand - statistics.ForehandWon;
                     if (spinUpLost > 0) barSeries2.Items.Add(new BarItem(spinUpLost, categoryNr));
                     categoryNr++;
 
-                    categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_side_backhand, statistics.Backhand));
+                    categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.side_backhand, statistics.Backhand));
                     barSeries1.Items.Add(new BarItem(statistics.BackhandWon, categoryNr));
                     var noSpinLost = statistics.Backhand - statistics.BackhandWon;
                     if (noSpinLost > 0) barSeries2.Items.Add(new BarItem(noSpinLost, categoryNr));

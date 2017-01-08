@@ -129,10 +129,10 @@
   <data name="section_side" xml:space="preserve">
     <value>Side</value>
   </data>
-  <data name="section_side_backhand" xml:space="preserve">
+  <data name="side_backhand" xml:space="preserve">
     <value>Rückhand</value>
   </data>
-  <data name="section_side_forehand" xml:space="preserve">
+  <data name="side_forehand" xml:space="preserve">
     <value>Vorhand</value>
   </data>
   <data name="section_spin" xml:space="preserve">
@@ -245,5 +245,50 @@
   </data>
   <data name="technique_pendulum" xml:space="preserve">
     <value>Pendulum</value>
+  </data>
+  <data name="side_backhand_short" xml:space="preserve">
+    <value>RH</value>
+  </data>
+  <data name="side_forehand_short" xml:space="preserve">
+    <value>VH</value>
+  </data>
+  <data name="technique_block_short" xml:space="preserve">
+    <value>Blk</value>
+  </data>
+  <data name="technique_chop_short" xml:space="preserve">
+    <value>Chp</value>
+  </data>
+  <data name="technique_counter_short" xml:space="preserve">
+    <value>Cntr</value>
+  </data>
+  <data name="technique_flip_short" xml:space="preserve">
+    <value>Flp</value>
+  </data>
+  <data name="technique_lob_short" xml:space="preserve">
+    <value>Lb</value>
+  </data>
+  <data name="technique_miscellaneous_short" xml:space="preserve">
+    <value>Andere</value>
+  </data>
+  <data name="technique_push_short" xml:space="preserve">
+    <value>Psh</value>
+  </data>
+  <data name="technique_reverse" xml:space="preserve">
+    <value>Reverse</value>
+  </data>
+  <data name="technique_smash_short" xml:space="preserve">
+    <value>Sm</value>
+  </data>
+  <data name="technique_special" xml:space="preserve">
+    <value>Special</value>
+  </data>
+  <data name="technique_special_short" xml:space="preserve">
+    <value>Spcl</value>
+  </data>
+  <data name="technique_Tomahawk" xml:space="preserve">
+    <value>Tomahawk</value>
+  </data>
+  <data name="technique_topspin_short" xml:space="preserve">
+    <value>TS</value>
   </data>
 </root>

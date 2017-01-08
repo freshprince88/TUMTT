@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TT.Models.Statistics
 {
@@ -39,8 +36,8 @@ namespace TT.Models.Statistics
                         if (!NumberToTechniqueCountDict.TryGetValue(s.Number, out techniqueToCountDict))
                         {
                             techniqueToCountDict = new Dictionary<string, int>();
-                            foreach (var technique in techniques)
-                                techniqueToCountDict[technique] = 0;
+                            foreach (var technique in Enum.GetValues(typeof(Util.Enums.Stroke.TechniqueBasic)))
+                                techniqueToCountDict[technique.ToString()] = 0;
                             NumberToTechniqueCountDict[s.Number] = techniqueToCountDict;
                         }
 
@@ -48,61 +45,61 @@ namespace TT.Models.Statistics
                         {
                             this.Push++;
                             PushWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Push"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Push.ToString()]++;
                         }
                         else if (s.HasStrokeTec(flipConsts))
                         {
                             this.Flip++;
                             FlipWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Flip"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Flip.ToString()]++;
                         }
                         else if (s.HasStrokeTec(topspinConsts))
                         {
                             this.Topspin++;
                             TopspinWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Topspin"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Topspin.ToString()]++;
                         }
                         else if (s.HasStrokeTec(blockConsts))
                         {
                             this.Block++;
                             BlockWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Block"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Block.ToString()]++;
                         }
                         else if (s.HasStrokeTec(counterConsts))
                         {
                             this.Counter++;
                             CounterWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Counter"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Counter.ToString()]++;
                         }
                         else if (s.HasStrokeTec(smashConsts))
                         {
                             this.Smash++;
                             SmashWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Smash"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Smash.ToString()]++;
                         }
                         else if (s.HasStrokeTec(lobConsts))
                         {
                             this.Lob++;
                             LobWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Lob"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Lob.ToString()]++;
                         }
                         else if (s.HasStrokeTec(chopConsts))
                         {
                             this.Chop++;
                             ChopWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Chop"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Chop.ToString()]++;
                         }
                         else if (s.HasStrokeTec(specialConsts))
                         {
                             this.Special++;
                             SpecialWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Special"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Special.ToString()]++;
                         }
                         else if (s.HasStrokeTec(miscellaneousConsts))
                         {
                             this.Miscellaneous++;
                             MiscellaneousWon += s.Rally.Winner == Player ? 1 : 0;
-                            NumberToTechniqueCountDict[s.Number]["Miscellaneous"]++;
+                            NumberToTechniqueCountDict[s.Number][Util.Enums.Stroke.TechniqueBasic.Miscellaneous.ToString()]++;
                         }
                         else
                         {
@@ -115,11 +112,7 @@ namespace TT.Models.Statistics
                 }
             }
         }
-
-        private static readonly IEnumerable<string> techniques = new List<string>() {
-            "Push", "Flip", "Topspin", "Block", "Counter", "Smash", "Lob", "Chop", "Special", "Miscellaneous"
-        };
-
+        
         public SortedDictionary<int, IDictionary<string, int>> NumberToTechniqueCountDict { get; set; }
         public int Push { get; private set; }
         public int PushWon { get; private set; }
