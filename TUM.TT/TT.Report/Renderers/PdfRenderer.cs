@@ -582,13 +582,9 @@ namespace TT.Report.Renderers
 
         public void Visit(SideSection section)
         {
-            this.AddHeading(2, Properties.Resources.section_side);
+            this.AddHeading(2, section.HasStepAround ? Properties.Resources.section_side_steparound : Properties.Resources.section_side);
 
             AddItemsToTable(section.SidePlots, null, oxyPlotToTempFilePathFunction, 450, 210, 270, 150);
-        }
-        
-        public void Visit(StepAroundSection section)
-        {
         }
 
         public void Visit(SpinSection section)

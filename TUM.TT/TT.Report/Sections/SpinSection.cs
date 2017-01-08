@@ -1,7 +1,9 @@
 ﻿using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TT.Models;
 using TT.Models.Statistics;
 using TT.Report.Plots;
@@ -20,6 +22,7 @@ namespace TT.Report.Sections
                 if (sets[set].Count > 0)
                 {
                     var statistics = new SpinStatistics(match, player, sets[set]);
+                    int dataMax = Enumerable.Max(new int[] { statistics.NoSpin, statistics.SpinDown, statistics.SpinUp, statistics.NotAnalysed });
 
                     PlotModel plot = plotStyle.CreatePlot();
                     plot.LegendOrientation = LegendOrientation.Horizontal;
@@ -35,8 +38,8 @@ namespace TT.Report.Sections
 
                     var linearAxis1 = new LinearAxis();
                     linearAxis1.Position = AxisPosition.Bottom;
-                    linearAxis1.MinorStep = 1;
-                    linearAxis1.MajorStep = 4;
+                    linearAxis1.MajorStep = Math.Ceiling(dataMax / 4d);
+                    linearAxis1.MinorStep = linearAxis1.MajorStep / 4d;
                     linearAxis1.AbsoluteMinimum = 0;
                     linearAxis1.MaximumPadding = 0.06;
                     linearAxis1.MinimumPadding = 0;
@@ -58,6 +61,15 @@ namespace TT.Report.Sections
 
                     int categoryNr = 0;
 
+                    if (statistics.NotAnalysed > 0)
+                    {
+                        categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_hidden, statistics.NotAnalysed));
+                        barSeries1.Items.Add(new BarItem(statistics.NotAnalysedWon, categoryNr));
+                        var notAnalysedLost = statistics.NotAnalysed - statistics.NotAnalysedWon;
+                        if (notAnalysedLost > 0) barSeries2.Items.Add(new BarItem(notAnalysedLost, categoryNr));
+                        categoryNr++;
+                    }
+
                     categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_up, statistics.SpinUp));
                     barSeries1.Items.Add(new BarItem(statistics.SpinUpWon, categoryNr));
                     var spinUpLost = statistics.SpinUp - statistics.SpinUpWon;
@@ -75,15 +87,6 @@ namespace TT.Report.Sections
                     var spinDownLost = statistics.SpinDown - statistics.SpinDownWon;
                     if (spinDownLost > 0) barSeries2.Items.Add(new BarItem(spinDownLost, categoryNr));
                     categoryNr++;
-
-                    if (statistics.NotAnalysed > 0)
-                    {
-                        categoryAxis1.Labels.Add(string.Format("{0} ({1})", Properties.Resources.section_spin_hidden, statistics.NotAnalysed));
-                        barSeries1.Items.Add(new BarItem(statistics.NotAnalysedWon, categoryNr));
-                        var notAnalysedLost = statistics.NotAnalysed - statistics.NotAnalysedWon;
-                        if (notAnalysedLost > 0) barSeries2.Items.Add(new BarItem(notAnalysedLost, categoryNr));
-                        categoryNr++;
-                    }
 
                     plot.Series.Add(barSeries1);
                     plot.Series.Add(barSeries2);

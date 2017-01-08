@@ -282,7 +282,11 @@ namespace TT.Viewer.ViewModels
 
             if (matchOpened)
             {
-                CustomizedReportGenerator gen = new CustomizedReportGenerator() { Customization = GetCustomizationDictionary() };
+                CustomizedReportGenerator gen = new CustomizedReportGenerator()
+                {
+                    Customization = GetCustomizationDictionary(),
+                    Match = MatchManager.Match
+                };
                 issuedReportId = MatchHashGenerator.GenerateMatchHash(MatchManager.Match) + gen.CustomizationId;
                 ReportGenerationQueueManager.Enqueue(gen);
             }

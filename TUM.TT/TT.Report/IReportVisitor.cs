@@ -86,12 +86,6 @@ namespace TT.Report
         void Visit(SideSection section);
 
         /// <summary>
-        /// Visits the step around section.
-        /// </summary>
-        /// <param name="section">The section</param>
-        void Visit(StepAroundSection section);
-
-        /// <summary>
         /// Visits the spin section.
         /// </summary>
         /// <param name="section">The section</param>

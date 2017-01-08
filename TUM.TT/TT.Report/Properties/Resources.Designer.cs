@@ -97,6 +97,15 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Side (Steparound).
+        /// </summary>
+        public static string section_side_steparound {
+            get {
+                return ResourceManager.GetString("section_side_steparound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spin.
         /// </summary>
         public static string section_spin {
@@ -430,6 +439,24 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backhand (Steparound).
+        /// </summary>
+        public static string side_backhand_steparound {
+            get {
+                return ResourceManager.GetString("side_backhand_steparound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BH (SA).
+        /// </summary>
+        public static string side_backhand_steparound_short {
+            get {
+                return ResourceManager.GetString("side_backhand_steparound_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forehand.
         /// </summary>
         public static string side_forehand {
@@ -444,6 +471,33 @@ namespace TT.Report.Properties {
         public static string side_forehand_short {
             get {
                 return ResourceManager.GetString("side_forehand_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forehand (Steparound).
+        /// </summary>
+        public static string side_forehand_steparound {
+            get {
+                return ResourceManager.GetString("side_forehand_steparound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FH (SA).
+        /// </summary>
+        public static string side_forehand_steparound_short {
+            get {
+                return ResourceManager.GetString("side_forehand_steparound_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string stat_not_analysed {
+            get {
+                return ResourceManager.GetString("stat_not_analysed", resourceCulture);
             }
         }
         
@@ -567,9 +621,9 @@ namespace TT.Report.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Tomahawk.
         /// </summary>
-        public static string technique_Tomahawk {
+        public static string technique_tomahawk {
             get {
-                return ResourceManager.GetString("technique_Tomahawk", resourceCulture);
+                return ResourceManager.GetString("technique_tomahawk", resourceCulture);
             }
         }
         
