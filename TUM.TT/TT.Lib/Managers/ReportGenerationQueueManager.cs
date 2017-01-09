@@ -78,7 +78,7 @@ namespace TT.Lib.Managers
             {
                 lock(man)
                 {
-                    Debug.WriteLine("*QueueWorker: adding repGen.Hash={0} to queue", repGen.GetHashCode());
+                    Debug.WriteLine("*QueueWorker: adding repGen (Hash={0}) to queue", repGen.GetHashCode());
                     workList.Add(repGen);
                 }
             }
@@ -112,6 +112,7 @@ namespace TT.Lib.Managers
                             var custRepGenThread = new Thread(new ThreadStart(custRepGen.GenerateReport));
                             custRepGenThread.Name = "CustomReportGenThread-" + genId++;
                             custRepGenThread.SetApartmentState(ApartmentState.STA);
+                            Debug.WriteLine("QueueWorker: starting {0}", args: custRepGenThread.Name);
                             custRepGenThread.Start();
                         }
                         else
@@ -126,13 +127,13 @@ namespace TT.Lib.Managers
 
             private void CustomizedReportGenerator_SectionsAdded(object sender, SectionsAddedEventArgs e)
             {
-                Debug.WriteLine("sections added [sender={0} report={1}]", sender, e.Report);
+                Debug.WriteLine("QueueWorker [EVENT]: sections added [sender={0} report={1}]", sender, e.Report);
 
-                IReportGenerator repGen = (IReportGenerator)sender;
-                var repGenCustomizationId = (repGen is CustomizedReportGenerator ? ((CustomizedReportGenerator)repGen).CustomizationId : "1");
+                CustomizedReportGenerator repGen = (CustomizedReportGenerator)sender;
+                var repGenCustomizationId = repGen.CustomizationId;
                 var matchHash = MatchHashGenerator.GenerateMatchHash(man.matchManager.Match);
                 string tmpReportPath = null;
-                if (repGen == custRepGen)
+                if (!repGen.Abort)
                 {
                     var renderer = IoC.Get<IReportRenderer>("PDF");
                     tmpReportPath = Path.GetTempPath() + "ttviewer_" + (matchHash + repGenCustomizationId) + ".pdf";
@@ -149,14 +150,14 @@ namespace TT.Lib.Managers
                 else
                     return;
 
-                if (repGen == custRepGen)
+                if (!repGen.Abort)
                 {
-                    Debug.WriteLine("QueueWorker: queue not grown since, invoking ReportGenerated event");
+                    Debug.WriteLine("QueueWorker: repGen={0} not aborted, invoking ReportGenerated event", repGen.GetHashCode());
                     man.ReportGenerated?.Invoke(man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
                 }
                 else
                 {
-                    Debug.WriteLine("QueueWorker: queue has grown since printing file (queue.Count={0}), discarding.", workList.Count);
+                    Debug.WriteLine("QueueWorker: repGen={0} aborted, discarding.", repGen.GetHashCode());
                 }
             }            
         }

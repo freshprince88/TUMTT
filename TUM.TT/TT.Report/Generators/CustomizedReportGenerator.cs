@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace TT.Report.Generators
 {
@@ -58,9 +59,12 @@ namespace TT.Report.Generators
 
             var report = GenerateReport(Match);
             if (!Abort)
+            {
                 SectionsAdded?.Invoke(this, new SectionsAddedEventArgs(report));
+                Debug.WriteLine("Thread '{1}' done.", GetHashCode(), Thread.CurrentThread.Name);
+            }
             else
-                Debug.WriteLine("CustomizedReportGenerator: report generation aborted!");
+                Debug.WriteLine("CustomizedReportGenerator {0}: report generation aborted! (Thread: {1})", GetHashCode(), Thread.CurrentThread.Name);
         }
 
         /// <summary>

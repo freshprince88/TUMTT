@@ -26,6 +26,7 @@ namespace TT.Report.Renderers
     using System.Diagnostics;
     using System.Windows.Media.Imaging;
     using System.Windows.Threading;
+    using System.Threading;
 
     /// <summary>
     /// Renders a report to a PDF file.
@@ -160,6 +161,10 @@ namespace TT.Report.Renderers
                 };
                 this.renderer.RenderDocument();
             }
+            catch (NullReferenceException)
+            {
+                Debug.WriteLine("PdfRenderer: NullReferenceException in 'RenderDocument()' (this.Hash={0} Thread.Name={1})", GetHashCode(), Thread.CurrentThread.Name);
+            }
             finally
             {
                 foreach (var temp in this.temporaryFiles)
@@ -168,7 +173,7 @@ namespace TT.Report.Renderers
                     {
                         File.Delete(temp);
                     }
-                    catch (FileNotFoundException)
+                    catch (IOException)
                     {
                     }
                 }
@@ -646,7 +651,14 @@ namespace TT.Report.Renderers
         /// <param name="sink">The stream to write to.</param>
         public void Save(Stream sink)
         {
-            this.renderer.PdfDocument.Save(sink);
+            try
+            {
+                this.renderer.PdfDocument.Save(sink);
+            }
+            catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
+            {
+                Debug.WriteLine("PdfRenderer: {2} in 'Save(Stream)' (this.Hash={0} Thread.Name={1})", GetHashCode(), Thread.CurrentThread.Name, e.GetType().Name);
+            }
         }
 
         /// <summary>
