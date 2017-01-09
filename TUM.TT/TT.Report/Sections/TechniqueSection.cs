@@ -108,7 +108,7 @@ namespace TT.Report.Sections
 
                         if (statistics.Block > 0)
                         {
-                            categoryAxis.Labels.Add(string.Format("{0} ({1})", useShortCatNames ? Properties.Resources.technique_block_short : Properties.Resources.section_technique_push, statistics.Block));
+                            categoryAxis.Labels.Add(string.Format("{0} ({1})", useShortCatNames ? Properties.Resources.technique_block_short : Properties.Resources.section_technique_block, statistics.Block));
                             barSeries1.Items.Add(new ColumnItem(statistics.BlockWon, categoryNr));
                             var blockLost = statistics.Block - statistics.BlockWon;
                             if (blockLost > 0) barSeries2.Items.Add(new ColumnItem(blockLost, categoryNr));

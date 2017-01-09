@@ -44,7 +44,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="PlacementForehandAllTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+            <Label x:Name="PlacementForehandAllTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
                 <Label.Content>
                     <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
@@ -248,7 +248,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="PlacementMiddleAllTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+            <Label x:Name="PlacementMiddleAllTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
                 <Label.Content>
                     <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
@@ -452,7 +452,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="PlacementBackhandAllTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+            <Label x:Name="PlacementBackhandAllTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
                 <Label.Content>
                     <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                         <Binding Path="SelectedRallies" />
