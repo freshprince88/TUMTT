@@ -409,11 +409,11 @@
                 </ScrollViewer>
                 
             </GroupBox>
-            
 
-            <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox" Margin="2 5 10 0" BorderThickness="1 1 1 0">
+
+            <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox" Margin="2 5 10 0" BorderThickness="1 1 1 0" IsEnabled="False">
                 <Grid x:Name="ReportPreviewBrowserContainer">
-                    <WebBrowser x:Name="ReportPreviewControl" IsEnabled="False" Visibility="Hidden"/>
+                    <WebBrowser x:Name="ReportPreviewControl" Visibility="Hidden"/>
                     <Grid x:Name="PreviewOverlay">
                         <Image x:Name="PreviewOverlayImage" ClipToBounds="True" />
                         <Controls:ProgressRing Width="{Binding ActualWidth, ElementName=PreviewOverlay, Converter={StaticResource MathConverter}, ConverterParameter=a/6}" IsActive="True" />
@@ -432,8 +432,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Content="{Binding Path=report_settings_cancel, Source={StaticResource LocalizedStrings}}" cal:Message.Attach="OnCancelClick()"/>
-                <Button Grid.Column="1" Content="{Binding Path=report_settings_ok, Source={StaticResource LocalizedStrings}}" Margin="5 0 0 0" cal:Message.Attach="OnOkClick()" 
-                        IsEnabled="{Binding Visibility, ElementName=ReportPreviewControl, Converter={StaticResource VisibilityToBoolConverter}, ConverterParameter=true}"/>
+                <Button Grid.Column="1" Content="{Binding Path=report_settings_ok, Source={StaticResource LocalizedStrings}}" Margin="5 0 0 0" cal:Message.Attach="OnOkClick()"/>
                 <Button Grid.Column="2" Content="{Binding Path=report_settings_ok_generate, Source={StaticResource LocalizedStrings}}"  Margin="5 0 0 0" cal:Message.Attach="OnOkGenerateClick()" 
                         IsEnabled="{Binding Visibility, ElementName=ReportPreviewControl, Converter={StaticResource VisibilityToBoolConverter}, ConverterParameter=true}"/>
 

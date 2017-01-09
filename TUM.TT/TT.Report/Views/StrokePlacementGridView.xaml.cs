@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace TT.Report.Views
 {
@@ -9,7 +11,14 @@ namespace TT.Report.Views
     {
         public StrokePlacementGridView()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception e) when (e is InvalidOperationException)
+            {
+                Debug.WriteLine("StrokePlacementGridView: InitializeComponent() failed ({0} - {1})", e.GetType().Name, e.Message);
+            }
         }
     }
 }

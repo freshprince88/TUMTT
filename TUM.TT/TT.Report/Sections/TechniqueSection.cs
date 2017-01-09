@@ -175,7 +175,12 @@ namespace TT.Report.Sections
                         plot.Axes.Add(categoryAxis);
                         plot.Axes.Add(linearAxis);
 
-                        ExistingStatisticsImageBitmapFrames[set] = new List<object>() { plot, ExistingStatisticsImageBitmapFrames[set] };
+                        var sectionImages = new List<object>() { plot };
+                        if (ExistingStatisticsImageBitmapFrames.ContainsKey(set))
+                            sectionImages.Add(ExistingStatisticsImageBitmapFrames[set]);
+                        else
+                            sectionImages.Add(null);
+                        ExistingStatisticsImageBitmapFrames[set] = sectionImages;
 
                         Debug.WriteLine("Got Technique plot (set={0})", args: set);
                     }

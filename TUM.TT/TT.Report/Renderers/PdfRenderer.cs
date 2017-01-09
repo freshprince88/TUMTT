@@ -115,6 +115,9 @@ namespace TT.Report.Renderers
         {
             bitmapFrameToTempFileFunction = new Func<object, int, int, string>((item, width, height) =>
             {
+                if (item == null)
+                    return @"pack://application:,,,/TT.Report;component/Resources/image_loading_error.png";
+
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add((BitmapFrame)(object)item);
 
@@ -127,6 +130,9 @@ namespace TT.Report.Renderers
             });
             oxyPlotToTempFilePathFunction = new Func<object, int, int, string>((p, width, height) =>
             {
+                if (p == null)
+                    return @"pack://application:,,,/TT.Report;component/Resources/image_loading_error.png";
+
                 var plot = (OxyPlot.PlotModel)p;
                 FixPlotColor(plot);
                 var tempFile = GetTempFile();

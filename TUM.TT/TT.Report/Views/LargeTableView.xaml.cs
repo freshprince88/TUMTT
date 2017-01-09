@@ -63,11 +63,18 @@ namespace TT.Report.Views
 
         public LargeTableView()
         {
-            InitializeComponent();
-            ActiveRally = null;
-            AddHandler(MouseDownEvent, new MouseButtonEventHandler(Background_MouseDown));
+            try
+            {
+                InitializeComponent();
+                ActiveRally = null;
+                AddHandler(MouseDownEvent, new MouseButtonEventHandler(Background_MouseDown));
 
-            Loaded += OnLoaded;
+                Loaded += OnLoaded;
+            }
+            catch(Exception e) when (e is InvalidOperationException)
+            {
+                Debug.WriteLine("LargeTableView: InitializeComponent() failed ({0} - {1})", e.GetType().Name, e.Message);
+            }
         }
 
         #region Event handlers

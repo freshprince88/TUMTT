@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,13 @@ namespace TT.Report.Views
     {
         public TechniqueStatisticsGridView()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            } catch (Exception e) when (e is InvalidOperationException)
+            {
+                Debug.WriteLine("TechniqueStatisticsGridView: InitializeComponent() failed ({0} - {1})", e.GetType().Name, e.Message);
+            }
         }
     }
 }

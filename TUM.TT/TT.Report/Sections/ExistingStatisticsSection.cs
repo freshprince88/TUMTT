@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -41,29 +43,38 @@ namespace TT.Report.Sections
                     StrokeNumber = strokeNumber,
                     SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
                 };
-                var view = (UserControl)System.Activator.CreateInstance(v);
-                ViewModelBinder.Bind(vm, view, null);
-                ((IActivate)vm).Activate();
 
-                var mainGrid = (Grid)view.Content;
-                var size = new Size(mainGrid.Width, mainGrid.Height);
-                var scale = sets.Count > 1 ? 1 : 2.5;
 
-                view.Width = size.Width;
-                view.Height = size.Height;
+                try
+                {
+                    var view = (UserControl)Activator.CreateInstance(v);
+                    ViewModelBinder.Bind(vm, view, null);
+                    ((IActivate)vm).Activate();
 
-                view.RenderTransform = new ScaleTransform(scale, scale);
-                view.Measure(size);
-                view.Arrange(new Rect(size));
-                view.UpdateLayout();
+                    var mainGrid = (Grid)view.Content;
+                    var size = new Size(mainGrid.Width, mainGrid.Height);
+                    var scale = sets.Count > 1 ? 1 : 2.5;
 
-                size.Width = mainGrid.ActualWidth;
-                size.Height = mainGrid.ActualHeight;
+                    view.Width = size.Width;
+                    view.Height = size.Height;
 
-                var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
-                bmp.Render(view);
+                    view.RenderTransform = new ScaleTransform(scale, scale);
+                    view.Measure(size);
+                    view.Arrange(new Rect(size));
+                    view.UpdateLayout();
 
-                ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
+                    size.Width = mainGrid.ActualWidth;
+                    size.Height = mainGrid.ActualHeight;
+
+                    var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
+                    bmp.Render(view);
+
+                    ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
+                }
+                catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
+                {
+                    Debug.WriteLine("ExistingStatisticsSection: '{0}' - cannot get statistics bitmap", args: e.GetType().Name);
+                }
             }
         }
     }
