@@ -289,10 +289,10 @@
     <value>Rückschlag</value>
   </data>
   <data name="report_settings_strokechoice_service" xml:space="preserve">
-    <value>Service</value>
+    <value>Aufschlag</value>
   </data>
   <data name="report_settings_strokechoice_steparound" xml:space="preserve">
-    <value>Step Around</value>
+    <value>Umlaufen</value>
   </data>
   <data name="report_settings_strokechoice_technique" xml:space="preserve">
     <value>Technik</value>
