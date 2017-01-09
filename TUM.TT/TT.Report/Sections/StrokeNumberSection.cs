@@ -10,7 +10,7 @@ using TT.Report.Plots;
 
 namespace TT.Report.Sections
 {
-    public class StrokeNumberSection : IReportSection
+    public class StrokeNumberSection : BaseSection
     {
         public List<PlotModel> NumberPlots { get; internal set; }
         private IDictionary<Stroke.TechniqueBasic, string> techniqueNames = new Dictionary<Stroke.TechniqueBasic, string>() {
@@ -37,7 +37,7 @@ namespace TT.Report.Sections
                     var statistics = new TechniqueStatistics(match, p, sets[set], strokeNumber);
 
                     PlotModel plot = plotStyle.CreatePlot();
-                    plot.Title = set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set);
+                    plot.Title = GetSetTitleString(set);
                     plot.TitleFontSize = 16;
                     plot.LegendOrientation = LegendOrientation.Horizontal;
                     plot.LegendPlacement = LegendPlacement.Outside;

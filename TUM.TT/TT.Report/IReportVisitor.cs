@@ -59,13 +59,7 @@ namespace TT.Report
         /// Visits the technical efficiency section.
         /// </summary>
         /// <param name="section">The section</param>
-        void Visit(TechnicalEfficiencySection section);
-
-        /// <summary>
-        /// Visits the simulation section.
-        /// </summary>
-        /// <param name="section">The section</param>
-        void Visit(RelevanceOfStrokeSection section);
+        void Visit(TechnicalEfficiencySection section);        
 
         /// <summary>
         /// Visits the part section.

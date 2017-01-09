@@ -413,7 +413,7 @@
 
             <GroupBox Grid.Column="1" Header="Preview" x:Name="ReportPreviewGroupBox" Margin="2 5 10 0" BorderThickness="1 1 1 0">
                 <Grid x:Name="ReportPreviewBrowserContainer">
-                    <WebBrowser x:Name="ReportPreviewControl" Source="about:blank" />
+                    <WebBrowser x:Name="ReportPreviewControl" IsEnabled="False" Visibility="Hidden"/>
                     <Grid x:Name="PreviewOverlay">
                         <Image x:Name="PreviewOverlayImage" ClipToBounds="True" />
                         <Controls:ProgressRing Width="{Binding ActualWidth, ElementName=PreviewOverlay, Converter={StaticResource MathConverter}, ConverterParameter=a/6}" IsActive="True" />

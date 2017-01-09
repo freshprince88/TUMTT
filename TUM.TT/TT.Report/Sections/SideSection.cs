@@ -10,7 +10,7 @@ using TT.Report.Plots;
 
 namespace TT.Report.Sections
 {
-    public class SideSection : IReportSection
+    public class SideSection : BaseSection
     {
         public List<PlotModel> SidePlots { get; internal set; }
         public bool HasStepAround { get; private set; }
@@ -33,7 +33,7 @@ namespace TT.Report.Sections
                     plot.LegendOrientation = LegendOrientation.Horizontal;
                     plot.LegendPlacement = LegendPlacement.Outside;
                     plot.LegendPosition = LegendPosition.BottomCenter;
-                    plot.Title = set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set);
+                    plot.Title = GetSetTitleString(set);
                     plot.TitleFontSize = 16;
                     plot.PlotAreaBorderThickness = new OxyThickness(1, 0, 0, 1);
 

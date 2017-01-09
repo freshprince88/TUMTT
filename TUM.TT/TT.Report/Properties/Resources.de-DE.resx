@@ -309,4 +309,97 @@
   <data name="technique_topspin_short" xml:space="preserve">
     <value>TS</value>
   </data>
+  <data name="section_basicinfo_compref" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_player" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="section_basicinfo_ranking" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_result" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_service" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_service_freq" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_service_winprob" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_totalpoints" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_basicinfo_winprob" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_matchdynamics_byplayer" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_matchdynamics_overall" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_matchdynamics_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_avg_mean" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_avg_median" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_avg_service" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_avg_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_avg_totallengths" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_avg_winner" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_dist_expected" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_dist_observed" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_dist_ralliescount" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_dist_rallylength" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_rallylength_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_scoringprocess_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_techefficiency_error" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_techefficiency_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_transitionmatrix_abs_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_transitionmatrix_prob_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="section_transitionmatrix_title" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="sets_multiple" xml:space="preserve">
+    <value>Sätze</value>
+  </data>
 </root>

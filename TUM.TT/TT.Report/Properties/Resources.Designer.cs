@@ -61,6 +61,123 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comp. Perf..
+        /// </summary>
+        public static string section_basicinfo_compref {
+            get {
+                return ResourceManager.GetString("section_basicinfo_compref", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player.
+        /// </summary>
+        public static string section_basicinfo_player {
+            get {
+                return ResourceManager.GetString("section_basicinfo_player", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranking.
+        /// </summary>
+        public static string section_basicinfo_ranking {
+            get {
+                return ResourceManager.GetString("section_basicinfo_ranking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string section_basicinfo_result {
+            get {
+                return ResourceManager.GetString("section_basicinfo_result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        public static string section_basicinfo_service {
+            get {
+                return ResourceManager.GetString("section_basicinfo_service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freq..
+        /// </summary>
+        public static string section_basicinfo_service_freq {
+            get {
+                return ResourceManager.GetString("section_basicinfo_service_freq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win. Prob..
+        /// </summary>
+        public static string section_basicinfo_service_winprob {
+            get {
+                return ResourceManager.GetString("section_basicinfo_service_winprob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic Information.
+        /// </summary>
+        public static string section_basicinfo_title {
+            get {
+                return ResourceManager.GetString("section_basicinfo_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Points.
+        /// </summary>
+        public static string section_basicinfo_totalpoints {
+            get {
+                return ResourceManager.GetString("section_basicinfo_totalpoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win. Prob..
+        /// </summary>
+        public static string section_basicinfo_winprob {
+            get {
+                return ResourceManager.GetString("section_basicinfo_winprob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By serving player.
+        /// </summary>
+        public static string section_matchdynamics_byplayer {
+            get {
+                return ResourceManager.GetString("section_matchdynamics_byplayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overall.
+        /// </summary>
+        public static string section_matchdynamics_overall {
+            get {
+                return ResourceManager.GetString("section_matchdynamics_overall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match dynamics.
+        /// </summary>
+        public static string section_matchdynamics_title {
+            get {
+                return ResourceManager.GetString("section_matchdynamics_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General Section.
         /// </summary>
         public static string section_part_general {
@@ -84,6 +201,123 @@ namespace TT.Report.Properties {
         public static string section_placement {
             get {
                 return ResourceManager.GetString("section_placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mean.
+        /// </summary>
+        public static string section_rallylength_avg_mean {
+            get {
+                return ResourceManager.GetString("section_rallylength_avg_mean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Median.
+        /// </summary>
+        public static string section_rallylength_avg_median {
+            get {
+                return ResourceManager.GetString("section_rallylength_avg_median", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        public static string section_rallylength_avg_service {
+            get {
+                return ResourceManager.GetString("section_rallylength_avg_service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average.
+        /// </summary>
+        public static string section_rallylength_avg_title {
+            get {
+                return ResourceManager.GetString("section_rallylength_avg_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total lengths.
+        /// </summary>
+        public static string section_rallylength_avg_totallengths {
+            get {
+                return ResourceManager.GetString("section_rallylength_avg_totallengths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Winner.
+        /// </summary>
+        public static string section_rallylength_avg_winner {
+            get {
+                return ResourceManager.GetString("section_rallylength_avg_winner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected.
+        /// </summary>
+        public static string section_rallylength_dist_expected {
+            get {
+                return ResourceManager.GetString("section_rallylength_dist_expected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Observed.
+        /// </summary>
+        public static string section_rallylength_dist_observed {
+            get {
+                return ResourceManager.GetString("section_rallylength_dist_observed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #Rallies.
+        /// </summary>
+        public static string section_rallylength_dist_ralliescount {
+            get {
+                return ResourceManager.GetString("section_rallylength_dist_ralliescount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rally length.
+        /// </summary>
+        public static string section_rallylength_dist_rallylength {
+            get {
+                return ResourceManager.GetString("section_rallylength_dist_rallylength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distribution.
+        /// </summary>
+        public static string section_rallylength_dist_title {
+            get {
+                return ResourceManager.GetString("section_rallylength_dist_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rally Length.
+        /// </summary>
+        public static string section_rallylength_title {
+            get {
+                return ResourceManager.GetString("section_rallylength_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scoring process.
+        /// </summary>
+        public static string section_scoringprocess_title {
+            get {
+                return ResourceManager.GetString("section_scoringprocess_title", resourceCulture);
             }
         }
         
@@ -237,6 +471,24 @@ namespace TT.Report.Properties {
         public static string section_table {
             get {
                 return ResourceManager.GetString("section_table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string section_techefficiency_error {
+            get {
+                return ResourceManager.GetString("section_techefficiency_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technical efficiency.
+        /// </summary>
+        public static string section_techefficiency_title {
+            get {
+                return ResourceManager.GetString("section_techefficiency_title", resourceCulture);
             }
         }
         
@@ -403,11 +655,47 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Absolute number of transitions.
+        /// </summary>
+        public static string section_transitionmatrix_abs_title {
+            get {
+                return ResourceManager.GetString("section_transitionmatrix_abs_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transition probabilities.
+        /// </summary>
+        public static string section_transitionmatrix_prob_title {
+            get {
+                return ResourceManager.GetString("section_transitionmatrix_prob_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transition matrix.
+        /// </summary>
+        public static string section_transitionmatrix_title {
+            get {
+                return ResourceManager.GetString("section_transitionmatrix_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All sets.
         /// </summary>
         public static string sets_all {
             get {
                 return ResourceManager.GetString("sets_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets.
+        /// </summary>
+        public static string sets_multiple {
+            get {
+                return ResourceManager.GetString("sets_multiple", resourceCulture);
             }
         }
         

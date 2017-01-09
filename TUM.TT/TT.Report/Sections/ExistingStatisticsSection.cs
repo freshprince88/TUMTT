@@ -33,39 +33,37 @@ namespace TT.Report.Sections
                 {
                     continue;
                 }
-                //if (strokeNumber == 1)
-                //{
-                    // we have to create & re-populate new viewmodels because just switching SelectedRallies for some reason doesn't update the view
-                    StatisticsGridViewModel vm = new StatisticsGridViewModel()
-                    {
-                        Player = player,
-                        StrokeNumber = strokeNumber,
-                        SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
-                    };
-                    var view = (UserControl)System.Activator.CreateInstance(v);
-                    ViewModelBinder.Bind(vm, view, null);
-                    ((IActivate)vm).Activate();
 
-                    var mainGrid = (Grid)view.Content;
-                    var size = new Size(mainGrid.Width, mainGrid.Height);
-                    var scale = sets.Count > 1 ? 1 : 2.5;
+                // we have to create & re-populate new viewmodels because just switching SelectedRallies for some reason doesn't update the view
+                StatisticsGridViewModel vm = new StatisticsGridViewModel()
+                {
+                    Player = player,
+                    StrokeNumber = strokeNumber,
+                    SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
+                };
+                var view = (UserControl)System.Activator.CreateInstance(v);
+                ViewModelBinder.Bind(vm, view, null);
+                ((IActivate)vm).Activate();
 
-                    view.Width = size.Width;
-                    view.Height = size.Height;
+                var mainGrid = (Grid)view.Content;
+                var size = new Size(mainGrid.Width, mainGrid.Height);
+                var scale = sets.Count > 1 ? 1 : 2.5;
 
-                    view.RenderTransform = new ScaleTransform(scale, scale);
-                    view.Measure(size);
-                    view.Arrange(new Rect(size));
-                    view.UpdateLayout();
+                view.Width = size.Width;
+                view.Height = size.Height;
 
-                    size.Width = mainGrid.ActualWidth;
-                    size.Height = mainGrid.ActualHeight;
+                view.RenderTransform = new ScaleTransform(scale, scale);
+                view.Measure(size);
+                view.Arrange(new Rect(size));
+                view.UpdateLayout();
 
-                    var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
-                    bmp.Render(view);
+                size.Width = mainGrid.ActualWidth;
+                size.Height = mainGrid.ActualHeight;
 
-                    ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
-                //}
+                var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
+                bmp.Render(view);
+
+                ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
             }
         }
     }
