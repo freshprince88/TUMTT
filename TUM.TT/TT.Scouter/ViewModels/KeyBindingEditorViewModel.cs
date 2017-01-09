@@ -16,7 +16,6 @@ namespace TT.Scouter.ViewModels
         public IEventAggregator events { get; private set; }
         private readonly IWindowManager _windowManager;
         private IDialogCoordinator DialogCoordinator;
-        private Key _currentKey;
         private KeyGesture _currentGesture;
         private string _selectedKeyBinding;
 
@@ -106,7 +105,7 @@ namespace TT.Scouter.ViewModels
             {
                 keyGesture = new KeyGesture(eventArgs.Key == Key.System ? eventArgs.SystemKey : eventArgs.Key, eventArgs.KeyboardDevice.Modifiers);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return;
             }
