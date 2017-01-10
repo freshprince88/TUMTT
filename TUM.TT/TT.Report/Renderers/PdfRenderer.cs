@@ -749,11 +749,15 @@ namespace TT.Report.Renderers
             heading3.ParagraphFormat.KeepWithNext = true;
 
             var setName = this.Document.Styles.AddStyle(
-                OurStyleNames.SetName, StyleNames.Heading2);
+                OurStyleNames.SetName, StyleNames.Normal);
+            setName.Font.Size = 15;
+            setName.Font.Bold = true;
+            setName.Font.Color = TitleColor;
             setName.ParagraphFormat.Alignment = ParagraphAlignment.Center;
             setName.ParagraphFormat.SpaceBefore = 10;
+            setName.ParagraphFormat.SpaceAfter = 5;
             setName.ParagraphFormat.Font.Size = 16;
-            setName.ParagraphFormat.Font.Bold = true;
+            setName.ParagraphFormat.KeepWithNext = true;
         }
 
         /// <summary>
