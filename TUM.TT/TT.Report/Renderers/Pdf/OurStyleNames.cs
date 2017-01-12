@@ -20,10 +20,10 @@ namespace TT.Report.Renderers.Pdf
         /// Name of the style for the document subtitle.
         /// </summary>
         public const string Subtitle = "Subtitle";
-
+        
         /// <summary>
-        /// Name of the style for the document part title.
+        /// Name of the style for the set names.
         /// </summary>
-        public const string PartTitle = "PartTitle";
+        public const string SetName = "SetName";
     }
 }

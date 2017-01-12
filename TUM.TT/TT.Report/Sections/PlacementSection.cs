@@ -8,7 +8,7 @@ namespace TT.Report.Sections
     {
         public PlacementSection(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
         {
-            base.GetImageBitmapFrames(strokeNumber, sets, match, p, new StrokePlacementGridView());
+            base.GetImageBitmapFrames(strokeNumber, sets, match, p, typeof(StrokePlacementGridView));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,11 +15,11 @@ namespace TT.Report.Sections
 {
     public abstract class ExistingStatisticsSection
     {
-        public IDictionary<string, BitmapFrame> ExistingStatisticsImageBitmapFrames { get; private set; }
+        public IDictionary<string, object> ExistingStatisticsImageBitmapFrames { get; private set; }
 
-        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, UserControl view)
+        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, System.Type v)
         {
-            this.ExistingStatisticsImageBitmapFrames = new Dictionary<string, BitmapFrame>();
+            this.ExistingStatisticsImageBitmapFrames = new Dictionary<string, object>();
 
             var player = MatchPlayer.None;
             if (match.FirstPlayer.Equals(p))
@@ -26,7 +28,6 @@ namespace TT.Report.Sections
                 player = MatchPlayer.Second;
 
             var statistics = new MatchStatistics(match);
-            var mainGrid = (Grid)view.Content;
 
             foreach (var set in sets.Keys)
             {
@@ -34,17 +35,23 @@ namespace TT.Report.Sections
                 {
                     continue;
                 }
-                if (strokeNumber == 1)
+
+                // we have to create & re-populate new viewmodels because just switching SelectedRallies for some reason doesn't update the view
+                StatisticsGridViewModel vm = new StatisticsGridViewModel()
                 {
-                    // we have to create & re-populate new views because just switching SelectedRallies for some reason doesn't update the view
-                    ServiceStatisticsGridViewModel vm = new ServiceStatisticsGridViewModel()
-                    {
-                        Player = player,
-                        SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
-                    };
+                    Player = player,
+                    StrokeNumber = strokeNumber,
+                    SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
+                };
+
+
+                try
+                {
+                    var view = (UserControl)Activator.CreateInstance(v);
                     ViewModelBinder.Bind(vm, view, null);
                     ((IActivate)vm).Activate();
 
+                    var mainGrid = (Grid)view.Content;
                     var size = new Size(mainGrid.Width, mainGrid.Height);
                     var scale = sets.Count > 1 ? 1 : 2.5;
 
@@ -63,6 +70,10 @@ namespace TT.Report.Sections
                     bmp.Render(view);
 
                     ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
+                }
+                catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
+                {
+                    Debug.WriteLine("ExistingStatisticsSection: '{0}' - cannot get statistics bitmap", args: e.GetType().Name);
                 }
             }
         }

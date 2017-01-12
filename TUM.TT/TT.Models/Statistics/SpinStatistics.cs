@@ -62,7 +62,7 @@ namespace TT.Models.Statistics
         public int NotAnalysedWon { get; private set; }
         public MatchPlayer Player { get; private set; }
 
-        public override bool CountStroke(Stroke stroke, MatchPlayer player, int strokeNumber = -1)
+        public override bool CountStroke(Stroke stroke, MatchPlayer player, int strokeNumber = -1, string stat = null)
         {
             return stroke.Player == player && stroke.Number == 1;
         }

@@ -25,6 +25,8 @@ namespace TT.Report.Renderers
     using OxyPlot.Series;
     using System.Diagnostics;
     using System.Windows.Media.Imaging;
+    using System.Windows.Threading;
+    using System.Threading;
 
     /// <summary>
     /// Renders a report to a PDF file.
@@ -32,6 +34,7 @@ namespace TT.Report.Renderers
     public class PdfRenderer : IReportRenderer
     {
         private readonly Func<object, int, int, string> bitmapFrameToTempFileFunction;
+        private readonly Func<object, int, int, string> oxyPlotToTempFilePathFunction;
 
         /// <summary>
         /// Format for probability values.
@@ -52,6 +55,16 @@ namespace TT.Report.Renderers
         /// The color for borders.
         /// </summary>        
         private static readonly Color BorderColor = Color.Parse("0xFF154171");
+
+        /// <summary>
+        /// The color for titles.
+        /// </summary>
+        private static readonly Color TitleColor = Color.Parse("0xFF154171");
+
+        /// <summary>
+        /// A color for plot titles that matches TitleColor.
+        /// </summary>
+        private static readonly OxyPlot.OxyColor PlotTitleColor = OxyPlot.OxyColor.Parse("#FF154171");
 
         /// <summary>
         /// The color for the first player.
@@ -102,12 +115,28 @@ namespace TT.Report.Renderers
         {
             bitmapFrameToTempFileFunction = new Func<object, int, int, string>((item, width, height) =>
             {
+                if (item == null)
+                    return @"pack://application:,,,/TT.Report;component/Resources/image_loading_error.png";
+
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add((BitmapFrame)(object)item);
 
                 var tempFile = this.GetTempFile();
                 using (Stream stm = File.Create(tempFile))
+                {
                     encoder.Save(stm);
+                }
+                return tempFile;
+            });
+            oxyPlotToTempFilePathFunction = new Func<object, int, int, string>((p, width, height) =>
+            {
+                if (p == null)
+                    return @"pack://application:,,,/TT.Report;component/Resources/image_loading_error.png";
+
+                var plot = (OxyPlot.PlotModel)p;
+                FixPlotColor(plot);
+                var tempFile = GetTempFile();
+                PdfExporter.Export(plot, tempFile, width, height);
                 return tempFile;
             });
         }
@@ -119,7 +148,7 @@ namespace TT.Report.Renderers
         {
             this.Document = new Document();
             this.Document.AddSection();
-            this.headingCounters = new int[] { 0, 0 };
+            this.headingCounters = new int[] { 0, 0, 0 };
             this.SetupStyles();
         }
 
@@ -138,6 +167,10 @@ namespace TT.Report.Renderers
                 };
                 this.renderer.RenderDocument();
             }
+            catch (Exception e) when (e is NullReferenceException || e is ArgumentException)
+            {
+                Debug.WriteLine("PdfRenderer: {2} in 'RenderDocument()' (this.Hash={0} Thread.Name={1})", GetHashCode(), Thread.CurrentThread.Name, e.GetType().Name);
+            }
             finally
             {
                 foreach (var temp in this.temporaryFiles)
@@ -146,7 +179,7 @@ namespace TT.Report.Renderers
                     {
                         File.Delete(temp);
                     }
-                    catch (FileNotFoundException)
+                    catch (IOException)
                     {
                     }
                 }
@@ -218,7 +251,8 @@ namespace TT.Report.Renderers
         /// <param name="info">The basic information</param>
         public void Visit(BasicInformationSection info)
         {
-            this.AddHeading(1, "Basic Information");
+            var head = this.AddHeading(2, Properties.Resources.section_basicinfo_title);
+            head.Format.SpaceAfter = 10;
 
             var table = this.Document.LastSection.AddTable();
             table.Format.Alignment = ParagraphAlignment.Center;
@@ -275,43 +309,43 @@ namespace TT.Report.Renderers
             table.SetEdge(0, 3, table.Columns.Count, 1, Edge.Bottom, BorderStyle.Single, 1.5, BorderColor);
 
             names.SetCells(
-                "Player",
+                Properties.Resources.section_basicinfo_player,
                 string.Empty,
                 info.FirstPlayer.Name,
                 info.SecondPlayer.Name);
             ranking.SetCells(
-                "Ranking",
+                Properties.Resources.section_basicinfo_ranking,
                 string.Empty,
                 FormatRank(info.FirstPlayer.Rank ?? new Rank(0, DateTime.Now)),
                 FormatRank(info.SecondPlayer.Rank ?? new Rank(0, DateTime.Now)));
             totalPoints.SetCells(
-                "Total Points",
+                Properties.Resources.section_basicinfo_totalpoints,
                 string.Empty,
                 info.FirstPlayerStats.TotalPoints.ToString(),
                 info.SecondPlayerStats.TotalPoints.ToString());
             performance.SetCells(
-                "Comp. Perf.",
+                Properties.Resources.section_basicinfo_compref,
                 string.Empty,
                 info.FirstPlayerStats.CompetitionPerformance.ToString(PerformanceFormat),
                 info.SecondPlayerStats.CompetitionPerformance.ToString(PerformanceFormat));
             winningProbability.SetCells(
-                "Win. Prob.",
+                Properties.Resources.section_basicinfo_service_winprob,
                 string.Empty,
                 info.FirstPlayerStats.WinningProbability.ToString(ProbabilityFormat),
                 info.SecondPlayerStats.WinningProbability.ToString(ProbabilityFormat));
             serviceFrequency.SetCells(
-                "Service",
-                "Freq.",
+                Properties.Resources.section_basicinfo_service,
+                Properties.Resources.section_basicinfo_service_freq,
                 info.FirstPlayerStats.ServiceFrequency.ToString(),
                 info.SecondPlayerStats.ServiceFrequency.ToString());
             serviceWinningProbability.SetCells(
                 string.Empty,
-                "Win. Prob.",
+                Properties.Resources.section_basicinfo_service_winprob,
                 info.FirstPlayerStats.ProbabilityOfWinningAfterService.ToString(ProbabilityFormat),
                 info.SecondPlayerStats.ProbabilityOfWinningAfterService.ToString(ProbabilityFormat));
 
             titleRow.Cells[ralliesOffset].AddParagraph(
-                string.Format("Result ({0}:{1})", info.FinalSetScore.First, info.FinalSetScore.Second));
+                string.Format("{0} ({1}:{2})", Properties.Resources.section_basicinfo_result, info.FinalSetScore.First, info.FinalSetScore.Second));
             titleRow.Cells[ralliesOffset].MergeRight = info.FinalRallyScores.Count() - 1;
             var scores = info.FinalRallyScores
                 .Select((score, i) => Tuple.Create(ralliesOffset + i, score));
@@ -331,9 +365,10 @@ namespace TT.Report.Renderers
             var stats = lengths.Statistics;
 
             var section = this.Document.LastSection;
-            this.AddHeading(1, "Rally Length");
+            this.AddHeading(2, Properties.Resources.section_rallylength_title);
 
-            this.AddHeading(2, "Average");
+            var head = this.AddHeading(3, Properties.Resources.section_rallylength_avg_title);
+            head.Format.SpaceAfter = 10;
 
             var table = section.AddTable();
             table.Format.Alignment = ParagraphAlignment.Center;
@@ -382,15 +417,15 @@ namespace TT.Report.Renderers
             titleColumn.SetCells(
                 string.Empty,
                 string.Empty,
-                "Mean",
-                "Median");
+                Properties.Resources.section_rallylength_avg_mean,
+                Properties.Resources.section_rallylength_avg_median);
             totalLengths.SetCells(
-                "Total lengths",
+                Properties.Resources.section_rallylength_avg_totallengths,
                 string.Empty,
                 stats.TotalLengths.Select(l => (double)l).Mean().ToString(AverageFormat),
                 stats.TotalLengths.CategoricalMedian().ToString(AverageFormat));
             serviceFirst.SetCells(
-                "Service",
+                Properties.Resources.section_rallylength_avg_service,
                 "A",
                 stats.ByServer[MatchPlayer.First].Select(l => (double)l).Mean().ToString(AverageFormat),
                 stats.ByServer[MatchPlayer.First].CategoricalMedian().ToString(AverageFormat));
@@ -400,7 +435,7 @@ namespace TT.Report.Renderers
                 stats.ByServer[MatchPlayer.Second].Select(l => (double)l).Mean().ToString(AverageFormat),
                 stats.ByServer[MatchPlayer.Second].CategoricalMedian().ToString(AverageFormat));
             winnerFirst.SetCells(
-                "Winner",
+                Properties.Resources.section_rallylength_avg_winner,
                 "A",
                 stats.ByWinner[MatchPlayer.First].Select(l => (double)l).Mean().ToString(AverageFormat),
                 stats.ByWinner[MatchPlayer.First].CategoricalMedian().ToString(AverageFormat));
@@ -417,15 +452,15 @@ namespace TT.Report.Renderers
                 foreach (var winner in players)
                 {
                     table.Columns[offset].SetCells(
-                        server == MatchPlayer.First ? "Service A" : "Service B",
-                        winner == MatchPlayer.First ? "Winner A" : "Winner B",
+                        string.Format("{0} {1}", Properties.Resources.section_rallylength_avg_service, (server == MatchPlayer.First ? "A" : "B")),
+                        string.Format("{0} {1}", Properties.Resources.section_rallylength_avg_winner, (winner == MatchPlayer.First ? "A" : "B")),
                         stats.ByServerAndWinner[server][winner].Select(l => (double)l).Mean().ToString(AverageFormat),
                         stats.ByServerAndWinner[server][winner].CategoricalMedian().ToString(AverageFormat));
                     offset++;
                 }
             }
 
-            this.AddHeading(2, "Distribution");
+            this.AddHeading(3, Properties.Resources.section_rallylength_dist_title);
             this.AddPlot(lengths.Plot);
         }
 
@@ -435,7 +470,8 @@ namespace TT.Report.Renderers
         /// <param name="process">The section</param>
         public void Visit(ScoringProcessSection process)
         {
-            this.AddHeading(1, "Scoring process");
+            var head = this.AddHeading(2, Properties.Resources.section_scoringprocess_title);
+            head.Format.SpaceBefore = 10;
             this.AddPlot(process.Plot, height: 200);
         }
 
@@ -445,13 +481,13 @@ namespace TT.Report.Renderers
         /// <param name="section">The section.</param>
         public void Visit(MatchDynamicsSection section)
         {
-            this.AddHeading(1, "Match dynamics");
+            this.AddHeading(2, Properties.Resources.section_matchdynamics_title);
 
-            this.AddHeading(2, "Overall");
+            this.AddHeading(3, Properties.Resources.section_matchdynamics_overall);
 
             this.AddPlot(section.OverallPlot, height: 180);
 
-            this.AddHeading(2, "By serving player");
+            this.AddHeading(3, Properties.Resources.section_matchdynamics_byplayer);
 
             this.AddPlot(section.ByServerPlot, height: 180);
         }
@@ -464,9 +500,11 @@ namespace TT.Report.Renderers
         {
             var transitions = section.Transitions;
 
-            this.AddHeading(1, "Transition matrix");
+            this.AddHeading(2, Properties.Resources.section_transitionmatrix_title);
 
-            this.AddHeading(2, "Absolute number of transitions");
+            var head = this.AddHeading(3, Properties.Resources.section_transitionmatrix_abs_title);
+            head.Format.SpaceAfter = 10;
+
             var absolute = transitions.TransitionsByPlayer;
             var firstAbsolute = this.ProjectTransitionMatrix(absolute[MatchPlayer.First]);
             var points = transitions.PointsAtStrokeByPlayer;
@@ -489,7 +527,9 @@ namespace TT.Report.Renderers
                 v => v.ToString("F0"),
                 firstAbsolute.ColumnCount + 4);
 
-            this.AddHeading(2, "Transition probabilities");
+            head = this.AddHeading(3, Properties.Resources.section_transitionmatrix_prob_title);
+            head.Format.SpaceAfter = 10;
+
             var pTransition = transitions.ProbabilitiesByPlayer;
             var pFirst = this.ProjectTransitionMatrix(pTransition[MatchPlayer.First]);
             var pPoint = transitions.PointAtStrokeProbabilityByPlayer;
@@ -518,7 +558,8 @@ namespace TT.Report.Renderers
         /// <param name="section">The technical efficiency section</param>
         public void Visit(TechnicalEfficiencySection section)
         {
-            this.AddHeading(1, "Technical efficiency");
+            var head = this.AddHeading(2, Properties.Resources.section_techefficiency_title);
+            head.Format.SpaceAfter = 10;
 
             var te = section.TechnicalEfficiency;
 
@@ -527,101 +568,81 @@ namespace TT.Report.Renderers
             this.AddTechnicalEfficiencyTable(MatchPlayer.Second, te);
         }
 
-        /// <summary>
-        /// Renders the simulation section.
-        /// </summary>
-        /// <param name="section">The section</param>
-        public void Visit(RelevanceOfStrokeSection section)
-        {
-            this.AddHeading(1, "Relevance of Stroke");
-            this.AddPlot(section.PlotByStriker, height: 250);
-        }
-
         public void Visit(PartSection section)
         {
             // each new part means new heading counters
-            this.ResetHeadingCounters();
+            //this.ResetHeadingCounters();
 
             bool isPlayerPart = section.Player != null;
             var partName = string.Format(
                 isPlayerPart ? "{0} - {1}" : "{0}",
                 section.PartName,
                 isPlayerPart ? section.Player.Name : "");
-            var paragraph = this.Document.LastSection.AddParagraph(partName, OurStyleNames.PartTitle);
+            var paragraph = AddHeading(1, partName);
 
             if (isPlayerPart)
-                paragraph.Format.SpaceBefore = 20;
+                paragraph.Format.PageBreakBefore = true;
         }
 
         public void Visit(StrokeStatsHeadingSection section)
         {
-            this.AddHeading(1, section.StrokeName);
+            this.AddHeading(2, section.StrokeName);
         }
 
         public void Visit(SideSection section)
         {
-            this.AddHeading(2, Properties.Resources.section_side);
+            this.AddHeading(3, section.HasStepAround ? Properties.Resources.section_side_steparound : Properties.Resources.section_side);
 
-            var oxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
-            {
-                var tempFile = GetTempFile();
-                PdfExporter.Export(plot, tempFile, width + 65, height + 15);
-                return tempFile;
-            });
-
-            AddItemsToTable(section.SidePlots, null, oxyPlotToTempFilePathFunction, 350, 210);            
-        }
-        
-        public void Visit(StepAroundSection section)
-        {
+            AddItemsToTable(section.SidePlots, null, oxyPlotToTempFilePathFunction, 450, 210, 270, 150);
         }
 
         public void Visit(SpinSection section)
         {
-            AddHeading(2, Properties.Resources.section_spin);
-
-            var oxyPlotToTempFilePathFunction = new Func<OxyPlot.PlotModel, int, int, string>((plot, width, height) =>
-            {
-                var tempFile = GetTempFile();
-                PdfExporter.Export(plot, tempFile, width, height);
-                return tempFile;
-            });
+            AddHeading(3, Properties.Resources.section_spin);
 
             AddItemsToTable(section.SpinPlots, null, oxyPlotToTempFilePathFunction, 450, 210, 270, 150);
         }
 
         public void Visit(TechniqueSection section)
         {
-            AddHeading(2, Properties.Resources.section_technique);
+            Debug.WriteLine("Visiting Technique section {0}", section);
+            AddHeading(3, Properties.Resources.section_technique);
 
-            var itemsList = new List<BitmapFrame>();
+            var itemsList = new List<object>();
             foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
+
+            if (itemsList.Count > 0 && itemsList.ElementAt(0) is BitmapFrame)
+                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15, tableIndentLeft: 2.25);
+            else if (itemsList.Count > 0 && itemsList.ElementAt(0) is List<object>)
+                AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 280, 190, keepCol1AspectRation: false, keepCol2AspectRation: true, extraColWidth: 15);
         }
 
         public void Visit(PlacementSection section)
         {
-            AddHeading(2, Properties.Resources.section_placement);
+            AddHeading(3, Properties.Resources.section_placement);
 
-            var itemsList = new List<BitmapFrame>();
+            var itemsList = new List<object>();
             foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15);
+            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15, tableIndentLeft: 2.25);
         }
 
         public void Visit(LargeTableSection section)
         {
-            AddHeading(2, Properties.Resources.section_table);
+            AddHeading(3, Properties.Resources.section_table);
 
             var itemsList = new List<BitmapFrame>();
             foreach (var set in section.TableImageBitmapFrames.Keys)
                 itemsList.Add(section.TableImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 450, 210);
+            AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 450, 210, twoColtableIndentLeft: 0.75);
         }
 
-        public void Visit(LastStrokeNumberSection section)
+        public void Visit(StrokeNumberSection section)
         {
+            AddHeading(3, Properties.Resources.section_strokenumber);
+
+            AddItemsToTable(section.NumberPlots, null, oxyPlotToTempFilePathFunction, 450, 210, 290, 190);
         }
 
         public void Visit(LastStrokeServiceSection section)
@@ -634,7 +655,14 @@ namespace TT.Report.Renderers
         /// <param name="sink">The stream to write to.</param>
         public void Save(Stream sink)
         {
-            this.renderer.PdfDocument.Save(sink);
+            try
+            {
+                this.renderer.PdfDocument.Save(sink);
+            }
+            catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
+            {
+                Debug.WriteLine("PdfRenderer: {2} in 'Save(Stream)' (this.Hash={0} Thread.Name={1})", GetHashCode(), Thread.CurrentThread.Name, e.GetType().Name);
+            }
         }
 
         /// <summary>
@@ -676,7 +704,7 @@ namespace TT.Report.Renderers
                 OurStyleNames.Title, StyleNames.Normal);
             title.Font.Name = "Calibri";
             title.Font.Size = 22;
-            title.Font.Color = Color.Parse("0xFF154171");
+            title.Font.Color = TitleColor;
             title.ParagraphFormat.Alignment = ParagraphAlignment.Center;
             title.ParagraphFormat.Borders.DistanceFromBottom = 2;
             title.ParagraphFormat.Borders.Bottom.Width = 1;
@@ -692,30 +720,44 @@ namespace TT.Report.Renderers
             subtitle.ParagraphFormat.Alignment = ParagraphAlignment.Center;
             subtitle.ParagraphFormat.SpaceAfter = 3;
             subtitle.ParagraphFormat.SpaceBefore = 3;
-
-            var partTitle = this.Document.Styles.AddStyle(
-                OurStyleNames.PartTitle, OurStyleNames.Title);
-            partTitle.Font.Size = 18;
-            partTitle.Font.Bold = true;
-            partTitle.ParagraphFormat.Borders.Bottom.Visible = false;
-            partTitle.ParagraphFormat.Alignment = ParagraphAlignment.Left;
-            partTitle.ParagraphFormat.SpaceAfter = 3;
-            partTitle.ParagraphFormat.SpaceBefore = 3;
-
+            
             var heading1 = this.Document.Styles[StyleNames.Heading1];
             heading1.Font = title.Font.Clone();
-            heading1.Font.Size = 14;
+            heading1.Font.Size = 18;
             heading1.Font.Bold = true;
-            heading1.ParagraphFormat.PageBreakBefore = false;
+            heading1.Font.Color = TitleColor;
             heading1.ParagraphFormat.Alignment = ParagraphAlignment.Left;
-            heading1.ParagraphFormat.SpaceAfter = 5;
-            heading1.ParagraphFormat.SpaceBefore = 9;
-            heading1.ParagraphFormat.KeepWithNext = true;
+            heading1.ParagraphFormat.SpaceAfter = 3;
+            heading1.ParagraphFormat.SpaceBefore = 3;
 
             var heading2 = this.Document.Styles[StyleNames.Heading2];
-            heading2.Font.Size = 11.5;
-            heading2.BaseStyle = StyleNames.Heading1;
+            heading2.BaseStyle = StyleNames.Heading1;            
+            heading2.Font.Size = 15;
+            heading2.Font.Bold = true;
             heading2.ParagraphFormat.PageBreakBefore = false;
+            heading2.ParagraphFormat.Alignment = ParagraphAlignment.Left;
+            heading2.ParagraphFormat.SpaceAfter = 5;
+            heading2.ParagraphFormat.SpaceBefore = 9;
+            heading2.ParagraphFormat.KeepWithNext = true;
+
+            var heading3 = this.Document.Styles[StyleNames.Heading3];
+            heading3.Font.Size = 12;
+            heading3.BaseStyle = StyleNames.Heading1;
+            heading3.ParagraphFormat.SpaceBefore = 9;
+            heading3.ParagraphFormat.SpaceAfter = 5;
+            heading3.ParagraphFormat.PageBreakBefore = false;
+            heading3.ParagraphFormat.KeepWithNext = true;
+
+            var setName = this.Document.Styles.AddStyle(
+                OurStyleNames.SetName, StyleNames.Normal);
+            setName.Font.Size = 15;
+            setName.Font.Bold = true;
+            setName.Font.Color = TitleColor;
+            setName.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+            setName.ParagraphFormat.SpaceBefore = 10;
+            setName.ParagraphFormat.SpaceAfter = 5;
+            setName.ParagraphFormat.Font.Size = 16;
+            setName.ParagraphFormat.KeepWithNext = true;
         }
 
         /// <summary>
@@ -968,7 +1010,7 @@ namespace TT.Report.Renderers
             titleColumn.SetCells(
                 name,
                 "Score",
-                "Error",
+                Properties.Resources.section_techefficiency_error,
                 "SR",
                 "UR",
                 "SR Service/Return/Long",
@@ -1068,13 +1110,7 @@ namespace TT.Report.Renderers
             var paragraph = this.Document.LastSection.AddParagraph();
             if (plot != null)
             {
-                // Fix up the plot text color.  For some insane reason, PDFSharp turns
-                // the plot's black into blue
-                if (plot.TextColor.Equals(OxyPlot.OxyColors.Black))
-                {
-                    plot.TextColor = OxyPlot.OxyColor.FromArgb(255, 0, 0, 1);
-                }
-
+                FixPlotColor(plot);
                 var tempFile = this.GetTempFile();
                 PdfExporter.Export(plot, tempFile, width, height);
                 var image = paragraph.AddImage(tempFile);
@@ -1084,20 +1120,36 @@ namespace TT.Report.Renderers
             return paragraph;
         }
 
-        private Table AddItemsToTable<T>(List<T> items, 
-            List<string> setNumbers, 
-            Func<T, int, int, string> itemToTempFilePathFunction, 
-            int normalWidth, 
-            int smallWidth, 
-            int normalHeight = 0, 
-            int smallHeight = 0, 
-            int extraColWidth = 0)
+        /// <summary>
+        /// Fix up the plot text color.  For some insane reason, PDFSharp turns
+        /// the plot's black into blue
+        /// </summary>
+        private void FixPlotColor(OxyPlot.PlotModel plot)
+        {            
+            if (plot.TextColor.Equals(OxyPlot.OxyColors.Black))
+            {
+                plot.TitleColor = PlotTitleColor;
+                plot.TextColor = OxyPlot.OxyColor.FromArgb(255, 0, 0, 1);
+            }
+        }
+
+        private Table AddItemsToTable<T>(List<T> items,
+            List<string> setNumbers,
+            Func<T, int, int, string> itemToTempFilePathFunction,
+            int normalWidth,
+            int smallWidth,
+            int normalHeight = 0,
+            int smallHeight = 0,
+            int extraColWidth = 0,
+            double tableIndentLeft = 0,
+            double twoColtableIndentLeft = 0)
         {
             var tableItemsCount = items.Count;
             bool multipleItems = tableItemsCount > 1;
 
             Table table = Document.LastSection.AddTable();
-            table.Borders.Visible = false;
+            table.Borders.Visible = false;            
+            table.Rows.LeftIndent = Unit.FromCentimeter(multipleItems ? twoColtableIndentLeft : tableIndentLeft);
 
             Column col = table.AddColumn();
             col.Width = (multipleItems ? smallWidth : normalWidth) + extraColWidth;
@@ -1148,11 +1200,8 @@ namespace TT.Report.Renderers
                 {
                     if (set != null)
                     {
-                        var setHeading = row.Cells[rowIndex].AddParagraph(set == "all" ? Properties.Resources.sets_all : (Properties.Resources.sets_one + " " + set));
-                        setHeading.Format.Font.Size = multipleItems ? 16 : 18;
-                        setHeading.Format.Font.Bold = true;
-                        setHeading.Format.Alignment = ParagraphAlignment.Center;
-                        setHeading.Format.SpaceBefore = 10;
+                        var setHeading = row.Cells[rowIndex].AddParagraph(GetSetTitleString(set));
+                        setHeading.Style = OurStyleNames.SetName;
                     }
                     if (rowIndex == 1)
                         i -= 2;
@@ -1186,6 +1235,84 @@ namespace TT.Report.Renderers
             }
 
             return table;
+        }
+
+        private Table AddItemsToTwoColTable<T>(List<T> items,
+            List<string> setNumbers,
+            Func<T, int, int, string> firstColItemToTempFilePathFunction,
+            Func<T, int, int, string> secondColItemToTempFilePathFunction,
+            int firstColWidth,
+            int secondColWidth,
+            int firstColHeight = 0,
+            int secondColHeight = 0,
+            bool keepCol1AspectRation = true,
+            bool keepCol2AspectRation = true,
+            int extraColWidth = 0)
+        {
+            Table table = Document.LastSection.AddTable();
+            table.Borders.Visible = false;
+            table.Rows.LeftIndent = Unit.FromCentimeter(-0.85);
+
+            Column col1 = table.AddColumn();
+            col1.Width = firstColWidth + extraColWidth;
+
+            Column col2 = table.AddColumn();
+            col2.Width = secondColWidth + extraColWidth;
+            
+            int sizeH = Math.Max(firstColHeight, secondColHeight);
+            if (sizeH == 0)
+                sizeH = Math.Max(firstColWidth, secondColWidth);
+
+            int rowIndex = 0;
+            foreach (var colItems in items)
+            {
+                var colItemsList = (List<T>)(object)colItems;
+
+                Row row = table.AddRow();
+                var heading = row.Cells[0].AddParagraph(GetSetTitleString(setNumbers[rowIndex]));
+                heading.Style = OurStyleNames.SetName;
+                row.Cells[0].MergeRight = 1;
+                row.KeepWith = 1;
+
+                row = table.AddRow();
+                var tempFile = firstColItemToTempFilePathFunction.Invoke(colItemsList.ElementAt(0), firstColWidth, sizeH);
+                var image = row.Cells[0].AddParagraph().AddImage(tempFile);
+                if (keepCol1AspectRation)
+                    image.LockAspectRatio = true;
+                else
+                    image.Height = sizeH;
+                image.Width = firstColWidth;
+                row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+
+                tempFile = secondColItemToTempFilePathFunction.Invoke(colItemsList.ElementAt(1), secondColWidth, sizeH);
+                image = row.Cells[1].AddParagraph().AddImage(tempFile);
+                if (keepCol2AspectRation)
+                    image.LockAspectRatio = true;
+                else
+                    image.Height = sizeH;
+                image.Width = secondColWidth;
+                row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+                row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+
+                rowIndex++;
+            }
+
+            return table;
+        }
+
+        private string GetSetTitleString(string setName)
+        {
+            if (setName == "all")
+                return Properties.Resources.sets_all;
+            else if (setName.Contains(","))
+            {
+                return string.Format("{0} {1}", Properties.Resources.sets_multiple, setName.Replace(',', '+'));
+            }
+            else
+            {
+                return string.Format("{0} {1}", Properties.Resources.sets_one, setName);
+            }
         }
 
         /// <summary>

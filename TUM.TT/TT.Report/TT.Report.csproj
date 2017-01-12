@@ -59,17 +59,17 @@
       <HintPath>..\packages\MathNet.Numerics.3.11.1\lib\net40\MathNet.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MigraDoc.DocumentObjectModel, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Pdf.2014.1.311.1\lib\NET45\MigraDoc.DocumentObjectModel.dll</HintPath>
+    <Reference Include="MigraDoc.DocumentObjectModel-gdi, Version=1.50.4000.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.4000-beta3b\lib\net20\MigraDoc.DocumentObjectModel-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MigraDoc.Rendering, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Pdf.2014.1.311.1\lib\NET45\MigraDoc.Rendering.dll</HintPath>
+    <Reference Include="MigraDoc.Rendering-gdi, Version=1.50.4000.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.4000-beta3b\lib\net20\MigraDoc.Rendering-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MigraDoc.RtfRendering, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Pdf.2014.1.311.1\lib\NET45\MigraDoc.RtfRendering.dll</HintPath>
+    <Reference Include="MigraDoc.RtfRendering-gdi, Version=1.50.4000.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.4000-beta3b\lib\net20\MigraDoc.RtfRendering-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OxyPlot, Version=2014.1.311.1, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -79,13 +79,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\OxyPlot.Pdf.2014.1.311.1\lib\NET45\OxyPlot.Pdf.dll</HintPath>
     </Reference>
-    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Pdf.2014.1.311.1\lib\NET45\PdfSharp.dll</HintPath>
+    <Reference Include="PdfSharp-gdi, Version=1.50.4000.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.4000-beta3b\lib\net20\PdfSharp-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Pdf.2014.1.311.1\lib\NET45\PdfSharp.Charting.dll</HintPath>
+    <Reference Include="PdfSharp.Charting-gdi, Version=1.50.4000.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.4000-beta3b\lib\net20\PdfSharp.Charting-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -109,6 +109,7 @@
     <Compile Include="Generators\CustomizedReportGenerator.cs" />
     <Compile Include="Generators\DefaultReportGenerator.cs" />
     <Compile Include="Generators\IReportGenerator.cs" />
+    <Compile Include="Sections\BaseSection.cs" />
     <Compile Include="Sections\ExistingStatisticsSection.cs" />
     <Compile Include="Sections\StrokeStatsHeadingSection.cs" />
     <Compile Include="Sections\PartSection.cs" />
@@ -118,12 +119,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Sections\LargeTableSection.cs" />
-    <Compile Include="Sections\LastStrokeNumberSection.cs" />
+    <Compile Include="Sections\StrokeNumberSection.cs" />
     <Compile Include="Sections\LastStrokeServiceSection.cs" />
     <Compile Include="Sections\PlacementSection.cs" />
     <Compile Include="Sections\SpinSection.cs" />
     <Compile Include="Sections\TechniqueSection.cs" />
-    <Compile Include="Sections\StepAroundSection.cs" />
     <Compile Include="Sections\SideSection.cs" />
     <Compile Include="IReportVisitor.cs" />
     <Compile Include="Plots\HistogramExtensions.cs" />
@@ -145,19 +145,23 @@
     <Compile Include="Sections\TechnicalEfficiencySection.cs" />
     <Compile Include="Sections\TransitionsSection.cs" />
     <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
-    <Compile Include="ViewModels\ServiceStatisticsGridViewModel.cs" />
+    <Compile Include="ViewModels\StatisticsGridViewModel.cs" />
     <Compile Include="Views\LargeTableView.xaml.cs">
       <DependentUpon>LargeTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ServiceTechniqueGridView.xaml.cs">
-      <DependentUpon>ServiceTechniqueGridView.xaml</DependentUpon>
+    <Compile Include="Views\ServiceTechniqueStatisticsGridView.xaml.cs">
+      <DependentUpon>ServiceTechniqueStatisticsGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StrokePlacementGridView.xaml.cs">
       <DependentUpon>StrokePlacementGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.cs" />
+    <Compile Include="Views\TechniqueStatisticsGridView.xaml.cs">
+      <DependentUpon>TechniqueStatisticsGridView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\Entypo.ttf" />
   </ItemGroup>
@@ -181,11 +185,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ServiceTechniqueGridView.xaml">
+    <Page Include="Views\ServiceTechniqueStatisticsGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StrokePlacementGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TechniqueStatisticsGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Entypo-license.txt" />
+    <Content Include="Resources\image_loading_error.png" />
     <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

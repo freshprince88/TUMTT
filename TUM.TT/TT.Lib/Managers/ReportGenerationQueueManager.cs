@@ -7,6 +7,7 @@ using System.Threading;
 using TT.Lib.Util;
 using TT.Report.Generators;
 using TT.Report.Renderers;
+using static TT.Report.Generators.CustomizedReportGenerator;
 
 namespace TT.Lib.Managers
 {
@@ -63,7 +64,9 @@ namespace TT.Lib.Managers
         {
             internal List<IReportGenerator> workList;
             internal ReportGenerationQueueManager man;
+            internal CustomizedReportGenerator custRepGen;
             internal bool run;
+            internal static int genId;
 
             internal QueueWorker(ReportGenerationQueueManager man)
             {
@@ -75,7 +78,7 @@ namespace TT.Lib.Managers
             {
                 lock(man)
                 {
-                    Debug.WriteLine("*QueueWorker: adding repGen={0} to queue", repGen);
+                    Debug.WriteLine("*QueueWorker: adding repGen (Hash={0}) to queue", repGen.GetHashCode());
                     workList.Add(repGen);
                 }
             }
@@ -87,43 +90,76 @@ namespace TT.Lib.Managers
                     if (workList.Count != 0)
                     {
                         Debug.WriteLine("QueueWorker: queue not empty, starting report generation (queue.Count={0})", workList.Count);
-                        var repGen = workList[workList.Count - 1];
-                        var repGenCustomizationId = (repGen is CustomizedReportGenerator ? ((CustomizedReportGenerator)repGen).CustomizationId : "1");
-                        var matchHash = MatchHashGenerator.GenerateMatchHash(man.matchManager.Match);
 
-                        Report.Report report = repGen.GenerateReport(man.matchManager.Match);
-                        var renderer = IoC.Get<IReportRenderer>("PDF");
-                        string tmpReportPath = Path.GetTempPath() + "ttviewer_" + (matchHash + repGenCustomizationId) + ".pdf";
-                        bool fileExists = File.Exists(tmpReportPath);
-                        Debug.WriteLine("QueueWorker: report file (exists? {0}): {1}", fileExists, tmpReportPath);
-                        if (!fileExists)
+                        IReportGenerator repGen;
+                        lock (man)
                         {
-                            using (var sink = File.Create(tmpReportPath))
-                            {
-                                report.RenderToStream(renderer, sink);
-                            }
+                            repGen = workList[workList.Count - 1];
+                            workList.Clear();
                         }
 
-                        lock(man)
+                        if (custRepGen != null)
                         {
-                            if (workList.Count > 1)
-                            {
-                                Debug.WriteLine("QueueWorker: queue.Count={0}, reducing to last", workList.Count);
-                                var lastRg = workList[workList.Count - 1];
-                                workList.Clear();
-                                workList.Add(lastRg);
-                            }
-                            else
-                            {
-                                Debug.WriteLine("QueueWorker: queue not grown since, invoking ReportGenerated event");
-                                man.ReportGenerated(man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
-                                workList.Clear();
-                            }
+                            custRepGen.Abort = true;
+                            custRepGen.SectionsAdded -= CustomizedReportGenerator_SectionsAdded;
+                            custRepGen = null;
+                        }
+
+                        if (repGen is CustomizedReportGenerator)
+                        {
+                            custRepGen = (CustomizedReportGenerator)repGen;
+                            custRepGen.SectionsAdded += CustomizedReportGenerator_SectionsAdded;
+                            var custRepGenThread = new Thread(new ThreadStart(custRepGen.GenerateReport));
+                            custRepGenThread.Name = "CustomReportGenThread-" + genId++;
+                            custRepGenThread.SetApartmentState(ApartmentState.STA);
+                            Debug.WriteLine("QueueWorker: starting {0}", args: custRepGenThread.Name);
+                            custRepGenThread.Start();
+                        }
+                        else
+                        {
+                            // TODO Generate report with non-customizable report generator
+                            // repGen.GenerateReport(man.matchManager.Match);
                         }
                     }
-                    Thread.Sleep(50);
+                    Thread.Sleep(500);
                 }
             }
+
+            private void CustomizedReportGenerator_SectionsAdded(object sender, SectionsAddedEventArgs e)
+            {
+                Debug.WriteLine("QueueWorker [EVENT]: sections added [sender={0} report={1}]", sender, e.Report);
+
+                CustomizedReportGenerator repGen = (CustomizedReportGenerator)sender;
+                var repGenCustomizationId = repGen.CustomizationId;
+                var matchHash = MatchHashGenerator.GenerateMatchHash(man.matchManager.Match);
+                string tmpReportPath = null;
+                if (!repGen.Abort)
+                {
+                    var renderer = IoC.Get<IReportRenderer>("PDF");
+                    tmpReportPath = Path.GetTempPath() + "ttviewer_" + (matchHash + repGenCustomizationId) + ".pdf";
+                    bool fileExists = File.Exists(tmpReportPath);
+                    Debug.WriteLine("QueueWorker: report file (exists? {0}): {1}", fileExists, tmpReportPath);
+                    if (!fileExists)
+                    {
+                        using (var sink = File.Create(tmpReportPath))
+                        {
+                            e.Report.RenderToStream(renderer, sink);
+                        }
+                    }
+                }
+                else
+                    return;
+
+                if (!repGen.Abort)
+                {
+                    Debug.WriteLine("QueueWorker: repGen={0} not aborted, invoking ReportGenerated event", repGen.GetHashCode());
+                    man.ReportGenerated?.Invoke(man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
+                }
+                else
+                {
+                    Debug.WriteLine("QueueWorker: repGen={0} aborted, discarding.", repGen.GetHashCode());
+                }
+            }            
         }
     }
 }

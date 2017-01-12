@@ -5,7 +5,9 @@ using TT.Report.Plots;
 using TT.Report.Sections;
 using System.Windows.Media;
 using System.Collections.Generic;
-using System.Collections;
+using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace TT.Report.Generators
 {
@@ -15,9 +17,22 @@ namespace TT.Report.Generators
     public class CustomizedReportGenerator : IReportGenerator
     {
 
+        public class SectionsAddedEventArgs
+        {
+            public Report Report { get; set; }
+
+            public SectionsAddedEventArgs(Report report)
+            {
+                Report = report;
+            }
+        }
+
         private MatchPlayerToColorConverter matchPlayerToColorConverter;
 
+        public bool Abort { get; set; }
+        public Match Match { get; set; }
         public string CustomizationId { get; private set; }
+        public EventHandler<SectionsAddedEventArgs> SectionsAdded;
 
         private Dictionary<string, object> customization;
         public Dictionary<string, object> Customization {
@@ -31,10 +46,25 @@ namespace TT.Report.Generators
                 CustomizationId = (string)value["id"];
             }
         }
-
+        
         public CustomizedReportGenerator()
         {
             this.matchPlayerToColorConverter = new MatchPlayerToColorConverter();
+        }
+
+        public void GenerateReport()
+        {
+            if (Match == null)
+                throw new Exception("Match is null.");
+
+            var report = GenerateReport(Match);
+            if (!Abort)
+            {
+                SectionsAdded?.Invoke(this, new SectionsAddedEventArgs(report));
+                Debug.WriteLine("Thread '{1}' done.", GetHashCode(), Thread.CurrentThread.Name);
+            }
+            else
+                Debug.WriteLine("CustomizedReportGenerator {0}: report generation aborted! (Thread: {1})", GetHashCode(), Thread.CurrentThread.Name);
         }
 
         /// <summary>
@@ -59,6 +89,8 @@ namespace TT.Report.Generators
             };
             
             var report = new Report();
+
+            if (Abort) return null;
 
             report.Sections.Add(new MetadataSection()
             {
@@ -86,6 +118,8 @@ namespace TT.Report.Generators
             report.Sections.Add(new BasicInformationSection(match));
             report.Sections.Add(new ScoringProcessSection(match, plotStyle));
 
+            if (Abort) return null;
+
             var transitionSection = new TransitionsSection(match);
 
             if (((List<string>)Customization["general"]).Contains("rallylength"))
@@ -97,8 +131,11 @@ namespace TT.Report.Generators
             if (((List<string>)Customization["general"]).Contains("techefficiency"))
                 report.Sections.Add(new TechnicalEfficiencySection(transitionSection.Transitions));
 
+            if (Abort) return null;
+
             foreach (var p in (List<object>)Customization["players"])
             {
+                if (Abort) return null;
                 if (p is Player)
                 {
                     // add sections for requested players (1/2)
@@ -124,11 +161,24 @@ namespace TT.Report.Generators
                 {
                     var headingNameAndNumber = GetStrokeStatsHeadingNameAndStrokeNr(n);
                     report.Sections.Add(new StrokeStatsHeadingSection((string)headingNameAndNumber[0]));
+
+                    bool stepAround = strokeStats.Contains("steparound");
+                    bool hasSideSection = false;
                     foreach (var s in strokeStats)
                     {
-                        report.Sections.Add(GetStrokeSection(s, plotStyle, match, player, (int)headingNameAndNumber[1]));
-                    }
-
+                        var sec = GetStrokeSection(s, plotStyle, match, player, stepAround, (int)headingNameAndNumber[1]);
+                        if (sec is SideSection)
+                        {
+                            if (!hasSideSection)
+                                report.Sections.Add(sec);
+                            hasSideSection = true;
+                        }
+                        else
+                        {
+                            if (sec != null)
+                                report.Sections.Add(sec);
+                        }
+                    }                    
                 }
             }
         }
@@ -147,19 +197,19 @@ namespace TT.Report.Generators
             return null;
         }
 
-        private IReportSection GetStrokeSection(string sectionName, PlotStyle plotStyle, Match match, object player, int strokeNumber)
+        private IReportSection GetStrokeSection(string sectionName, PlotStyle plotStyle, Match match, object player, bool stepAround, int strokeNumber)
         {
             var sets = (IDictionary<string, List<Rally>>)Customization["sets"];
             switch (sectionName)
             {
-                case "side": return new SideSection(plotStyle, strokeNumber, sets, match, player);
-                case "steparound": return new StepAroundSection();
+                case "steparound":
+                case "side": return new SideSection(plotStyle, strokeNumber, stepAround, sets, match, player);
                 case "spin": return new SpinSection(plotStyle, sets, match, player);
-                case "technique": return new TechniqueSection(strokeNumber, sets, match, player);
+                case "technique": return new TechniqueSection(plotStyle, strokeNumber, sets, match, player);
                 case "placement": return new PlacementSection(strokeNumber, sets, match, player);
                 case "table": return new LargeTableSection(strokeNumber, sets, match, player);
                 case "service": return new LastStrokeServiceSection();
-                case "number": return new LastStrokeNumberSection();
+                case "number": return new StrokeNumberSection(plotStyle, strokeNumber, sets, match, player);
             }
             return null;
         }

@@ -4,9 +4,10 @@ using TT.Models;
 
 namespace TT.Report.ViewModels
 {
-    public class ServiceStatisticsGridViewModel : Screen
+    public class StatisticsGridViewModel : Screen
     {
         public MatchPlayer Player { get; set; }
+        public int StrokeNumber { get; set; }
 
         private ObservableCollection<Rally> selectedRallies;
         public ObservableCollection<Rally> SelectedRallies
@@ -22,7 +23,7 @@ namespace TT.Report.ViewModels
             }
         }
         
-        public ServiceStatisticsGridViewModel()
+        public StatisticsGridViewModel()
         {
             selectedRallies = new ObservableCollection<Rally>();
         }

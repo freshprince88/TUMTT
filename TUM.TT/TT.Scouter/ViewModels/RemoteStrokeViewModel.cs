@@ -8,7 +8,6 @@ using TT.Scouter.Util.Model;
 using MahApps.Metro.Controls;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;

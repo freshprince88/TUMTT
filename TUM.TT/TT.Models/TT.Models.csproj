@@ -86,6 +86,7 @@
     <Compile Include="Statistics\SpinStatistics.cs" />
     <Compile Include="Statistics\SideStatistics.cs" />
     <Compile Include="Statistics\TechnicalEfficiency.cs" />
+    <Compile Include="Statistics\TechniqueStatistics.cs" />
     <Compile Include="Statistics\Transitions.cs" />
     <Compile Include="Statistics\IMatchTransitionStatistics.cs" />
     <Compile Include="Stroke.cs" />

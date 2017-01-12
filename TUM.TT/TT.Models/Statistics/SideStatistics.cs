@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TT.Models.Statistics
 {
@@ -20,19 +16,49 @@ namespace TT.Models.Statistics
             {
                 foreach (var stroke in r.Strokes)
                 {
+                    bool stepAround = stroke.StepAround;
                     if (CountStroke(stroke, player, strokeNr))
-                    {            
-                        this.Forehand += stroke.EnumSide == Util.Enums.Stroke.Hand.Forehand ? 1 : 0;
-                        this.Backhand += stroke.EnumSide == Util.Enums.Stroke.Hand.Backhand ? 1 : 0;
-                        this.NotAnalysed += stroke.EnumSide == Util.Enums.Stroke.Hand.None ? 1 : 0;
+                    {
+                        if (stroke.EnumSide == Util.Enums.Stroke.Hand.Forehand)
+                        {
+                            Forehand++;
+                            ForehandStepAround += stepAround ? 1 : 0;
+                            if (stroke.Rally.Winner == player)
+                            {
+                                ForehandWon++;
+                                ForehandStepAroundWon += stepAround ? 1 : 0;
+                            }
+                        }
+                        if (stroke.EnumSide == Util.Enums.Stroke.Hand.Backhand)
+                        {
+                            Backhand++;
+                            BackhandStepAround += stepAround ? 1 : 0;
+                            if (stroke.Rally.Winner == player)
+                            {
+                                BackhandWon++;
+                                BackhandStepAroundWon += stepAround ? 1 : 0;
+                            }
+                        }
+                        if (stroke.EnumSide == Util.Enums.Stroke.Hand.None)
+                        {
+                            NotAnalysed++;
+                            NotAnalysedWon += stroke.Rally.Winner == player ? 1 : 0;
+                        }
                     }
                 }
             }
         }
 
         public int Backhand { get; private set; }
+        public int BackhandWon { get; private set; }
+        public int BackhandStepAround { get; private set; }
+        public int BackhandStepAroundWon { get; private set; }
         public int Forehand { get; private set; }
+        public int ForehandWon { get; private set; }
+        public int ForehandStepAround { get; private set; }
+        public int ForehandStepAroundWon { get; private set; }
         public int NotAnalysed { get; private set; }
+        public int NotAnalysedWon { get; private set; }
 
     }
 }

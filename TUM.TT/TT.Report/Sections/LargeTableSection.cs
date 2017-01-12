@@ -1,6 +1,8 @@
 ﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -31,43 +33,50 @@ namespace TT.Report.Sections
             ViewModelBinder.Bind(vm, ltv, null);
             ((IActivate)vm).Activate();
 
-            var size = new Size(ltv.TableGrid.Width, ltv.TableGrid.Height);
-            var statistics = new MatchStatistics(match);
-            var setStrokes = new List<Stroke>();
-            var scale = sets.Count > 1 ? 1 : 2.5;
+            try
+            {
+                var size = new Size(ltv.TableGrid.Width, ltv.TableGrid.Height);
+                var statistics = new MatchStatistics(match);
+                var setStrokes = new List<Stroke>();
+                var scale = sets.Count > 1 ? 1 : 2.5;
 
-            ltv.Width = size.Width;
-            ltv.Height = size.Height;
-            
-            foreach (var set in sets.Keys)
-            {                
-                if (sets[set].Count == 0)
-                {
-                    continue;
-                }
+                ltv.Width = size.Width;
+                ltv.Height = size.Height;
 
-                foreach (var rally in sets[set])
+                foreach (var set in sets.Keys)
                 {
-                    rally.Strokes.Apply(stroke =>
+                    if (sets[set].Count == 0)
                     {
-                        if (statistics.CountStroke(stroke, player, strokeNumber))
-                            setStrokes.Add(stroke);
-                    });
+                        continue;
+                    }
+
+                    foreach (var rally in sets[set])
+                    {
+                        rally.Strokes.Apply(stroke =>
+                        {
+                            if (statistics.CountStroke(stroke, player, strokeNumber))
+                                setStrokes.Add(stroke);
+                        });
+                    }
+
+                    ltv.Strokes = new ObservableCollection<Stroke>(setStrokes);
+
+                    ltv.RenderTransform = new ScaleTransform(scale, scale);
+                    ltv.Measure(size);
+                    ltv.Arrange(new Rect(size));
+                    ltv.UpdateLayout();
+
+                    var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
+                    bmp.Render(ltv);
+
+                    TableImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
+
+                    setStrokes.Clear();
                 }
-
-                ltv.Strokes = new ObservableCollection<Stroke>(setStrokes);
-
-                ltv.RenderTransform = new ScaleTransform(scale, scale);
-                ltv.Measure(size);
-                ltv.Arrange(new Rect(size));
-                ltv.UpdateLayout();
-
-                var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
-                bmp.Render(ltv);
-
-                TableImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
-
-                setStrokes.Clear();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("LargeTableSection: '{0}' - cannot fill table. ({1})", e.GetType().Name, e.Message);
             }
         }
     }

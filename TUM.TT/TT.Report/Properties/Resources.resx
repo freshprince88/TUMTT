@@ -129,6 +129,12 @@
   <data name="section_side" xml:space="preserve">
     <value>Side</value>
   </data>
+  <data name="side_backhand" xml:space="preserve">
+    <value>Backhand</value>
+  </data>
+  <data name="side_forehand" xml:space="preserve">
+    <value>Forehand</value>
+  </data>
   <data name="section_spin" xml:space="preserve">
     <value>Spin</value>
   </data>
@@ -138,17 +144,17 @@
   <data name="section_spin_hidden" xml:space="preserve">
     <value>Hidden</value>
   </data>
-  <data name="section_spin_lost" xml:space="preserve">
-    <value>Lost</value>
-  </data>
   <data name="section_spin_no" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="section_spin_up" xml:space="preserve">
     <value>Up</value>
   </data>
-  <data name="section_spin_won" xml:space="preserve">
-    <value>Won</value>
+  <data name="section_strokenumber" xml:space="preserve">
+    <value>Stroke number</value>
+  </data>
+  <data name="section_stroke_lost" xml:space="preserve">
+    <value>Lost</value>
   </data>
   <data name="section_stroke_name_all" xml:space="preserve">
     <value>All strokes</value>
@@ -168,11 +174,65 @@
   <data name="section_stroke_name_third" xml:space="preserve">
     <value>Third stroke</value>
   </data>
+  <data name="section_stroke_won" xml:space="preserve">
+    <value>Won</value>
+  </data>
   <data name="section_table" xml:space="preserve">
     <value>Table</value>
   </data>
   <data name="section_technique" xml:space="preserve">
     <value>Technique</value>
+  </data>
+  <data name="section_technique_banana" xml:space="preserve">
+    <value>Banana</value>
+  </data>
+  <data name="section_technique_block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="section_technique_blockchop" xml:space="preserve">
+    <value>BlockChop</value>
+  </data>
+  <data name="section_technique_blocktempo" xml:space="preserve">
+    <value>BlockTempo</value>
+  </data>
+  <data name="section_technique_chop" xml:space="preserve">
+    <value>Chop</value>
+  </data>
+  <data name="section_technique_counter" xml:space="preserve">
+    <value>Counter</value>
+  </data>
+  <data name="section_technique_flip" xml:space="preserve">
+    <value>Flip</value>
+  </data>
+  <data name="section_technique_lob" xml:space="preserve">
+    <value>Lob</value>
+  </data>
+  <data name="section_technique_miscellaneous" xml:space="preserve">
+    <value>Miscellaneous</value>
+  </data>
+  <data name="section_technique_na" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="section_technique_push" xml:space="preserve">
+    <value>Push</value>
+  </data>
+  <data name="section_technique_pushaggressive" xml:space="preserve">
+    <value>PushAggressive</value>
+  </data>
+  <data name="section_technique_smash" xml:space="preserve">
+    <value>Smash</value>
+  </data>
+  <data name="section_technique_special" xml:space="preserve">
+    <value>Special</value>
+  </data>
+  <data name="section_technique_topspin" xml:space="preserve">
+    <value>Topspin</value>
+  </data>
+  <data name="section_technique_topspinspin" xml:space="preserve">
+    <value>TopspinSpin</value>
+  </data>
+  <data name="section_technique_topspintempo" xml:space="preserve">
+    <value>TopspinTempo</value>
   </data>
   <data name="sets_all" xml:space="preserve">
     <value>All sets</value>
@@ -182,5 +242,167 @@
   </data>
   <data name="table_netout_label" xml:space="preserve">
     <value>Net/Out</value>
+  </data>
+  <data name="technique_pendulum" xml:space="preserve">
+    <value>Pendulum</value>
+  </data>
+  <data name="section_side_steparound" xml:space="preserve">
+    <value>Side (Steparound)</value>
+  </data>
+  <data name="side_backhand_short" xml:space="preserve">
+    <value>BH</value>
+  </data>
+  <data name="side_backhand_steparound" xml:space="preserve">
+    <value>Backhand (Steparound)</value>
+  </data>
+  <data name="side_backhand_steparound_short" xml:space="preserve">
+    <value>BH (SA)</value>
+  </data>
+  <data name="side_forehand_short" xml:space="preserve">
+    <value>FH</value>
+  </data>
+  <data name="side_forehand_steparound" xml:space="preserve">
+    <value>Forehand (Steparound)</value>
+  </data>
+  <data name="side_forehand_steparound_short" xml:space="preserve">
+    <value>FH (SA)</value>
+  </data>
+  <data name="stat_not_analysed" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="technique_block_short" xml:space="preserve">
+    <value>Blk</value>
+  </data>
+  <data name="technique_chop_short" xml:space="preserve">
+    <value>Chp</value>
+  </data>
+  <data name="technique_counter_short" xml:space="preserve">
+    <value>Cntr</value>
+  </data>
+  <data name="technique_flip_short" xml:space="preserve">
+    <value>Flp</value>
+  </data>
+  <data name="technique_lob_short" xml:space="preserve">
+    <value>Lb</value>
+  </data>
+  <data name="technique_miscellaneous_short" xml:space="preserve">
+    <value>Misc</value>
+  </data>
+  <data name="technique_push_short" xml:space="preserve">
+    <value>Psh</value>
+  </data>
+  <data name="technique_reverse" xml:space="preserve">
+    <value>Reverse</value>
+  </data>
+  <data name="technique_smash_short" xml:space="preserve">
+    <value>Sm</value>
+  </data>
+  <data name="technique_special" xml:space="preserve">
+    <value>Special</value>
+  </data>
+  <data name="technique_special_short" xml:space="preserve">
+    <value>Spcl</value>
+  </data>
+  <data name="technique_tomahawk" xml:space="preserve">
+    <value>Tomahawk</value>
+  </data>
+  <data name="technique_topspin_short" xml:space="preserve">
+    <value>TS</value>
+  </data>
+  <data name="section_basicinfo_compref" xml:space="preserve">
+    <value>Comp. Perf.</value>
+  </data>
+  <data name="section_basicinfo_player" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="section_basicinfo_ranking" xml:space="preserve">
+    <value>Ranking</value>
+  </data>
+  <data name="section_basicinfo_result" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="section_basicinfo_service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="section_basicinfo_service_freq" xml:space="preserve">
+    <value>Freq.</value>
+  </data>
+  <data name="section_basicinfo_service_winprob" xml:space="preserve">
+    <value>Win. Prob.</value>
+  </data>
+  <data name="section_basicinfo_title" xml:space="preserve">
+    <value>Basic Information</value>
+  </data>
+  <data name="section_basicinfo_totalpoints" xml:space="preserve">
+    <value>Total Points</value>
+  </data>
+  <data name="section_basicinfo_winprob" xml:space="preserve">
+    <value>Win. Prob.</value>
+  </data>
+  <data name="section_matchdynamics_byplayer" xml:space="preserve">
+    <value>By serving player</value>
+  </data>
+  <data name="section_matchdynamics_overall" xml:space="preserve">
+    <value>Overall</value>
+  </data>
+  <data name="section_matchdynamics_title" xml:space="preserve">
+    <value>Match dynamics</value>
+  </data>
+  <data name="section_rallylength_avg_mean" xml:space="preserve">
+    <value>Mean</value>
+  </data>
+  <data name="section_rallylength_avg_median" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="section_rallylength_avg_service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="section_rallylength_avg_title" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="section_rallylength_avg_totallengths" xml:space="preserve">
+    <value>Total lengths</value>
+  </data>
+  <data name="section_rallylength_avg_winner" xml:space="preserve">
+    <value>Winner</value>
+  </data>
+  <data name="section_rallylength_dist_expected" xml:space="preserve">
+    <value>Expected</value>
+  </data>
+  <data name="section_rallylength_dist_observed" xml:space="preserve">
+    <value>Observed</value>
+  </data>
+  <data name="section_rallylength_dist_ralliescount" xml:space="preserve">
+    <value>#Rallies</value>
+  </data>
+  <data name="section_rallylength_dist_rallylength" xml:space="preserve">
+    <value>Rally length</value>
+  </data>
+  <data name="section_rallylength_dist_title" xml:space="preserve">
+    <value>Distribution</value>
+  </data>
+  <data name="section_rallylength_title" xml:space="preserve">
+    <value>Rally Length</value>
+  </data>
+  <data name="section_scoringprocess_title" xml:space="preserve">
+    <value>Scoring process</value>
+  </data>
+  <data name="section_techefficiency_error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="section_techefficiency_title" xml:space="preserve">
+    <value>Technical efficiency</value>
+  </data>
+  <data name="section_transitionmatrix_abs_title" xml:space="preserve">
+    <value>Absolute number of transitions</value>
+  </data>
+  <data name="section_transitionmatrix_prob_title" xml:space="preserve">
+    <value>Transition probabilities</value>
+  </data>
+  <data name="section_transitionmatrix_title" xml:space="preserve">
+    <value>Transition matrix</value>
+  </data>
+  <data name="sets_multiple" xml:space="preserve">
+    <value>Sets</value>
   </data>
 </root>

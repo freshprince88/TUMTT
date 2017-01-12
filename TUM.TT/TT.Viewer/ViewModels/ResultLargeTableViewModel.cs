@@ -10,10 +10,6 @@ using TT.Models;
 using System.Windows;
 using System.Dynamic;
 using System.Windows.Controls.Primitives;
-using System.Windows.Controls;
-using System.Windows.Input;
-using TT.Converters;
-using System.Diagnostics;
 
 namespace TT.Viewer.ViewModels
 {
@@ -28,8 +24,6 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
         private IWindowManager WindowManager;
-
-        private MatchPlayerToStringConverter matchPlayerToStringConverter;
 
         public ObservableCollection<Rally> Rallies { get; set; }
         private ObservableCollection<Stroke> strokes;
