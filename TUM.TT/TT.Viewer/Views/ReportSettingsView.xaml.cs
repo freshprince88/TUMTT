@@ -64,7 +64,7 @@ namespace TT.Viewer.Views
         {
             Debug.WriteLine("Selecting combi view {0}", combi);
 
-            foreach (var i in ReportSettingsGrid_Content_Sets_ToggleButtons.Children)
+            foreach (var i in ReportSettingsGridContentSetsToggleButtons.Children)
             {
                 var tb = i as ToggleButton;
                 if (tb != null && tb.Tag is int && (int)tb.Tag == combi && tb.IsChecked.Value)
@@ -81,7 +81,7 @@ namespace TT.Viewer.Views
                 var combiName = "Combi" + combiSetsString.Replace("+", "");
 
                 var combiPresent = false;
-                foreach (var i in ReportSettingsGrid_Content_Sets_ToggleButtons.Children)
+                foreach (var i in ReportSettingsGridContentSetsToggleButtons.Children)
                 {
                     var tb = i as ToggleButton;
                     if (tb != null && tb.Name == combiName)
@@ -101,8 +101,8 @@ namespace TT.Viewer.Views
                     textBlock.Inlines.Add(new Run(combiSetsString));
                     combi.Content = textBlock;
 
-                    var setCount = ReportSettingsGrid_Content_Sets_ToggleButtons.Children.Count;
-                    ReportSettingsGrid_Content_Sets_ToggleButtons.Children.Insert(setCount - 1, combi);
+                    var setCount = ReportSettingsGridContentSetsToggleButtons.Children.Count;
+                    ReportSettingsGridContentSetsToggleButtons.Children.Insert(setCount - 1, combi);
 
                     combi.Checked += Combi_Checked;
                     combi.Unchecked += Combi_Checked;
@@ -193,7 +193,7 @@ namespace TT.Viewer.Views
 
         private void PlusCombiPopup_Closed(object sender, EventArgs e)
         {
-            foreach (var tb in PlusCombiPopup_ToggleButtons.Children)
+            foreach (var tb in PlusCombiPopupToggleButtons.Children)
                 if (tb is ToggleButton && ((ToggleButton)tb).IsChecked.Value)
                     ((ToggleButton)tb).IsChecked = false;
             if (PlusCombi.IsChecked.Value)
@@ -209,7 +209,7 @@ namespace TT.Viewer.Views
         {
             var combiSets = 0;
             var combiSetsString = "";
-            foreach (var i in PlusCombiPopup_ToggleButtons.Children)
+            foreach (var i in PlusCombiPopupToggleButtons.Children)
             {
                 var tb = i as ToggleButton;
                 if (tb != null && tb.IsChecked.Value)
@@ -260,32 +260,32 @@ namespace TT.Viewer.Views
 
         private void SCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(SAllCheckBox, ReportSettingsGrid_Content_Strokes_SContainer);
+            ReflectChbxState(SAllCheckBox, ReportSettingsGridContentStrokesSContainer);
         }
 
         private void RCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(RAllCheckBox, ReportSettingsGrid_Content_Strokes_RContainer);
+            ReflectChbxState(RAllCheckBox, ReportSettingsGridContentStrokesRContainer);
         }
 
         private void ThirdCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(ThirdAllCheckBox, ReportSettingsGrid_Content_Strokes_ThirdContainer);
+            ReflectChbxState(ThirdAllCheckBox, ReportSettingsGridContentStrokesThirdContainer);
         }
 
         private void FourthCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(FourthAllCheckBox, ReportSettingsGrid_Content_Strokes_FourthContainer);
+            ReflectChbxState(FourthAllCheckBox, ReportSettingsGridContentStrokesFourthContainer);
         }
 
         private void LCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(LAllCheckBox, ReportSettingsGrid_Content_Strokes_LContainer);
+            ReflectChbxState(LAllCheckBox, ReportSettingsGridContentStrokesLContainer);
         }
 
         private void ACheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(AAllCheckBox, ReportSettingsGrid_Content_Strokes_AContainer);
+            ReflectChbxState(AAllCheckBox, ReportSettingsGridContentStrokesAContainer);
         }
 
         private void ReflectChbxState(CheckBox allChbx, Grid otherChbxs)
@@ -322,32 +322,32 @@ namespace TT.Viewer.Views
 
         private void SAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_SContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesSContainer, (CheckBox)sender);
         }
 
         private void RAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_RContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesRContainer, (CheckBox)sender);
         }
 
         private void ThirdAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_ThirdContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesThirdContainer, (CheckBox)sender);
         }
 
         private void FourthAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_FourthContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesFourthContainer, (CheckBox)sender);
         }
 
         private void LAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_LContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesLContainer, (CheckBox)sender);
         }
 
         private void AAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_AContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesAContainer, (CheckBox)sender);
         }
 
         private void CheckChildChbxs(Grid parent, CheckBox allChbx)

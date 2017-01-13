@@ -288,6 +288,16 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No match loaded.
+        ///Preview not available..
+        /// </summary>
+        public static string report_settings_no_match_loaded {
+            get {
+                return ResourceManager.GetString("report_settings_no_match_loaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string report_settings_ok {

@@ -36,6 +36,7 @@ namespace TT.Viewer.ViewModels
         public IReportGenerationQueueManager ReportGenerationQueueManager { get; private set; }        
         public Dictionary<int, string[]> StrokeStats { get; private set; }
         public Dictionary<int, string[]> GeneralStats { get; private set; }
+        public SortedDictionary<string, List<Rally>> Sets { get; set; }
 
         private int playerChoice;
         public int PlayerChoice {
@@ -220,6 +221,11 @@ namespace TT.Viewer.ViewModels
         public List<int> AvailableCombis{ get; set; }        
         public List<int> SelectedCombis { get; set; }
 
+        public ReportSettingsViewModel()
+        {
+            // default constructor for caliburn design time integration
+        }
+
         public ReportSettingsViewModel(IMatchManager matchManager, IReportGenerationQueueManager reportGenerationQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
         {
             MatchManager = matchManager;
@@ -228,27 +234,40 @@ namespace TT.Viewer.ViewModels
             WindowManager = windowManager;
             DialogCoordinator = dialogCoordinator;
 
+            Sets = new SortedDictionary<string, List<Rally>>();
+            if (MatchManager.Match != null)
+            {
+                foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
+                {
+                    var setNumber = (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1).ToString();
+                    List<Rally> rallyList;
+                    if (!Sets.TryGetValue(setNumber, out rallyList))
+                        Sets[setNumber] = new List<Rally>();
+                    Sets[setNumber].Add(rally);
+                }
+            }
+
             generatedReport = new Dictionary<string, object>();
 
             StrokeStats = new Dictionary<int, string[]>
             {
-                [1] = new string[] {"side", Properties.Resources.report_settings_strokechoice_side},
-                [2] = new string[] {"steparound", Properties.Resources.report_settings_strokechoice_steparound},
-                [4] = new string[] {"spin", Properties.Resources.table_spin_title},
-                [8] = new string[] {"technique", Properties.Resources.report_settings_strokechoice_technique},
-                [16] = new string[] {"placement", Properties.Resources.report_settings_strokechoice_placement},
-                [32] = new string[] {"table", Properties.Resources.table_large_tab_title},
-                [64] = new string[] {"service", Properties.Resources.report_settings_strokechoice_service},
-                [128] = new string[] {"number", Properties.Resources.report_settings_strokechoice_number}
+                [1] = new[] {"side", Properties.Resources.report_settings_strokechoice_side},
+                [2] = new[] {"steparound", Properties.Resources.report_settings_strokechoice_steparound},
+                [4] = new[] {"spin", Properties.Resources.table_spin_title},
+                [8] = new[] {"technique", Properties.Resources.report_settings_strokechoice_technique},
+                [16] = new[] {"placement", Properties.Resources.report_settings_strokechoice_placement},
+                [32] = new[] {"table", Properties.Resources.table_large_tab_title},
+                [64] = new[] {"service", Properties.Resources.report_settings_strokechoice_service},
+                [128] = new[] {"number", Properties.Resources.report_settings_strokechoice_number}
             };
 
             GeneralStats = new Dictionary<int, string[]>
             {
-                [1] = new string[] {"rallylength", Properties.Resources.report_settings_generalchoice_rallylength},
-                [2] = new string[] {"matchdynamics", Properties.Resources.report_settings_generalchoice_matchdynamics},
+                [1] = new[] {"rallylength", Properties.Resources.report_settings_generalchoice_rallylength},
+                [2] = new[] {"matchdynamics", Properties.Resources.report_settings_generalchoice_matchdynamics},
                 [4] =
-                new string[] {"transitionmatrix", Properties.Resources.report_settings_generalchoice_transitionmatrix},
-                [8] = new string[] {"techefficiency", Properties.Resources.report_settings_generalchoice_techefficiency}
+                new[] {"transitionmatrix", Properties.Resources.report_settings_generalchoice_transitionmatrix},
+                [8] = new[] {"techefficiency", Properties.Resources.report_settings_generalchoice_techefficiency}
             };
 
             DisplayName = Properties.Resources.report_settings_window_title;
@@ -309,6 +328,7 @@ namespace TT.Viewer.ViewModels
         public void OnCancelClick()
         {
             Debug.WriteLine("OnCancelClick");
+            ReportGenerationQueueManager.Stop(true);
             TryClose();
         }
 
@@ -337,7 +357,7 @@ namespace TT.Viewer.ViewModels
                 };
                 yield return dialog;
                 
-                ReportGenerationQueueManager.SetReportUserPath(dialog.Result);
+                ReportGenerationQueueManager.ReportPathUser = dialog.Result;
             }
             if (exitAfter)
                 OnDeactivate(true);
@@ -364,27 +384,17 @@ namespace TT.Viewer.ViewModels
             customizationId += "8" + PlayerChoice.ToString("X");
             // adding a number in front ensures any two setting choices that are the same (e.g. 00010) will still get different encodings
 
-            Dictionary<string, List<Rally>> sets = new Dictionary<string, List<Rally>>();
+            Dictionary<string, List<Rally>> customizationSets = new Dictionary<string, List<Rally>>();
             // 'all' sets
             if ((SetChoice & 1) == 1)
-                sets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
+                customizationSets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
 
             // sets 1-7
-            for (var i = 1; i <= Math.Ceiling(Math.Log(SetChoice, 2)); i++)
+            foreach (var set in Sets.Keys)
             {
-                int mask = 1 << i;
-                if ((mask & SetChoice) == mask)
-                {
-                    var rallyList = new List<Rally>();
-                    foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
-                    {
-                        if (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1 == i)
-                        {
-                            rallyList.Add(rally);
-                        }
-                    }
-                    sets[i.ToString()] = rallyList;
-                }
+                var mask = 1 << int.Parse(set);
+                if ((mask & setChoice) == mask)
+                    customizationSets[set] = Sets[set];
             }
             customizationId += "9" + SetChoice.ToString("X");
 
@@ -411,11 +421,11 @@ namespace TT.Viewer.ViewModels
                         }
                     }
                 }
-                sets[combiName.Substring(0, combiName.Length - 1)] = rallyList;
+                customizationSets[combiName.Substring(0, combiName.Length - 1)] = rallyList;
                 customizationId += combi.ToString("X");
             }
 
-            customizations["sets"] = sets;
+            customizations["sets"] = customizationSets;
 
             customizations["service_stats"] = new List<string>();
             customizations["return_stats"] = new List<string>();
@@ -534,7 +544,7 @@ namespace TT.Viewer.ViewModels
                 ReportGenerationQueueManager.ReportGenerated -= ReportGenerationQueueManager_ReportGenerated;
                 Events.Unsubscribe(this);
 
-                ReportGenerationQueueManager.Stop();
+                ReportGenerationQueueManager.Stop(false);
 
                 WindowManager = null;
                 DialogCoordinator = null;

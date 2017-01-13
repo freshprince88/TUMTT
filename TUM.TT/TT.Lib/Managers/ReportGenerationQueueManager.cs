@@ -32,12 +32,12 @@ namespace TT.Lib.Managers
     {
         public event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
 
-        private string ReportPathUser { get; set; }
+        public string ReportPathUser { get; set; }
 
         private readonly IMatchManager _matchManager;
         private readonly QueueWorker _queueWorker;
-        private NotifyIcon _repGenNotification;
         private readonly AsyncOperation _asyncOp;
+        private NotifyIcon _repGenNotification;
 
         public ReportGenerationQueueManager(IMatchManager matchManager)
         {
@@ -60,6 +60,8 @@ namespace TT.Lib.Managers
             _repGenNotification.BalloonTipClicked += dClickOrBalloonClick;
 
             _matchManager = matchManager;
+            // AsyncOperation being created in the constructor gives us a way of letting code run on the UI (main) thread,
+            // which is needed for NotifyIcon (& its BalloonTip) to generate click events
             _asyncOp = AsyncOperationManager.CreateOperation(null);
             _queueWorker = new QueueWorker(this);
             Start();
@@ -69,12 +71,7 @@ namespace TT.Lib.Managers
         {
             _queueWorker.AddReportGenerator(reportGenerator);
         }
-
-        public void SetReportUserPath(string userPath)
-        {
-            ReportPathUser = userPath;
-        }
-
+        
         public void Start()
         {
             if (!_queueWorker.Run)
@@ -89,9 +86,11 @@ namespace TT.Lib.Managers
             }
         }
 
-        public void Stop()
+        public void Stop(bool immediately)
         {
             _queueWorker.Run = false;
+            if (immediately)
+                _repGenNotification.Visible = false;
         }
 
         public void Dispose()
@@ -157,6 +156,7 @@ namespace TT.Lib.Managers
                             {
                                 _man._asyncOp.Post(o =>
                                 {
+                                    // this has to be done on the UI thread
                                     Debug.WriteLine($"QueueWorker: making NotifyIcon visible (Thread '{Thread.CurrentThread.Name}')");
                                     _man._repGenNotification.Text = Resources.notification_generating;
                                     _man._repGenNotification.Visible = true;
@@ -253,11 +253,10 @@ namespace TT.Lib.Managers
                     var reportPathUser = _man.ReportPathUser;
                     _man._asyncOp.Post(o =>
                     {
-                        Debug.WriteLine($"QueueWorker: setting tag and text of NotifyIcon.BalloonTip (Thread '{Thread.CurrentThread.Name}')");
+                        // this has to be done on the UI thread
+                        Debug.WriteLine($"QueueWorker: setting tag and text of NotifyIcon.BalloonTip and showing it (Thread '{Thread.CurrentThread.Name}')");
                         _man._repGenNotification.Tag = reportPathUser;
                         _man._repGenNotification.Text = Resources.notification_generated_doubleclick;
-
-                        Debug.WriteLine($"QueueWorker: repGenNotification.Visible={_man._repGenNotification.Visible} (Thread '{Thread.CurrentThread.Name}')");
                         _man._repGenNotification.ShowBalloonTip(30000);
                     }, EventArgs.Empty);
 
