@@ -1,19 +1,20 @@
 ﻿<controls:MetroWindow x:Class="TT.Viewer.Views.ReportSettingsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:cal="http://www.caliburnproject.org"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
-             xmlns:prop="clr-namespace:TT.Viewer.Properties"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"             
-             dialog:DialogParticipation.Register="{Binding}"
-             xmlns:vm="clr-namespace:TT.Viewer.ViewModels"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:ReportSettingsViewModel, IsDesignTimeCreatable=True}"
-             d:DesignWidth="1200" 
-             d:DesignHeight="860">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:cal="http://www.caliburnproject.org"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+                      xmlns:prop="clr-namespace:TT.Viewer.Properties"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:wpfconvs="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.Converters;assembly=Microsoft.TeamFoundation.Controls"
+                      dialog:DialogParticipation.Register="{Binding}"
+                      xmlns:vm="clr-namespace:TT.Viewer.ViewModels"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance Type=vm:ReportSettingsViewModel, IsDesignTimeCreatable=True}"
+                      d:DesignWidth="1200"
+                      d:DesignHeight="860">
 
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
@@ -21,9 +22,9 @@
             <conv:PlayerToStringConverter x:Key="PlayerToStringConverter"/>
             <conv:IntMaskMatchToBooleanConverter x:Key="IntMaskMatchToBooleanConverter"/>
             <conv:MathConverter x:Key="MathConverter"/>
-            <conv:VisibilityToBoolConverter x:Key="VisibilityToBoolConverter"/>
             <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <conv:CollectionContainsToVisibilityConverter x:Key="CollectionContainsToVisibilityConverter"/>
+            <wpfconvs:IsNullConverter x:Key="IsNullConverter"/>
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
 
@@ -448,7 +449,7 @@
                 <Button Grid.Column="0" Content="{Binding Path=report_settings_cancel, Source={StaticResource LocalizedStrings}}" cal:Message.Attach="OnCancelClick()"/>
                 <Button Grid.Column="1" Content="{Binding Path=report_settings_ok, Source={StaticResource LocalizedStrings}}" Margin="5 0 0 0" cal:Message.Attach="OnOkClick()"/>
                 <Button Grid.Column="2" Content="{Binding Path=report_settings_ok_generate, Source={StaticResource LocalizedStrings}}"  Margin="5 0 0 0" cal:Message.Attach="OnOkGenerateClick()" 
-                        IsEnabled="{Binding Visibility, ElementName=ReportPreviewControl, Converter={StaticResource VisibilityToBoolConverter}, ConverterParameter=true}"/>
+                        IsEnabled="{Binding MatchManager.Match, Converter={StaticResource IsNullConverter}, ConverterParameter=Not}"/>
 
             </Grid>            
         </Border>

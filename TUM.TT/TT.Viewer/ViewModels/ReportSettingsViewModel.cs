@@ -322,6 +322,7 @@ namespace TT.Viewer.ViewModels
         {
             Debug.WriteLine("OnOkClick");
             Save();
+            ReportGenerationQueueManager.Stop(true);
             TryClose();
         }
 

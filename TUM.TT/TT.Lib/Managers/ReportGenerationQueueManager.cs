@@ -49,8 +49,12 @@ namespace TT.Lib.Managers
             };
             EventHandler dClickOrBalloonClick = (sender, args) =>
             {
-                Debug.WriteLine($"QueueWorker (double-click on NotifyIcon or single-click on BallonTip): opening path '{((NotifyIcon)sender).Tag}' and hiding NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
-                Process.Start((string)((NotifyIcon)sender).Tag);
+                var notifyIcon = (NotifyIcon) sender;
+                if (notifyIcon?.Tag == null)
+                    return;
+
+                Debug.WriteLine($"QueueWorker (double-click on NotifyIcon or single-click on BallonTip): opening path '{notifyIcon.Tag}' and hiding NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
+                Process.Start((string)notifyIcon.Tag);
                 _repGenNotification.Visible = false;
             };
             _repGenNotification.DoubleClick += dClickOrBalloonClick;
@@ -86,10 +90,10 @@ namespace TT.Lib.Managers
             }
         }
 
-        public void Stop(bool immediately)
+        public void Stop(bool hideNotifyIcon)
         {
             _queueWorker.Run = false;
-            if (immediately)
+            if (hideNotifyIcon)
                 _repGenNotification.Visible = false;
         }
 
