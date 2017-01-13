@@ -1,11 +1,11 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Threading;
 using TT.Lib.Properties;
 using TT.Lib.Util;
 using TT.Report.Generators;
@@ -37,15 +37,30 @@ namespace TT.Lib.Managers
         private readonly IMatchManager _matchManager;
         private readonly QueueWorker _queueWorker;
         private NotifyIcon _repGenNotification;
+        private readonly AsyncOperation _asyncOp;
 
         public ReportGenerationQueueManager(IMatchManager matchManager)
         {
+            Debug.WriteLine($"ReportGenerationQueueManager: creating NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
             _repGenNotification = new NotifyIcon()
             {
                 Icon = Resources.olive_letter_v_512,
                 Text = Resources.notification_generating
             };
+            EventHandler dClickOrBalloonClick = (sender, args) =>
+            {
+                Debug.WriteLine($"QueueWorker (double-click on NotifyIcon or single-click on BallonTip): opening path '{((NotifyIcon)sender).Tag}' and hiding NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
+                Process.Start((string)((NotifyIcon)sender).Tag);
+                _repGenNotification.Visible = false;
+            };
+            _repGenNotification.DoubleClick += dClickOrBalloonClick;
+
+            _repGenNotification.BalloonTipText = Resources.notification_generated_text;
+            _repGenNotification.BalloonTipTitle = Resources.notification_generated_title;
+            _repGenNotification.BalloonTipClicked += dClickOrBalloonClick;
+
             _matchManager = matchManager;
+            _asyncOp = AsyncOperationManager.CreateOperation(null);
             _queueWorker = new QueueWorker(this);
             Start();
         }
@@ -58,8 +73,6 @@ namespace TT.Lib.Managers
         public void SetReportUserPath(string userPath)
         {
             ReportPathUser = userPath;
-            if (_queueWorker._renderedReportPath != null)
-                _queueWorker.CopyRenderedReportToUserPath();
         }
 
         public void Start()
@@ -67,7 +80,10 @@ namespace TT.Lib.Managers
             if (!_queueWorker.Run)
             {
                 _queueWorker.Run = true;
-                Thread workerThread = new Thread(_queueWorker.WorkTheQueue);
+                Thread workerThread = new Thread(_queueWorker.WorkTheQueue)
+                {
+                    Name = "QueueWorkerThread"
+                };
                 workerThread.SetApartmentState(ApartmentState.STA);
                 workerThread.Start();
             }
@@ -78,12 +94,21 @@ namespace TT.Lib.Managers
             _queueWorker.Run = false;
         }
 
+        public void Dispose()
+        {
+            _queueWorker.Run = false;
+            Debug.WriteLine($"ReportGenerationQueueManager: disposing of NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
+            _repGenNotification.Visible = false;
+            _repGenNotification.Dispose();
+            _repGenNotification = null;
+        }
+
         private class QueueWorker
         {
             private readonly List<IReportGenerator> _workList;
             private readonly ReportGenerationQueueManager _man;
             private CustomizedReportGenerator _custRepGen;
-            internal string _renderedReportPath;
+            private string _renderedReportPath;
             internal bool Run;
             private static int _genId;
 
@@ -104,7 +129,7 @@ namespace TT.Lib.Managers
 
             internal void WorkTheQueue()
             {
-                while (Run)
+                while (Run || _man._repGenNotification != null && _man._repGenNotification.Visible)
                 {
                     if (_workList.Count != 0)
                     {
@@ -128,18 +153,37 @@ namespace TT.Lib.Managers
                         var gen = repGen as CustomizedReportGenerator;
                         if (gen != null)
                         {
-                            _custRepGen = gen;
-                            _custRepGen.SectionsAdded += CustomizedReportGenerator_SectionsAdded;
-                            var custRepGenThread = new Thread(_custRepGen.GenerateReport)
-                            {
-                                Name = "CustomReportGenThread-" + _genId++
-                            };
-                            custRepGenThread.SetApartmentState(ApartmentState.STA);
-                            Debug.WriteLine("QueueWorker: starting {0}", args: custRepGenThread.Name);
-                            custRepGenThread.Start();
-
                             if (_man._repGenNotification != null)
-                                _man._repGenNotification.Visible = true;
+                            {
+                                _man._asyncOp.Post(o =>
+                                {
+                                    Debug.WriteLine($"QueueWorker: making NotifyIcon visible (Thread '{Thread.CurrentThread.Name}')");
+                                    _man._repGenNotification.Text = Resources.notification_generating;
+                                    _man._repGenNotification.Visible = true;
+                                }, EventArgs.Empty);
+                            }
+
+                            var matchHash = MatchHashGenerator.GenerateMatchHash(_man._matchManager.Match);
+                            var tmpFileName = "ttviewer_" + (matchHash + gen.CustomizationId) + ".pdf";
+                            var tmpReportPath = Path.GetTempPath() + tmpFileName;
+                            if (File.Exists(tmpReportPath))
+                            {
+                                Debug.WriteLine($"QueueWorker: tmp file '{tmpFileName}' already exists, skipping generation and invoking ReportGenerated event (Thread '{Thread.CurrentThread.Name}')");
+                                _renderedReportPath = tmpReportPath;
+                                _man.ReportGenerated?.Invoke(_man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, gen.CustomizationId));
+                            }
+                            else
+                            {
+                                _custRepGen = gen;
+                                _custRepGen.SectionsAdded += CustomizedReportGenerator_SectionsAdded;
+                                var custRepGenThread = new Thread(_custRepGen.GenerateReport)
+                                {
+                                    Name = "CustomReportGenThread-" + _genId++
+                                };
+                                custRepGenThread.SetApartmentState(ApartmentState.STA);
+                                Debug.WriteLine("QueueWorker: starting {0}", args: custRepGenThread.Name);
+                                custRepGenThread.Start();
+                            }
                         }
                         else
                         {
@@ -147,6 +191,9 @@ namespace TT.Lib.Managers
                             // repGen.GenerateReport(man.matchManager.Match);
                         }
                     }
+                    if (_man.ReportPathUser != null)
+                        CopyRenderedReportToUserPath();
+
                     Thread.Sleep(500);
                 }
             }
@@ -181,9 +228,6 @@ namespace TT.Lib.Managers
                     Debug.WriteLine("QueueWorker: repGen={0} not aborted, invoking ReportGenerated event", repGen.GetHashCode());
                     _renderedReportPath = tmpReportPath;
                     _man.ReportGenerated?.Invoke(_man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
-
-                    if (_man.ReportPathUser != null)
-                        CopyRenderedReportToUserPath();
                 }
                 else
                 {
@@ -191,36 +235,34 @@ namespace TT.Lib.Managers
                 }
             }
 
-            private void _repGenNotification_BalloonTipClosed(object sender, EventArgs e)
+            private void CopyRenderedReportToUserPath()
             {
-                _man._repGenNotification.Dispose();
-            }
-
-            internal void CopyRenderedReportToUserPath()
-            {
-                Debug.WriteLine($"userChosenPath={_man.ReportPathUser}");
-                try
+                if (_renderedReportPath != null)
                 {
-                    File.Copy(_renderedReportPath, _man.ReportPathUser, true);
-                }
-                catch (Exception)
-                {
-                    // TODO alert when opened in another process 
-                }
+                    Debug.WriteLine($"QueueWorker: userChosenPath={_man.ReportPathUser} (Thread '{Thread.CurrentThread.Name}')");
+                    try
+                    {
+                        File.Copy(_renderedReportPath, _man.ReportPathUser, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"QueueWorker: {ex.GetType().Name} ({ex.Message}) (Thread '{Thread.CurrentThread.Name}')");
+                        // TODO alert when opened in another process 
+                    }
 
-                _man._repGenNotification.BalloonTipText = "Report has been generated. Click here to open it.";
-                _man._repGenNotification.BalloonTipTitle = "Report generation finished!";
-                //_repGenNotification.BalloonTipClicked += (s, e) =>
-                //{
-                //    Process.Start(_man.ReportPathUser);
-                //    _repGenNotification.Visible = false;
-                //    _repGenNotification.Dispose();
-                //    _repGenNotification = null;
-                //};
-                //_repGenNotification.BalloonTipClosed += _repGenNotification_BalloonTipClosed;
-                _man._repGenNotification.ShowBalloonTip(30000);
+                    var reportPathUser = _man.ReportPathUser;
+                    _man._asyncOp.Post(o =>
+                    {
+                        Debug.WriteLine($"QueueWorker: setting tag and text of NotifyIcon.BalloonTip (Thread '{Thread.CurrentThread.Name}')");
+                        _man._repGenNotification.Tag = reportPathUser;
+                        _man._repGenNotification.Text = Resources.notification_generated_doubleclick;
 
-                _man.ReportPathUser = null;
+                        Debug.WriteLine($"QueueWorker: repGenNotification.Visible={_man._repGenNotification.Visible} (Thread '{Thread.CurrentThread.Name}')");
+                        _man._repGenNotification.ShowBalloonTip(30000);
+                    }, EventArgs.Empty);
+
+                    _man.ReportPathUser = null;
+                }
             }
         }
     }

@@ -29,7 +29,7 @@ namespace TT.Lib.Properties {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resources() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -57,6 +57,33 @@ namespace TT.Lib.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double-click to open generated report.
+        /// </summary>
+        public static string notification_generated_doubleclick {
+            get {
+                return ResourceManager.GetString("notification_generated_doubleclick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report has been generated. Click here to open it..
+        /// </summary>
+        public static string notification_generated_text {
+            get {
+                return ResourceManager.GetString("notification_generated_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report generation finished!.
+        /// </summary>
+        public static string notification_generated_title {
+            get {
+                return ResourceManager.GetString("notification_generated_title", resourceCulture);
             }
         }
         

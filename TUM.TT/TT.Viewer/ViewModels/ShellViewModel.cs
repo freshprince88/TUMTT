@@ -74,7 +74,11 @@ namespace TT.Viewer.ViewModels
         protected override void OnDeactivate(bool close)
         {
             Events.Unsubscribe(this);
-            if (close) TryDeleteTmpFiles();
+            if (close)
+            {
+                TryDeleteTmpFiles();
+                IoC.Get<IReportGenerationQueueManager>().Dispose();
+            }
         }
 
         /// <summary>

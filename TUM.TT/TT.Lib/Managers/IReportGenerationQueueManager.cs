@@ -13,6 +13,7 @@ namespace TT.Lib.Managers
         void SetReportUserPath(string userPath);
         void Start();
         void Stop();
+        void Dispose();
         event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
     }
 }

@@ -230,21 +230,26 @@ namespace TT.Viewer.ViewModels
 
             generatedReport = new Dictionary<string, object>();
 
-            StrokeStats = new Dictionary<int, string[]>();
-            StrokeStats[1] = new string[] { "side", Properties.Resources.report_settings_strokechoice_side };
-            StrokeStats[2] = new string[] { "steparound", Properties.Resources.report_settings_strokechoice_steparound };
-            StrokeStats[4] = new string[] { "spin", Properties.Resources.table_spin_title };
-            StrokeStats[8] = new string[] { "technique", Properties.Resources.report_settings_strokechoice_technique };
-            StrokeStats[16] = new string[] { "placement", Properties.Resources.report_settings_strokechoice_placement };
-            StrokeStats[32] = new string[] { "table", Properties.Resources.table_large_tab_title };
-            StrokeStats[64] = new string[] { "service", Properties.Resources.report_settings_strokechoice_service };
-            StrokeStats[128] = new string[] { "number", Properties.Resources.report_settings_strokechoice_number };
+            StrokeStats = new Dictionary<int, string[]>
+            {
+                [1] = new string[] {"side", Properties.Resources.report_settings_strokechoice_side},
+                [2] = new string[] {"steparound", Properties.Resources.report_settings_strokechoice_steparound},
+                [4] = new string[] {"spin", Properties.Resources.table_spin_title},
+                [8] = new string[] {"technique", Properties.Resources.report_settings_strokechoice_technique},
+                [16] = new string[] {"placement", Properties.Resources.report_settings_strokechoice_placement},
+                [32] = new string[] {"table", Properties.Resources.table_large_tab_title},
+                [64] = new string[] {"service", Properties.Resources.report_settings_strokechoice_service},
+                [128] = new string[] {"number", Properties.Resources.report_settings_strokechoice_number}
+            };
 
-            GeneralStats = new Dictionary<int, string[]>();
-            GeneralStats[1] = new string[] { "rallylength", Properties.Resources.report_settings_generalchoice_rallylength };
-            GeneralStats[2] = new string[] { "matchdynamics", Properties.Resources.report_settings_generalchoice_matchdynamics };
-            GeneralStats[4] = new string[] { "transitionmatrix", Properties.Resources.report_settings_generalchoice_transitionmatrix };
-            GeneralStats[8] = new string[] { "techefficiency", Properties.Resources.report_settings_generalchoice_techefficiency };
+            GeneralStats = new Dictionary<int, string[]>
+            {
+                [1] = new string[] {"rallylength", Properties.Resources.report_settings_generalchoice_rallylength},
+                [2] = new string[] {"matchdynamics", Properties.Resources.report_settings_generalchoice_matchdynamics},
+                [4] =
+                new string[] {"transitionmatrix", Properties.Resources.report_settings_generalchoice_transitionmatrix},
+                [8] = new string[] {"techefficiency", Properties.Resources.report_settings_generalchoice_techefficiency}
+            };
 
             DisplayName = Properties.Resources.report_settings_window_title;
             AvailableCombis = new List<int>();
@@ -255,18 +260,6 @@ namespace TT.Viewer.ViewModels
 
             PropertyChanged += ReportSettingsViewModel_PropertyChanged;
             ReportGenerationQueueManager.ReportGenerated += ReportGenerationQueueManager_ReportGenerated;
-
-
-
-            //ni = new NotifyIcon()
-            //{
-            //    Icon = Properties.Resources.olive_letter_v_512,
-            //    Text = "test",
-            //    Visible = true
-            //};
-            //ni.BalloonTipText = "some text";
-            //ni.BalloonTipTitle = "some title";
-            //ni.ShowBalloonTip(30000);
         }
 
         private void ReportGenerationQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
@@ -547,7 +540,7 @@ namespace TT.Viewer.ViewModels
                 DialogCoordinator = null;
                 MatchManager = null;
                 Events = null;
-                //ReportGenerationQueueManager = null;
+                ReportGenerationQueueManager = null;
             }
         }
     }

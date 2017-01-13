@@ -124,4 +124,13 @@
   <data name="notification_generating" xml:space="preserve">
     <value>Generating Report ...</value>
   </data>
+  <data name="notification_generated_text" xml:space="preserve">
+    <value>Report has been generated. Click here to open it.</value>
+  </data>
+  <data name="notification_generated_title" xml:space="preserve">
+    <value>Report generation finished!</value>
+  </data>
+  <data name="notification_generated_doubleclick" xml:space="preserve">
+    <value>Double-click to open generated report</value>
+  </data>
 </root>
