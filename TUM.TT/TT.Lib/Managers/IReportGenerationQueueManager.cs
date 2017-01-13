@@ -10,6 +10,7 @@ namespace TT.Lib.Managers
     public interface IReportGenerationQueueManager
     {
         void Enqueue(IReportGenerator reportGenerator);
+        void SetReportUserPath(string userPath);
         void Start();
         void Stop();
         event EventHandler<ReportGeneratedEventArgs> ReportGenerated;

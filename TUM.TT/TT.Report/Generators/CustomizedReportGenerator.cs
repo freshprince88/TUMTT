@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace TT.Report.Generators
 {
@@ -19,7 +20,7 @@ namespace TT.Report.Generators
 
         public class SectionsAddedEventArgs
         {
-            public Report Report { get; set; }
+            public Report Report { get; }
 
             public SectionsAddedEventArgs(Report report)
             {
@@ -27,29 +28,29 @@ namespace TT.Report.Generators
             }
         }
 
-        private MatchPlayerToColorConverter matchPlayerToColorConverter;
+        private readonly MatchPlayerToColorConverter _matchPlayerToColorConverter;
 
         public bool Abort { get; set; }
         public Match Match { get; set; }
         public string CustomizationId { get; private set; }
         public EventHandler<SectionsAddedEventArgs> SectionsAdded;
 
-        private Dictionary<string, object> customization;
+        private Dictionary<string, object> _customization;
         public Dictionary<string, object> Customization {
             get
             {
-                return customization;
+                return _customization;
             }
             set
             {
-                customization = value;
+                _customization = value;
                 CustomizationId = (string)value["id"];
             }
         }
         
         public CustomizedReportGenerator()
         {
-            this.matchPlayerToColorConverter = new MatchPlayerToColorConverter();
+            this._matchPlayerToColorConverter = new MatchPlayerToColorConverter();
         }
 
         public void GenerateReport()
@@ -74,8 +75,8 @@ namespace TT.Report.Generators
         /// <returns>The generated report.</returns>
         public Report GenerateReport(Match match)
         {
-            var firstPlayerColor = matchPlayerToColorConverter.Convert(MatchPlayer.First, typeof(Color), null, System.Globalization.CultureInfo.CurrentCulture);
-            var secondPlayerColor = matchPlayerToColorConverter.Convert(MatchPlayer.Second, typeof(Color), null, System.Globalization.CultureInfo.CurrentCulture);
+            var firstPlayerColor = _matchPlayerToColorConverter.Convert(MatchPlayer.First, typeof(Color), null, System.Globalization.CultureInfo.CurrentCulture);
+            var secondPlayerColor = _matchPlayerToColorConverter.Convert(MatchPlayer.Second, typeof(Color), null, System.Globalization.CultureInfo.CurrentCulture);
 
             var plotStyle = new PlotStyle()
             {
@@ -94,12 +95,7 @@ namespace TT.Report.Generators
 
             report.Sections.Add(new MetadataSection()
             {
-                Subject = string.Format(
-                         "{0} {1}, {2} vs. {3}",
-                         match.Tournament,
-                         match.Round,
-                         match.FirstPlayer.Name,
-                         match.SecondPlayer.Name),
+                Subject = $"{match.Tournament} {match.Round}, {match.FirstPlayer.Name} vs. {match.SecondPlayer.Name}",
                 Title = "Table Tennis Performance Report",
                 Author = "TUM - Fakultät für Sport- und Gesundheitswissenschaft"
             });

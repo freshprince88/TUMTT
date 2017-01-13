@@ -161,6 +161,11 @@
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
     <Compile Include="Managers\IReportGenerationQueueManager.cs" />
     <Compile Include="Managers\ReportGenerationQueueManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
     <Compile Include="Util\MatchHashGenerator.cs" />
     <Compile Include="Util\ObservableSortedList.cs" />
@@ -216,6 +221,7 @@
   <ItemGroup>
     <Content Include="Libs\Zhucai.LambdaParser.dll" />
     <Content Include="Resources\Entypo-license.txt" />
+    <None Include="Resources\olive-letter-v-512.ico" />
     <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +271,13 @@
       <Project>{9f1fd7dd-1706-4327-89f1-722284fbbdb9}</Project>
       <Name>TT.Report</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

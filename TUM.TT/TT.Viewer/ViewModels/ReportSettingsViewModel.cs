@@ -16,6 +16,7 @@ using TT.Lib.Results;
 using TT.Report.Renderers;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 using TT.Lib.Events;
 using TT.Report.Generators;
 using TT.Models;
@@ -27,8 +28,9 @@ namespace TT.Viewer.ViewModels
         private IWindowManager WindowManager;
         private IDialogCoordinator DialogCoordinator;
         private string issuedReportId;
-        private Dictionary<string, object> generatedReport; 
-        
+        private Dictionary<string, object> generatedReport;
+        private NotifyIcon ni;
+
         public IMatchManager MatchManager { get; private set; }
         public IEventAggregator Events { get; private set; }
         public IReportGenerationQueueManager ReportGenerationQueueManager { get; private set; }        
@@ -252,17 +254,29 @@ namespace TT.Viewer.ViewModels
             ReportGenerationQueueManager.Start();
 
             PropertyChanged += ReportSettingsViewModel_PropertyChanged;
-            ReportGenerationQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
+            ReportGenerationQueueManager.ReportGenerated += ReportGenerationQueueManager_ReportGenerated;
+
+
+
+            //ni = new NotifyIcon()
+            //{
+            //    Icon = Properties.Resources.olive_letter_v_512,
+            //    Text = "test",
+            //    Visible = true
+            //};
+            //ni.BalloonTipText = "some text";
+            //ni.BalloonTipTitle = "some title";
+            //ni.ShowBalloonTip(30000);
         }
 
-        private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
+        private void ReportGenerationQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
         {
-            Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.ReportPath);
+            Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.ReportPathTemp);
             generatedReport["match"] = e.MatchHash;
             generatedReport["reportid"] = e.ReportSettingsCode;
-            generatedReport["path"] = e.ReportPath;
+            generatedReport["path"] = e.ReportPathTemp;
             if (Events != null) // this is null in some scenarios 
-                Events.PublishOnUIThread(new ReportPreviewChangedEvent(e.ReportPath));
+                Events.PublishOnUIThread(new ReportPreviewChangedEvent(e.ReportPathTemp));
         }
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -322,19 +336,6 @@ namespace TT.Viewer.ViewModels
                 Debug.WriteLine("Saving generated report failed. Report neither generated nor issued.");
             else
             {
-                var sleepAbortCounter = 0;
-                while ((generatedReport.GetValueOrDefault("reportid") == null || generatedReport.GetValueOrDefault("match") == null) || ((string)generatedReport["match"] + (string)generatedReport["reportid"] != issuedReportId))
-                {
-                    Thread.Sleep(50);
-                    sleepAbortCounter++;
-                    if (sleepAbortCounter > 100)
-                    {
-                        Debug.WriteLine("Saving generated report failed. Timeout (5 s) for report generation reached.");
-                        if (exitAfter)
-                            OnDeactivate(true);
-                        yield break;
-                    }
-                }
                 var dialog = new SaveFileDialogResult()
                 {
                     Title = "Choose a target for PDF report",
@@ -342,17 +343,8 @@ namespace TT.Viewer.ViewModels
                     DefaultFileName = MatchManager.Match.DefaultFilename(),
                 };
                 yield return dialog;
-
-                var userChosenPath = dialog.Result;
-                Debug.WriteLine("userChosenPath={0}", userChosenPath, "");
-                try
-                {
-                    File.Copy((string)generatedReport["path"], userChosenPath, true);
-                    Process.Start(userChosenPath);
-                } catch (Exception)
-                { 
-                    // TODO alert when opened in another process 
-                }
+                
+                ReportGenerationQueueManager.SetReportUserPath(dialog.Result);
             }
             if (exitAfter)
                 OnDeactivate(true);
@@ -546,7 +538,7 @@ namespace TT.Viewer.ViewModels
             if (close)
             {
                 PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
-                ReportGenerationQueueManager.ReportGenerated -= ReportSettingsQueueManager_ReportGenerated;
+                ReportGenerationQueueManager.ReportGenerated -= ReportGenerationQueueManager_ReportGenerated;
                 Events.Unsubscribe(this);
 
                 ReportGenerationQueueManager.Stop();
@@ -555,7 +547,7 @@ namespace TT.Viewer.ViewModels
                 DialogCoordinator = null;
                 MatchManager = null;
                 Events = null;
-                ReportGenerationQueueManager = null;
+                //ReportGenerationQueueManager = null;
             }
         }
     }

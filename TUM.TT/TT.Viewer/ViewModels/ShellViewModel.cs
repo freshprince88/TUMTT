@@ -6,11 +6,13 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Models;
+using Application = System.Windows.Application;
 
 
 namespace TT.Viewer.ViewModels
