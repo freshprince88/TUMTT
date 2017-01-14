@@ -3,6 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -39,6 +40,10 @@ namespace TT.Viewer.ViewModels
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
+
+            // for translation testing - don't set for production!
+            //CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("de-DE");
+            //CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("de-DE");
         }
 
         #region Caliburn hooks

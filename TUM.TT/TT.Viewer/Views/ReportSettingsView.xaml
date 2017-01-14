@@ -113,7 +113,7 @@
 
                             <Label Grid.Row="0" Content="{Binding Path=report_settings_setchoice_title, Source={StaticResource LocalizedStrings}}" FontWeight="DemiBold"/>
                             <WrapPanel Grid.Row="1" x:Name="ReportSettingsGridContentSetsToggleButtons" Margin="5 0 0 0">
-                                <ToggleButton Width="40" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                <ToggleButton Width="40" Height="30" Style="{DynamicResource MetroAccentRoundedRectToggleButtonStyle}"
                                              IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
                                     <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
                                 </ToggleButton>
@@ -152,7 +152,7 @@
                                               Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=7}">
                                     <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
                                 </ToggleButton>
-                                <ToggleButton x:Name="PlusCombi" Width="64" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Click="PlusCombi_Click">
+                                <ToggleButton x:Name="PlusCombi" Width="64" Height="30" Style="{DynamicResource MetroAccentRoundedRectToggleButtonStyle}" Click="PlusCombi_Click">
                                     <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_pluscombi, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
                                 </ToggleButton>
                             </WrapPanel>
@@ -467,25 +467,32 @@
             <Border x:Name="PlusCombiPopupBorder" BorderBrush="Gray" BorderThickness="1">
                 <Grid Background="White">
                     <WrapPanel x:Name="PlusCombiPopupToggleButtons">
-                        <ToggleButton Tag="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton Tag="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                      Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=1}">
                             <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
                         </ToggleButton>
-                        <ToggleButton Tag="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton Tag="2" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                      Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=2}">
                             <TextBlock FontSize="12"><Run Text="2"/></TextBlock>
                         </ToggleButton>
-                        <ToggleButton Tag="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton Tag="3" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                      Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=3}">
                             <TextBlock FontSize="12"><Run Text="3"/></TextBlock>
                         </ToggleButton>
-                        <ToggleButton Tag="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton Tag="4" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                      Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=4}">
                             <TextBlock FontSize="12"><Run Text="4"/></TextBlock>
                         </ToggleButton>
-                        <ToggleButton Tag="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton Tag="5" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                      Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=5}">
                             <TextBlock FontSize="12"><Run Text="5"/></TextBlock>
                         </ToggleButton>
-                        <ToggleButton Tag="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton Tag="6" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                      Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=6}">
                             <TextBlock FontSize="12"><Run Text="6"/></TextBlock>
                         </ToggleButton>
-                        <ToggleButton Tag="7" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}">
+                        <ToggleButton Tag="7" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                                      Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=7}">
                             <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
                         </ToggleButton>
                         <Separator Margin="2"/>

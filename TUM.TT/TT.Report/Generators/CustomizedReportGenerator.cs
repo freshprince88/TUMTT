@@ -96,14 +96,14 @@ namespace TT.Report.Generators
             report.Sections.Add(new MetadataSection()
             {
                 Subject = $"{match.Tournament} {match.Round}, {match.FirstPlayer.Name} vs. {match.SecondPlayer.Name}",
-                Title = "Table Tennis Performance Report",
+                Title = Properties.Resources.report_title,
                 Author = "TUM - Fakultät für Sport- und Gesundheitswissenschaft"
             });
 
             report.Sections.Add(
                  new HeaderSection()
                  {
-                     Headline = "Table Tennis Performance Report",
+                     Headline = Properties.Resources.report_header_headline,
                      Round = match.Round,
                      Tournament = match.Tournament,
                      Date = match.DateTime

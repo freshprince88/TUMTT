@@ -402,4 +402,64 @@
   <data name="sets_multiple" xml:space="preserve">
     <value>Sätze</value>
   </data>
+  <data name="placement_error_short" xml:space="preserve">
+    <value>F</value>
+  </data>
+  <data name="placement_halflong_short" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="placement_long_short" xml:space="preserve">
+    <value>l</value>
+  </data>
+  <data name="placement_short_short" xml:space="preserve">
+    <value>k</value>
+  </data>
+  <data name="report_header_headline" xml:space="preserve">
+    <value>Tischtennis Leistungsbericht</value>
+  </data>
+  <data name="report_title" xml:space="preserve">
+    <value>Tischtennis Leistungsbericht</value>
+  </data>
+  <data name="section_rallylength_dist_title" xml:space="preserve">
+    <value>Verteilung</value>
+  </data>
+  <data name="section_technique_block_diag" xml:space="preserve">
+    <value>Block
+(diagonal)</value>
+  </data>
+  <data name="section_technique_block_middle" xml:space="preserve">
+    <value>Block
+(Mitte)</value>
+  </data>
+  <data name="section_technique_block_parallel" xml:space="preserve">
+    <value>Block
+(parallel)</value>
+  </data>
+  <data name="section_technique_push_halflong" xml:space="preserve">
+    <value>Schupf
+(halblang)</value>
+  </data>
+  <data name="section_technique_push_long" xml:space="preserve">
+    <value>Schupf
+(lang)</value>
+  </data>
+  <data name="section_technique_push_short" xml:space="preserve">
+    <value>Schupf
+(kurz)</value>
+  </data>
+  <data name="section_technique_topspin_diag" xml:space="preserve">
+    <value>Topspin
+(diagonal)</value>
+  </data>
+  <data name="section_technique_topspin_middle" xml:space="preserve">
+    <value>Topspin
+(Mitte)</value>
+  </data>
+  <data name="section_technique_topspin_parallel" xml:space="preserve">
+    <value>Topspin
+(parallel)</value>
+  </data>
+  <data name="technique_label_short" xml:space="preserve">
+    <value>T</value>
+  </data>
 </root>

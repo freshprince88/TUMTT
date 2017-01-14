@@ -61,6 +61,60 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E.
+        /// </summary>
+        public static string placement_error_short {
+            get {
+                return ResourceManager.GetString("placement_error_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to h.
+        /// </summary>
+        public static string placement_halflong_short {
+            get {
+                return ResourceManager.GetString("placement_halflong_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to l.
+        /// </summary>
+        public static string placement_long_short {
+            get {
+                return ResourceManager.GetString("placement_long_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        public static string placement_short_short {
+            get {
+                return ResourceManager.GetString("placement_short_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Table Tennis Performance Report.
+        /// </summary>
+        public static string report_header_headline {
+            get {
+                return ResourceManager.GetString("report_header_headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Table Tennis Performance Report.
+        /// </summary>
+        public static string report_title {
+            get {
+                return ResourceManager.GetString("report_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comp. Perf..
         /// </summary>
         public static string section_basicinfo_compref {
@@ -520,6 +574,36 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Block
+        ///(diagonal).
+        /// </summary>
+        public static string section_technique_block_diag {
+            get {
+                return ResourceManager.GetString("section_technique_block_diag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block
+        ///(Middle).
+        /// </summary>
+        public static string section_technique_block_middle {
+            get {
+                return ResourceManager.GetString("section_technique_block_middle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block
+        ///(parallel).
+        /// </summary>
+        public static string section_technique_block_parallel {
+            get {
+                return ResourceManager.GetString("section_technique_block_parallel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BlockChop.
         /// </summary>
         public static string section_technique_blockchop {
@@ -601,6 +685,36 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Push
+        ///(half-long).
+        /// </summary>
+        public static string section_technique_push_halflong {
+            get {
+                return ResourceManager.GetString("section_technique_push_halflong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Push
+        ///(long).
+        /// </summary>
+        public static string section_technique_push_long {
+            get {
+                return ResourceManager.GetString("section_technique_push_long", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Push
+        ///(short).
+        /// </summary>
+        public static string section_technique_push_short {
+            get {
+                return ResourceManager.GetString("section_technique_push_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PushAggressive.
         /// </summary>
         public static string section_technique_pushaggressive {
@@ -633,6 +747,36 @@ namespace TT.Report.Properties {
         public static string section_technique_topspin {
             get {
                 return ResourceManager.GetString("section_technique_topspin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topspin
+        ///(diagonal).
+        /// </summary>
+        public static string section_technique_topspin_diag {
+            get {
+                return ResourceManager.GetString("section_technique_topspin_diag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topspin
+        ///(Middle).
+        /// </summary>
+        public static string section_technique_topspin_middle {
+            get {
+                return ResourceManager.GetString("section_technique_topspin_middle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topspin
+        ///(parallel).
+        /// </summary>
+        public static string section_technique_topspin_parallel {
+            get {
+                return ResourceManager.GetString("section_technique_topspin_parallel", resourceCulture);
             }
         }
         
@@ -831,6 +975,15 @@ namespace TT.Report.Properties {
         public static string technique_flip_short {
             get {
                 return ResourceManager.GetString("technique_flip_short", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T.
+        /// </summary>
+        public static string technique_label_short {
+            get {
+                return ResourceManager.GetString("technique_label_short", resourceCulture);
             }
         }
         

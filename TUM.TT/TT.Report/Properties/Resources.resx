@@ -405,4 +405,61 @@
   <data name="sets_multiple" xml:space="preserve">
     <value>Sets</value>
   </data>
+  <data name="placement_error_short" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="placement_halflong_short" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="placement_long_short" xml:space="preserve">
+    <value>l</value>
+  </data>
+  <data name="placement_short_short" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="report_header_headline" xml:space="preserve">
+    <value>Table Tennis Performance Report</value>
+  </data>
+  <data name="report_title" xml:space="preserve">
+    <value>Table Tennis Performance Report</value>
+  </data>
+  <data name="section_technique_block_diag" xml:space="preserve">
+    <value>Block
+(diagonal)</value>
+  </data>
+  <data name="section_technique_block_middle" xml:space="preserve">
+    <value>Block
+(Middle)</value>
+  </data>
+  <data name="section_technique_block_parallel" xml:space="preserve">
+    <value>Block
+(parallel)</value>
+  </data>
+  <data name="section_technique_push_halflong" xml:space="preserve">
+    <value>Push
+(half-long)</value>
+  </data>
+  <data name="section_technique_push_long" xml:space="preserve">
+    <value>Push
+(long)</value>
+  </data>
+  <data name="section_technique_push_short" xml:space="preserve">
+    <value>Push
+(short)</value>
+  </data>
+  <data name="section_technique_topspin_diag" xml:space="preserve">
+    <value>Topspin
+(diagonal)</value>
+  </data>
+  <data name="section_technique_topspin_middle" xml:space="preserve">
+    <value>Topspin
+(Middle)</value>
+  </data>
+  <data name="section_technique_topspin_parallel" xml:space="preserve">
+    <value>Topspin
+(parallel)</value>
+  </data>
+  <data name="technique_label_short" xml:space="preserve">
+    <value>T</value>
+  </data>
 </root>
