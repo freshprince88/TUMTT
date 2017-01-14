@@ -56,6 +56,22 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        private bool _crunchTimeChoice;
+        public bool CrunchTimeChoice
+        {
+            get
+            {
+                return _crunchTimeChoice;
+            }
+            set
+            {
+                _crunchTimeChoice = value;
+
+                Debug.WriteLine("crunch time choice: {0}", _crunchTimeChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
         private int setChoice;
         public int SetChoice
         {
@@ -322,14 +338,14 @@ namespace TT.Viewer.ViewModels
         {
             Debug.WriteLine("OnOkClick");
             Save();
-            ReportGenerationQueueManager.Stop(true);
+            ReportGenerationQueueManager.Stop(true, true);
             TryClose();
         }
 
         public void OnCancelClick()
         {
             Debug.WriteLine("OnCancelClick");
-            ReportGenerationQueueManager.Stop(true);
+            ReportGenerationQueueManager.Stop(true, false);
             TryClose();
         }
 
@@ -338,13 +354,13 @@ namespace TT.Viewer.ViewModels
             Debug.WriteLine("OnOkGenerateClick");
             Save();
 
-            foreach (var r in SaveGeneratedReport(false))
+            foreach (var r in SaveGeneratedReport())
                 yield return r;
 
             TryClose();
         }
 
-        public IEnumerable<IResult> SaveGeneratedReport(bool exitAfter)
+        public IEnumerable<IResult> SaveGeneratedReport()
         {
             if (issuedReportId == null && generatedReport.GetValueOrDefault("reportid") == null)
                 Debug.WriteLine("Saving generated report failed. Report neither generated nor issued.");
@@ -360,8 +376,6 @@ namespace TT.Viewer.ViewModels
                 
                 ReportGenerationQueueManager.ReportPathUser = dialog.Result;
             }
-            if (exitAfter)
-                OnDeactivate(true);
         }
 
         private Dictionary<string, object> GetCustomizationDictionary()
@@ -389,6 +403,12 @@ namespace TT.Viewer.ViewModels
             // 'all' sets
             if ((SetChoice & 1) == 1)
                 customizationSets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
+
+            // 'crunch time sets
+            if (CrunchTimeChoice)
+            {
+                customizationSets["crunchtime"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies.Where(r => r.CurrentRallyScore.First + r.CurrentRallyScore.Second >= 16));
+            }
 
             // sets 1-7
             foreach (var set in Sets.Keys)
@@ -425,6 +445,8 @@ namespace TT.Viewer.ViewModels
                 customizationSets[combiName.Substring(0, combiName.Length - 1)] = rallyList;
                 customizationId += combi.ToString("X");
             }
+
+            customizationId += "B" + (CrunchTimeChoice ? 1 : 0);
 
             customizations["sets"] = customizationSets;
 
@@ -515,6 +537,7 @@ namespace TT.Viewer.ViewModels
             Properties.Settings.Default.ReportGenerator_AllStatsChoice = AllStatsChoice;
             Properties.Settings.Default.ReportGenerator_ExpandState = ExpandState;
             Properties.Settings.Default.ReportGenerator_GeneralChoice = GeneralChoice;
+            Properties.Settings.Default.ReportGenerator_CrunchTimeChoice = CrunchTimeChoice;
         }
 
         private void Load()
@@ -529,6 +552,7 @@ namespace TT.Viewer.ViewModels
             AllStatsChoice = Properties.Settings.Default.ReportGenerator_AllStatsChoice;
             ExpandState = Properties.Settings.Default.ReportGenerator_ExpandState;
             GeneralChoice = Properties.Settings.Default.ReportGenerator_GeneralChoice;
+            CrunchTimeChoice = Properties.Settings.Default.ReportGenerator_CrunchTimeChoice;
 
             var combis = Properties.Settings.Default.ReportGenerator_Combis;
             if (combis != null) AvailableCombis.AddRange(combis);
@@ -541,18 +565,23 @@ namespace TT.Viewer.ViewModels
             base.OnDeactivate(close);
             if (close)
             {
-                PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
-                ReportGenerationQueueManager.ReportGenerated -= ReportGenerationQueueManager_ReportGenerated;
-                Events.Unsubscribe(this);
-
-                ReportGenerationQueueManager.Stop(false);
-
-                WindowManager = null;
-                DialogCoordinator = null;
-                MatchManager = null;
-                Events = null;
-                ReportGenerationQueueManager = null;
+                DiscardViewModel(false);
             }
+        }
+
+        public void DiscardViewModel(bool finishLastReport)
+        {
+            PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
+            ReportGenerationQueueManager.ReportGenerated -= ReportGenerationQueueManager_ReportGenerated;
+            Events.Unsubscribe(this);
+
+            ReportGenerationQueueManager.Stop(false, finishLastReport);
+
+            WindowManager = null;
+            DialogCoordinator = null;
+            MatchManager = null;
+            Events = null;
+            ReportGenerationQueueManager = null;
         }
     }
 }

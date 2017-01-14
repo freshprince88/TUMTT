@@ -325,4 +325,7 @@
     <value>Kein Match geladen.
 Keine Vorschau möglich.</value>
   </data>
+  <data name="report_settings_setchoice_crunchtime" xml:space="preserve">
+    <value>Crunch</value>
+  </data>
 </root>

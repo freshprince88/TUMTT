@@ -205,6 +205,15 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You haven&apos;t selected any statistics for any strokes, thus the section for player {0} is empty..
+        /// </summary>
+        public static string section_empty_warning {
+            get {
+                return ResourceManager.GetString("section_empty_warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By serving player.
         /// </summary>
         public static string section_matchdynamics_byplayer {
@@ -831,6 +840,15 @@ namespace TT.Report.Properties {
         public static string sets_all {
             get {
                 return ResourceManager.GetString("sets_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crunch time.
+        /// </summary>
+        public static string sets_crunchtime {
+            get {
+                return ResourceManager.GetString("sets_crunchtime", resourceCulture);
             }
         }
         

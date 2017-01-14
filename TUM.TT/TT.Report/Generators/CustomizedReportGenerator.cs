@@ -136,7 +136,11 @@ namespace TT.Report.Generators
                 {
                     // add sections for requested players (1/2)
                     report.Sections.Add(new PartSection(Properties.Resources.section_part_player, p as Player));
+                    var sectionsCount = report.Sections.Count;
+
                     AddStrokeSections(report, plotStyle, match, p);
+                    if (sectionsCount == report.Sections.Count)
+                        report.Sections.Add(new SectionEmptyWarningSection(p as Player));
                 }
                 else if (p is List<Player>)
                 {

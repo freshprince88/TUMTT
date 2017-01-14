@@ -462,4 +462,10 @@
   <data name="technique_label_short" xml:space="preserve">
     <value>T</value>
   </data>
+  <data name="section_empty_warning" xml:space="preserve">
+    <value>You haven't selected any statistics for any strokes, thus the section for player {0} is empty.</value>
+  </data>
+  <data name="sets_crunchtime" xml:space="preserve">
+    <value>Crunch time</value>
+  </data>
 </root>

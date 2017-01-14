@@ -114,6 +114,11 @@ namespace TT.Report
         /// </summary>
         /// <param name="section">The section</param>
         void Visit(LastStrokeServiceSection section);
-        
+
+        /// <summary>
+        /// Visits the section that warns about being an empty section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(SectionEmptyWarningSection section);
     }
 }

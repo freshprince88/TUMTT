@@ -173,7 +173,9 @@ namespace TT.Viewer.ViewModels
         {
             var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator);
             reportVm.GenerateReport();
-            return reportVm.SaveGeneratedReport(true);
+            foreach (var res in reportVm.SaveGeneratedReport())
+                yield return res;
+            reportVm.DiscardViewModel(true);
         }
 
         #endregion
@@ -189,6 +191,10 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanShowPlayer);
             NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
+
+            var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator);
+            reportVm.GenerateReport();
+            reportVm.DiscardViewModel(true);
         }
         
         public void Handle(ReportPreviewChangedEvent message)

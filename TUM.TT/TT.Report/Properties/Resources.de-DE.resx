@@ -462,4 +462,10 @@
   <data name="technique_label_short" xml:space="preserve">
     <value>T</value>
   </data>
+  <data name="section_empty_warning" xml:space="preserve">
+    <value>Sie haben keine Statistiken für einzelne Schläge ausgewählt, deshalb ist der Spielerteil für {0} leer.</value>
+  </data>
+  <data name="sets_crunchtime" xml:space="preserve">
+    <value>Crunch Time</value>
+  </data>
 </root>

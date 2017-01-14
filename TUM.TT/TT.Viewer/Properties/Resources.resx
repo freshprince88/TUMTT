@@ -332,4 +332,7 @@
     <value>No match loaded.
 Preview not available.</value>
   </data>
+  <data name="report_settings_setchoice_crunchtime" xml:space="preserve">
+    <value>Crunch</value>
+  </data>
 </root>

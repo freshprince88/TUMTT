@@ -87,6 +87,11 @@ namespace TT.Report.Renderers
         private static readonly Color SecondPlayerShadingColor = Color.Parse("0x44C0504D");
 
         /// <summary>
+        /// The color for italic warning strings.
+        /// </summary>
+        private static readonly Color WarningColor = Color.Parse("0xFF9C9C9C");
+
+        /// <summary>
         /// Indent for tables.
         /// </summary>
         private static readonly Unit TableIndent = Unit.FromCentimeter(0.25);
@@ -649,6 +654,11 @@ namespace TT.Report.Renderers
         {
         }
 
+        public void Visit(SectionEmptyWarningSection section)
+        {
+            Document.LastSection.AddParagraph(string.Format(Properties.Resources.section_empty_warning, args: section.Player.Name), OurStyleNames.Warning);
+        }
+
         /// <summary>
         /// Saves the rendered PDF.
         /// </summary>
@@ -758,6 +768,14 @@ namespace TT.Report.Renderers
             setName.ParagraphFormat.SpaceAfter = 5;
             setName.ParagraphFormat.Font.Size = 16;
             setName.ParagraphFormat.KeepWithNext = true;
+
+            var warning = this.Document.Styles.AddStyle(
+                OurStyleNames.Warning, StyleNames.Normal);
+            warning.Font.Size = 14;
+            warning.Font.Italic = true;
+            warning.Font.Color = WarningColor;
+            warning.ParagraphFormat.SpaceBefore = 30;
+            warning.ParagraphFormat.Alignment = ParagraphAlignment.Center;
         }
 
         /// <summary>
@@ -1134,7 +1152,7 @@ namespace TT.Report.Renderers
         }
 
         private Table AddItemsToTable<T>(List<T> items,
-            List<string> setNumbers,
+            List<string> setTitles,
             Func<T, int, int, string> itemToTempFilePathFunction,
             int normalWidth,
             int smallWidth,
@@ -1169,7 +1187,7 @@ namespace TT.Report.Renderers
             }
 
             int cellAmount;
-            if (setNumbers != null)
+            if (setTitles != null)
                 cellAmount = (tableItemsCount % 2 == 1 ? (tableItemsCount + 1) : tableItemsCount) * 2;
             else
                 cellAmount = tableItemsCount + (tableItemsCount % 2 == 1 ? 1 : 0);
@@ -1179,13 +1197,13 @@ namespace TT.Report.Renderers
             int i = 0;
             for (var c = 0; c < cellAmount; c++)
             {
-                var set = setNumbers != null ? setNumbers.ElementAtOrDefault(i) : null;
+                var set = setTitles?.ElementAtOrDefault(i);
 
                 int rowIndex = c % 2;
                 if (rowIndex == 0)
                     row = table.AddRow();
 
-                if (setNumbers != null)
+                if (setTitles != null)
                 {
                     if (c % 4 == 0 || c % 4 == 1)
                     {
@@ -1200,7 +1218,7 @@ namespace TT.Report.Renderers
                 {
                     if (set != null)
                     {
-                        var setHeading = row.Cells[rowIndex].AddParagraph(GetSetTitleString(set));
+                        var setHeading = row.Cells[rowIndex].AddParagraph(set);
                         setHeading.Style = OurStyleNames.SetName;
                     }
                     if (rowIndex == 1)
@@ -1229,7 +1247,7 @@ namespace TT.Report.Renderers
             }
             if (multipleItems && row.Cells.Count == 1)
             {
-                if (setNumbers != null)
+                if (setTitles != null)
                     table.Rows[row.Index - 1].Cells[0].MergeRight = 1;
                 row.Cells[0].MergeRight = 1;
             }
@@ -1238,7 +1256,7 @@ namespace TT.Report.Renderers
         }
 
         private Table AddItemsToTwoColTable<T>(List<T> items,
-            List<string> setNumbers,
+            List<string> setTitles,
             Func<T, int, int, string> firstColItemToTempFilePathFunction,
             Func<T, int, int, string> secondColItemToTempFilePathFunction,
             int firstColWidth,
@@ -1269,7 +1287,7 @@ namespace TT.Report.Renderers
                 var colItemsList = (List<T>)(object)colItems;
 
                 Row row = table.AddRow();
-                var heading = row.Cells[0].AddParagraph(GetSetTitleString(setNumbers[rowIndex]));
+                var heading = row.Cells[0].AddParagraph(setTitles[rowIndex]);
                 heading.Style = OurStyleNames.SetName;
                 row.Cells[0].MergeRight = 1;
                 row.KeepWith = 1;
@@ -1299,20 +1317,6 @@ namespace TT.Report.Renderers
             }
 
             return table;
-        }
-
-        private string GetSetTitleString(string setName)
-        {
-            if (setName == "all")
-                return Properties.Resources.sets_all;
-            else if (setName.Contains(","))
-            {
-                return string.Format("{0} {1}", Properties.Resources.sets_multiple, setName.Replace(',', '+'));
-            }
-            else
-            {
-                return string.Format("{0} {1}", Properties.Resources.sets_one, setName);
-            }
         }
 
         /// <summary>

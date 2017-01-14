@@ -15,7 +15,7 @@ using TT.Report.Views;
 
 namespace TT.Report.Sections
 {
-    public class TechniqueSection : ExistingStatisticsSection, IReportSection
+    public class TechniqueSection : ExistingStatisticsSection
     {
         public TechniqueSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
         {
@@ -175,14 +175,15 @@ namespace TT.Report.Sections
                         plot.Axes.Add(categoryAxis);
                         plot.Axes.Add(linearAxis);
 
+                        var setTitle = GetSetTitleString(set);
                         var sectionImages = new List<object>() { plot };
-                        if (ExistingStatisticsImageBitmapFrames.ContainsKey(set))
-                            sectionImages.Add(ExistingStatisticsImageBitmapFrames[set]);
+                        if (ExistingStatisticsImageBitmapFrames.ContainsKey(setTitle))
+                            sectionImages.Add(ExistingStatisticsImageBitmapFrames[setTitle]);
                         else
                             sectionImages.Add(null);
-                        ExistingStatisticsImageBitmapFrames[set] = sectionImages;
+                        ExistingStatisticsImageBitmapFrames[setTitle] = sectionImages;
 
-                        Debug.WriteLine("Got Technique plot (set={0})", args: set);
+                        Debug.WriteLine("Got Technique plot (set={0})", args: setTitle);
                     }
                     Debug.WriteLine("Technique section for stroke {0} of set {1} ready.", strokeNumber, set);
                 }

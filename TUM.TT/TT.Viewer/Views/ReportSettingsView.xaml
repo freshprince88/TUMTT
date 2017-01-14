@@ -117,6 +117,10 @@
                                              IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}">
                                     <TextBlock FontSize="12"><Run Text="{Binding Path=report_settings_setchoice_all, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
                                 </ToggleButton>
+                                <ToggleButton Width="{Binding ActualWidth, ElementName=CrunchTimeText}" Height="30" Style="{DynamicResource MetroAccentRoundedRectToggleButtonStyle}"
+                                             IsChecked="{Binding CrunchTimeChoice, Mode=TwoWay}">
+                                    <TextBlock Padding="12 0" FontSize="12" x:Name="CrunchTimeText"><Run Text="{Binding Path=report_settings_setchoice_crunchtime, Source={StaticResource LocalizedStrings}, Mode=OneWay}"/></TextBlock>
+                                </ToggleButton>
                                 <ToggleButton Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
                                               IsChecked="{Binding SetChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" 
                                               Visibility="{Binding Sets.Keys, Converter={StaticResource CollectionContainsToVisibilityConverter}, ConverterParameter=1}">
@@ -365,9 +369,9 @@
                                         <CheckBox Grid.Row="2" Grid.Column="1" Content="{Binding Path=StrokeStats[32][1]}" Margin="1"
                                                   Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
                                                   IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=32}" />
-                                        <CheckBox Grid.Row="3" Grid.Column="0" Content="{Binding Path=StrokeStats[64][1]}" Margin="1"
+              <!-- "Service statistics" <CheckBox Grid.Row="3" Grid.Column="0" Content="{Binding Path=StrokeStats[64][1]}" Margin="1"
                                                   Checked="LCheckBox_Checked" Unchecked="LCheckBox_Checked"
-                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=64}" />
+                                                  IsChecked="{Binding LastStatsChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=64}"/>-->
                                     </Grid>
                                 </Expander>
 

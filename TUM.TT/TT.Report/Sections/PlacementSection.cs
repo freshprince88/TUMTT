@@ -4,7 +4,7 @@ using TT.Report.Views;
 
 namespace TT.Report.Sections
 {
-    public class PlacementSection : ExistingStatisticsSection, IReportSection
+    public class PlacementSection : ExistingStatisticsSection
     {
         public PlacementSection(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
         {

@@ -12,6 +12,8 @@ namespace TT.Report.Sections
         {
             if (setName == "all")
                 return Properties.Resources.sets_all;
+            else if (setName == "crunchtime")
+                return Properties.Resources.sets_crunchtime;
             else if (setName.Contains(","))
             {
                 return string.Format("{0} {1}", Properties.Resources.sets_multiple, setName.Replace(',', '+'));

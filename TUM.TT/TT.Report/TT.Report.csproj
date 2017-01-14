@@ -112,6 +112,7 @@
     <Compile Include="Generators\IReportGenerator.cs" />
     <Compile Include="Sections\BaseSection.cs" />
     <Compile Include="Sections\ExistingStatisticsSection.cs" />
+    <Compile Include="Sections\SectionEmptyWarningSection.cs" />
     <Compile Include="Sections\StrokeStatsHeadingSection.cs" />
     <Compile Include="Sections\PartSection.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -25,5 +25,10 @@ namespace TT.Report.Renderers.Pdf
         /// Name of the style for the set names.
         /// </summary>
         public const string SetName = "SetName";
+
+        /// <summary>
+        /// Name of the style for warnings.
+        /// </summary>
+        public const string Warning = "Warning";
     }
 }

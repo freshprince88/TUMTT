@@ -343,6 +343,15 @@ namespace TT.Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crunch.
+        /// </summary>
+        public static string report_settings_setchoice_crunchtime {
+            get {
+                return ResourceManager.GetString("report_settings_setchoice_crunchtime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to +Combi.
         /// </summary>
         public static string report_settings_setchoice_pluscombi {

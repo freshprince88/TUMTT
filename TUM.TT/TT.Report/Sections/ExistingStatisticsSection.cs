@@ -13,7 +13,7 @@ using TT.Report.Views;
 
 namespace TT.Report.Sections
 {
-    public abstract class ExistingStatisticsSection
+    public abstract class ExistingStatisticsSection : BaseSection
     {
         public IDictionary<string, object> ExistingStatisticsImageBitmapFrames { get; private set; }
 
@@ -44,7 +44,6 @@ namespace TT.Report.Sections
                     SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
                 };
 
-
                 try
                 {
                     var view = (UserControl)Activator.CreateInstance(v);
@@ -69,7 +68,8 @@ namespace TT.Report.Sections
                     var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
                     bmp.Render(view);
 
-                    ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
+                    var setTitle = GetSetTitleString(set);
+                    ExistingStatisticsImageBitmapFrames[setTitle] = (BitmapFrame.Create(bmp));
                 }
                 catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
                 {

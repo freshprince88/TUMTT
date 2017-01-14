@@ -90,9 +90,9 @@ namespace TT.Lib.Managers
             }
         }
 
-        public void Stop(bool hideNotifyIcon)
+        public void Stop(bool hideNotifyIcon, bool runOnce)
         {
-            _queueWorker.Run = false;
+            _queueWorker.RunOnce = true;
             if (hideNotifyIcon)
                 _repGenNotification.Visible = false;
         }
@@ -113,6 +113,7 @@ namespace TT.Lib.Managers
             private CustomizedReportGenerator _custRepGen;
             private string _renderedReportPath;
             internal bool Run;
+            internal bool RunOnce;
             private static int _genId;
 
             internal QueueWorker(ReportGenerationQueueManager man)
@@ -132,7 +133,7 @@ namespace TT.Lib.Managers
 
             internal void WorkTheQueue()
             {
-                while (Run || _man._repGenNotification != null && _man._repGenNotification.Visible)
+                while (Run || RunOnce || _man._repGenNotification != null && _man._repGenNotification.Visible)
                 {
                     if (_workList.Count != 0)
                     {
@@ -198,6 +199,8 @@ namespace TT.Lib.Managers
                     if (_man.ReportPathUser != null)
                         CopyRenderedReportToUserPath();
 
+                    if (RunOnce)
+                        RunOnce = false;
                     Thread.Sleep(500);
                 }
             }
