@@ -100,8 +100,8 @@
                                         <Binding Path="player_2" Source="{StaticResource LocalizedStrings}" />
                                     </PriorityBinding>
                                 </CheckBox>
-                                <CheckBox Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
-                                             IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}"/>
+                                <!--<CheckBox Content="{Binding Path=report_settings_playerchoice_both, Source={StaticResource LocalizedStrings}}" Margin="8 0 0 0" FontStyle="Italic"
+                                             IsChecked="{Binding PlayerChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}"/>-->
                             </WrapPanel>
                         </Grid>
 
