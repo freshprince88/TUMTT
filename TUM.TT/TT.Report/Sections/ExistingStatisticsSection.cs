@@ -7,9 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TT.Models;
-using TT.Models.Statistics;
 using TT.Report.ViewModels;
-using TT.Report.Views;
 
 namespace TT.Report.Sections
 {
@@ -17,17 +15,15 @@ namespace TT.Report.Sections
     {
         public IDictionary<string, object> ExistingStatisticsImageBitmapFrames { get; private set; }
 
-        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, System.Type v)
+        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, Type v)
         {
-            this.ExistingStatisticsImageBitmapFrames = new Dictionary<string, object>();
+            ExistingStatisticsImageBitmapFrames = new Dictionary<string, object>();
 
             var player = MatchPlayer.None;
             if (match.FirstPlayer.Equals(p))
                 player = MatchPlayer.First;
             else if (match.SecondPlayer.Equals(p))
                 player = MatchPlayer.Second;
-
-            var statistics = new MatchStatistics(match);
 
             foreach (var set in sets.Keys)
             {
@@ -69,7 +65,7 @@ namespace TT.Report.Sections
                     bmp.Render(view);
 
                     var setTitle = GetSetTitleString(set);
-                    ExistingStatisticsImageBitmapFrames[setTitle] = (BitmapFrame.Create(bmp));
+                    ExistingStatisticsImageBitmapFrames[setTitle] = BitmapFrame.Create(bmp);
                 }
                 catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
                 {

@@ -125,6 +125,7 @@
     <Compile Include="Sections\LastStrokeServiceSection.cs" />
     <Compile Include="Sections\PlacementSection.cs" />
     <Compile Include="Sections\SpinSection.cs" />
+    <Compile Include="Sections\TableLegendSection.cs" />
     <Compile Include="Sections\TechniqueSection.cs" />
     <Compile Include="Sections\SideSection.cs" />
     <Compile Include="IReportVisitor.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Sections\TransitionsSection.cs" />
     <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
     <Compile Include="ViewModels\StatisticsGridViewModel.cs" />
+    <Compile Include="ViewModels\TableLegendViewModel.cs" />
     <Compile Include="Views\LargeTableView.xaml.cs">
       <DependentUpon>LargeTableView.xaml</DependentUpon>
     </Compile>
@@ -156,6 +158,9 @@
     </Compile>
     <Compile Include="Views\StrokePlacementGridView.xaml.cs">
       <DependentUpon>StrokePlacementGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableLegendView.xaml.cs">
+      <DependentUpon>TableLegendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.cs" />
     <Compile Include="Views\TechniqueStatisticsGridView.xaml.cs">
@@ -194,6 +199,10 @@
     <Page Include="Views\StrokePlacementGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableLegendView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TechniqueStatisticsGridView.xaml">
       <SubType>Designer</SubType>

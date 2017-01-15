@@ -4,17 +4,15 @@ namespace TT.Report.Sections
 {
     public class PartSection : IReportSection
     {
+        public enum PartType { General, Player, Appendix}
+        public PartType Type { get; private set; }
         public string PartName { get; private set; }
-        public Player Player { get; private set; }
+        public Player Player { get; set; }
 
-        public PartSection(string partName)
+        public PartSection(string partName, PartType partType)
         {
-            this.PartName = partName;
-        }
-
-        public PartSection(string partName, Player player) : this(partName)
-        {
-            this.Player = player;
+            PartName = partName;
+            Type = partType;
         }
     }
 }

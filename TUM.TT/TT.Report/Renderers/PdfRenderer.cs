@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using MigraDoc.DocumentObjectModel.Shapes;
+
 namespace TT.Report.Renderers
 {
     using System;
@@ -97,6 +99,11 @@ namespace TT.Report.Renderers
         private static readonly Unit TableIndent = Unit.FromCentimeter(0.25);
 
         /// <summary>
+        /// Maximum width of a column of a table that fits perfectly on one A4 page (portrait)
+        /// </summary>
+        private static readonly int MaxTableColWidth = 455;
+
+        /// <summary>
         /// Keeps track of the heading numbers.
         /// </summary>
         private int[] headingCounters;
@@ -118,7 +125,7 @@ namespace TT.Report.Renderers
 
         public PdfRenderer()
         {
-            bitmapFrameToTempFileFunction = new Func<object, int, int, string>((item, width, height) =>
+            bitmapFrameToTempFileFunction = (item, width, height) =>
             {
                 if (item == null)
                     return @"pack://application:,,,/TT.Report;component/Resources/image_loading_error.png";
@@ -132,8 +139,8 @@ namespace TT.Report.Renderers
                     encoder.Save(stm);
                 }
                 return tempFile;
-            });
-            oxyPlotToTempFilePathFunction = new Func<object, int, int, string>((p, width, height) =>
+            };
+            oxyPlotToTempFilePathFunction = (p, width, height) =>
             {
                 if (p == null)
                     return @"pack://application:,,,/TT.Report;component/Resources/image_loading_error.png";
@@ -143,7 +150,7 @@ namespace TT.Report.Renderers
                 var tempFile = GetTempFile();
                 PdfExporter.Export(plot, tempFile, width, height);
                 return tempFile;
-            });
+            };
         }
 
         /// <summary>
@@ -577,15 +584,14 @@ namespace TT.Report.Renderers
         {
             // each new part means new heading counters
             //this.ResetHeadingCounters();
-
-            bool isPlayerPart = section.Player != null;
+            
             var partName = string.Format(
-                isPlayerPart ? "{0} - {1}" : "{0}",
+                section.Player != null ? "{0} - {1}" : "{0}",
                 section.PartName,
-                isPlayerPart ? section.Player.Name : "");
+                section.Player != null ? section.Player.Name : "");
             var paragraph = AddHeading(1, partName);
 
-            if (isPlayerPart)
+            if (section.Type != PartSection.PartType.General)
                 paragraph.Format.PageBreakBefore = true;
         }
 
@@ -618,9 +624,9 @@ namespace TT.Report.Renderers
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
 
             if (itemsList.Count > 0 && itemsList.ElementAt(0) is BitmapFrame)
-                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15, tableIndentLeft: 2.25);
+                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, tableIndentLeft: 2.25);
             else if (itemsList.Count > 0 && itemsList.ElementAt(0) is List<object>)
-                AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 280, 190, keepCol1AspectRation: false, keepCol2AspectRation: true, extraColWidth: 15);
+                AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 280, 190, keepCol1AspectRation: false);
         }
 
         public void Visit(PlacementSection section)
@@ -630,7 +636,7 @@ namespace TT.Report.Renderers
             var itemsList = new List<object>();
             foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, extraColWidth: 15, tableIndentLeft: 2.25);
+            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, tableIndentLeft: 2.25);
         }
 
         public void Visit(LargeTableSection section)
@@ -640,7 +646,7 @@ namespace TT.Report.Renderers
             var itemsList = new List<BitmapFrame>();
             foreach (var set in section.TableImageBitmapFrames.Keys)
                 itemsList.Add(section.TableImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 450, 210, twoColtableIndentLeft: 0.75);
+            AddItemsToTable(itemsList, section.TableImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 430, 210);
         }
 
         public void Visit(StrokeNumberSection section)
@@ -657,6 +663,28 @@ namespace TT.Report.Renderers
         public void Visit(SectionEmptyWarningSection section)
         {
             Document.LastSection.AddParagraph(string.Format(Properties.Resources.section_empty_warning, args: section.Player.Name), OurStyleNames.Warning);
+        }
+
+        public void Visit(TableLegendSection section)
+        {
+            var sec = Document.LastSection;
+            var table = sec.AddTable();
+            table.Borders.Visible = false;
+            table.AddColumn(MaxTableColWidth);
+
+            var row1 = table.AddRow();
+            row1.KeepWith = 1;
+            var par = row1.Cells[0].AddParagraph(Properties.Resources.legend_section_header);
+            par.Style = OurStyleNames.SetName;
+
+            var row2 = table.AddRow();
+            par = row2.Cells[0].AddParagraph();
+            par.Format.Alignment = ParagraphAlignment.Center;
+
+            var tmpImageFile = bitmapFrameToTempFileFunction.Invoke(section.LegendImage, 180, 400);
+            var img = par.AddImage(tmpImageFile);
+            img.LockAspectRatio = true;
+            img.Width = 180;
         }
 
         /// <summary>
@@ -1158,19 +1186,17 @@ namespace TT.Report.Renderers
             int smallWidth,
             int normalHeight = 0,
             int smallHeight = 0,
-            int extraColWidth = 0,
-            double tableIndentLeft = 0,
-            double twoColtableIndentLeft = 0)
+            double tableIndentLeft = 0)
         {
             var tableItemsCount = items.Count;
             bool multipleItems = tableItemsCount > 1;
 
             Table table = Document.LastSection.AddTable();
-            table.Borders.Visible = false;            
-            table.Rows.LeftIndent = Unit.FromCentimeter(multipleItems ? twoColtableIndentLeft : tableIndentLeft);
+            table.Borders.Visible = false;
+            table.Rows.LeftIndent = Unit.FromCentimeter(multipleItems ? 0 : tableIndentLeft);
 
             Column col = table.AddColumn();
-            col.Width = (multipleItems ? smallWidth : normalWidth) + extraColWidth;
+            col.Width = (int)(MaxTableColWidth / (multipleItems ?  2d : 1d));
 
             int sizeW, sizeH;
             if (multipleItems)
@@ -1178,7 +1204,7 @@ namespace TT.Report.Renderers
                 sizeW = smallWidth;
                 sizeH = smallHeight;
                 col = table.AddColumn();
-                col.Width = smallWidth + extraColWidth;
+                col.Width = (int)(MaxTableColWidth / 2d);
             }
             else
             {
@@ -1264,19 +1290,18 @@ namespace TT.Report.Renderers
             int firstColHeight = 0,
             int secondColHeight = 0,
             bool keepCol1AspectRation = true,
-            bool keepCol2AspectRation = true,
-            int extraColWidth = 0)
+            bool keepCol2AspectRation = true)
         {
             Table table = Document.LastSection.AddTable();
             table.Borders.Visible = false;
-            table.Rows.LeftIndent = Unit.FromCentimeter(-0.85);
+            //table.Rows.LeftIndent = Unit.FromCentimeter(-0.85);
 
             Column col1 = table.AddColumn();
-            col1.Width = firstColWidth + extraColWidth;
+            col1.Width = (int)(MaxTableColWidth / 2d);
 
             Column col2 = table.AddColumn();
-            col2.Width = secondColWidth + extraColWidth;
-            
+            col2.Width = (int)(MaxTableColWidth / 2d);
+
             int sizeH = Math.Max(firstColHeight, secondColHeight);
             if (sizeH == 0)
                 sizeH = Math.Max(firstColWidth, secondColWidth);

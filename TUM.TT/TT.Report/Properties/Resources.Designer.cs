@@ -61,6 +61,150 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backhand:.
+        /// </summary>
+        public static string legend_backhand_title {
+            get {
+                return ResourceManager.GetString("legend_backhand_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banana / Flip.
+        /// </summary>
+        public static string legend_banana_flip_title {
+            get {
+                return ResourceManager.GetString("legend_banana_flip_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block / Counter.
+        /// </summary>
+        public static string legend_block_counter_title {
+            get {
+                return ResourceManager.GetString("legend_block_counter_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chop.
+        /// </summary>
+        public static string legend_chop_title {
+            get {
+                return ResourceManager.GetString("legend_chop_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forehand:.
+        /// </summary>
+        public static string legend_forehand_title {
+            get {
+                return ResourceManager.GetString("legend_forehand_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intercept.
+        /// </summary>
+        public static string legend_lineexplanation_intercept_title {
+            get {
+                return ResourceManager.GetString("legend_lineexplanation_intercept_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point of contact → Placement.
+        /// </summary>
+        public static string legend_lineexplanation_poc_pl_title {
+            get {
+                return ResourceManager.GetString("legend_lineexplanation_poc_pl_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lob.
+        /// </summary>
+        public static string legend_lob_title {
+            get {
+                return ResourceManager.GetString("legend_lob_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Misc.
+        /// </summary>
+        public static string legend_misc_title {
+            get {
+                return ResourceManager.GetString("legend_misc_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Push.
+        /// </summary>
+        public static string legend_push_title {
+            get {
+                return ResourceManager.GetString("legend_push_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Table legend.
+        /// </summary>
+        public static string legend_section_header {
+            get {
+                return ResourceManager.GetString("legend_section_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service (with spin).
+        /// </summary>
+        public static string legend_service_with_spin_title {
+            get {
+                return ResourceManager.GetString("legend_service_with_spin_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service (without spin).
+        /// </summary>
+        public static string legend_service_without_spin_title {
+            get {
+                return ResourceManager.GetString("legend_service_without_spin_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smash.
+        /// </summary>
+        public static string legend_smash_title {
+            get {
+                return ResourceManager.GetString("legend_smash_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topspin.
+        /// </summary>
+        public static string legend_topspin_title {
+            get {
+                return ResourceManager.GetString("legend_topspin_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to APPENDIX.
+        /// </summary>
+        public static string part_appendix {
+            get {
+                return ResourceManager.GetString("part_appendix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E.
         /// </summary>
         public static string placement_error_short {

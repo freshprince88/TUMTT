@@ -101,7 +101,7 @@ namespace TT.Report.Generators
             });
 
             report.Sections.Add(
-                 new HeaderSection()
+                 new HeaderSection
                  {
                      Headline = Properties.Resources.report_header_headline,
                      Round = match.Round,
@@ -109,7 +109,7 @@ namespace TT.Report.Generators
                      Date = match.DateTime
                  });
 
-            report.Sections.Add(new PartSection(Properties.Resources.section_part_general));
+            report.Sections.Add(new PartSection(Properties.Resources.section_part_general, PartSection.PartType.General));
 
             report.Sections.Add(new BasicInformationSection(match));
             report.Sections.Add(new ScoringProcessSection(match, plotStyle));
@@ -135,7 +135,7 @@ namespace TT.Report.Generators
                 if (p is Player)
                 {
                     // add sections for requested players (1/2)
-                    report.Sections.Add(new PartSection(Properties.Resources.section_part_player, p as Player));
+                    report.Sections.Add(new PartSection(Properties.Resources.section_part_player, PartSection.PartType.Player) { Player = p as Player});
                     var sectionsCount = report.Sections.Count;
 
                     AddStrokeSections(report, plotStyle, match, p);
@@ -148,12 +148,22 @@ namespace TT.Report.Generators
                 }
             }
 
+            foreach (var sec in report.Sections)
+            {
+                if (sec is LargeTableSection)
+                {
+                    report.Sections.Add(new PartSection(Properties.Resources.part_appendix, PartSection.PartType.Appendix));
+                    report.Sections.Add(new TableLegendSection());
+                    break;
+                }
+            }
+
             return report;
         }
 
         private void AddStrokeSections(Report report, PlotStyle plotStyle, Match match, object player)
         {
-            var statsNames = new string[] { "service_stats", "return_stats", "third_stats", "fourth_stats", "last_stats", "all_stats" };
+            var statsNames = new[] { "service_stats", "return_stats", "third_stats", "fourth_stats", "last_stats", "all_stats" };
             foreach (var n in statsNames)
             {
                 var strokeStats = (List<string>)Customization[n];

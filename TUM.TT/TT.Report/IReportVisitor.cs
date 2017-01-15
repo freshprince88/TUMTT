@@ -120,5 +120,11 @@ namespace TT.Report
         /// </summary>
         /// <param name="section">The section</param>
         void Visit(SectionEmptyWarningSection section);
+
+        /// <summary>
+        /// Visits the table legend section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(TableLegendSection section);
     }
 }

@@ -309,7 +309,7 @@ namespace TT.Report.Views
                 }
             }
             else
-                xE = X2 > X1 ? followingStrokeGrid.Width : 0; // special case: horizontal stroke (e.g. legend view)
+                xE = X2 > X1 ? followingStrokeGrid.ActualWidth : 0; // special case: horizontal stroke (e.g. legend view)
 
             // line shape part of intercept arrow
             Line interceptLine = new Line();
