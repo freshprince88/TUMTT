@@ -4,7 +4,9 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Globalization;
 using MigraDoc.DocumentObjectModel.Shapes;
+using TT.Models.Util;
 
 namespace TT.Report.Renderers
 {
@@ -108,23 +110,47 @@ namespace TT.Report.Renderers
         /// </summary>
         private int[] headingCounters;
 
+        private Random _random;
+
         /// <summary>
         /// The renderer to render this document.
         /// </summary>
         private PdfDocumentRenderer renderer;
 
         /// <summary>
-        /// The temporary files created for rendering.
-        /// </summary>
-        private List<string> temporaryFiles = new List<string>();
-
-        /// <summary>
         /// Gets the rendered document.
         /// </summary>
         public Document Document { get; private set; }
 
+        public IDictionary<TempFileType, TempFileScheme> TempFileSchemes
+        {
+            get
+            {
+                var tempFileSchemes = new Dictionary<TempFileType, TempFileScheme>();
+                var tfs = new TempFileScheme
+                {
+                    TempPath = Path.GetTempPath(),
+                    NameScheme = "tmp_oxyplot{0}",
+                    Type = TempFileType.OxyPlot
+                };
+                tempFileSchemes[TempFileType.OxyPlot] = tfs;
+
+                tfs = new TempFileScheme
+                {
+                    TempPath = Path.GetTempPath(),
+                    NameScheme = "tmp_image{0}",
+                    Type = TempFileType.Image
+                };
+                tempFileSchemes[TempFileType.Image] = tfs;
+
+                return tempFileSchemes;
+            }
+        }
+
         public PdfRenderer()
         {
+            _random = new Random();
+
             bitmapFrameToTempFileFunction = (item, width, height) =>
             {
                 if (item == null)
@@ -133,7 +159,7 @@ namespace TT.Report.Renderers
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add((BitmapFrame)(object)item);
 
-                var tempFile = this.GetTempFile();
+                var tempFile = GetTempFile(TempFileType.Image);
                 using (Stream stm = File.Create(tempFile))
                 {
                     encoder.Save(stm);
@@ -147,7 +173,7 @@ namespace TT.Report.Renderers
 
                 var plot = (OxyPlot.PlotModel)p;
                 FixPlotColor(plot);
-                var tempFile = GetTempFile();
+                var tempFile = GetTempFile(TempFileType.OxyPlot);
                 PdfExporter.Export(plot, tempFile, width, height);
                 return tempFile;
             };
@@ -175,28 +201,13 @@ namespace TT.Report.Renderers
                 this.renderer = new PdfDocumentRenderer(true)
                 {
                     Document = this.Document,
-                    Language = "en"
+                    Language = CultureInfo.CurrentCulture.TwoLetterISOLanguageName
                 };
                 this.renderer.RenderDocument();
             }
-            catch (Exception e) when (e is NullReferenceException || e is ArgumentException)
+            catch (Exception e) when (e is NullReferenceException || e is ArgumentException || e is InvalidOperationException)
             {
-                Debug.WriteLine("PdfRenderer: {2} in 'RenderDocument()' (this.Hash={0} Thread.Name={1})", GetHashCode(), Thread.CurrentThread.Name, e.GetType().Name);
-            }
-            finally
-            {
-                foreach (var temp in this.temporaryFiles)
-                {
-                    try
-                    {
-                        File.Delete(temp);
-                    }
-                    catch (IOException)
-                    {
-                    }
-                }
-
-                this.temporaryFiles.Clear();
+                Debug.WriteLine($"PdfRenderer: {e.GetType().Name} in 'RenderDocument()' (ex.Message='{e.Message}', this.Hash={GetHashCode()}, Thread.Name={Thread.CurrentThread.Name})");
             }
         }
 
@@ -1157,7 +1168,7 @@ namespace TT.Report.Renderers
             if (plot != null)
             {
                 FixPlotColor(plot);
-                var tempFile = this.GetTempFile();
+                var tempFile = GetTempFile(TempFileType.OxyPlot);
                 PdfExporter.Export(plot, tempFile, width, height);
                 var image = paragraph.AddImage(tempFile);
                 image.Width = width;
@@ -1348,11 +1359,16 @@ namespace TT.Report.Renderers
         /// Gets a temporary file.
         /// </summary>
         /// <returns>The path to the temporary file.</returns>
-        private string GetTempFile()
+        private string GetTempFile(TempFileType type)
         {
-            var tmp = Path.GetTempFileName();
-            this.temporaryFiles.Add(tmp);
-            return tmp;
+            string tmpFile;
+            do
+            {
+                var tempFileScheme = TempFileSchemes[type];
+                tmpFile = tempFileScheme.TempPath +
+                          string.Format(tempFileScheme.NameScheme, _random.Next(int.MaxValue).ToString("X"));
+            } while (File.Exists(tmpFile));
+            return tmpFile;
         }
     }
 }

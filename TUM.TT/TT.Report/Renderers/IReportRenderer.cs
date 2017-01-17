@@ -4,8 +4,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using TT.Models.Util;
+
 namespace TT.Report.Renderers
 {
+    using System.Collections.Generic;
     using System.IO;
 
     /// <summary>
@@ -34,5 +37,10 @@ namespace TT.Report.Renderers
         /// Called after rendering the last section.
         /// </remarks>
         void AfterRendering();
+
+        /// <summary>
+        /// A dictionary of temp file schemes created during report rendering.
+        /// </summary>
+        IDictionary<TempFileType, TempFileScheme> TempFileSchemes { get; }
     }
 }

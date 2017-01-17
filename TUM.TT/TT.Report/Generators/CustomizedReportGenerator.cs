@@ -62,7 +62,7 @@ namespace TT.Report.Generators
             if (!Abort)
             {
                 SectionsAdded?.Invoke(this, new SectionsAddedEventArgs(report));
-                Debug.WriteLine("Thread '{1}' done.", GetHashCode(), Thread.CurrentThread.Name);
+                Debug.WriteLine($"Thread '{Thread.CurrentThread.Name}' done.");
             }
             else
                 Debug.WriteLine("CustomizedReportGenerator {0}: report generation aborted! (Thread: {1})", GetHashCode(), Thread.CurrentThread.Name);
@@ -222,6 +222,17 @@ namespace TT.Report.Generators
                 case "number": return new StrokeNumberSection(plotStyle, strokeNumber, sets, match, player);
             }
             return null;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var generator = obj as CustomizedReportGenerator;
+            return generator != null && string.Equals(generator.CustomizationId, CustomizationId);
+        }
+
+        public override int GetHashCode()
+        {
+            return (CustomizationId != null ? CustomizationId.GetHashCode() : 0);
         }
     }
 }

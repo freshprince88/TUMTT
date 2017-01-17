@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TT.Models.Util;
 using TT.Report.Generators;
 
 namespace TT.Lib.Managers
@@ -15,5 +16,6 @@ namespace TT.Lib.Managers
         void Dispose();
         event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
         string ReportPathUser { get; set; }
+        TempFileScheme TempFileScheme { get; }
     }
 }

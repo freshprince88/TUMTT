@@ -6,6 +6,7 @@ using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using TT.Lib;
@@ -13,30 +14,33 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Models;
+using TT.Models.Util;
+using TT.Report.Renderers;
 using Application = System.Windows.Application;
+using Match = System.Text.RegularExpressions.Match;
 
 
 namespace TT.Viewer.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
         IShell,
-        IHandle<MatchOpenedEvent>,
-        IHandle<ReportPreviewChangedEvent>
+        IHandle<MatchOpenedEvent>
     {
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         public IEventAggregator Events { get; private set; }
         public IMatchManager MatchManager { get; set; }
+        private IReportGenerationQueueManager _reportGenerationQueueManager;
         private IDialogCoordinator DialogCoordinator;
         private readonly IWindowManager _windowManager;
-        private List<string> TmpFiles { get; set; }
 
-        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
+        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IReportGenerationQueueManager queueManager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "";
 
             _windowManager = windowmanager;
+            _reportGenerationQueueManager = queueManager;
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
@@ -44,6 +48,8 @@ namespace TT.Viewer.ViewModels
             // for translation testing - don't set for production!
             //CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("de-DE");
             //CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("de-DE");
+
+            TryDeleteTmpFiles();
         }
 
         #region Caliburn hooks
@@ -82,7 +88,7 @@ namespace TT.Viewer.ViewModels
             if (close)
             {
                 TryDeleteTmpFiles();
-                IoC.Get<IReportGenerationQueueManager>().Dispose();
+                _reportGenerationQueueManager.Dispose();
             }
         }
 
@@ -171,7 +177,7 @@ namespace TT.Viewer.ViewModels
 
         public IEnumerable<IResult> GenerateReport()
         {
-            var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator);
+            var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, _windowManager, Events, DialogCoordinator);
             reportVm.GenerateReport();
             foreach (var res in reportVm.SaveGeneratedReport())
                 yield return res;
@@ -192,29 +198,28 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
 
-            var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator);
+            var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, _windowManager, Events, DialogCoordinator);
             reportVm.GenerateReport();
             reportVm.DiscardViewModel(true);
         }
-        
-        public void Handle(ReportPreviewChangedEvent message)
-        {
-            if (TmpFiles == null)
-                TmpFiles = new List<string>();
-            if (!TmpFiles.Contains(message.ReportPreviewPath))
-                TmpFiles.Add(message.ReportPreviewPath);
-        }
         #endregion
-
+        
         #region Helper Methods
         private void TryDeleteTmpFiles()
         {
-            if (TmpFiles != null)
-                foreach (string path in TmpFiles)
+            var tempFileSchemes = new List<TempFileScheme>() {_reportGenerationQueueManager.TempFileScheme };
+            tempFileSchemes.AddRange(IoC.Get<IReportRenderer>("PDF").TempFileSchemes.Values);
+            foreach (var tempFileScheme in tempFileSchemes)
+            {
+                foreach (var file in Directory.GetFiles(tempFileScheme.TempPath, Regex.Replace(tempFileScheme.NameScheme, "{\\d}", "*")))
+                {
                     try
                     {
-                        File.Delete(path);
-                    } catch (Exception) { /* best effort */}
+                        File.Delete(file);
+                    }
+                    catch (Exception) { /* best effort */}
+                }
+            }
         }
 
         public IEnumerable<IResult> OpenMatch()
@@ -289,7 +294,7 @@ namespace TT.Viewer.ViewModels
                 settings.ResizeMode = ResizeMode.CanResizeWithGrip;
                 settings.Width = Math.Min(SystemParameters.PrimaryScreenWidth - 20, 1200);
                 settings.Height = Math.Min(SystemParameters.PrimaryScreenHeight - 35, 860);
-                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator), null, settings);
+                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, _windowManager, Events, DialogCoordinator), null, settings);
             }
         }
         #endregion

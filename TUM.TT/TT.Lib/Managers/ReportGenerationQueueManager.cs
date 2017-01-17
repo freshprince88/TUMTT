@@ -11,6 +11,8 @@ using TT.Lib.Util;
 using TT.Report.Generators;
 using TT.Report.Renderers;
 using static TT.Report.Generators.CustomizedReportGenerator;
+using TempFileScheme = TT.Models.Util.TempFileScheme;
+using TempFileType = TT.Models.Util.TempFileType;
 
 namespace TT.Lib.Managers
 {
@@ -33,6 +35,18 @@ namespace TT.Lib.Managers
         public event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
 
         public string ReportPathUser { get; set; }
+        
+        public TempFileScheme TempFileScheme
+        {
+            get
+            {
+                TempFileScheme tfs;
+                tfs.TempPath = Path.GetTempPath();
+                tfs.NameScheme = "ttviewer_{0}.pdf";
+                tfs.Type = TempFileType.ReportPreview;
+                return tfs;
+            }
+        }
 
         private readonly IMatchManager _matchManager;
         private readonly QueueWorker _queueWorker;
@@ -108,6 +122,8 @@ namespace TT.Lib.Managers
 
         private class QueueWorker
         {
+            private static readonly object WorkListLock = new object();
+
             private readonly List<IReportGenerator> _workList;
             private readonly ReportGenerationQueueManager _man;
             private CustomizedReportGenerator _custRepGen;
@@ -126,6 +142,14 @@ namespace TT.Lib.Managers
             {
                 lock(_man)
                 {
+                    var gen = repGen as CustomizedReportGenerator;
+                    if (gen != null && _custRepGen != null &&
+                        string.Equals(gen.CustomizationId, _custRepGen.CustomizationId) || _workList.Contains(repGen))
+                    {
+                        Debug.WriteLine("*QueueWorker: NOT adding repGen (Hash={0}) to queue - already in queue/work", repGen.GetHashCode());
+                        return;
+                    }
+
                     Debug.WriteLine("*QueueWorker: adding repGen (Hash={0}) to queue", repGen.GetHashCode());
                     _workList.Add(repGen);
                 }
@@ -140,7 +164,7 @@ namespace TT.Lib.Managers
                         Debug.WriteLine("QueueWorker: queue not empty, starting report generation (queue.Count={0})", _workList.Count);
 
                         IReportGenerator repGen;
-                        lock (_man)
+                        lock (WorkListLock)
                         {
                             repGen = _workList[_workList.Count - 1];
                             _workList.Clear();
@@ -169,8 +193,8 @@ namespace TT.Lib.Managers
                             }
 
                             var matchHash = MatchHashGenerator.GenerateMatchHash(_man._matchManager.Match);
-                            var tmpFileName = "ttviewer_" + (matchHash + gen.CustomizationId) + ".pdf";
-                            var tmpReportPath = Path.GetTempPath() + tmpFileName;
+                            var tmpFileName = string.Format(_man.TempFileScheme.NameScheme, matchHash + gen.CustomizationId);
+                            var tmpReportPath = _man.TempFileScheme.TempPath + tmpFileName;
                             if (File.Exists(tmpReportPath))
                             {
                                 Debug.WriteLine($"QueueWorker: tmp file '{tmpFileName}' already exists, skipping generation and invoking ReportGenerated event (Thread '{Thread.CurrentThread.Name}')");
@@ -216,7 +240,7 @@ namespace TT.Lib.Managers
                 if (!repGen.Abort)
                 {
                     var renderer = IoC.Get<IReportRenderer>("PDF");
-                    tmpReportPath = Path.GetTempPath() + "ttviewer_" + (matchHash + repGenCustomizationId) + ".pdf";
+                    tmpReportPath = _man.TempFileScheme.TempPath + string.Format(_man.TempFileScheme.NameScheme, matchHash + repGenCustomizationId);
                     bool fileExists = File.Exists(tmpReportPath);
                     Debug.WriteLine("QueueWorker: report file (exists? {0}): {1}", fileExists, tmpReportPath);
                     if (!fileExists)
@@ -235,6 +259,8 @@ namespace TT.Lib.Managers
                     Debug.WriteLine("QueueWorker: repGen={0} not aborted, invoking ReportGenerated event", repGen.GetHashCode());
                     _renderedReportPath = tmpReportPath;
                     _man.ReportGenerated?.Invoke(_man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
+                    if (repGen.Equals(_custRepGen))
+                        _custRepGen = null;
                 }
                 else
                 {

@@ -124,6 +124,8 @@ namespace TT.Viewer.Views
         
         private void ReportPreviewControl_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+            if (e.Uri == null || string.IsNullOrEmpty(e.Uri.ToString()))
+                return;
             Debug.WriteLine($"Load complete [uri={e.Uri}]");
             new Thread(DisplayWebBrowserDelayed).Start();
         }
