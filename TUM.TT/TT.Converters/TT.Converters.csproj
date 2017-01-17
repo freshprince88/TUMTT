@@ -72,6 +72,7 @@
     <Compile Include="MediaSpeedToBoolConverter.cs" />
     <Compile Include="MinRallyLengthToVisibleConverter.cs" />
     <Compile Include="MSToTimeConverter.cs" />
+    <Compile Include="NullToVisibilityConverter.cs" />
     <Compile Include="NumAndLengthToLastVisibilityConverter.cs" />
     <Compile Include="NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="NumToPrevVisibleConverter.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="SpinToBoolScouterConverter.cs" />
     <Compile Include="SpinToCheckedConverter.cs" />
     <Compile Include="StepAroundToBoolConverter.cs" />
-    <Compile Include="StringMatchToBooleanConverter.cs" />
+    <Compile Include="CollectionContainsToVisibilityConverter.cs" />
     <Compile Include="StrokeTechniqueToBoolScouterConverter.cs" />
     <Compile Include="TableLengthToCheckedConverter.cs" />
     <Compile Include="TablePositionCountConverter.cs" />

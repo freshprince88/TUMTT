@@ -93,6 +93,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -111,6 +112,7 @@
     <Compile Include="Generators\IReportGenerator.cs" />
     <Compile Include="Sections\BaseSection.cs" />
     <Compile Include="Sections\ExistingStatisticsSection.cs" />
+    <Compile Include="Sections\SectionEmptyWarningSection.cs" />
     <Compile Include="Sections\StrokeStatsHeadingSection.cs" />
     <Compile Include="Sections\PartSection.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -123,6 +125,7 @@
     <Compile Include="Sections\LastStrokeServiceSection.cs" />
     <Compile Include="Sections\PlacementSection.cs" />
     <Compile Include="Sections\SpinSection.cs" />
+    <Compile Include="Sections\TableLegendSection.cs" />
     <Compile Include="Sections\TechniqueSection.cs" />
     <Compile Include="Sections\SideSection.cs" />
     <Compile Include="IReportVisitor.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Sections\TransitionsSection.cs" />
     <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
     <Compile Include="ViewModels\StatisticsGridViewModel.cs" />
+    <Compile Include="ViewModels\TableLegendViewModel.cs" />
     <Compile Include="Views\LargeTableView.xaml.cs">
       <DependentUpon>LargeTableView.xaml</DependentUpon>
     </Compile>
@@ -154,6 +158,9 @@
     </Compile>
     <Compile Include="Views\StrokePlacementGridView.xaml.cs">
       <DependentUpon>StrokePlacementGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableLegendView.xaml.cs">
+      <DependentUpon>TableLegendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableView.cs" />
     <Compile Include="Views\TechniqueStatisticsGridView.xaml.cs">
@@ -192,6 +199,10 @@
     <Page Include="Views\StrokePlacementGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableLegendView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TechniqueStatisticsGridView.xaml">
       <SubType>Designer</SubType>

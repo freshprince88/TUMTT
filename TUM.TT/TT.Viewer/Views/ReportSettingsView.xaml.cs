@@ -1,7 +1,6 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
@@ -14,6 +13,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using TT.Lib.Events;
 using TT.Viewer.ViewModels;
+using CheckBox = System.Windows.Controls.CheckBox;
 
 namespace TT.Viewer.Views
 {
@@ -24,16 +24,15 @@ namespace TT.Viewer.Views
         IHandle<ReportPreviewChangedEvent>,
         IHandle<ReportSettingsChangedEvent>
     {
-        public IEventAggregator Events { get; private set; }
-        private bool reflectCheckStateChange = true;
+        private IEventAggregator Events { get; }
+        private bool _reflectCheckStateChange = true;
 
         public ReportSettingsView()
         {
             InitializeComponent();
             Name = "ReportSettings";
 
-            var blurEffect = new BlurEffect();
-            blurEffect.Radius = 0;
+            var blurEffect = new BlurEffect {Radius = 0};
             PreviewOverlayImage.Effect = blurEffect;
 
             DataContextChanged += ReportSettingsView_DataContextChanged;
@@ -64,7 +63,7 @@ namespace TT.Viewer.Views
         {
             Debug.WriteLine("Selecting combi view {0}", combi);
 
-            foreach (var i in ReportSettingsGrid_Content_Sets_ToggleButtons.Children)
+            foreach (var i in ReportSettingsGridContentSetsToggleButtons.Children)
             {
                 var tb = i as ToggleButton;
                 if (tb != null && tb.Tag is int && (int)tb.Tag == combi && tb.IsChecked.Value)
@@ -81,7 +80,7 @@ namespace TT.Viewer.Views
                 var combiName = "Combi" + combiSetsString.Replace("+", "");
 
                 var combiPresent = false;
-                foreach (var i in ReportSettingsGrid_Content_Sets_ToggleButtons.Children)
+                foreach (var i in ReportSettingsGridContentSetsToggleButtons.Children)
                 {
                     var tb = i as ToggleButton;
                     if (tb != null && tb.Name == combiName)
@@ -89,45 +88,44 @@ namespace TT.Viewer.Views
                 }
                 if (!combiPresent)
                 {
-                    var combi = new ToggleButton();
-                    combi.Style = FindResource("MetroAccentCircleToggleButtonStyle") as Style;
-                    combi.Name = combiName;
-                    combi.Width = 55;
-                    combi.Height = 30;
-                    combi.Tag = combiSets;
-
-                    var textBlock = new TextBlock();
-                    textBlock.FontSize = 12;
+                    var textBlock = new TextBlock {FontSize = 12};
                     textBlock.Inlines.Add(new Run(combiSetsString));
-                    combi.Content = textBlock;
 
-                    var setCount = ReportSettingsGrid_Content_Sets_ToggleButtons.Children.Count;
-                    ReportSettingsGrid_Content_Sets_ToggleButtons.Children.Insert(setCount - 1, combi);
+                    var combi = new ToggleButton
+                    {
+                        Style = FindResource("MetroAccentRoundedRectToggleButtonStyle") as Style,
+                        Name = combiName,
+                        Height = 30,
+                        Padding = new Thickness(12, 0, 12, 0),
+                        Tag = combiSets,
+                        Content = textBlock
+                    };
 
                     combi.Checked += Combi_Checked;
                     combi.Unchecked += Combi_Checked;
                     combi.IsChecked = true;
+
+                    var setCount = ReportSettingsGridContentSetsToggleButtons.Children.Count;
+                    ReportSettingsGridContentSetsToggleButtons.Children.Insert(setCount - 1, combi);
                 }
             }
         }
 
         private void ReportSettingsView_Closed(object sender, EventArgs e)
         {
-            // navigate away and remove the webbrowser control for it to properly release its resources
-            // (so that we can delete the temporary pdf files on exit)
-            ReportPreviewControl.Navigate("about:blank");
-            ReportPreviewBrowserContainer.Children.Remove(ReportPreviewControl);
-
             DataContextChanged -= ReportSettingsView_DataContextChanged;
             ReportPreviewControl.LoadCompleted -= ReportPreviewControl_LoadCompleted;
             Closed -= ReportSettingsView_Closed;
             Events.Unsubscribe(this);
-        }
 
+            ReportPreviewControl.Navigate("http://localhost/"); // "about:blank" seems to lock the webbrowser when a pdf was loaded
+            ReportPreviewBrowserContainer.Children.Remove(ReportPreviewControl);
+        }
+        
         private void ReportPreviewControl_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            Debug.WriteLine("Load complete [uri={0}]", e.Uri.ToString(), "");
-            new Thread(new ThreadStart(DisplayWebBrowserDelayed)).Start();
+            Debug.WriteLine($"Load complete [uri={e.Uri}]");
+            new Thread(DisplayWebBrowserDelayed).Start();
         }
 
         public void Handle(ReportSettingsChangedEvent message)
@@ -155,22 +153,24 @@ namespace TT.Viewer.Views
 
         public void Handle(ReportPreviewChangedEvent message)
         {
-            var pfc = new PreviewFileChange();
-            pfc.newPath = message.ReportPreviewPath;
-            pfc.view = this;
-            new Thread(new ThreadStart(pfc.ChangePreviewFile)).Start();
+            var pfc = new PreviewFileChange
+            {
+                NewPath = message.ReportPreviewPath,
+                View = this
+            };
+            new Thread(pfc.ChangePreviewFile).Start();
         }
 
         private class PreviewFileChange
         {
-            internal string newPath;
-            internal ReportSettingsView view;
+            internal string NewPath;
+            internal ReportSettingsView View;
 
             internal void ChangePreviewFile()
             {
-                view.Dispatcher.Invoke(() =>
+                View.Dispatcher.Invoke(() =>
                 {
-                    view.ReportPreviewControl.Navigate(newPath + "#toolbar=0&navpanes=0&messages=0&statusbar=0");                    
+                    View.ReportPreviewControl.Navigate(NewPath + "#toolbar=0&navpanes=0&messages=0&statusbar=0");                    
                 });
             }
         }        
@@ -193,7 +193,7 @@ namespace TT.Viewer.Views
 
         private void PlusCombiPopup_Closed(object sender, EventArgs e)
         {
-            foreach (var tb in PlusCombiPopup_ToggleButtons.Children)
+            foreach (var tb in PlusCombiPopupToggleButtons.Children)
                 if (tb is ToggleButton && ((ToggleButton)tb).IsChecked.Value)
                     ((ToggleButton)tb).IsChecked = false;
             if (PlusCombi.IsChecked.Value)
@@ -209,7 +209,7 @@ namespace TT.Viewer.Views
         {
             var combiSets = 0;
             var combiSetsString = "";
-            foreach (var i in PlusCombiPopup_ToggleButtons.Children)
+            foreach (var i in PlusCombiPopupToggleButtons.Children)
             {
                 var tb = i as ToggleButton;
                 if (tb != null && tb.IsChecked.Value)
@@ -225,8 +225,7 @@ namespace TT.Viewer.Views
                 AddCombiView(combiSets, combiSetsName);
 
                 var vm = DataContext as ReportSettingsViewModel;
-                if (vm != null)
-                    vm.AddCombi(combiSets);
+                vm?.AddCombi(combiSets);
             }
 
             PlusCombiPopup.IsOpen = false;
@@ -260,37 +259,37 @@ namespace TT.Viewer.Views
 
         private void SCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(SAllCheckBox, ReportSettingsGrid_Content_Strokes_SContainer);
+            ReflectChbxState(SAllCheckBox, ReportSettingsGridContentStrokesSContainer);
         }
 
         private void RCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(RAllCheckBox, ReportSettingsGrid_Content_Strokes_RContainer);
+            ReflectChbxState(RAllCheckBox, ReportSettingsGridContentStrokesRContainer);
         }
 
         private void ThirdCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(ThirdAllCheckBox, ReportSettingsGrid_Content_Strokes_ThirdContainer);
+            ReflectChbxState(ThirdAllCheckBox, ReportSettingsGridContentStrokesThirdContainer);
         }
 
         private void FourthCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(FourthAllCheckBox, ReportSettingsGrid_Content_Strokes_FourthContainer);
+            ReflectChbxState(FourthAllCheckBox, ReportSettingsGridContentStrokesFourthContainer);
         }
 
         private void LCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(LAllCheckBox, ReportSettingsGrid_Content_Strokes_LContainer);
+            ReflectChbxState(LAllCheckBox, ReportSettingsGridContentStrokesLContainer);
         }
 
         private void ACheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ReflectChbxState(AAllCheckBox, ReportSettingsGrid_Content_Strokes_AContainer);
+            ReflectChbxState(AAllCheckBox, ReportSettingsGridContentStrokesAContainer);
         }
 
         private void ReflectChbxState(CheckBox allChbx, Grid otherChbxs)
         {
-            if (reflectCheckStateChange)
+            if (_reflectCheckStateChange)
             {
                 bool allChecked = true;
                 bool allUnchecked = true;
@@ -315,44 +314,44 @@ namespace TT.Viewer.Views
                     if (allChbx.IsChecked == null || allChbx.IsChecked.Value)
                         allChbx.IsChecked = false;
                 }
-                else if (!allChecked && !allUnchecked)
+                else
                     allChbx.IsChecked = null;
             }
         }
 
         private void SAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_SContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesSContainer, (CheckBox)sender);
         }
 
         private void RAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_RContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesRContainer, (CheckBox)sender);
         }
 
         private void ThirdAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_ThirdContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesThirdContainer, (CheckBox)sender);
         }
 
         private void FourthAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_FourthContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesFourthContainer, (CheckBox)sender);
         }
 
         private void LAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_LContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesLContainer, (CheckBox)sender);
         }
 
         private void AAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            CheckChildChbxs(ReportSettingsGrid_Content_Strokes_AContainer, (CheckBox)sender);
+            CheckChildChbxs(ReportSettingsGridContentStrokesAContainer, (CheckBox)sender);
         }
 
         private void CheckChildChbxs(Grid parent, CheckBox allChbx)
         {
-            reflectCheckStateChange = false;
+            _reflectCheckStateChange = false;
 
             if (allChbx.IsChecked == null)
                 allChbx.IsChecked = false;
@@ -367,7 +366,7 @@ namespace TT.Viewer.Views
                 }
             }
 
-            reflectCheckStateChange = true;
+            _reflectCheckStateChange = true;
         }
     }
 }

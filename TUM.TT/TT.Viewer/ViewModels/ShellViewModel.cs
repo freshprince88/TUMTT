@@ -3,14 +3,17 @@ using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Models;
+using Application = System.Windows.Application;
 
 
 namespace TT.Viewer.ViewModels
@@ -37,6 +40,10 @@ namespace TT.Viewer.ViewModels
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
+
+            // for translation testing - don't set for production!
+            //CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("de-DE");
+            //CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("de-DE");
         }
 
         #region Caliburn hooks
@@ -72,7 +79,11 @@ namespace TT.Viewer.ViewModels
         protected override void OnDeactivate(bool close)
         {
             Events.Unsubscribe(this);
-            if (close) TryDeleteTmpFiles();
+            if (close)
+            {
+                TryDeleteTmpFiles();
+                IoC.Get<IReportGenerationQueueManager>().Dispose();
+            }
         }
 
         /// <summary>
@@ -162,7 +173,9 @@ namespace TT.Viewer.ViewModels
         {
             var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator);
             reportVm.GenerateReport();
-            return reportVm.SaveGeneratedReport(true);
+            foreach (var res in reportVm.SaveGeneratedReport())
+                yield return res;
+            reportVm.DiscardViewModel(true);
         }
 
         #endregion
@@ -178,6 +191,10 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanShowPlayer);
             NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
+
+            var reportVm = new ReportSettingsViewModel(MatchManager, IoC.Get<IReportGenerationQueueManager>(), _windowManager, Events, DialogCoordinator);
+            reportVm.GenerateReport();
+            reportVm.DiscardViewModel(true);
         }
         
         public void Handle(ReportPreviewChangedEvent message)

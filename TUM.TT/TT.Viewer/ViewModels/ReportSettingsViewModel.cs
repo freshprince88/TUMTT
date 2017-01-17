@@ -16,6 +16,7 @@ using TT.Lib.Results;
 using TT.Report.Renderers;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 using TT.Lib.Events;
 using TT.Report.Generators;
 using TT.Models;
@@ -27,13 +28,15 @@ namespace TT.Viewer.ViewModels
         private IWindowManager WindowManager;
         private IDialogCoordinator DialogCoordinator;
         private string issuedReportId;
-        private Dictionary<string, object> generatedReport; 
-        
+        private Dictionary<string, object> generatedReport;
+        private NotifyIcon ni;
+
         public IMatchManager MatchManager { get; private set; }
         public IEventAggregator Events { get; private set; }
         public IReportGenerationQueueManager ReportGenerationQueueManager { get; private set; }        
         public Dictionary<int, string[]> StrokeStats { get; private set; }
         public Dictionary<int, string[]> GeneralStats { get; private set; }
+        public SortedDictionary<string, List<Rally>> Sets { get; set; }
 
         private int playerChoice;
         public int PlayerChoice {
@@ -49,6 +52,22 @@ namespace TT.Viewer.ViewModels
                     playerChoice += value;
 
                 Debug.WriteLine("player choice: {0}", playerChoice);
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private bool _crunchTimeChoice;
+        public bool CrunchTimeChoice
+        {
+            get
+            {
+                return _crunchTimeChoice;
+            }
+            set
+            {
+                _crunchTimeChoice = value;
+
+                Debug.WriteLine("crunch time choice: {0}", _crunchTimeChoice);
                 NotifyOfPropertyChange();
             }
         }
@@ -218,6 +237,11 @@ namespace TT.Viewer.ViewModels
         public List<int> AvailableCombis{ get; set; }        
         public List<int> SelectedCombis { get; set; }
 
+        public ReportSettingsViewModel()
+        {
+            // default constructor for caliburn design time integration
+        }
+
         public ReportSettingsViewModel(IMatchManager matchManager, IReportGenerationQueueManager reportGenerationQueueManager, IWindowManager windowManager, IEventAggregator events, IDialogCoordinator dialogCoordinator)
         {
             MatchManager = matchManager;
@@ -226,23 +250,41 @@ namespace TT.Viewer.ViewModels
             WindowManager = windowManager;
             DialogCoordinator = dialogCoordinator;
 
+            Sets = new SortedDictionary<string, List<Rally>>();
+            if (MatchManager.Match != null)
+            {
+                foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
+                {
+                    var setNumber = (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1).ToString();
+                    List<Rally> rallyList;
+                    if (!Sets.TryGetValue(setNumber, out rallyList))
+                        Sets[setNumber] = new List<Rally>();
+                    Sets[setNumber].Add(rally);
+                }
+            }
+
             generatedReport = new Dictionary<string, object>();
 
-            StrokeStats = new Dictionary<int, string[]>();
-            StrokeStats[1] = new string[] { "side", Properties.Resources.report_settings_strokechoice_side };
-            StrokeStats[2] = new string[] { "steparound", Properties.Resources.report_settings_strokechoice_steparound };
-            StrokeStats[4] = new string[] { "spin", Properties.Resources.table_spin_title };
-            StrokeStats[8] = new string[] { "technique", Properties.Resources.report_settings_strokechoice_technique };
-            StrokeStats[16] = new string[] { "placement", Properties.Resources.report_settings_strokechoice_placement };
-            StrokeStats[32] = new string[] { "table", Properties.Resources.table_large_tab_title };
-            StrokeStats[64] = new string[] { "service", Properties.Resources.report_settings_strokechoice_service };
-            StrokeStats[128] = new string[] { "number", Properties.Resources.report_settings_strokechoice_number };
+            StrokeStats = new Dictionary<int, string[]>
+            {
+                [1] = new[] {"side", Properties.Resources.report_settings_strokechoice_side},
+                [2] = new[] {"steparound", Properties.Resources.report_settings_strokechoice_steparound},
+                [4] = new[] {"spin", Properties.Resources.table_spin_title},
+                [8] = new[] {"technique", Properties.Resources.report_settings_strokechoice_technique},
+                [16] = new[] {"placement", Properties.Resources.report_settings_strokechoice_placement},
+                [32] = new[] {"table", Properties.Resources.table_large_tab_title},
+                [64] = new[] {"service", Properties.Resources.report_settings_strokechoice_service},
+                [128] = new[] {"number", Properties.Resources.report_settings_strokechoice_number}
+            };
 
-            GeneralStats = new Dictionary<int, string[]>();
-            GeneralStats[1] = new string[] { "rallylength", Properties.Resources.report_settings_generalchoice_rallylength };
-            GeneralStats[2] = new string[] { "matchdynamics", Properties.Resources.report_settings_generalchoice_matchdynamics };
-            GeneralStats[4] = new string[] { "transitionmatrix", Properties.Resources.report_settings_generalchoice_transitionmatrix };
-            GeneralStats[8] = new string[] { "techefficiency", Properties.Resources.report_settings_generalchoice_techefficiency };
+            GeneralStats = new Dictionary<int, string[]>
+            {
+                [1] = new[] {"rallylength", Properties.Resources.report_settings_generalchoice_rallylength},
+                [2] = new[] {"matchdynamics", Properties.Resources.report_settings_generalchoice_matchdynamics},
+                [4] =
+                new[] {"transitionmatrix", Properties.Resources.report_settings_generalchoice_transitionmatrix},
+                [8] = new[] {"techefficiency", Properties.Resources.report_settings_generalchoice_techefficiency}
+            };
 
             DisplayName = Properties.Resources.report_settings_window_title;
             AvailableCombis = new List<int>();
@@ -252,17 +294,17 @@ namespace TT.Viewer.ViewModels
             ReportGenerationQueueManager.Start();
 
             PropertyChanged += ReportSettingsViewModel_PropertyChanged;
-            ReportGenerationQueueManager.ReportGenerated += ReportSettingsQueueManager_ReportGenerated;
+            ReportGenerationQueueManager.ReportGenerated += ReportGenerationQueueManager_ReportGenerated;
         }
 
-        private void ReportSettingsQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
+        private void ReportGenerationQueueManager_ReportGenerated(object sender, ReportGeneratedEventArgs e)
         {
-            Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.ReportPath);
+            Debug.WriteLine("report generated [sender={0} report={1}]", sender, e.ReportPathTemp);
             generatedReport["match"] = e.MatchHash;
             generatedReport["reportid"] = e.ReportSettingsCode;
-            generatedReport["path"] = e.ReportPath;
+            generatedReport["path"] = e.ReportPathTemp;
             if (Events != null) // this is null in some scenarios 
-                Events.PublishOnUIThread(new ReportPreviewChangedEvent(e.ReportPath));
+                Events.PublishOnUIThread(new ReportPreviewChangedEvent(e.ReportPathTemp));
         }
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -296,12 +338,14 @@ namespace TT.Viewer.ViewModels
         {
             Debug.WriteLine("OnOkClick");
             Save();
+            ReportGenerationQueueManager.Stop(true, true);
             TryClose();
         }
 
         public void OnCancelClick()
         {
             Debug.WriteLine("OnCancelClick");
+            ReportGenerationQueueManager.Stop(true, false);
             TryClose();
         }
 
@@ -310,31 +354,18 @@ namespace TT.Viewer.ViewModels
             Debug.WriteLine("OnOkGenerateClick");
             Save();
 
-            foreach (var r in SaveGeneratedReport(false))
+            foreach (var r in SaveGeneratedReport())
                 yield return r;
 
             TryClose();
         }
 
-        public IEnumerable<IResult> SaveGeneratedReport(bool exitAfter)
+        public IEnumerable<IResult> SaveGeneratedReport()
         {
             if (issuedReportId == null && generatedReport.GetValueOrDefault("reportid") == null)
                 Debug.WriteLine("Saving generated report failed. Report neither generated nor issued.");
             else
             {
-                var sleepAbortCounter = 0;
-                while ((generatedReport.GetValueOrDefault("reportid") == null || generatedReport.GetValueOrDefault("match") == null) || ((string)generatedReport["match"] + (string)generatedReport["reportid"] != issuedReportId))
-                {
-                    Thread.Sleep(50);
-                    sleepAbortCounter++;
-                    if (sleepAbortCounter > 100)
-                    {
-                        Debug.WriteLine("Saving generated report failed. Timeout (5 s) for report generation reached.");
-                        if (exitAfter)
-                            OnDeactivate(true);
-                        yield break;
-                    }
-                }
                 var dialog = new SaveFileDialogResult()
                 {
                     Title = "Choose a target for PDF report",
@@ -342,20 +373,9 @@ namespace TT.Viewer.ViewModels
                     DefaultFileName = MatchManager.Match.DefaultFilename(),
                 };
                 yield return dialog;
-
-                var userChosenPath = dialog.Result;
-                Debug.WriteLine("userChosenPath={0}", userChosenPath, "");
-                try
-                {
-                    File.Copy((string)generatedReport["path"], userChosenPath, true);
-                    Process.Start(userChosenPath);
-                } catch (Exception)
-                { 
-                    // TODO alert when opened in another process 
-                }
+                
+                ReportGenerationQueueManager.ReportPathUser = dialog.Result;
             }
-            if (exitAfter)
-                OnDeactivate(true);
         }
 
         private Dictionary<string, object> GetCustomizationDictionary()
@@ -379,27 +399,23 @@ namespace TT.Viewer.ViewModels
             customizationId += "8" + PlayerChoice.ToString("X");
             // adding a number in front ensures any two setting choices that are the same (e.g. 00010) will still get different encodings
 
-            Dictionary<string, List<Rally>> sets = new Dictionary<string, List<Rally>>();
+            Dictionary<string, List<Rally>> customizationSets = new Dictionary<string, List<Rally>>();
             // 'all' sets
             if ((SetChoice & 1) == 1)
-                sets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
+                customizationSets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
+
+            // 'crunch time sets
+            if (CrunchTimeChoice)
+            {
+                customizationSets["crunchtime"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies.Where(r => r.CurrentRallyScore.First + r.CurrentRallyScore.Second >= 16));
+            }
 
             // sets 1-7
-            for (var i = 1; i <= Math.Ceiling(Math.Log(SetChoice, 2)); i++)
+            foreach (var set in Sets.Keys)
             {
-                int mask = 1 << i;
-                if ((mask & SetChoice) == mask)
-                {
-                    var rallyList = new List<Rally>();
-                    foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
-                    {
-                        if (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1 == i)
-                        {
-                            rallyList.Add(rally);
-                        }
-                    }
-                    sets[i.ToString()] = rallyList;
-                }
+                var mask = 1 << int.Parse(set);
+                if ((mask & setChoice) == mask)
+                    customizationSets[set] = Sets[set];
             }
             customizationId += "9" + SetChoice.ToString("X");
 
@@ -426,11 +442,13 @@ namespace TT.Viewer.ViewModels
                         }
                     }
                 }
-                sets[combiName.Substring(0, combiName.Length - 1)] = rallyList;
+                customizationSets[combiName.Substring(0, combiName.Length - 1)] = rallyList;
                 customizationId += combi.ToString("X");
             }
 
-            customizations["sets"] = sets;
+            customizationId += "B" + (CrunchTimeChoice ? 1 : 0);
+
+            customizations["sets"] = customizationSets;
 
             customizations["service_stats"] = new List<string>();
             customizations["return_stats"] = new List<string>();
@@ -519,6 +537,7 @@ namespace TT.Viewer.ViewModels
             Properties.Settings.Default.ReportGenerator_AllStatsChoice = AllStatsChoice;
             Properties.Settings.Default.ReportGenerator_ExpandState = ExpandState;
             Properties.Settings.Default.ReportGenerator_GeneralChoice = GeneralChoice;
+            Properties.Settings.Default.ReportGenerator_CrunchTimeChoice = CrunchTimeChoice;
         }
 
         private void Load()
@@ -533,6 +552,7 @@ namespace TT.Viewer.ViewModels
             AllStatsChoice = Properties.Settings.Default.ReportGenerator_AllStatsChoice;
             ExpandState = Properties.Settings.Default.ReportGenerator_ExpandState;
             GeneralChoice = Properties.Settings.Default.ReportGenerator_GeneralChoice;
+            CrunchTimeChoice = Properties.Settings.Default.ReportGenerator_CrunchTimeChoice;
 
             var combis = Properties.Settings.Default.ReportGenerator_Combis;
             if (combis != null) AvailableCombis.AddRange(combis);
@@ -545,18 +565,23 @@ namespace TT.Viewer.ViewModels
             base.OnDeactivate(close);
             if (close)
             {
-                PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
-                ReportGenerationQueueManager.ReportGenerated -= ReportSettingsQueueManager_ReportGenerated;
-                Events.Unsubscribe(this);
-
-                ReportGenerationQueueManager.Stop();
-
-                WindowManager = null;
-                DialogCoordinator = null;
-                MatchManager = null;
-                Events = null;
-                ReportGenerationQueueManager = null;
+                DiscardViewModel(false);
             }
+        }
+
+        public void DiscardViewModel(bool finishLastReport)
+        {
+            PropertyChanged -= ReportSettingsViewModel_PropertyChanged;
+            ReportGenerationQueueManager.ReportGenerated -= ReportGenerationQueueManager_ReportGenerated;
+            Events.Unsubscribe(this);
+
+            ReportGenerationQueueManager.Stop(false, finishLastReport);
+
+            WindowManager = null;
+            DialogCoordinator = null;
+            MatchManager = null;
+            Events = null;
+            ReportGenerationQueueManager = null;
         }
     }
 }

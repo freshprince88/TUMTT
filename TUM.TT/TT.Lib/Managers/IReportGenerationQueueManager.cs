@@ -11,7 +11,9 @@ namespace TT.Lib.Managers
     {
         void Enqueue(IReportGenerator reportGenerator);
         void Start();
-        void Stop();
+        void Stop(bool hideNotifyIcon, bool runOnce);
+        void Dispose();
         event EventHandler<ReportGeneratedEventArgs> ReportGenerated;
+        string ReportPathUser { get; set; }
     }
 }

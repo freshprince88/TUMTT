@@ -7,27 +7,23 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TT.Models;
-using TT.Models.Statistics;
 using TT.Report.ViewModels;
-using TT.Report.Views;
 
 namespace TT.Report.Sections
 {
-    public abstract class ExistingStatisticsSection
+    public abstract class ExistingStatisticsSection : BaseSection
     {
         public IDictionary<string, object> ExistingStatisticsImageBitmapFrames { get; private set; }
 
-        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, System.Type v)
+        protected void GetImageBitmapFrames(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p, Type v)
         {
-            this.ExistingStatisticsImageBitmapFrames = new Dictionary<string, object>();
+            ExistingStatisticsImageBitmapFrames = new Dictionary<string, object>();
 
             var player = MatchPlayer.None;
             if (match.FirstPlayer.Equals(p))
                 player = MatchPlayer.First;
             else if (match.SecondPlayer.Equals(p))
                 player = MatchPlayer.Second;
-
-            var statistics = new MatchStatistics(match);
 
             foreach (var set in sets.Keys)
             {
@@ -43,7 +39,6 @@ namespace TT.Report.Sections
                     StrokeNumber = strokeNumber,
                     SelectedRallies = new System.Collections.ObjectModel.ObservableCollection<Rally>(sets[set])
                 };
-
 
                 try
                 {
@@ -69,7 +64,8 @@ namespace TT.Report.Sections
                     var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
                     bmp.Render(view);
 
-                    ExistingStatisticsImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
+                    var setTitle = GetSetTitleString(set);
+                    ExistingStatisticsImageBitmapFrames[setTitle] = BitmapFrame.Create(bmp);
                 }
                 catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
                 {
