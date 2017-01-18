@@ -170,7 +170,6 @@
     <Compile Include="Util\MatchHashGenerator.cs" />
     <Compile Include="Util\ObservableSortedList.cs" />
     <Compile Include="Util\ShortcutFactory.cs" />
-    <Compile Include="Util\TempFileScheme.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
     <Compile Include="Webbrowser\Test.cs" />
