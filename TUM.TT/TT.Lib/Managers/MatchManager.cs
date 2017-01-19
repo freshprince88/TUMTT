@@ -266,7 +266,7 @@ namespace TT.Lib.Managers
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
-            Events.PublishOnUIThread(new FullscreenEvent(false));
+            //Events.PublishOnUIThread(new FullscreenEvent(false));
         }
 
         public IEnumerable<IResult> OpenLiveMatch()
