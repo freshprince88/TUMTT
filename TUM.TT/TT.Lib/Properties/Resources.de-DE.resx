@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="dialog_file_in_use_button_cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="dialog_file_in_use_button_ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="dialog_file_in_use_message" xml:space="preserve">
+    <value>Die Datei '{0}' kann nicht überschrieben werden - vermutlich ist sie bereits in einem anderen Programm geöffnet. Möchten sie das Überschreiben erneut versuchen?</value>
+  </data>
+  <data name="dialog_file_in_use_title" xml:space="preserve">
+    <value>Datei in Benutzung</value>
+  </data>
   <data name="notification_generating" xml:space="preserve">
     <value>Bericht wird erstellt ...</value>
   </data>

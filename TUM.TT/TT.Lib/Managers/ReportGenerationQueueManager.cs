@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TT.Lib.Properties;
 using TT.Lib.Util;
@@ -12,6 +13,7 @@ using TT.Report.Generators;
 using TT.Report.Renderers;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
+using MahApps.Metro.Controls.Dialogs;
 using static TT.Report.Generators.CustomizedReportGenerator;
 using TempFileScheme = TT.Models.Util.TempFileScheme;
 using TempFileType = TT.Models.Util.TempFileType;
@@ -276,19 +278,34 @@ namespace TT.Lib.Managers
                         try
                         {
                             File.Copy(_renderedReportPath, _man.ReportPathUser, true);
+
+                            var reportPathUser = _man.ReportPathUser;
+                            NotifyUser(reportPathUser);
                         }
                         catch (Exception ex)
                         {
                             Debug.WriteLine($"QueueWorker: {ex.GetType().Name} ({ex.Message}) (Thread '{Thread.CurrentThread.Name}')");
-                            // TODO alert when opened in another process 
+                            if (ShowFileInUseDialog(_man.ReportPathUser).Result == MessageDialogResult.Affirmative)
+                                return;
                         }
-
-                        var reportPathUser = _man.ReportPathUser;
-                        NotifyUser(reportPathUser);
-
                         _man.ReportPathUser = null;
                     }
                 }
+            }
+
+            private static Task<MessageDialogResult> ShowFileInUseDialog(string reportPathUser)
+            {
+                var dialogSettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = Resources.dialog_file_in_use_button_ok,
+                    NegativeButtonText = Resources.dialog_file_in_use_button_cancel,
+                    AnimateShow = true,
+                    AnimateHide = false
+                };
+                var coordinator = IoC.Get<IDialogCoordinator>();
+                return coordinator.ShowMessageAsync(IoC.Get<IShell>(), Resources.dialog_file_in_use_title, 
+                    string.Format(Resources.dialog_file_in_use_message, reportPathUser),
+                    MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
             }
 
             private void MakeNotifyIconVisible()

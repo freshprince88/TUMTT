@@ -29,7 +29,7 @@ namespace TT.Lib.Properties {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        public Resources() {
         }
         
         /// <summary>
@@ -57,6 +57,42 @@ namespace TT.Lib.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string dialog_file_in_use_button_cancel {
+            get {
+                return ResourceManager.GetString("dialog_file_in_use_button_cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string dialog_file_in_use_button_ok {
+            get {
+                return ResourceManager.GetString("dialog_file_in_use_button_ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t overwrite file &apos;{0}&apos; - it is probably open in another program. Retry overwriting?.
+        /// </summary>
+        public static string dialog_file_in_use_message {
+            get {
+                return ResourceManager.GetString("dialog_file_in_use_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File in use.
+        /// </summary>
+        public static string dialog_file_in_use_title {
+            get {
+                return ResourceManager.GetString("dialog_file_in_use_title", resourceCulture);
             }
         }
         
