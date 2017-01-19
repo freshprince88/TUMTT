@@ -6,10 +6,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 using TT.Lib.Properties;
 using TT.Lib.Util;
 using TT.Report.Generators;
 using TT.Report.Renderers;
+//using Windows.UI.Notifications;
 using static TT.Report.Generators.CustomizedReportGenerator;
 using TempFileScheme = TT.Models.Util.TempFileScheme;
 using TempFileType = TT.Models.Util.TempFileType;
@@ -291,11 +293,46 @@ namespace TT.Lib.Managers
                         _man._repGenNotification.Tag = reportPathUser;
                         _man._repGenNotification.Text = Resources.notification_generated_doubleclick;
                         _man._repGenNotification.ShowBalloonTip(30000);
+                        //ShowToast();
                     }, EventArgs.Empty);
 
                     _man.ReportPathUser = null;
                 }
             }
+
+            //private void ShowToast()
+            //{
+            //    string toastVisual =
+            //        $@"<visual>
+            //          <binding template='ToastGeneric'>
+            //            <text>{"Report generation finished"}</text>
+            //            <text>{"Click here to open the newly generated PDF with the Report."}</text>
+            //          </binding>
+            //        </visual>";
+
+            //    string toastActions =
+            //        $@"<actions> 
+            //              <action
+            //                  content='Open'
+            //                  arguments='{"action=open"}'
+            //                  activationType='background'
+            //                  hint-inputId='tbReply'/>
+ 
+            //        </actions>";
+
+            //    string toastXmlString =
+            //        $@"<toast launch='{"action=open"}'>
+            //            {toastVisual}
+            //            {toastActions}
+            //        </toast>";
+
+            //    // Parse to XML
+            //    XmlDocument toastXml = new XmlDocument();
+            //    toastXml.LoadXml(toastXmlString);
+
+            //    // Generate toast
+            //    var toast = new ToastNotification(toastXml);
+            //}
         }
     }
 }
