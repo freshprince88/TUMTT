@@ -31,9 +31,12 @@ namespace TT.Report.Generators
         private readonly MatchPlayerToColorConverter _matchPlayerToColorConverter;
 
         public bool Abort { get; set; }
+        public bool Done { get; set; }
         public Match Match { get; set; }
         public string CustomizationId { get; private set; }
         public EventHandler<SectionsAddedEventArgs> SectionsAdded;
+
+        public bool ShowNotification { get; set; }
 
         private Dictionary<string, object> _customization;
         public Dictionary<string, object> Customization {
@@ -50,7 +53,8 @@ namespace TT.Report.Generators
         
         public CustomizedReportGenerator()
         {
-            this._matchPlayerToColorConverter = new MatchPlayerToColorConverter();
+            _matchPlayerToColorConverter = new MatchPlayerToColorConverter();
+            ShowNotification = true;
         }
 
         public void GenerateReport()

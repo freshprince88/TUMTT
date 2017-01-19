@@ -29,7 +29,6 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator DialogCoordinator;
         private string issuedReportId;
         private Dictionary<string, object> generatedReport;
-        private NotifyIcon ni;
 
         public IMatchManager MatchManager { get; private set; }
         public IEventAggregator Events { get; private set; }
@@ -313,11 +312,11 @@ namespace TT.Viewer.ViewModels
             if (!ignoredProperties.Contains(e.PropertyName))
             {
                 Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
-                GenerateReport();
+                GenerateReport(true);
             }
         }
         
-        public void GenerateReport()
+        public void GenerateReport(bool silent = false)
         {
             bool matchOpened = MatchManager.Match != null;
             Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened));
@@ -327,7 +326,8 @@ namespace TT.Viewer.ViewModels
                 CustomizedReportGenerator gen = new CustomizedReportGenerator()
                 {
                     Customization = GetCustomizationDictionary(),
-                    Match = MatchManager.Match
+                    Match = MatchManager.Match,
+                    ShowNotification = !silent
                 };
                 issuedReportId = MatchHashGenerator.GenerateMatchHash(MatchManager.Match) + gen.CustomizationId;
                 ReportGenerationQueueManager.Enqueue(gen);

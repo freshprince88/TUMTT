@@ -6,12 +6,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.Xml;
 using TT.Lib.Properties;
 using TT.Lib.Util;
 using TT.Report.Generators;
 using TT.Report.Renderers;
-//using Windows.UI.Notifications;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 using static TT.Report.Generators.CustomizedReportGenerator;
 using TempFileScheme = TT.Models.Util.TempFileScheme;
 using TempFileType = TT.Models.Util.TempFileType;
@@ -108,7 +108,7 @@ namespace TT.Lib.Managers
 
         public void Stop(bool hideNotifyIcon, bool runOnce)
         {
-            _queueWorker.RunOnce = true;
+            _queueWorker.RunOnce = runOnce;
             if (hideNotifyIcon)
                 _repGenNotification.Visible = false;
         }
@@ -145,8 +145,10 @@ namespace TT.Lib.Managers
                 lock(_man)
                 {
                     var gen = repGen as CustomizedReportGenerator;
-                    if (gen != null && _custRepGen != null &&
-                        string.Equals(gen.CustomizationId, _custRepGen.CustomizationId) || _workList.Contains(repGen))
+                    if (gen == null)
+                        throw new NotImplementedException("Queueing of non-customizable report generators not implemented");
+
+                    if (_workList.Contains(repGen) || (_custRepGen != null && !_custRepGen.Done && string.Equals(gen.CustomizationId, _custRepGen.CustomizationId)))
                     {
                         Debug.WriteLine("*QueueWorker: NOT adding repGen (Hash={0}) to queue - already in queue/work", repGen.GetHashCode());
                         return;
@@ -172,9 +174,10 @@ namespace TT.Lib.Managers
                             _workList.Clear();
                         }
 
+                        _renderedReportPath = null;
+
                         if (_custRepGen != null)
                         {
-                            _renderedReportPath = null;
                             _custRepGen.Abort = true;
                             _custRepGen.SectionsAdded -= CustomizedReportGenerator_SectionsAdded;
                             _custRepGen = null;
@@ -183,17 +186,6 @@ namespace TT.Lib.Managers
                         var gen = repGen as CustomizedReportGenerator;
                         if (gen != null)
                         {
-                            if (_man._repGenNotification != null)
-                            {
-                                _man._asyncOp.Post(o =>
-                                {
-                                    // this has to be done on the UI thread
-                                    Debug.WriteLine($"QueueWorker: making NotifyIcon visible (Thread '{Thread.CurrentThread.Name}')");
-                                    _man._repGenNotification.Text = Resources.notification_generating;
-                                    _man._repGenNotification.Visible = true;
-                                }, EventArgs.Empty);
-                            }
-
                             var matchHash = MatchHashGenerator.GenerateMatchHash(_man._matchManager.Match);
                             var tmpFileName = string.Format(_man.TempFileScheme.NameScheme, matchHash + gen.CustomizationId);
                             var tmpReportPath = _man.TempFileScheme.TempPath + tmpFileName;
@@ -205,6 +197,9 @@ namespace TT.Lib.Managers
                             }
                             else
                             {
+                                if (gen.ShowNotification)
+                                    MakeNotifyIconVisible();
+
                                 _custRepGen = gen;
                                 _custRepGen.SectionsAdded += CustomizedReportGenerator_SectionsAdded;
                                 var custRepGenThread = new Thread(_custRepGen.GenerateReport)
@@ -222,8 +217,8 @@ namespace TT.Lib.Managers
                             // repGen.GenerateReport(man.matchManager.Match);
                         }
                     }
-                    if (_man.ReportPathUser != null)
-                        CopyRenderedReportToUserPath();
+
+                    CopyRenderedReportToUserPath();
 
                     if (RunOnce)
                         RunOnce = false;
@@ -259,10 +254,9 @@ namespace TT.Lib.Managers
                 if (!repGen.Abort)
                 {
                     Debug.WriteLine("QueueWorker: repGen={0} not aborted, invoking ReportGenerated event", repGen.GetHashCode());
+                    repGen.Done = true;
                     _renderedReportPath = tmpReportPath;
                     _man.ReportGenerated?.Invoke(_man, new ReportGeneratedEventArgs(tmpReportPath, matchHash, repGenCustomizationId));
-                    if (repGen.Equals(_custRepGen))
-                        _custRepGen = null;
                 }
                 else
                 {
@@ -272,67 +266,103 @@ namespace TT.Lib.Managers
 
             private void CopyRenderedReportToUserPath()
             {
-                if (_renderedReportPath != null)
+                if (_man.ReportPathUser != null)
                 {
-                    Debug.WriteLine($"QueueWorker: userChosenPath={_man.ReportPathUser} (Thread '{Thread.CurrentThread.Name}')");
-                    try
-                    {
-                        File.Copy(_renderedReportPath, _man.ReportPathUser, true);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"QueueWorker: {ex.GetType().Name} ({ex.Message}) (Thread '{Thread.CurrentThread.Name}')");
-                        // TODO alert when opened in another process 
-                    }
+                    MakeNotifyIconVisible();
 
-                    var reportPathUser = _man.ReportPathUser;
-                    _man._asyncOp.Post(o =>
+                    if (_renderedReportPath != null)
                     {
-                        // this has to be done on the UI thread
-                        Debug.WriteLine($"QueueWorker: setting tag and text of NotifyIcon.BalloonTip and showing it (Thread '{Thread.CurrentThread.Name}')");
-                        _man._repGenNotification.Tag = reportPathUser;
-                        _man._repGenNotification.Text = Resources.notification_generated_doubleclick;
-                        _man._repGenNotification.ShowBalloonTip(30000);
-                        //ShowToast();
-                    }, EventArgs.Empty);
+                        Debug.WriteLine($"QueueWorker: userChosenPath={_man.ReportPathUser} (Thread '{Thread.CurrentThread.Name}')");
+                        try
+                        {
+                            File.Copy(_renderedReportPath, _man.ReportPathUser, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"QueueWorker: {ex.GetType().Name} ({ex.Message}) (Thread '{Thread.CurrentThread.Name}')");
+                            // TODO alert when opened in another process 
+                        }
 
-                    _man.ReportPathUser = null;
+                        var reportPathUser = _man.ReportPathUser;
+                        NotifyUser(reportPathUser);
+
+                        _man.ReportPathUser = null;
+                    }
                 }
             }
 
-            //private void ShowToast()
-            //{
-            //    string toastVisual =
-            //        $@"<visual>
-            //          <binding template='ToastGeneric'>
-            //            <text>{"Report generation finished"}</text>
-            //            <text>{"Click here to open the newly generated PDF with the Report."}</text>
-            //          </binding>
-            //        </visual>";
+            private void MakeNotifyIconVisible()
+            {
+                if (_man._repGenNotification != null && !_man._repGenNotification.Visible)
+                {
+                    _man._asyncOp.Post(o =>
+                    {
+                        // this has to be done on the UI thread
+                        Debug.WriteLine($"QueueWorker: making NotifyIcon visible (Thread '{Thread.CurrentThread.Name}')");
+                        _man._repGenNotification.Text = Resources.notification_generating;
+                        _man._repGenNotification.Visible = true;
+                    }, EventArgs.Empty);
+                }
+            }
 
-            //    string toastActions =
-            //        $@"<actions> 
-            //              <action
-            //                  content='Open'
-            //                  arguments='{"action=open"}'
-            //                  activationType='background'
-            //                  hint-inputId='tbReply'/>
+            private void NotifyUser(string reportPathUser)
+            {
+                _man._asyncOp.Post(o =>
+                {
+                    // this has to be done on the UI thread
+                    Debug.WriteLine($"QueueWorker: setting tag and text of NotifyIcon.BalloonTip and showing it (Thread '{Thread.CurrentThread.Name}')");
+                    _man._repGenNotification.Tag = reportPathUser;
+                    _man._repGenNotification.Text = Resources.notification_generated_doubleclick;
+
+                    /* Use the first line to show a balloontip XOR the second for a toast - they look the same,
+                       the toast _could_ however go to the action center, if there is shortcut for the app
+                       in the start menu.
+                       See http://stackoverflow.com/questions/36165102/toast-notifications-does-not-appear-in-action-center-after-time-out
+                       and https://msdn.microsoft.com/en-us/library/windows/apps/hh802762.aspx
+                       and https://msdn.microsoft.com/en-us/library/windows/apps/hh802768.aspx
+                       (If for some reason the necessary usings & references for toasts were deleted from this project, 
+                       see: http://stackoverflow.com/questions/12745703/how-can-i-use-the-windows-ui-namespace-from-a-regular-non-store-win32-net-app
+                    */
+                    _man._repGenNotification.ShowBalloonTip(30000); // 30 sec - Windows somehow doesn't respect this value though
+                                                                    //ShowToast();
+                }, EventArgs.Empty);
+            }
+
+            // ReSharper disable once UnusedMember.Local
+            private void ShowToast()
+            {
+                string toastVisual =
+                    $@"<visual>
+                      <binding template='ToastGeneric'>
+                        <text>{"Report generation finished"}</text>
+                        <text>{"Click here to open the newly generated PDF with the Report."}</text>
+                      </binding>
+                    </visual>";
+
+                string toastActions =
+                    $@"<actions> 
+                          <action
+                              content='Open'
+                              arguments='{"action=open"}'
+                              activationType='background'
+                              hint-inputId='tbReply'/>
  
-            //        </actions>";
+                    </actions>";
 
-            //    string toastXmlString =
-            //        $@"<toast launch='{"action=open"}'>
-            //            {toastVisual}
-            //            {toastActions}
-            //        </toast>";
+                string toastXmlString =
+                    $@"<toast launch='{"action=open"}'>
+                        {toastVisual}
+                        {toastActions}
+                    </toast>";
 
-            //    // Parse to XML
-            //    XmlDocument toastXml = new XmlDocument();
-            //    toastXml.LoadXml(toastXmlString);
-
-            //    // Generate toast
-            //    var toast = new ToastNotification(toastXml);
-            //}
+                // Parse to XML
+                var toastXml = new XmlDocument();
+                toastXml.LoadXml(toastXmlString);
+                
+                // Generate toast
+                var toast = new ToastNotification(toastXml);
+                ToastNotificationManager.CreateToastNotifier("ttlib").Show(toast);
+            }
         }
     }
 }
