@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,6 +22,12 @@ namespace TT.Report.Sections
             ((IActivate)vm).Activate();
 
             var mainGrid = (Grid)view.Content;
+            if (mainGrid == null)
+            {
+                Debug.WriteLine("TableLegendSection: mainGrid is null - system probably shutting down. Returning null.");
+                return;
+            }
+
             var size = new Size(mainGrid.Width, mainGrid.Height);
             var scale = 2.5;
 
