@@ -6,7 +6,8 @@
                       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
-                        xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+                      xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       Dialog:DialogParticipation.Register="{Binding}"
                       ResizeMode="CanResizeWithGrip"
                       Width="1024"
@@ -74,7 +75,6 @@
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button ToolTip="Save Match"
-                    cal:Message.Attach="[Event Click] = [Action SaveMatch()]" 
                     Visibility="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}" >
                 <Rectangle Width="22"
                            Height="22"
@@ -84,6 +84,18 @@
                                      Visual="{StaticResource appbar_save}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="SaveMatch">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Ctrl" Key="S"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="SaveMatch"/>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </Button>
             <!--<Button ToolTip="Open new Match"
                     cal:Message.Attach="[Event Click] = [Action OpenMatch()]">
