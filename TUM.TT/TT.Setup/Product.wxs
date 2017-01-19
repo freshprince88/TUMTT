@@ -1,31 +1,105 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="{70524E77-1BB3-44D9-B00E-1AFF3C018E87}" Name="TUM.TT 1.0" Language="1031" Version="1.0.0.0" Manufacturer="TU München" 
-           UpgradeCode="{4C484FD9-23B1-4111-856B-EE5B03BB9EB0}" Codepage="1252">
-		<Package Id="*" Keywords="Installer" Description="TUM.TT 1.0 Installer" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+  <!-- Use * to generate product ID on every build -->
+  <Product Id="*"
+			 Name="TUM.TT"
+			 Language="1031"
+			 Version="1.0.0.0"
+			 Manufacturer="TU München"
+			 UpgradeCode="4C484FD9-23B1-4111-856B-EE5B03BB9EB0">
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+    <Package Compressed="yes"
+				 InstallScope="perMachine"
+				 Manufacturer="TU München"
+				 Description="TUM.TT [ProductVersion] Installer"
+				 Comments="(c) 2016 TU München" />
 
-		<Feature Id="ProductFeature" Title="TUM.TT" Level="1" ConfigurableDirectory='INSTALLDIR'>
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="INSTALLDIR">
-				<Directory Id="INSTALLFOLDER" Name="TUM TT Software" />
-			</Directory>
-		</Directory>
-	</Fragment>
+    <!--Directory structure-->
+    <Directory Id="TARGETDIR"
+				   Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="DIR_MyProgram"
+						   Name="TU München" />
+        <Directory Id="ProgramMenuFolder">
+          <Directory Id="DIR_Shortcuts"
+							   Name="TUM TT" />
+        </Directory>
+      </Directory>
+    </Directory>
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			 <Component Id="ProductComponent">
-         <File Source="$(var.TT.Viewer.TargetPath)" />
-			 </Component> 
-		</ComponentGroup>
-	</Fragment>
+    <!--Components-->
+    <DirectoryRef Id="DIR_MyProgram">
+      <Component Id="CMP_ViewerEXE"
+					   Guid="{44C2C5EF-5D1C-4CBE-ABC1-48CAE236B9DF}">
+        <File Id="FILE_ViewerEXE"
+					  Source="$(var.TT.Viewer.TargetPath)"
+					  KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_ScouterEXE"
+					   Guid="{1A51B1A4-0921-4F7F-8E96-72848585CF04}">
+        <File Id="FILE_ScouterEXE"
+					  Source="$(var.TT.Scouter.TargetPath)"
+					  KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!--Start Menu Shortcuts-->
+    <DirectoryRef Id="DIR_Shortcuts">
+      <Component Id="CMP_TypicalShortcuts"
+					   Guid="{0AD75B8C-DF2A-4509-9985-F6ACC601EA87}">
+
+        <Shortcut Id="StartViewerShortcutComplete"
+						  Name="TUM.TT - Viewer"
+						  Description="TUM.TT Analysis Viewer"
+						  Target="[DIR_MyProgram]FileToInstall.txt" />
+
+        <Shortcut Id="UninstallShortcutComplete"
+						  Name="Uninstall TUM.TT"
+						  Description="Uninstalls TUM.TT Analysis Software"
+						  Target="[System64Folder]msiexec.exe"
+						  Arguments="/x [ProductCode]" />
+
+        <RemoveFolder Id="RemoveDIR_Shortcuts"
+							  On="uninstall" />
+
+        <RegistryValue Root="HKCU"
+							   Key="Software\TUM\TUMTT"
+							   Name="installed"
+							   Type="integer"
+							   Value="1"
+							   KeyPath="yes" />
+      </Component>
+
+      <Component Id="CMP_ScouterShortcut"
+       Guid="{F7472610-BBAE-4FD9-8310-D5D987E08D6F}">
+
+        <Shortcut Id="StartScouterShortcutComplete"
+              Name="TUM.TT - Scouter"
+              Description="TUM.TT Analysis Viewer"
+              Target="[DIR_MyProgram]FileToInstall.txt" />
+      </Component>
+    </DirectoryRef>
+
+    <!--Features-->
+    <Feature Id="CompleteFeature"
+				 Title="Complete Installation"
+				 Level="4">
+      <ComponentRef Id="CMP_ViewerEXE" />
+      <ComponentRef Id="CMP_ScouterEXE" />
+      <ComponentRef Id="CMP_TypicalShortcuts" />
+      <ComponentRef Id="CMP_ScouterShortcut" />
+    </Feature>
+
+    <Feature Id="OnlyViewerFeature"
+			 Title="Viewer Only"
+			 Level="1">
+      <ComponentRef Id="CMP_ViewerEXE" />
+      <ComponentRef Id="CMP_TypicalShortcuts" />
+    </Feature>
+
+    <UIRef Id="WixUI_Mondo"/>
+  </Product>
 </Wix>
