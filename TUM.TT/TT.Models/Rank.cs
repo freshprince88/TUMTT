@@ -30,8 +30,8 @@ namespace TT.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Rank"/> class.
         /// </summary>
-        /// <param name="position">The position in the ranking.</param>
-        /// <param name="date">The date of ranking.</param>
+        /// <param name="p">The position in the ranking.</param>
+        /// <param name="d">The date of ranking.</param>
         public Rank(int p, DateTime d)
         {
             this.Position = p;
