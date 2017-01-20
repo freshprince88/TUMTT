@@ -347,7 +347,9 @@ namespace TT.Viewer.ViewModels
             }
             else
             {
+                Events.PublishOnUIThread(new FullscreenHidePlayerEvent(false));
                 Events.PublishOnUIThread(new FullscreenEvent(false));
+
             }
         }
 

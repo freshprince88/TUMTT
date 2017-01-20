@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace TT.Lib.Events
 {
 
-    public class FullscreenHideHitlistEvent {
+    public class FullscreenHidePlayerEvent
+    {
         public bool Hide { get; set; }
-        public FullscreenHideHitlistEvent(bool hideShow)
+        public FullscreenHidePlayerEvent(bool hideShow)
         {
             Hide = hideShow;
         }

@@ -22,7 +22,8 @@ namespace TT.Viewer.Views
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>,
         IHandle<VideoLoadedEvent>,
-        IHandle<FullscreenEvent>
+        IHandle<FullscreenEvent>,
+        IHandle<FullscreenHidePlayerEvent>
     {
 
         private IEventAggregator Events;
@@ -72,17 +73,13 @@ namespace TT.Viewer.Views
             {
                 if (mousePosition != System.Windows.Forms.Control.MousePosition)
                 {
-                    Mouse.OverrideCursor = null;
-
+                    //Mouse.OverrideCursor = null;
                     LastMouseMove = DateTime.Now;
-
                     if (IsHidden)
-                    {
-                        SliderRow.Height = new GridLength(1, GridUnitType.Auto);
-                        PlayerRow1.Height = new GridLength(25);
-                        PlayerRow2.Height = new GridLength(25);
+                    {                     
                         IsHidden = false;
-                        Events.PublishOnUIThread(new FullscreenHideAllEvent(false));
+                        Events.PublishOnUIThread(new FullscreenHidePlayerEvent(false));
+                        Events.PublishOnUIThread(new FullscreenHideHitlistEvent(false));
                     }
 
                     timer.Enabled = true;
@@ -190,11 +187,10 @@ namespace TT.Viewer.Views
             {
                 timer.Stop();
                 {
-                    SliderRow.Height = new GridLength(0);
-                    PlayerRow1.Height = new GridLength(0);
-                    PlayerRow2.Height = new GridLength(0);
+                    
                     IsHidden = true;
-                    Events.PublishOnUIThread(new FullscreenHideAllEvent(true));
+                    Events.PublishOnUIThread(new FullscreenHidePlayerEvent(true));
+                    Events.PublishOnUIThread(new FullscreenHideHitlistEvent(true));
                     Mouse.OverrideCursor = System.Windows.Input.Cursors.None;
                 }
 
@@ -233,6 +229,27 @@ namespace TT.Viewer.Views
                     break;
                 case false:
                         MediaPlayer.SetValue(Grid.RowSpanProperty, 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void Handle(FullscreenHidePlayerEvent message)
+        {
+            switch(message.Hide)
+            {
+                case true:
+                    SliderRow.Height = new GridLength(0);
+                    PlayerRow1.Height = new GridLength(0);
+                    PlayerRow2.Height = new GridLength(0);
+
+                    break;
+                case false:
+                    Mouse.OverrideCursor = null;
+                    SliderRow.Height = new GridLength(1, GridUnitType.Auto);
+                    PlayerRow1.Height = new GridLength(25);
+                    PlayerRow2.Height = new GridLength(25);
                     break;
                 default:
                     break;

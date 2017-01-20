@@ -19,7 +19,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für ShellView.xaml
     /// </summary>
-    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<HideMenuEvent>, IHandle<FullscreenEvent>, IHandle<FullscreenHideAllEvent>
+    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<HideMenuEvent>, IHandle<FullscreenEvent>, IHandle<FullscreenHideHitlistEvent>
     {
         public IEventAggregator Events { get; private set; }
         WindowState currentStateNonFullscreen { get; set; }
@@ -102,7 +102,7 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(FullscreenHideAllEvent message)
+        public void Handle(FullscreenHideHitlistEvent message)
         {
             switch (message.Hide)
             {
