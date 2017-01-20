@@ -1,26 +1,15 @@
 ﻿using Caliburn.Micro;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using TT.Models.Util.Enums;
 using TT.Lib.Events;
-using TT.Lib.Managers;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
     public class ResultTabViewModel : Conductor<IResultViewTabItem>.Collection.OneActive,
         IHandle<FullscreenEvent>
     {
-
         private IEventAggregator Events;
+        private IResultViewTabItem _lastNonFullScreenItem;
 
         public ResultTabViewModel(IEnumerable<IResultViewTabItem> tabs, IEventAggregator e)
         {
@@ -36,6 +25,10 @@ namespace TT.Viewer.ViewModels
             {
                 tab.DisplayName = tab.GetTabTitle(message.Fullscreen);
             }
+            if (message.Fullscreen)
+                _lastNonFullScreenItem = ActiveItem;
+            else
+                ActiveItem = _lastNonFullScreenItem;
         }
 
         protected override void OnActivate()
