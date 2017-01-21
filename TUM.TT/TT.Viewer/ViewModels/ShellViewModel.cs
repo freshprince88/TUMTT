@@ -177,7 +177,7 @@ namespace TT.Viewer.ViewModels
 
         public IEnumerable<IResult> GenerateReport()
         {
-            var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, _windowManager, Events, DialogCoordinator);
+            var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, Events);
             reportVm.GenerateReport();
             foreach (var res in reportVm.SaveGeneratedReport())
                 yield return res;
@@ -198,7 +198,7 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
 
-            var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, _windowManager, Events, DialogCoordinator);
+            var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, Events);
             reportVm.GenerateReport();
             reportVm.DiscardViewModel(true);
         }
@@ -294,7 +294,7 @@ namespace TT.Viewer.ViewModels
                 settings.ResizeMode = ResizeMode.CanResizeWithGrip;
                 settings.Width = Math.Min(SystemParameters.PrimaryScreenWidth - 20, 1200);
                 settings.Height = Math.Min(SystemParameters.PrimaryScreenHeight - 35, 860);
-                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, _windowManager, Events, DialogCoordinator), null, settings);
+                _windowManager.ShowDialog(new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, Events), null, settings);
             }
         }
         #endregion
