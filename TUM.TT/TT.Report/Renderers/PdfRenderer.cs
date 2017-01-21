@@ -635,7 +635,7 @@ namespace TT.Report.Renderers
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
 
             if (itemsList.Count > 0 && itemsList.ElementAt(0) is BitmapFrame)
-                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, tableIndentLeft: 2.25);
+                AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200);
             else if (itemsList.Count > 0 && itemsList.ElementAt(0) is List<object>)
                 AddItemsToTwoColTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), oxyPlotToTempFilePathFunction, bitmapFrameToTempFileFunction, 280, 190, keepCol1AspectRation: false);
         }
@@ -647,7 +647,7 @@ namespace TT.Report.Renderers
             var itemsList = new List<object>();
             foreach (var set in section.ExistingStatisticsImageBitmapFrames.Keys)
                 itemsList.Add(section.ExistingStatisticsImageBitmapFrames[set]);
-            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200, tableIndentLeft: 2.25);
+            AddItemsToTable(itemsList, section.ExistingStatisticsImageBitmapFrames.Keys.ToList(), bitmapFrameToTempFileFunction, 300, 200);
         }
 
         public void Visit(LargeTableSection section)
@@ -1196,15 +1196,13 @@ namespace TT.Report.Renderers
             int normalWidth,
             int smallWidth,
             int normalHeight = 0,
-            int smallHeight = 0,
-            double tableIndentLeft = 0)
+            int smallHeight = 0)
         {
             var tableItemsCount = items.Count;
             bool multipleItems = tableItemsCount > 1;
 
             Table table = Document.LastSection.AddTable();
             table.Borders.Visible = false;
-            table.Rows.LeftIndent = Unit.FromCentimeter(multipleItems ? 0 : tableIndentLeft);
 
             Column col = table.AddColumn();
             col.Width = (int)(MaxTableColWidth / (multipleItems ?  2d : 1d));
