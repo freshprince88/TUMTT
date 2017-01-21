@@ -16,7 +16,6 @@ using TT.Lib.Results;
 using TT.Report.Renderers;
 using System.IO;
 using System.Threading;
-using System.Windows.Forms;
 using TT.Lib.Events;
 using TT.Report.Generators;
 using TT.Models;
@@ -29,6 +28,7 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator DialogCoordinator;
         private string issuedReportId;
         private Dictionary<string, object> generatedReport;
+        private Timer _reportGenerationTimer;
 
         public IMatchManager MatchManager { get; private set; }
         public IEventAggregator Events { get; private set; }
@@ -312,14 +312,21 @@ namespace TT.Viewer.ViewModels
             if (!ignoredProperties.Contains(e.PropertyName))
             {
                 Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
-                GenerateReport();
+                Events.PublishOnUIThread(new ReportSettingsChangedEvent(MatchManager.Match != null));
+                if (_reportGenerationTimer == null)
+                    _reportGenerationTimer = new Timer(GenerateReport, false, TimeSpan.FromSeconds(1.5), TimeSpan.FromMilliseconds(-1));
+                else
+                    _reportGenerationTimer.Change(TimeSpan.FromSeconds(1.5), TimeSpan.FromMilliseconds(-1));
             }
         }
         
-        public void GenerateReport()
+        public void GenerateReport(object genEvent = null)
         {
-            bool matchOpened = MatchManager.Match != null;
-            Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened));
+            var matchOpened = MatchManager.Match != null;
+
+            var generateRepSettingsChangeEvenet = genEvent as bool?;
+            if (generateRepSettingsChangeEvenet == null || generateRepSettingsChangeEvenet.Value)
+                Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened));
 
             if (matchOpened)
             {
