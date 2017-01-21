@@ -297,11 +297,14 @@ namespace TT.Viewer.ViewModels
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (MatchManager.Match == null)
+                return;
+
             var ignoredProperties = new List<string> { "IsInitialized", "IsActive", "ExpandState" };
             if (!ignoredProperties.Contains(e.PropertyName))
             {
                 Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
-                Events.PublishOnUIThread(new ReportSettingsChangedEvent(MatchManager.Match != null));
+                Events.PublishOnUIThread(new ReportSettingsChangedEvent(true));
                 if (_reportGenerationTimer == null)
                     _reportGenerationTimer = new Timer(GenerateReport, false, TimeSpan.FromSeconds(1.5), TimeSpan.FromMilliseconds(-1));
                 else
