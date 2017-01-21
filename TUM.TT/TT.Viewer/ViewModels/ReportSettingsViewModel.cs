@@ -312,11 +312,11 @@ namespace TT.Viewer.ViewModels
             if (!ignoredProperties.Contains(e.PropertyName))
             {
                 Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
-                GenerateReport(true);
+                GenerateReport();
             }
         }
         
-        public void GenerateReport(bool silent = false)
+        public void GenerateReport()
         {
             bool matchOpened = MatchManager.Match != null;
             Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened));
@@ -326,8 +326,7 @@ namespace TT.Viewer.ViewModels
                 CustomizedReportGenerator gen = new CustomizedReportGenerator()
                 {
                     Customization = GetCustomizationDictionary(),
-                    Match = MatchManager.Match,
-                    ShowNotification = !silent
+                    Match = MatchManager.Match
                 };
                 issuedReportId = MatchHashGenerator.GenerateMatchHash(MatchManager.Match) + gen.CustomizationId;
                 ReportGenerationQueueManager.Enqueue(gen);

@@ -199,7 +199,7 @@ namespace TT.Viewer.ViewModels
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
 
             var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, _windowManager, Events, DialogCoordinator);
-            reportVm.GenerateReport(true);
+            reportVm.GenerateReport();
             reportVm.DiscardViewModel(true);
         }
         #endregion

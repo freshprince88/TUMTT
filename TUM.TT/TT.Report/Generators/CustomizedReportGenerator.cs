@@ -54,7 +54,6 @@ namespace TT.Report.Generators
         public CustomizedReportGenerator()
         {
             _matchPlayerToColorConverter = new MatchPlayerToColorConverter();
-            ShowNotification = true;
         }
 
         public void GenerateReport()

@@ -55,7 +55,7 @@ namespace TT.Viewer.Views
                     SelectCombiView(combi);
 
                 // generate the report based on the initial settings
-                vm.GenerateReport(true);
+                vm.GenerateReport();
             }
         }
 

@@ -593,9 +593,6 @@ namespace TT.Report.Renderers
 
         public void Visit(PartSection section)
         {
-            // each new part means new heading counters
-            //this.ResetHeadingCounters();
-            
             var partName = string.Format(
                 section.Player != null ? "{0} - {1}" : "{0}",
                 section.PartName,
@@ -1303,7 +1300,6 @@ namespace TT.Report.Renderers
         {
             Table table = Document.LastSection.AddTable();
             table.Borders.Visible = false;
-            //table.Rows.LeftIndent = Unit.FromCentimeter(-0.85);
 
             Column col1 = table.AddColumn();
             col1.Width = (int)(MaxTableColWidth / 2d);
