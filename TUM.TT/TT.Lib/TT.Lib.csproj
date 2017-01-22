@@ -178,6 +178,7 @@
     <Compile Include="Util\ShortcutFactory.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
+    <Compile Include="Views\ReportGenerationNotifyIcon.cs" />
     <Compile Include="Webbrowser\Test.cs" />
     <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />
@@ -228,6 +229,22 @@
     <Content Include="Libs\Zhucai.LambdaParser.dll" />
     <Content Include="Resources\Entypo-license.txt" />
     <None Include="Resources\olive-letter-v-512.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r0.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r1.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r10.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r11.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r12.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r13.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r14.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r15.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r2.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r3.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r4.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r5.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r6.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r7.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r8.ico" />
+    <EmbeddedResource Include="Resources\r_icons\r9.ico" />
     <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>

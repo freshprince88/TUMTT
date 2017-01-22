@@ -14,6 +14,7 @@ using TT.Report.Renderers;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 using MahApps.Metro.Controls.Dialogs;
+using TT.Lib.Views;
 using static TT.Report.Generators.CustomizedReportGenerator;
 using TempFileScheme = TT.Models.Util.TempFileScheme;
 using TempFileType = TT.Models.Util.TempFileType;
@@ -55,33 +56,15 @@ namespace TT.Lib.Managers
         private readonly IMatchManager _matchManager;
         private readonly QueueWorker _queueWorker;
         private readonly AsyncOperation _asyncOp;
-        private NotifyIcon _repGenNotification;
+        private ReportGenerationNotifyIcon _notifyIcon;
 
         public ReportGenerationQueueManager(IMatchManager matchManager)
         {
-            Debug.WriteLine($"ReportGenerationQueueManager: creating NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
-            _repGenNotification = new NotifyIcon()
-            {
-                Icon = Resources.olive_letter_v_512,
-                Text = Resources.notification_generating
-            };
-            EventHandler dClickOrBalloonClick = (sender, args) =>
-            {
-                var notifyIcon = (NotifyIcon) sender;
-                if (notifyIcon?.Tag == null)
-                    return;
-
-                Debug.WriteLine($"QueueWorker (double-click on NotifyIcon or single-click on BallonTip): opening path '{notifyIcon.Tag}' and hiding NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
-                Process.Start((string)notifyIcon.Tag);
-                _repGenNotification.Visible = false;
-            };
-            _repGenNotification.DoubleClick += dClickOrBalloonClick;
-
-            _repGenNotification.BalloonTipText = Resources.notification_generated_text;
-            _repGenNotification.BalloonTipTitle = Resources.notification_generated_title;
-            _repGenNotification.BalloonTipClicked += dClickOrBalloonClick;
-
             _matchManager = matchManager;
+
+            Debug.WriteLine($"ReportGenerationQueueManager: creating ReportGenerationNotifyIcon (Thread '{Thread.CurrentThread.Name}')");
+            _notifyIcon = new ReportGenerationNotifyIcon();
+
             // AsyncOperation being created in the constructor gives us a way of letting code run on the UI (main) thread,
             // which is needed for NotifyIcon (& its BalloonTip) to generate click events
             _asyncOp = AsyncOperationManager.CreateOperation(null);
@@ -112,16 +95,15 @@ namespace TT.Lib.Managers
         {
             _queueWorker.RunOnce = runOnce;
             if (hideNotifyIcon)
-                _repGenNotification.Visible = false;
+                _notifyIcon.Visible = false;
         }
 
         public void Dispose()
         {
             _queueWorker.Run = false;
             Debug.WriteLine($"ReportGenerationQueueManager: disposing of NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
-            _repGenNotification.Visible = false;
-            _repGenNotification.Dispose();
-            _repGenNotification = null;
+            _notifyIcon.Dispose();
+            _notifyIcon = null;
         }
 
         private class QueueWorker
@@ -163,7 +145,7 @@ namespace TT.Lib.Managers
 
             internal void WorkTheQueue()
             {
-                while (Run || RunOnce || _man._repGenNotification != null && _man._repGenNotification.Visible)
+                while (Run || RunOnce || _man._notifyIcon != null && _man._notifyIcon.Visible) //_man._repGenNotification != null && _man._repGenNotification.Visible)
                 {
                     if (_workList.Count != 0)
                     {
@@ -310,14 +292,13 @@ namespace TT.Lib.Managers
 
             private void MakeNotifyIconVisible()
             {
-                if (_man._repGenNotification != null && !_man._repGenNotification.Visible)
+                if (_man._notifyIcon != null && !_man._notifyIcon.Visible) //(_man._repGenNotification != null && !_man._repGenNotification.Visible)
                 {
                     _man._asyncOp.Post(o =>
                     {
                         // this has to be done on the UI thread
                         Debug.WriteLine($"QueueWorker: making NotifyIcon visible (Thread '{Thread.CurrentThread.Name}')");
-                        _man._repGenNotification.Text = Resources.notification_generating;
-                        _man._repGenNotification.Visible = true;
+                        _man._notifyIcon.Animate();
                     }, EventArgs.Empty);
                 }
             }
@@ -328,8 +309,8 @@ namespace TT.Lib.Managers
                 {
                     // this has to be done on the UI thread
                     Debug.WriteLine($"QueueWorker: setting tag and text of NotifyIcon.BalloonTip and showing it (Thread '{Thread.CurrentThread.Name}')");
-                    _man._repGenNotification.Tag = reportPathUser;
-                    _man._repGenNotification.Text = Resources.notification_generated_doubleclick;
+                    _man._notifyIcon.Tag = reportPathUser;
+                    _man._notifyIcon.StopAnimating();
 
                     /* Use the first line to show a balloontip XOR the second for a toast - they look the same,
                        the toast _could_ however go to the action center, if there is shortcut for the app
@@ -340,8 +321,8 @@ namespace TT.Lib.Managers
                        (If for some reason the necessary usings & references for toasts were deleted from this project, 
                        see: http://stackoverflow.com/questions/12745703/how-can-i-use-the-windows-ui-namespace-from-a-regular-non-store-win32-net-app
                     */
-                    _man._repGenNotification.ShowBalloonTip(30000); // 30 sec - Windows somehow doesn't respect this value though
-                                                                    //ShowToast();
+                    _man._notifyIcon.ShowBaloonTip();
+                    //ShowToast();
                 }, EventArgs.Empty);
             }
 
