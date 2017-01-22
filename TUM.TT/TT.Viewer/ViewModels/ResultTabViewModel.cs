@@ -10,10 +10,12 @@ namespace TT.Viewer.ViewModels
     {
         private IEventAggregator Events;
         private IResultViewTabItem _lastNonFullScreenItem;
+        private IEnumerable<IResultViewTabItem> _allTabs;
 
         public ResultTabViewModel(IEnumerable<IResultViewTabItem> tabs, IEventAggregator e)
         {
-            Items.AddRange(tabs);
+            _allTabs = tabs;
+            Items.AddRange(_allTabs);
 
             Events = e;
             Events.Subscribe(this);
@@ -21,14 +23,24 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(FullscreenEvent message)
         {
+            if (message.Fullscreen)
+            {
+                _lastNonFullScreenItem = ActiveItem;
+                Items.Clear();
+                Items.Add(_allTabs.First(t => t is ResultListViewModel));
+                ActiveItem = Items.First();
+            }
+            else
+            {
+                Items.Clear();
+                Items.AddRange(_allTabs);
+                ActiveItem = _lastNonFullScreenItem;
+            }
+
             foreach (IResultViewTabItem tab in Items)
             {
                 tab.DisplayName = tab.GetTabTitle(message.Fullscreen);
             }
-            if (message.Fullscreen)
-                _lastNonFullScreenItem = ActiveItem;
-            else
-                ActiveItem = _lastNonFullScreenItem;
         }
 
         protected override void OnActivate()
