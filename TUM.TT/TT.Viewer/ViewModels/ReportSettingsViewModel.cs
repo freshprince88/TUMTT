@@ -292,7 +292,7 @@ namespace TT.Viewer.ViewModels
             _generatedReport["match"] = e.MatchHash;
             _generatedReport["reportid"] = e.ReportSettingsCode;
             _generatedReport["path"] = e.ReportPathTemp;
-            Events?.PublishOnUIThread(new ReportPreviewChangedEvent(e.ReportPathTemp));
+            Events?.PublishOnUIThread(new ReportPreviewChangedEvent(e.ReportPathTemp, e.ReportSettingsCode));
         }
 
         private void ReportSettingsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -304,7 +304,7 @@ namespace TT.Viewer.ViewModels
             if (!ignoredProperties.Contains(e.PropertyName))
             {
                 Debug.WriteLine("property changed [sender={0} propname={1} propvalue={2}]", sender, e.PropertyName, sender.GetType().GetProperty(e.PropertyName).GetValue(sender));
-                Events.PublishOnUIThread(new ReportSettingsChangedEvent(true));
+                Events.PublishOnUIThread(new ReportSettingsChangedEvent(true, (string)GetCustomizationDictionary()["id"]));
                 if (_reportGenerationTimer == null)
                     _reportGenerationTimer = new Timer(GenerateReport, false, TimeSpan.FromSeconds(1.5), TimeSpan.FromMilliseconds(-1));
                 else
@@ -315,16 +315,17 @@ namespace TT.Viewer.ViewModels
         public void GenerateReport(object genEvent = null)
         {
             var matchOpened = MatchManager.Match != null;
+            var customizationDict = GetCustomizationDictionary();
+            var generateRepSettingsChangedEvent = genEvent as bool?;
 
-            var generateRepSettingsChangeEvenet = genEvent as bool?;
-            if (generateRepSettingsChangeEvenet == null || generateRepSettingsChangeEvenet.Value)
-                Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened));
+            if (generateRepSettingsChangedEvent == null || generateRepSettingsChangedEvent.Value)
+                Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened, (string)customizationDict["id"]));
 
             if (matchOpened)
             {
                 var gen = new CustomizedReportGenerator()
                 {
-                    Customization = GetCustomizationDictionary(),
+                    Customization = customizationDict,
                     Match = MatchManager.Match
                 };
                 _issuedReportId = MatchHashGenerator.GenerateMatchHash(MatchManager.Match) + gen.CustomizationId;

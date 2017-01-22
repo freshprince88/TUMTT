@@ -10,8 +10,8 @@ using TT.Lib.Properties;
 using TT.Lib.Util;
 using TT.Report.Generators;
 using TT.Report.Renderers;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
+//using Windows.Data.Xml.Dom;
+//using Windows.UI.Notifications;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Views;
 using static TT.Report.Generators.CustomizedReportGenerator;
@@ -297,12 +297,12 @@ namespace TT.Lib.Managers
 
             private void MakeNotifyIconVisible()
             {
-                if (_man._notifyIcon != null && !_man._notifyIcon.Visible)
+                if (_man._notifyIcon != null && !_man._notifyIcon.Animating)
                 {
                     _man._asyncOp.Post(o =>
                     {
                         // this has to be done on the UI thread
-                        Debug.WriteLine($"QueueWorker: making NotifyIcon visible (Thread '{Thread.CurrentThread.Name}')");
+                        Debug.WriteLine($"QueueWorker: animating NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
                         _man._notifyIcon.Animate();
                     }, EventArgs.Empty);
                 }
@@ -325,6 +325,7 @@ namespace TT.Lib.Managers
                        and https://msdn.microsoft.com/en-us/library/windows/apps/hh802768.aspx
                        (If for some reason the necessary usings & references for toasts were deleted from this project, 
                        see: http://stackoverflow.com/questions/12745703/how-can-i-use-the-windows-ui-namespace-from-a-regular-non-store-win32-net-app
+                       Especially on how to add ref to "Windows.Data & Windows.UI")
                     */
                     _man._notifyIcon.ShowBaloonTip();
                     //ShowToast();
@@ -358,13 +359,13 @@ namespace TT.Lib.Managers
                         {toastActions}
                     </toast>";
 
-                // Parse to XML
-                var toastXml = new XmlDocument();
-                toastXml.LoadXml(toastXmlString);
-                
-                // Generate toast
-                var toast = new ToastNotification(toastXml);
-                ToastNotificationManager.CreateToastNotifier("ttlib").Show(toast);
+                // Parse to XML [needs using that is commented out]
+                //var toastXml = new XmlDocument();
+                //toastXml.LoadXml(toastXmlString);
+
+                // Generate toast [needs using that is commented out]
+                //var toast = new ToastNotification(toastXml);
+                //ToastNotificationManager.CreateToastNotifier("ttlib").Show(toast);
             }
         }
     }

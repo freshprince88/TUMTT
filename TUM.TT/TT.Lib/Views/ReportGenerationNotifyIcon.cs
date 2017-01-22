@@ -94,11 +94,14 @@ namespace TT.Lib.Views
             }
         }
 
+        public bool Animating => _timer.Enabled;
+
         public void Animate()
         {
             _timer.Start();
             _notifyIcon.Visible = true;
             _notifyIcon.Text = Resources.notification_generating;
+            _notifyIcon.Tag = null;
         }
 
         public void StopAnimating()

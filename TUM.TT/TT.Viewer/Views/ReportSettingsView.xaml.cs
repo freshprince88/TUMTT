@@ -26,6 +26,9 @@ namespace TT.Viewer.Views
     {
         private IEventAggregator Events { get; }
         private bool _reflectCheckStateChange = true;
+        private string _issuedPreviewCustomizationId;
+        private string _currentPreviewCustomizationId;
+        private static readonly object DisplayLock = new object();
 
         public ReportSettingsView()
         {
@@ -132,29 +135,39 @@ namespace TT.Viewer.Views
 
         public void Handle(ReportSettingsChangedEvent message)
         {
-            if (ReportPreviewGroupBox.IsEnabled && PresentationSource.FromVisual(ReportPreviewControl) != null)
+            lock (DisplayLock)
             {
-                var topLeftCorner = ReportPreviewControl.PointToScreen(new System.Windows.Point(0, 0));
-                var topLeftGdiPoint = new System.Drawing.Point((int)topLeftCorner.X, (int)topLeftCorner.Y);
-                var size = new System.Drawing.Size((int)ReportPreviewControl.ActualWidth, (int)ReportPreviewControl.ActualHeight);
-
-                var screenShot = new Bitmap((int)ReportPreviewControl.ActualWidth, (int)ReportPreviewControl.ActualHeight);
-
-                using (var graphics = Graphics.FromImage(screenShot))
+                _issuedPreviewCustomizationId = message.CustomziationId;
+                if (ReportPreviewGroupBox.IsEnabled && PresentationSource.FromVisual(ReportPreviewControl) != null)
                 {
-                    graphics.CopyFromScreen(topLeftGdiPoint, new System.Drawing.Point(), size, CopyPixelOperation.SourceCopy);
+
+                    var topLeftCorner = ReportPreviewControl.PointToScreen(new System.Windows.Point(0, 0));
+                    var topLeftGdiPoint = new System.Drawing.Point((int) topLeftCorner.X, (int) topLeftCorner.Y);
+                    var size = new System.Drawing.Size((int) ReportPreviewControl.ActualWidth,
+                        (int) ReportPreviewControl.ActualHeight);
+
+                    var screenShot = new Bitmap((int) ReportPreviewControl.ActualWidth,
+                        (int) ReportPreviewControl.ActualHeight);
+
+                    using (var graphics = Graphics.FromImage(screenShot))
+                    {
+                        graphics.CopyFromScreen(topLeftGdiPoint, new System.Drawing.Point(), size,
+                            CopyPixelOperation.SourceCopy);
+                    }
+
+                    PreviewOverlayImage.Source = Imaging.CreateBitmapSourceFromHBitmap(screenShot.GetHbitmap(),
+                        IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    ReportPreviewControl.Visibility = Visibility.Hidden;
+                    ((BlurEffect) PreviewOverlayImage.Effect).Radius = 20;
+
+                    ReportPreviewGroupBox.IsEnabled = false;
                 }
-
-                PreviewOverlayImage.Source = Imaging.CreateBitmapSourceFromHBitmap(screenShot.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                ReportPreviewControl.Visibility = Visibility.Hidden;
-                ((BlurEffect)PreviewOverlayImage.Effect).Radius = 20;
-
-                ReportPreviewGroupBox.IsEnabled = false;
             }
         }
 
         public void Handle(ReportPreviewChangedEvent message)
         {
+            _currentPreviewCustomizationId = message.CustomizationId;
             var pfc = new PreviewFileChange
             {
                 NewPath = message.ReportPreviewPath,
@@ -182,9 +195,15 @@ namespace TT.Viewer.Views
             Thread.Sleep(500);
             Dispatcher.Invoke(() =>
             {
-                ReportPreviewControl.Visibility = Visibility.Visible;
-                ((BlurEffect)PreviewOverlayImage.Effect).Radius = 0;
-                ReportPreviewGroupBox.IsEnabled = true;
+                lock (DisplayLock)
+                {
+                    if (_currentPreviewCustomizationId == _issuedPreviewCustomizationId)
+                    {
+                        ReportPreviewControl.Visibility = Visibility.Visible;
+                        ((BlurEffect)PreviewOverlayImage.Effect).Radius = 0;
+                        ReportPreviewGroupBox.IsEnabled = true;
+                    }
+                }
             });
         }
 
