@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using TT.Lib.Properties;
 using TT.Lib.Util;
 using TT.Report.Generators;
@@ -145,7 +144,7 @@ namespace TT.Lib.Managers
 
             internal void WorkTheQueue()
             {
-                while (Run || RunOnce || _man._notifyIcon != null && _man._notifyIcon.Visible) //_man._repGenNotification != null && _man._repGenNotification.Visible)
+                while (Run || RunOnce || _man._notifyIcon != null && _man._notifyIcon.Visible)
                 {
                     if (_workList.Count != 0)
                     {
@@ -271,6 +270,7 @@ namespace TT.Lib.Managers
                                 return;
                         }
                         _man.ReportPathUser = null;
+                        _man._notifyIcon.Visible = false;
                     }
                 }
             }
@@ -292,7 +292,7 @@ namespace TT.Lib.Managers
 
             private void MakeNotifyIconVisible()
             {
-                if (_man._notifyIcon != null && !_man._notifyIcon.Visible) //(_man._repGenNotification != null && !_man._repGenNotification.Visible)
+                if (_man._notifyIcon != null && !_man._notifyIcon.Visible)
                 {
                     _man._asyncOp.Post(o =>
                     {
