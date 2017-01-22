@@ -29,9 +29,12 @@ namespace TT.Viewer.ViewModels
                 Items.Clear();
                 Items.Add(_allTabs.First(t => t is ResultListViewModel));
                 ActiveItem = Items.First();
+                Events.PublishOnUIThread(new FullscreenReduceHitlistEvent(true));
+
             }
             else
             {
+                Events.PublishOnUIThread(new FullscreenReduceHitlistEvent(false));
                 Items.Clear();
                 Items.AddRange(_allTabs);
                 ActiveItem = _lastNonFullScreenItem;
