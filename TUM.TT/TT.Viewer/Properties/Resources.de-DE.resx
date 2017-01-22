@@ -328,4 +328,7 @@ Keine Vorschau möglich.</value>
   <data name="report_settings_setchoice_crunchtime" xml:space="preserve">
     <value>Crunch</value>
   </data>
+  <data name="statistics" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
 </root>
