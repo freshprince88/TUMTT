@@ -266,11 +266,16 @@ namespace TT.Lib.Managers
                         catch (Exception ex)
                         {
                             Debug.WriteLine($"QueueWorker: {ex.GetType().Name} ({ex.Message}) (Thread '{Thread.CurrentThread.Name}')");
-                            if (ShowFileInUseDialog(_man.ReportPathUser).Result == MessageDialogResult.Affirmative)
-                                return;
+                            switch (ShowFileInUseDialog(_man.ReportPathUser).Result)
+                            {
+                                case MessageDialogResult.Affirmative:
+                                    return;
+                                case MessageDialogResult.Negative:
+                                    _man._notifyIcon.Visible = false;
+                                    break;
+                            }
                         }
                         _man.ReportPathUser = null;
-                        _man._notifyIcon.Visible = false;
                     }
                 }
             }
@@ -308,7 +313,7 @@ namespace TT.Lib.Managers
                 _man._asyncOp.Post(o =>
                 {
                     // this has to be done on the UI thread
-                    Debug.WriteLine($"QueueWorker: setting tag and text of NotifyIcon.BalloonTip and showing it (Thread '{Thread.CurrentThread.Name}')");
+                    Debug.WriteLine($"QueueWorker: setting tag of NotifyIcon.BalloonTip and showing it (Thread '{Thread.CurrentThread.Name}')");
                     _man._notifyIcon.Tag = reportPathUser;
                     _man._notifyIcon.StopAnimating();
 

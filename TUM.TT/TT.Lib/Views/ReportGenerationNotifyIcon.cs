@@ -56,9 +56,9 @@ namespace TT.Lib.Views
                 if (notifyIcon?.Tag == null)
                     return;
 
-                Debug.WriteLine($"QueueWorker (double-click on NotifyIcon or single-click on BallonTip): opening path '{notifyIcon.Tag}' and hiding NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
+                Debug.WriteLine($"ReportGenerationNotifyIcon click on NotifyIcon or BallonTip): opening path '{notifyIcon.Tag}' and hiding NotifyIcon (Thread '{Thread.CurrentThread.Name}')");
                 Process.Start((string)notifyIcon.Tag);
-                _notifyIcon.Visible = false;
+                notifyIcon.Visible = false;
             };
             _notifyIcon.DoubleClick += dClickOrBalloonClick;
             _notifyIcon.BalloonTipClicked += dClickOrBalloonClick;
