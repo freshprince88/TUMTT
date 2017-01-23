@@ -125,7 +125,7 @@ namespace TT.Lib.Managers
 
             internal void AddReportGenerator(IReportGenerator repGen)
             {
-                lock(_man)
+                lock (WorkListLock)
                 {
                     var gen = repGen as CustomizedReportGenerator;
                     if (gen == null)
