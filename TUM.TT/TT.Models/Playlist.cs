@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Serialization;
+using TT.Models.Util;
 
 namespace TT.Models
 {
@@ -12,7 +13,7 @@ namespace TT.Models
         /// <summary>
         /// Backs the <see cref="Rallies"/> property.
         /// </summary>
-        private ObservableCollection<Rally> rallies = new ObservableCollection<Rally>();
+        private ObservableCollectionEx<Rally> rallies = new ObservableCollectionEx<Rally>();
 
         private string name;
 
@@ -39,7 +40,7 @@ namespace TT.Models
         /// <summary>
         /// Gets all rallies of this match.
         /// </summary>
-        public ObservableCollection<Rally> Rallies
+        public ObservableCollectionEx<Rally> Rallies
         {
             get { return this.rallies; }
         }

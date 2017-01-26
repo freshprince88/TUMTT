@@ -93,6 +93,7 @@
     <Compile Include="Util\AsyncXmlSerializer.cs" />
     <Compile Include="Util\EnumExtensions.cs" />
     <Compile Include="Util\Enums.cs" />
+    <Compile Include="Util\ObservableCollectionEx.cs" />
     <Compile Include="Util\TempFileScheme.cs" />
   </ItemGroup>
   <ItemGroup>

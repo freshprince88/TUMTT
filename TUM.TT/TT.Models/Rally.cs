@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -1738,7 +1739,30 @@ namespace TT.Models
         }
 
         #endregion
+    }
 
+    public class RallyComparer : IEqualityComparer<Rally>
+    {
 
+        public bool Equals(Rally x, Rally y)
+        {
+            //Check whether the objects are the same object. 
+            if (Object.ReferenceEquals(x, y)) return true;
+
+            //Check whether the products' properties are equal. 
+            return x != null && y != null && x.Number.Equals(y.Number);
+        }
+
+        public int GetHashCode(Rally obj)
+        {
+            //Get hash code for the Name field if it is not null. 
+            int hashProductName = obj.Number.GetHashCode();
+
+            //Get hash code for the Code field. 
+            int hashProductCode = obj.CurrentRallyScore.GetHashCode();
+
+            //Calculate the hash code for the product. 
+            return hashProductName ^ hashProductCode;
+        }
     }
 }
