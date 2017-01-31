@@ -313,6 +313,14 @@ namespace TT.Scouter.ViewModels
             IsMuted = false;
             Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Unmute));
         }
+        public void SkipForward()
+        {
+
+        }
+        public void SkipBackwards()
+        {
+
+        }
         #endregion
 
         public IEnumerable<IResult> Open()

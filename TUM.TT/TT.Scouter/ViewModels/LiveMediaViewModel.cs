@@ -22,7 +22,6 @@ using TT.Lib.Util;
 namespace TT.Scouter.ViewModels
 {
     public class LiveMediaViewModel : Screen, IMediaPosition
-        //, IHandle<MediaLiveScouterSpeedEvent>
     {
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength

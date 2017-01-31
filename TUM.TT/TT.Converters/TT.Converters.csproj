@@ -59,6 +59,7 @@
     <Compile Include="Column2TabConverter.cs" />
     <Compile Include="CourseToBoolScouterConverter.cs" />
     <Compile Include="CrunchToBoolConverter.cs" />
+    <Compile Include="CurrentRallyNumberToVisibilityConverter.cs" />
     <Compile Include="CurrentRallyServerToBallIsVisibleConverter.cs" />
     <Compile Include="CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
     <Compile Include="ForeBackHandToBoolConverter.cs" />

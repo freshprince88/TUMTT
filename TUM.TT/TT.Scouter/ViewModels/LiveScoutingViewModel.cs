@@ -49,6 +49,20 @@ namespace TT.Scouter.ViewModels
         {
             LiveView.SetNewStart();
         }
+        public void SkipForward()
+        {
+            LiveView.MediaPlayer.SkipForward();
+        }
+        public void SkipBackwards()
+        {
+            LiveView.MediaPlayer.SkipBackwards();
+        }
+        public void Previous()
+        {
+            LiveView.CurrentScreen = LiveView.ChoiceOfServiceReceive;
+            LiveView.ChangeTransitioningContent();
+        }
+
         #endregion
     }
 }

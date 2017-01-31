@@ -125,9 +125,10 @@ namespace TT.Scouter.ViewModels
         public void SetFirstServer()
         {
             if (FirstServerPlayer1)
-            {
+            {   LiveView.firstServerBackup = MatchManager.ConvertPlayer(MatchManager.Match.FirstPlayer);
                 LiveView.Server = MatchManager.ConvertPlayer(MatchManager.Match.FirstPlayer);
                 LiveView.CurrentRally.Server = LiveView.Server;
+                NotifyOfPropertyChange("LiveView.FirstServerBackup");
                 NotifyOfPropertyChange("LiveView.Server");
                 NotifyOfPropertyChange("LiveView.FirstServerSet");
                 MatchManager.MatchModified = true;
@@ -135,8 +136,10 @@ namespace TT.Scouter.ViewModels
             }
             else if (FirstServerPlayer2)
             {
+                LiveView.firstServerBackup = MatchManager.ConvertPlayer(MatchManager.Match.SecondPlayer);
                 LiveView.Server = MatchManager.ConvertPlayer(MatchManager.Match.SecondPlayer);
                 LiveView.CurrentRally.Server = LiveView.Server;
+                NotifyOfPropertyChange("LiveView.FirstServerBackup");
                 NotifyOfPropertyChange("LiveView.Server");
                 NotifyOfPropertyChange("LiveView.FirstServerSet");
                 MatchManager.MatchModified = true;

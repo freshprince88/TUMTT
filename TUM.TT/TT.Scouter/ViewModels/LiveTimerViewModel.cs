@@ -108,13 +108,20 @@ namespace TT.Scouter.ViewModels
             Pause();
             watch.Reset();
         }
+        public void SkipForward()
+        {
 
+        }
+        public void SkipBackwards()
+        {
+
+        }
         private void ReportTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if(watch.IsRunning)
                 NotifyOfPropertyChange("MediaPosition");
         }
-
+        
         #endregion
     }
 }

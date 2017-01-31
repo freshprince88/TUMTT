@@ -75,7 +75,19 @@ namespace TT.Scouter.ViewModels
                                 LiveView.CurrentRally = new Rally();
                                 LiveView.Rallies.Add(LiveView.CurrentRally);
                                 LiveView.CurrentRally.UpdateServerAndScore();
+                                NotifyOfPropertyChange("LiveView.CurrentRally");
+
                             }
+                        }
+                        else
+                        {
+                            LiveView.CurrentRally = new Rally();
+                            LiveView.Rallies.Add(LiveView.CurrentRally);
+                            LiveView.Server = LiveView.firstServerBackup;
+                            LiveView.CurrentRally.Server= LiveView.firstServerBackup;
+                            LiveView.CurrentRally.UpdateServerAndScore();
+                            NotifyOfPropertyChange("LiveView.CurrentRally");
+
                         }
 
                     }
