@@ -3,6 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
 using TT.Models;
 using TT.Lib.Managers;
+using System;
 
 namespace TT.Scouter.ViewModels
 {
@@ -15,6 +16,34 @@ namespace TT.Scouter.ViewModels
         public RemoteViewModel RemoteView { get; set; }
 
         public LiveViewModel.TimeMode LiveMode { get; set; }
+        private TimeSpan _lastLiveMediaPos;
+        public TimeSpan LastLiveMediaPosition
+        {
+            get
+            {
+                return _lastLiveMediaPos;
+            }
+            set
+            {
+                if (_lastLiveMediaPos != value)
+                    _lastLiveMediaPos = value;
+                NotifyOfPropertyChange();
+            }
+        }
+        private TimeSpan _lastRemoteMediaPos;
+        public TimeSpan LastRemoteMediaPosition
+        {
+            get
+            {
+                return _lastRemoteMediaPos;
+            }
+            set
+            {
+                if (_lastRemoteMediaPos != value)
+                    _lastRemoteMediaPos = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         public enum Tabs
         {
@@ -32,7 +61,7 @@ namespace TT.Scouter.ViewModels
                 {
                     _selectedTab = value;
                     NotifyOfPropertyChange("SelectedTab");
-                    if (_selectedTab == 0)
+                    if (_selectedTab == 0)                       
                     {
                         if (LiveView.Rallies.Any())
                         {

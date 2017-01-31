@@ -19,7 +19,7 @@ using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
-    public class RemoteMediaViewModel : Screen, IMediaPosition, IHandle<MediaSpeedEvent>
+    public class RemoteMediaViewModel : Screen, IMediaPosition
     {
 
         ///// <summary>
@@ -116,20 +116,6 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        private int _mediaSpeed;
-        public int MediaSpeed
-        {
-            get
-            {
-                return _mediaSpeed;
-            }
-            set
-            {
-                if (_mediaSpeed != value)
-                    _mediaSpeed = value;
-                NotifyOfPropertyChange();
-            }
-        }
 
         private bool _playing;
         public bool IsPlaying
@@ -211,7 +197,6 @@ namespace TT.Scouter.ViewModels
             syncStart = true;
             syncEnd = true;
             toRallyStart = true;
-            MediaSpeed = 100;
             PlayMode = false;             
             IsPlaying = false;
             calibration = cal;
@@ -244,28 +229,7 @@ namespace TT.Scouter.ViewModels
 
         #endregion  
         #region Event Handlers
-        public void Handle(MediaSpeedEvent message)
-        {
-            switch (message.Speed)
-            {
-                case Media.Speed.Quarter:
-                    MediaSpeed = 25;
-                    break;
-                case Media.Speed.Half:
-                    MediaSpeed = 50;
-                    break;
-                case Media.Speed.Third:
-                    MediaSpeed = 75;
-                    break;
-                case Media.Speed.Full:
-                    MediaSpeed = 100;
-                    break;
-                default:
-                    break;
-            }
-
-        }
-      
+            
 
         #endregion
 
