@@ -26,8 +26,18 @@ namespace TT.Viewer.ViewModels
         public List<Models.Util.Enums.Stroke.Spin> SelectedSpins { get; private set; }
         public Models.Util.Enums.Stroke.Hand Hand { get; private set; }       
         public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
-        public Models.Util.Enums.Stroke.Specials Specials { get; private set; }
-
+        private HashSet<Models.Util.Enums.Stroke.Specials> _specials;
+        public HashSet<Models.Util.Enums.Stroke.Specials> SelectedSpecials
+        {
+            get
+            {
+                return _specials;
+            }
+            private set
+            {
+                _specials = value;
+            }
+        }
         public HashSet<Models.Util.Enums.Stroke.Services> SelectedServices { get; private set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public HashSet<Positions.Server> SelectedServerPositions { get; set; }
@@ -59,7 +69,7 @@ namespace TT.Viewer.ViewModels
             SelectedSpins = new List<Models.Util.Enums.Stroke.Spin>();
             Hand = Models.Util.Enums.Stroke.Hand.None;
             Quality = Models.Util.Enums.Stroke.Quality.None;
-            Specials = Models.Util.Enums.Stroke.Specials.None;
+            SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
             SelectedServices = new HashSet<Models.Util.Enums.Stroke.Services>();
             SelectedServerPositions = new HashSet<Positions.Server>();
             SelectedTablePositions = new HashSet<Positions.Table>();
@@ -209,38 +219,37 @@ namespace TT.Viewer.ViewModels
 
         public void EdgeSpecials(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("edgetable"))
+            if (source.Name.ToLower().Equals("edgetable"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.None)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeTable;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.EdgeNet)
-                        Specials = Models.Util.Enums.Stroke.Specials.Both;
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeTable);
                 }
                 else
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.EdgeTable)
-                        Specials = Models.Util.Enums.Stroke.Specials.None;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.Both)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeNet;
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeTable);
                 }
             }
-            else if (source.Name.ToLower().Contains("edgenet"))
+            else if (source.Name.ToLower().Equals("edgenet"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.None)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeNet;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.EdgeTable)
-                        Specials = Models.Util.Enums.Stroke.Specials.Both;
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeNet);
                 }
                 else
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.EdgeNet)
-                        Specials = Models.Util.Enums.Stroke.Specials.None;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.Both)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeTable;
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNet);
+                }
+            }
+            else if (source.Name.ToLower().Equals("edgenettable"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
+                }
+                else
+                {
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -326,7 +335,7 @@ namespace TT.Viewer.ViewModels
                     r.Strokes[0].HasQuality(this.Quality) &&
                     r.Strokes[0].HasSpins(this.SelectedSpins) &&
                     r.Strokes[0].HasServices(this.SelectedServices) &&
-                    r.Strokes[0].HasSpecials(this.Specials) &&
+                    r.Strokes[0].HasSpecials(this.SelectedSpecials) &&
                     r.Strokes[0].HasServerPosition(this.SelectedServerPositions) &&
                     r.Strokes[0].HasTablePosition(this.SelectedTablePositions)
                     )

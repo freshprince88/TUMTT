@@ -16,7 +16,7 @@ namespace TT.Scouter.ViewModels
     public class StrokeDetailViewModel : Conductor<IScreen>.Collection.AllActive
     {
         #region Properties
-        
+
         /// <summary>
         /// Sets key bindings for ControlWithBindableKeyGestures
         /// </summary>
@@ -163,7 +163,7 @@ namespace TT.Scouter.ViewModels
             }
 
         }
-        public void SelectStroketechnique (ToggleButton source)
+        public void SelectStroketechnique(ToggleButton source)
         {
             if (source.Name.ToLower().Equals("push"))
             {
@@ -437,6 +437,57 @@ namespace TT.Scouter.ViewModels
                 }
             }
 
+        }
+        public void SelectSpecials(ToggleButton source)
+        {
+            if (Stroke == null)
+            {
+                Stroke.Specials = "";
+                return;
+            }
+
+            if (source.Name.ToLower().Contains("edgetable"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Stroke.Specials == "EdgeNet")
+                    {
+                        Stroke.Specials = "EdgeNetTable";
+                    }
+                    else
+                    {
+                        Stroke.Specials = "EdgeTable";
+                    }
+                }
+                else
+                {
+                    if (Stroke.Specials == "EdgeTable")
+                        Stroke.Specials = "";
+                    else if (Stroke.Specials == "EdgeNetTable")
+                        Stroke.Specials = "EdgeNet";
+                }
+            }
+            else if (source.Name.ToLower().Contains("edgenet"))
+            {
+                if (source.IsChecked.Value)
+                {
+
+
+                    if (Stroke.Specials == "EdgeTable")
+                    {
+                        Stroke.Specials = "EdgeNetTable";
+                    }
+                    else
+                        Stroke.Specials = "EdgeNet";
+                }
+                else
+                {
+                    if (Stroke.Specials == "EdgeNet")
+                        Stroke.Specials = "";
+                    else if (Stroke.Specials == "EdgeNetTable")
+                        Stroke.Specials = "EdgeTable";
+                }
+            }
         }
 
 

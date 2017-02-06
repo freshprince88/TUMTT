@@ -913,23 +913,27 @@ namespace TT.Models
             return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
-        public bool HasSpecials(Util.Enums.Stroke.Specials specials)
+        public bool HasSpecials(IEnumerable<Util.Enums.Stroke.Specials> specials)
         {
-            switch (specials)
+            List<bool> ORresults = new List<bool>();
+            foreach (var spec in specials)
             {
-                case Util.Enums.Stroke.Specials.EdgeTable:
-                    return Specials == "EdgeTable";
-                case Util.Enums.Stroke.Specials.EdgeRacket:
-                    return Specials == "EdgeRacket";
-                case Util.Enums.Stroke.Specials.EdgeNet:
-                    return Specials == "EdgeNet";
-                case Util.Enums.Stroke.Specials.None:
-                    return true;
-                case Util.Enums.Stroke.Specials.Both:
-                    return Specials == "EdgeTable" || Specials == "EdgeNet";
-                default:
-                    return false;
+                switch (spec)
+                {
+                    case Util.Enums.Stroke.Specials.EdgeTable:
+                        ORresults.Add(Specials == "EdgeTable");
+                        break;
+                    case Util.Enums.Stroke.Specials.EdgeNet:
+                        ORresults.Add(Specials == "EdgeNet");
+                        break;
+                    case Util.Enums.Stroke.Specials.EdgeNetTable:
+                        ORresults.Add(Specials == "EdgeNetTable");
+                        break;
+                    default:
+                        break;
+                }
             }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
         }
 
         public bool HasServerPosition(IEnumerable<Positions.Server> server)

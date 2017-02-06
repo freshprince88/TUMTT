@@ -95,6 +95,7 @@
     <Compile Include="ServiceToBoolScouterConverter.cs" />
     <Compile Include="SetToBoolConverter.cs" />
     <Compile Include="SideToBoolScouterConverter.cs" />
+    <Compile Include="SpecialsToBoolScouterConverter.cs" />
     <Compile Include="SpecialToBoolConverter.cs" />
     <Compile Include="SpinToBoolScouterConverter.cs" />
     <Compile Include="SpinToCheckedConverter.cs" />

@@ -186,7 +186,7 @@
                           cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:SpecialToBoolConverter}" Mode="OneWay">
-                        <Binding Path="Specials" />
+                        <Binding Path="SelectedSpecials" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
