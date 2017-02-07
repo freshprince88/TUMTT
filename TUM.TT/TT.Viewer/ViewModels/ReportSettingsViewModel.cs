@@ -315,11 +315,11 @@ namespace TT.Viewer.ViewModels
         public void GenerateReport(object genEvent = null)
         {
             var matchOpened = MatchManager.Match != null;
-            var customizationDict = GetCustomizationDictionary();
+            var customizationDict = matchOpened ? GetCustomizationDictionary() : null;
             var generateRepSettingsChangedEvent = genEvent as bool?;
 
             if (generateRepSettingsChangedEvent == null || generateRepSettingsChangedEvent.Value)
-                Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened, (string)customizationDict["id"]));
+                Events.PublishOnUIThread(new ReportSettingsChangedEvent(matchOpened, (string)customizationDict?["id"]));
 
             if (matchOpened)
             {
