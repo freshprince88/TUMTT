@@ -241,6 +241,24 @@ namespace TT.Report.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Round.
+        /// </summary>
+        public static string report_header_default_round {
+            get {
+                return ResourceManager.GetString("report_header_default_round", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournament.
+        /// </summary>
+        public static string report_header_default_tournament {
+            get {
+                return ResourceManager.GetString("report_header_default_tournament", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Table Tennis Performance Report.
         /// </summary>
         public static string report_header_headline {

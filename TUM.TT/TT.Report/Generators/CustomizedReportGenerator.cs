@@ -107,8 +107,8 @@ namespace TT.Report.Generators
                  new HeaderSection
                  {
                      Headline = Properties.Resources.report_header_headline,
-                     Round = match.Round,
-                     Tournament = match.Tournament,
+                     Round = match.Round ?? Properties.Resources.report_header_default_round,
+                     Tournament = match.Tournament ?? Properties.Resources.report_header_default_tournament,
                      Date = match.DateTime
                  });
 
