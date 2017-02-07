@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace TT.Models.Statistics
 {
     using System.Collections.Generic;
@@ -84,17 +86,17 @@ namespace TT.Models.Statistics
             var backward = new double[data.Length];
 
             // Fill the gap at the beginning
-            for (int i = 0; i < windowSize - 1; ++i)
+            for (int i = 0; i < Math.Min(backward.Length, windowSize - 1); ++i)
             {
                 backward[i] = double.NaN;
             }
 
-            for (int i = windowSize - 1; i < data.Length; ++i)
+            for (int i = Math.Min(backward.Length - 1, windowSize - 1); i < data.Length; ++i)
             {
                 // Fill the window, for simplicity in reversed order.  Doesn't
                 // matter anyway, since where just taking the average
                 var window = new double[windowSize];
-                for (int j = 0; j < windowSize; ++j)
+                for (int j = 0; j < Math.Min(backward.Length, windowSize); ++j)
                 {
                     window[j] = data[i - j];
                 }
@@ -106,7 +108,7 @@ namespace TT.Models.Statistics
             var forward = new double[backward.Length];
 
             // Fill the gap at the end
-            for (int i = forward.Length - windowSize + 1; i < forward.Length; ++i)
+            for (int i = Math.Max(forward.Length, forward.Length - windowSize + 1); i < forward.Length; ++i)
             {
                 forward[i] = double.NaN;
             }
