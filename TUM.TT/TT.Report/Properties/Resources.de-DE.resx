@@ -325,28 +325,28 @@
     <value>Aufschlag</value>
   </data>
   <data name="section_basicinfo_service_freq" xml:space="preserve">
-    <value>Freq.</value>
+    <value>Anz.</value>
   </data>
   <data name="section_basicinfo_service_winprob" xml:space="preserve">
-    <value>Gew.wahrsch.</value>
+    <value>Gew.wahrs.</value>
   </data>
   <data name="section_basicinfo_title" xml:space="preserve">
     <value>Basis Informationen</value>
   </data>
   <data name="section_basicinfo_totalpoints" xml:space="preserve">
-    <value>?</value>
+    <value>Punkte gesamt</value>
   </data>
   <data name="section_basicinfo_winprob" xml:space="preserve">
-    <value>Gew.wahrsch.</value>
+    <value>Gew.wahrs.</value>
   </data>
   <data name="section_matchdynamics_byplayer" xml:space="preserve">
-    <value>?</value>
+    <value>Für aufschlagenden Spieler</value>
   </data>
   <data name="section_matchdynamics_overall" xml:space="preserve">
-    <value>?</value>
+    <value>Gesamt</value>
   </data>
   <data name="section_matchdynamics_title" xml:space="preserve">
-    <value>?</value>
+    <value>Match Dynamics</value>
   </data>
   <data name="section_rallylength_avg_mean" xml:space="preserve">
     <value>Mittelwert</value>
@@ -361,7 +361,7 @@
     <value>Durschschnitt</value>
   </data>
   <data name="section_rallylength_avg_totallengths" xml:space="preserve">
-    <value>?</value>
+    <value>Länge (gesamt)</value>
   </data>
   <data name="section_rallylength_avg_winner" xml:space="preserve">
     <value>Winner</value>
