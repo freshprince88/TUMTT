@@ -551,10 +551,38 @@ namespace TT.Viewer.ViewModels
             GeneralChoice = Properties.Settings.Default.ReportGenerator_GeneralChoice;
             CrunchTimeChoice = Properties.Settings.Default.ReportGenerator_CrunchTimeChoice;
 
-            var combis = Properties.Settings.Default.ReportGenerator_Combis;
-            if (combis != null) AvailableCombis.AddRange(combis);
-            combis = Properties.Settings.Default.ReportGenerator_Combis;
-            if (combis != null) SelectedCombis.AddRange(combis);
+            var combisList = PruneCombis(Properties.Settings.Default.ReportGenerator_Combis);
+            if (combisList != null && combisList.Count > 0)
+            {
+                AvailableCombis.AddRange(combisList);
+                SelectedCombis.AddRange(new List<int>(combisList));
+            }
+        }
+
+        private List<int> PruneCombis(int[] combis)
+        {
+            if (combis == null)
+                return null;
+
+            var combisList = combis.ToList();
+            for (var i = 0; i < combisList.Count; i++)
+            {
+                var combi = combisList[i];
+                for (var j = 1; j < Math.Ceiling(Math.Log(combi, 2)); j++)
+                {
+                    var mask = 1 << j;
+                    if ((mask & combi) == mask)
+                    {
+                        if (Sets.Count != 0 && !Sets.ContainsKey(j.ToString()))
+                        {
+                            combisList.RemoveAt(i);
+                            i--;
+                            break;
+                        }
+                    }
+                }
+            }
+            return combisList;
         }
 
         protected override void OnDeactivate(bool close)
