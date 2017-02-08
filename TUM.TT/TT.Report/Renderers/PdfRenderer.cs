@@ -504,15 +504,25 @@ namespace TT.Report.Renderers
         /// <param name="section">The section.</param>
         public void Visit(MatchDynamicsSection section)
         {
+            var overallAvailable = section.OverallPlot != null;
+            var byServerAvailable = section.ByServerPlot != null;
+
+            if (!overallAvailable && !byServerAvailable)
+                return;
+
             this.AddHeading(2, Properties.Resources.section_matchdynamics_title);
 
-            this.AddHeading(3, Properties.Resources.section_matchdynamics_overall);
+            if (overallAvailable)
+            {
+                this.AddHeading(3, Properties.Resources.section_matchdynamics_overall);
+                this.AddPlot(section.OverallPlot, height: 180);
+            }
 
-            this.AddPlot(section.OverallPlot, height: 180);
-
-            this.AddHeading(3, Properties.Resources.section_matchdynamics_byplayer);
-
-            this.AddPlot(section.ByServerPlot, height: 180);
+            if (byServerAvailable)
+            {
+                this.AddHeading(3, Properties.Resources.section_matchdynamics_byplayer);
+                this.AddPlot(section.ByServerPlot, height: 180);
+            }
         }
 
         /// <summary>

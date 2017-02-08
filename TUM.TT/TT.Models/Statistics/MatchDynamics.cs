@@ -21,6 +21,8 @@ namespace TT.Models.Statistics
         /// </summary>
         private const int WindowSize = 4;
 
+        public bool IsComputable { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchDynamics"/> class.
         /// </summary>
@@ -35,18 +37,25 @@ namespace TT.Models.Statistics
             var overallResults = this.Match.DefaultPlaylist.FinishedRallies
                 .Select(r => r.Winner == winner ? 1d : 0d)
                 .ToArray();
-            this.Overall = MovingBackwardForwardAverage(overallResults, WindowSize);
+            var overallStatsComputable = overallResults.Length >= WindowSize - 1;
+            if (overallStatsComputable)
+                Overall = MovingBackwardForwardAverage(overallResults, WindowSize);
 
             // Dynamics by serving player.
             this.ByServer = new Dictionary<MatchPlayer, IEnumerable<double>>();
+            bool playerStatsComputable = true;
             foreach (var player in new MatchPlayer[] { MatchPlayer.First, MatchPlayer.Second })
             {
                 var playerResults = this.Match.DefaultPlaylist.FinishedRallies
                     .Where(r => r.Server == player)
                     .Select(r => r.Winner == player ? 1d : 0d)
                     .ToArray();
-                this.ByServer[player] = MovingBackwardForwardAverage(playerResults, WindowSize);
+                playerStatsComputable &= playerResults.Length >= WindowSize - 1;
+                if (playerStatsComputable)
+                    ByServer[player] = MovingBackwardForwardAverage(playerResults, WindowSize);
             }
+
+            IsComputable = overallStatsComputable || playerStatsComputable;
         }
 
         /// <summary>
@@ -86,17 +95,17 @@ namespace TT.Models.Statistics
             var backward = new double[data.Length];
 
             // Fill the gap at the beginning
-            for (int i = 0; i < Math.Min(backward.Length, windowSize - 1); ++i)
+            for (int i = 0; i < windowSize - 1; ++i)
             {
                 backward[i] = double.NaN;
             }
 
-            for (int i = Math.Min(backward.Length - 1, windowSize - 1); i < data.Length; ++i)
+            for (int i = windowSize - 1; i < data.Length; ++i)
             {
                 // Fill the window, for simplicity in reversed order.  Doesn't
                 // matter anyway, since where just taking the average
                 var window = new double[windowSize];
-                for (int j = 0; j < Math.Min(backward.Length, windowSize); ++j)
+                for (int j = 0; j < windowSize; ++j)
                 {
                     window[j] = data[i - j];
                 }
@@ -108,7 +117,7 @@ namespace TT.Models.Statistics
             var forward = new double[backward.Length];
 
             // Fill the gap at the end
-            for (int i = Math.Max(forward.Length, forward.Length - windowSize + 1); i < forward.Length; ++i)
+            for (int i = forward.Length - windowSize + 1; i < forward.Length; ++i)
             {
                 forward[i] = double.NaN;
             }

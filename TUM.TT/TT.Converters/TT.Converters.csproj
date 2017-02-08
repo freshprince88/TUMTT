@@ -51,6 +51,7 @@
     <Compile Include="AggressivenessToBoolConverter.cs" />
     <Compile Include="AggressivenessToBoolScouterConverter.cs" />
     <Compile Include="BaseConverter.cs" />
+    <Compile Include="BoolAndConverter.cs" />
     <Compile Include="BoolNotConverter.cs" />
     <Compile Include="BoolNotToVisibilityConverter.cs" />
     <Compile Include="BoolToVisibilityCollapsedConverter.cs" />

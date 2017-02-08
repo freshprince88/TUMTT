@@ -12,6 +12,7 @@ using System.Threading;
 using TT.Lib.Events;
 using TT.Report.Generators;
 using TT.Models;
+using TT.Models.Statistics;
 
 namespace TT.Viewer.ViewModels
 {
@@ -226,6 +227,16 @@ namespace TT.Viewer.ViewModels
 
         public List<int> AvailableCombis{ get; }        
         public List<int> SelectedCombis { get; }
+
+        private bool _matchDynamicsStatisticsEnabled;
+        public bool MatchDynamicsStatisticsEnabled
+        {
+            get
+            {
+                return MatchManager.Match == null || new MatchDynamics(MatchManager.Match).IsComputable;
+            }
+            set { _matchDynamicsStatisticsEnabled = value; }
+        }
 
         // ReSharper disable once UnusedMember.Global
         public ReportSettingsViewModel()

@@ -24,6 +24,7 @@
             <conv:MathConverter x:Key="MathConverter"/>
             <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <conv:CollectionContainsToVisibilityConverter x:Key="CollectionContainsToVisibilityConverter"/>
+            <conv:BoolAndConverter x:Key="BoolAndConverter" />
             <wpfconvs:IsNullConverter x:Key="IsNullConverter"/>
         </ResourceDictionary>
     </controls:MetroWindow.Resources>
@@ -73,7 +74,14 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <CheckBox Grid.Row="0" Grid.Column="0" Content="{Binding Path=GeneralStats[1][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=1}" Margin="2"/>
-                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=GeneralStats[2][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=2}" Margin="2"/>
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="{Binding Path=GeneralStats[2][1]}" Margin="2" IsEnabled="{Binding MatchDynamicsStatisticsEnabled}">
+                                    <CheckBox.IsChecked>
+                                        <MultiBinding Converter="{StaticResource BoolAndConverter}">
+                                            <Binding Path="GeneralChoice" Mode="TwoWay" Converter="{StaticResource IntMaskMatchToBooleanConverter}" ConverterParameter="2"/>
+                                            <Binding Path="MatchDynamicsStatisticsEnabled" Mode="TwoWay"/>
+                                        </MultiBinding>
+                                    </CheckBox.IsChecked>
+                                </CheckBox>
                                 <CheckBox Grid.Row="1" Grid.Column="0" Content="{Binding Path=GeneralStats[4][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=4}" Margin="2"/>
                                 <CheckBox Grid.Row="1" Grid.Column="1" Content="{Binding Path=GeneralStats[8][1]}" IsChecked="{Binding GeneralChoice, Mode=TwoWay, Converter={StaticResource IntMaskMatchToBooleanConverter}, ConverterParameter=8}" Margin="2"/>
                             </Grid>
