@@ -286,11 +286,16 @@ namespace TT.Report.Renderers
             var names = table.AddColumn(Unit.FromCentimeter(2));
             var ranking = table.AddColumn(Unit.FromCentimeter(2));
             var ralliesOffset = ranking.Index + 1;
-            foreach (var result in info.FinalRallyScores)
+
+            Column resultColumn = null;
+            var finalRallyScores = info.FinalRallyScores.Count();
+            for (var i = 0; i < finalRallyScores; i++)
             {
                 // One column for each rally result
-                table.AddColumn(new Unit(0.6, UnitType.Centimeter));
+                resultColumn = table.AddColumn(new Unit(finalRallyScores == 1 ? 1 : 0.6, UnitType.Centimeter));
             }
+            if (resultColumn == null)
+                table.AddColumn(new Unit(1, UnitType.Centimeter));
 
             var totalPoints = table.AddColumn(Unit.FromCentimeter(1.2));
             var performance = table.AddColumn(Unit.FromCentimeter(2));
@@ -369,7 +374,8 @@ namespace TT.Report.Renderers
 
             titleRow.Cells[ralliesOffset].AddParagraph(
                 string.Format("{0} ({1}:{2})", Properties.Resources.section_basicinfo_result, info.FinalSetScore.First, info.FinalSetScore.Second));
-            titleRow.Cells[ralliesOffset].MergeRight = info.FinalRallyScores.Count() - 1;
+            if (info.FinalRallyScores.Any())
+                titleRow.Cells[ralliesOffset].MergeRight = info.FinalRallyScores.Count() - 1;
             var scores = info.FinalRallyScores
                 .Select((score, i) => Tuple.Create(ralliesOffset + i, score));
             foreach (var pair in scores)
