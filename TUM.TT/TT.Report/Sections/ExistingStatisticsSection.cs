@@ -69,8 +69,9 @@ namespace TT.Report.Sections
                 }
                 catch (Exception e) when (e is NullReferenceException || e is InvalidOperationException)
                 {
-                    Debug.WriteLine("ExistingStatisticsSection: '{0}' - cannot get statistics bitmap", args: e.GetType().Name);
+                    Debug.WriteLine("{1}: '{0}' - cannot get statistics bitmap", e.GetType().Name, SectionName);
                 }
+                Debug.WriteLine("{2} for stroke {0} of set {1} ready.", GetStrokeNumberString(strokeNumber), set, SectionName);
             }
         }
     }

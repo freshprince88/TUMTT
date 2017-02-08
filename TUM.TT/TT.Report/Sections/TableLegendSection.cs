@@ -12,6 +12,8 @@ namespace TT.Report.Sections
 {
     public class TableLegendSection : BaseSection
     {
+        protected sealed override string SectionName => "Table Legend section";
+
         public BitmapFrame LegendImage { get; }
 
         public TableLegendSection()
@@ -46,6 +48,8 @@ namespace TT.Report.Sections
             bmp.Render(view);
             
             LegendImage = BitmapFrame.Create(bmp);
+
+            Debug.WriteLine("{0} for stroke ready.", args: SectionName);
         }
     }
 }

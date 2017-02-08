@@ -3,6 +3,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using TT.Models;
 using TT.Models.Statistics;
@@ -12,6 +13,8 @@ namespace TT.Report.Sections
 {
     public class SideSection : BaseSection
     {
+        protected sealed override string SectionName => "Side section";
+
         public List<PlotModel> SidePlots { get; internal set; }
         public bool HasStepAround { get; private set; }
 
@@ -112,6 +115,8 @@ namespace TT.Report.Sections
                     plot.Axes.Add(linearAxis1);
 
                     SidePlots.Add(plot);
+
+                    Debug.WriteLine("{2} for stroke {0} of set {1} ready.", GetStrokeNumberString(strokeNr), set, SectionName);
                 }
             }
         }

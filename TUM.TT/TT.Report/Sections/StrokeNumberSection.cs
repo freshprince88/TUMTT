@@ -12,6 +12,8 @@ namespace TT.Report.Sections
 {
     public class StrokeNumberSection : BaseSection
     {
+        protected override string SectionName => "Stroke Number section";
+
         public List<PlotModel> NumberPlots { get; internal set; }
         private IDictionary<Stroke.TechniqueBasic, string> techniqueNames = new Dictionary<Stroke.TechniqueBasic, string>() {
             { Stroke.TechniqueBasic.Push, Properties.Resources.section_technique_push },
@@ -26,7 +28,7 @@ namespace TT.Report.Sections
             { Stroke.TechniqueBasic.Miscellaneous, Properties.Resources.section_technique_miscellaneous },
         };
 
-        public StrokeNumberSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<TT.Models.Rally>> sets, TT.Models.Match match, object p)
+        public StrokeNumberSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<Models.Rally>> sets, Models.Match match, object p)
         {
             NumberPlots = new List<PlotModel>();
 
@@ -95,9 +97,10 @@ namespace TT.Report.Sections
                     plot.Axes.Add(categoryAxis);
                     plot.Axes.Add(linearAxis);
 
-                    NumberPlots.Add(plot);                    
+                    NumberPlots.Add(plot);
+
+                    Debug.WriteLine("{2} for stroke {0} of set {1} ready.", GetStrokeNumberString(strokeNumber), set, SectionName);
                 }
-                Debug.WriteLine("Number section for stroke {0} of set {1} ready.", strokeNumber, set);
             }
         }
 
