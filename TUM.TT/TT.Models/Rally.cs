@@ -414,16 +414,19 @@ namespace TT.Models
         /// </summary>
         public Stroke LastWinnerStroke()
         {
-            int StrokeNumber;
+            if (Strokes.Count < 1)
+                return null;
+
+            int strokeNumber;
             if (Strokes[Convert.ToInt32(Length) - 1].Player == Winner)
             {
-                StrokeNumber = Convert.ToInt32(Length) - 1;
+                strokeNumber = Convert.ToInt32(Length) - 1;
             }
             else
             {
-                StrokeNumber = Convert.ToInt32(Length) - 2;
+                strokeNumber = Convert.ToInt32(Length) - 2;
             }
-            return StrokeNumber >= 0 ? Strokes[StrokeNumber] : null;
+            return strokeNumber >= 0 ? Strokes[strokeNumber] : null;
         }
 
         /// <summary>
