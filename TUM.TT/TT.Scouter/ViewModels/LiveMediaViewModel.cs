@@ -47,8 +47,10 @@ namespace TT.Scouter.ViewModels
             set
             {
                 if (_mediaPos != value)
+                {
                     _mediaPos = value;
-                NotifyOfPropertyChange();
+                    NotifyOfPropertyChange();
+                }
             }
         }
 
