@@ -211,9 +211,8 @@ namespace TT.Scouter.ViewModels
         {
             base.OnViewLoaded(view);
             Events.Subscribe(this);
-
-
         }
+
         protected override void OnActivate()
         {
             base.OnActivate();
@@ -222,12 +221,12 @@ namespace TT.Scouter.ViewModels
 
         protected override void OnDeactivate(bool close)
         {
-
             Events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
 
         #endregion  
+
         #region Event Handlers
             
 

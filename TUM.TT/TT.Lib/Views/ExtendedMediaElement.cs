@@ -140,7 +140,7 @@ namespace TT.Lib.Views
 
         private void MediaPositionChanged(TimeSpan newValue)
         {
-            //Debug.WriteLine("{2} MediaPositionChanged newValue={0} positionChangedByTimer={1}", newValue, positionChangedByTimer, DateTime.Now.TimeOfDay);
+            Debug.WriteLine("{2} MediaPositionChanged newValue={0} positionChangedByTimer={1}", newValue, positionChangedByTimer, DateTime.Now.TimeOfDay);
             if (positionChangedByTimer)
             {
                 positionChangedByTimer = false;
@@ -162,8 +162,8 @@ namespace TT.Lib.Views
             if (!IsPlaying)
                 return;
 
-            //Debug.WriteLine("{2} MediaTimerTickHandler sender={0} Position={1} mediaOpened={3}", sender, Position, DateTime.Now.TimeOfDay, mediaOpened);
-            
+            Debug.WriteLine("{2} MediaTimerTickHandler sender={0} Position={1} mediaOpened={3}", sender, Position, DateTime.Now.TimeOfDay, mediaOpened);
+
             // don't set any positions if the media isn't loaded yet after Play()
             if (!mediaOpened)
                 return;
