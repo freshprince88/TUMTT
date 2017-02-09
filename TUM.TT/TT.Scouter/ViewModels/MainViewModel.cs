@@ -7,7 +7,7 @@ using System;
 
 namespace TT.Scouter.ViewModels
 {
-    public class MainViewModel : Conductor<IScreen>.Collection.AllActive
+    public class MainViewModel : Conductor<IScreen>.Collection.OneActive 
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
@@ -63,44 +63,40 @@ namespace TT.Scouter.ViewModels
                     NotifyOfPropertyChange("SelectedTab");
                     if (_selectedTab == 0)                       
                     {
+                        this.ActivateItem(LiveView);
+
                         if (LiveView.Rallies.Any())
                         {
-                            if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
-                            {
-
-                            }
-
-                            else
+                            if (LiveView.Rallies.Last().Winner != MatchPlayer.None)
                             {
                                 LiveView.CurrentRally = new Rally();
                                 LiveView.Rallies.Add(LiveView.CurrentRally);
                                 LiveView.CurrentRally.UpdateServerAndScore();
                                 NotifyOfPropertyChange("LiveView.CurrentRally");
-
                             }
                         }
                         else
                         {
                             LiveView.CurrentRally = new Rally();
-                            LiveView.Rallies.Add(LiveView.CurrentRally);
+                            Manager.ActivePlaylist.Rallies.Add(LiveView.CurrentRally);
                             LiveView.Server = LiveView.firstServerBackup;
                             LiveView.CurrentRally.Server= LiveView.firstServerBackup;
                             LiveView.CurrentRally.UpdateServerAndScore();
                             NotifyOfPropertyChange("LiveView.CurrentRally");
-
                         }
 
                     }
                     if (_selectedTab == 1)
-                    {
+                    {                        
                         if (LiveView.Rallies.Any())
                         {
                             if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
                             {
-                                LiveView.Rallies.Remove(LiveView.Rallies.Last());
-
+                                Manager.ActivePlaylist.Rallies.Remove(Manager.ActivePlaylist.Rallies.Last());
                             }
                         }
+
+                        this.ActivateItem(RemoteView);
                     }
                 }
             }
@@ -111,9 +107,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             Manager = man;
             LiveView = new LiveViewModel(Events, Manager);
-            RemoteView = new RemoteViewModel(Events, Manager, dia);
-            
-            
+            RemoteView = new RemoteViewModel(Events, Manager, dia);                        
         }
 
 
@@ -124,7 +118,6 @@ namespace TT.Scouter.ViewModels
             base.OnActivate();
             LiveView.ViewMode = LiveMode;
             this.ActivateItem(LiveView);
-            this.ActivateItem(RemoteView);
         }
 
         protected override void OnDeactivate(bool close)
