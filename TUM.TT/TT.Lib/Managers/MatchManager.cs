@@ -9,6 +9,7 @@ using TT.Lib.Results;
 using TT.Lib.Util;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Models.Util.Enums;
+using System.Windows.Threading;
 
 namespace TT.Lib.Managers
 {
@@ -188,11 +189,29 @@ namespace TT.Lib.Managers
                 FileName = dialog.Result;
             }
 
+            //Remove Dummy Rally from Scouter
+            var playList = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
+            var lastRally = playList.Rallies.LastOrDefault();
+            bool haveToAddAgain = false;
+            if (playList.Rallies.Any())
+            {
+                if (lastRally.Winner == MatchPlayer.None)
+                {
+                    playList.Rallies.Remove(lastRally);
+                    haveToAddAgain = true;
+                }
+            }
+
             var serialization = new SerializeMatchResult(Match, FileName, Format.XML.Serializer);
             yield return serialization
                 .Rescue()
                 .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", FileName))
                 .Propagate(); // Reraise the error to abort the coroutine
+
+            if (haveToAddAgain)
+            {
+                Execute.OnUIThread((System.Action)(() => playList.Rallies.Add(lastRally)));
+            }
 
             MatchModified = false;
             NotifyOfPropertyChange("MatchModified");

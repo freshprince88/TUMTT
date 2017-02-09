@@ -111,21 +111,21 @@ namespace TT.Models
             //// Update the rally after the new one
             //this.rallies[args.NewStartingIndex].UpdateServerAndScore();
 
-            //if (args.OldItems != null)
-            //{
-            //    foreach (var rally in args.OldItems.Cast<Rally>())
-            //    {
-            //        // Disconnect from each removed rally.
-            //        rally.Playlist = null;
-            //        rally.PropertyChanged -= this.OnRallyChanged;
-            //    }
+            if (args.OldItems != null)
+            {
+                foreach (var rally in args.OldItems.Cast<Rally>())
+                {
+                    // Disconnect from each removed rally.
+                    rally.Playlist = null;
+                    rally.PropertyChanged -= this.OnRallyChanged;
+                }
 
-            //    // Update the rally after the removed one.
-            //    if (args.OldStartingIndex < this.rallies.Count)
-            //    {
-            //        this.rallies[args.OldStartingIndex].UpdateServerAndScore();
-            //    }
-            //}
+                //// Update the rally after the removed one.
+                //if (args.OldStartingIndex < this.rallies.Count)
+                //{
+                //    this.rallies[args.OldStartingIndex].UpdateServerAndScore();
+                //}
+            }
         }
 
         /// <summary>
