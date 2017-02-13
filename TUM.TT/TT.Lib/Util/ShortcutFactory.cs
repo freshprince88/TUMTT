@@ -38,22 +38,22 @@ namespace TT.Lib.Util
         {
             var dictionary = new Dictionary<string, KeyBinding>
             {
-                {"PreviousRally", new KeyBinding(){Key = Key.F, Modifiers= ModifierKeys.None}},
-                //{"PreviousRally", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.None)},
-                //{"StartRallyAtBeginning", new KeyBinding(Key.MediaPreviousTrack, ModifierKeys.Control)},
-                //{"Previous5Frames", new KeyBinding(Key.MediaPreviousTrack, ModifierKeys.Shift)},
-                //{"PreviousFrame", new KeyBinding(Key.MediaPreviousTrack, ModifierKeys.Alt)},
-                //{"PlayPause", new KeyBinding(Key.MediaPlayPause, ModifierKeys.None)},
-                //{"NextFrame", new KeyBinding(Key.MediaNextTrack, ModifierKeys.Alt)},
-                //{"Next5Frames", new KeyBinding(Key.MediaNextTrack, ModifierKeys.Shift)},
-                //{"NextRally", new KeyBinding(Key.MediaNextTrack, ModifierKeys.None)},
-                //{"FullscreenHelper", new KeyBinding(Key.F, ModifierKeys.Alt)},
-                //{"PlayModeHelper", new KeyBinding(Key.R, ModifierKeys.Alt)},
-                //{"SelectForehand", new KeyBinding(Key.V, ModifierKeys.Alt)},
-                //{"SelectBackhand", new KeyBinding(Key.B, ModifierKeys.Alt)},
-                //{"NextStroke", new KeyBinding(Key.Right, ModifierKeys.Alt)},
-                //{"PreviousStroke", new KeyBinding(Key.Left, ModifierKeys.Alt)}
+                //{"PreviousRally", new KeyBinding() {Key =){Key = Key.F, Modifiers= ModifierKeys.None}},
 
+                {"PreviousRally", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.None}},
+                {"StartRallyAtBeginning", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Control}},
+                {"Previous5Frames", new KeyBinding() {Key =Key.MediaPreviousTrack,Modifiers =  ModifierKeys.Shift}},
+                {"PreviousFrame", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt}},
+                {"PlayPause", new KeyBinding() {Key =Key.MediaPlayPause, Modifiers = ModifierKeys.None}},
+                {"NextFrame", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Alt}},
+                {"Next5Frames", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Shift}},
+                {"NextRally", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.None}},
+                {"FullscreenHelper", new KeyBinding() {Key =Key.F, Modifiers = ModifierKeys.Alt}},
+                {"PlayModeHelper", new KeyBinding() {Key =Key.R, Modifiers = ModifierKeys.Alt}},
+                {"SelectForehand", new KeyBinding() {Key =Key.V, Modifiers = ModifierKeys.Alt}},
+                {"SelectBackhand", new KeyBinding() {Key =Key.B, Modifiers = ModifierKeys.Alt}},
+                {"NextStroke", new KeyBinding() {Key =Key.Right, Modifiers = ModifierKeys.Alt}},
+                {"PreviousStroke", new KeyBinding() {Key =Key.Left, Modifiers = ModifierKeys.Alt}}
             };
             return dictionary;
         }
