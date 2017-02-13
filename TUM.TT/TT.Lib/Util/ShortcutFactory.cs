@@ -12,10 +12,10 @@ namespace TT.Lib.Util
         private static ShortcutFactory _instance;
         private readonly string _regKey;
 
-        private readonly Dictionary<string, InputGesture> _keyGestures;
-        public Dictionary<string, InputGesture> KeyGestures
+        private readonly Dictionary<string, KeyBinding> _keyGestures;
+        public Dictionary<string, KeyBinding> KeyGestures
         {
-            get { return new Dictionary<string, InputGesture>(_keyGestures); }
+            get { return new Dictionary<string, KeyBinding>(_keyGestures); }
         }
         
         private ShortcutFactory()
@@ -34,24 +34,25 @@ namespace TT.Lib.Util
         
         #region Initial Gestures
 
-        public static Dictionary<string, InputGesture> GetInitialGestures()
+        public static Dictionary<string, KeyBinding> GetInitialGestures()
         {
-            var dictionary = new Dictionary<string, InputGesture>
+            var dictionary = new Dictionary<string, KeyBinding>
             {
-                {"PreviousRally", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.None)},
-                {"StartRallyAtBeginning", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.Control)},
-                {"Previous5Frames", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.Shift)},
-                {"PreviousFrame", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.Alt)},
-                {"PlayPause", new KeyGesture(Key.MediaPlayPause, ModifierKeys.None)},
-                {"NextFrame", new KeyGesture(Key.MediaNextTrack, ModifierKeys.Alt)},
-                {"Next5Frames", new KeyGesture(Key.MediaNextTrack, ModifierKeys.Shift)},
-                {"NextRally", new KeyGesture(Key.MediaNextTrack, ModifierKeys.None)},
-                {"FullscreenHelper", new KeyGesture(Key.F, ModifierKeys.Alt)},
-                {"PlayModeHelper", new KeyGesture(Key.R, ModifierKeys.Alt)},
-                {"SelectForehand", new KeyGesture(Key.V, ModifierKeys.Alt)},
-                {"SelectBackhand", new KeyGesture(Key.B, ModifierKeys.Alt)},
-                {"NextStroke", new KeyGesture(Key.Right, ModifierKeys.Alt)},
-                {"PreviousStroke", new KeyGesture(Key.Left, ModifierKeys.Alt)}
+                {"PreviousRally", new KeyBinding(){Key = Key.F, Modifiers= ModifierKeys.None}},
+                //{"PreviousRally", new KeyGesture(Key.MediaPreviousTrack, ModifierKeys.None)},
+                //{"StartRallyAtBeginning", new KeyBinding(Key.MediaPreviousTrack, ModifierKeys.Control)},
+                //{"Previous5Frames", new KeyBinding(Key.MediaPreviousTrack, ModifierKeys.Shift)},
+                //{"PreviousFrame", new KeyBinding(Key.MediaPreviousTrack, ModifierKeys.Alt)},
+                //{"PlayPause", new KeyBinding(Key.MediaPlayPause, ModifierKeys.None)},
+                //{"NextFrame", new KeyBinding(Key.MediaNextTrack, ModifierKeys.Alt)},
+                //{"Next5Frames", new KeyBinding(Key.MediaNextTrack, ModifierKeys.Shift)},
+                //{"NextRally", new KeyBinding(Key.MediaNextTrack, ModifierKeys.None)},
+                //{"FullscreenHelper", new KeyBinding(Key.F, ModifierKeys.Alt)},
+                //{"PlayModeHelper", new KeyBinding(Key.R, ModifierKeys.Alt)},
+                //{"SelectForehand", new KeyBinding(Key.V, ModifierKeys.Alt)},
+                //{"SelectBackhand", new KeyBinding(Key.B, ModifierKeys.Alt)},
+                //{"NextStroke", new KeyBinding(Key.Right, ModifierKeys.Alt)},
+                //{"PreviousStroke", new KeyBinding(Key.Left, ModifierKeys.Alt)}
 
             };
             return dictionary;
@@ -61,7 +62,7 @@ namespace TT.Lib.Util
 
         #region Key Gestures
 
-        public InputGesture GetKeyGestures(string commandName)
+        public KeyBinding GetKeyGestures(string commandName)
         {
             if (_keyGestures.ContainsKey(commandName))
                 return _keyGestures[commandName];
@@ -69,7 +70,7 @@ namespace TT.Lib.Util
             return null;
         }
 
-        public void SetKeyGesture(string commandName, InputGesture gesture)
+        public void SetKeyGesture(string commandName, KeyBinding gesture)
         {
             if (_keyGestures.ContainsKey(commandName) && Equals(_keyGestures[commandName], gesture))
                 return;
@@ -84,7 +85,7 @@ namespace TT.Lib.Util
 
         public void UpdateRegistry(string commandName)
         {
-            var keyGesture = _keyGestures[commandName] as KeyGesture;
+            var keyGesture = _keyGestures[commandName] as KeyBinding;
             if (keyGesture == null)
                 return;
 
@@ -111,7 +112,11 @@ namespace TT.Lib.Util
                     var keyEnum = (Key) key;
                     var modifiersEnum = (ModifierKeys)modifiers;
 
-                    _keyGestures[entry] = new KeyGesture(keyEnum, modifiersEnum);
+                    _keyGestures[entry] = new KeyBinding()
+                    {
+                        Key = keyEnum,
+                        Modifiers = modifiersEnum
+                    };
                 }
             }
         }

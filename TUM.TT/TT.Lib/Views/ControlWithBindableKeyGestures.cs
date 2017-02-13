@@ -16,13 +16,13 @@ namespace TT.Lib.Views
     {
         protected static readonly DependencyProperty
             BindableKeyGesturesProperty = DependencyProperty.Register(
-                "BindableKeyGestures", typeof(Dictionary<string, KeyGesture>),
+                "BindableKeyGestures", typeof(Dictionary<string, KeyBinding>),
                 typeof(ControlWithBindableKeyGestures), new FrameworkPropertyMetadata(null, OnBindableKeyGesturesChanged)
             );
 
-        public Dictionary<string, KeyGesture> BindableKeyGestures
+        public Dictionary<string, KeyBinding> BindableKeyGestures
         {
-            get { return (Dictionary<string, KeyGesture>)GetValue(BindableKeyGesturesProperty); }
+            get { return (Dictionary<string, KeyBinding>)GetValue(BindableKeyGesturesProperty); }
             set { SetValue(BindableKeyGesturesProperty, value); }
         }
 
@@ -41,10 +41,10 @@ namespace TT.Lib.Views
                 //method to be called
                 var actionMessage = new ActionMessage { MethodName = keyGesture.Key };
 
-                //key gesture that triggers binding
+               //key gesture that triggers binding
                 var command = new GlobalInputBindingTrigger();
                 command.Actions.Add(actionMessage);
-                command.InputBinding = new KeyBinding(new RoutedCommand(), keyGesture.Value);
+                command.InputBinding = keyGesture.Value;
 
                 //set
                 var triggers = Interaction.GetTriggers(userControl);

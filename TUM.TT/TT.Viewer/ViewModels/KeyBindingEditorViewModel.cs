@@ -18,7 +18,7 @@ namespace TT.Viewer.ViewModels
         public IEventAggregator events { get; private set; }
         private readonly IWindowManager _windowManager;
         private IDialogCoordinator DialogCoordinator;
-        private KeyGesture _currentGesture;
+        private KeyBinding _currentGesture;
         private string _selectedKeyBinding;
 
         public KeyBindingEditorViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IDialogCoordinator coordinator)
@@ -40,7 +40,7 @@ namespace TT.Viewer.ViewModels
             {
                 if (value == _selectedKeyBinding) return;
                 _selectedKeyBinding = value;
-                CurrentGesture = ShortcutFactory.Instance.GetKeyGestures(_selectedKeyBinding) as KeyGesture;
+                CurrentGesture = ShortcutFactory.Instance.GetKeyGestures(_selectedKeyBinding);
             }
         }
 
@@ -49,7 +49,7 @@ namespace TT.Viewer.ViewModels
             return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
         }
 
-        public KeyGesture CurrentGesture
+        public KeyBinding CurrentGesture
         {
             get { return _currentGesture; }
             set
@@ -66,7 +66,10 @@ namespace TT.Viewer.ViewModels
             get
             {
                 if (CurrentGesture == null) return String.Empty;
-                return CurrentGesture.GetDisplayStringForCulture(CultureInfo.CurrentCulture);
+                if (CurrentGesture.Modifiers != ModifierKeys.None)
+                    return CurrentGesture.Modifiers + "+" + CurrentGesture.Key;
+
+                return CurrentGesture.Key.ToString();
             }
         }
 
@@ -75,9 +78,9 @@ namespace TT.Viewer.ViewModels
             if (string.IsNullOrEmpty(SelectedKeyBinding))
                 return;
 
-            KeyGesture initialGesture = null;
+            KeyBinding initialGesture = null;
             if (ShortcutFactory.GetInitialGestures().ContainsKey(SelectedKeyBinding))
-                initialGesture = ShortcutFactory.GetInitialGestures()[SelectedKeyBinding] as KeyGesture;
+                initialGesture = ShortcutFactory.GetInitialGestures()[SelectedKeyBinding] as KeyBinding;
             
             CurrentGesture = initialGesture;
         }
@@ -102,10 +105,14 @@ namespace TT.Viewer.ViewModels
                 return;
             }
 
-            KeyGesture keyGesture;
+            KeyBinding keyGesture;
             try
             {
-                keyGesture = new KeyGesture(eventArgs.Key == Key.System ? eventArgs.SystemKey : eventArgs.Key, eventArgs.KeyboardDevice.Modifiers);
+                keyGesture = new KeyBinding
+                {
+                    Key = eventArgs.Key == Key.System ? eventArgs.SystemKey : eventArgs.Key,
+                    Modifiers = eventArgs.KeyboardDevice.Modifiers
+                };
             }
             catch (Exception)
             {

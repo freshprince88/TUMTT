@@ -25,7 +25,7 @@ namespace TT.Scouter.ViewModels
         ///// <summary>
         ///// Sets key bindings for ControlWithBindableKeyGestures
         ///// </summary>
-        //public Dictionary<string, KeyGesture> KeyBindings
+        //public Dictionary<string, KeyBinding> KeyBindings
         //{
         //    get
         //    {
@@ -36,7 +36,7 @@ namespace TT.Scouter.ViewModels
         //        var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
 
         //        //return relevant key gestures
-        //        return keyGesture.ToDictionary(x => x.Key, x => (KeyGesture)x.Value); // TODO
+        //        return keyGesture.ToDictionary(x => x.Key, x => (KeyBinding)x.Value); // TODO
         //    }
         //    set { }
         //}
