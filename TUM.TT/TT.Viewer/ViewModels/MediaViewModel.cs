@@ -347,7 +347,9 @@ namespace TT.Viewer.ViewModels
             }
             else
             {
+                Events.PublishOnUIThread(new FullscreenHidePlayerEvent(false));
                 Events.PublishOnUIThread(new FullscreenEvent(false));
+
             }
         }
 
@@ -370,6 +372,14 @@ namespace TT.Viewer.ViewModels
         {
             MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Start);
             Pause();
+        }
+        public void SkipForward()
+        {
+
+        }
+        public void SkipBackwards()
+        {
+
         }
 
         #endregion

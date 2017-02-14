@@ -12,8 +12,7 @@ namespace TT.Scouter.Views
     /// <summary>
     /// Interaction logic for RemoteView.xaml
     /// </summary>
-    public partial class RemoteView : ControlWithBindableKeyGestures,
-        IHandle<ResultListControlEvent>
+    public partial class RemoteView : ControlWithBindableKeyGestures
     {
         public IEventAggregator Events { get; private set; }
         public IMatchManager Manager { get; private set; }
@@ -24,22 +23,6 @@ namespace TT.Scouter.Views
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
-        }
-
-
-        public void Handle(ResultListControlEvent msg)
-        {
-            var newSelection = Items.Items.Cast<Rally>().Where(i => i.Equals(msg.SelectedRally)).FirstOrDefault();
-
-            if (newSelection != null && Items.SelectedItem != newSelection)
-                Items.SelectedItem = newSelection;
-            else
-            {
-                if (newSelection != null)
-                {
-                    Manager.ActiveRally = newSelection;
-                }
-            }
         }
     }
 }

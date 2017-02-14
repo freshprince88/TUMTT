@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Serialization;
+using TT.Models.Util;
 
 namespace TT.Models
 {
@@ -12,7 +13,7 @@ namespace TT.Models
         /// <summary>
         /// Backs the <see cref="Rallies"/> property.
         /// </summary>
-        private ObservableCollection<Rally> rallies = new ObservableCollection<Rally>();
+        private ObservableCollectionEx<Rally> rallies = new ObservableCollectionEx<Rally>();
 
         private string name;
 
@@ -39,7 +40,7 @@ namespace TT.Models
         /// <summary>
         /// Gets all rallies of this match.
         /// </summary>
-        public ObservableCollection<Rally> Rallies
+        public ObservableCollectionEx<Rally> Rallies
         {
             get { return this.rallies; }
         }
@@ -110,21 +111,21 @@ namespace TT.Models
             //// Update the rally after the new one
             //this.rallies[args.NewStartingIndex].UpdateServerAndScore();
 
-            //if (args.OldItems != null)
-            //{
-            //    foreach (var rally in args.OldItems.Cast<Rally>())
-            //    {
-            //        // Disconnect from each removed rally.
-            //        rally.Playlist = null;
-            //        rally.PropertyChanged -= this.OnRallyChanged;
-            //    }
+            if (args.OldItems != null)
+            {
+                foreach (var rally in args.OldItems.Cast<Rally>())
+                {
+                    // Disconnect from each removed rally.
+                    rally.Playlist = null;
+                    rally.PropertyChanged -= this.OnRallyChanged;
+                }
 
-            //    // Update the rally after the removed one.
-            //    if (args.OldStartingIndex < this.rallies.Count)
-            //    {
-            //        this.rallies[args.OldStartingIndex].UpdateServerAndScore();
-            //    }
-            //}
+                //// Update the rally after the removed one.
+                //if (args.OldStartingIndex < this.rallies.Count)
+                //{
+                //    this.rallies[args.OldStartingIndex].UpdateServerAndScore();
+                //}
+            }
         }
 
         /// <summary>

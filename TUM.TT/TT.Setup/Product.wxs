@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="{70524E77-1BB3-44D9-B00E-1AFF3C018E87}" Name="TUM.TT 1.0" Language="1031" Version="1.0.0.0" Manufacturer="TU München" 
+           UpgradeCode="{4C484FD9-23B1-4111-856B-EE5B03BB9EB0}" Codepage="1252">
+		<Package Id="*" Keywords="Installer" Description="TUM.TT 1.0 Installer" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="TUM.TT" Level="1" ConfigurableDirectory='INSTALLDIR'>
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="INSTALLDIR">
+				<Directory Id="INSTALLFOLDER" Name="TUM TT Software" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			 <Component Id="ProductComponent">
+         <File Source="$(var.TT.Viewer.TargetPath)" />
+			 </Component> 
+		</ComponentGroup>
+	</Fragment>
+</Wix>

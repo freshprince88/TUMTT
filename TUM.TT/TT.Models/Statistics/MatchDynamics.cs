@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace TT.Models.Statistics
 {
     using System.Collections.Generic;
@@ -19,6 +21,8 @@ namespace TT.Models.Statistics
         /// </summary>
         private const int WindowSize = 4;
 
+        public bool IsComputable { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchDynamics"/> class.
         /// </summary>
@@ -33,18 +37,25 @@ namespace TT.Models.Statistics
             var overallResults = this.Match.DefaultPlaylist.FinishedRallies
                 .Select(r => r.Winner == winner ? 1d : 0d)
                 .ToArray();
-            this.Overall = MovingBackwardForwardAverage(overallResults, WindowSize);
+            var overallStatsComputable = overallResults.Length >= WindowSize - 1;
+            if (overallStatsComputable)
+                Overall = MovingBackwardForwardAverage(overallResults, WindowSize);
 
             // Dynamics by serving player.
             this.ByServer = new Dictionary<MatchPlayer, IEnumerable<double>>();
+            bool playerStatsComputable = true;
             foreach (var player in new MatchPlayer[] { MatchPlayer.First, MatchPlayer.Second })
             {
                 var playerResults = this.Match.DefaultPlaylist.FinishedRallies
                     .Where(r => r.Server == player)
                     .Select(r => r.Winner == player ? 1d : 0d)
                     .ToArray();
-                this.ByServer[player] = MovingBackwardForwardAverage(playerResults, WindowSize);
+                playerStatsComputable &= playerResults.Length >= WindowSize - 1;
+                if (playerStatsComputable)
+                    ByServer[player] = MovingBackwardForwardAverage(playerResults, WindowSize);
             }
+
+            IsComputable = overallStatsComputable || playerStatsComputable;
         }
 
         /// <summary>

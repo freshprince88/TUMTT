@@ -310,96 +310,216 @@
     <value>TS</value>
   </data>
   <data name="section_basicinfo_compref" xml:space="preserve">
-    <value>?</value>
+    <value>Comp. Perf.</value>
   </data>
   <data name="section_basicinfo_player" xml:space="preserve">
     <value>Spieler</value>
   </data>
   <data name="section_basicinfo_ranking" xml:space="preserve">
-    <value>?</value>
+    <value>Ranking</value>
   </data>
   <data name="section_basicinfo_result" xml:space="preserve">
-    <value>?</value>
+    <value>Ergebnis</value>
   </data>
   <data name="section_basicinfo_service" xml:space="preserve">
-    <value>?</value>
+    <value>Aufschlag</value>
   </data>
   <data name="section_basicinfo_service_freq" xml:space="preserve">
-    <value>?</value>
+    <value>Anz.</value>
   </data>
   <data name="section_basicinfo_service_winprob" xml:space="preserve">
-    <value>?</value>
+    <value>Gew.wahrs.</value>
   </data>
   <data name="section_basicinfo_title" xml:space="preserve">
-    <value>?</value>
+    <value>Basis Informationen</value>
   </data>
   <data name="section_basicinfo_totalpoints" xml:space="preserve">
-    <value>?</value>
+    <value>Punkte gesamt</value>
   </data>
   <data name="section_basicinfo_winprob" xml:space="preserve">
-    <value>?</value>
+    <value>Gew.wahrs.</value>
   </data>
   <data name="section_matchdynamics_byplayer" xml:space="preserve">
-    <value>?</value>
+    <value>Für aufschlagenden Spieler</value>
   </data>
   <data name="section_matchdynamics_overall" xml:space="preserve">
-    <value>?</value>
+    <value>Gesamt</value>
   </data>
   <data name="section_matchdynamics_title" xml:space="preserve">
-    <value>?</value>
+    <value>Match Dynamics</value>
   </data>
   <data name="section_rallylength_avg_mean" xml:space="preserve">
-    <value>?</value>
+    <value>Mittelwert</value>
   </data>
   <data name="section_rallylength_avg_median" xml:space="preserve">
-    <value>?</value>
+    <value>Median</value>
   </data>
   <data name="section_rallylength_avg_service" xml:space="preserve">
-    <value>?</value>
+    <value>Aufschlag</value>
   </data>
   <data name="section_rallylength_avg_title" xml:space="preserve">
-    <value>?</value>
+    <value>Durschschnitt</value>
   </data>
   <data name="section_rallylength_avg_totallengths" xml:space="preserve">
-    <value>?</value>
+    <value>Länge (gesamt)</value>
   </data>
   <data name="section_rallylength_avg_winner" xml:space="preserve">
-    <value>?</value>
+    <value>Winner</value>
   </data>
   <data name="section_rallylength_dist_expected" xml:space="preserve">
-    <value>?</value>
+    <value>erwartet</value>
   </data>
   <data name="section_rallylength_dist_observed" xml:space="preserve">
-    <value>?</value>
+    <value>beobachtet</value>
   </data>
   <data name="section_rallylength_dist_ralliescount" xml:space="preserve">
-    <value>?</value>
+    <value>#Rallies</value>
   </data>
   <data name="section_rallylength_dist_rallylength" xml:space="preserve">
-    <value>?</value>
+    <value>Rallylänge</value>
   </data>
   <data name="section_rallylength_title" xml:space="preserve">
-    <value>?</value>
+    <value>Rallylänge</value>
   </data>
   <data name="section_scoringprocess_title" xml:space="preserve">
-    <value>?</value>
+    <value>Punktverlauf</value>
   </data>
   <data name="section_techefficiency_error" xml:space="preserve">
-    <value>?</value>
+    <value>Fehler</value>
   </data>
   <data name="section_techefficiency_title" xml:space="preserve">
-    <value>?</value>
+    <value>Technische Effizienz</value>
   </data>
   <data name="section_transitionmatrix_abs_title" xml:space="preserve">
-    <value>?</value>
+    <value>Absolute Anzahl an Übergängen</value>
   </data>
   <data name="section_transitionmatrix_prob_title" xml:space="preserve">
-    <value>?</value>
+    <value>Übergangswahrscheinlichkeiten</value>
   </data>
   <data name="section_transitionmatrix_title" xml:space="preserve">
-    <value>?</value>
+    <value>Übergangsmatrix</value>
   </data>
   <data name="sets_multiple" xml:space="preserve">
     <value>Sätze</value>
+  </data>
+  <data name="placement_error_short" xml:space="preserve">
+    <value>F</value>
+  </data>
+  <data name="placement_halflong_short" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="placement_long_short" xml:space="preserve">
+    <value>l</value>
+  </data>
+  <data name="placement_short_short" xml:space="preserve">
+    <value>k</value>
+  </data>
+  <data name="report_header_headline" xml:space="preserve">
+    <value>Tischtennis Leistungsbericht</value>
+  </data>
+  <data name="report_title" xml:space="preserve">
+    <value>Tischtennis Leistungsbericht</value>
+  </data>
+  <data name="section_rallylength_dist_title" xml:space="preserve">
+    <value>Verteilung</value>
+  </data>
+  <data name="section_technique_block_diag" xml:space="preserve">
+    <value>Block
+(diagonal)</value>
+  </data>
+  <data name="section_technique_block_middle" xml:space="preserve">
+    <value>Block
+(Mitte)</value>
+  </data>
+  <data name="section_technique_block_parallel" xml:space="preserve">
+    <value>Block
+(parallel)</value>
+  </data>
+  <data name="section_technique_push_halflong" xml:space="preserve">
+    <value>Schupf
+(halblang)</value>
+  </data>
+  <data name="section_technique_push_long" xml:space="preserve">
+    <value>Schupf
+(lang)</value>
+  </data>
+  <data name="section_technique_push_short" xml:space="preserve">
+    <value>Schupf
+(kurz)</value>
+  </data>
+  <data name="section_technique_topspin_diag" xml:space="preserve">
+    <value>Topspin
+(diagonal)</value>
+  </data>
+  <data name="section_technique_topspin_middle" xml:space="preserve">
+    <value>Topspin
+(Mitte)</value>
+  </data>
+  <data name="section_technique_topspin_parallel" xml:space="preserve">
+    <value>Topspin
+(parallel)</value>
+  </data>
+  <data name="technique_label_short" xml:space="preserve">
+    <value>T</value>
+  </data>
+  <data name="section_empty_warning" xml:space="preserve">
+    <value>Sie haben keine Statistiken für einzelne Schläge ausgewählt, deshalb ist der Spielerteil für {0} leer.</value>
+  </data>
+  <data name="sets_crunchtime" xml:space="preserve">
+    <value>Crunch Time</value>
+  </data>
+  <data name="legend_backhand_title" xml:space="preserve">
+    <value>Rückhand:</value>
+  </data>
+  <data name="legend_banana_flip_title" xml:space="preserve">
+    <value>Banane / Flip</value>
+  </data>
+  <data name="legend_block_counter_title" xml:space="preserve">
+    <value>Block / Konterball</value>
+  </data>
+  <data name="legend_chop_title" xml:space="preserve">
+    <value>Schnittabwehr</value>
+  </data>
+  <data name="legend_forehand_title" xml:space="preserve">
+    <value>Vorhand:</value>
+  </data>
+  <data name="legend_lineexplanation_intercept_title" xml:space="preserve">
+    <value>Annahme</value>
+  </data>
+  <data name="legend_lineexplanation_poc_pl_title" xml:space="preserve">
+    <value>Annahmepunkt → Platzierung</value>
+  </data>
+  <data name="legend_lob_title" xml:space="preserve">
+    <value>Ballonabwehr</value>
+  </data>
+  <data name="legend_misc_title" xml:space="preserve">
+    <value>Sonstige</value>
+  </data>
+  <data name="legend_push_title" xml:space="preserve">
+    <value>Schupfball</value>
+  </data>
+  <data name="legend_section_header" xml:space="preserve">
+    <value>Legende für Tisch</value>
+  </data>
+  <data name="legend_service_without_spin_title" xml:space="preserve">
+    <value>Aufschlag (ohne Spin)</value>
+  </data>
+  <data name="legend_service_with_spin_title" xml:space="preserve">
+    <value>Aufschlag (mit Spin)</value>
+  </data>
+  <data name="legend_smash_title" xml:space="preserve">
+    <value>Schuss</value>
+  </data>
+  <data name="legend_topspin_title" xml:space="preserve">
+    <value>Topspin</value>
+  </data>
+  <data name="part_appendix" xml:space="preserve">
+    <value>APPENDIX</value>
+  </data>
+  <data name="report_header_default_round" xml:space="preserve">
+    <value>Runde</value>
+  </data>
+  <data name="report_header_default_tournament" xml:space="preserve">
+    <value>Tournament</value>
   </data>
 </root>

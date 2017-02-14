@@ -16,12 +16,13 @@ namespace TT.Scouter.Views
         IHandle<MediaLiveScouterMuteEvent>
     {
         public IEventAggregator Events { get; set; }
-
+        TimeSpan currentTime;
         private IMatchManager Manager;
 
         public LiveMediaView()
         {
             InitializeComponent();
+            currentTime = TimeSpan.Zero;
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
@@ -39,6 +40,7 @@ namespace TT.Scouter.Views
         private void ExtendedMediaView_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
             Events.Unsubscribe(this);
+            currentTime = MediaPlayer.Position;
         }
 
         public void Handle(MediaControlEvent message)
@@ -68,6 +70,7 @@ namespace TT.Scouter.Views
             MediaPlayer.StopWithState();
             MediaPlayer.Close();
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
+            MediaPlayer.MediaPosition = currentTime;
             MediaPlayer.PlayWithState();
             MediaPlayer.PauseWithState();
             PlayButton.Visibility = System.Windows.Visibility.Visible;

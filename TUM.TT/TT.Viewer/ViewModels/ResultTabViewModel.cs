@@ -1,30 +1,21 @@
 ﻿using Caliburn.Micro;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using TT.Models.Util.Enums;
 using TT.Lib.Events;
-using TT.Lib.Managers;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
     public class ResultTabViewModel : Conductor<IResultViewTabItem>.Collection.OneActive,
         IHandle<FullscreenEvent>
     {
-
         private IEventAggregator Events;
+        private IResultViewTabItem _lastNonFullScreenItem;
+        private IEnumerable<IResultViewTabItem> _allTabs;
 
         public ResultTabViewModel(IEnumerable<IResultViewTabItem> tabs, IEventAggregator e)
         {
-            Items.AddRange(tabs);
+            _allTabs = tabs;
+            Items.AddRange(_allTabs);
 
             Events = e;
             Events.Subscribe(this);
@@ -32,6 +23,23 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(FullscreenEvent message)
         {
+            if (message.Fullscreen)
+            {
+                _lastNonFullScreenItem = ActiveItem;
+                Items.Clear();
+                Items.Add(_allTabs.First(t => t is ResultListViewModel));
+                ActiveItem = Items.First();
+                Events.PublishOnUIThread(new FullscreenReduceHitlistEvent(true));
+
+            }
+            else
+            {
+                Events.PublishOnUIThread(new FullscreenReduceHitlistEvent(false));
+                Items.Clear();
+                Items.AddRange(_allTabs);
+                ActiveItem = _lastNonFullScreenItem;
+            }
+
             foreach (IResultViewTabItem tab in Items)
             {
                 tab.DisplayName = tab.GetTabTitle(message.Fullscreen);

@@ -267,21 +267,18 @@ namespace TT.Viewer.ViewModels
                 var sourceItem = dropInfo.Data as IEnumerable<ResultListItem>;
                 var targetItem = dropInfo.TargetItem as PlaylistItem;
                 Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
-
-                while (sourceItem.Count() > 0)
-                {
-                    if (list != null && !list.Rallies.Contains(sourceItem.Last().Rally))
-                    {
-                        list.Rallies.Add(sourceItem.Last().Rally);
-                        //Sort List after Rally-Number
-                        Sort(list.Rallies);
-                        MatchManager.MatchModified = true;
-                        NotifyOfPropertyChange("MatchManager.MatchModified");
-                        targetItem.Count++;
-                        this.Items.Refresh();
-                    }
-                    sourceItem = WithoutLast<ResultListItem>(sourceItem);
-                }
+                var temp = sourceItem.Select(i => i.Rally).ToList();
+                var dropNumbers = temp.Select(r => r.Number).ToList();
+                var plNumbers = list.Rallies.Select(r => r.Number).ToList();
+                var except = dropNumbers.Except(plNumbers);
+                var newItems = temp.Where(r => except.Contains(r.Number));
+                list.Rallies.AddRange(newItems);
+                targetItem.Count = list.Rallies.Count;
+                //Sort List after Rally-Number                        
+                Sort(list.Rallies);
+                this.Items.Refresh();
+                MatchManager.MatchModified = true;
+                NotifyOfPropertyChange("MatchManager.MatchModified");
             }
 
 

@@ -33,6 +33,9 @@ namespace TT.Converters
             int? lastUsedStrokeNumber = originalStrokeNumber;
             foreach (var r in rallies)
             {
+                if (r.Strokes.Count < 1)
+                    continue;
+
                 var start = 0;
                 var limit = 1;
                 if (originalStrokeNumber != null)

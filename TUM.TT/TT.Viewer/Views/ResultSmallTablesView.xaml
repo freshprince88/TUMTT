@@ -8,6 +8,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:vm="clr-namespace:TT.Viewer.ViewModels"
              xmlns:prop="clr-namespace:TT.Viewer.Properties"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              mc:Ignorable="d" 
              d:DesignHeight="442" d:DesignWidth="327"
              d:DataContext="{d:DesignInstance Type=vm:ResultSmallTablesViewModel, IsDesignTimeCreatable=True}">
@@ -56,7 +57,8 @@
         </WrapPanel>
 
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="SmallTableItemsControl" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Rallies}">
+            <ItemsControl x:Name="SmallTableItemsControl" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding Rallies}" dd:DragDrop.IsDragSource="True"
+            dd:DragDrop.IsDropTarget="False" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel>

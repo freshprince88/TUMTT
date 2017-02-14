@@ -213,5 +213,17 @@ namespace TT.Viewer.Properties {
                 this["ReportGenerator_GeneralChoice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReportGenerator_CrunchTimeChoice {
+            get {
+                return ((bool)(this["ReportGenerator_CrunchTimeChoice"]));
+            }
+            set {
+                this["ReportGenerator_CrunchTimeChoice"] = value;
+            }
+        }
     }
 }

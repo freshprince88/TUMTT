@@ -235,7 +235,7 @@
     <value>Netz/Aus:</value>
   </data>
   <data name="report_settings_title" xml:space="preserve">
-    <value>Report Einstellungen</value>
+    <value>Berichteinstellungen</value>
   </data>
   <data name="report_settings_cancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -320,5 +320,15 @@
   </data>
   <data name="report_settings_strokechoice_side" xml:space="preserve">
     <value>Vor-/Rückhand</value>
+  </data>
+  <data name="report_settings_no_match_loaded" xml:space="preserve">
+    <value>Kein Match geladen.
+Keine Vorschau möglich.</value>
+  </data>
+  <data name="report_settings_setchoice_crunchtime" xml:space="preserve">
+    <value>Crunch</value>
+  </data>
+  <data name="statistics" xml:space="preserve">
+    <value>Statistik</value>
   </data>
 </root>

@@ -37,7 +37,18 @@ namespace TT.Viewer.ViewModels
                 _aggressiveness = value;
             }
         }
-        public Models.Util.Enums.Stroke.Specials Specials { get; private set; }
+        private HashSet<Models.Util.Enums.Stroke.Specials> _specials;
+        public HashSet<Models.Util.Enums.Stroke.Specials> SelectedSpecials
+        {
+            get
+            {
+                return _specials;
+            }
+            private set
+            {
+                _specials = value;
+            }
+        }
 
         private HashSet<Models.Util.Enums.Stroke.Technique> _strokeTec;
         public HashSet<Models.Util.Enums.Stroke.Technique> SelectedStrokeTec
@@ -69,7 +80,7 @@ namespace TT.Viewer.ViewModels
             Quality = Models.Util.Enums.Stroke.Quality.None;
             SelectedAggressiveness = new HashSet<Models.Util.Enums.Stroke.Aggressiveness>();
             SelectedStrokeTec = new HashSet<Models.Util.Enums.Stroke.Technique>();
-            Specials = Models.Util.Enums.Stroke.Specials.None;
+            SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
             StepAround = Models.Util.Enums.Stroke.StepAround.Not;
             Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.None;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
@@ -441,38 +452,37 @@ namespace TT.Viewer.ViewModels
         }
         public void EdgeSpecials(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("edgetable"))
+            if (source.Name.ToLower().Equals("edgetable"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.None)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeTable;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.EdgeNet)
-                        Specials = Models.Util.Enums.Stroke.Specials.Both;
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeTable);
                 }
                 else
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.EdgeTable)
-                        Specials = Models.Util.Enums.Stroke.Specials.None;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.Both)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeNet;
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeTable);
                 }
             }
-            else if (source.Name.ToLower().Contains("edgenet"))
+            else if (source.Name.ToLower().Equals("edgenet"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.None)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeNet;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.EdgeTable)
-                        Specials = Models.Util.Enums.Stroke.Specials.Both;
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeNet);
                 }
                 else
                 {
-                    if (Specials == Models.Util.Enums.Stroke.Specials.EdgeNet)
-                        Specials = Models.Util.Enums.Stroke.Specials.None;
-                    else if (Specials == Models.Util.Enums.Stroke.Specials.Both)
-                        Specials = Models.Util.Enums.Stroke.Specials.EdgeTable;
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNet);
+                }
+            }
+            else if (source.Name.ToLower().Equals("edgenettable"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
+                }
+                else
+                {
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -549,7 +559,7 @@ namespace TT.Viewer.ViewModels
                     r.LastWinnerStroke().HasTablePosition(this.SelectedTablePositions) &&
                     r.LastWinnerStroke().HasStrokeLength(this.SelectedStrokeLengths) &&
                     r.LastWinnerStroke().HasAggressiveness(this.SelectedAggressiveness) &&
-                    r.LastWinnerStroke().HasSpecials(this.Specials)).
+                    r.LastWinnerStroke().HasSpecials(this.SelectedSpecials)).
                     ToList();
                 Manager.SelectedRallies = results;
             }

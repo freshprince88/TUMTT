@@ -3,6 +3,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using TT.Models;
 using TT.Models.Statistics;
@@ -12,19 +13,20 @@ namespace TT.Report.Sections
 {
     public class SpinSection : BaseSection
     {
+        protected sealed override string SectionName => "Spin section";
 
         public SpinSection(PlotStyle plotStyle, IDictionary<string, List<Rally>> sets, Match match, object player)
         {
-            this.SpinPlots = new List<PlotModel>();
+            SpinPlots = new List<PlotModel>();
 
             foreach (var set in sets.Keys)
             {
                 if (sets[set].Count > 0)
                 {
                     var statistics = new SpinStatistics(match, player, sets[set]);
-                    int dataMax = Enumerable.Max(new int[] { statistics.NoSpin, statistics.SpinDown, statistics.SpinUp, statistics.NotAnalysed });
+                    var dataMax = new[] { statistics.NoSpin, statistics.SpinDown, statistics.SpinUp, statistics.NotAnalysed }.Max();
 
-                    PlotModel plot = plotStyle.CreatePlot();
+                    var plot = plotStyle.CreatePlot();
                     plot.LegendOrientation = LegendOrientation.Horizontal;
                     plot.LegendPlacement = LegendPlacement.Outside;
                     plot.LegendPosition = LegendPosition.BottomCenter;
@@ -32,13 +34,17 @@ namespace TT.Report.Sections
                     plot.TitleFontSize = 16;
                     plot.PlotAreaBorderThickness = new OxyThickness(1, 0, 0, 1);
 
-                    var categoryAxis1 = new CategoryAxis();
-                    categoryAxis1.Position = AxisPosition.Left;
-                    categoryAxis1.MinorStep = 1;
+                    var categoryAxis1 = new CategoryAxis
+                    {
+                        Position = AxisPosition.Left,
+                        MinorStep = 1
+                    };
 
-                    var linearAxis1 = new LinearAxis();
-                    linearAxis1.Position = AxisPosition.Bottom;
-                    linearAxis1.MajorStep = Math.Ceiling(dataMax / 4d);
+                    var linearAxis1 = new LinearAxis
+                    {
+                        Position = AxisPosition.Bottom,
+                        MajorStep = Math.Ceiling(dataMax / 4d)
+                    };
                     linearAxis1.MinorStep = linearAxis1.MajorStep / 4d;
                     linearAxis1.AbsoluteMinimum = 0;
                     linearAxis1.MaximumPadding = 0.06;
@@ -86,7 +92,6 @@ namespace TT.Report.Sections
                     barSeries1.Items.Add(new BarItem(statistics.SpinUpWon, categoryNr));
                     var spinUpLost = statistics.SpinUp - statistics.SpinUpWon;
                     if (spinUpLost > 0) barSeries2.Items.Add(new BarItem(spinUpLost, categoryNr));
-                    categoryNr++;
 
                     plot.Series.Add(barSeries1);
                     plot.Series.Add(barSeries2);
@@ -95,6 +100,8 @@ namespace TT.Report.Sections
                     plot.Axes.Add(linearAxis1);
 
                     SpinPlots.Add(plot);
+
+                    Debug.WriteLine("{1} for stroke 1 of set {0} ready.", set, SectionName);
                 }
             }
         }

@@ -13,8 +13,10 @@ using TT.Report.Views;
 
 namespace TT.Report.Sections
 {
-    public class LargeTableSection : IReportSection
+    public class LargeTableSection : BaseSection
     {
+        protected sealed override string SectionName => "Large Table section";
+
         public IDictionary<string, BitmapFrame> TableImageBitmapFrames { get; private set; }
 
         public LargeTableSection(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
@@ -69,9 +71,12 @@ namespace TT.Report.Sections
                     var bmp = new RenderTargetBitmap((int)(scale * (size.Width * (300 / 96d))), (int)(scale * (size.Height * (300 / 96d))), 300, 300, PixelFormats.Pbgra32);
                     bmp.Render(ltv);
 
-                    TableImageBitmapFrames[set] = (BitmapFrame.Create(bmp));
+                    var setTitle = GetSetTitleString(set);
+                    TableImageBitmapFrames[setTitle] = (BitmapFrame.Create(bmp));
 
                     setStrokes.Clear();
+
+                    Debug.WriteLine("{2} for stroke {0} of set {1} ready.", GetStrokeNumberString(strokeNumber), set, SectionName);
                 }
             }
             catch (Exception e)

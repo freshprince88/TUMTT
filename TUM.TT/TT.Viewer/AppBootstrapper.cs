@@ -34,7 +34,7 @@ namespace TT.Viewer {
             container.Singleton<IReportGenerator, DefaultReportGenerator>("default");
             container.Singleton<IReportGenerator, CustomizedReportGenerator>("customized");
             // Report rendering
-            container.Singleton<IReportRenderer, PdfRenderer>("PDF");
+            container.RegisterPerRequest(typeof(IReportRenderer),"PDF", typeof(PdfRenderer));
         }
 
         protected override object GetInstance(Type service, string key) {

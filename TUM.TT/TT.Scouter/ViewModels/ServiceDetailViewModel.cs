@@ -414,7 +414,26 @@ namespace TT.Scouter.ViewModels
 
         }
 
+        public void SelectSpecials(ToggleButton source)
+        {
+            if (Stroke == null)
+            {
+                Stroke.Specials = "";
+                return;
+            }
 
+            if (source.Name.ToLower().Contains("edgetable"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Specials = "EdgeTable";
+                }
+                else
+                {
+                    Stroke.Specials = "";
+                }
+            }
+        }
         public void SelectService(ToggleButton source)
         {
             if (Stroke == null)
@@ -514,6 +533,7 @@ namespace TT.Scouter.ViewModels
 
 
         }
+
         #endregion
         #region Helper Methods
         public void MutualExclusiveToggleButtonClick(Grid parent, ToggleButton tb)

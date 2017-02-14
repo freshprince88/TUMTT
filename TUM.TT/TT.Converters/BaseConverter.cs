@@ -17,7 +17,10 @@ namespace TT.Converters
             if (player != null)
                 expression = expression.Replace("$$PlayerString$$", player.Value.ToString());
             if (strokeNumber != null)
+            {
                 expression = expression.Replace("$$StrokeNumber$$", (strokeNumber.Value - 1).ToString());
+                expression = expression.Replace("$$EqualsOrNot$$", strokeNumber % 2 == 0 ? "==" : "!=");
+            }
             expression = expression.Replace('\'', '"');
             expression = expression.Replace("MatchPlayer.None", "\"None\"");
             expression = expression.Replace("MatchPlayer.First", "\"First\"");

@@ -20,7 +20,7 @@ namespace TT.Lib.Interfaces
         void Pause();
 
         void Stop();
-
-        
+        void SkipForward();
+        void SkipBackwards();
     }
 }

@@ -24,7 +24,7 @@ namespace TT.Viewer.Views
     /// Interaktionslogik für MatchView.xaml
     /// </summary>
     public partial class MatchView : UserControl,
-        IHandle<FullscreenEvent>, IHandle<FullscreenHideAllEvent>
+        IHandle<FullscreenEvent>, IHandle<FullscreenHideHitlistEvent>
     {
         #region Properties
 
@@ -80,7 +80,7 @@ namespace TT.Viewer.Views
                     break;
             }
         }
-        public void Handle(FullscreenHideAllEvent message)
+        public void Handle(FullscreenHideHitlistEvent message)
         {
             switch (message.Hide)
             {

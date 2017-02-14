@@ -3,10 +3,11 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
 using TT.Models;
 using TT.Lib.Managers;
+using System;
 
 namespace TT.Scouter.ViewModels
 {
-    public class MainViewModel : Conductor<IScreen>.Collection.AllActive
+    public class MainViewModel : Conductor<IScreen>.Collection.OneActive 
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
@@ -15,6 +16,34 @@ namespace TT.Scouter.ViewModels
         public RemoteViewModel RemoteView { get; set; }
 
         public LiveViewModel.TimeMode LiveMode { get; set; }
+        private TimeSpan _lastLiveMediaPos;
+        public TimeSpan LastLiveMediaPosition
+        {
+            get
+            {
+                return _lastLiveMediaPos;
+            }
+            set
+            {
+                if (_lastLiveMediaPos != value)
+                    _lastLiveMediaPos = value;
+                NotifyOfPropertyChange();
+            }
+        }
+        private TimeSpan _lastRemoteMediaPos;
+        public TimeSpan LastRemoteMediaPosition
+        {
+            get
+            {
+                return _lastRemoteMediaPos;
+            }
+            set
+            {
+                if (_lastRemoteMediaPos != value)
+                    _lastRemoteMediaPos = value;
+                NotifyOfPropertyChange();
+            }
+        }
 
         public enum Tabs
         {
@@ -32,34 +61,42 @@ namespace TT.Scouter.ViewModels
                 {
                     _selectedTab = value;
                     NotifyOfPropertyChange("SelectedTab");
-                    if (_selectedTab == 0)
+                    if (_selectedTab == 0)                       
                     {
+                        this.ActivateItem(LiveView);
+
                         if (LiveView.Rallies.Any())
                         {
-                            if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
-                            {
-
-                            }
-
-                            else
+                            if (LiveView.Rallies.Last().Winner != MatchPlayer.None)
                             {
                                 LiveView.CurrentRally = new Rally();
                                 LiveView.Rallies.Add(LiveView.CurrentRally);
                                 LiveView.CurrentRally.UpdateServerAndScore();
+                                NotifyOfPropertyChange("LiveView.CurrentRally");
                             }
+                        }
+                        else
+                        {
+                            LiveView.CurrentRally = new Rally();
+                            Manager.ActivePlaylist.Rallies.Add(LiveView.CurrentRally);
+                            LiveView.Server = LiveView.firstServerBackup;
+                            LiveView.CurrentRally.Server= LiveView.firstServerBackup;
+                            LiveView.CurrentRally.UpdateServerAndScore();
+                            NotifyOfPropertyChange("LiveView.CurrentRally");
                         }
 
                     }
                     if (_selectedTab == 1)
-                    {
+                    {                        
                         if (LiveView.Rallies.Any())
                         {
                             if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
                             {
-                                LiveView.Rallies.Remove(LiveView.Rallies.Last());
-
+                                Manager.ActivePlaylist.Rallies.Remove(Manager.ActivePlaylist.Rallies.Last());
                             }
                         }
+
+                        this.ActivateItem(RemoteView);
                     }
                 }
             }
@@ -70,9 +107,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             Manager = man;
             LiveView = new LiveViewModel(Events, Manager);
-            RemoteView = new RemoteViewModel(Events, Manager, dia);
-            
-            
+            RemoteView = new RemoteViewModel(Events, Manager, dia);                        
         }
 
 
@@ -83,7 +118,6 @@ namespace TT.Scouter.ViewModels
             base.OnActivate();
             LiveView.ViewMode = LiveMode;
             this.ActivateItem(LiveView);
-            this.ActivateItem(RemoteView);
         }
 
         protected override void OnDeactivate(bool close)
