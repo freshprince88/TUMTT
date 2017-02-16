@@ -150,7 +150,7 @@ namespace TT.Lib.Results
             {
                 currentProgress = progressBar;
             }
-            dialog.SetMessage("\nCollection is currently being created! \n\nIt may take a while...(" + remainingTime.Minutes+":"+remainingTime.Seconds+ ")");
+            dialog.SetMessage("\nCollection is currently being created! \n\nIt may take a while...(" + remainingTime.ToString(@"mm\:ss") + ")");
             dialog.SetProgress(currentProgress);
             
         }
