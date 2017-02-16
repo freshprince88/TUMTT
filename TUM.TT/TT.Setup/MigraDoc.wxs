@@ -10,6 +10,12 @@
         <File Name="MigraDoc.Rendering.dll" />
       </Component>
       <Component>
+        <File Name="MigraDoc.DocumentObjectModel-gdi.dll" />
+      </Component>
+      <Component>
+        <File Name="MigraDoc.Rendering-gdi.dll" />
+      </Component>
+      <Component>
         <File Name="MigraDoc.RtfRendering.dll" />
       </Component>
     </ComponentGroup>    

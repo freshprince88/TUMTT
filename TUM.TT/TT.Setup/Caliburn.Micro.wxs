@@ -6,6 +6,12 @@
       <Component>
         <File Name="Caliburn.Micro.dll" />
       </Component>
+      <Component>
+        <File Name="Caliburn.Micro.Platform.dll" />
+      </Component>
+      <Component>
+        <File Name="Caliburn.Micro.Platform.Core.dll" />
+      </Component>
     </ComponentGroup>    
   </Fragment>
 </Wix>

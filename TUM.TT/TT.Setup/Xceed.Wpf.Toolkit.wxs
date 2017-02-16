@@ -6,6 +6,9 @@
       <Component>
         <File Name="Xceed.Wpf.Toolkit.dll" />
       </Component>
+      <Component>
+        <File Name="Xceed.Wpf.DataGrid.dll" />
+      </Component>
     </ComponentGroup>    
   </Fragment>
 </Wix>

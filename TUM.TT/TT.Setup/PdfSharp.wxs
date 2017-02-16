@@ -7,7 +7,13 @@
         <File Name="PdfSharp.dll" />
       </Component>
       <Component>
+        <File Name="PdfSharp-gdi.dll" />
+      </Component>
+      <Component>
         <File Name="PdfSharp.Charting.dll" />
+      </Component>
+      <Component>
+        <File Name="PdfSharp.Charting-gdi.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
