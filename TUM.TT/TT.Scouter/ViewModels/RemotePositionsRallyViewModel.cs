@@ -153,15 +153,19 @@ namespace TT.Scouter.ViewModels
             DrawnStrokes.Clear();
             foreach(Stroke s in Strokes)
             {
-                DrawElement dE = createDrawElement(Visibility.Hidden);
-                dE.text = s.Number.ToString();
-                s.StrokePlacementChanged += S_StrokePlacementChanged;
-                if (s.Placement != null && s.Placement.WX >= 0 && s.Placement.WY >= 0)
+               Application.Current.Dispatcher.Invoke(() =>
                 {
-                    dE.g.Visibility = Visibility.Visible;
-                    putGridToPosition(new Point(s.Placement.WX, s.Placement.WY), dE);
-                }
-                DrawnStrokes.Add(dE);
+                    DrawElement dE = createDrawElement(Visibility.Hidden);
+                    dE.text = s.Number.ToString();
+                    s.StrokePlacementChanged += S_StrokePlacementChanged;
+                    if (s.Placement != null && s.Placement.WX >= 0 && s.Placement.WY >= 0)
+                    {
+                        dE.g.Visibility = Visibility.Visible;
+                        putGridToPosition(new Point(s.Placement.WX, s.Placement.WY), dE);
+                    }
+                    DrawnStrokes.Add(dE);
+                });
+                
             }
         }
 

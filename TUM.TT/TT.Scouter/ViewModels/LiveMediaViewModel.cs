@@ -21,7 +21,7 @@ using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
-    public class LiveMediaViewModel : Screen, IMediaPosition, IHandle<MediaLiveScouterSpeedEvent>
+    public class LiveMediaViewModel : Screen, IMediaPosition
     {
         private TimeSpan _mediaLength;
         public TimeSpan MediaLength
@@ -47,8 +47,10 @@ namespace TT.Scouter.ViewModels
             set
             {
                 if (_mediaPos != value)
+                {
                     _mediaPos = value;
-                NotifyOfPropertyChange();
+                    NotifyOfPropertyChange();
+                }
             }
         }
 
@@ -97,20 +99,7 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        private int _mediaSpeed;
-        public int MediaSpeed
-        {
-            get
-            {
-                return _mediaSpeed;
-            }
-            set
-            {
-                if (_mediaSpeed != value)
-                    _mediaSpeed = value;
-                NotifyOfPropertyChange();
-            }
-        }
+       
 
         private bool _playing;
         public bool IsPlaying
@@ -351,7 +340,6 @@ namespace TT.Scouter.ViewModels
         {
             Events = ev;
             Manager = man;
-            MediaSpeed = 100;
             OneBackwardsChecked = false;
             TwoBackwardsChecked = true;
             ThreeBackwardsChecked = false;
@@ -392,30 +380,6 @@ namespace TT.Scouter.ViewModels
         #endregion  
 
         #region Event Handlers
-        public void Handle(MediaLiveScouterSpeedEvent message)
-        {
-            switch (message.LiveScouterSpeed)
-            {
-                case Media.LiveScouterSpeed.Quarter:
-                    MediaSpeed = 25;
-                    break;
-                case Media.LiveScouterSpeed.Half:
-                    MediaSpeed = 50;
-                    break;
-                case Media.LiveScouterSpeed.Third:
-                    MediaSpeed = 75;
-                    break;
-                case Media.LiveScouterSpeed.Full:
-                    MediaSpeed = 100;
-                    break;
-                case Media.LiveScouterSpeed.Faster:
-                    MediaSpeed = 150;
-                    break;
-                default:
-                    break;
-            }
-
-        }
      
         #endregion
 

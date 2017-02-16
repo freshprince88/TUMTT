@@ -117,6 +117,9 @@ namespace TT.Report.Sections
         /// <returns>The plot.</returns>
         private PlotModel PlotOverallDynamics()
         {
+            if (Dynamics == null)
+                return null;
+
             var plot = this.CreateDynamicsPlot();
 
             var series = new LineSeries()
@@ -142,9 +145,11 @@ namespace TT.Report.Sections
         /// <returns>The plot.</returns>
         private PlotModel PlotByServerDynamics()
         {
-            var plot = this.CreateDynamicsPlot();
-
             var players = new MatchPlayer[] { MatchPlayer.First, MatchPlayer.Second };
+            if (Dynamics.ByServer.Count != players.Length)
+                return null;
+
+            var plot = this.CreateDynamicsPlot();
             foreach (var player in players)
             {
                 var name = player == MatchPlayer.First ?

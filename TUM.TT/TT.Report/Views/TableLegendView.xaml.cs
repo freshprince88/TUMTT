@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,7 +16,14 @@ namespace TT.Report.Views
     {
         public TableLegendView()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception e) when (e is InvalidOperationException)
+            {
+                Debug.WriteLine("TableLegendView: InitializeComponent() failed ({0} - {1})", e.GetType().Name, e.Message);
+            }
         }
 
         private Grid currentInnerFieldGrid;

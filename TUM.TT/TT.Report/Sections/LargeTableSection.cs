@@ -15,6 +15,8 @@ namespace TT.Report.Sections
 {
     public class LargeTableSection : BaseSection
     {
+        protected sealed override string SectionName => "Large Table section";
+
         public IDictionary<string, BitmapFrame> TableImageBitmapFrames { get; private set; }
 
         public LargeTableSection(int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
@@ -73,6 +75,8 @@ namespace TT.Report.Sections
                     TableImageBitmapFrames[setTitle] = (BitmapFrame.Create(bmp));
 
                     setStrokes.Clear();
+
+                    Debug.WriteLine("{2} for stroke {0} of set {1} ready.", GetStrokeNumberString(strokeNumber), set, SectionName);
                 }
             }
             catch (Exception e)

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace TT.Report.Sections
 {
-    public class BaseSection : IReportSection
+    public abstract class BaseSection : IReportSection
     {
+        protected abstract string SectionName { get; }
+
         protected string GetSetTitleString(string setName)
         {
             if (setName == "all")
@@ -21,6 +23,19 @@ namespace TT.Report.Sections
             else
             {
                 return string.Format("{0} {1}", Properties.Resources.sets_one, setName);
+            }
+        }
+
+        protected string GetStrokeNumberString(int strokeNumber)
+        {
+            switch (strokeNumber)
+            {
+                case -1:
+                    return "'all'";
+                case int.MaxValue:
+                    return "'last'";
+                default:
+                    return strokeNumber.ToString();
             }
         }
     }

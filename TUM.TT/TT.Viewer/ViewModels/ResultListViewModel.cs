@@ -17,7 +17,6 @@ namespace TT.Viewer.ViewModels
 {
     public class ResultListViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
-        IHandle<FullscreenEvent>,
         IHandle<MediaControlEvent>
     {
         public string Header { get; set; }
@@ -30,7 +29,7 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator Events;
         private IDialogCoordinator Dialogs;
         private IMatchManager Manager;
-        private int count;
+
 
         public ObservableCollection<ResultListItem> Items { get; set; }
         public List<Rally> Rallies { get; set; }
@@ -39,11 +38,10 @@ namespace TT.Viewer.ViewModels
         public ResultListViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
             this.DisplayName = "Hitlist";
-            Header = "Hitlist (" + count + ")";
+            Header = "Hitlist";
             Events = e;
             Dialogs = c;
             Manager = man;
-            count = 0;
             Player1 = "Player 1";
             Player2 = "Player 2";
             PointsPlayer1 = 0;
@@ -106,31 +104,10 @@ namespace TT.Viewer.ViewModels
             //{
             //    this.ActivateItem(new ResultListItem(rally));
             //}
-
-            count = Items.Count();
-            this.DisplayName = "Hitlist (" + count + ")";
-            Header = "Hitlist (" + count + ")";
-            NotifyOfPropertyChange("Header");
-
             //this.Items.Refresh();
         }
 
-        public void Handle(FullscreenEvent message)
-        {
-            switch (message.Fullscreen)
-            {
-                case true:
-                    //this.DisplayName = "R(" + count + ")";
-                    Header = "R(" + count + ")";
-                    break;
-                case false:
-                    //this.DisplayName = "Hitlist (" + count + ")";
-                    Header = "Hitlist (" + count + ")";
-                    break;
-                default:
-                    break;
-            }
-        }
+ 
 
         public void Handle(MediaControlEvent message)
         {

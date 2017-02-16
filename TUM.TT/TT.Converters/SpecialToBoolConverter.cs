@@ -1,31 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
-using TT.Models.Util.Enums;
 
 namespace TT.Converters
+
 {
-    [ValueConversion(typeof(Stroke.Specials), typeof(bool))]
+    [ValueConversion(typeof(HashSet<Models.Util.Enums.Stroke.Services>), typeof(bool))]
     public class SpecialToBoolConverter : BaseConverter, IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            Stroke.Specials specials = (Stroke.Specials)values[0];
+            HashSet<Models.Util.Enums.Stroke.Specials> set = (HashSet<Models.Util.Enums.Stroke.Specials>)values[0];
             string btnName = (string)values[1];
 
-            switch (specials)
+            foreach (var spec in set)
             {
-                case Stroke.Specials.EdgeTable:
-                    return btnName.ToString().ToLower() == "edgetable";
-                case Stroke.Specials.EdgeNet:
-                    return btnName.ToString().ToLower() == "edgenet";
-                case Stroke.Specials.Both:
+                var test = spec.ToString().ToLower();
+                if (test == btnName.ToLower())
                     return true;
-                case Stroke.Specials.None:
-                    return false;
             }
             return false;
         }
+
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {

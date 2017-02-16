@@ -51,6 +51,7 @@
     <Compile Include="AggressivenessToBoolConverter.cs" />
     <Compile Include="AggressivenessToBoolScouterConverter.cs" />
     <Compile Include="BaseConverter.cs" />
+    <Compile Include="BoolAndConverter.cs" />
     <Compile Include="BoolNotConverter.cs" />
     <Compile Include="BoolNotToVisibilityConverter.cs" />
     <Compile Include="BoolToVisibilityCollapsedConverter.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Column2TabConverter.cs" />
     <Compile Include="CourseToBoolScouterConverter.cs" />
     <Compile Include="CrunchToBoolConverter.cs" />
+    <Compile Include="CurrentRallyNumberToVisibilityConverter.cs" />
     <Compile Include="CurrentRallyServerToBallIsVisibleConverter.cs" />
     <Compile Include="CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
     <Compile Include="ForeBackHandToBoolConverter.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="ServiceToBoolScouterConverter.cs" />
     <Compile Include="SetToBoolConverter.cs" />
     <Compile Include="SideToBoolScouterConverter.cs" />
+    <Compile Include="SpecialsToBoolScouterConverter.cs" />
     <Compile Include="SpecialToBoolConverter.cs" />
     <Compile Include="SpinToBoolScouterConverter.cs" />
     <Compile Include="SpinToCheckedConverter.cs" />

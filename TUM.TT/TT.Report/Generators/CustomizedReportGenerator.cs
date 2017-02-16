@@ -31,9 +31,12 @@ namespace TT.Report.Generators
         private readonly MatchPlayerToColorConverter _matchPlayerToColorConverter;
 
         public bool Abort { get; set; }
+        public bool Done { get; set; }
         public Match Match { get; set; }
         public string CustomizationId { get; private set; }
         public EventHandler<SectionsAddedEventArgs> SectionsAdded;
+
+        public bool ShowNotification { get; set; }
 
         private Dictionary<string, object> _customization;
         public Dictionary<string, object> Customization {
@@ -50,7 +53,7 @@ namespace TT.Report.Generators
         
         public CustomizedReportGenerator()
         {
-            this._matchPlayerToColorConverter = new MatchPlayerToColorConverter();
+            _matchPlayerToColorConverter = new MatchPlayerToColorConverter();
         }
 
         public void GenerateReport()
@@ -62,7 +65,7 @@ namespace TT.Report.Generators
             if (!Abort)
             {
                 SectionsAdded?.Invoke(this, new SectionsAddedEventArgs(report));
-                Debug.WriteLine("Thread '{1}' done.", GetHashCode(), Thread.CurrentThread.Name);
+                Debug.WriteLine($"Thread '{Thread.CurrentThread.Name}' done.");
             }
             else
                 Debug.WriteLine("CustomizedReportGenerator {0}: report generation aborted! (Thread: {1})", GetHashCode(), Thread.CurrentThread.Name);
@@ -104,8 +107,8 @@ namespace TT.Report.Generators
                  new HeaderSection
                  {
                      Headline = Properties.Resources.report_header_headline,
-                     Round = match.Round,
-                     Tournament = match.Tournament,
+                     Round = match.Round ?? Properties.Resources.report_header_default_round,
+                     Tournament = match.Tournament ?? Properties.Resources.report_header_default_tournament,
                      Date = match.DateTime
                  });
 
@@ -222,6 +225,17 @@ namespace TT.Report.Generators
                 case "number": return new StrokeNumberSection(plotStyle, strokeNumber, sets, match, player);
             }
             return null;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var generator = obj as CustomizedReportGenerator;
+            return generator != null && string.Equals(generator.CustomizationId, CustomizationId);
+        }
+
+        public override int GetHashCode()
+        {
+            return (CustomizationId != null ? CustomizationId.GetHashCode() : 0);
         }
     }
 }

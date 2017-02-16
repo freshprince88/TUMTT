@@ -133,4 +133,16 @@
   <data name="notification_generated_doubleclick" xml:space="preserve">
     <value>Double-click to open generated report</value>
   </data>
+  <data name="dialog_file_in_use_button_cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="dialog_file_in_use_button_ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="dialog_file_in_use_message" xml:space="preserve">
+    <value>Couldn't overwrite file '{0}' - it is probably open in another program. Retry overwriting?</value>
+  </data>
+  <data name="dialog_file_in_use_title" xml:space="preserve">
+    <value>File in use</value>
+  </data>
 </root>

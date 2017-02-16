@@ -19,7 +19,7 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für ShellView.xaml
     /// </summary>
-    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<HideMenuEvent>, IHandle<FullscreenEvent>, IHandle<FullscreenHideAllEvent>
+    public partial class ShellView : MahApps.Metro.Controls.MetroWindow, IHandle<HideMenuEvent>, IHandle<FullscreenEvent>, IHandle<FullscreenHideHitlistEvent>
     {
         public IEventAggregator Events { get; private set; }
         WindowState currentStateNonFullscreen { get; set; }
@@ -54,10 +54,10 @@ namespace TT.Viewer.Views
                     SolidColorBrush bg = new SolidColorBrush();
                     bg.Opacity = 0.5;
                     Background = bg;
-                    WindowState = WindowState.Maximized;
+                    IgnoreTaskbarOnMaximize = true;
                     ShowTitleBar = false;
                     Topmost = true;
-                    IgnoreTaskbarOnMaximize = true;
+                    WindowState = WindowState.Maximized;
                     MenuButton.Visibility = Visibility.Collapsed;
 
 
@@ -88,13 +88,13 @@ namespace TT.Viewer.Views
                     //}
 
 
-                        break;
+                    break;
                 case false:
                     ClearValue(BackgroundProperty);
-                    WindowState = currentStateNonFullscreen;
-                    ShowTitleBar = true;
-                    Topmost = false;
                     IgnoreTaskbarOnMaximize = false;
+                    ShowTitleBar = true;                    
+                    Topmost = false;
+                    WindowState = currentStateNonFullscreen;
                     MenuButton.Visibility = Visibility.Visible;
                     break;
                 default:
@@ -102,7 +102,7 @@ namespace TT.Viewer.Views
             }
         }
 
-        public void Handle(FullscreenHideAllEvent message)
+        public void Handle(FullscreenHideHitlistEvent message)
         {
             switch (message.Hide)
             {

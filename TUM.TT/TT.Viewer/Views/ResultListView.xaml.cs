@@ -13,7 +13,7 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class ResultListView : UserControl,
         IHandle<ResultListControlEvent>,
-        IHandle<FullscreenEvent>
+        IHandle<FullscreenReduceHitlistEvent>
     {
 
         public IEventAggregator Events { get; private set; }
@@ -35,9 +35,9 @@ namespace TT.Viewer.Views
 
         }
 
-        public void Handle(FullscreenEvent message)
+        public void Handle(FullscreenReduceHitlistEvent message)
         {
-            switch (message.Fullscreen)
+            switch (message.ReduceHitlist)
             {
                 case true:
                     Column1.Header = "S";

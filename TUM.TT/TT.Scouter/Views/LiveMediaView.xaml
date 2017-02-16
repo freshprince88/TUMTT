@@ -55,48 +55,19 @@
             </Grid.ColumnDefinitions>
             <RadioButton x:Name="Slow150Button" Content="150%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="1"
                           cal:Message.Attach="[Event Checked] = [Action Slow(150)]">
-                <RadioButton.IsChecked>
-                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
-                        <Binding Path="MediaSpeed" />
-                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                    </MultiBinding>
-                </RadioButton.IsChecked>
+               
             </RadioButton>
             <RadioButton x:Name="Slow100Button" Content="100%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="2"
-                          cal:Message.Attach="[Event Checked] = [Action Slow(100)]">
-                <RadioButton.IsChecked>
-                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
-                        <Binding Path="MediaSpeed" />
-                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                    </MultiBinding>
-                </RadioButton.IsChecked>
+                          cal:Message.Attach="[Event Checked] = [Action Slow(100)]" IsChecked="True">
             </RadioButton>
             <RadioButton x:Name="Slow75Button" Content="75%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="3" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(75)]">
-                <RadioButton.IsChecked>
-                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
-                        <Binding Path="MediaSpeed" />
-                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                    </MultiBinding>
-                </RadioButton.IsChecked>
             </RadioButton>
             <RadioButton x:Name="Slow50Button" Content="50%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(50)]">
-                <RadioButton.IsChecked>
-                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
-                        <Binding Path="MediaSpeed" />
-                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                    </MultiBinding>
-                </RadioButton.IsChecked>
             </RadioButton>
             <RadioButton x:Name="Slow25Button" Content="25%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="5" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(25)]">
-                <RadioButton.IsChecked>
-                    <MultiBinding Converter="{conv:MediaSpeedToBoolConverter}" Mode="OneWay">
-                        <Binding Path="MediaSpeed" />
-                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                    </MultiBinding>
-                </RadioButton.IsChecked>
             </RadioButton>
             <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="7"
                     Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"
@@ -121,7 +92,6 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-
             <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8"
                     cal:Message.Attach="[Event Click] = [Action Stop()]">
                 <Rectangle Width="15" Height="15" 
@@ -132,7 +102,6 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-
             <Button x:Name="SkipBackwards" Style="{StaticResource MetroAccentFlat}" Grid.Column="9" >
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">

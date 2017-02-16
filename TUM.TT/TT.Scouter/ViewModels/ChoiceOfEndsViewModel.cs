@@ -25,7 +25,7 @@ namespace TT.Scouter.ViewModels
 
         private bool _player1TopPlayer2Bottom;
         /// <summary>
-        /// Determines whether Player1 is FirstServer
+        /// Determines whether Player1 is Top and Player2 is Bottom
         /// </summary>
         public bool Player1TopPlayer2Bottom
         {
@@ -44,7 +44,7 @@ namespace TT.Scouter.ViewModels
         }
         private bool _player2TopPlayer1Bottom;
         /// <summary>
-        /// Determines whether Player1 is FirstServer
+        /// Determines whether Player2 is Top and Player1 is Bottom
         /// </summary>
         public bool Player2TopPlayer1Bottom
         {

@@ -103,6 +103,7 @@ namespace TT.Scouter.ViewModels
         public IMediaPosition MediaPlayer { get; set; }
 
         public MatchPlayer Server { get; set; }
+        public MatchPlayer firstServerBackup { get; set; }
 
         public Match Match { get { return MatchManager.Match; } }
         public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
@@ -129,6 +130,8 @@ namespace TT.Scouter.ViewModels
                 }
                 NotifyOfPropertyChange();
                 NotifyOfPropertyChange("LengthHelper");
+                NotifyOfPropertyChange("CurrentRally");
+
             }
         }
 
@@ -231,6 +234,7 @@ namespace TT.Scouter.ViewModels
             TransitioningContent = CurrentScreen;
         }
 
+
         #endregion
 
         #region View Methods
@@ -268,6 +272,7 @@ namespace TT.Scouter.ViewModels
                 CurrentRally.UpdateServerAndScore();
                 Server = CurrentRally.Server;
                 //LengthHelper = 0;
+                NotifyOfPropertyChange("CurrentRally");
                 NotifyOfPropertyChange();
                 NotifyOfPropertyChange("Server");
                 IsNewRally = true;
@@ -334,7 +339,6 @@ namespace TT.Scouter.ViewModels
         {
             if (Rallies.Count == 2)
             {
-                MatchPlayer firstServerBackup = MatchManager.Match.FirstServer;
                 Rally lastRally = Rallies.Last();
                 if (lastRally.Winner == MatchPlayer.None)
                 {
@@ -354,6 +358,8 @@ namespace TT.Scouter.ViewModels
                 IsWinnerEnabled = false;
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("FirstServerSet");
+                NotifyOfPropertyChange("CurrentRally");
+
             }
             if (Rallies.Count > 2)
             {
@@ -370,8 +376,9 @@ namespace TT.Scouter.ViewModels
                 IsNewRally = true;
                 IsWinnerEnabled = false;
                 MatchManager.MatchModified = true;
-
                 NotifyOfPropertyChange("FirstServerSet");
+                NotifyOfPropertyChange("CurrentRally");
+
             }
 
         }

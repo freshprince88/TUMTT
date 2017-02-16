@@ -10,6 +10,7 @@ namespace TT.Report.Sections
 {
     public class SectionEmptyWarningSection : BaseSection
     {
+        protected override string SectionName => "Section Empty Warning section";
         public Player Player { get; }
 
         public SectionEmptyWarningSection(Player player)

@@ -24,6 +24,7 @@ namespace TT.Viewer.ViewModels
         public string PointsPlayer2Percent { get; set; }
         public double totalRalliesCount { get; set; }
 
+
         #endregion
 
 
@@ -74,6 +75,8 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange("PointsPlayer2Percent");
             NotifyOfPropertyChange("Player1");
             NotifyOfPropertyChange("Player2");
+            NotifyOfPropertyChange("totalRalliesCount");
+
 
         }
 

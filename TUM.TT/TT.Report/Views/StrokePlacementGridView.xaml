@@ -810,7 +810,7 @@
             </Label>
         </Grid>
 
-        <Label x:Name="PlacementAllServiceErrorsTotalButton" Tag="r => $$Player$$ (r.Server != r.Winner &amp;&amp; r.Length == 1)" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" Padding="2 0 2 0" Margin="2 2 2 0" FontSize="40" HorizontalAlignment="Center">
+        <Label x:Name="PlacementAllServiceErrorsTotalButton" Tag="r => $$Player$$ (r.Server $$EqualsOrNot$$ r.Winner &amp;&amp; r.Length == ($$StrokeNumber$$ + 1))" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" Padding="2 0 2 0" Margin="2 2 2 0" FontSize="40" HorizontalAlignment="Center">
             <Label.Content>
                 <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
                     <Binding Path="SelectedRallies" />

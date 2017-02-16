@@ -201,10 +201,8 @@
         public enum Specials
         {
             EdgeTable,
-            EdgeRacket,
             EdgeNet,
-            None,
-            Both
+            EdgeNetTable,
         }
 
         public enum Services

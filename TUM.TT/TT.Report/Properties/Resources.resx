@@ -516,4 +516,10 @@
   <data name="part_appendix" xml:space="preserve">
     <value>APPENDIX</value>
   </data>
+  <data name="report_header_default_round" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="report_header_default_tournament" xml:space="preserve">
+    <value>Tournament</value>
+  </data>
 </root>

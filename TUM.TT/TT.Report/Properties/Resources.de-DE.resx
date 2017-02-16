@@ -310,94 +310,94 @@
     <value>TS</value>
   </data>
   <data name="section_basicinfo_compref" xml:space="preserve">
-    <value>?</value>
+    <value>Comp. Perf.</value>
   </data>
   <data name="section_basicinfo_player" xml:space="preserve">
     <value>Spieler</value>
   </data>
   <data name="section_basicinfo_ranking" xml:space="preserve">
-    <value>?</value>
+    <value>Ranking</value>
   </data>
   <data name="section_basicinfo_result" xml:space="preserve">
-    <value>?</value>
+    <value>Ergebnis</value>
   </data>
   <data name="section_basicinfo_service" xml:space="preserve">
-    <value>?</value>
+    <value>Aufschlag</value>
   </data>
   <data name="section_basicinfo_service_freq" xml:space="preserve">
-    <value>?</value>
+    <value>Anz.</value>
   </data>
   <data name="section_basicinfo_service_winprob" xml:space="preserve">
-    <value>?</value>
+    <value>Gew.wahrs.</value>
   </data>
   <data name="section_basicinfo_title" xml:space="preserve">
-    <value>?</value>
+    <value>Basis Informationen</value>
   </data>
   <data name="section_basicinfo_totalpoints" xml:space="preserve">
-    <value>?</value>
+    <value>Punkte gesamt</value>
   </data>
   <data name="section_basicinfo_winprob" xml:space="preserve">
-    <value>?</value>
+    <value>Gew.wahrs.</value>
   </data>
   <data name="section_matchdynamics_byplayer" xml:space="preserve">
-    <value>?</value>
+    <value>Für aufschlagenden Spieler</value>
   </data>
   <data name="section_matchdynamics_overall" xml:space="preserve">
-    <value>?</value>
+    <value>Gesamt</value>
   </data>
   <data name="section_matchdynamics_title" xml:space="preserve">
-    <value>?</value>
+    <value>Match Dynamics</value>
   </data>
   <data name="section_rallylength_avg_mean" xml:space="preserve">
-    <value>?</value>
+    <value>Mittelwert</value>
   </data>
   <data name="section_rallylength_avg_median" xml:space="preserve">
-    <value>?</value>
+    <value>Median</value>
   </data>
   <data name="section_rallylength_avg_service" xml:space="preserve">
-    <value>?</value>
+    <value>Aufschlag</value>
   </data>
   <data name="section_rallylength_avg_title" xml:space="preserve">
-    <value>?</value>
+    <value>Durschschnitt</value>
   </data>
   <data name="section_rallylength_avg_totallengths" xml:space="preserve">
-    <value>?</value>
+    <value>Länge (gesamt)</value>
   </data>
   <data name="section_rallylength_avg_winner" xml:space="preserve">
-    <value>?</value>
+    <value>Winner</value>
   </data>
   <data name="section_rallylength_dist_expected" xml:space="preserve">
-    <value>?</value>
+    <value>erwartet</value>
   </data>
   <data name="section_rallylength_dist_observed" xml:space="preserve">
-    <value>?</value>
+    <value>beobachtet</value>
   </data>
   <data name="section_rallylength_dist_ralliescount" xml:space="preserve">
-    <value>?</value>
+    <value>#Rallies</value>
   </data>
   <data name="section_rallylength_dist_rallylength" xml:space="preserve">
-    <value>?</value>
+    <value>Rallylänge</value>
   </data>
   <data name="section_rallylength_title" xml:space="preserve">
-    <value>?</value>
+    <value>Rallylänge</value>
   </data>
   <data name="section_scoringprocess_title" xml:space="preserve">
-    <value>?</value>
+    <value>Punktverlauf</value>
   </data>
   <data name="section_techefficiency_error" xml:space="preserve">
-    <value>?</value>
+    <value>Fehler</value>
   </data>
   <data name="section_techefficiency_title" xml:space="preserve">
-    <value>?</value>
+    <value>Technische Effizienz</value>
   </data>
   <data name="section_transitionmatrix_abs_title" xml:space="preserve">
-    <value>?</value>
+    <value>Absolute Anzahl an Übergängen</value>
   </data>
   <data name="section_transitionmatrix_prob_title" xml:space="preserve">
-    <value>?</value>
+    <value>Übergangswahrscheinlichkeiten</value>
   </data>
   <data name="section_transitionmatrix_title" xml:space="preserve">
-    <value>?</value>
+    <value>Übergangsmatrix</value>
   </data>
   <data name="sets_multiple" xml:space="preserve">
     <value>Sätze</value>
@@ -515,5 +515,11 @@
   </data>
   <data name="part_appendix" xml:space="preserve">
     <value>APPENDIX</value>
+  </data>
+  <data name="report_header_default_round" xml:space="preserve">
+    <value>Runde</value>
+  </data>
+  <data name="report_header_default_tournament" xml:space="preserve">
+    <value>Tournament</value>
   </data>
 </root>

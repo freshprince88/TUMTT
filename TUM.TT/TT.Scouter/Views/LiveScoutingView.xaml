@@ -116,6 +116,27 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Visibility="{Binding Path=LiveView.CurrentRally.Number,UpdateSourceTrigger=PropertyChanged, Converter={conv:CurrentRallyNumberToVisibilityConverter}}" >
+                    <Rectangle Height="20" Width="20" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_navigate_previous}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cal:ActionMessage MethodName="Previous" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush2}" Visibility="{Binding Path=LiveView.IsNewRally, Converter={conv:BoolNotToVisibilityConverter}}">
@@ -129,7 +150,20 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-
+            <Button x:Name="SetNewStartButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="1" Grid.Column="3" Height="25" Width="25" HorizontalAlignment="Right" ToolTip="Set New Rally Start">
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_refresh}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="SetNewStart" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
             <Label Name="lbl_RallyNum" Grid.Column="1" Content="{Binding Path=LiveView.CurrentRally.RallyNumLong}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
@@ -236,7 +270,18 @@
                                 <KeyBinding Key="Down"/>
                             </ob:InputBindingTrigger.InputBinding>
                             <cal:ActionMessage MethodName="SetNewStart"/>
-
+                        </ob:InputBindingTrigger>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Modifiers="Ctrl" Key="Right"/>
+                            </ob:InputBindingTrigger.InputBinding>
+                            <cal:ActionMessage MethodName="SkipForward"/>
+                        </ob:InputBindingTrigger>
+                        <ob:InputBindingTrigger>
+                            <ob:InputBindingTrigger.InputBinding>
+                                <KeyBinding Modifiers="Ctrl" Key="Left"/>
+                            </ob:InputBindingTrigger.InputBinding>
+                            <cal:ActionMessage MethodName="SkipBackwards"/>
                         </ob:InputBindingTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>

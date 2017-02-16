@@ -9,10 +9,12 @@ namespace TT.Lib.Events
     public class ReportSettingsChangedEvent
     {
         public bool MatchOpened { get; private set; }
+        public string CustomziationId { get; private set; }
 
-        public ReportSettingsChangedEvent(bool matchNotOpenedYet)
+        public ReportSettingsChangedEvent(bool matchNotOpenedYet, string customizationId)
         {
-            this.MatchOpened = matchNotOpenedYet;
+            MatchOpened = matchNotOpenedYet;
+            CustomziationId = customizationId;
         }
     }
 }

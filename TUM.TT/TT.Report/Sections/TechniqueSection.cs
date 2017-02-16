@@ -17,6 +17,8 @@ namespace TT.Report.Sections
 {
     public class TechniqueSection : ExistingStatisticsSection
     {
+        protected override string SectionName => "Technique section";
+
         public TechniqueSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<Rally>> sets, Match match, object p)
         {
             Debug.WriteLine("New Technique section");
@@ -182,10 +184,9 @@ namespace TT.Report.Sections
                         else
                             sectionImages.Add(null);
                         ExistingStatisticsImageBitmapFrames[setTitle] = sectionImages;
-
-                        Debug.WriteLine("Got Technique plot (set={0})", args: setTitle);
+                        
+                        Debug.WriteLine("{2} for stroke {0} of set {1} ready.", GetStrokeNumberString(strokeNumber), set, SectionName);
                     }
-                    Debug.WriteLine("Technique section for stroke {0} of set {1} ready.", strokeNumber, set);
                 }
             }
         }
