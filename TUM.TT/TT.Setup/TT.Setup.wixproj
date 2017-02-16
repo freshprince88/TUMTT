@@ -21,9 +21,57 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Caliburn.Micro.wxs" />
+    <Compile Include="DragDrop.wxs" />
+    <Compile Include="EPPlus.wxs" />
+    <Compile Include="LambdaParser.wxs" />
+    <Compile Include="ListView.wxs" />
+    <Compile Include="MahApps.Metro.wxs" />
+    <Compile Include="MathNet.Numerics.wxs" />
+    <Compile Include="MigraDoc.wxs" />
+    <Compile Include="NReco.wxs" />
+    <Compile Include="OxyPlot.wxs" />
+    <Compile Include="PdfSharp.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="System.Windows.Interactivity.wxs" />
+    <Compile Include="Scouter.wxs" />
+    <Compile Include="TTProjects.wxs" />
+    <Compile Include="Viewer.wxs" />
+    <Compile Include="Xceed.Wpf.Toolkit.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TT.Converters\TT.Converters.csproj">
+      <Name>TT.Converters</Name>
+      <Project>{257f3b3f-ee44-4b7b-a629-218f37047d49}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.Lib\TT.Lib.csproj">
+      <Name>TT.Lib</Name>
+      <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.Models\TT.Models.csproj">
+      <Name>TT.Models</Name>
+      <Project>{bfdd82b6-73a9-4408-a183-4acc3dc7e2c0}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.Report\TT.Report.csproj">
+      <Name>TT.Report</Name>
+      <Project>{9f1fd7dd-1706-4327-89f1-722284fbbdb9}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\TT.Scouter\TT.Scouter.csproj">
       <Name>TT.Scouter</Name>
       <Project>{399addf9-0fdd-47a3-9621-3f34a99e90bb}</Project>
@@ -46,6 +94,9 @@
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.ico" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

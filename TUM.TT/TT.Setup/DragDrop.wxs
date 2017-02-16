@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="DragDrop" Directory="INSTALLFOLDER"
+                    Source="$(var.TT.Viewer.TargetDir)">
+      <Component>
+        <File Name="GongSolutions.Wpf.DragDrop.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
