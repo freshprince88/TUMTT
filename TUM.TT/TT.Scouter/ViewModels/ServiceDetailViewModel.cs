@@ -102,38 +102,7 @@ namespace TT.Scouter.ViewModels
 
         #region View Methods
 
-        public void SelectForehand ()
-        {
-            if (Stroke == null)
-            {
-                Stroke.Side = "";
-                return;
-            }
-            else if (Stroke.Side == "Forehand")
-            {
-                Stroke.Side = "";
-            }
-            else 
-            {
-                Stroke.Side = "Forehand";
-            }
-        }
-        public void SelectBackhand()
-        {
-            if (Stroke == null)
-            {
-                Stroke.Side = "";
-                return;
-            }
-            else if (Stroke.Side == "Backhand")
-            {
-                Stroke.Side = "";
-            }
-            else
-            {
-                Stroke.Side = "Backhand";
-            }
-        }
+       
         public void SelectSide(ToggleButton source)
         {
             if (Stroke == null)
@@ -533,6 +502,264 @@ namespace TT.Scouter.ViewModels
 
 
         }
+
+        #endregion
+        #region Helper Methods for Shortcuts
+        public void SelectForehand()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Side == "Forehand")
+            {
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectBackhand()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Side == "Backhand")
+            {
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectPendulum()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Pendulum")
+            {
+                Stroke.Servicetechnique = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Pendulum";
+            }
+        }
+        public void SelectReverse()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Reverse")
+            {
+                Stroke.Servicetechnique = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Reverse";
+            }
+        }
+        public void SelectTomahawk()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Tomahawk")
+            {
+                Stroke.Servicetechnique = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Tomahawk";
+            }
+        }
+        public void SelectSpecialServe()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Special")
+            {
+                Stroke.Servicetechnique = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Special";
+            }
+        }
+
+        // Technique + Forehand
+
+        public void SelectForehandPendulum()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Pendulum" && Stroke.Side == "Forehand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Pendulum";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandReverse()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Reverse" && Stroke.Side == "Forehand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Reverse";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandTomahawk()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Tomahawk" && Stroke.Side == "Forehand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Tomahawk";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandSpecialServe()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Special" && Stroke.Side == "Forehand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Special";
+                Stroke.Side = "Forehand";
+            }
+        }
+
+        //Technique + Backhand
+
+        public void SelectBackhandPendulum()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Pendulum" && Stroke.Side == "Backhand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Pendulum";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandReverse()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Reverse" && Stroke.Side == "Backhand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Reverse";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandTomahawk()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Tomahawk" && Stroke.Side == "Backhand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Tomahawk";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandSpecialServe()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Servicetechnique == "Special" && Stroke.Side == "Backhand")
+            {
+                Stroke.Servicetechnique = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Servicetechnique = "Special";
+                Stroke.Side = "Backhand";
+            }
+        }
+
 
         #endregion
         #region Helper Methods

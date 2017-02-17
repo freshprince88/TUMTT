@@ -40,20 +40,98 @@ namespace TT.Lib.Util
             {
                 //{"PreviousRally", new KeyBinding() {Key =){Key = Key.F, Modifiers= ModifierKeys.None}},
 
-                {"PreviousRally", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.None}},
-                {"StartRallyAtBeginning", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Control}},
+                {"PreviousRally", new KeyBinding() {Key =Key.A, Modifiers = ModifierKeys.Shift }},
+                {"NextRally", new KeyBinding() {Key =Key.D, Modifiers = ModifierKeys.Shift}},
+                {"PreviousStroke", new KeyBinding() {Key =Key.A, Modifiers = ModifierKeys.None}},
+                {"NextStroke", new KeyBinding() {Key =Key.D, Modifiers = ModifierKeys.None}},
+                
+                {"StartRallyAtBeginning", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt | ModifierKeys.Control  } },
                 {"Previous5Frames", new KeyBinding() {Key =Key.MediaPreviousTrack,Modifiers =  ModifierKeys.Shift}},
                 {"PreviousFrame", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt}},
-                {"PlayPause", new KeyBinding() {Key =Key.MediaPlayPause, Modifiers = ModifierKeys.None}},
+                {"PlayPause", new KeyBinding() {Key =Key.S, Modifiers = ModifierKeys.None}},
                 {"NextFrame", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Alt}},
                 {"Next5Frames", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Shift}},
-                {"NextRally", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.None}},
+                
+                //{"NextRally", new KeyBinding() {Key =Key.Right, Modifiers = ModifierKeys.Alt | ModifierKeys.Control }},
                 {"FullscreenHelper", new KeyBinding() {Key =Key.F, Modifiers = ModifierKeys.Alt}},
                 {"PlayModeHelper", new KeyBinding() {Key =Key.R, Modifiers = ModifierKeys.Alt}},
-                {"SelectForehand", new KeyBinding() {Key =Key.V, Modifiers = ModifierKeys.Alt}},
-                {"SelectBackhand", new KeyBinding() {Key =Key.B, Modifiers = ModifierKeys.Alt}},
-                {"NextStroke", new KeyBinding() {Key =Key.Right, Modifiers = ModifierKeys.Alt}},
-                {"PreviousStroke", new KeyBinding() {Key =Key.Left, Modifiers = ModifierKeys.Alt}}
+
+                {"SelectForehand", new KeyBinding() {Key =Key.B, Modifiers = ModifierKeys.None}},
+                {"SelectBackhand", new KeyBinding() {Key =Key.N, Modifiers = ModifierKeys.None}},
+                {"SelectStepAround", new KeyBinding() {Key =Key.M, Modifiers = ModifierKeys.None}},
+
+
+                
+
+                // only Technique (Modifier = ALT)
+
+                {"SelectPush", new KeyBinding() {Key =Key.G, Modifiers = ModifierKeys.Alt}},
+                {"SelectPushAggressive", new KeyBinding() {Key =Key.T, Modifiers = ModifierKeys.Alt}},
+                {"SelectFlip", new KeyBinding() {Key =Key.H, Modifiers = ModifierKeys.Alt}},
+                {"SelectBanana", new KeyBinding() {Key =Key.Z, Modifiers = ModifierKeys.Alt}},
+                {"SelectTopspin", new KeyBinding() {Key =Key.J, Modifiers = ModifierKeys.Alt}},
+                {"SelectBlock", new KeyBinding() {Key =Key.K, Modifiers = ModifierKeys.Alt}},
+                
+                {"SelectSmash", new KeyBinding() {Key =Key.L, Modifiers = ModifierKeys.Alt}},
+                {"SelectChop", new KeyBinding() {Key =Key.O, Modifiers = ModifierKeys.Alt}},
+                {"SelectLob", new KeyBinding() {Key =Key.Oem3, Modifiers = ModifierKeys.Alt}},
+                {"SelectCounter", new KeyBinding() {Key =Key.P, Modifiers = ModifierKeys.Alt}},
+                {"SelectSpecial", new KeyBinding() {}},
+
+                {"SelectPendulum", new KeyBinding() {Key =Key.G, Modifiers = ModifierKeys.Alt}},
+                {"SelectReverse", new KeyBinding() {Key =Key.H, Modifiers = ModifierKeys.Alt}},
+                {"SelectTomahawk", new KeyBinding() {Key =Key.J, Modifiers = ModifierKeys.Alt}},
+                {"SelectSpecialServe", new KeyBinding() {Key =Key.K, Modifiers = ModifierKeys.Alt}},
+
+                // Technique Options (Modifier = NONE)
+
+                {"SelectSpinOrChopOption", new KeyBinding() {Key =Key.U, Modifiers = ModifierKeys.None}},
+                {"SelectTempoOption", new KeyBinding() {Key =Key.I, Modifiers = ModifierKeys.None}},
+
+                //Forehand + Technique (Modifier = NONE)
+
+                {"SelectForehandPush", new KeyBinding() {Key =Key.G, Modifiers = ModifierKeys.None}},
+                {"SelectForehandPushAggressive", new KeyBinding() {Key =Key.T, Modifiers = ModifierKeys.None}},
+                {"SelectForehandFlip", new KeyBinding() {Key =Key.H, Modifiers = ModifierKeys.None}},
+                {"SelectForehandBanana", new KeyBinding() {Key =Key.Z, Modifiers = ModifierKeys.None}},
+                {"SelectForehandTopspin", new KeyBinding() {Key =Key.J, Modifiers = ModifierKeys.None}},
+                {"SelectForehandBlock", new KeyBinding() {Key =Key.K, Modifiers = ModifierKeys.None}},
+                
+                {"SelectForehandSmash", new KeyBinding() {Key =Key.L, Modifiers = ModifierKeys.None}},
+                {"SelectForehandChop", new KeyBinding() {Key =Key.O, Modifiers = ModifierKeys.None}},
+                {"SelectForehandLob", new KeyBinding() {Key =Key.Oem3, Modifiers = ModifierKeys.None}},
+                {"SelectForehandCounter", new KeyBinding() {Key =Key.P, Modifiers = ModifierKeys.None}},
+                {"SelectForehandSpecial", new KeyBinding() {}},
+
+                {"SelectForehandPendulum", new KeyBinding() {Key =Key.G, Modifiers = ModifierKeys.None}},
+                {"SelectForehandReverse", new KeyBinding() {Key =Key.H, Modifiers = ModifierKeys.None}},
+                {"SelectForehandTomahawk", new KeyBinding() {Key =Key.J, Modifiers = ModifierKeys.None}},
+                {"SelectForehandSpecialServe", new KeyBinding() {Key =Key.K, Modifiers = ModifierKeys.None}},
+
+                 //Backhand + Technique (Modifier = SHIFT)
+
+                {"SelectBackhandPush", new KeyBinding() {Key =Key.G, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandPushAggressive", new KeyBinding() {Key =Key.T, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandFlip", new KeyBinding() {Key =Key.H, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandBanana", new KeyBinding() {Key =Key.Z, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandTopspin", new KeyBinding() {Key =Key.J, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandBlock", new KeyBinding() {Key =Key.K, Modifiers = ModifierKeys.Shift}},
+
+                {"SelectBackhandSmash", new KeyBinding() {Key =Key.L, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandChop", new KeyBinding() {Key =Key.O, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandLob", new KeyBinding() {Key =Key.Oem3, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandCounter", new KeyBinding() {Key =Key.P, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandSpecial", new KeyBinding() {}},
+
+                {"SelectBackhandPendulum", new KeyBinding() {Key =Key.G, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandReverse", new KeyBinding() {Key =Key.H, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandTomahawk", new KeyBinding() {Key =Key.J, Modifiers = ModifierKeys.Shift}},
+                {"SelectBackhandSpecialServe", new KeyBinding() {Key =Key.K, Modifiers = ModifierKeys.Shift}},
+
+
+
+
+
             };
             return dictionary;
         }

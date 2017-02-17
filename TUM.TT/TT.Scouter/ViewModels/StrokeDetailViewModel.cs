@@ -99,38 +99,9 @@ namespace TT.Scouter.ViewModels
             Events.Subscribe(this);
         }
         #region View Methods
-        public void SelectForehand()
-        {
-            if (Stroke == null)
-            {
-                Stroke.Side = "";
-                return;
-            }
-            else if (Stroke.Side == "Forehand")
-            {
-                Stroke.Side = "";
-            }
-            else
-            {
-                Stroke.Side = "Forehand";
-            }
-        }
-        public void SelectBackhand()
-        {
-            if (Stroke == null)
-            {
-                Stroke.Side = "";
-                return;
-            }
-            else if (Stroke.Side == "Backhand")
-            {
-                Stroke.Side = "";
-            }
-            else
-            {
-                Stroke.Side = "Backhand";
-            }
-        }
+
+        
+        
         public void SelectSide(ToggleButton source)
         {
             if (Stroke == null)
@@ -535,6 +506,777 @@ namespace TT.Scouter.ViewModels
 
 
         }
+        #endregion
+
+        #region Helper Methods for Shortcuts
+
+
+        public void SelectForehand()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Side == "Forehand")
+            {
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectBackhand()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Side == "Backhand")
+            {
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectStepAround()
+        {
+            Stroke.StepAround = !Stroke.StepAround;
+        }
+
+        // only Technique (Modifier = ALT) 
+        public void SelectPush()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Push")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Push";
+            }
+        }
+        public void SelectPushAggressive()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type=="Push" && Stroke.Stroketechnique.Option == "aggressive")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else 
+            {
+                Stroke.Stroketechnique.Type = "Push";
+                Stroke.Stroketechnique.Option = "aggressive";
+            }
+        }
+        public void SelectFlip()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Flip")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Flip";
+            }
+        }
+        public void SelectBanana()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Flip" && Stroke.Stroketechnique.Option == "Banana")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Flip";
+                Stroke.Stroketechnique.Option = "Banana";
+            }
+        }
+        public void SelectTopspin()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Topspin")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Topspin";
+            }
+        }
+        public void SelectBlock()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Block")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Block";
+            }
+        }       
+        public void SelectChop()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Chop")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Chop";
+            }
+        }
+        public void SelectLob()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Lob")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Lob";
+            }
+        }
+        public void SelectSmash()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Smash")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Smash";
+            }
+        }
+        public void SelectCounter()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Counter")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Counter";
+            }
+        }
+        public void SelectSpecial()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Special")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Special";
+            }
+        }
+
+        // Technique Options (Modifier = NONE)
+        public void SelectSpinOrChopOption()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Stroketechnique.Option == "Spin")
+            {
+                Stroke.Stroketechnique.Option = "";
+            }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Stroketechnique.Option == "")
+            {
+                Stroke.Stroketechnique.Option = "Spin";
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "Chop")
+            {
+                Stroke.Stroketechnique.Option = "";
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "")
+            {
+                Stroke.Stroketechnique.Option = "Chop";
+            }
+        }
+        public void SelectTempoOption()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Stroketechnique.Option == "Tempo")
+            {
+                Stroke.Stroketechnique.Option = "";
+            }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Stroketechnique.Option == "")
+            {
+                Stroke.Stroketechnique.Option = "Tempo";
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "Tempo")
+            {
+                Stroke.Stroketechnique.Option = "";
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "")
+            {
+                Stroke.Stroketechnique.Option = "Tempo";
+            }
+        }
+
+        // Forehand + Technique (Modifier = None) 
+        public void SelectForehandPush()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Push" && Stroke.Side=="Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Push";
+                Stroke.Side = "Forehand";
+
+            }
+        }
+        public void SelectForehandPushAggressive()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Push" && Stroke.Side == "Forehand" && Stroke.Stroketechnique.Option == "aggressive")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Push";
+                Stroke.Stroketechnique.Option = "aggressive";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandFlip()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Flip" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Flip";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandBanana()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Flip" && Stroke.Side == "Forehand" && Stroke.Stroketechnique.Option == "Banana")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Flip";
+                Stroke.Stroketechnique.Option = "Banana";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandTopspin()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Topspin";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandBlock()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Block";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandChop()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Chop" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Chop";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandLob()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Lob" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Lob";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandSmash()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Smash" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Smash";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandCounter()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Counter" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Counter";
+                Stroke.Side = "Forehand";
+            }
+        }
+        public void SelectForehandSpecial()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Special" && Stroke.Side == "Forehand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Special";
+                Stroke.Side = "Forehand";
+            }
+        }
+
+        // Backhand + Technique (Modifier = None) 
+        public void SelectBackhandPush()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Push" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Push";
+                Stroke.Side = "Backhand";
+
+            }
+        }
+        public void SelectBackhandPushAggressive()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Push" && Stroke.Side == "Backhand" && Stroke.Stroketechnique.Option == "aggressive")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Push";
+                Stroke.Stroketechnique.Option = "aggressive";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandFlip()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Flip" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Flip";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandBanana()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Flip" && Stroke.Side == "Backhand" && Stroke.Stroketechnique.Option == "Banana")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Flip";
+                Stroke.Stroketechnique.Option = "Banana";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandTopspin()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Topspin";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandBlock()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Block";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandChop()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Chop" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Chop";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandLob()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Lob" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Lob";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandSmash()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Smash" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Smash";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandCounter()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Counter" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Counter";
+                Stroke.Side = "Backhand";
+            }
+        }
+        public void SelectBackhandSpecial()
+        {
+            if (Stroke == null)
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+                return;
+            }
+            else if (Stroke.Stroketechnique.Type == "Special" && Stroke.Side == "Backhand")
+            {
+                Stroke.Stroketechnique.Type = "";
+                Stroke.Stroketechnique.Option = "";
+                Stroke.Side = "";
+            }
+            else
+            {
+                Stroke.Stroketechnique.Type = "Special";
+                Stroke.Side = "Backhand";
+            }
+        }
+
+
         #endregion
         #region Helper Methods
 

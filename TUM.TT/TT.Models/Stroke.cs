@@ -1084,7 +1084,7 @@ namespace TT.Models
             }
             set
             {
-                option = value;
+                RaiseAndSetIfChanged(ref option, value);
             }
         }
     }
