@@ -12,20 +12,20 @@ namespace TT.Report.Sections
 {
     public class StrokeNumberSection : BaseSection
     {
-        protected override string SectionName => "Stroke Number section";
+        protected sealed override string SectionName => "Stroke Number section";
 
-        public List<PlotModel> NumberPlots { get; internal set; }
-        private IDictionary<Stroke.TechniqueBasic, string> techniqueNames = new Dictionary<Stroke.TechniqueBasic, string>() {
-            { Stroke.TechniqueBasic.Push, Properties.Resources.section_technique_push },
-            { Stroke.TechniqueBasic.Flip, Properties.Resources.section_technique_flip },
-            { Stroke.TechniqueBasic.Topspin, Properties.Resources.section_technique_topspin },
-            { Stroke.TechniqueBasic.Block, Properties.Resources.section_technique_block },
-            { Stroke.TechniqueBasic.Counter, Properties.Resources.section_technique_counter },
-            { Stroke.TechniqueBasic.Smash, Properties.Resources.section_technique_smash },
-            { Stroke.TechniqueBasic.Lob, Properties.Resources.section_technique_lob },
-            { Stroke.TechniqueBasic.Chop, Properties.Resources.section_technique_chop },
-            { Stroke.TechniqueBasic.Special, Properties.Resources.section_technique_special },
-            { Stroke.TechniqueBasic.Miscellaneous, Properties.Resources.section_technique_miscellaneous },
+        public List<PlotModel> NumberPlots { get; }
+        private readonly IDictionary<Stroke.TechniqueBasic, object[]> _techniqueDisplayables = new Dictionary<Stroke.TechniqueBasic, object[]>() {
+            { Stroke.TechniqueBasic.Push, new object []{ Properties.Resources.section_technique_push, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Flip, new object []{ Properties.Resources.section_technique_flip, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Topspin, new object []{ Properties.Resources.section_technique_topspin, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Block, new object []{ Properties.Resources.section_technique_block, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Counter, new object []{ Properties.Resources.section_technique_counter, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Smash, new object []{ Properties.Resources.section_technique_smash, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Lob, new object []{ Properties.Resources.section_technique_lob, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Chop, new object []{ Properties.Resources.section_technique_chop, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Special, new object []{ Properties.Resources.section_technique_special, OxyColor.Parse("#000000") }},
+            { Stroke.TechniqueBasic.Miscellaneous, new object []{  Properties.Resources.section_technique_miscellaneous, OxyColor.Parse("#000000") }},
         };
 
         public StrokeNumberSection(PlotStyle plotStyle, int strokeNumber, IDictionary<string, List<Models.Rally>> sets, Models.Match match, object p)
@@ -113,15 +113,27 @@ namespace TT.Report.Sections
                 Title = GetSeriesTitleForTechnique(technique),
                 LabelPlacement = LabelPlacement.Inside,
                 LabelMargin = 4,
-                LabelFormatString = "{0}"
+                LabelFormatString = "{0}",
+                FillColor = GetSeriesColorForTechnique(technique)
             };
+        }
+
+        private OxyColor GetSeriesColorForTechnique(string technique)
+        {
+            if (technique.Equals("N/A"))
+                return OxyColors.OrangeRed;
+            var col = (OxyColor)_techniqueDisplayables[(Stroke.TechniqueBasic)Enum.Parse(typeof(Stroke.TechniqueBasic), technique)][1];
+            if (!col.Equals(OxyColors.Black))
+                return col;
+            var ran = new Random(technique.GetHashCode());
+            return OxyColor.FromRgb((byte) ran.Next(255), (byte) ran.Next(255), (byte) ran.Next(255));
         }
 
         private string GetSeriesTitleForTechnique(string technique)
         {
             if (technique.Equals("N/A"))
                 return Properties.Resources.section_technique_na;
-            return techniqueNames[(Stroke.TechniqueBasic)Enum.Parse(typeof(Stroke.TechniqueBasic), technique)];
+            return (string)_techniqueDisplayables[(Stroke.TechniqueBasic)Enum.Parse(typeof(Stroke.TechniqueBasic), technique)][0];
         }
 
     }
