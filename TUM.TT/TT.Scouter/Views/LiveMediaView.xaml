@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="TT.Scouter.Views.LiveMediaView"
+﻿<views:ControlWithBindableKeyGestures BindableKeyGestures="{Binding KeyBindings}" x:Class="TT.Scouter.Views.LiveMediaView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:views="clr-namespace:TT.Lib.Views;assembly=TT.Lib"
              xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
@@ -139,13 +140,13 @@
                 <i:Interaction.Triggers>
                     <!--<i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="SkipBackwards"/>
-                    </i:EventTrigger>-->
+                    </i:EventTrigger>--><!--
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Modifiers="Ctrl" Key="Left"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="SkipBackwards"/>
-                    </ob:GlobalInputBindingTrigger>
+                    </ob:GlobalInputBindingTrigger>-->
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="SkipForward" Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
@@ -186,12 +187,12 @@
                     <!--<i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="SkipForward"/>
                     </i:EventTrigger>-->
-                    <ob:GlobalInputBindingTrigger>
+                    <!--<ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Modifiers="Ctrl" Key="Right"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="SkipForward"/>
-                    </ob:GlobalInputBindingTrigger>
+                    </ob:GlobalInputBindingTrigger>-->
                 </i:Interaction.Triggers>
             </Button>
 
@@ -236,4 +237,4 @@
 
         </Grid>
     </Grid>
-</UserControl>
+</views:ControlWithBindableKeyGestures>

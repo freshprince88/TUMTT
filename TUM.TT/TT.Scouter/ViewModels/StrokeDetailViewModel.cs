@@ -1039,7 +1039,7 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        // Backhand + Technique (Modifier = None) 
+        // Backhand + Technique (Modifier = Shift) 
         public void SelectBackhandPush()
         {
             if (Stroke == null)

@@ -1,16 +1,29 @@
 ﻿using Caliburn.Micro;
-using System.Windows.Controls;
-using TT.Lib.Events;
 using System;
-using TT.Models.Util.Enums;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Views;
+using TT.Models.Util.Enums;
 
 namespace TT.Scouter.Views
 {
     /// <summary>
     /// Interaction logic for LiveMediaView.xaml
     /// </summary>
-    public partial class LiveMediaView : UserControl,
+    public partial class LiveMediaView : ControlWithBindableKeyGestures,
         IHandle<MediaControlEvent>,
         IHandle<MediaLiveScouterSpeedEvent>,
         IHandle<MediaLiveScouterMuteEvent>

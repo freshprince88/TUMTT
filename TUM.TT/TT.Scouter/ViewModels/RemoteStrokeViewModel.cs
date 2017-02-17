@@ -117,6 +117,11 @@ namespace TT.Scouter.ViewModels
             Events.Subscribe(this);
             ActivateItem(SchlagDetail);
         }
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
         #region View Methods
         public void NextStroke()
         {
