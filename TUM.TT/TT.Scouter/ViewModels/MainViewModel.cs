@@ -31,6 +31,7 @@ namespace TT.Scouter.ViewModels
             }
         }
         private TimeSpan _lastRemoteMediaPos;
+
         public TimeSpan LastRemoteMediaPosition
         {
             get
@@ -116,8 +117,17 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
-            LiveView.ViewMode = LiveMode;
-            this.ActivateItem(LiveView);
+            switch (SelectedTab)
+            {
+                case 0:
+                    this.ActivateItem(LiveView);
+                    break;
+                case 1:
+                    this.ActivateItem(RemoteView);
+                    break;
+                default:
+                    break;
+            }                        
         }
 
         protected override void OnDeactivate(bool close)
