@@ -9,13 +9,35 @@ using System.Windows.Controls;
 using TT.Lib.Util;
 using TT.Lib.Results;
 using System.Collections.Generic;
+using System.Windows.Input;
+using System.Reflection;
 
 namespace TT.Scouter.ViewModels
 {
     public class LiveViewModel : Conductor<IScreen>.Collection.AllActive
     {
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyBinding> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyBinding)x.Value); // TODO
+            }
+            set { }
+        }
+
         private IEventAggregator Events;
         private IMatchManager MatchManager;
+        private IDialogCoordinator Dialogs;
 
         public bool FirstServerSet
         {
@@ -86,7 +108,7 @@ namespace TT.Scouter.ViewModels
                     switch (_mode)
                     {
                         case TimeMode.Video:
-                            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+                            MediaPlayer = new LiveMediaViewModel(Events, MatchManager, Dialogs);
                             break;
                         case TimeMode.Timer:
                             MediaPlayer = new LiveTimerViewModel();
@@ -192,16 +214,17 @@ namespace TT.Scouter.ViewModels
 
         public Screen CurrentScreen { get; set; }
 
-        public LiveViewModel(IEventAggregator ev, IMatchManager man)
+        public LiveViewModel(IEventAggregator ev, IMatchManager man,IDialogCoordinator cor)
         {
             Events = ev;
             MatchManager = man;
+            Dialogs = cor;
             IsNewRally = true;
             IsWinnerEnabled = false;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
-            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+            MediaPlayer = new LiveMediaViewModel(Events, MatchManager,Dialogs);
             ChoiceOfEnds = new ChoiceOfEndsViewModel(Events, MatchManager, this);
             ChoiceOfServiceReceive = new ChoiceOfServiceReceiveViewModel(Events, MatchManager, this);
             LiveScouting = new LiveScoutingViewModel(Events, MatchManager, MediaPlayer, this);
@@ -228,6 +251,7 @@ namespace TT.Scouter.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
+            this.ActivateItem(MediaPlayer);
             this.ActivateItem(ChoiceOfEnds);
             this.ActivateItem(ChoiceOfServiceReceive);
             this.ActivateItem(LiveScouting);
@@ -334,7 +358,6 @@ namespace TT.Scouter.ViewModels
             NotifyOfPropertyChange("FirstServerSet");
             MatchManager.MatchModified = true;
         }
-
         public void DeleteLastRally()
         {
             if (Rallies.Count == 2)

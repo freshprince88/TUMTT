@@ -9,11 +9,33 @@ using System.Windows.Controls;
 using TT.Lib.Util;
 using TT.Lib.Results;
 using System.Collections.Generic;
+using System.Windows.Input;
+using System.Reflection;
 
 namespace TT.Scouter.ViewModels
 {
     public class LiveScoutingViewModel : Screen
     {
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyBinding> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyBinding)x.Value); // TODO
+            }
+            set { }
+        }
+
+
         private IEventAggregator Events;
         private IMatchManager MatchManager;
        

@@ -44,8 +44,8 @@ namespace TT.Lib.Util
                 {"NextRally", new KeyBinding() {Key =Key.D, Modifiers = ModifierKeys.Shift}},
                 {"PreviousStroke", new KeyBinding() {Key =Key.A, Modifiers = ModifierKeys.None}},
                 {"NextStroke", new KeyBinding() {Key =Key.D, Modifiers = ModifierKeys.None}},
-                {"SkipBackwards", new KeyBinding() {Key =Key.A, Modifiers = ModifierKeys.Alt}},
-                {"SkipForward", new KeyBinding() {Key =Key.D, Modifiers = ModifierKeys.Alt}},
+                {"SkipBackwards", new KeyBinding() {Key =Key.Q, Modifiers = ModifierKeys.None}},
+                {"SkipForward", new KeyBinding() {Key =Key.E, Modifiers = ModifierKeys.None}},
 
 
                 {"StartRallyAtBeginning", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt | ModifierKeys.Control  } },
@@ -134,6 +134,7 @@ namespace TT.Lib.Util
 
 
 
+                //{ "StartRally", new KeyBinding() {Key =Key.OemMinus, Modifiers = ModifierKeys.None}},
 
             };
             return dictionary;

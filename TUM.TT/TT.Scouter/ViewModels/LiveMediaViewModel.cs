@@ -1,23 +1,22 @@
 ﻿using Caliburn.Micro;
-using System;
-using TT.Lib.Events;
-using TT.Lib.Managers;
-using TT.Models;
-using TT.Models.Util.Enums;
-using TT.Lib.Interfaces;
-using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
+using TT.Lib.Events;
+using TT.Lib.Managers;
+using TT.Models;
 using TT.Lib.Results;
+using TT.Models.Util.Enums;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using TT.Scouter.Util.Model;
-
+using TT.Lib.Interfaces;
 using TT.Lib.Util;
+using System.Windows.Controls;
 
 namespace TT.Scouter.ViewModels
 {
@@ -354,11 +353,14 @@ namespace TT.Scouter.ViewModels
 
         private IEventAggregator Events;
         private IMatchManager Manager;
+        private IDialogCoordinator Dialogs;
 
-        public LiveMediaViewModel(IEventAggregator ev, IMatchManager man)
+        public LiveMediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
             Manager = man;
+            Dialogs = cor;
+            IsPlaying = false;
             OneBackwardsChecked = false;
             TwoBackwardsChecked = true;
             ThreeBackwardsChecked = false;
@@ -412,6 +414,17 @@ namespace TT.Scouter.ViewModels
         public void Pause()
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.LiveScouter));
+        }
+        public void PlayPause()
+        {
+            if (IsPlaying)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
         }
 
         public void Stop()

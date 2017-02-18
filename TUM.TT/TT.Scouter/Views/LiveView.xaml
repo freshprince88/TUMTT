@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="TT.Scouter.Views.LiveView"
+﻿<views:ControlWithBindableKeyGestures BindableKeyGestures="{Binding KeyBindings}" x:Class="TT.Scouter.Views.LiveView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:TT.Lib.Views;assembly=TT.Lib"
              xmlns:styles="clr-namespace:TT.Lib.Styles;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
@@ -108,7 +109,7 @@
                           Visual="{DynamicResource appbar_close}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-                <i:Interaction.Triggers>
+                <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="DeleteLastRally" />
                     </i:EventTrigger>
@@ -118,7 +119,7 @@
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="DeleteLastRally"/>
                     </ob:GlobalInputBindingTrigger>
-                </i:Interaction.Triggers>
+                </i:Interaction.Triggers>-->
             </Button>
         </Grid>
 
@@ -138,4 +139,4 @@
         </Grid>
 
     </Grid>
-</UserControl>
+</views:ControlWithBindableKeyGestures>

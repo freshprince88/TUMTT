@@ -11,6 +11,8 @@ namespace TT.Scouter.ViewModels
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
+        private IDialogCoordinator Dialogs;
+
 
         public LiveViewModel LiveView { get; set; }
         public RemoteViewModel RemoteView { get; set; }
@@ -103,12 +105,13 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-        public MainViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
+        public MainViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
             Events = ev;
             Manager = man;
-            LiveView = new LiveViewModel(Events, Manager);
-            RemoteView = new RemoteViewModel(Events, Manager, dia);                        
+            Dialogs = cor;
+            LiveView = new LiveViewModel(Events, Manager, Dialogs);
+            RemoteView = new RemoteViewModel(Events, Manager, Dialogs);                        
         }
 
 
