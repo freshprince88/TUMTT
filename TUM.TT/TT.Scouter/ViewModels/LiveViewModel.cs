@@ -247,15 +247,20 @@ namespace TT.Scouter.ViewModels
         }
 
         #region Caliburn Hooks
-
         protected override void OnActivate()
         {
             base.OnActivate();
+            this.Events.Subscribe(this);
             this.ActivateItem(MediaPlayer);
             this.ActivateItem(ChoiceOfEnds);
             this.ActivateItem(ChoiceOfServiceReceive);
             this.ActivateItem(LiveScouting);
             TransitioningContent = CurrentScreen;
+        }
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
 
 
@@ -419,6 +424,20 @@ namespace TT.Scouter.ViewModels
         {
             TransitioningContent = CurrentScreen;
         }
+
+        #endregion
+
+        #region Helper Methods for Shortcuts
+
+        public void DeleteLastRallyLiveMode()
+        {
+            DeleteLastRally();
+        }
+     
+        
+
+    
+
 
         #endregion
     }

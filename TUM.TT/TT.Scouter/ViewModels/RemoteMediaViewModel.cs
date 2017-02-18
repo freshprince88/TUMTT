@@ -322,6 +322,19 @@ namespace TT.Scouter.ViewModels
         }
         #endregion
 
+        #region Helper Methods for Shortcuts
+
+
+        public void PlayPauseRemoteMode()
+
+        {
+                PlayPause();
+        }
+
+
+        #endregion
+
+
         public IEnumerable<IResult> Open()
         {
             return Manager.LoadVideo();

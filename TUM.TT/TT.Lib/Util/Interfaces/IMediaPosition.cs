@@ -19,6 +19,8 @@ namespace TT.Lib.Interfaces
         
         void Pause();
 
+        void PlayPause();
+
         void Stop();
         void SkipForward();
         void SkipBackwards();

@@ -323,7 +323,6 @@ namespace TT.Scouter.ViewModels
             FourthChecked = false;
             LastChecked = false;
         }
-
         protected override void OnActivate()
         {
             base.OnActivate();
@@ -470,6 +469,9 @@ namespace TT.Scouter.ViewModels
         }
 
         #endregion
+
+        
+
 
         private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

@@ -382,8 +382,6 @@ namespace TT.Scouter.ViewModels
         {
             base.OnViewLoaded(view);
             Events.Subscribe(this);
-
-
         }
         protected override void OnActivate()
         {
@@ -393,7 +391,6 @@ namespace TT.Scouter.ViewModels
 
         protected override void OnDeactivate(bool close)
         {
-
             Events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
@@ -536,6 +533,13 @@ namespace TT.Scouter.ViewModels
             Events.PublishOnUIThread(new MediaLiveScouterMuteEvent(Media.Mute.Unmute));
         }
 
+        #endregion
+
+        #region Helper Methods for Shortcuts
+        public void PlayPauseLiveMode()
+        {
+                PlayPause();
+        }
         #endregion
 
         #region Helper Methods

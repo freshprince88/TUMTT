@@ -116,9 +116,9 @@ namespace TT.Scouter.ViewModels
 
 
         #region Caliburn Hooks
-
         protected override void OnActivate()
         {
+
             base.OnActivate();
             switch (SelectedTab)
             {
@@ -130,7 +130,9 @@ namespace TT.Scouter.ViewModels
                     break;
                 default:
                     break;
-            }                        
+            }
+
+
         }
 
         protected override void OnDeactivate(bool close)

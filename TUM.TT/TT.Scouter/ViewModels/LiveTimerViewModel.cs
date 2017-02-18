@@ -116,6 +116,7 @@ namespace TT.Scouter.ViewModels
         {
 
         }
+        public void PlayPause() { }
         private void ReportTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if(watch.IsRunning)

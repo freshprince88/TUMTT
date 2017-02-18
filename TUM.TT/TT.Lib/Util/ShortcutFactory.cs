@@ -51,7 +51,10 @@ namespace TT.Lib.Util
                 {"StartRallyAtBeginning", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt | ModifierKeys.Control  } },
                 {"Previous5Frames", new KeyBinding() {Key =Key.MediaPreviousTrack,Modifiers =  ModifierKeys.Shift}},
                 {"PreviousFrame", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt}},
-                {"PlayPause", new KeyBinding() {Key =Key.S, Modifiers = ModifierKeys.None}},
+                {"PlayPauseRemoteMode", new KeyBinding() {Key =Key.S, Modifiers = ModifierKeys.None}},
+                {"PlayPauseLiveMode", new KeyBinding() {Key =Key.S, Modifiers = ModifierKeys.None}},
+                
+
                 {"NextFrame", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Alt}},
                 {"Next5Frames", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Shift}},
                 
