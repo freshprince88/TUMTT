@@ -123,6 +123,7 @@ namespace TT.Scouter.ViewModels
             switch (SelectedTab)
             {
                 case 0:
+                    LiveView.ViewMode = LiveMode;
                     this.ActivateItem(LiveView);
                     break;
                 case 1:
