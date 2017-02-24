@@ -90,15 +90,15 @@ namespace TT.Scouter.Views
 
             if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
             {
-               
+
                 MediaPlayer.StopWithState();
                 MediaPlayer.Close();
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
                 MediaPlayer.MediaPosition = currentTime;
                 MediaPlayer.PlayWithState();
-                               
+
                 MediaPlayer.PauseWithState();
-               
+
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
 
             }
@@ -148,6 +148,8 @@ namespace TT.Scouter.Views
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
             MediaPlayer.PlayWithState();
             MediaPlayer.PauseWithState();
+
+            PlayButton.Visibility = System.Windows.Visibility.Visible;
         }
 
         public void Handle(DrawLineEvent message)

@@ -25,6 +25,7 @@ namespace TT.Scouter.Views
     /// </summary>
     public partial class LiveMediaView : ControlWithBindableKeyGestures,
         IHandle<MediaControlEvent>,
+        IHandle<VideoLoadedEvent>,
         IHandle<MediaLiveScouterSpeedEvent>,
         IHandle<MediaLiveScouterMuteEvent>
     {
@@ -56,6 +57,17 @@ namespace TT.Scouter.Views
             currentTime = MediaPlayer.Position;
         }
 
+        public void Handle(VideoLoadedEvent message)
+        {
+            MediaPlayer.StopWithState();
+            MediaPlayer.Close();
+            MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
+            MediaPlayer.PlayWithState();
+            MediaPlayer.PauseWithState();
+
+            PlayButton.Visibility = System.Windows.Visibility.Visible;
+        }
+
         public void Handle(MediaControlEvent message)
         {
             if (message.Source == Media.Source.LiveScouter)
@@ -80,14 +92,21 @@ namespace TT.Scouter.Views
         private void LiveMediaView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             Events.Subscribe(this);
-            MediaPlayer.StopWithState();
-            MediaPlayer.Close();
-            MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
-            MediaPlayer.MediaPosition = currentTime;
-            MediaPlayer.PlayWithState();
-            MediaPlayer.PauseWithState();
-            PlayButton.Visibility = System.Windows.Visibility.Visible;
-            
+
+            if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
+            {
+
+                MediaPlayer.StopWithState();
+                MediaPlayer.Close();
+                MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
+                MediaPlayer.MediaPosition = currentTime;
+                MediaPlayer.PlayWithState();
+
+                MediaPlayer.PauseWithState();
+
+                PlayButton.Visibility = System.Windows.Visibility.Visible;
+
+            }
         }
 
         public void Handle(MediaLiveScouterSpeedEvent message)

@@ -378,11 +378,7 @@ namespace TT.Scouter.ViewModels
         }
 
         #region Caliburn hooks
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            Events.Subscribe(this);
-        }
+
         protected override void OnActivate()
         {
             base.OnActivate();

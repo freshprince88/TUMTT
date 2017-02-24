@@ -88,6 +88,7 @@ namespace TT.Scouter.ViewModels
 
         public enum TimeMode
         {
+            None,
             Video,
             Timer
         }
@@ -103,7 +104,7 @@ namespace TT.Scouter.ViewModels
             {
                 if (_mode != value)
                 {
-                    this.DeactivateItem(MediaPlayer, true);
+                    //this.DeactivateItem(MediaPlayer, true);
                     _mode = value;
                     switch (_mode)
                     {
@@ -116,7 +117,7 @@ namespace TT.Scouter.ViewModels
                         default:
                             break;
                     }
-                    this.ActivateItem(MediaPlayer);
+                    //this.ActivateItem(MediaPlayer);
                     NotifyOfPropertyChange();
                 }
             }
@@ -224,7 +225,7 @@ namespace TT.Scouter.ViewModels
             CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
-            MediaPlayer = new LiveMediaViewModel(Events, MatchManager,Dialogs);
+            //MediaPlayer = new LiveMediaViewModel(Events, MatchManager,Dialogs);
             ChoiceOfEnds = new ChoiceOfEndsViewModel(Events, MatchManager, this);
             ChoiceOfServiceReceive = new ChoiceOfServiceReceiveViewModel(Events, MatchManager, this);
             LiveScouting = new LiveScoutingViewModel(Events, MatchManager, MediaPlayer, this);

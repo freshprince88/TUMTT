@@ -308,15 +308,17 @@ namespace TT.Scouter.ViewModels
 
         bool fromConstructor;
 
+        public IDialogCoordinator Dialogs { get; set; }
+
         #endregion
 
         public RemoteViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
         {
             Events = ev;
             MatchManager = man;
+            Dialogs = dia;
             fromConstructor = true;
             CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
-            MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, dia, calibration);
             ServiceChecked = true;
             ReceiveChecked = false;
             ThirdChecked = false;
@@ -327,11 +329,18 @@ namespace TT.Scouter.ViewModels
         {
             base.OnActivate();
             this.Events.Subscribe(this);
+
+            if (MediaPlayer == null)
+            {
+                MediaPlayer = new RemoteMediaViewModel(Events, MatchManager, Dialogs, calibration);
+                NotifyOfPropertyChange("MediaPlayer");
+            }
+
             this.ActivateItem(MediaPlayer);
             this.ActivateItem(SchlagView);
             this.ActivateItem(PositionsRallyView);
 
-            if(fromConstructor)
+            if (fromConstructor)
                 CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
 
             fromConstructor = false;
@@ -470,7 +479,7 @@ namespace TT.Scouter.ViewModels
 
         #endregion
 
-        
+
 
 
         private void SetMatchModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
