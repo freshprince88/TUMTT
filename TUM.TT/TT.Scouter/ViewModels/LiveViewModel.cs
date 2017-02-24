@@ -11,6 +11,7 @@ using TT.Lib.Results;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Reflection;
+using System;
 
 namespace TT.Scouter.ViewModels
 {
@@ -252,6 +253,14 @@ namespace TT.Scouter.ViewModels
         {
             base.OnActivate();
             this.Events.Subscribe(this);
+
+            if (ViewMode == TimeMode.None && !String.IsNullOrWhiteSpace(MatchManager.Match.VideoFile))
+            {
+                ViewMode = TimeMode.Video;
+                NotifyOfPropertyChange("MediaPlayer");
+            }
+
+
             this.ActivateItem(MediaPlayer);
             this.ActivateItem(ChoiceOfEnds);
             this.ActivateItem(ChoiceOfServiceReceive);
