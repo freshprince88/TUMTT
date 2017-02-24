@@ -73,7 +73,7 @@ namespace TT.Scouter.ViewModels
 
                 if (remoteViewModel.CurrentStroke == null || remoteViewModel.CurrentStroke.Number == 1)
                 {
-                    SchlagDetail = new ServiceDetailViewModel(value, MatchManager, CurrentRally);                       
+                    SchlagDetail = new ServiceDetailViewModel(value, MatchManager, CurrentRally);
                     NotifyOfPropertyChange("SchlagDetail");
                 }
                 else
@@ -125,16 +125,22 @@ namespace TT.Scouter.ViewModels
         #region View Methods
         public void NextStroke()
         {
-            if (CurrentStroke.Number < Strokes.Count)
-                CurrentStroke = Strokes[CurrentStroke.Number];
+            if (CurrentStroke != null)
+            {
+                if (CurrentStroke.Number < Strokes.Count)
+                    CurrentStroke = Strokes[CurrentStroke.Number];
+            }
         }
 
         public void PreviousStroke()
         {
-            if (CurrentStroke.Number != 1)
+            if (CurrentStroke != null)
             {
-                var idx = CurrentStroke.Number - 1;
-                CurrentStroke = Strokes[idx - 1];
+                if (CurrentStroke.Number != 1)
+                {
+                    var idx = CurrentStroke.Number - 1;
+                    CurrentStroke = Strokes[idx - 1];
+                }
             }
         }
 
