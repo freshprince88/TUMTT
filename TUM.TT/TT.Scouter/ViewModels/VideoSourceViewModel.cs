@@ -24,10 +24,9 @@ namespace TT.Scouter.ViewModels
             var nextScreen = ShowScreenResult.Of<MainViewModel>();
             nextScreen.Properties.Add("SelectedTab", MainViewModel.Tabs.Live);
             nextScreen.Properties.Add("LiveMode", LiveViewModel.TimeMode.Video);
-            yield return nextScreen;
-
             foreach (var result in MatchManager.LoadVideo())
                 yield return result;
+            yield return nextScreen;
         }
 
         public IEnumerable<IResult> NoVideo()

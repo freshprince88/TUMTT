@@ -4,10 +4,11 @@ using System.Linq;
 using TT.Models;
 using TT.Lib.Managers;
 using System;
+using System.Collections.Generic;
 
 namespace TT.Scouter.ViewModels
 {
-    public class MainViewModel : Conductor<IScreen>.Collection.OneActive 
+    public class MainViewModel : Conductor<IScreen>.Collection.OneActive
     {
         private IEventAggregator Events;
         private IMatchManager Manager;
@@ -64,7 +65,7 @@ namespace TT.Scouter.ViewModels
                 {
                     _selectedTab = value;
                     NotifyOfPropertyChange("SelectedTab");
-                    if (_selectedTab == 0)                       
+                    if (_selectedTab == 0)
                     {
                         this.ActivateItem(LiveView);
 
@@ -83,14 +84,14 @@ namespace TT.Scouter.ViewModels
                             LiveView.CurrentRally = new Rally();
                             Manager.ActivePlaylist.Rallies.Add(LiveView.CurrentRally);
                             LiveView.Server = LiveView.firstServerBackup;
-                            LiveView.CurrentRally.Server= LiveView.firstServerBackup;
+                            LiveView.CurrentRally.Server = LiveView.firstServerBackup;
                             LiveView.CurrentRally.UpdateServerAndScore();
                             NotifyOfPropertyChange("LiveView.CurrentRally");
                         }
 
                     }
                     if (_selectedTab == 1)
-                    {                        
+                    {
                         if (LiveView.Rallies.Any())
                         {
                             if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
@@ -111,7 +112,7 @@ namespace TT.Scouter.ViewModels
             Manager = man;
             Dialogs = cor;
             LiveView = new LiveViewModel(Events, Manager, Dialogs);
-            RemoteView = new RemoteViewModel(Events, Manager, Dialogs);                        
+            RemoteView = new RemoteViewModel(Events, Manager, Dialogs);
         }
 
 
@@ -147,6 +148,13 @@ namespace TT.Scouter.ViewModels
 
         #region View Methods
 
+        public IEnumerable<IResult> AddVideoFile()
+        {
+            foreach (var result in Manager.LoadVideo())
+                yield return result;
+            LiveView.ViewMode = LiveViewModel.TimeMode.Video;
+            NotifyOfPropertyChange("MediaPlayer");
+        }
         #endregion
 
     }
