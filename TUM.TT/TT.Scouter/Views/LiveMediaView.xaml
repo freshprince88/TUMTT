@@ -138,17 +138,17 @@
                         </MenuItem>
                     </ContextMenu>
                 </Button.ContextMenu>
-                <!--<i:Interaction.Triggers>
-                    --><!--<i:EventTrigger EventName="Click">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="SkipBackwards"/>
-                    </i:EventTrigger>--><!--
+                    </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Modifiers="Ctrl" Key="Left"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="SkipBackwards"/>
-                    </ob:GlobalInputBindingTrigger>--><!--
-                </i:Interaction.Triggers>-->
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </Button>
             <Button x:Name="SkipForward" Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
                 <Rectangle Width="15" Height="15" 
@@ -184,17 +184,17 @@
                         </MenuItem>
                     </ContextMenu>
                 </Button.ContextMenu>
-                <!--<i:Interaction.Triggers>
-                    --><!--<i:EventTrigger EventName="Click">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="SkipForward"/>
-                    </i:EventTrigger>-->
-                    <!--<ob:GlobalInputBindingTrigger>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
                         <ob:GlobalInputBindingTrigger.InputBinding>
                             <KeyBinding Modifiers="Ctrl" Key="Right"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="SkipForward"/>
-                    </ob:GlobalInputBindingTrigger>--><!--
-                </i:Interaction.Triggers>-->
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
             </Button>
 
 
