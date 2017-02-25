@@ -253,17 +253,14 @@
                             </ob:InputBindingTrigger.InputBinding>
                             <cal:ActionMessage MethodName="RallyWon">
                                 <cal:Parameter Value="1" />
-                                <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                             </cal:ActionMessage>
                         </ob:InputBindingTrigger>
                         <ob:InputBindingTrigger>
                             <ob:InputBindingTrigger.InputBinding>
                                 <KeyBinding Key="Right"/>
                             </ob:InputBindingTrigger.InputBinding>
-
                             <cal:ActionMessage MethodName="RallyWon">
                                 <cal:Parameter Value="2" />
-                                <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                             </cal:ActionMessage>
                         </ob:InputBindingTrigger>
                         <ob:InputBindingTrigger>
@@ -302,7 +299,6 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="RallyWon">
                             <cal:Parameter Value="1" />
-                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
@@ -311,7 +307,6 @@
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="RallyWon">
                             <cal:Parameter Value="1" />
-                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                         </cal:ActionMessage>
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
@@ -322,7 +317,6 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="RallyWon">
                             <cal:Parameter Value="2" />
-                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                         </cal:ActionMessage>
                     </i:EventTrigger>
                     <ob:GlobalInputBindingTrigger>
@@ -331,7 +325,6 @@
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="RallyWon">
                             <cal:Parameter Value="2" />
-                            <cal:Parameter Value="{Binding ElementName=NumberBox, Path=Text}" />
                         </cal:ActionMessage>
 
                     </ob:GlobalInputBindingTrigger>

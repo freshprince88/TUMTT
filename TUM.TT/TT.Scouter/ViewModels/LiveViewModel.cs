@@ -286,7 +286,7 @@ namespace TT.Scouter.ViewModels
 
         }
 
-        public void RallyWon(int player, int length)
+        public void RallyWon(int player)
         {
 
             if (!IsNewRally)

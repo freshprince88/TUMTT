@@ -58,9 +58,9 @@ namespace TT.Scouter.ViewModels
 
         }
 
-        public void RallyWon(int player, int length)
+        public void RallyWon(int player)
         {
-            LiveView.RallyWon(player, length);
+            LiveView.RallyWon(player);
         }
 
         public void StartRally()
