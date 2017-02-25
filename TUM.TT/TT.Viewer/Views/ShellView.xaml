@@ -59,6 +59,15 @@
                 <Setter Property="HorizontalAlignment"
                         Value="Center"/>
             </Style>
+            <Style x:Key="MiniTileStyle"
+                   TargetType="Controls:Tile">
+                <Setter Property="Width"
+                        Value="50" />
+                <Setter Property="Height"
+                        Value="100" />
+                <Setter Property="TitleFontSize"
+                        Value="10" />
+            </Style>
             
         </ResourceDictionary>
     </Window.Resources>
@@ -94,6 +103,12 @@
                             <KeyBinding Modifiers="Ctrl" Key="S"/>
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="SaveMatch"/>
+                    </ob:GlobalInputBindingTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Ctrl+Shift" Key="S"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="SaveMatchAs"/>
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -146,6 +161,16 @@
                         <Controls:Tile Title="Save Match" cal:Message.Attach="[Event Click] = [Action SaveMatch()]" 
                                    IsEnabled="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged}" 
                                    Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                            <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_save}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Controls:Tile>
+                        <Controls:Tile Title="Save As" cal:Message.Attach="[Event Click] = [Action SaveMatchAs()]"
+                                   IsEnabled="{Binding Path=MatchManager.MatchSaveAs, UpdateSourceTrigger=PropertyChanged}" 
+                                   Background="{DynamicResource AccentColorBrush}" Style="{StaticResource MiniTileStyle }">
                             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                                 <Rectangle.OpacityMask>

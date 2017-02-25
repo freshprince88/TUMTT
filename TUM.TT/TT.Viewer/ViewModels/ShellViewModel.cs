@@ -160,6 +160,13 @@ namespace TT.Viewer.ViewModels
                 return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
             }
         }
+        public bool CanSaveMatchAs
+        {
+            get
+            {
+                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+            }
+        }
         public bool CanShowPlayer
         {
             get
@@ -194,6 +201,7 @@ namespace TT.Viewer.ViewModels
             // We must reconsider, whether we can generate a report now.
             NotifyOfPropertyChange(() => this.CanGenerateReport);
             NotifyOfPropertyChange(() => this.CanSaveMatch);
+            NotifyOfPropertyChange(() => this.CanSaveMatchAs);
             NotifyOfPropertyChange(() => this.CanShowPlayer);
             NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
@@ -235,6 +243,16 @@ namespace TT.Viewer.ViewModels
                 {
                     yield return action;
                 }                
+            }
+        }
+        public IEnumerable<IResult> SaveMatchAs()
+        {
+            if (MatchManager.MatchSaveAs)
+            {
+                foreach (var action in MatchManager.SaveMatchAs())
+                {
+                    yield return action;
+                }
             }
         }
         public static bool IsWindowOpen<T>(string name ="") where T : Window
