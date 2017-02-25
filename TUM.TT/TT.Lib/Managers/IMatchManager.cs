@@ -23,6 +23,7 @@ namespace TT.Lib.Managers
         string FileName { get; set; }
 
         bool MatchModified { get; set; }
+        bool MatchSaveAs { get; set; }
 
         void DeleteRally(Rally r);
 
@@ -31,7 +32,7 @@ namespace TT.Lib.Managers
         IEnumerable<IResult> GenerateReport(string type);
 
         IEnumerable<IResult> SaveMatch();
-
+        IEnumerable<IResult> SaveMatchAs();
         IEnumerable<IResult> OpenMatch();
         IEnumerable<IResult> OpenLiveMatch();
 

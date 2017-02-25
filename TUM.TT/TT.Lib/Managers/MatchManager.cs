@@ -39,7 +39,21 @@ namespace TT.Lib.Managers
                 }
             }
         }
+        private bool _matchSaveAs;
+        public bool MatchSaveAs
+        {
+            get { return _matchSaveAs; }
+            set
+            {
+                if (_matchSaveAs != value)
+                {
+                    _matchSaveAs = value;
+                    NotifyOfPropertyChange("MatchSaveAs");
+                    NotifyOfPropertyChange();
 
+                }
+            }
+        }
         private bool _matchMod;
         public bool MatchModified
         {
@@ -175,6 +189,9 @@ namespace TT.Lib.Managers
 
         #region Business Logic
 
+        
+
+
         public IEnumerable<IResult> SaveMatch()
         {
             if (FileName == null || FileName == string.Empty)
@@ -187,7 +204,47 @@ namespace TT.Lib.Managers
                 };
                 yield return dialog;
                 FileName = dialog.Result;
+                MatchSaveAs = true;
+                NotifyOfPropertyChange("MatchSaveAs");
             }
+
+            //Remove Dummy Rally from Scouter
+            var playList = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
+            var lastRally = playList.Rallies.LastOrDefault();
+            bool haveToAddAgain = false;
+            if (playList.Rallies.Any())
+            {
+                if (lastRally.Winner == MatchPlayer.None)
+                {
+                    playList.Rallies.Remove(lastRally);
+                    haveToAddAgain = true;
+                }
+            }
+            var serialization = new SerializeMatchResult(Match, FileName, Format.XML.Serializer);
+            yield return serialization
+                .Rescue()
+                .WithMessage("Error saving the match", string.Format("Could not save the match to {0}.", FileName))
+                .Propagate(); // Reraise the error to abort the coroutine
+
+            if (haveToAddAgain)
+            {
+                Execute.OnUIThread((System.Action)(() => playList.Rallies.Add(lastRally)));
+            }
+            MatchModified = false;
+            NotifyOfPropertyChange("MatchModified");
+        }
+
+        public IEnumerable<IResult> SaveMatchAs()
+        {
+            var dialog = new SaveFileDialogResult()
+            {
+                Title = string.Format("Save match \"{0}\"...", Match.Title()),
+                Filter = Format.XML.DialogFilter,
+                DefaultFileName = FileName.Split('\\').Last(),
+            };
+            yield return dialog;
+            FileName = dialog.Result;
+
 
             //Remove Dummy Rally from Scouter
             var playList = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
@@ -282,6 +339,8 @@ namespace TT.Lib.Managers
             {
                 MatchModified = false;
             }
+            MatchSaveAs = true;
+            NotifyOfPropertyChange("MatchSaveAs");
             ActivePlaylist = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
@@ -310,6 +369,10 @@ namespace TT.Lib.Managers
             Events.PublishOnUIThread(new MatchOpenedEvent(Match));
             Events.PublishOnUIThread(new HideMenuEvent());
             MatchModified = false;
+            MatchSaveAs = true;
+            NotifyOfPropertyChange("MatchSaveAs");
+            NotifyOfPropertyChange("MatchModified");
+
         }
 
         public void DeleteRally(Rally r)

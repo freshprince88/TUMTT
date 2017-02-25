@@ -19,7 +19,8 @@ namespace TT.Scouter.ViewModels
         public NewMatchViewModel(IEventAggregator ev, IMatchManager man)
         {
             Events = ev;
-            MatchManager = man;
+            MatchManager = man;           
+
         }
 
         protected override void OnActivate()

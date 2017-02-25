@@ -33,7 +33,7 @@ namespace TT.Scouter.ViewModels
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
-            
+
 
         }
 
@@ -101,7 +101,7 @@ namespace TT.Scouter.ViewModels
                     Question = "The match is modified. Save changes?",
                     AllowCancel = true
                 };
-                yield return question;               
+                yield return question;
 
                 if (question.Result)
                 {
@@ -129,6 +129,7 @@ namespace TT.Scouter.ViewModels
             // We must reconsider, whether we can generate a report now.
 
             this.NotifyOfPropertyChange(() => this.CanSaveMatch);
+            this.NotifyOfPropertyChange(() => this.CanSaveMatchAs);
             this.NotifyOfPropertyChange(() => this.CanShowPlayer);
             this.NotifyOfPropertyChange(() => this.CanShowCompetition);
             MatchManager.Match.PropertyChanged += SetMatchModified;
@@ -139,11 +140,11 @@ namespace TT.Scouter.ViewModels
             {
                 MatchManager.ActivePlaylist.Rallies[i].PropertyChanged += SetMatchModified;
                 int countStrokes = MatchManager.ActivePlaylist.Rallies[i].Strokes.Count();
-                for (int j=0; j < countStrokes; j++)
+                for (int j = 0; j < countStrokes; j++)
                 {
                     MatchManager.ActivePlaylist.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
                     if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin != null)
-                    MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
+                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
                     if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique != null)
                         MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique.PropertyChanged += SetMatchModified;
                     if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement != null)
@@ -184,11 +185,13 @@ namespace TT.Scouter.ViewModels
         {
             MatchManager.CreateNewMatch();
             this.NotifyOfPropertyChange(() => this.CanSaveMatch);
+            this.NotifyOfPropertyChange(() => this.CanSaveMatchAs);
             this.NotifyOfPropertyChange(() => this.CanShowPlayer);
             this.NotifyOfPropertyChange(() => this.CanShowCompetition);
             Events.PublishOnUIThread(new HideMenuEvent());
             var next = ShowScreenResult.Of<NewMatchViewModel>();
             yield return next;
+            MatchManager.MatchSaveAs = false;
         }
         public IEnumerable<IResult> OpenMatch()
         {
@@ -211,11 +214,22 @@ namespace TT.Scouter.ViewModels
                 {
                     yield return action;
                 }
-
             }
-
-
         }
+
+        public IEnumerable<IResult> SaveMatchAs()
+        {
+            if (MatchManager.MatchSaveAs)
+            {
+
+
+                foreach (var action in MatchManager.SaveMatchAs())
+                {
+                    yield return action;
+                }
+            }
+        }
+
         public IEnumerable<IResult> OpenMatchWithoutVideo()
         {
             foreach (IResult result in MatchManager.OpenLiveMatch())
@@ -226,35 +240,43 @@ namespace TT.Scouter.ViewModels
             yield return next;
         }
 
-        
+
 
         public bool CanSaveMatch
         {
             get
             {
-                return MatchManager.Match != null ;
+                return MatchManager.Match != null;
+            }
+        }
+        public bool CanSaveMatchAs
+        {
+            get
+            {
+                return MatchManager.Match != null;
             }
         }
         public bool CanShowPlayer
         {
             get
-            {   if (MatchManager.Match != null)
+            {
+                if (MatchManager.Match != null)
                 {
-                    if(MatchManager.Match.FirstPlayer != null && MatchManager.Match.SecondPlayer != null)
+                    if (MatchManager.Match.FirstPlayer != null && MatchManager.Match.SecondPlayer != null)
                     {
                         return true;
                     }
                     return false;
                 }
                 return false;
-                 
+
             }
         }
         public bool CanShowCompetition
         {
             get
             {
-                return MatchManager.Match != null ;
+                return MatchManager.Match != null;
             }
         }
 
@@ -313,7 +335,7 @@ namespace TT.Scouter.ViewModels
                 _windowManager.ShowWindow(new KeyBindingEditorViewModel(_windowManager, Events, DialogCoordinator));
             }
         }
-        
+
 
 
         #endregion

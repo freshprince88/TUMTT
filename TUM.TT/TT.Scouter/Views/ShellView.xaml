@@ -102,6 +102,12 @@
                         </ob:GlobalInputBindingTrigger.InputBinding>
                         <cal:ActionMessage MethodName="SaveMatch"/>
                     </ob:GlobalInputBindingTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Control+Shift" Key="S"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="SaveMatchAs"/>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
 
@@ -121,6 +127,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
@@ -130,52 +137,62 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    
-                        <Controls:Tile Grid.Column="0" Title="New Match"  cal:Message.Attach="[Event Click] = [Action OpenNewMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
-                            <Rectangle Width="30" Height="30" 
+
+                    <Controls:Tile Grid.Column="0" Title="New Match"  cal:Message.Attach="[Event Click] = [Action OpenNewMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                        <Rectangle Width="30" Height="30" 
                                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_section_expand}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </Controls:Tile>
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_section_expand}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
                     <Controls:Tile Grid.Column="1" Title="Open Match" cal:Message.Attach="[Event Click] = [Action OpenMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
-                            <Rectangle Width="30" Height="30" 
+                        <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </Controls:Tile>
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
                     <Controls:Tile Grid.Column="2" Title="Open Template" cal:Message.Attach="[Event Click] = [Action OpenMatchWithoutVideo()]" Background="{DynamicResource AccentColorBrush}"  Style="{StaticResource SmallTileStyle }">
-                            <Rectangle Width="30" Height="30" 
+                        <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </Controls:Tile>
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
                     <Controls:Tile Grid.Column="3" Title="Save Match" cal:Message.Attach="[Event Click] = [Action SaveMatch()]" 
                                    IsEnabled="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged}" 
                                    Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
-                            <Rectangle Width="30" Height="30" 
+                        <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_save}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </Controls:Tile>
-                    
-                            <Controls:Tile Grid.Column="5" Title="ITTV" cal:Message.Attach="[Event Click] = [Action OpenITTV()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
-                                <Rectangle Width="30" Height="30" 
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_save}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
+                    <Controls:Tile Grid.Column="4" Title="Save As" cal:Message.Attach="[Event Click] = [Action SaveMatchAs()]"
+                                   IsEnabled="{Binding Path=MatchManager.MatchSaveAs, UpdateSourceTrigger=PropertyChanged}" 
+                                   Background="{DynamicResource AccentColorBrush}" Style="{StaticResource MiniTileStyle }">
+                        <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_stream}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </Controls:Tile>
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_save}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
 
-                    <Controls:Tile Grid.Column="6" Title="Shortcuts" cal:Message.Attach="[Event Click] = [Action ShowKeyBindingEditor()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="6" Title="ITTV" cal:Message.Attach="[Event Click] = [Action OpenITTV()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                        <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_stream}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
+
+                    <Controls:Tile Grid.Column="7" Title="Shortcuts" cal:Message.Attach="[Event Click] = [Action ShowKeyBindingEditor()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>
@@ -186,15 +203,15 @@
 
 
 
-                    <Controls:Tile Grid.Column="8" Title="Competition" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
-                            <Rectangle Width="30" Height="30" 
+                    <Controls:Tile Grid.Column="9" Title="Competition" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                        <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_trophy}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </Controls:Tile>
-                    <Controls:Tile Grid.Column="9" Title="Player" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"  Background="{DynamicResource AccentColorBrush}" Style="{StaticResource BigTileStyle }">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_trophy}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
+                    <Controls:Tile Grid.Column="10" Title="Player" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"  Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>
