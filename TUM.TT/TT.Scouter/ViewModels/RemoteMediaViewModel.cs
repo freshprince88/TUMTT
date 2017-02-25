@@ -309,11 +309,11 @@ namespace TT.Scouter.ViewModels
         }
         public void SkipForward()
         {
-
+            NextFrame();
         }
         public void SkipBackwards()
         {
-
+            PreviousFrame();
         }
         #endregion
 

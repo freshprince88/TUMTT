@@ -205,6 +205,9 @@ namespace TT.Scouter.ViewModels
                     else
                     {
                         //TODO Hier kommt er nicht rein, wenn man die Länge verändert -> keine neuen Schläge werden erstellt!!!!
+
+
+                       // TODO          if(value!=null)
                         SchlagView.Strokes = value.Strokes;
                         SchlagView.CurrentRally = value;
                         PositionsRallyView.OnNewStrokes();

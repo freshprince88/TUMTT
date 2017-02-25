@@ -112,6 +112,10 @@
     <Compile Include="TechniqueToBoolConverter.cs" />
     <Compile Include="TimeSpanToMilliSecondsConverter.cs" />
     <Compile Include="TwoBoolToBoolConverter.cs" />
+    <Compile Include="VideoSourceAndRallyCountToBoolConverter.cs" />
+    <Compile Include="VideoSourceToBoolConverter.cs" />
+    <Compile Include="VideoSourceToNotVisibilityConverter.cs" />
+    <Compile Include="VideoSourceToVisibilityConverter.cs" />
     <Compile Include="VisibilityToBoolConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

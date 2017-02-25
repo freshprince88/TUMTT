@@ -111,6 +111,7 @@ namespace TT.Scouter.ViewModels
                     {
                         case TimeMode.Video:
                             MediaPlayer = new LiveMediaViewModel(Events, MatchManager, Dialogs);
+                            //this.ActivateItem(MediaPlayer);
                             break;
                         case TimeMode.Timer:
                             MediaPlayer = new LiveTimerViewModel();
@@ -120,6 +121,7 @@ namespace TT.Scouter.ViewModels
                     }
                     //this.ActivateItem(MediaPlayer);
                     NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("MediaPlayer");
                 }
             }
         }

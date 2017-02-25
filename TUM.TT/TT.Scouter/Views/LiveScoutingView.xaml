@@ -57,7 +57,6 @@
                 <Viewbox Grid.Row="1" Grid.Column="1">
                     <Ellipse  Fill="White" Width="10" Height="10" Stretch="Fill" />
                 </Viewbox>
-
                 <Grid.Visibility>
                     <MultiBinding Converter="{conv:MatchPlayerToVisibilityConverter}" Mode="OneWay">
                         <Binding RelativeSource="{RelativeSource Self}" Path="Name"/>
@@ -129,7 +128,6 @@
                             <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_navigate_previous}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <cal:ActionMessage MethodName="Previous" />
@@ -147,7 +145,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition />                                                                                         
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
