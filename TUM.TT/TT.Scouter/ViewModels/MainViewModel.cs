@@ -55,20 +55,17 @@ namespace TT.Scouter.ViewModels
             Remote
         }
 
-        private int _selectedTab;
-        public int SelectedTab
+        private Tabs _selectedTab;
+        public Tabs SelectedTab
         {
             get { return _selectedTab; }
             set
             {
                 if (_selectedTab != value)
                 {
-                    _selectedTab = value;
-                    NotifyOfPropertyChange("SelectedTab");
-                    if (_selectedTab == 0)
-                    {
-                        this.ActivateItem(LiveView);
-
+                    _selectedTab = value;                    
+                    if (_selectedTab == Tabs.Live)
+                    {                       
                         if (LiveView.Rallies.Any())
                         {
                             if (LiveView.Rallies.Last().Winner != MatchPlayer.None)
@@ -89,8 +86,9 @@ namespace TT.Scouter.ViewModels
                             NotifyOfPropertyChange("LiveView.CurrentRally");
                         }
 
+                        this.ActivateItem(LiveView);
                     }
-                    if (_selectedTab == 1)
+                    if (_selectedTab == Tabs.Remote)
                     {
                         if (LiveView.Rallies.Any())
                         {
@@ -102,6 +100,7 @@ namespace TT.Scouter.ViewModels
 
                         this.ActivateItem(RemoteView);
                     }
+                    NotifyOfPropertyChange("SelectedTab");
                 }
             }
         }
@@ -111,6 +110,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             Manager = man;
             Dialogs = cor;
+            Manager.ActiveRally = new Rally();
             LiveView = new LiveViewModel(Events, Manager, Dialogs);
             RemoteView = new RemoteViewModel(Events, Manager, Dialogs);
         }
@@ -123,11 +123,11 @@ namespace TT.Scouter.ViewModels
             base.OnActivate();
             switch (SelectedTab)
             {
-                case 0:
+                case Tabs.Live:
                     LiveView.ViewMode = LiveMode;
                     this.ActivateItem(LiveView);
                     break;
-                case 1:
+                case Tabs.Remote:
                     this.ActivateItem(RemoteView);
                     break;
                 default:
