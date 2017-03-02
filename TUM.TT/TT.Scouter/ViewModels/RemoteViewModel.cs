@@ -192,7 +192,7 @@ namespace TT.Scouter.ViewModels
             get { return _rally; }
             set
             {
-                if (fromConstructor || _rally != value)
+                if (value != null && (fromConstructor || _rally != value))
                 {
                     MatchManager.ActiveRally = value;
 
@@ -205,9 +205,6 @@ namespace TT.Scouter.ViewModels
                     else
                     {
                         //TODO Hier kommt er nicht rein, wenn man die Länge verändert -> keine neuen Schläge werden erstellt!!!!
-
-
-                       // TODO          if(value!=null)
                         SchlagView.Strokes = value.Strokes;
                         SchlagView.CurrentRally = value;
                         PositionsRallyView.OnNewStrokes();
