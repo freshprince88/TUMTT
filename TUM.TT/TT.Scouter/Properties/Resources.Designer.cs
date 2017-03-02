@@ -59,14 +59,5 @@ namespace TT.Scouter.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tournament.
-        /// </summary>
-        public static string tournament_title_default {
-            get {
-                return ResourceManager.GetString("tournament_title_default", resourceCulture);
-            }
-        }
     }
 }
