@@ -115,7 +115,6 @@
   <ItemGroup>
     <Compile Include="Events\FollowMouseEvent.cs" />
     <Compile Include="Events\FullscreenHidePlayerEvent.cs" />
-    <Compile Include="Events\FullscreenReduceHitlistEvent.cs" />
     <Compile Include="Events\MediaLiveScouterMuteEvent.cs" />
     <Compile Include="Events\MediaLiveScouterSpeedEvent.cs" />
     <Compile Include="Events\PointAddedEventArgs.cs" />
