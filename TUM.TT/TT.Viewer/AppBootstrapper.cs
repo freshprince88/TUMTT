@@ -14,6 +14,7 @@ namespace TT.Viewer {
 
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
+        internal static string UserTto;
 
         public AppBootstrapper() {
             Initialize();
@@ -53,7 +54,10 @@ namespace TT.Viewer {
             container.BuildUp(instance);
         }
 
-        protected override void OnStartup(object sender, System.Windows.StartupEventArgs e) {
+        protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
+        {
+            if (e.Args.Length > 0)
+                UserTto = e.Args[0];
             DisplayRootViewFor<IShell>();
         }
     }

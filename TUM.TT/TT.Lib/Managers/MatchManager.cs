@@ -300,17 +300,23 @@ namespace TT.Lib.Managers
 
         }
 
-        public IEnumerable<IResult> OpenMatch()
+        public IEnumerable<IResult> OpenMatch(string fileName = null)
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));
             bool newVideoLoaded = false;
+
             var dialog = new OpenFileDialogResult()
             {
                 Title = "Open match...",
                 Filter = Format.XML.DialogFilter,
             };
-            yield return dialog;
-            FileName = dialog.Result;
+            if (fileName == null || !File.Exists(fileName))
+            {
+                yield return dialog;
+                FileName = dialog.Result;
+            }
+            else
+                FileName = fileName;
 
             var deserialization = new DeserializeMatchResult(FileName, Format.XML.Serializer);
             yield return deserialization

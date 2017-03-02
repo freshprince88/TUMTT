@@ -80,6 +80,10 @@ namespace TT.Viewer.ViewModels
             {
                 ActivateItem(new WelcomeViewModel(MatchManager));
             }
+
+            var userTto = AppBootstrapper.UserTto;
+            if (userTto != null)
+                Coroutine.BeginExecute(MatchManager.OpenMatch(userTto).GetEnumerator());
         }
 
         protected override void OnDeactivate(bool close)

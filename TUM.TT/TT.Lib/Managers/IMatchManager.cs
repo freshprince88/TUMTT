@@ -33,7 +33,7 @@ namespace TT.Lib.Managers
 
         IEnumerable<IResult> SaveMatch();
         IEnumerable<IResult> SaveMatchAs();
-        IEnumerable<IResult> OpenMatch();
+        IEnumerable<IResult> OpenMatch(string fileName = null);
         IEnumerable<IResult> OpenLiveMatch();
 
 
