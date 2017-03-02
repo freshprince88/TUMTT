@@ -13,7 +13,7 @@ namespace TT.Viewer.Views
     /// </summary>
     public partial class ResultListView : UserControl,
         IHandle<ResultListControlEvent>,
-        IHandle<FullscreenReduceHitlistEvent>
+        IHandle<FullscreenEvent>
     {
 
         public IEventAggregator Events { get; private set; }
@@ -21,8 +21,18 @@ namespace TT.Viewer.Views
         public ResultListView()
         {
             InitializeComponent();
+            DataContextChanged += OnDataContextChanged;
             Events = IoC.Get<IEventAggregator>();
-            Events.Subscribe(this);            
+            Events.Subscribe(this);
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            var vm = args.NewValue as ResultListViewModel;
+            if (vm != null)
+            {
+                ReduceHitlist(vm.IsFullScreen);
+            }
         }
 
         public void Handle(ResultListControlEvent msg)
@@ -35,32 +45,33 @@ namespace TT.Viewer.Views
 
         }
 
-        public void Handle(FullscreenReduceHitlistEvent message)
+        private void ReduceHitlist(bool toggle)
         {
-            switch (message.ReduceHitlist)
+            if (toggle)
             {
-                case true:
-                    Column1.Header = "S";
-                    ProportionalColumn.ApplyWidth(Column0, 1);
-                    ProportionalColumn.ApplyWidth(Column1, 2);
-                    ProportionalColumn.ApplyWidth(Column2, 0);
-                    ProportionalColumn.ApplyWidth(Column3, 0);
-                    ProportionalColumn.ApplyWidth(Column4, 0);
-                    ProportionalColumn.ApplyWidth(Column5, 0);
-                    break;
-                case false:
-                    Column1.Header = "Score";
-                    
-                    ProportionalColumn.ApplyWidth(Column0, 1);
-                    ProportionalColumn.ApplyWidth(Column1, 2);
-                    ProportionalColumn.ApplyWidth(Column2, 2);
-                    ProportionalColumn.ApplyWidth(Column3, 3);
-                    ProportionalColumn.ApplyWidth(Column4, 3);
-                    ProportionalColumn.ApplyWidth(Column5, 2);
-                    break;
-                default:
-                    break;
+                Column1.Header = "S";
+                ProportionalColumn.ApplyWidth(Column0, 1);
+                ProportionalColumn.ApplyWidth(Column1, 2);
+                ProportionalColumn.ApplyWidth(Column2, 0);
+                ProportionalColumn.ApplyWidth(Column3, 0);
+                ProportionalColumn.ApplyWidth(Column4, 0);
+                ProportionalColumn.ApplyWidth(Column5, 0);
             }
+            else
+            {
+                Column1.Header = "Score";
+                ProportionalColumn.ApplyWidth(Column0, 1);
+                ProportionalColumn.ApplyWidth(Column1, 2);
+                ProportionalColumn.ApplyWidth(Column2, 2);
+                ProportionalColumn.ApplyWidth(Column3, 3);
+                ProportionalColumn.ApplyWidth(Column4, 3);
+                ProportionalColumn.ApplyWidth(Column5, 2);
+            }
+        }
+
+        public void Handle(FullscreenEvent message)
+        {
+            ReduceHitlist(message.Fullscreen);
         }
 
         private void Items_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

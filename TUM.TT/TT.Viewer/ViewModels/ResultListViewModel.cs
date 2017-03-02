@@ -17,7 +17,8 @@ namespace TT.Viewer.ViewModels
 {
     public class ResultListViewModel : Screen, IResultViewTabItem,
         IHandle<ResultsChangedEvent>,
-        IHandle<MediaControlEvent>
+        IHandle<MediaControlEvent>,
+        IHandle<FullscreenEvent>
     {
         public string Header { get; set; }
         public string Player1 { get; set; }
@@ -33,7 +34,7 @@ namespace TT.Viewer.ViewModels
 
         public ObservableCollection<ResultListItem> Items { get; set; }
         public List<Rally> Rallies { get; set; }
-
+        public bool IsFullScreen { get; private set; }
 
         public ResultListViewModel(IEventAggregator e, IDialogCoordinator c, IMatchManager man)
         {
@@ -49,6 +50,9 @@ namespace TT.Viewer.ViewModels
             totalRalliesCount = 0;
             Items = new ObservableCollection<ResultListItem>();
             Rallies = new List<Rally>();
+            
+            // Subscribe ourself to the event bus
+            Events.Subscribe(this);
         }
 
         public byte GetOrderInResultView()
@@ -148,8 +152,10 @@ namespace TT.Viewer.ViewModels
                 }
             }
         }
-
-
+        public void Handle(FullscreenEvent message)
+        {
+            IsFullScreen = message.Fullscreen;
+        }
 
         #endregion
 
@@ -158,15 +164,14 @@ namespace TT.Viewer.ViewModels
         protected override void OnActivate()
         {
             base.OnActivate();
-            // Subscribe ourself to the event bus
-            Events.Subscribe(this);
             Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
             Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
         }
 
         protected override void OnDeactivate(bool close)
         {
-            Events.Unsubscribe(this);
+            if (close)
+                Events.Unsubscribe(this);
             Items.Clear();
             base.OnDeactivate(close);
         }
