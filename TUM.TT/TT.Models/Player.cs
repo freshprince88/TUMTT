@@ -65,6 +65,11 @@ namespace TT.Models
             this.rank = new Rank(0, DateTime.Today);
         }
 
+        public Player(int index) : this()
+        {
+            this.name = string.Format(Properties.Resources.player_name_default, index);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>

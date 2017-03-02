@@ -74,6 +74,7 @@ namespace TT.Models
         /// </summary>
         public Match()
         {
+            this.tournament = Properties.Resources.tournament_title_default;
             this.playlists.CollectionChanged += this.OnPlaylistsChanged;
         }
 

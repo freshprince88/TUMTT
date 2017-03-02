@@ -409,8 +409,8 @@ namespace TT.Lib.Managers
         {
             this.Match = new Match();
             Match.DateTime = DateTime.Now;
-            Match.FirstPlayer = new Player();
-            Match.SecondPlayer = new Player();
+            Match.FirstPlayer = new Player(1);
+            Match.SecondPlayer = new Player(2);
             Match.Playlists.Add(new Playlist() { Name = "Alle", Match = Match });
             Match.Playlists.Add(new Playlist() { Name = "Markiert", Match = Match });
             this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
