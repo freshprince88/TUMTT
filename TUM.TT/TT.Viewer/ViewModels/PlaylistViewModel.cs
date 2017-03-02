@@ -245,6 +245,15 @@ namespace TT.Viewer.ViewModels
                 dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
                 dropInfo.Effects = DragDropEffects.Copy;
             }
+            else if (dropInfo.TargetItem is PlaylistItem)
+            {
+                Rally data = ((DataObject)dropInfo.Data).GetData(typeof(Rally)) as Rally;
+                if (data != null)
+                {
+                    dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                    dropInfo.Effects = DragDropEffects.Copy;
+                }
+            }
 
         }
 
@@ -285,16 +294,25 @@ namespace TT.Viewer.ViewModels
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("MatchManager.MatchModified");
             }
-            else if (dropInfo.Data is Rally && dropInfo.TargetItem is PlaylistItem)
+            else if (dropInfo.TargetItem is PlaylistItem)
             {
-                var sourceItem = dropInfo.Data as Rally;
-                var targetItem = dropInfo.TargetItem as PlaylistItem;
-                Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
-                if (list != null && !list.Rallies.Contains(sourceItem))
+                Rally sourceItem;
+                if (dropInfo.Data is Rally)
+                    sourceItem = (Rally)dropInfo.Data;
+                else
                 {
-                    list.Rallies.Add(sourceItem);
+                    sourceItem = ((DataObject) dropInfo.Data).GetData(typeof(Rally)) as Rally;
+                    if (sourceItem == null)
+                        return;
+                }
+
+                var targetItem = dropInfo.TargetItem as PlaylistItem;
+                var playlist = MatchManager.Match.Playlists.FirstOrDefault(p => p.Name == targetItem.Name);
+                if (playlist != null && !playlist.Rallies.Contains(sourceItem))
+                {
+                    playlist.Rallies.Add(sourceItem);
                     //Sort List after Rally-Number
-                    Sort(list.Rallies);
+                    Sort(playlist.Rallies);
                     MatchManager.MatchModified = true;
                     NotifyOfPropertyChange("MatchManager.MatchModified");
                     targetItem.Count++;

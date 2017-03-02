@@ -169,6 +169,22 @@ namespace TT.Viewer.Views
             DeselectAll();
         }
 
+        private void Stroke_MouseMove(object sender, MouseEventArgs e)
+        {
+            Shape shape = sender as Shape;
+            if (shape != null && e.LeftButton == MouseButtonState.Pressed)
+            {
+                foreach (var keyValuePair in StrokeShapes)
+                {
+                    if (keyValuePair.Value.Contains(shape))
+                    {
+                        DragDrop.DoDragDrop(shape, keyValuePair.Key.Rally, DragDropEffects.Copy);
+                    }
+                }
+
+            }
+        }
+
         protected override void AttachEventHandlerToShape(Shape shape, Stroke stroke)
         {
             shape.DataContext = stroke;
@@ -177,6 +193,7 @@ namespace TT.Viewer.Views
             shape.MouseEnter += new MouseEventHandler(Stroke_MouseEnter);
             shape.MouseLeave += new MouseEventHandler(Stroke_MouseLeave);
             shape.MouseDown += new MouseButtonEventHandler(Stroke_MouseDown);
+            shape.MouseMove += Stroke_MouseMove;
         }
 
         #endregion
