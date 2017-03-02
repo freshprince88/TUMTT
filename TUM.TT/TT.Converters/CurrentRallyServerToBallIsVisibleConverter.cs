@@ -11,7 +11,10 @@ namespace TT.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            MatchPlayer server = (MatchPlayer)values[0];
+            MatchPlayer? server = values[0] as MatchPlayer?;
+            if (server == null)
+                return Visibility.Hidden;
+
             string gridName = (string)values[1];
 
             switch (server)

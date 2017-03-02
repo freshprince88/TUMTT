@@ -11,7 +11,10 @@ namespace TT.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            MatchPlayer winner = (MatchPlayer)values[0];
+            MatchPlayer? winner = values[0] as MatchPlayer?;
+            if (winner == null)
+                return false;
+
             string btnName = (string)values[1];
 
             switch (winner)

@@ -135,7 +135,7 @@ namespace TT.Scouter.ViewModels
         {
             get
             {
-                return CurrentRally.Length;
+                return CurrentRally?.Length ?? 0;
             }
             set
             {
