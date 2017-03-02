@@ -240,6 +240,11 @@ namespace TT.Viewer.ViewModels
                 }
 
             }
+            else if (dropInfo.Data is Rally && dropInfo.TargetItem is PlaylistItem)
+            {
+                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                dropInfo.Effects = DragDropEffects.Copy;
+            }
 
         }
 
@@ -280,7 +285,22 @@ namespace TT.Viewer.ViewModels
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("MatchManager.MatchModified");
             }
-
+            else if (dropInfo.Data is Rally && dropInfo.TargetItem is PlaylistItem)
+            {
+                var sourceItem = dropInfo.Data as Rally;
+                var targetItem = dropInfo.TargetItem as PlaylistItem;
+                Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
+                if (list != null && !list.Rallies.Contains(sourceItem))
+                {
+                    list.Rallies.Add(sourceItem);
+                    //Sort List after Rally-Number
+                    Sort(list.Rallies);
+                    MatchManager.MatchModified = true;
+                    NotifyOfPropertyChange("MatchManager.MatchModified");
+                    targetItem.Count++;
+                    this.Items.Refresh();
+                }
+            }
 
         }
 
