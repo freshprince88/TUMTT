@@ -82,6 +82,13 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="PreviousRally"/>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="A" Modifiers="Alt"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PreviousRally">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="StartRallyAtBeginningButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2">
@@ -162,6 +169,13 @@
                         <cal:ActionMessage MethodName="Pause">
                         </cal:ActionMessage>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="S" Modifiers="Alt"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayPause">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8">
@@ -213,6 +227,13 @@
                     <i:EventTrigger EventName="Click">
                         <cal:ActionMessage MethodName="NextRally"/>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="D" Modifiers="Alt"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="NextRally">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
 
@@ -317,6 +338,13 @@
                         <cal:ActionMessage MethodName="FullscreenOnOff">
                         </cal:ActionMessage>
                     </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="F" Modifiers="Alt"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="FullscreenHelper">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
             <Button x:Name="LoadButton" Style="{StaticResource MetroAccentFlat}" Grid.Row="1" Grid.Column="11" ToolTip="Load Video"

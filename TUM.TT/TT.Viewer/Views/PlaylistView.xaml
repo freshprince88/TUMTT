@@ -72,6 +72,7 @@
                             </BulletDecorator>
                             <TextBlock Text="{Binding Path=NameStr, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0"/>
                             <TextBlock Text="{Binding Path=CountStr, UpdateSourceTrigger=PropertyChanged}" Margin="5 0 0 0"/>
+                            <TextBlock Text="{Binding Path=PlayTimeStr, UpdateSourceTrigger=PropertyChanged}" Margin="5 0 0 0"/>
                         </WrapPanel>
                     </DataTemplate>
 

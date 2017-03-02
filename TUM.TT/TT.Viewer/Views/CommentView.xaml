@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:local="clr-namespace:TT.Viewer.Views"
+             xmlns:views="clr-namespace:TT.Lib.Views;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+              xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
@@ -32,6 +36,10 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Comment"/></TextBlock>
         <TextBox Grid.Row="2" Grid.Column="0"  Text="{Binding Comment , UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" FontSize="16">
+            <TextBox.InputBindings>
+                
+                <KeyBinding Key="S" Command="ApplicationCommands.NotACommand" />
+            </TextBox.InputBindings>
 
         </TextBox>
         

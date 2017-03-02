@@ -66,10 +66,18 @@ namespace TT.Viewer.ViewModels
                 MatchManager.Match.Playlists.Add(p);
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("MatchManager.MatchModified");
+                double pt = 0;
+                for (int c = 0; c < p.Rallies.Count(); c++)
+                {
+                    pt = pt + (p.Rallies[c].End - p.Rallies[c].Start);
+                }
+                double test = pt;
                 this.ActivateItem(new PlaylistItem()
                 {
                     Name = name,
                     Count = p.Rallies.Count(),
+
+                    PlayTime = pt,
                     List = p
                 });
             }
@@ -273,6 +281,7 @@ namespace TT.Viewer.ViewModels
                     MatchManager.MatchModified = true;
                     NotifyOfPropertyChange("MatchManager.MatchModified");
                     targetItem.Count++;
+                    targetItem.PlayTime = targetItem.PlayTime + (sourceItem.Rally.End - sourceItem.Rally.Start);
                     this.Items.Refresh();
                 }
             }
@@ -288,8 +297,10 @@ namespace TT.Viewer.ViewModels
                 var newItems = temp.Where(r => except.Contains(r.Number));
                 list.Rallies.AddRange(newItems);
                 targetItem.Count = list.Rallies.Count;
+                targetItem.PlayTime = calcPlaytime(list);
                 //Sort List after Rally-Number                        
                 Sort(list.Rallies);
+                targetItem.PlayTime= calcPlaytime(list);
                 this.Items.Refresh();
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("MatchManager.MatchModified");
@@ -316,6 +327,7 @@ namespace TT.Viewer.ViewModels
                     MatchManager.MatchModified = true;
                     NotifyOfPropertyChange("MatchManager.MatchModified");
                     targetItem.Count++;
+                    targetItem.PlayTime = targetItem.PlayTime + (sourceItem.End - sourceItem.Start);
                     this.Items.Refresh();
                 }
             }
@@ -329,6 +341,7 @@ namespace TT.Viewer.ViewModels
             if (selected != null)
             {
                 selected.Count = message.List.Rallies.Count;
+                selected.PlayTime = calcPlaytime(message.List);
                 this.Items.Refresh();
             }
         }
@@ -369,7 +382,16 @@ namespace TT.Viewer.ViewModels
             }
             return r;
         }
+        public double calcPlaytime(Playlist l)
+        {
+            double pt = 0;
+            for (int c = 0; c < l.Rallies.Count(); c++)
+            {
+                pt = pt + (l.Rallies[c].End - l.Rallies[c].Start);
+            }
+            return pt;
 
+        }
         private void LoadPlaylists()
         {
             this.Items.Clear();
@@ -377,11 +399,18 @@ namespace TT.Viewer.ViewModels
             foreach (var playlist in MatchManager.Match.Playlists)
             {
                 string name = playlist.Name;
+                double pt = 0;
+                for (int c = 0; c < playlist.Rallies.Count(); c++)
+                {
+                    pt = pt + (playlist.Rallies[c].End - playlist.Rallies[c].Start);
+                }
+                double test = pt;
 
                 this.ActivateItem(new PlaylistItem()
                 {
                     Name = name,
                     Count = playlist.Rallies.Count(),
+                    PlayTime = pt,
                     List = playlist
                 });
             }
