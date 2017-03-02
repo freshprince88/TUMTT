@@ -6,6 +6,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"     
              xmlns:local="clr-namespace:TT.Viewer.Views" 
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
@@ -47,24 +48,66 @@
                 </ToggleButton>-->
                 <ToggleButton x:Name="FilterSet1Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="1" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="1"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SetToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedSets" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterSet2Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="2"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SetToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedSets" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterSet3Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="3" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="3"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SetToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedSets" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterSet4Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="4" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="4"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SetToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedSets" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterSet5Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="5" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="5"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SetToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedSets" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterSet6Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="6" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="6"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SetToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedSets" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                 </ToggleButton>
                 <ToggleButton x:Name="FilterSet7Button" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="7" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="7"/></TextBlock>
+                    <ToggleButton.IsChecked>
+                        <MultiBinding Converter="{conv:SetToBoolConverter}" Mode="OneWay">
+                            <Binding Path="SelectedSets" />
+                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                        </MultiBinding>
+                    </ToggleButton.IsChecked>
                 </ToggleButton>
             </WrapPanel>
             <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Stretch">
@@ -74,11 +117,25 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"  FontSize="10" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="Option:"/>
-                <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" cal:Message.Attach="[Event Click] = [Action CrunchOrNot($source)]" />
+                <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" cal:Message.Attach="[Event Click] = [Action CrunchOrNot($source)]" IsChecked="{Binding Path=Crunch, Converter={conv:CrunchToBoolConverter}, Mode=OneWay}" />
             </Grid>
             <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Player:"/>
-            <ToggleButton x:Name="FilterPlayer1Button" Content="{Binding Path=Player1}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  cal:Message.Attach="[Event Click] = [Action P1P2($source]"/>
-            <ToggleButton x:Name="FilterPlayer2Button" Content="{Binding Path=Player2}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" cal:Message.Attach="[Event Click] = [Action P1P2($source)]"/>
+            <ToggleButton x:Name="PlayerPlayer1" Content="{Binding Path=Player1}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  cal:Message.Attach="[Event Click] = [Action P1P2($source]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:PlayerP1P2ToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Player" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
+            </ToggleButton>
+            <ToggleButton x:Name="PlayerPlayer2" Content="{Binding Path=Player2}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" cal:Message.Attach="[Event Click] = [Action P1P2($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:PlayerP1P2ToBoolConverter}" Mode="OneWay">
+                        <Binding Path="Player" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
+            </ToggleButton>
             <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Display:"/>
             <ToggleButton x:Name="FilterDetailInformationButton" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" IsChecked="True" Content="Details">
                 <i:Interaction.Triggers>
