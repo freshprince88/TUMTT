@@ -43,7 +43,7 @@ namespace TT.Report.Sections
                     var linearAxis1 = new LinearAxis
                     {
                         Position = AxisPosition.Bottom,
-                        MajorStep = Math.Ceiling(dataMax / 4d)
+                        MajorStep = Math.Max(Math.Ceiling(dataMax / 4d), 1)
                     };
                     linearAxis1.MinorStep = linearAxis1.MajorStep / 4d;
                     linearAxis1.AbsoluteMinimum = 0;
