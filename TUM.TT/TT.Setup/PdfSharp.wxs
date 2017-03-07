@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="PdfSharp" Directory="INSTALLFOLDER"
+                    Source="$(var.TT.Viewer.TargetDir)">
+      <Component>
+        <File Name="PdfSharp.dll" />
+      </Component>
+      <Component>
+        <File Name="PdfSharp-gdi.dll" />
+      </Component>
+      <Component>
+        <File Name="PdfSharp.Charting.dll" />
+      </Component>
+      <Component>
+        <File Name="PdfSharp.Charting-gdi.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
