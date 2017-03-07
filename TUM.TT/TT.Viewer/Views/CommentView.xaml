@@ -23,26 +23,21 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Comment"/></TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="0"  Text="{Binding Comment , UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" FontSize="16">
-            <TextBox.InputBindings>
-                
-                <KeyBinding Key="S" Command="ApplicationCommands.NotACommand" />
-            </TextBox.InputBindings>
 
+        <TextBox Grid.Row="2" Grid.Column="0"  Text="{Binding Comment , UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto">
         </TextBox>
-        
+
         <!--<Button x:Name="AddButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="0" Grid.Row="1" Height="25" Width="25">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">

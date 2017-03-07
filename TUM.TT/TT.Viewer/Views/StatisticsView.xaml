@@ -30,7 +30,7 @@
             <TabItem x:Name="ThirdStatisticsTabHeader" Header="3"/>
             <TabItem x:Name="FourthStatisticsTabHeader" Header="4"/>
             <TabItem x:Name="LastStatisticsTabHeader" Header="L"/>
-            <TabItem x:Name="TotalMatchStatisticsTabHeader" Header="G" IsEnabled="False"/>
+            <!--<TabItem x:Name="TotalMatchStatisticsTabHeader" Header="G" IsEnabled="False"/>-->
         </TabControl>
 
 
