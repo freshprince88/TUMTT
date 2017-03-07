@@ -72,8 +72,8 @@ namespace TT.Viewer.Views
                     ResultListGrid.Margin = new Thickness(0);
                     Column0.Width = new GridLength(1, GridUnitType.Star);
                     Column1.Width = new GridLength(1, GridUnitType.Star);
-                    MediaRow1.Height = new GridLength(1, GridUnitType.Star);
-                    MediaRow2.Height = new GridLength(1, GridUnitType.Star);
+                    MediaRow1.Height = new GridLength(5, GridUnitType.Star);
+                    MediaRow2.Height = new GridLength(3, GridUnitType.Star);
 
                     break;
                 default:
