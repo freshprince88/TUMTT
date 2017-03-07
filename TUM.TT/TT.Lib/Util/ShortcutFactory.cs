@@ -134,6 +134,9 @@ namespace TT.Lib.Util
                 {"SelectBackhandTomahawk", new KeyBinding() {Key =Key.J, Modifiers = ModifierKeys.Shift}},
                 {"SelectBackhandSpecialServe", new KeyBinding() {Key =Key.K, Modifiers = ModifierKeys.Shift}},
 
+                {"DeleteLastRallyLiveMode", new KeyBinding() {Key =Key.OemMinus, Modifiers = ModifierKeys.None}},
+
+
 
 
 
