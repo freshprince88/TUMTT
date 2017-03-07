@@ -25,9 +25,9 @@
 
             <Grid x:Name="MediaGrid" Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" x:Name="MediaRow1" />
-                    <RowDefinition Height="*" x:Name="MediaRow2" />
+                    <RowDefinition Height="8*" />
+                    <RowDefinition Height="5*" x:Name="MediaRow1" />
+                    <RowDefinition Height="3*" x:Name="MediaRow2" />
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0" BorderThickness="1 0 0 1" BorderBrush="{DynamicResource AccentColorBrush}">
