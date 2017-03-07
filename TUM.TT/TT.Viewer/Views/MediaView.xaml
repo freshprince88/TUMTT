@@ -298,6 +298,17 @@
 
             <ToggleButton IsThreeState="True" Grid.Column="8" Style="{StaticResource MetroAccentFlatRepeat2Toggle}" IsChecked="{Binding Path=PlayMode}">
                 <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="FullscreenOnOff">
+                        </cal:ActionMessage>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Key="V" Modifiers="Alt"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="PlayModeHelper">
+                        </cal:ActionMessage>
+                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
                 
             </ToggleButton>
