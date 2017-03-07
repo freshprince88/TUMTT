@@ -253,7 +253,7 @@ namespace TT.Viewer.ViewModels
             Sets = new SortedDictionary<string, List<Rally>>();
             if (MatchManager.Match != null)
             {
-                foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
+                foreach (var rally in MatchManager.Match.Rallies)
                 {
                     var setNumber = (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1).ToString();
                     List<Rally> rallyList;
@@ -410,12 +410,12 @@ namespace TT.Viewer.ViewModels
             var customizationSets = new Dictionary<string, List<Rally>>();
             // 'all' sets
             if ((SetChoice & 1) == 1)
-                customizationSets["all"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies);
+                customizationSets["all"] = new List<Rally>(MatchManager.Match.Rallies);
 
             // 'crunch time sets
             if (CrunchTimeChoice)
             {
-                customizationSets["crunchtime"] = new List<Rally>(MatchManager.Match.DefaultPlaylist.Rallies.Where(r => r.CurrentRallyScore.First + r.CurrentRallyScore.Second >= 16));
+                customizationSets["crunchtime"] = new List<Rally>(MatchManager.Match.Rallies.Where(r => r.CurrentRallyScore.First + r.CurrentRallyScore.Second >= 16));
             }
 
             // sets 1-7
@@ -441,7 +441,7 @@ namespace TT.Viewer.ViewModels
                     if ((mask & combi) == mask)
                     {
                         combiName += i + ",";
-                        foreach (var rally in MatchManager.Match.DefaultPlaylist.Rallies)
+                        foreach (var rally in MatchManager.Match.Rallies)
                         {
                             if (rally.CurrentSetScore.First + rally.CurrentSetScore.Second + 1 == i)
                             {

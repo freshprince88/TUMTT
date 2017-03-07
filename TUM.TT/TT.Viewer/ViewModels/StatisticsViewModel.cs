@@ -33,7 +33,7 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            this.ActivePlaylist = new Playlist();
+            this.ActivePlaylist = new Playlist(Match);
 
             ServiceStatisticsView = new ServiceStatisticsViewModel(this.events, Manager);
             ReceiveStatisticsView = new ReceiveStatisticsViewModel(this.events, Manager);

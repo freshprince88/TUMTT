@@ -70,7 +70,7 @@ namespace TT.Scouter.ViewModels
                         {
                             if (LiveView.Rallies.Last().Winner != MatchPlayer.None)
                             {
-                                LiveView.CurrentRally = new Rally();
+                                LiveView.CurrentRally = new Rally(Manager.Match);
                                 LiveView.Rallies.Add(LiveView.CurrentRally);
                                 LiveView.CurrentRally.UpdateServerAndScore();
                                 NotifyOfPropertyChange("LiveView.CurrentRally");
@@ -78,8 +78,8 @@ namespace TT.Scouter.ViewModels
                         }
                         else
                         {
-                            LiveView.CurrentRally = new Rally();
-                            Manager.ActivePlaylist.Rallies.Add(LiveView.CurrentRally);
+                            LiveView.CurrentRally = new Rally(Manager.Match);
+                            Manager.Match.Rallies.Add(LiveView.CurrentRally);
                             LiveView.Server = LiveView.firstServerBackup;
                             LiveView.CurrentRally.Server = LiveView.firstServerBackup;
                             LiveView.CurrentRally.UpdateServerAndScore();
@@ -94,7 +94,7 @@ namespace TT.Scouter.ViewModels
                         {
                             if (LiveView.Rallies.Last().Winner == MatchPlayer.None)
                             {
-                                Manager.ActivePlaylist.Rallies.Remove(Manager.ActivePlaylist.Rallies.Last());
+                                Manager.Match.Rallies.Remove(Manager.Match.Rallies.Last());
                             }
                         }
 
@@ -110,7 +110,7 @@ namespace TT.Scouter.ViewModels
             Events = ev;
             Manager = man;
             Dialogs = cor;
-            Manager.ActiveRally = new Rally();
+            Manager.ActiveRally = new Rally(Manager.Match);
             LiveView = new LiveViewModel(Events, Manager, Dialogs);
             RemoteView = new RemoteViewModel(Events, Manager, Dialogs);
         }

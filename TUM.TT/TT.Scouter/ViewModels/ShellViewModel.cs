@@ -135,40 +135,40 @@ namespace TT.Scouter.ViewModels
             MatchManager.Match.PropertyChanged += SetMatchModified;
             MatchManager.Match.FirstPlayer.PropertyChanged += SetMatchModified;
             MatchManager.Match.SecondPlayer.PropertyChanged += SetMatchModified;
-            int countRallies = MatchManager.ActivePlaylist.Rallies.Count;
+            int countRallies = MatchManager.Match.Rallies.Count;
             for (int i = 0; i < countRallies; i++)
             {
-                MatchManager.ActivePlaylist.Rallies[i].PropertyChanged += SetMatchModified;
-                int countStrokes = MatchManager.ActivePlaylist.Rallies[i].Strokes.Count();
+                MatchManager.Match.Rallies[i].PropertyChanged += SetMatchModified;
+                int countStrokes = MatchManager.Match.Rallies[i].Strokes.Count();
                 for (int j = 0; j < countStrokes; j++)
                 {
-                    MatchManager.ActivePlaylist.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
-                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin != null)
-                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
-                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique != null)
-                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique.PropertyChanged += SetMatchModified;
-                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement != null)
-                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement.PropertyChanged += SetMatchModified;
+                    MatchManager.Match.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
+                    if (MatchManager.Match.Rallies[i].Strokes[j].Spin != null)
+                        MatchManager.Match.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
+                    if (MatchManager.Match.Rallies[i].Strokes[j].Stroketechnique != null)
+                        MatchManager.Match.Rallies[i].Strokes[j].Stroketechnique.PropertyChanged += SetMatchModified;
+                    if (MatchManager.Match.Rallies[i].Strokes[j].Placement != null)
+                        MatchManager.Match.Rallies[i].Strokes[j].Placement.PropertyChanged += SetMatchModified;
                 }
             }
 
         }
         public void Handle(RalliesStrokesAddedEvent message)
         {
-            int countRallies = MatchManager.ActivePlaylist.Rallies.Count;
+            int countRallies = MatchManager.Match.Rallies.Count;
             for (int i = 0; i < countRallies; i++)
             {
-                MatchManager.ActivePlaylist.Rallies[i].PropertyChanged += SetMatchModified;
-                int countStrokes = MatchManager.ActivePlaylist.Rallies[i].Strokes.Count();
+                MatchManager.Match.Rallies[i].PropertyChanged += SetMatchModified;
+                int countStrokes = MatchManager.Match.Rallies[i].Strokes.Count();
                 for (int j = 0; j < countStrokes; j++)
                 {
-                    MatchManager.ActivePlaylist.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
-                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin != null)
-                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
-                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique != null)
-                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Stroketechnique.PropertyChanged += SetMatchModified;
-                    if (MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement != null)
-                        MatchManager.ActivePlaylist.Rallies[i].Strokes[j].Placement.PropertyChanged += SetMatchModified;
+                    MatchManager.Match.Rallies[i].Strokes[j].PropertyChanged += SetMatchModified;
+                    if (MatchManager.Match.Rallies[i].Strokes[j].Spin != null)
+                        MatchManager.Match.Rallies[i].Strokes[j].Spin.PropertyChanged += SetMatchModified;
+                    if (MatchManager.Match.Rallies[i].Strokes[j].Stroketechnique != null)
+                        MatchManager.Match.Rallies[i].Strokes[j].Stroketechnique.PropertyChanged += SetMatchModified;
+                    if (MatchManager.Match.Rallies[i].Strokes[j].Placement != null)
+                        MatchManager.Match.Rallies[i].Strokes[j].Placement.PropertyChanged += SetMatchModified;
 
 
 

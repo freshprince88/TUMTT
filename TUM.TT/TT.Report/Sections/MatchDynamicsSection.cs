@@ -72,7 +72,7 @@ namespace TT.Report.Sections
             var rallyNoAxis = new LinearAxis()
             {
                 Minimum = 0,
-                Maximum = this.match.DefaultPlaylist.FinishedRallies.Count() + 0.5,
+                Maximum = this.match.FinishedRallies.Count() + 0.5,
                 MinorStep = 5,
                 MajorStep = 5,
                 MinorTickSize = 0,
@@ -165,7 +165,7 @@ namespace TT.Report.Sections
                 plot.Series.Add(series);
 
                 // Join the dynamics with the corresponding rally index.
-                var points = this.match.DefaultPlaylist.FinishedRallies
+                var points = this.match.FinishedRallies
                     .Select((r, i) => r.Server == player ? i + 1 : -1)
                     .Where(i => i != -1)
                     .Zip(this.Dynamics.ByServer[player], (n, d) => new DataPoint(n, d));

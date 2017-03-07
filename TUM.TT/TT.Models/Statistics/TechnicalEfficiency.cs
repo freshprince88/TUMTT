@@ -145,7 +145,7 @@ namespace TT.Models.Statistics
             var usage = this.ScoresAtLength(p, low) + this.ErrorsAtLength(p, low)
                 + this.ScoresAtLength(p, high) + this.ErrorsAtLength(p, high);
             var sr = (this.ScoresAtLength(p, low) + this.ScoresAtLength(p, high)) / usage;
-            var ur = usage / this.Match.DefaultPlaylist.FinishedRallies.Count();
+            var ur = usage / this.Match.FinishedRallies.Count();
             return new TE(sr, ur);
         }
 
@@ -174,7 +174,7 @@ namespace TT.Models.Statistics
         private double UsageRateAtLength(MatchPlayer player, int n)
         {
             return (this.ScoresAtLength(player, n) + this.ErrorsAtLength(player, n)) /
-                this.Match.DefaultPlaylist.FinishedRallies.Count();
+                this.Match.FinishedRallies.Count();
         }
 
         /// <summary>

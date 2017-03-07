@@ -341,7 +341,7 @@ namespace TT.Scouter.ViewModels
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
 

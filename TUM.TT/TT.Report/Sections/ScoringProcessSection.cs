@@ -58,7 +58,7 @@ namespace TT.Report.Sections
             var rallyNoAxis = new LinearAxis()
             {
                 Minimum = 0,
-                Maximum = this.match.DefaultPlaylist.FinishedRallies.Count() + 0.5,
+                Maximum = this.match.FinishedRallies.Count() + 0.5,
                 Position = AxisPosition.Bottom,
                 MinorStep = 5,
                 MajorStep = 5,
@@ -107,7 +107,7 @@ namespace TT.Report.Sections
                 });
 
             var rallyNo = 0;
-            foreach (var rally in this.match.DefaultPlaylist.FinishedRallies)
+            foreach (var rally in this.match.FinishedRallies)
             {
                 firstSeries.Points.Add(new DataPoint(rallyNo, rally.CurrentRallyScore.First));
                 secondSeries.Points.Add(new DataPoint(rallyNo, rally.CurrentRallyScore.Second));

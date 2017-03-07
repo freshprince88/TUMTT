@@ -108,7 +108,7 @@ namespace TT.Models.Serialization
             WriteRow(sheet, 5, "Results", "Player 1", "Player 2");
 
             var row = 6;
-            var sets = match.DefaultPlaylist.FinishedRallies
+            var sets = match.FinishedRallies
                 .Where(r => r.IsEndOfSet)
                 .Select(r => r.FinalSetScore)
                 .Select((s, i) => new object[] { string.Format("Set {0}", i + 1), s.First, s.Second });
@@ -142,7 +142,7 @@ namespace TT.Models.Serialization
             WriteRow(sheet, row, header);
             row++;
 
-            var rallies = match.DefaultPlaylist.FinishedRallies
+            var rallies = match.FinishedRallies
                 .Select((r, i) => new object[] 
                 {
                     i + 1, // The rally number
@@ -181,13 +181,13 @@ namespace TT.Models.Serialization
 
             foreach (var rally in ParseRallyTable(sheet))
             {
-                match.DefaultPlaylist.Rallies.Add(rally);
+                match.Rallies.Add(rally);
             }
 
-            if (match.DefaultPlaylist.FinishedRallies.Any())
+            if (match.FinishedRallies.Any())
             {
                 // Determine the mode of this match
-                var winningScore = match.DefaultPlaylist.Rallies.Last().FinalSetScore.Highest;
+                var winningScore = match.Rallies.Last().FinalSetScore.Highest;
                 var modes = (MatchMode[])Enum.GetValues(typeof(MatchMode));
                 match.Mode = modes
                     .Where(m => winningScore == m.RequiredSets())

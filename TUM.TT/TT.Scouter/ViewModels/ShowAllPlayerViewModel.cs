@@ -163,13 +163,13 @@ namespace TT.Scouter.ViewModels
                 };
                 yield return question;
 
-                var playlist = MatchManager.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-                var lastRally = playlist.Rallies.LastOrDefault();
+                var match = MatchManager.Match;
+                var lastRally = match.Rallies.LastOrDefault();
                 //TODO
-                if (playlist.Rallies.Any())
+                if (match.Rallies.Any())
                 {
                     if (lastRally.Winner == MatchPlayer.None)
-                        playlist.Rallies.Remove(lastRally);
+                        match.Rallies.Remove(lastRally);
                 }
 
                 if (question.Result)
@@ -193,7 +193,7 @@ namespace TT.Scouter.ViewModels
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
         #endregion
