@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="TTProjects" Directory="INSTALLFOLDER"
+                    Source="$(var.TT.Viewer.TargetDir)">
+      <Component>
+        <File Name="TT.Lib.dll" />
+      </Component>
+      <Component>
+        <File Name="TT.Converters.dll" />
+      </Component>
+      <Component>
+        <File Name="TT.Models.dll" />
+      </Component>
+      <Component>
+        <File Name="TT.Report.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
