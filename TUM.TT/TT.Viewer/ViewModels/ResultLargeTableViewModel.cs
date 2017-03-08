@@ -161,7 +161,11 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(RallyLengthChangedEvent message)
         {
-            RallyLength = message;
+            if (message != RallyLength)
+            {
+                RallyLength = message;
+                UpdateStrokeDisplay(Rallies);
+            }
         }
 
         public void Handle(MediaControlEvent message)
