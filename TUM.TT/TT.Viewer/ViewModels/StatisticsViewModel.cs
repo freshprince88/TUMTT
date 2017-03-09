@@ -13,21 +13,15 @@ namespace TT.Viewer.ViewModels
 {
     public class StatisticsViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public ServiceStatisticsViewModel ServiceStatisticsView { get; set; }
-        public ReceiveStatisticsViewModel ReceiveStatisticsView { get; set; }
-        public ThirdBallStatisticsViewModel ThirdBallStatisticsView { get; set; }
-        public FourthBallStatisticsViewModel FourthBallStatisticsView { get; set; }
-        public LastBallStatisticsViewModel LastBallStatisticsView { get; set; }
-        public TotalMatchStatisticsViewModel TotalMatchStatisticsView { get; set; }
-        public int SelectedTab { get; set; }
         public Playlist ActivePlaylist { get; set; }
-        private Match Match { get; set; }
+        public int SelectedTab { get; set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
         private IMatchManager Manager;
+        private readonly Dictionary<string, object[]> _tabNameDictionary;
 
         public StatisticsViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
@@ -35,12 +29,16 @@ namespace TT.Viewer.ViewModels
             Manager = man;
             this.ActivePlaylist = new Playlist(Match);
 
-            ServiceStatisticsView = new ServiceStatisticsViewModel(this.events, Manager);
-            ReceiveStatisticsView = new ReceiveStatisticsViewModel(this.events, Manager);
-            ThirdBallStatisticsView = new ThirdBallStatisticsViewModel(this.events, Manager);
-            FourthBallStatisticsView = new FourthBallStatisticsViewModel(this.events, Manager);
-            LastBallStatisticsView = new LastBallStatisticsViewModel(this.events, Manager);
-            TotalMatchStatisticsView = new TotalMatchStatisticsViewModel(this.events, Manager);
+            _tabNameDictionary = new Dictionary<string, object[]>()
+            {
+                ["ServiceStatisticsTab"] = new object[] {new ServiceStatisticsViewModel(this.events, Manager), 1},
+                ["ReceiveStatisticsTab"] = new object[] {new ReceiveStatisticsViewModel(this.events, Manager), 2},
+                ["ThirdStatisticsTab"] = new object[] {new ThirdBallStatisticsViewModel(this.events, Manager), 3},
+                ["FourthStatisticsTab"] = new object[] {new FourthBallStatisticsViewModel(this.events, Manager), 4},
+                ["LastStatisticsTab"] = new object[] {new LastBallStatisticsViewModel(this.events, Manager), 5},
+                ["TotalMatchStatisticsTab"] = new object[] {new TotalMatchStatisticsViewModel(this.events, Manager), 1}
+            };
+
             SelectedTab = 0;
         }
 
@@ -52,8 +50,15 @@ namespace TT.Viewer.ViewModels
             // Activate the welcome model
             if (this.ActiveItem == null)
             {
-                this.ActivateItem(ServiceStatisticsView);
-                
+                var s = _tabNameDictionary["ServiceStatisticsTab"];
+                this.ActivateItem((IScreen) s[0]);
+                Manager.CurrentRallyLength = (int) s[1];
+            }
+            else
+            {
+                var sel = _tabNameDictionary.Where(vmAndRallyLength => ActiveItem == vmAndRallyLength.Value[0]);
+                var first = sel.First();
+                Manager.CurrentRallyLength = (int)first.Value[1];
             }
         }
 
@@ -66,36 +71,13 @@ namespace TT.Viewer.ViewModels
 
         public void FilterSelected(SelectionChangedEventArgs args)
         {
-            TabItem selected = args.AddedItems[0] as TabItem;
-            switch (selected.Name)
-            {
-                case "ServiceStatisticsTabHeader":
-                    this.ActivateItem(ServiceStatisticsView);                  
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-                    break;
-                case "ReceiveStatisticsTabHeader":
-                    this.ActivateItem(ReceiveStatisticsView);                     
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
-                    break;
-                case "ThirdStatisticsTabHeader":
-                    this.ActivateItem(ThirdBallStatisticsView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
-                    break;
-                case "FourthStatisticsTabHeader":
-                    this.ActivateItem(FourthBallStatisticsView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
-                    break;
-                case "LastStatisticsTabHeader":
-                    this.ActivateItem(LastBallStatisticsView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
-                    break;
-                case "TotalMatchStatisticsTabHeader":
-                    this.ActivateItem(TotalMatchStatisticsView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-                    break;
-                default:
-                    break;
-            }
+            var selected = args.AddedItems[0] as TabItem;
+            if (selected == null)
+                return;
+
+            var s = _tabNameDictionary[selected.Name];
+            ActivateItem((IScreen) s[0]);
+            Manager.CurrentRallyLength = (int)s[1];
         }
     }
 }
