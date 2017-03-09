@@ -10,6 +10,7 @@ using TT.Lib.Results;
 using TT.Scouter.ViewModels;
 using TT.Lib.Events;
 using System;
+using TT.Lib.Util;
 
 namespace TT.Scouter.ViewModels
 {
@@ -34,7 +35,6 @@ namespace TT.Scouter.ViewModels
             MatchManager = manager;
             DialogCoordinator = coordinator;
             
-
         }
 
         #region Caliburn hooks
@@ -52,18 +52,24 @@ namespace TT.Scouter.ViewModels
 
         protected override void OnViewLoaded(object view)
         {
-            base.OnViewLoaded(view);
+            base.OnViewLoaded(view);            
         }
 
         protected override void OnActivate()
         {
             base.OnActivate();
-            Events.Subscribe(this);
+            Events.Subscribe(this);            
 
             if (this.ActiveItem == null)
             {
                 ActivateItem(new WelcomeViewModel(Events, MatchManager));
             }
+
+            string registry = @"Software\Technische Universität München\Table Tennis Analysis\Secure";
+            Secure scr = new Secure(Secure.Mode.Date);
+            bool validVersion = scr.Algorithm("xyz", registry);
+            if (validVersion != true)
+                this.TryClose();
         }
 
         /// <summary>

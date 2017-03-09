@@ -172,6 +172,7 @@
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
     <Compile Include="Util\MatchHashGenerator.cs" />
     <Compile Include="Util\ObservableSortedList.cs" />
+    <Compile Include="Util\Secure.cs" />
     <Compile Include="Util\ShortcutFactory.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
