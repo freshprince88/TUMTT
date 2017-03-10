@@ -13,6 +13,7 @@ using TT.Lib;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
+using TT.Lib.Util;
 using TT.Models;
 using TT.Models.Util;
 using TT.Report.Renderers;
@@ -75,6 +76,12 @@ namespace TT.Viewer.ViewModels
         {
             base.OnActivate();
             Events.Subscribe(this);
+
+            string registry = @"Software\Technische Universität München\Table Tennis Analysis\Secure";
+            Secure scr = new Secure(Secure.Mode.Date);
+            bool validVersion = scr.Algorithm("xyz", registry);
+            if (validVersion != true)
+                this.TryClose();
 
             if (this.ActiveItem == null)
             {
