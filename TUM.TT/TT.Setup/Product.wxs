@@ -21,7 +21,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
 
-    <Feature Id="Complete" Title="Complete" Display="expand" ConfigurableDirectory="INSTALLFOLDER" Level="99">
+    <Feature Id="Complete" Title="TUM.TT" Display="expand" ConfigurableDirectory="INSTALLFOLDER" Level="1">
       <Feature Id="Viewer" Title="Viewer" Level="1">
         <ComponentGroupRef Id="DependencyComponents" />
         <ComponentGroupRef Id="ViewerComponents" />
@@ -30,7 +30,7 @@
       <Feature Id="Scouter" Title="Scouter" Level="99">
         <ComponentGroupRef Id="ScouterComponents" />
       </Feature>
-    </Feature>
+    </Feature>    
 
 
     <UI Id='Mondo'>
