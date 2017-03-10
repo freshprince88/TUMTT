@@ -80,10 +80,10 @@ namespace TT.Scouter.ViewModels
                 MatchManager.MatchModified = true;
                 NotifyOfPropertyChange("MatchModified");
 
-                Rally first = new Rally();
+                Rally first = new Rally(Match);
                 first.Number = 1;
 
-                MatchManager.ActivePlaylist.Rallies.Add(first);
+                MatchManager.Match.Rallies.Add(first);
                 first.UpdateServerAndScore();
 
                 var nextScreen = ShowScreenResult.Of<VideoSourceViewModel>();

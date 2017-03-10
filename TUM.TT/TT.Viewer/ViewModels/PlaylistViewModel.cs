@@ -61,7 +61,7 @@ namespace TT.Viewer.ViewModels
             //this.events.PublishOnUIThread(new ShowInputDialogEvent("Please enter a name for the playlist", "New Playlist")); 
             if (name != null && name != string.Empty)
             {
-                Playlist p = new Playlist();
+                Playlist p = new Playlist(MatchManager.Match);
                 p.Name = name;
                 MatchManager.Match.Playlists.Add(p);
                 MatchManager.MatchModified = true;
@@ -275,9 +275,9 @@ namespace TT.Viewer.ViewModels
                 Playlist list = MatchManager.Match.Playlists.Where(p => p.Name == targetItem.Name).FirstOrDefault();
                 if (list != null && !list.Rallies.Contains(sourceItem.Rally))
                 {
-                    list.Rallies.Add(sourceItem.Rally);
+                    list.Add(sourceItem.Rally);
                     //Sort List after Rally-Number
-                    Sort(list.Rallies);
+                    list.Sort();
                     MatchManager.MatchModified = true;
                     NotifyOfPropertyChange("MatchManager.MatchModified");
                     targetItem.Count++;
@@ -295,11 +295,11 @@ namespace TT.Viewer.ViewModels
                 var plNumbers = list.Rallies.Select(r => r.Number).ToList();
                 var except = dropNumbers.Except(plNumbers);
                 var newItems = temp.Where(r => except.Contains(r.Number));
-                list.Rallies.AddRange(newItems);
+                list.AddRange(newItems);
                 targetItem.Count = list.Rallies.Count;
                 targetItem.PlayTime = calcPlaytime(list);
                 //Sort List after Rally-Number                        
-                Sort(list.Rallies);
+                list.Sort();
                 targetItem.PlayTime= calcPlaytime(list);
                 this.Items.Refresh();
                 MatchManager.MatchModified = true;
@@ -321,9 +321,9 @@ namespace TT.Viewer.ViewModels
                 var playlist = MatchManager.Match.Playlists.FirstOrDefault(p => p.Name == targetItem.Name);
                 if (playlist != null && !playlist.Rallies.Contains(sourceItem))
                 {
-                    playlist.Rallies.Add(sourceItem);
+                    playlist.Add(sourceItem);
                     //Sort List after Rally-Number
-                    Sort(playlist.Rallies);
+                    playlist.Sort();
                     MatchManager.MatchModified = true;
                     NotifyOfPropertyChange("MatchManager.MatchModified");
                     targetItem.Count++;

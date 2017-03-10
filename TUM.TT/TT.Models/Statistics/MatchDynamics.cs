@@ -32,9 +32,9 @@ namespace TT.Models.Statistics
         {
             // The overall dynamics, calculated from the point of view of the 
             // winning player.
-            var winner = this.Match.IsOver ? this.Match.DefaultPlaylist.FinishedRallies.Last().Winner :
+            var winner = this.Match.IsOver ? this.Match.FinishedRallies.Last().Winner :
                MatchPlayer.First;
-            var overallResults = this.Match.DefaultPlaylist.FinishedRallies
+            var overallResults = this.Match.FinishedRallies
                 .Select(r => r.Winner == winner ? 1d : 0d)
                 .ToArray();
             var overallStatsComputable = overallResults.Length >= WindowSize - 1;
@@ -46,7 +46,7 @@ namespace TT.Models.Statistics
             bool playerStatsComputable = true;
             foreach (var player in new MatchPlayer[] { MatchPlayer.First, MatchPlayer.Second })
             {
-                var playerResults = this.Match.DefaultPlaylist.FinishedRallies
+                var playerResults = this.Match.FinishedRallies
                     .Where(r => r.Server == player)
                     .Select(r => r.Winner == player ? 1d : 0d)
                     .ToArray();

@@ -43,7 +43,7 @@ namespace TT.Scouter.ViewModels
         public IMediaPosition MediaPlayer { get; set; }
 
         public Match Match { get { return MatchManager.Match; } }
-        public IEnumerable<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
+        public IEnumerable<Rally> Rallies { get { return MatchManager.Match.Rallies; } }
         public RemoteStrokeViewModel SchlagView { get; set; }
 
         private bool _service;
@@ -318,7 +318,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = man;
             Dialogs = dia;
             fromConstructor = true;
-            CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
+            CurrentRally = MatchManager.Match.Rallies.FirstOrDefault();
             ServiceChecked = true;
             ReceiveChecked = false;
             ThirdChecked = false;
@@ -341,7 +341,7 @@ namespace TT.Scouter.ViewModels
             this.ActivateItem(PositionsRallyView);
 
             if (fromConstructor)
-                CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
+                CurrentRally = MatchManager.Match.Rallies.FirstOrDefault();
 
             fromConstructor = false;
         }

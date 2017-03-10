@@ -161,35 +161,35 @@ namespace TT.Viewer.ViewModels
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
         public bool CanSaveMatch
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
         public bool CanSaveMatchAs
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
         public bool CanShowPlayer
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
         public bool CanShowCompetition
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.DefaultPlaylist.FinishedRallies.Any();
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
 

@@ -185,7 +185,7 @@ namespace TT.Models.Statistics
 
                 // Get all rallies that are actually long enough for our player
                 // to get to stroke i+1
-                var rallies = this.Match.DefaultPlaylist.FinishedRallies
+                var rallies = this.Match.FinishedRallies
                     .Where(r => r.Length >= i && r.Server == server);
 
                 // Now determine how many rallies end here
@@ -203,7 +203,7 @@ namespace TT.Models.Statistics
             }
 
             // Now compute the catch all state.
-            var allRemainingRallies = this.Match.DefaultPlaylist.FinishedRallies
+            var allRemainingRallies = this.Match.FinishedRallies
                 .Where(r => r.Length > StrokeLimit);
 
             var remainingRalliesEnding = allRemainingRallies

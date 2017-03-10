@@ -20,9 +20,14 @@ namespace TT.Models
     public class Rally : PropertyChangedBase
     {
         /// <summary>
+        /// Backs the ID of this Rally
+        /// </summary>
+        private Guid id;
+
+        /// <summary>
         /// Backs the <see cref="Playlist"/> property.
         /// </summary>
-        private Playlist playlist;
+        private Match match;
 
         /// <summary>
         /// Backs the <see cref="Strokes"/> property.
@@ -84,17 +89,35 @@ namespace TT.Models
         /// </summary>
         public Rally()
         {
+            if (this.id == null || this.id == Guid.Empty)
+            {
+                this.id = Guid.NewGuid();
+            }
             this.schläge.CollectionChanged += this.OnSchlägeChanged;
+        }
+
+        public Rally(Match m) : this()
+        {
+            this.match = m;
+        }
+
+        /// <summary>
+        /// Returns the ID of this Rally
+        /// </summary>
+        [XmlAttribute]
+        public Guid ID
+        {
+            get { return this.id; }
+            set { this.id = value; }
         }
 
         /// <summary>
         /// Gets or sets the match this rally.
         /// </summary>
         [XmlIgnore]
-        public Playlist Playlist
+        public Match Match
         {
-            get { return this.playlist; }
-            set { this.RaiseAndSetIfChanged(ref this.playlist, value); }
+            get { return this.match; }
         }
 
         /// <summary>
@@ -323,7 +346,7 @@ namespace TT.Models
         /// </summary>
         public void UpdateServerAndScore()
         {
-            if (this.Playlist == null)
+            if (this.Match == null)
             {
                 throw new InvalidOperationException("Rally not part of a Playlist");
             }
@@ -340,7 +363,7 @@ namespace TT.Models
         /// </summary>
         private void UpdateNummer()
         {
-            var previousRally = this.Playlist.FindPreviousRally(this);
+            var previousRally = this.Match.FindPreviousRally(this);
 
             // We don't need to update the server if there is no previous rally
             if (previousRally != null)
@@ -358,13 +381,13 @@ namespace TT.Models
         /// </summary>
         private void UpdateServer()
         {
-            MatchPlayer FirstServer = this.Playlist.Rallies[0].Server;
-            var previousRally = this.Playlist.FindPreviousRally(this);
+            MatchPlayer FirstServer = this.match.Rallies[0].Server;
+            var previousRally = this.match.FindPreviousRally(this);
 
             // We don't need to update the server if there is no previous rally
             if (previousRally != null)
             {
-                var prePreviousRally = this.Playlist.FindPreviousRally(previousRally);
+                var prePreviousRally = this.match.FindPreviousRally(previousRally);
 
                 if (previousRally.IsEndOfSet)
                 {
@@ -382,7 +405,7 @@ namespace TT.Models
                     && previousRally.Server == prePreviousRally.Server
                     && !prePreviousRally.IsEndOfSet)
                 {
-                    MatchPlayer FirstS = this.Playlist.Rallies[0].Server;
+                    MatchPlayer FirstS = this.match.Rallies[0].Server;
                     // If the last two rallies in *this* set were served by the same player, 
                     // change the serving player for this rally
                     this.Server = previousRally.Server.Other();
@@ -400,7 +423,7 @@ namespace TT.Models
         /// </summary>
         private void UpdateScore()
         {
-            var previousRally = this.Playlist.FindPreviousRally(this);
+            var previousRally = this.match.FindPreviousRally(this);
 
             // If there is no previous rally, start fresh with zero score.  If the previous rally
             // wins the set, also start with a fresh 

@@ -132,7 +132,7 @@ namespace TT.Scouter.ViewModels
         public MatchPlayer firstServerBackup { get; set; }
 
         public Match Match { get { return MatchManager.Match; } }
-        public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
+        public ObservableCollection<Rally> Rallies { get { return MatchManager.Match.Rallies; } }
 
         private Rally _currentRally;
         /// <summary>
@@ -225,7 +225,7 @@ namespace TT.Scouter.ViewModels
             Dialogs = cor;
             IsNewRally = true;
             IsWinnerEnabled = false;
-            CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
+            CurrentRally = MatchManager.Match.Rallies.FirstOrDefault();
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
             //MediaPlayer = new LiveMediaViewModel(Events, MatchManager,Dialogs);
@@ -305,10 +305,10 @@ namespace TT.Scouter.ViewModels
                 if (Markiert)
                 {
                     Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                    marked.Rallies.Add(CurrentRally);
+                    marked.Add(CurrentRally);
                 }
 
-                CurrentRally = new Rally();
+                CurrentRally = new Rally(Match);
                 Rallies.Add(CurrentRally);
                 CurrentRally.UpdateServerAndScore();
                 Server = CurrentRally.Server;
@@ -386,7 +386,7 @@ namespace TT.Scouter.ViewModels
                     lastRally = Rallies.Last();
                 }
                 Rallies.Remove(lastRally);
-                Rallies.Add(new Rally());
+                Rallies.Add(new Rally(Match));
                 CurrentRally = Rallies.Last();
                 this.Server = firstServerBackup;
                 CurrentRally.Server = this.Server;
@@ -410,7 +410,7 @@ namespace TT.Scouter.ViewModels
                     lastRally = Rallies.Last();
                 }
                 Rallies.Remove(lastRally);
-                Rallies.Add(new Rally());
+                Rallies.Add(new Rally(Match));
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
                 IsNewRally = true;

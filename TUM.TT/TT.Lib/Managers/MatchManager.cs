@@ -180,9 +180,10 @@ namespace TT.Lib.Managers
         }
         #endregion
 
-        public MatchManager(IEventAggregator aggregator)
+        public MatchManager(IEventAggregator aggregator, Match m)
         {
             Events = aggregator;
+            this.Match = m;
             CurrentRallyLength = 1;
             SelectedRallies = new List<Rally>();
         }
@@ -209,14 +210,13 @@ namespace TT.Lib.Managers
             }
 
             //Remove Dummy Rally from Scouter
-            var playList = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-            var lastRally = playList.Rallies.LastOrDefault();
+            var lastRally = Match.Rallies.LastOrDefault();
             bool haveToAddAgain = false;
-            if (playList.Rallies.Any())
+            if (Match.Rallies.Any())
             {
                 if (lastRally.Winner == MatchPlayer.None)
                 {
-                    playList.Rallies.Remove(lastRally);
+                    Match.Rallies.Remove(lastRally);
                     haveToAddAgain = true;
                 }
             }
@@ -228,7 +228,7 @@ namespace TT.Lib.Managers
 
             if (haveToAddAgain)
             {
-                Execute.OnUIThread((System.Action)(() => playList.Rallies.Add(lastRally)));
+                Execute.OnUIThread((System.Action)(() => Match.Rallies.Add(lastRally)));
             }
             MatchModified = false;
             NotifyOfPropertyChange("MatchModified");
@@ -247,14 +247,13 @@ namespace TT.Lib.Managers
 
 
             //Remove Dummy Rally from Scouter
-            var playList = Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
-            var lastRally = playList.Rallies.LastOrDefault();
+            var lastRally = Match.Rallies.LastOrDefault();
             bool haveToAddAgain = false;
-            if (playList.Rallies.Any())
+            if (Match.Rallies.Any())
             {
                 if (lastRally.Winner == MatchPlayer.None)
                 {
-                    playList.Rallies.Remove(lastRally);
+                    Match.Rallies.Remove(lastRally);
                     haveToAddAgain = true;
                 }
             }
@@ -267,7 +266,7 @@ namespace TT.Lib.Managers
 
             if (haveToAddAgain)
             {
-                Execute.OnUIThread((System.Action)(() => playList.Rallies.Add(lastRally)));
+                Execute.OnUIThread((System.Action)(() => Match.Rallies.Add(lastRally)));
             }
 
             MatchModified = false;
@@ -385,9 +384,7 @@ namespace TT.Lib.Managers
         {
             if (ActivePlaylist.Name != "Alle")
             {
-                Boolean test;
-                test = ActivePlaylist.Rallies.Remove(r);
-                Playlist test2 = ActivePlaylist;
+                bool success = ActivePlaylist.RallyIDs.Remove(r.ID);
                 Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
                 Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
                 MatchModified = true;
@@ -417,8 +414,8 @@ namespace TT.Lib.Managers
             Match.DateTime = DateTime.Now;
             Match.FirstPlayer = new Player(1);
             Match.SecondPlayer = new Player(2);
-            Match.Playlists.Add(new Playlist() { Name = "Alle", Match = Match });
-            Match.Playlists.Add(new Playlist() { Name = "Markiert", Match = Match });
+            Match.Playlists.Add(new Playlist(Match) { Name = "Alle" });
+            Match.Playlists.Add(new Playlist(Match) { Name = "Markiert" });
             this.ActivePlaylist = this.Match.Playlists.Where(p => p.Name == "Alle").FirstOrDefault();
             this.FileName = String.Empty;
             this.MatchModified = false;

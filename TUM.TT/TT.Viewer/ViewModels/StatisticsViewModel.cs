@@ -27,7 +27,7 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            this.ActivePlaylist = new Playlist();
+            this.ActivePlaylist = new Playlist(Manager.Match);
 
             _tabNameDictionary = new Dictionary<string, object[]>()
             {
