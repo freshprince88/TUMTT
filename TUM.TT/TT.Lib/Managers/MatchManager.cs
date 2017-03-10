@@ -382,12 +382,13 @@ namespace TT.Lib.Managers
 
         public void DeleteRally(Rally r)
         {
-            Boolean test;
-            test = Match.Rallies.Remove(r);
-            Playlist test2 = ActivePlaylist;
-            Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
-            Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
-            MatchModified = true;
+            if (ActivePlaylist.Name != "Alle")
+            {
+                bool success = ActivePlaylist.RallyIDs.Remove(r.ID);
+                Events.PublishOnUIThread(new PlaylistSelectionChangedEvent());
+                Events.PublishOnUIThread(new PlaylistChangedEvent(ActivePlaylist));
+                MatchModified = true;
+            }
         }
 
         public void RenamePlaylist(string oldName, string newName)
