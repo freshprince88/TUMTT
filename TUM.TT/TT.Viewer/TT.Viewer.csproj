@@ -92,8 +92,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Microsoft.TeamFoundation.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="NReco.VideoConverter, Version=1.1.0.0, Culture=neutral, PublicKeyToken=395ccb334978a0cd, processorArchitecture=MSIL">
-      <HintPath>..\packages\NReco.VideoConverter.1.1.0.0\lib\net20\NReco.VideoConverter.dll</HintPath>
+    <Reference Include="NReco.VideoConverter, Version=1.1.2.0, Culture=neutral, PublicKeyToken=395ccb334978a0cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.VideoConverter.1.1.2\lib\net20\NReco.VideoConverter.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

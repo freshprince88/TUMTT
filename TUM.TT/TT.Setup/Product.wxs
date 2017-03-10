@@ -6,13 +6,13 @@
            Manufacturer="Technische Universität München"
            UpgradeCode="4BA29266-C904-4B01-8534-E05F33E91CB0">
 
-    <?if $(var.Platform) = x64 ?>
+    <!--<?if $(var.Platform) = x64 ?>
     <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
     <?else ?>
     <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
-    <?endif ?>
+    <?endif ?>-->
 
-    <Package InstallerVersion="400" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="400" Compressed="yes" InstallScope="perUser" />
 
     <Condition Message="This application only runs on Windows Vista, Windows Server 2008, or higher.">
       <![CDATA[Installed OR (VersionNT >= 600)]]>
@@ -45,8 +45,11 @@
 
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="$(var.PlatformProgramFilesFolder)">
+      <Directory Id="LocalAppDataFolder">
         <Directory Id="INSTALLFOLDER" Name="TUM Table Tennis Analysis">
+          <Component Id="RemoveInstallFolder" Guid="{4F886F4F-3929-4C43-8490-021873AB955E}">
+            <RemoveFolder Id="RM_InstallFolder" On="uninstall"/>
+          </Component>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -73,6 +76,7 @@
       <ComponentGroupRef Id="DragDrop" />
       <ComponentGroupRef Id="TTProjects" />
       <ComponentGroupRef Id="ListView" />
+      <ComponentRef Id="RemoveInstallFolder"/>
     </ComponentGroup>
   </Fragment>
 
