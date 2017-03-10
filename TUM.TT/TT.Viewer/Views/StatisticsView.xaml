@@ -25,12 +25,12 @@
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
                 </Style>
             </TabControl.Resources>
-            <TabItem x:Name="ServiceStatisticsTabHeader" Header="S"/>
-            <TabItem x:Name="ReceiveStatisticsTabHeader" Header="R"/>
-            <TabItem x:Name="ThirdStatisticsTabHeader" Header="3"/>
-            <TabItem x:Name="FourthStatisticsTabHeader" Header="4"/>
-            <TabItem x:Name="LastStatisticsTabHeader" Header="L"/>
-            <!--<TabItem x:Name="TotalMatchStatisticsTabHeader" Header="G" IsEnabled="False"/>-->
+            <TabItem x:Name="ServiceStatisticsTab" Header="S"/>
+            <TabItem x:Name="ReceiveStatisticsTab" Header="R"/>
+            <TabItem x:Name="ThirdStatisticsTab" Header="3"/>
+            <TabItem x:Name="FourthStatisticsTab" Header="4"/>
+            <TabItem x:Name="LastStatisticsTab" Header="L"/>
+            <!--<TabItem x:Name="TotalMatchStatisticsTab" Header="G" IsEnabled="False"/>-->
         </TabControl>
 
 
