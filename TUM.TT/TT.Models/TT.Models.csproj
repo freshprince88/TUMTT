@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\NoStrokeEndPointException.cs" />
     <Compile Include="Exceptions\NoStrokeStartingPointException.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
