@@ -36,6 +36,7 @@
     <Compile Include="Product.wxs" />
     <Compile Include="System.Windows.Interactivity.wxs" />
     <Compile Include="Scouter.wxs" />
+    <Compile Include="TeamFoundation.Controls.wxs" />
     <Compile Include="TTProjects.wxs" />
     <Compile Include="Viewer.wxs" />
     <Compile Include="Xceed.Wpf.Toolkit.wxs" />

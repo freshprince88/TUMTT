@@ -314,7 +314,6 @@ namespace TT.Viewer.ViewModels
             if (IsWindowOpen<Window>("ReportSettings"))
             {
                 Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ReportSettings").FirstOrDefault().Focus();
-
             }
             else
             {

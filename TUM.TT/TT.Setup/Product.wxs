@@ -76,6 +76,7 @@
       <ComponentGroupRef Id="DragDrop" />
       <ComponentGroupRef Id="TTProjects" />
       <ComponentGroupRef Id="ListView" />
+      <ComponentGroupRef Id="TeamFoundation.Controls"/>
       <ComponentRef Id="RemoveInstallFolder"/>
     </ComponentGroup>
   </Fragment>
