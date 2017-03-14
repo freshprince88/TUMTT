@@ -183,14 +183,14 @@
                         </Rectangle>
                     </Controls:Tile>
 
-                    <Controls:Tile Grid.Column="6" Title="ITTV" cal:Message.Attach="[Event Click] = [Action OpenITTV()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <!--<Controls:Tile Grid.Column="6" Title="ITTV" cal:Message.Attach="[Event Click] = [Action OpenITTV()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_stream}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                    </Controls:Tile>
+                    </Controls:Tile>-->
 
                     <Controls:Tile Grid.Column="7" Title="Shortcuts" cal:Message.Attach="[Event Click] = [Action ShowKeyBindingEditor()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 

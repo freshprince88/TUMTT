@@ -116,7 +116,7 @@
                 </Rectangle>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cal:ActionMessage MethodName="StartRallyAtBeginning">
+                        <cal:ActionMessage MethodName="Previous5Frames">
                         </cal:ActionMessage>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
