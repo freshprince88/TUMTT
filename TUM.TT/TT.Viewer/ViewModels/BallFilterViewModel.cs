@@ -13,53 +13,64 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ThirdBallViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class BallFilterViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
         IHandle<BasicFilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
-        public Models.Util.Enums.Stroke.Hand Hand { get; private set; }
-        public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
-        public HashSet<Positions.Table> SelectedTablePositions { get; set; }
-        public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
-        private HashSet<Models.Util.Enums.Stroke.Aggressiveness> _aggressiveness;
+        public Filter BallFilter;
         public HashSet<Models.Util.Enums.Stroke.Aggressiveness> SelectedAggressiveness
         {
             get
             {
-                return _aggressiveness;
-            }
-            private set
-            {
-                _aggressiveness = value;
+                return BallFilter.Aggressiveness;
             }
         }
-        private HashSet<Models.Util.Enums.Stroke.Specials> _specials;
         public HashSet<Models.Util.Enums.Stroke.Specials> SelectedSpecials
         {
             get
             {
-                return _specials;
-            }
-            private set
-            {
-                _specials = value;
+                return BallFilter.Specials;
             }
         }
-        public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
-
-        private HashSet<Models.Util.Enums.Stroke.Technique> _strokeTec;
+        public Models.Util.Enums.Stroke.StepAround StepAround {
+            get
+            {
+                return BallFilter.StepAround;
+            }
+        }
 
         public HashSet<Models.Util.Enums.Stroke.Technique> SelectedStrokeTec
         {
             get
             {
-                return _strokeTec;
+                return BallFilter.StrokeTec;
             }
-            private set
+        }
+
+        public Models.Util.Enums.Stroke.Hand Hand
+        {
+            get
             {
-                _strokeTec = value;
+                return BallFilter.Hand;
+            }
+        }
+
+        public Models.Util.Enums.Stroke.Quality Quality
+        {
+            get
+            {
+                return BallFilter.Quality;
+            }
+        }
+
+        private string _name;
+        public string Name
+        {
+            get
+            {
+                return _name;
             }
         }
 
@@ -69,26 +80,27 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IMatchManager Manager;
 
-        public ThirdBallViewModel(IEventAggregator eventAggregator, IMatchManager man)
+        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber) 
+            : this(eventAggregator, man, strokeNumber, String.Concat((strokeNumber + 1).ToString(), ". Stroke:")) { }
+
+        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber, string name)
+            : this(eventAggregator, man, strokeNumber, name, new Filter(strokeNumber)) { }
+
+        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber, string name, Filter filter)
         {
+            _name = name;
+
             this.events = eventAggregator;
             Manager = man;
-            Hand = Models.Util.Enums.Stroke.Hand.None;
-            SelectedStrokeLengths = new HashSet<Positions.Length>();
-            SelectedTablePositions = new HashSet<Positions.Table>();
-            Quality = Models.Util.Enums.Stroke.Quality.None;
-            SelectedAggressiveness = new HashSet<Models.Util.Enums.Stroke.Aggressiveness>();
-            SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
-            SelectedStrokeTec = new HashSet<Models.Util.Enums.Stroke.Technique>();
-            StepAround = Models.Util.Enums.Stroke.StepAround.Not;
+            BallFilter = filter;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
-                MinRallyLength = 2,
-                PlayerLabel="3rd Stroke:",
-                StrokeNumber = 2
+                MinRallyLength = strokeNumber,
+                PlayerLabel = _name,
+                StrokeNumber = strokeNumber
             };
-            TableView = new TableStandardViewModel(this.events,"Third");
-            TableView.StrokeNumber = 2;
+            TableView = new TableStandardViewModel(this.events, _name);
+            TableView.StrokeNumber = strokeNumber;
             TableView.lastStroke = false;
         }
 
@@ -113,16 +125,16 @@ namespace TT.Viewer.ViewModels
                 if (source.IsChecked.Value)
                 {
                     if (Hand == Models.Util.Enums.Stroke.Hand.None)
-                        Hand = Models.Util.Enums.Stroke.Hand.Forehand;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.Forehand;
                     else if (Hand == Models.Util.Enums.Stroke.Hand.Backhand)
-                        Hand = Models.Util.Enums.Stroke.Hand.Both;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
                     if (Hand == Models.Util.Enums.Stroke.Hand.Forehand)
-                        Hand = Models.Util.Enums.Stroke.Hand.None;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.None;
                     else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
-                        Hand = Models.Util.Enums.Stroke.Hand.Backhand;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.Backhand;
                 }
             }
             else if (source.Name.ToLower().Contains("backhand"))
@@ -130,16 +142,16 @@ namespace TT.Viewer.ViewModels
                 if (source.IsChecked.Value)
                 {
                     if (Hand == Models.Util.Enums.Stroke.Hand.None)
-                        Hand = Models.Util.Enums.Stroke.Hand.Backhand;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.Backhand;
                     else if (Hand == Models.Util.Enums.Stroke.Hand.Forehand)
-                        Hand = Models.Util.Enums.Stroke.Hand.Both;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
                     if (Hand == Models.Util.Enums.Stroke.Hand.Backhand)
-                        Hand = Models.Util.Enums.Stroke.Hand.None;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.None;
                     else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
-                        Hand = Models.Util.Enums.Stroke.Hand.Forehand;
+                        BallFilter.Hand = Models.Util.Enums.Stroke.Hand.Forehand;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -151,11 +163,11 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    StepAround = Models.Util.Enums.Stroke.StepAround.StepAround;
+                    BallFilter.StepAround = Models.Util.Enums.Stroke.StepAround.StepAround;
                 }
                 else
                 {
-                    StepAround = Models.Util.Enums.Stroke.StepAround.Not;
+                    BallFilter.StepAround = Models.Util.Enums.Stroke.StepAround.Not;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -340,16 +352,16 @@ namespace TT.Viewer.ViewModels
                 if (source.IsChecked.Value)
                 {
                     if (Quality == Models.Util.Enums.Stroke.Quality.None)
-                        Quality = Models.Util.Enums.Stroke.Quality.Good;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.Good;
                     else if (Quality == Models.Util.Enums.Stroke.Quality.Bad)
-                        Quality = Models.Util.Enums.Stroke.Quality.Both;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.Both;
                 }
                 else
                 {
                     if (Quality == Models.Util.Enums.Stroke.Quality.Good)
-                        Quality = Models.Util.Enums.Stroke.Quality.None;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.None;
                     else if (Quality == Models.Util.Enums.Stroke.Quality.Both)
-                        Quality = Models.Util.Enums.Stroke.Quality.Bad;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.Bad;
                 }
             }
             else if (source.Name.ToLower().Contains("badq"))
@@ -357,16 +369,16 @@ namespace TT.Viewer.ViewModels
                 if (source.IsChecked.Value)
                 {
                     if (Quality == Models.Util.Enums.Stroke.Quality.None)
-                        Quality = Models.Util.Enums.Stroke.Quality.Bad;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.Bad;
                     else if (Quality == Models.Util.Enums.Stroke.Quality.Good)
-                        Quality = Models.Util.Enums.Stroke.Quality.Both;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.Both;
                 }
                 else
                 {
                     if (Quality == Models.Util.Enums.Stroke.Quality.Bad)
-                        Quality = Models.Util.Enums.Stroke.Quality.None;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.None;
                     else if (Quality == Models.Util.Enums.Stroke.Quality.Both)
-                        Quality = Models.Util.Enums.Stroke.Quality.Good;
+                        BallFilter.Quality = Models.Util.Enums.Stroke.Quality.Good;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -493,8 +505,8 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(TableStdViewSelectionChangedEvent message)
         {
-            SelectedStrokeLengths = message.StrokeLengths;
-            SelectedTablePositions = message.Positions;
+            BallFilter.StrokeLengths = message.StrokeLengths;
+            BallFilter.TablePositions = message.Positions;
             UpdateSelection(Manager.ActivePlaylist);
         }
 
@@ -506,6 +518,9 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
+                var results = BallFilter.filter(BasicFilterView.SelectedRallies).ToList();
+
+                /*
                 var results = BasicFilterView.SelectedRallies
                     .Where(r => r.Strokes.Count > 2 &&
                     r.Strokes[2].HasHand(this.Hand) &&
@@ -517,6 +532,7 @@ namespace TT.Viewer.ViewModels
                     r.Strokes[2].HasAggressiveness(this.SelectedAggressiveness) &&
                     r.Strokes[2].HasSpecials(this.SelectedSpecials)).
                     ToList();
+                */
                 Manager.SelectedRallies = results;
             }
         }

@@ -18,9 +18,9 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaktionslogik für ThirdBallView.xaml
     /// </summary>
-    public partial class ThirdBallView : UserControl
+    public partial class BallFilterView : UserControl
     {
-        public ThirdBallView()
+        public BallFilterView()
         {
             InitializeComponent();
         }

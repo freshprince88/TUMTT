@@ -1,11 +1,7 @@
 ﻿using Caliburn.Micro;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using TT.Lib.Events;
 using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
@@ -29,9 +25,9 @@ namespace TT.Viewer.ViewModels
             _tabNameDictionary = new Dictionary<string, object[]>()
             {
                 ["ServiceFilterTab"] = new object[] { new ServiceViewModel(this.events, Manager), 1 },
-                ["ReceiveFilterTab"] = new object[] { new ReceiveViewModel(this.events, Manager), 2 },
-                ["ThirdFilterTab"] = new object[] { new ThirdBallViewModel(this.events, Manager), 3 },
-                ["FourthFilterTab"] = new object[] { new FourthBallViewModel(this.events, Manager), 4 },
+                ["ReceiveFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 1, "Recieve"), 2 },
+                ["ThirdFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 2), 3 },
+                ["FourthFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 3), 4 },
                 ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 5 },
                 ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager), 1 },
                 ["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager), 1 }

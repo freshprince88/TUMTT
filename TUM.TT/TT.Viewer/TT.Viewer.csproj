@@ -160,7 +160,6 @@
     <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
     <Compile Include="ViewModels\FilterViewModel.cs" />
-    <Compile Include="ViewModels\FourthBallViewModel.cs" />
     <Compile Include="ViewModels\IResultViewTabItem.cs" />
     <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ReportSettingsViewModel.cs" />
@@ -171,7 +170,6 @@
     <Compile Include="ViewModels\ResultListViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
-    <Compile Include="ViewModels\ReceiveViewModel.cs" />
     <Compile Include="ViewModels\ResultMiniStatisticViewModel.cs" />
     <Compile Include="ViewModels\ResultTabViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
@@ -192,7 +190,7 @@
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
-    <Compile Include="ViewModels\ThirdBallViewModel.cs" />
+    <Compile Include="ViewModels\BallFilterViewModel.cs" />
     <Compile Include="ViewModels\TotalMatchStatisticsViewModel.cs" />
     <Compile Include="ViewModels\TotalMatchViewModel.cs" />
     <Compile Include="ViewModels\WelcomeViewModel.cs" />
@@ -216,9 +214,6 @@
     </Compile>
     <Compile Include="Views\FourthBallStatisticsView.xaml.cs">
       <DependentUpon>FourthBallStatisticsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FourthBallView.xaml.cs">
-      <DependentUpon>FourthBallView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\KeyBindingEditorView.xaml.cs">
       <DependentUpon>KeyBindingEditorView.xaml</DependentUpon>
@@ -246,9 +241,6 @@
     </Compile>
     <Compile Include="Views\ReceiveStatisticsView.xaml.cs">
       <DependentUpon>ReceiveStatisticsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ReceiveView.xaml.cs">
-      <DependentUpon>ReceiveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportSettingsView.xaml.cs">
       <DependentUpon>ReportSettingsView.xaml</DependentUpon>
@@ -314,8 +306,8 @@
     <Compile Include="Views\ThirdBallStatisticsView.xaml.cs">
       <DependentUpon>ThirdBallStatisticsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThirdBallView.xaml.cs">
-      <DependentUpon>ThirdBallView.xaml</DependentUpon>
+    <Compile Include="Views\BallFilterlView.xaml.cs">
+      <DependentUpon>BallFilterlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TotalMatchStatisticsView.xaml.cs">
       <DependentUpon>TotalMatchStatisticsView.xaml</DependentUpon>
@@ -360,10 +352,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FourthBallStatisticsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FourthBallView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -420,10 +408,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReceiveStatisticsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ReceiveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -495,9 +479,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ThirdBallView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\BallFilterlView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TotalMatchStatisticsView.xaml">
       <SubType>Designer</SubType>
