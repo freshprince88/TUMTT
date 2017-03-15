@@ -26,6 +26,7 @@ namespace TT.Viewer.ViewModels
             this.parent = parent;
 
             MainView = mainView;
+            this.ActivateItem(mainView);
         }
 
         /// <summary>
