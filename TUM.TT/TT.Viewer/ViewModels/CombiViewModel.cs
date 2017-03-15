@@ -107,13 +107,20 @@ namespace TT.Viewer.ViewModels
 
         public void AddFilter()
         {
-            pendingFilter = new Filter(_newFilterStrokeNumber, "<Enter Name>");
-            var ballFilterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
-            var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, ballFilterView);
+            if (_newFilterStrokeNumber > 0)
+            {
+                pendingFilter = new Filter((_newFilterStrokeNumber - 1), "<Enter Name>");
+                var ballFilterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
+                var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, ballFilterView);
 
-            pendingType = SaveCancleActionType.ActionType.Add;
+                pendingType = SaveCancleActionType.ActionType.Add;
 
-            parent.ActivateItem(saveCancleView);
+                parent.ActivateItem(saveCancleView);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Strokeindex starts with 1 = Service, 2 = Return, 3 = 3rd Stroke, ...", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
         }
 
         public void EditFilter()
