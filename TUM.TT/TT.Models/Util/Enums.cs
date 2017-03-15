@@ -160,6 +160,24 @@
         }
     }
 
+    public static class SaveCancleActionType
+    {
+        public enum ActionType
+        {
+            Add,
+            Edit
+        }
+    }
+
+    public static class FilterCombination
+    {
+        public enum CombinationType
+        {
+            And,
+            Or
+        }
+    }
+
     public static class Stroke
     {
         public enum Player

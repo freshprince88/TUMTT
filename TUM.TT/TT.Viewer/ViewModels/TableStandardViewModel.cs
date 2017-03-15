@@ -17,9 +17,34 @@ namespace TT.Viewer.ViewModels
     {
 
         private IEventAggregator events;
-        public HashSet<Positions.Table> SelectedPositions { get; set; }
-        public HashSet<Positions.Length> SelectedStrokeLength { get; set; }
-        public int StrokeNumber { get; set; }  
+        private Filter _filter;
+        public HashSet<Positions.Table> SelectedPositions
+        {
+            get
+            {
+                return _filter.TablePositions;
+            }
+            set
+            {
+                _filter.TablePositions = value;
+            }
+        }
+        public HashSet<Positions.Length> SelectedStrokeLength {
+            get
+            {
+                return _filter.StrokeLengths;
+            }
+            set
+            {
+                _filter.StrokeLengths = value;
+            }
+        }
+        public int StrokeNumber {
+            get
+            {
+                return _filter.StrokeNumber;
+            }
+        }  
         public bool lastStroke { get; set; }
         public Dictionary<string, int> PositionCounts { get; set; }
         public string name
@@ -44,10 +69,10 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public TableStandardViewModel(IEventAggregator eventAggregator, string n)
+        public TableStandardViewModel(IEventAggregator eventAggregator, string n, Filter filter)
         {
             name = n;
-            StrokeNumber = 0;
+            _filter = filter;
             lastStroke = false;
             this.events = eventAggregator;
             PositionCounts = new Dictionary<string, int>();
@@ -60,8 +85,6 @@ namespace TT.Viewer.ViewModels
             PositionCounts.Add("TopLeft", 0);
             PositionCounts.Add("TopMid", 0);
             PositionCounts.Add("TopRight", 0);
-            SelectedStrokeLength = new HashSet<Positions.Length>();
-            SelectedPositions = new HashSet<Positions.Table>();
         }
 
         #region View Methods

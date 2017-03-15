@@ -173,6 +173,7 @@
     <Compile Include="ViewModels\ResultMiniStatisticViewModel.cs" />
     <Compile Include="ViewModels\ResultTabViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
+    <Compile Include="ViewModels\SaveCancleViewModel.cs" />
     <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
@@ -223,6 +224,9 @@
     </Compile>
     <Compile Include="Views\MatchView.xaml.cs">
       <DependentUpon>MatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SaveCancleView.xaml.cs">
+      <DependentUpon>SaveCancleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
       <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
@@ -306,8 +310,8 @@
     <Compile Include="Views\ThirdBallStatisticsView.xaml.cs">
       <DependentUpon>ThirdBallStatisticsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BallFilterlView.xaml.cs">
-      <DependentUpon>BallFilterlView.xaml</DependentUpon>
+    <Compile Include="Views\BallFilterView.xaml.cs">
+      <DependentUpon>BallFilterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TotalMatchStatisticsView.xaml.cs">
       <DependentUpon>TotalMatchStatisticsView.xaml</DependentUpon>
@@ -368,6 +372,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SaveCancleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -479,7 +487,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BallFilterlView.xaml">
+    <Page Include="Views\BallFilterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

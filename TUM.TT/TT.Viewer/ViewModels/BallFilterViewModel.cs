@@ -18,6 +18,7 @@ namespace TT.Viewer.ViewModels
         IHandle<BasicFilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
+        private List<Rally> selectedRalliesOnCreation;
         public TableStandardViewModel TableView { get; set; }
         public Filter BallFilter;
         public HashSet<Models.Util.Enums.Stroke.Aggressiveness> SelectedAggressiveness
@@ -65,12 +66,15 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        private string _name;
         public string Name
         {
             get
             {
-                return _name;
+                return BallFilter.Name;
+            }
+            set
+            {
+                BallFilter.Name = value;
             }
         }
 
@@ -81,26 +85,33 @@ namespace TT.Viewer.ViewModels
         private IMatchManager Manager;
 
         public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber) 
-            : this(eventAggregator, man, strokeNumber, String.Concat((strokeNumber + 1).ToString(), ". Stroke:")) { }
+            : this(eventAggregator, man, strokeNumber, String.Concat((strokeNumber + 1).ToString(), ". Stroke")) { }
 
         public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber, string name)
             : this(eventAggregator, man, strokeNumber, name, new Filter(strokeNumber)) { }
 
-        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber, string name, Filter filter)
+        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, Filter filter, bool showBasicFilter = true)
+            : this(eventAggregator, man, filter.StrokeNumber, filter.Name, filter, showBasicFilter) { }
+
+        private BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber, string name, Filter filter, bool showBasicFilter = true)
         {
-            _name = name;
+            filter.Name = name;
 
             this.events = eventAggregator;
             Manager = man;
             BallFilter = filter;
-            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
+            if (showBasicFilter)
             {
-                MinRallyLength = strokeNumber,
-                PlayerLabel = _name,
-                StrokeNumber = strokeNumber
-            };
-            TableView = new TableStandardViewModel(this.events, _name);
-            TableView.StrokeNumber = strokeNumber;
+                BasicFilterView = new BasicFilterViewModel(this.events, Manager)
+                {
+                    MinRallyLength = strokeNumber,
+                    PlayerLabel = name,
+                    StrokeNumber = strokeNumber
+                };
+            }else{
+                selectedRalliesOnCreation = man.SelectedRallies.ToList();
+            }
+            TableView = new TableStandardViewModel(this.events, name, filter);
             TableView.lastStroke = false;
         }
 
@@ -518,21 +529,15 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BallFilter.filter(BasicFilterView.SelectedRallies).ToList();
-
-                /*
-                var results = BasicFilterView.SelectedRallies
-                    .Where(r => r.Strokes.Count > 2 &&
-                    r.Strokes[2].HasHand(this.Hand) &&
-                    r.Strokes[2].HasStepAround(this.StepAround) &&
-                    r.Strokes[2].HasStrokeTec(this.SelectedStrokeTec) &&
-                    r.Strokes[2].HasQuality(this.Quality) &&
-                    r.Strokes[2].HasTablePosition(this.SelectedTablePositions) &&
-                    r.Strokes[2].HasStrokeLength(this.SelectedStrokeLengths) &&
-                    r.Strokes[2].HasAggressiveness(this.SelectedAggressiveness) &&
-                    r.Strokes[2].HasSpecials(this.SelectedSpecials)).
-                    ToList();
-                */
+                List<Rally> ralliesToFilter;
+                if (BasicFilterView == null){
+                    ralliesToFilter = selectedRalliesOnCreation;
+                } else
+                {
+                    ralliesToFilter = BasicFilterView.SelectedRallies;
+                }
+                var results = BallFilter.filter(ralliesToFilter).ToList();
+                
                 Manager.SelectedRallies = results;
             }
         }

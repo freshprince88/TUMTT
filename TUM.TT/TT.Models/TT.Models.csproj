@@ -61,6 +61,7 @@
     <Compile Include="Exceptions\NoStrokeEndPointException.cs" />
     <Compile Include="Exceptions\NoStrokeStartingPointException.cs" />
     <Compile Include="Filter.cs" />
+    <Compile Include="FilterList.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -78,7 +79,9 @@
     <Compile Include="Score.cs" />
     <Compile Include="Serialization\ExcelMatchSerializer.cs" />
     <Compile Include="Serialization\ExcelSerializationException.cs" />
+    <Compile Include="Serialization\IFilterSerializer.cs" />
     <Compile Include="Serialization\IMatchSerializer.cs" />
+    <Compile Include="Serialization\XmlFilterSerializer.cs" />
     <Compile Include="Serialization\XmlMatchSerializer.cs" />
     <Compile Include="Rank.cs" />
     <Compile Include="Statistics\EnumerableExtensions.cs" />

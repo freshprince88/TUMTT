@@ -175,6 +175,7 @@
     <Compile Include="Util\ShortcutFactory.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
+    <Compile Include="Views\ISaveCancle.cs" />
     <Compile Include="Views\ReportGenerationNotifyIcon.cs" />
     <Compile Include="Webbrowser\Test.cs" />
     <Compile Include="Webbrowser\WebBrowserUtility.cs" />

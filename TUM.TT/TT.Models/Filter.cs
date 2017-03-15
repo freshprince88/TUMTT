@@ -9,7 +9,20 @@ namespace TT.Models
 {
     public class Filter
     {
+        public const string FILTER_PATH = "Filters";
+
+        private Guid id;
+        public Guid ID
+        {
+            get { return this.id; }
+            set { this.id = value; }
+        }
+
+        public string Name;
+
         public int StrokeNumber;
+
+        public bool Enabled;
 
         public HashSet<Positions.Length> StrokeLengths;
         public HashSet<Positions.Table> TablePositions;
@@ -22,6 +35,8 @@ namespace TT.Models
 
         public Filter()
         {
+            this.id = Guid.NewGuid();
+
             StrokeLengths = new HashSet<Positions.Length>();
             TablePositions = new HashSet<Positions.Table>();
             Aggressiveness = new HashSet<Util.Enums.Stroke.Aggressiveness>();
@@ -30,6 +45,7 @@ namespace TT.Models
             StrokeTec = new HashSet<Util.Enums.Stroke.Technique>();
             Hand = Util.Enums.Stroke.Hand.None;
             Quality = Util.Enums.Stroke.Quality.None;
+            Enabled = true;
         }
 
         public Filter(int strokeNumber) : this()
@@ -37,28 +53,64 @@ namespace TT.Models
             this.StrokeNumber = strokeNumber;
         }
 
+        public Filter(int strokeNumber, string name) : this(strokeNumber)
+        {
+            this.Name = name;
+        }
+
+        public Filter(Filter f)
+        {
+            this.id = f.id;
+
+            this.Name = f.Name;
+
+            StrokeLengths = f.StrokeLengths;
+            TablePositions = f.TablePositions;
+            Aggressiveness = f.Aggressiveness;
+            Specials = f.Specials;
+            StepAround = f.StepAround;
+            StrokeTec = f.StrokeTec;
+            Hand = f.Hand;
+            Quality = f.Quality;
+            Enabled = f.Enabled;
+        }
+
         public Rally[] filter(IEnumerable<Rally> inputRallies)
         {
             List<Rally> returnRallies = new List<Models.Rally>(inputRallies);
             foreach(Rally r in inputRallies)
             {
-                if (r.Strokes.Count >= (StrokeNumber))
+                if (!this.accepts(r))
                 {
-                    // get Stroke on which filter is applied
-                    Stroke stroke = r.Strokes[StrokeNumber];
-
-                    // if Stroke does not Contain one of the Attributes in the HashSets Remove it from the return Array
-                    if (!stroke.HasStrokeLength(StrokeLengths)) returnRallies.Remove(r);
-                    if (!stroke.HasTablePosition(TablePositions)) returnRallies.Remove(r);
-                    if (!stroke.HasAggressiveness(Aggressiveness)) returnRallies.Remove(r);
-                    if (!stroke.HasSpecials(Specials)) returnRallies.Remove(r);
-                    if (!stroke.HasStrokeTec(StrokeTec)) returnRallies.Remove(r);
-                    if (!stroke.HasStepAround(StepAround)) returnRallies.Remove(r);
-                    if (!stroke.HasHand(Hand)) returnRallies.Remove(r);
-                    if (!stroke.HasQuality(Quality)) returnRallies.Remove(r);
+                    returnRallies.Remove(r);
                 }
             }
             return returnRallies.ToArray();
+        }
+
+        public bool accepts(Rally rally)
+        {
+            if (rally.Strokes.Count > (StrokeNumber))
+            {
+                // get Stroke on which filter is applied
+                Stroke stroke = rally.Strokes[StrokeNumber];
+
+                // if Stroke does not Contain one of the Attributes in the HashSets Remove it from the return Array
+                if (!stroke.HasStrokeLength(StrokeLengths)) return false;
+                if (!stroke.HasTablePosition(TablePositions)) return false;
+                if (!stroke.HasAggressiveness(Aggressiveness)) return false;
+                if (!stroke.HasSpecials(Specials)) return false;
+                if (!stroke.HasStrokeTec(StrokeTec)) return false;
+                if (!stroke.HasStepAround(StepAround)) return false;
+                if (!stroke.HasHand(Hand)) return false;
+                if (!stroke.HasQuality(Quality)) return false;
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -91,7 +91,7 @@ namespace TT.Viewer.ViewModels
                 StrokeNumber=0
             };
 
-            TableView = new TableStandardViewModel(this.events,"Last");
+            TableView = new TableStandardViewModel(this.events,"Last", new Filter());
             TableView.lastStroke = true;
 
         }

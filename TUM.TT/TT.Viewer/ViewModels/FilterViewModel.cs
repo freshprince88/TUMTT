@@ -29,8 +29,8 @@ namespace TT.Viewer.ViewModels
                 ["ThirdFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 2), 3 },
                 ["FourthFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 3), 4 },
                 ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 5 },
-                ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager), 1 },
-                ["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager), 1 }
+                ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager), 6 },
+                ["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager, this), 7 }
             };
 
             SelectedTab = 0;
