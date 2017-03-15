@@ -16,8 +16,28 @@ namespace TT.Viewer.ViewModels
     {
 
         private IEventAggregator events;
-        public HashSet<Positions.Table> SelectedPositions { get; set; }
-        public HashSet<Positions.Server> SelectedServerPositions { get; set; }
+        public HashSet<Positions.Table> SelectedPositions
+        {
+            get
+            {
+                return filter.TablePositions;
+            }
+            set
+            {
+                filter.TablePositions = value;
+            }
+        }
+        public HashSet<Positions.Server> SelectedServerPositions
+        {
+            get
+            {
+                return filter.ServerPositions;
+            }
+            set
+            {
+                filter.ServerPositions = value;
+            }
+        }
         public Dictionary<string, int> PositionCounts { get; set; }
 
         #region Enums       
@@ -25,6 +45,8 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         private ViewMode.Position _mode;
+        private Filter filter;
+
         public ViewMode.Position Mode
         {
             get
@@ -40,7 +62,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public TableServiceViewModel(IEventAggregator eventAggregator)
+        public TableServiceViewModel(IEventAggregator eventAggregator, Filter f)
         {
             this.events = eventAggregator;
             PositionCounts = new Dictionary<string, int>();
@@ -53,8 +75,8 @@ namespace TT.Viewer.ViewModels
             PositionCounts.Add("TopLeft", 0);
             PositionCounts.Add("TopMid", 0);
             PositionCounts.Add("TopRight", 0);
-            SelectedServerPositions = new HashSet<Positions.Server>();
-            SelectedPositions = new HashSet<Positions.Table>();
+
+            this.filter = f;
         }
 
         #region View Methods

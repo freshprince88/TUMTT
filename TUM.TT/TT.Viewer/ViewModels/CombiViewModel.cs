@@ -109,9 +109,18 @@ namespace TT.Viewer.ViewModels
         {
             if (_newFilterStrokeNumber > 0)
             {
+                IScreen filterView;
                 pendingFilter = new Filter((_newFilterStrokeNumber - 1), "<Enter Name>");
-                var ballFilterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
-                var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, ballFilterView);
+                if (_newFilterStrokeNumber == 1)
+                {
+                    filterView = new ServiceViewModel(this.events, Manager, pendingFilter, false);
+                }
+                else
+                {
+                    filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
+                }
+
+                var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
 
                 pendingType = SaveCancleActionType.ActionType.Add;
 
@@ -128,13 +137,18 @@ namespace TT.Viewer.ViewModels
             if (SelectedIndex < 0)
                 return;
 
+            IScreen filterView;
             var filterToEdit = FilterList[SelectedIndex];
             pendingFilter = new Filter(filterToEdit); // creating a copy of the current filter
 
             FilterList.DisableFilter(filterToEdit); // So Filter does not affect current SelectedRallies-List
-            var ballFilterView = new BallFilterViewModel(this.events, Manager, filterToEdit, false);
+            if (filterToEdit.StrokeNumber > 0)
+                filterView = new BallFilterViewModel(this.events, Manager, filterToEdit, false);
+            else
+                filterView = new ServiceViewModel(this.events, Manager, filterToEdit, false);
+
             FilterList.ToogleFilter(filterToEdit, pendingFilter.Enabled); // back to normal
-            var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, ballFilterView);
+            var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
 
             pendingType = SaveCancleActionType.ActionType.Edit;
 

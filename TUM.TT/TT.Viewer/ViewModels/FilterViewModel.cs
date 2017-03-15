@@ -24,7 +24,7 @@ namespace TT.Viewer.ViewModels
 
             _tabNameDictionary = new Dictionary<string, object[]>()
             {
-                ["ServiceFilterTab"] = new object[] { new ServiceViewModel(this.events, Manager), 1 },
+                ["ServiceFilterTab"] = new object[] { new ServiceViewModel(this.events, Manager, new Models.Filter(0, "Service")), 1 },
                 ["ReceiveFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 1, "Recieve"), 2 },
                 ["ThirdFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 2), 3 },
                 ["FourthFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 3), 4 },

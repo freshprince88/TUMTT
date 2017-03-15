@@ -20,28 +20,98 @@ namespace TT.Viewer.ViewModels
     {
 
         #region Properties
+
+        private Filter ServiceFilter;
+
         public BasicFilterViewModel BasicFilterView { get; set; }
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
-        public List<Models.Util.Enums.Stroke.Spin> SelectedSpins { get; private set; }
-        public Models.Util.Enums.Stroke.Hand Hand { get; private set; }       
-        public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
-        private HashSet<Models.Util.Enums.Stroke.Specials> _specials;
+
+        private List<Rally> selectedRalliesOnCreation;
+
+        public Models.Util.Enums.Stroke.Hand Hand
+        {
+            get
+            {
+                return ServiceFilter.Hand;
+            }
+            private set
+            {
+                ServiceFilter.Hand = value;
+            }
+        }
+        public Models.Util.Enums.Stroke.Quality Quality { get
+            {
+                return ServiceFilter.Quality;
+            }
+            private set
+            {
+                ServiceFilter.Quality = value;
+            }
+        }
         public HashSet<Models.Util.Enums.Stroke.Specials> SelectedSpecials
         {
             get
             {
-                return _specials;
+                return ServiceFilter.Specials;
             }
             private set
             {
-                _specials = value;
+                ServiceFilter.Specials = value;
             }
         }
-        public HashSet<Models.Util.Enums.Stroke.Services> SelectedServices { get; private set; }
-        public HashSet<Positions.Table> SelectedTablePositions { get; set; }
-        public HashSet<Positions.Server> SelectedServerPositions { get; set; }
+        public HashSet<Models.Util.Enums.Stroke.Services> SelectedServices
+        {
+            get
+            {
+                return ServiceFilter.Services;
+            }
+            private set
+            {
+                ServiceFilter.Services = value;
+            }
+        }
+        public HashSet<Positions.Table> SelectedTablePositions
+        {
+            get
+            {
+                return ServiceFilter.TablePositions;
+            }
+            set
+            {
+                ServiceFilter.TablePositions = value;
+            }
+        }
+        public HashSet<Positions.Server> SelectedServerPositions
+        {
+            get
+            {
+                return ServiceFilter.ServerPositions;
+            }
+            set
+            {
+                ServiceFilter.ServerPositions = value;
+            }
+        }
 
+        public IEnumerable<Models.Util.Enums.Stroke.Spin> SelectedSpins {
+            get
+            {
+                return ServiceFilter.Spins;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return ServiceFilter.Name;
+            }
+            set
+            {
+                ServiceFilter.Name = value;
+            }
+        }
         #endregion
 
 
@@ -51,29 +121,29 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IMatchManager Manager;
 
-        public ServiceViewModel(IEventAggregator eventAggregator, IMatchManager man)
+        public ServiceViewModel(IEventAggregator eventAggregator, IMatchManager man, Filter f, bool showBasicFilter = true)
         {
             this.events = eventAggregator;
             Manager = man;
 
-            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
+            if (showBasicFilter)
             {
-                MinRallyLength = 0,
-                PlayerLabel = "Service:",
-                LastStroke = false,
-                StrokeNumber = 0
+                BasicFilterView = new BasicFilterViewModel(this.events, Manager)
+                {
+                    MinRallyLength = 0,
+                    PlayerLabel = f.Name,
+                    LastStroke = false,
+                    StrokeNumber = 0
 
-            };
-            TableView = new TableServiceViewModel(events);
-
-            SelectedSpins = new List<Models.Util.Enums.Stroke.Spin>();
-            Hand = Models.Util.Enums.Stroke.Hand.None;
-            Quality = Models.Util.Enums.Stroke.Quality.None;
-            SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
-            SelectedServices = new HashSet<Models.Util.Enums.Stroke.Services>();
-            SelectedServerPositions = new HashSet<Positions.Server>();
-            SelectedTablePositions = new HashSet<Positions.Table>();
-            SpinControl = new SpinControlViewModel(events);
+                };
+            }
+            else
+            {
+                selectedRalliesOnCreation = man.SelectedRallies.ToList();
+            }
+            TableView = new TableServiceViewModel(events, f);
+            SpinControl = new SpinControlViewModel(events, f);
+            this.ServiceFilter = f;
         }
 
         #region View Methods
@@ -317,7 +387,6 @@ namespace TT.Viewer.ViewModels
 
         public void Handle(SpinControlSelectionChangedEvent message)
         {
-            SelectedSpins = message.Selected;
             UpdateSelection(Manager.ActivePlaylist);
         }
 
@@ -329,17 +398,17 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BasicFilterView.SelectedRallies
-                    .Where(r => r.Strokes.Count > 0 &&
-                    r.Strokes[0].HasHand(this.Hand) &&
-                    r.Strokes[0].HasQuality(this.Quality) &&
-                    r.Strokes[0].HasSpins(this.SelectedSpins) &&
-                    r.Strokes[0].HasServices(this.SelectedServices) &&
-                    r.Strokes[0].HasSpecials(this.SelectedSpecials) &&
-                    r.Strokes[0].HasServerPosition(this.SelectedServerPositions) &&
-                    r.Strokes[0].HasTablePosition(this.SelectedTablePositions)
-                    )
-                    .ToList();
+                List<Rally> ralliesToFilter;
+                if (BasicFilterView == null)
+                {
+                    ralliesToFilter = selectedRalliesOnCreation;
+                }
+                else
+                {
+                    ralliesToFilter = BasicFilterView.SelectedRallies;
+                }
+                var results = ServiceFilter.filter(ralliesToFilter).ToList();
+
                 Manager.SelectedRallies = results;
             }
         }

@@ -24,6 +24,11 @@ namespace TT.Models
 
         public bool Enabled;
 
+        /* FOR SERVICE */
+        public HashSet<Models.Util.Enums.Stroke.Spin> Spins;
+        public HashSet<Models.Util.Enums.Stroke.Services> Services;
+        public HashSet<Positions.Server> ServerPositions;
+
         public HashSet<Positions.Length> StrokeLengths;
         public HashSet<Positions.Table> TablePositions;
         public HashSet<Models.Util.Enums.Stroke.Aggressiveness> Aggressiveness;
@@ -36,6 +41,11 @@ namespace TT.Models
         public Filter()
         {
             this.id = Guid.NewGuid();
+
+            Spins = new HashSet<Util.Enums.Stroke.Spin>();
+            Services = new HashSet<Util.Enums.Stroke.Services>();
+            ServerPositions = new HashSet<Util.Enums.Positions.Server>();
+
 
             StrokeLengths = new HashSet<Positions.Length>();
             TablePositions = new HashSet<Positions.Table>();
@@ -63,6 +73,10 @@ namespace TT.Models
             this.id = f.id;
 
             this.Name = f.Name;
+
+            Spins = f.Spins;
+            Services = f.Services;
+            ServerPositions = f.ServerPositions;
 
             StrokeLengths = f.StrokeLengths;
             TablePositions = f.TablePositions;
@@ -96,6 +110,10 @@ namespace TT.Models
                 Stroke stroke = rally.Strokes[StrokeNumber];
 
                 // if Stroke does not Contain one of the Attributes in the HashSets Remove it from the return Array
+                if (!stroke.HasServices(Services)) return false;
+                if (!stroke.HasServerPosition(ServerPositions)) return false;
+                if (!stroke.HasSpins(Spins)) return false;
+
                 if (!stroke.HasStrokeLength(StrokeLengths)) return false;
                 if (!stroke.HasTablePosition(TablePositions)) return false;
                 if (!stroke.HasAggressiveness(Aggressiveness)) return false;

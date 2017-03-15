@@ -15,25 +15,25 @@ namespace TT.Viewer.ViewModels
     {
         private IEventAggregator events;
 
-        
 
-        private HashSet<Stroke.Spin> _spins;
-        public HashSet<Stroke.Spin> Selected
+
+        private TT.Models.Filter filter;
+        public HashSet<TT.Models.Util.Enums.Stroke.Spin> Selected
         {
             get
             {
-                return _spins;
+                return filter.Spins;
             }
-            private set 
+            private set
             {
-                _spins = value;
+                filter.Spins = value;
             }
         }
 
-        public SpinControlViewModel(IEventAggregator e)
+        public SpinControlViewModel(IEventAggregator e, TT.Models.Filter f)
         {
             events = e;
-            Selected = new HashSet<Stroke.Spin>();
+            filter = f;
         }
 
 
