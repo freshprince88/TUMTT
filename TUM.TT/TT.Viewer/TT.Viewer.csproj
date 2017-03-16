@@ -148,6 +148,7 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="ViewModels\BasicFilterStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\CombinationsViewModel.cs" />
     <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
@@ -200,6 +201,9 @@
     </Compile>
     <Compile Include="Views\BasicFilterView.xaml.cs">
       <DependentUpon>BasicFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CombinationsView.xaml.cs">
+      <DependentUpon>CombinationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CombiView.xaml.cs">
       <DependentUpon>CombiView.xaml</DependentUpon>
@@ -338,6 +342,10 @@
     <Page Include="Views\BasicFilterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CombinationsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CombiView.xaml">
       <SubType>Designer</SubType>
