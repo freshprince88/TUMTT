@@ -29,8 +29,7 @@ namespace TT.Viewer.ViewModels
         private Filter tempFilter;
         private SaveCancleActionType.ActionType pendingType;
 
-        public BasicFilter BasicFilter;
-        public FilterList FilterList { get; private set; }
+        private Combination FilterCombi;
         private Filter _selectedItem;
         public Filter SelectedItem
         {
@@ -68,6 +67,11 @@ namespace TT.Viewer.ViewModels
             set
             {
                 _filterTypeOr = value;
+                if (FilterTypeOr)
+                    FilterType = FilterCombination.CombinationType.Or;
+                else
+                    FilterType = FilterCombination.CombinationType.And;
+
                 NotifyOfPropertyChange("FilterTypeOr");
                 NotifyOfPropertyChange("FilterTypeText");
                 FilterList_CollectionChanged(this, null);
@@ -78,10 +82,11 @@ namespace TT.Viewer.ViewModels
         {
             get
             {
-                if (FilterTypeOr)
-                    return FilterCombination.CombinationType.Or;
-                else
-                    return FilterCombination.CombinationType.And;
+                return FilterCombi.FilterType;
+            }
+            private set
+            {
+                FilterCombi.FilterType = value;
             }
         }
 
@@ -112,13 +117,13 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IViewManager Manager;
 
-        public CombiViewModel(IEventAggregator eventAggregator, IViewManager man, Conductor<IScreen>.Collection.OneActive parent)
+        public CombiViewModel(IEventAggregator eventAggregator, IViewManager man, Conductor<IScreen>.Collection.OneActive parent, Combination filterCombi)
         {
             this.parent = parent;
             this.events = eventAggregator;
             this.Manager = man;
-            BasicFilter = new BasicFilter();
-            BasicFilterView = new BasicFilterViewModel(this.events, Manager, BasicFilter);
+            this.FilterCombi = filterCombi;
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager, FilterCombi.BasicFilter);
 
         }
 
@@ -160,13 +165,12 @@ namespace TT.Viewer.ViewModels
             pendingFilter = SelectedItem;
             tempFilter = new Filter(pendingFilter); // creating a copy of the current filter
 
-            FilterList.DisableFilter(pendingFilter); // So Filter does not affect current SelectedRallies-List
+            FilterCombi.FilterList.Remove(pendingFilter); // So Filter does not affect current SelectedRallies-List
             if (pendingFilter.StrokeNumber > 0)
                 filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
             else
                 filterView = new ServiceViewModel(this.events, Manager, pendingFilter, false);
 
-            FilterList.ToogleFilter(pendingFilter, tempFilter.Enabled); // back to normal
             var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
 
             pendingType = SaveCancleActionType.ActionType.Edit;
@@ -180,7 +184,7 @@ namespace TT.Viewer.ViewModels
                 return;
 
             var filterToDelete = SelectedItem;
-            FilterList.Remove(SelectedItem);
+            FilterCombi.FilterList.Remove(SelectedItem);
         }
        
         #endregion
@@ -241,7 +245,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                Manager.MatchManager.SelectedRallies = FilterList.filter(FilterType, BasicFilterView.SelectedRallies);
+                Manager.MatchManager.SelectedRallies = FilterCombi.FilterList.filter(FilterType, BasicFilterView.SelectedRallies);
             }
         }
 
@@ -257,8 +261,7 @@ namespace TT.Viewer.ViewModels
                     SaveNewItem();
                     break;
                 case SaveCancleActionType.ActionType.Edit:
-                    var idx = Manager.Filters.IndexOf(pendingFilter);
-                    Manager.Filters[idx] = pendingFilter;
+                    FilterCombi.FilterList.Add(pendingFilter);
                     break;
             }
 
@@ -272,7 +275,8 @@ namespace TT.Viewer.ViewModels
             if (pendingFilter.Name.Equals("<Enter Name>"))
                 pendingFilter.Name = "New Filter";
 
-            FilterList.Add(pendingFilter);
+            Manager.Filters.Add(pendingFilter);
+            FilterCombi.FilterList.Add(pendingFilter);
         }
 
         public void Cancle()
@@ -283,7 +287,7 @@ namespace TT.Viewer.ViewModels
                     // No need to do anything
                     break;
                 case SaveCancleActionType.ActionType.Edit:
-                    SelectedItem = tempFilter;
+                    FilterCombi.FilterList.Add(tempFilter);
                     break;
             }
 

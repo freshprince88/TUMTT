@@ -39,34 +39,6 @@ namespace TT.Models
             }
         }
 
-        public void EnableFilter(Filter f)
-        {
-            if (this.Contains(f))
-            {
-                var oldFilter = new Filter(f);
-                f.Enabled = true;
-                OnCollectionChanged(new System.Collections.Specialized.NotifyCollectionChangedEventArgs(System.Collections.Specialized.NotifyCollectionChangedAction.Replace, f, oldFilter, this.IndexOf(f)));
-            }
-        }
-
-        public void DisableFilter(Filter f)
-        {
-            if (this.Contains(f))
-            {
-                var oldFilter = new Filter(f);
-                f.Enabled = false;
-                OnCollectionChanged(new System.Collections.Specialized.NotifyCollectionChangedEventArgs(System.Collections.Specialized.NotifyCollectionChangedAction.Replace, f, oldFilter, this.IndexOf(f)));
-            }
-        }
-
-        public void ToogleFilter(Filter f, bool enabled)
-        {
-            if (enabled)
-                EnableFilter(f);
-            else
-                DisableFilter(f);
-        }
-
         private IEnumerable<Rally> filterOr(IEnumerable<Rally> rallies)
         {
             List<Rally> allResults = new List<Rally>();

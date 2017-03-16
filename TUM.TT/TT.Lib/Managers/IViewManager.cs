@@ -16,5 +16,6 @@ namespace TT.Lib.Managers
         IEnumerable<Rally> SelectedRallies { get; set; }
 
         ObservableCollection<Filter> Filters { get; }
+        ObservableCollection<Combination> Combinations { get; }
     }
 }

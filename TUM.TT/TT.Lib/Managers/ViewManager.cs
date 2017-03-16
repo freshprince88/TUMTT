@@ -13,6 +13,7 @@ namespace TT.Lib.Managers
     public class ViewManager : IViewManager
     {
         public ObservableCollection<Filter> Filters { get; private set; }
+        public ObservableCollection<Combination> Combinations { get; private set; }
         
         public IMatchManager MatchManager { get; private set; }
 
@@ -47,6 +48,14 @@ namespace TT.Lib.Managers
             this.MatchManager = matchManager;
             Filters = new ObservableCollection<Filter>(LoadFilter());
             Filters.CollectionChanged += Filters_CollectionChanged;
+
+            Combinations = new ObservableCollection<Combination>(LoadCombinations());
+            Combinations.CollectionChanged += Combinations_CollectionChanged;
+        }
+
+        private void Combinations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void Filters_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -137,6 +146,11 @@ namespace TT.Lib.Managers
                 }
                 catch { }
             }
+        }
+
+        private IEnumerable<Combination> LoadCombinations()
+        {
+            return new List<Combination>();
         }
     }
 }

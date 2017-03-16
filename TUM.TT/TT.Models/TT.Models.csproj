@@ -82,8 +82,10 @@
     <Compile Include="Score.cs" />
     <Compile Include="Serialization\ExcelMatchSerializer.cs" />
     <Compile Include="Serialization\ExcelSerializationException.cs" />
+    <Compile Include="Serialization\ICombinationSerializer.cs" />
     <Compile Include="Serialization\IFilterSerializer.cs" />
     <Compile Include="Serialization\IMatchSerializer.cs" />
+    <Compile Include="Serialization\XmlCombinationSerializer.cs" />
     <Compile Include="Serialization\XmlFilterSerializer.cs" />
     <Compile Include="Serialization\XmlMatchSerializer.cs" />
     <Compile Include="Rank.cs" />
