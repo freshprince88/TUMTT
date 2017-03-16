@@ -22,7 +22,7 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             this.Manager = new ViewManager(man);
 
-            var combi = new TT.Models.Combination(Manager);
+            var combi = new TT.Models.Combination();
 
             _tabNameDictionary = new Dictionary<string, object[]>()
             {

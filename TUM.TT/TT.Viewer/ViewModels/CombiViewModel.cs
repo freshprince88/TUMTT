@@ -37,6 +37,13 @@ namespace TT.Viewer.ViewModels
                 return FilterCombi.FilterList;
             }
         }
+        public IEnumerable<Filter> SortedFilterList
+        {
+            get
+            {
+                return FilterList.OrderBy(f => f.CreationDate);
+            }
+        }
         private Filter _selectedItem;
         public Filter SelectedItem
         {
@@ -132,6 +139,8 @@ namespace TT.Viewer.ViewModels
             this.FilterCombi = filterCombi;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager, FilterCombi.BasicFilter);
 
+            this.FilterCombi.FilterList.CollectionChanged += FilterList_CollectionChanged;
+
         }
 
         #region View Methods
@@ -169,10 +178,10 @@ namespace TT.Viewer.ViewModels
                 return;
 
             IScreen filterView;
-            pendingFilter = new Filter(SelectedItem);
-            tempFilter = SelectedItem; // creating a copy of the current filter
+            pendingFilter = SelectedItem;
+            tempFilter = new Filter(pendingFilter); // creating a copy of the current filter
 
-            FilterCombi.RemoveFilter(SelectedItem); // So Filter does not affect current SelectedRallies-List
+            FilterCombi.FilterList.Remove(SelectedItem); // So Filter does not affect current SelectedRallies-List
             if (pendingFilter.StrokeNumber > 0)
                 filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
             else
@@ -191,7 +200,7 @@ namespace TT.Viewer.ViewModels
                 return;
 
             var filterToDelete = SelectedItem;
-            FilterCombi.RemoveFilter(SelectedItem);
+            FilterCombi.FilterList.Remove(SelectedItem);
         }
        
         #endregion
@@ -240,7 +249,7 @@ namespace TT.Viewer.ViewModels
         private void FilterList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             UpdateSelection(Manager.MatchManager.ActivePlaylist);
-            NotifyOfPropertyChange("FilterList");
+            NotifyOfPropertyChange("SortedFilterList");
         }
 
 
@@ -268,7 +277,7 @@ namespace TT.Viewer.ViewModels
                     SaveNewItem();
                     break;
                 case SaveCancleActionType.ActionType.Edit:
-                    SaveNewItem();
+                    FilterCombi.FilterList.Add(pendingFilter);
                     break;
             }
 
@@ -281,9 +290,8 @@ namespace TT.Viewer.ViewModels
         {
             if (pendingFilter.Name.Equals("<Enter Name>"))
                 pendingFilter.Name = "New Filter";
-
-            Manager.Filters.Add(pendingFilter);
-            FilterCombi.AddFilter(pendingFilter);
+            
+            FilterCombi.FilterList.Add(pendingFilter);
         }
 
         public void Cancel()
@@ -294,11 +302,13 @@ namespace TT.Viewer.ViewModels
                     // No need to do anything
                     break;
                 case SaveCancleActionType.ActionType.Edit:
-                    FilterCombi.AddFilter(tempFilter);
+                    FilterCombi.FilterList.Add(tempFilter);
                     break;
             }
 
             parent.ActivateItem(this);
+
+            FilterList_CollectionChanged(this, null);
         }
 
         #endregion

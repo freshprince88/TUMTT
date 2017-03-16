@@ -10,22 +10,13 @@ namespace TT.Models
     public class Combination : IFilter
     {
         public BasicFilter BasicFilter;
-        private IFilterCombiBase manager;
-        public HashSet<Guid> FilterGuids;
-        public FilterList FilterList
-        {
-            get
-            {
-                return new FilterList(manager.FilterList.Where(f => FilterGuids.Contains(f.ID)).ToList());
-            }
-        }
+        public FilterList FilterList;
 
         public FilterCombination.CombinationType FilterType;
 
-        public Combination(IFilterCombiBase Manager)
+        public Combination()
         {
-            this.manager = Manager;
-            FilterGuids = new HashSet<Guid>();
+            FilterList = new FilterList();
             BasicFilter = new Models.BasicFilter();
         }
 
@@ -38,16 +29,6 @@ namespace TT.Models
         public Rally[] filter(IEnumerable<Rally> inputRallies)
         {
             return FilterList.filter(FilterType, inputRallies).ToArray();
-        }
-
-        public void AddFilter(Filter f)
-        {
-            FilterGuids.Add(f.ID);
-        }
-
-        public void RemoveFilter(Filter f)
-        {
-            FilterGuids.RemoveWhere(g => g == f.ID);
         }
     }
 }

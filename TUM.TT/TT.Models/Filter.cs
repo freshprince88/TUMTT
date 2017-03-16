@@ -78,6 +78,7 @@ namespace TT.Models
         public Filter(Filter f)
         {
             this.id = f.id;
+            this.CreationDate = f.CreationDate;
 
             this.Name = f.Name;
 

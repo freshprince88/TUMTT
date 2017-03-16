@@ -9,10 +9,11 @@ using TT.Models.Util.Enums;
 
 namespace TT.Models
 {
-    public class FilterList : ReadOnlyCollection<Filter>
+    public class FilterList : ObservableCollection<Filter>
     {
+        public FilterList() : base() { }
         public FilterList(List<Filter> list) : base(list) { }
-
+        public FilterList(IEnumerable<Filter> collection) : base(collection) { }
 
         public IEnumerable<Rally> filter(FilterCombination.CombinationType combinationType, IEnumerable<Rally> rallies)
         {

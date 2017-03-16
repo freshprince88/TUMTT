@@ -133,6 +133,7 @@ namespace TT.Viewer.ViewModels
             {
                 var basicFilter = new BasicFilter(strokeNumber);
                 BasicFilterView = new BasicFilterViewModel(this.events, Manager, basicFilter);
+            }else {
                 selectedRalliesOnCreation = man.MatchManager.SelectedRallies.ToList();
             }
             TableView = new TableStandardViewModel(this.events, name, filter);

@@ -8,14 +8,13 @@ using TT.Models;
 
 namespace TT.Lib.Managers
 {
-    public interface IViewManager : IFilterCombiBase
+    public interface IViewManager
     {
         IMatchManager MatchManager { get; }
 
         Playlist ActivePlaylist { get; set; }
         IEnumerable<Rally> SelectedRallies { get; set; }
-
-        ObservableCollection<Filter> Filters { get; }
+        
         ObservableCollection<Combination> Combinations { get; }
     }
 }

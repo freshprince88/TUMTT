@@ -12,22 +12,7 @@ namespace TT.Lib.Managers
 {
     public class ViewManager : IViewManager
     {
-        public ObservableCollection<Filter> Filters { get; private set; }
         public ObservableCollection<Combination> Combinations { get; private set; }
-
-        ObservableCollection<Filter> IFilterCombiBase.FilterList {
-            get
-            {
-                return Filters;
-            }
-        }
-        ObservableCollection<Combination> IFilterCombiBase.CombinationList
-        {
-            get
-            {
-                return Combinations;
-            }
-        }
         
         public IMatchManager MatchManager { get; private set; }
 
@@ -60,8 +45,6 @@ namespace TT.Lib.Managers
         public ViewManager(IMatchManager matchManager)
         {
             this.MatchManager = matchManager;
-            Filters = new ObservableCollection<Filter>(LoadFilter());
-            Filters.CollectionChanged += Filters_CollectionChanged;
 
             Combinations = new ObservableCollection<Combination>(LoadCombinations());
             Combinations.CollectionChanged += Combinations_CollectionChanged;
