@@ -29,6 +29,7 @@ namespace TT.Viewer.ViewModels
         private Filter tempFilter;
         private SaveCancleActionType.ActionType pendingType;
 
+        public BasicFilter BasicFilter;
         public FilterList FilterList { get; private set; }
         private Filter _selectedItem;
         public Filter SelectedItem
@@ -109,21 +110,16 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
 
-        public CombiViewModel(IEventAggregator eventAggregator, IMatchManager man, Conductor<IScreen>.Collection.OneActive parent)
+        public CombiViewModel(IEventAggregator eventAggregator, IViewManager man, Conductor<IScreen>.Collection.OneActive parent)
         {
             this.parent = parent;
             this.events = eventAggregator;
             this.Manager = man;
-            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
-            {
-                MinRallyLength= 0,
-                PlayerLabel = "Aufschlag:"
-            };
+            BasicFilter = new BasicFilter();
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager, BasicFilter);
 
-            FilterList = new FilterList(LoadFilter());
-            FilterList.CollectionChanged += FilterList_CollectionChanged;
         }
 
         #region View Methods
@@ -184,7 +180,6 @@ namespace TT.Viewer.ViewModels
                 return;
 
             var filterToDelete = SelectedItem;
-            DeleteFilter(filterToDelete);
             FilterList.Remove(SelectedItem);
         }
        
@@ -228,12 +223,12 @@ namespace TT.Viewer.ViewModels
         //Get SelectedRallies and apply own filters
         public void Handle(BasicFilterSelectionChangedEvent message)
         {
-            UpdateSelection(Manager.ActivePlaylist);
+            UpdateSelection(Manager.MatchManager.ActivePlaylist);
         }
 
         private void FilterList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            UpdateSelection(Manager.ActivePlaylist);
+            UpdateSelection(Manager.MatchManager.ActivePlaylist);
             NotifyOfPropertyChange("FilterList");
         }
 
@@ -246,7 +241,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                Manager.SelectedRallies = FilterList.filter(FilterType, BasicFilterView.SelectedRallies);
+                Manager.MatchManager.SelectedRallies = FilterList.filter(FilterType, BasicFilterView.SelectedRallies);
             }
         }
 
@@ -262,7 +257,8 @@ namespace TT.Viewer.ViewModels
                     SaveNewItem();
                     break;
                 case SaveCancleActionType.ActionType.Edit:
-                    SaveFilter(pendingFilter);
+                    var idx = Manager.Filters.IndexOf(pendingFilter);
+                    Manager.Filters[idx] = pendingFilter;
                     break;
             }
 
@@ -277,7 +273,6 @@ namespace TT.Viewer.ViewModels
                 pendingFilter.Name = "New Filter";
 
             FilterList.Add(pendingFilter);
-            SaveFilter(pendingFilter);
         }
 
         public void Cancle()
@@ -294,58 +289,6 @@ namespace TT.Viewer.ViewModels
 
             parent.ActivateItem(this);
         }
-
-        private IEnumerable<Filter> LoadFilter()
-        {
-            var tempFilterList = new List<Filter>();
-            var serializer = new XmlFilterSerializer();
-
-            DirectoryInfo d = new DirectoryInfo(Filter.FILTER_PATH);
-            if (d.Exists)
-            {
-                FileInfo[] Files = d.GetFiles("*.flt");
-                foreach (FileInfo file in Files)
-                {
-                    var stream = file.OpenRead();
-                    tempFilterList.Add(serializer.Deserialize(stream));
-                    stream.Close();
-                }
-            }
-            return tempFilterList;
-        }
-
-        private void SaveFilter(Filter filter)
-        {
-            var serializer = new XmlFilterSerializer();
-
-            DirectoryInfo d = new DirectoryInfo(Filter.FILTER_PATH);
-            if (!d.Exists)
-                d.Create();
-
-            try
-            {
-                var filterStream = File.Create(d.FullName + "\\" + filter.ID + ".flt");
-                serializer.Serialize(filterStream, filter);
-                filterStream.Close();
-            } catch (Exception e)
-            {
-                var message = String.Concat("Couldn't save Filter: ", e.Message);
-                System.Windows.MessageBox.Show(message, "Error while trying to save Filter", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            }
-        }
-
-        private void DeleteFilter(Filter filter)
-        {
-            DirectoryInfo d = new DirectoryInfo(Filter.FILTER_PATH);
-            if (d.Exists)
-            {
-                try
-                {
-                File.Delete(d.FullName + "\\" + filter.ID + ".flt");
-                } catch { }
-            }
-        }
-
 
         #endregion
 

@@ -68,9 +68,9 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
 
-        public LastBallViewModel(IEventAggregator eventAggregator, IMatchManager man)
+        public LastBallViewModel(IEventAggregator eventAggregator, IViewManager man)
         {
             this.events = eventAggregator;
             Manager = man;
@@ -83,13 +83,8 @@ namespace TT.Viewer.ViewModels
             SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
             StepAround = Models.Util.Enums.Stroke.StepAround.Not;
             Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.None;
-            BasicFilterView = new BasicFilterViewModel(this.events, Manager)
-            {
-                MinRallyLength = 1,
-                PlayerLabel = "Service:",
-                LastStroke = true,
-                StrokeNumber=0
-            };
+            var basicFilter = new BasicFilter(1, true);
+            BasicFilterView = new BasicFilterViewModel(this.events, Manager, basicFilter);
 
             TableView = new TableStandardViewModel(this.events,"Last", new Filter());
             TableView.lastStroke = true;

@@ -66,6 +66,35 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public Models.Util.Enums.Stroke.Player Player
+        {
+            get
+            {
+                return BallFilter.Player;
+            }
+            private set
+            {
+                BallFilter.Player = value;
+            }
+        }
+        public string Player1
+        {
+            get
+            {
+                return Manager.MatchManager.Match.FirstPlayer.Name.Split(' ')[0];
+            }
+        }
+        public string Player2 { get
+            {
+                return Manager.MatchManager.Match.SecondPlayer.Name.Split(' ')[0];
+            }
+        }
+        public string PlayerLabel {
+            get {
+                return String.Concat(BallFilter.StrokeNumber.ToString(), ". Stroke: ");
+            }
+        }
+
         public string Name
         {
             get
@@ -82,18 +111,18 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
 
-        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber) 
+        public BallFilterViewModel(IEventAggregator eventAggregator, IViewManager man, int strokeNumber) 
             : this(eventAggregator, man, strokeNumber, String.Concat((strokeNumber + 1).ToString(), ". Stroke")) { }
 
-        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber, string name)
+        public BallFilterViewModel(IEventAggregator eventAggregator, IViewManager man, int strokeNumber, string name)
             : this(eventAggregator, man, strokeNumber, name, new Filter(strokeNumber)) { }
 
-        public BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, Filter filter, bool showBasicFilter = true)
+        public BallFilterViewModel(IEventAggregator eventAggregator, IViewManager man, Filter filter, bool showBasicFilter = true)
             : this(eventAggregator, man, filter.StrokeNumber, filter.Name, filter, showBasicFilter) { }
 
-        private BallFilterViewModel(IEventAggregator eventAggregator, IMatchManager man, int strokeNumber, string name, Filter filter, bool showBasicFilter = true)
+        private BallFilterViewModel(IEventAggregator eventAggregator, IViewManager man, int strokeNumber, string name, Filter filter, bool showBasicFilter = true)
         {
             filter.Name = name;
 
@@ -102,14 +131,9 @@ namespace TT.Viewer.ViewModels
             BallFilter = filter;
             if (showBasicFilter)
             {
-                BasicFilterView = new BasicFilterViewModel(this.events, Manager)
-                {
-                    MinRallyLength = strokeNumber,
-                    PlayerLabel = name,
-                    StrokeNumber = strokeNumber
-                };
-            }else{
-                selectedRalliesOnCreation = man.SelectedRallies.ToList();
+                var basicFilter = new BasicFilter(strokeNumber);
+                BasicFilterView = new BasicFilterViewModel(this.events, Manager, basicFilter);
+                selectedRalliesOnCreation = man.MatchManager.SelectedRallies.ToList();
             }
             TableView = new TableStandardViewModel(this.events, name, filter);
             TableView.lastStroke = false;
@@ -465,6 +489,45 @@ namespace TT.Viewer.ViewModels
                 else
                 {
                     SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        
+        public void P1P2(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("player1"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.None)
+                        Player = Models.Util.Enums.Stroke.Player.Player1;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Player2)
+                        Player = Models.Util.Enums.Stroke.Player.Both;
+                }
+                else
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.Player1)
+                        Player = Models.Util.Enums.Stroke.Player.None;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
+                        Player = Models.Util.Enums.Stroke.Player.Player2;
+                }
+            }
+            else if (source.Name.ToLower().Contains("player2"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.None)
+                        Player = Models.Util.Enums.Stroke.Player.Player2;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Player1)
+                        Player = Models.Util.Enums.Stroke.Player.Both;
+                }
+                else
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.Player2)
+                        Player = Models.Util.Enums.Stroke.Player.None;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
+                        Player = Models.Util.Enums.Stroke.Player.Player1;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);

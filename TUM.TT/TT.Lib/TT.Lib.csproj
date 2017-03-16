@@ -161,7 +161,9 @@
     <Compile Include="Interactivity\InputBindingTrigger.cs" />
     <Compile Include="Interactivity\SelectAllTextOnFocusBehavior.cs" />
     <Compile Include="Managers\IReportGenerationQueueManager.cs" />
+    <Compile Include="Managers\IViewManager.cs" />
     <Compile Include="Managers\ReportGenerationQueueManager.cs" />
+    <Compile Include="Managers\ViewManager.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

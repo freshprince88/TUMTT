@@ -7,7 +7,7 @@ using TT.Models.Util.Enums;
 
 namespace TT.Models
 {
-    public class Filter
+    public class Filter : IFilter
     {
         public const string FILTER_PATH = "Filters";
 
@@ -40,6 +40,8 @@ namespace TT.Models
         public Models.Util.Enums.Stroke.Hand Hand;
         public Models.Util.Enums.Stroke.Quality Quality;
 
+        public Models.Util.Enums.Stroke.Player Player;
+
         public Filter()
         {
             this.id = Guid.NewGuid();
@@ -58,6 +60,8 @@ namespace TT.Models
             StrokeTec = new HashSet<Util.Enums.Stroke.Technique>();
             Hand = Util.Enums.Stroke.Hand.None;
             Quality = Util.Enums.Stroke.Quality.None;
+            Player = Models.Util.Enums.Stroke.Player.None;
+
             Enabled = true;
         }
 
@@ -89,6 +93,8 @@ namespace TT.Models
             StrokeTec = f.StrokeTec;
             Hand = f.Hand;
             Quality = f.Quality;
+            Player = f.Player;
+
             Enabled = f.Enabled;
         }
 
@@ -125,6 +131,7 @@ namespace TT.Models
                 if (!stroke.HasStepAround(StepAround)) return false;
                 if (!stroke.HasHand(Hand)) return false;
                 if (!stroke.HasQuality(Quality)) return false;
+                if (!stroke.HasPlayer(Player)) return false;
             }
             else
             {
@@ -138,5 +145,6 @@ namespace TT.Models
         {
             return Name;
         }
+
     }
 }

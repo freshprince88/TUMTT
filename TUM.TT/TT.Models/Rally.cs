@@ -578,6 +578,71 @@ namespace TT.Models
                 }
             }
         }
+
+        public bool HasSet(HashSet<int> Sets)
+        {
+            List<bool> ORresults = new List<bool>();
+
+            foreach (var set in Sets)
+            {
+                int setTotal = Convert.ToInt32(CurrentSetScore.First) + Convert.ToInt32(CurrentSetScore.Second) + 1;
+                ORresults.Add(setTotal == set);
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+        public bool HasRallyLength(HashSet<int> RallyLengths)
+        {
+            List<bool> ORresults = new List<bool>();
+
+            foreach (var rallylength in RallyLengths)
+            {
+
+                if (rallylength <= 5)
+                {
+                    ORresults.Add(Convert.ToInt32(Length) == rallylength);
+                }
+
+                else if (rallylength == 6)
+                {
+                    ORresults.Add(Convert.ToInt32(Length) >= rallylength);
+                }
+
+
+            }
+            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
+        }
+
+        public bool HasCrunchTime(Models.Util.Enums.Stroke.Crunch Crunch)
+        {
+            switch (Crunch)
+            {
+                case Models.Util.Enums.Stroke.Crunch.CrunchTime:
+                    return (Convert.ToInt32(CurrentRallyScore.First) + Convert.ToInt32(CurrentRallyScore.Second)) >= 16;
+                case Models.Util.Enums.Stroke.Crunch.Not:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        
+        public bool HasPoint(Models.Util.Enums.Stroke.Point Point)
+        {
+            switch (Point)
+            {
+                case Models.Util.Enums.Stroke.Point.Player1:
+                    return Winner == MatchPlayer.First;
+                case Models.Util.Enums.Stroke.Point.Player2:
+                    return Winner == MatchPlayer.Second;
+                case Models.Util.Enums.Stroke.Point.None:
+                    return true;
+                case Models.Util.Enums.Stroke.Point.Both:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         #endregion
 
         #region Helper Methods Statistics

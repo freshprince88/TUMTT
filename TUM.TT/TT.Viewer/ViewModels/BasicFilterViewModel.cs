@@ -25,20 +25,55 @@ namespace TT.Viewer.ViewModels
         public TableServiceViewModel TableView { get; private set; }
         public List<Rally> SelectedRallies { get; private set; }
 
-        public List<Models.Util.Enums.Stroke.Spin> SelectedSpins { get; private set; }
 
-        public Models.Util.Enums.Stroke.Point Point { get; private set; }
-        public Models.Util.Enums.Stroke.Player Player { get; private set; }
+        public Models.Util.Enums.Stroke.Point Point { get
+            {
+                return Filter.Point;
+            }
+            private set {
+                Filter.Point = value;
+            }
+        }
+        public Models.Util.Enums.Stroke.Crunch Crunch {
+            get {
+                return Filter.Crunch;
+            }
+            private set {
+                Filter.Crunch = value;
+            }
+        }
 
-        public Models.Util.Enums.Stroke.Crunch Crunch { get; private set; }
+        public HashSet<int> SelectedSets
+        {
+            get
+            {
+                return Filter.Sets;
+            }
+            private set
+            {
+                Filter.Sets = value;
+            }
+        }
+        public HashSet<int> SelectedRallyLengths
+        {
+            get
+            {
+                return Filter.RallyLengths;
+            }
+            private set
+            {
+                Filter.RallyLengths = value;
+            }
+        }
+        
+        public int MinRallyLength {
+            get
+            {
+                return Filter.MinRallyLength;
+            }
+        }
 
-        public HashSet<int> SelectedSets { get; private set; }
-        public HashSet<int> SelectedRallyLengths { get; private set; }
-        public int MinRallyLength { get; set; }
-        public bool LastStroke { get; set; }
-        public int StrokeNumber { get; set; }
-
-        public String PlayerLabel { get; set; }
+        private BasicFilter Filter { get; set; }
 
         #endregion
 
@@ -46,24 +81,16 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
 
-        public BasicFilterViewModel(IEventAggregator eventAggregator, IMatchManager man)
+        public BasicFilterViewModel(IEventAggregator eventAggregator, IViewManager man, BasicFilter filter)
         {
             this.events = eventAggregator;
             Manager = man;
+            this.Filter = filter;
             SelectedRallies = new List<Rally>();
-            Point = Models.Util.Enums.Stroke.Point.None;
-            Player = Models.Util.Enums.Stroke.Player.None;
-            Crunch = Models.Util.Enums.Stroke.Crunch.Not;
-            SelectedSets = new HashSet<int>();
-            SelectedRallyLengths = new HashSet<int>();
             Player1 = "Spieler 1";
             Player2 = "Spieler 2";
-            MinRallyLength = 0;
-            PlayerLabel = "";
-            LastStroke = false;
-            StrokeNumber = 0;
         }
 
         #region View Methods
@@ -320,44 +347,6 @@ namespace TT.Viewer.ViewModels
             UpdateSelection(Manager.ActivePlaylist);
         }
 
-        public void P1P2(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("player1"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Player == Models.Util.Enums.Stroke.Player.None)
-                        Player = Models.Util.Enums.Stroke.Player.Player1;
-                    else if (Player == Models.Util.Enums.Stroke.Player.Player2)
-                        Player = Models.Util.Enums.Stroke.Player.Both;
-                }
-                else
-                {
-                    if (Player == Models.Util.Enums.Stroke.Player.Player1)
-                        Player = Models.Util.Enums.Stroke.Player.None;
-                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
-                        Player = Models.Util.Enums.Stroke.Player.Player2;
-                }
-            }
-            else if (source.Name.ToLower().Contains("player2"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    if (Player == Models.Util.Enums.Stroke.Player.None)
-                        Player = Models.Util.Enums.Stroke.Player.Player2;
-                    else if (Player == Models.Util.Enums.Stroke.Player.Player1)
-                        Player = Models.Util.Enums.Stroke.Player.Both;
-                }
-                else
-                {
-                    if (Player == Models.Util.Enums.Stroke.Player.Player2)
-                        Player = Models.Util.Enums.Stroke.Player.None;
-                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
-                        Player = Models.Util.Enums.Stroke.Player.Player1;
-                }
-            }
-            UpdateSelection(Manager.ActivePlaylist);
-        }
         #endregion
 
         #region Caliburn Hooks
@@ -376,9 +365,9 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
 
-            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
-            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
-            if (Manager.Match != null)
+            Player1 = Manager.MatchManager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.MatchManager.Match.SecondPlayer.Name.Split(' ')[0];
+            if (Manager.MatchManager.Match != null)
                 UpdateSelection(Manager.ActivePlaylist);
         }
 
@@ -406,89 +395,8 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasCrunchTime(r) && HasPoint(r) && HasPlayer(r)).ToList();
+                SelectedRallies = Filter.filter(list.Rallies).ToList();
                 events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
-            }
-        }
-
-        private bool HasPoint(Rally r)
-        {
-            switch (this.Point)
-            {
-                case Models.Util.Enums.Stroke.Point.Player1:
-                    return r.Winner == MatchPlayer.First;  
-                case Models.Util.Enums.Stroke.Point.Player2:
-                    return r.Winner == MatchPlayer.Second; 
-                case Models.Util.Enums.Stroke.Point.None:
-                    return true;
-                case Models.Util.Enums.Stroke.Point.Both:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool HasPlayer(Rally r)
-        {
-            switch (this.Player)
-            {
-                case Models.Util.Enums.Stroke.Player.Player1:
-                    return r.Strokes[StrokeNumber].Player == MatchPlayer.First;
-                case Models.Util.Enums.Stroke.Player.Player2:
-                    return r.Strokes[StrokeNumber].Player == MatchPlayer.Second;
-                case Models.Util.Enums.Stroke.Player.None:
-                    return true;
-                case Models.Util.Enums.Stroke.Player.Both:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool HasSet(Rally r)
-        {
-            List<bool> ORresults = new List<bool>();
-
-            foreach (var set in SelectedSets)
-            {
-                int setTotal = Convert.ToInt32(r.CurrentSetScore.First) + Convert.ToInt32(r.CurrentSetScore.Second) + 1;
-                ORresults.Add(setTotal == set);
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
-        }
-
-        private bool HasRallyLength(Rally r)
-        {
-            List<bool> ORresults = new List<bool>();
-
-            foreach (var rallylength in SelectedRallyLengths)
-            {
-
-                if (rallylength <= 5)
-                {
-                    ORresults.Add(Convert.ToInt32(r.Length) == rallylength);
-                }
-
-                else if (rallylength == 6)
-                {
-                    ORresults.Add(Convert.ToInt32(r.Length) >= rallylength);
-                }
-
-
-            }
-            return ORresults.Count == 0 ? true : ORresults.Aggregate(false, (a, b) => a || b);
-        }
-
-        private bool HasCrunchTime(Rally r)
-        {
-            switch (this.Crunch)
-            {
-                case Models.Util.Enums.Stroke.Crunch.CrunchTime:
-                    return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
-                case Models.Util.Enums.Stroke.Crunch.Not:
-                    return true;
-                default:
-                    return false;
             }
         }
 

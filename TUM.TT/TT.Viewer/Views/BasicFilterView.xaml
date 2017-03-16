@@ -139,25 +139,6 @@
                     </MultiBinding>
                 </ToggleButton.IsChecked>
             </ToggleButton>
-            <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding PlayerLabel}"/>
-            <ToggleButton x:Name="PlayerPlayer1" Content="{Binding Path=Player1}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"
-                          cal:Message.Attach="[Event Click] = [Action P1P2($source)]">
-                <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:PlayerP1P2ToBoolConverter}" Mode="OneWay">
-                        <Binding Path="Player" />
-                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                    </MultiBinding>
-                </ToggleButton.IsChecked>
-            </ToggleButton>
-            <ToggleButton x:Name="PlayerPlayer2" Content="{Binding Path=Player2}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"
-                          cal:Message.Attach="[Event Click] = [Action P1P2($source)]">
-                <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:PlayerP1P2ToBoolConverter}" Mode="OneWay">
-                        <Binding Path="Player" />
-                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                    </MultiBinding>
-                </ToggleButton.IsChecked>
-            </ToggleButton>
             <Label Grid.Row="4" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Length:"/>
             <WrapPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <!--<ToggleButton x:Name="FilterRallyLengthAllButton" Grid.Row="0" Grid.Column="0"  Width="30" Height="30" IsChecked="True" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="A" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>-->

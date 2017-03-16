@@ -14,13 +14,13 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
         private readonly Dictionary<string, object[]> _tabNameDictionary;
 
         public FilterViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
-            this.Manager = man;
+            this.Manager = new ViewManager(man);
 
             _tabNameDictionary = new Dictionary<string, object[]>()
             {
@@ -29,7 +29,7 @@ namespace TT.Viewer.ViewModels
                 ["ThirdFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 2), 3 },
                 ["FourthFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 3), 4 },
                 ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 5 },
-                ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager), 6 },
+                ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager.MatchManager), 6 },
                 ["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager, this), 7 }
             };
 
@@ -55,13 +55,13 @@ namespace TT.Viewer.ViewModels
             {
                 var s = _tabNameDictionary["ServiceFilterTab"];
                 this.ActivateItem((IScreen)s[0]);
-                Manager.CurrentRallyLength = (int)s[1];
+                Manager.MatchManager.CurrentRallyLength = (int)s[1];
             }
             else
             {
                 var sel = _tabNameDictionary.Where(vmAndRallyLength => ActiveItem == vmAndRallyLength.Value[0]);
                 var first = sel.First();
-                Manager.CurrentRallyLength = (int)first.Value[1];
+                Manager.MatchManager.CurrentRallyLength = (int)first.Value[1];
             }
         }
 
@@ -73,7 +73,7 @@ namespace TT.Viewer.ViewModels
 
             var s = _tabNameDictionary[selected.Name];
             ActivateItem((IScreen)s[0]);
-            Manager.CurrentRallyLength = (int)s[1];
+            Manager.MatchManager.CurrentRallyLength = (int)s[1];
         }
     }
 }

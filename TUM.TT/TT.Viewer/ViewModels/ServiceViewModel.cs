@@ -112,6 +112,39 @@ namespace TT.Viewer.ViewModels
                 ServiceFilter.Name = value;
             }
         }
+
+        public Models.Util.Enums.Stroke.Player Player
+        {
+            get
+            {
+                return ServiceFilter.Player;
+            }
+            private set
+            {
+                ServiceFilter.Player = value;
+            }
+        }
+        public string Player1
+        {
+            get
+            {
+                return Manager.MatchManager.Match.FirstPlayer.Name.Split(' ')[0];
+            }
+        }
+        public string Player2
+        {
+            get
+            {
+                return Manager.MatchManager.Match.SecondPlayer.Name.Split(' ')[0];
+            }
+        }
+        public string PlayerLabel
+        {
+            get
+            {
+                return String.Concat("Service: ");
+            }
+        }
         #endregion
 
 
@@ -119,27 +152,21 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
 
-        public ServiceViewModel(IEventAggregator eventAggregator, IMatchManager man, Filter f, bool showBasicFilter = true)
+        public ServiceViewModel(IEventAggregator eventAggregator, IViewManager man, Filter f, bool showBasicFilter = true)
         {
             this.events = eventAggregator;
             Manager = man;
 
             if (showBasicFilter)
             {
-                BasicFilterView = new BasicFilterViewModel(this.events, Manager)
-                {
-                    MinRallyLength = 0,
-                    PlayerLabel = f.Name,
-                    LastStroke = false,
-                    StrokeNumber = 0
-
-                };
+                var basicFilter = new BasicFilter();
+                BasicFilterView = new BasicFilterViewModel(this.events, Manager, basicFilter);
             }
             else
             {
-                selectedRalliesOnCreation = man.SelectedRallies.ToList();
+                selectedRalliesOnCreation = man.MatchManager.SelectedRallies.ToList();
             }
             TableView = new TableServiceViewModel(events, f);
             SpinControl = new SpinControlViewModel(events, f);
@@ -320,6 +347,46 @@ namespace TT.Viewer.ViewModels
                 else
                 {
                     SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
+
+        public void P1P2(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("player1"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.None)
+                        Player = Models.Util.Enums.Stroke.Player.Player1;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Player2)
+                        Player = Models.Util.Enums.Stroke.Player.Both;
+                }
+                else
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.Player1)
+                        Player = Models.Util.Enums.Stroke.Player.None;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
+                        Player = Models.Util.Enums.Stroke.Player.Player2;
+                }
+            }
+            else if (source.Name.ToLower().Contains("player2"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.None)
+                        Player = Models.Util.Enums.Stroke.Player.Player2;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Player1)
+                        Player = Models.Util.Enums.Stroke.Player.Both;
+                }
+                else
+                {
+                    if (Player == Models.Util.Enums.Stroke.Player.Player2)
+                        Player = Models.Util.Enums.Stroke.Player.None;
+                    else if (Player == Models.Util.Enums.Stroke.Player.Both)
+                        Player = Models.Util.Enums.Stroke.Player.Player1;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);

@@ -748,6 +748,23 @@ namespace TT.Models
             }
         }
 
+        public bool HasPlayer(Util.Enums.Stroke.Player p)
+        {
+            switch (p)
+            {
+                case Models.Util.Enums.Stroke.Player.Player1:
+                    return Player == MatchPlayer.First;
+                case Models.Util.Enums.Stroke.Player.Player2:
+                    return Player == MatchPlayer.Second;
+                case Models.Util.Enums.Stroke.Player.None:
+                    return true;
+                case Models.Util.Enums.Stroke.Player.Both:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public bool HasTablePosition(IEnumerable<Positions.Table> pos)
         {
             List<bool> ORresults = new List<bool>();

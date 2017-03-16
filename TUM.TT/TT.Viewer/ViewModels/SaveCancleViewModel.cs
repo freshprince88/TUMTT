@@ -15,11 +15,11 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
 
         private ISaveCancle parent;
 
-        public SaveCancleViewModel(IEventAggregator eventAggregator, IMatchManager man, ISaveCancle parent, IScreen mainView)
+        public SaveCancleViewModel(IEventAggregator eventAggregator, IViewManager man, ISaveCancle parent, IScreen mainView)
         {
             this.events = eventAggregator;
             this.Manager = man;
