@@ -65,7 +65,7 @@ namespace TT.Viewer.ViewModels
         public void AddCombination()
         {
             IScreen filterView;
-            pendingCombination = new Combination(this.Manager);
+            pendingCombination = new Combination();
 
             filterView = new CombiViewModel(this.events, Manager, parent, pendingCombination);
 

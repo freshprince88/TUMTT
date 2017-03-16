@@ -276,7 +276,7 @@ namespace TT.Viewer.ViewModels
                 case SaveCancelActionType.ActionType.Add:
                     SaveNewItem();
                     break;
-                case SaveCancleActionType.ActionType.Edit:
+                case SaveCancelActionType.ActionType.Edit:
                     FilterCombi.FilterList.Add(pendingFilter);
                     break;
             }
