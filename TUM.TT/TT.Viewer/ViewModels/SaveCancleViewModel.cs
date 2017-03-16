@@ -17,9 +17,9 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IViewManager Manager;
 
-        private ISaveCancle parent;
+        private ISaveCancel parent;
 
-        public SaveCancleViewModel(IEventAggregator eventAggregator, IViewManager man, ISaveCancle parent, IScreen mainView)
+        public SaveCancleViewModel(IEventAggregator eventAggregator, IViewManager man, ISaveCancel parent, IScreen mainView)
         {
             this.events = eventAggregator;
             this.Manager = man;
@@ -52,7 +52,7 @@ namespace TT.Viewer.ViewModels
 
         public void Cancle()
         {
-            parent.Cancle();
+            parent.Cancel();
         }
     }
 }

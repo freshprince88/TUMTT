@@ -18,10 +18,22 @@ using TT.Models.Util.Enums;
 
 namespace TT.Viewer.ViewModels
 {
-    public class CombinationsViewModel : Conductor<IScreen>.Collection.AllActive
+    public class CombinationsViewModel : Conductor<IScreen>.Collection.AllActive, ISaveCancel
 
     {
         #region Properties
+
+        private SaveCancelActionType.ActionType pendingType;
+        private Combination pendingCombination;
+
+        private ObservableCollection<Combination> _combinations;
+        public ObservableCollection<Combination> Combinations
+        {
+            get
+            {
+                return _combinations;
+            }
+        }
 
         #endregion
 
@@ -44,13 +56,23 @@ namespace TT.Viewer.ViewModels
             this.parent = parent;
             this.events = eventAggregator;
             this.Manager = man;
+            _combinations = man.Combinations;
+            
         }
 
         #region View Methods
 
         public void AddCombination()
         {
-            
+            //    IScreen filterView;
+            //    pendingCombination = new Combination(this.Manager);
+
+
+            //    var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
+
+            //    pendingType = SaveCancelActionType.ActionType.Add;
+
+            //    parent.ActivateItem(saveCancleView);
         }
         
         public void EditCombination()
@@ -85,6 +107,7 @@ namespace TT.Viewer.ViewModels
             this.events.Unsubscribe(this);
         }
 
+
         #endregion
 
         #region Event Handlers
@@ -99,6 +122,17 @@ namespace TT.Viewer.ViewModels
         #endregion
 
         #region Save Cancel And Filters
+
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Cancel()
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

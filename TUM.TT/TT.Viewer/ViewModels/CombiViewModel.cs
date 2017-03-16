@@ -19,7 +19,7 @@ using TT.Models.Util.Enums;
 namespace TT.Viewer.ViewModels
 {
     public class CombiViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<BasicFilterSelectionChangedEvent>, ISaveCancle
+        IHandle<BasicFilterSelectionChangedEvent>, ISaveCancel
 
     {
         #region Properties
@@ -27,7 +27,7 @@ namespace TT.Viewer.ViewModels
 
         private Filter pendingFilter;
         private Filter tempFilter;
-        private SaveCancleActionType.ActionType pendingType;
+        private SaveCancelActionType.ActionType pendingType;
 
         private Combination FilterCombi;
         private Filter _selectedItem;
@@ -146,7 +146,7 @@ namespace TT.Viewer.ViewModels
 
                 var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
 
-                pendingType = SaveCancleActionType.ActionType.Add;
+                pendingType = SaveCancelActionType.ActionType.Add;
 
                 parent.ActivateItem(saveCancleView);
             }
@@ -173,7 +173,7 @@ namespace TT.Viewer.ViewModels
 
             var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
 
-            pendingType = SaveCancleActionType.ActionType.Edit;
+            pendingType = SaveCancelActionType.ActionType.Edit;
 
             parent.ActivateItem(saveCancleView);
         }
@@ -251,16 +251,16 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
-        #region Save Cancle And Filters
+        #region Save Cancel And Filters
 
         public void Save()
         {
             switch (pendingType)
             {
-                case SaveCancleActionType.ActionType.Add:
+                case SaveCancelActionType.ActionType.Add:
                     SaveNewItem();
                     break;
-                case SaveCancleActionType.ActionType.Edit:
+                case SaveCancelActionType.ActionType.Edit:
                     FilterCombi.FilterList.Add(pendingFilter);
                     break;
             }
@@ -279,14 +279,14 @@ namespace TT.Viewer.ViewModels
             FilterCombi.FilterList.Add(pendingFilter);
         }
 
-        public void Cancle()
+        public void Cancel()
         {
             switch (pendingType)
             {
-                case SaveCancleActionType.ActionType.Add:
+                case SaveCancelActionType.ActionType.Add:
                     // No need to do anything
                     break;
-                case SaveCancleActionType.ActionType.Edit:
+                case SaveCancelActionType.ActionType.Edit:
                     FilterCombi.FilterList.Add(tempFilter);
                     break;
             }

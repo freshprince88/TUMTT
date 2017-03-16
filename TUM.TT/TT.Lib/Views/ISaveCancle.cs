@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TT.Lib.Views
 {
-    public interface ISaveCancle
+    public interface ISaveCancel
     {
         void Save();
-        void Cancle();
+        void Cancel();
     }
 }
