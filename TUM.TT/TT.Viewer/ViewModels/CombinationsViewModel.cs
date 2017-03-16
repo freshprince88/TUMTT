@@ -37,9 +37,9 @@ namespace TT.Viewer.ViewModels
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
-        private IMatchManager Manager;
+        private IViewManager Manager;
 
-        public CombinationsViewModel(IEventAggregator eventAggregator, IMatchManager man, Conductor<IScreen>.Collection.OneActive parent)
+        public CombinationsViewModel(IEventAggregator eventAggregator, IViewManager man, Conductor<IScreen>.Collection.OneActive parent)
         {
             this.parent = parent;
             this.events = eventAggregator;
