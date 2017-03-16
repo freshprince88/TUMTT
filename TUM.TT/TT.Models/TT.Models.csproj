@@ -65,6 +65,7 @@
     <Compile Include="Filter.cs" />
     <Compile Include="FilterList.cs" />
     <Compile Include="IFilter.cs" />
+    <Compile Include="IFilterCombiBase.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
