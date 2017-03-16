@@ -160,7 +160,7 @@
         }
     }
 
-    public static class SaveCancleActionType
+    public static class SaveCancelActionType
     {
         public enum ActionType
         {

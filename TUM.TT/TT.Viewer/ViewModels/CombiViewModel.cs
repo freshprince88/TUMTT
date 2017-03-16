@@ -19,7 +19,7 @@ using TT.Models.Util.Enums;
 namespace TT.Viewer.ViewModels
 {
     public class CombiViewModel : Conductor<IScreen>.Collection.AllActive,
-        IHandle<BasicFilterSelectionChangedEvent>, ISaveCancle
+        IHandle<BasicFilterSelectionChangedEvent>, ISaveCancel
 
     {
         #region Properties
@@ -27,7 +27,7 @@ namespace TT.Viewer.ViewModels
 
         private Filter pendingFilter;
         private Filter tempFilter;
-        private SaveCancleActionType.ActionType pendingType;
+        private SaveCancelActionType.ActionType pendingType;
 
         private Combination FilterCombi;
         public IEnumerable<Filter> FilterList
@@ -160,11 +160,11 @@ namespace TT.Viewer.ViewModels
                     filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
                 }
 
-                var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
+                var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
 
-                pendingType = SaveCancleActionType.ActionType.Add;
+                pendingType = SaveCancelActionType.ActionType.Add;
 
-                parent.ActivateItem(saveCancleView);
+                parent.ActivateItem(saveCancelView);
             }
             else
             {
@@ -187,11 +187,11 @@ namespace TT.Viewer.ViewModels
             else
                 filterView = new ServiceViewModel(this.events, Manager, pendingFilter, false);
 
-            var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
+            var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
 
-            pendingType = SaveCancleActionType.ActionType.Edit;
+            pendingType = SaveCancelActionType.ActionType.Edit;
 
-            parent.ActivateItem(saveCancleView);
+            parent.ActivateItem(saveCancelView);
         }
 
         public void DeleteFilter()
@@ -267,13 +267,13 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
-        #region Save Cancle And Filters
+        #region Save Cancel And Filters
 
         public void Save()
         {
             switch (pendingType)
             {
-                case SaveCancleActionType.ActionType.Add:
+                case SaveCancelActionType.ActionType.Add:
                     SaveNewItem();
                     break;
                 case SaveCancleActionType.ActionType.Edit:
@@ -298,10 +298,10 @@ namespace TT.Viewer.ViewModels
         {
             switch (pendingType)
             {
-                case SaveCancleActionType.ActionType.Add:
+                case SaveCancelActionType.ActionType.Add:
                     // No need to do anything
                     break;
-                case SaveCancleActionType.ActionType.Edit:
+                case SaveCancelActionType.ActionType.Edit:
                     FilterCombi.FilterList.Add(tempFilter);
                     break;
             }

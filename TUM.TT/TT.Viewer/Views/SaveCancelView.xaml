@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TT.Viewer.Views.SaveCancleView"
+﻿<UserControl x:Class="TT.Viewer.Views.SaveCancelView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="1" cal:Message.Attach="[Event Click] = [Action Save()]">Save</Button>
-            <Button Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Cancle()]">Cancle</Button>
+            <Button Grid.Column="3" cal:Message.Attach="[Event Click] = [Action Cancel()]">Cancel</Button>
         </Grid>
 
         <ContentControl x:Name="MainView" Grid.Row="0" />
