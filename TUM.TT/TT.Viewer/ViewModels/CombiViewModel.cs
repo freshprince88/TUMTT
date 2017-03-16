@@ -24,30 +24,23 @@ namespace TT.Viewer.ViewModels
     {
         #region Properties
         public BasicFilterViewModel BasicFilterView { get; set; }
-        public TableKombiViewModel TableKombi { get; private set; }
 
         private Filter pendingFilter;
+        private Filter tempFilter;
         private SaveCancleActionType.ActionType pendingType;
 
-        private FilterList FilterList;
-        public List<String> FilterNames
+        public FilterList FilterList { get; private set; }
+        private Filter _selectedItem;
+        public Filter SelectedItem
         {
             get
             {
-                return FilterList.Select(f => f.Name).ToList<String>();
-            }
-        }
-        private int _selectedIndex;
-        public int SelectedIndex
-        {
-            get
-            {
-                return _selectedIndex;
+                return _selectedItem;
             }
             set
             {
-                _selectedIndex = value;
-                NotifyOfPropertyChange("SelectedIndex");
+                _selectedItem = value;
+                NotifyOfPropertyChange("SelectedItem");
             }
         }
 
@@ -61,6 +54,44 @@ namespace TT.Viewer.ViewModels
             set
             {
                 _newFilterStrokeNumber = int.Parse(value);
+            }
+        }
+
+        private bool _filterTypeOr;
+        public bool FilterTypeOr
+        {
+            get
+            {
+                return _filterTypeOr;
+            }
+            set
+            {
+                _filterTypeOr = value;
+                NotifyOfPropertyChange("FilterTypeOr");
+                NotifyOfPropertyChange("FilterTypeText");
+                FilterList_CollectionChanged(this, null);
+            }
+        }
+
+        public FilterCombination.CombinationType FilterType
+        {
+            get
+            {
+                if (FilterTypeOr)
+                    return FilterCombination.CombinationType.Or;
+                else
+                    return FilterCombination.CombinationType.And;
+            }
+        }
+
+        public string FilterTypeText
+        {
+            get
+            {
+                if (FilterTypeOr)
+                    return "FilterType: OR";
+                else
+                    return "FilterType: AND";
             }
         }
 
@@ -91,16 +122,8 @@ namespace TT.Viewer.ViewModels
                 PlayerLabel = "Aufschlag:"
             };
 
-            TableKombi = new TableKombiViewModel(this.events)
-            {
-                ButtonsVisible = true,
-                TopButtonPositions = new List<int>() { 1,2,3 },
-                BottomButtonPositions = new List<int>() { 7,8,9 },
-            };
-
             FilterList = new FilterList(LoadFilter());
             FilterList.CollectionChanged += FilterList_CollectionChanged;
-            _selectedIndex = -1;
         }
 
         #region View Methods
@@ -134,20 +157,20 @@ namespace TT.Viewer.ViewModels
 
         public void EditFilter()
         {
-            if (SelectedIndex < 0)
+            if (SelectedItem == null)
                 return;
 
             IScreen filterView;
-            var filterToEdit = FilterList[SelectedIndex];
-            pendingFilter = new Filter(filterToEdit); // creating a copy of the current filter
+            pendingFilter = SelectedItem;
+            tempFilter = new Filter(pendingFilter); // creating a copy of the current filter
 
-            FilterList.DisableFilter(filterToEdit); // So Filter does not affect current SelectedRallies-List
-            if (filterToEdit.StrokeNumber > 0)
-                filterView = new BallFilterViewModel(this.events, Manager, filterToEdit, false);
+            FilterList.DisableFilter(pendingFilter); // So Filter does not affect current SelectedRallies-List
+            if (pendingFilter.StrokeNumber > 0)
+                filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
             else
-                filterView = new ServiceViewModel(this.events, Manager, filterToEdit, false);
+                filterView = new ServiceViewModel(this.events, Manager, pendingFilter, false);
 
-            FilterList.ToogleFilter(filterToEdit, pendingFilter.Enabled); // back to normal
+            FilterList.ToogleFilter(pendingFilter, tempFilter.Enabled); // back to normal
             var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
 
             pendingType = SaveCancleActionType.ActionType.Edit;
@@ -157,12 +180,12 @@ namespace TT.Viewer.ViewModels
 
         public void DeleteFilter()
         {
-            if (SelectedIndex < 0)
+            if (SelectedItem == null)
                 return;
 
-            var filterToDelete = FilterList[SelectedIndex];
+            var filterToDelete = SelectedItem;
             DeleteFilter(filterToDelete);
-            FilterList.RemoveAt(SelectedIndex);
+            FilterList.Remove(SelectedItem);
         }
        
         #endregion
@@ -211,7 +234,7 @@ namespace TT.Viewer.ViewModels
         private void FilterList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             UpdateSelection(Manager.ActivePlaylist);
-            NotifyOfPropertyChange("FilterNames");
+            NotifyOfPropertyChange("FilterList");
         }
 
 
@@ -223,7 +246,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                Manager.SelectedRallies = FilterList.filter(FilterCombination.CombinationType.Or, BasicFilterView.SelectedRallies);
+                Manager.SelectedRallies = FilterList.filter(FilterType, BasicFilterView.SelectedRallies);
             }
         }
 
@@ -239,7 +262,7 @@ namespace TT.Viewer.ViewModels
                     SaveNewItem();
                     break;
                 case SaveCancleActionType.ActionType.Edit:
-                    SaveFilter(FilterList[SelectedIndex]);
+                    SaveFilter(pendingFilter);
                     break;
             }
 
@@ -265,7 +288,7 @@ namespace TT.Viewer.ViewModels
                     // No need to do anything
                     break;
                 case SaveCancleActionType.ActionType.Edit:
-                    FilterList[SelectedIndex] = pendingFilter;
+                    SelectedItem = tempFilter;
                     break;
             }
 

@@ -18,6 +18,8 @@ namespace TT.Models
             set { this.id = value; }
         }
 
+        public DateTime CreationDate;
+
         public string Name;
 
         public int StrokeNumber;
@@ -41,6 +43,7 @@ namespace TT.Models
         public Filter()
         {
             this.id = Guid.NewGuid();
+            this.CreationDate = DateTime.Now;
 
             Spins = new HashSet<Util.Enums.Stroke.Spin>();
             Services = new HashSet<Util.Enums.Stroke.Services>();
@@ -129,6 +132,11 @@ namespace TT.Models
             }
 
             return true;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

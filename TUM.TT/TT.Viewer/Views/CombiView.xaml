@@ -44,19 +44,10 @@
 
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="3" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         <Grid Grid.Row="4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
 
-            <ContentControl x:Name="TableKombi" Grid.Row="0" Grid.Column="0" />
+            <ToggleButton x:Name="FilterType" Grid.Row="0" Grid.Column="0" IsChecked="{Binding Path=FilterTypeOr}">
+                <Label x:Name="FilterTypeText" Content="{Binding Path=FilterTypeText}"/>
+            </ToggleButton>
 
         </Grid>
 
@@ -68,7 +59,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}">Filter List</TextBlock>
-            <ListBox x:Name="AllFilter" Grid.Row="1" ItemsSource="{Binding Path=FilterNames}" SelectedIndex="{Binding Path=SelectedIndex}"></ListBox>
+            <ListBox x:Name="AllFilter" Grid.Row="1" ItemsSource="{Binding Path=FilterList}" SelectedItem="{Binding Path=SelectedItem}"></ListBox>
         </Grid>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
         <Grid Grid.Row="8">
