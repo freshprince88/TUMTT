@@ -14,6 +14,20 @@ namespace TT.Lib.Managers
     {
         public ObservableCollection<Filter> Filters { get; private set; }
         public ObservableCollection<Combination> Combinations { get; private set; }
+
+        ObservableCollection<Filter> IFilterCombiBase.FilterList {
+            get
+            {
+                return Filters;
+            }
+        }
+        ObservableCollection<Combination> IFilterCombiBase.CombinationList
+        {
+            get
+            {
+                return Combinations;
+            }
+        }
         
         public IMatchManager MatchManager { get; private set; }
 

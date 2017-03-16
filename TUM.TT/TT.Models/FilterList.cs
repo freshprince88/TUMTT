@@ -9,21 +9,9 @@ using TT.Models.Util.Enums;
 
 namespace TT.Models
 {
-    public class FilterList : ObservableCollection<Filter>
+    public class FilterList : ReadOnlyCollection<Filter>
     {
-        public FilterList() : base() { }
-
-        public FilterList(IEnumerable<Filter> collection) : base(collection) { }
-
         public FilterList(List<Filter> list) : base(list) { }
-
-        public IEnumerable<Filter> EnabledFilter
-        {
-            get
-            {
-                return this.Where(f => f.Enabled);
-            }
-        }
 
 
         public IEnumerable<Rally> filter(FilterCombination.CombinationType combinationType, IEnumerable<Rally> rallies)
@@ -39,30 +27,59 @@ namespace TT.Models
             }
         }
 
+        public bool accepts(FilterCombination.CombinationType combinationType, Rally rally)
+        {
+            switch (combinationType)
+            {
+                case FilterCombination.CombinationType.And:
+                    return IsAcceptedAnd(rally);
+                case FilterCombination.CombinationType.Or:
+                    return isAcceptedOr(rally);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         private IEnumerable<Rally> filterOr(IEnumerable<Rally> rallies)
         {
             List<Rally> allResults = new List<Rally>();
             foreach (Rally rally in rallies)
             {
-                bool isAcceptedByOne = false;
-                foreach(Filter f in EnabledFilter)
-                {
-                    if (f.accepts(rally)) isAcceptedByOne = true;
-                }
-                if (isAcceptedByOne || EnabledFilter.Count() == 0) allResults.Add(rally);
+                if (isAcceptedOr(rally))
+                    allResults.Add(rally);
             }
 
             return allResults;
         }
 
+        private bool isAcceptedOr(Rally rally)
+        {
+            bool isAcceptedByOne = false;
+            foreach (Filter f in this)
+            {
+                if (f.accepts(rally)) isAcceptedByOne = true;
+            }
+            return isAcceptedByOne;
+        }
+
         private IEnumerable<Rally> filterAnd(IEnumerable<Rally> rallies)
         {
             Rally[] temp = rallies.ToArray();
-            foreach (Filter f in EnabledFilter)
+            foreach (Filter f in this)
             {
                 temp = f.filter(temp);
             }
             return temp;
+        }
+
+        private bool IsAcceptedAnd(Rally rally)
+        {
+            bool isAcceptedByAll = true;
+            foreach (Filter f in this)
+            {
+                if (!f.accepts(rally)) isAcceptedByAll = false;
+            }
+            return isAcceptedByAll;
         }
     }
 }

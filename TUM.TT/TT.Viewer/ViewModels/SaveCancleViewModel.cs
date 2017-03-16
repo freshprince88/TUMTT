@@ -52,7 +52,7 @@ namespace TT.Viewer.ViewModels
 
         public void Cancle()
         {
-            parent.Cancle();
+            parent.Cancel();
         }
     }
 }

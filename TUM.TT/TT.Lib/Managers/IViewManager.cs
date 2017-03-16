@@ -8,7 +8,7 @@ using TT.Models;
 
 namespace TT.Lib.Managers
 {
-    public interface IViewManager
+    public interface IViewManager : IFilterCombiBase
     {
         IMatchManager MatchManager { get; }
 

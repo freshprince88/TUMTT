@@ -146,5 +146,21 @@ namespace TT.Models
             return Name;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Filter)
+            {
+                var f = (Filter)obj;
+                return f.ID == this.ID;
+            }
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ID.GetHashCode();
+        }
+
     }
 }

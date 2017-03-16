@@ -9,6 +9,6 @@ namespace TT.Lib.Views
     public interface ISaveCancle
     {
         void Save();
-        void Cancle();
+        void Cancel();
     }
 }

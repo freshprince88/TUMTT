@@ -22,6 +22,8 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             this.Manager = new ViewManager(man);
 
+            var combi = new TT.Models.Combination(Manager);
+
             _tabNameDictionary = new Dictionary<string, object[]>()
             {
                 ["ServiceFilterTab"] = new object[] { new ServiceViewModel(this.events, Manager, new Models.Filter(0, "Service")), 1 },
@@ -30,7 +32,7 @@ namespace TT.Viewer.ViewModels
                 ["FourthFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 3), 4 },
                 ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 5 },
                 ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager.MatchManager), 6 },
-                ["KombiFilterTab"] = new object[] { new CombinationsViewModel(this.events, Manager, this), 7 }
+                ["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager, this, combi), 7 }
             };
 
             SelectedTab = 0;
