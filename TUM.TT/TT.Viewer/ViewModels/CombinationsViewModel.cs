@@ -64,15 +64,16 @@ namespace TT.Viewer.ViewModels
 
         public void AddCombination()
         {
-            //    IScreen filterView;
-            //    pendingCombination = new Combination(this.Manager);
+            IScreen filterView;
+            pendingCombination = new Combination(this.Manager);
 
+            filterView = new CombiViewModel(this.events, Manager, parent, pendingCombination);
 
-            //    var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
+            var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
 
-            //    pendingType = SaveCancelActionType.ActionType.Add;
+            pendingType = SaveCancelActionType.ActionType.Add;
 
-            //    parent.ActivateItem(saveCancleView);
+            parent.ActivateItem(saveCancelView);
         }
         
         public void EditCombination()

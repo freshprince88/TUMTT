@@ -18,9 +18,9 @@ namespace TT.Viewer.Views
     /// <summary>
     /// Interaction logic for NewFilterView.xaml
     /// </summary>
-    public partial class SaveCancleView : UserControl
+    public partial class SaveCancelView : UserControl
     {
-        public SaveCancleView()
+        public SaveCancelView()
         {
             InitializeComponent();
         }

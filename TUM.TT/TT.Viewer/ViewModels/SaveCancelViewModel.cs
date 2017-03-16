@@ -7,7 +7,7 @@ using TT.Lib.Views;
 
 namespace TT.Viewer.ViewModels
 {
-    public class SaveCancleViewModel : Conductor<IScreen>.Collection.AllActive
+    public class SaveCancelViewModel : Conductor<IScreen>.Collection.AllActive
     {
         public IScreen MainView { get; set; }
 
@@ -19,7 +19,7 @@ namespace TT.Viewer.ViewModels
 
         private ISaveCancel parent;
 
-        public SaveCancleViewModel(IEventAggregator eventAggregator, IViewManager man, ISaveCancel parent, IScreen mainView)
+        public SaveCancelViewModel(IEventAggregator eventAggregator, IViewManager man, ISaveCancel parent, IScreen mainView)
         {
             this.events = eventAggregator;
             this.Manager = man;
@@ -50,7 +50,7 @@ namespace TT.Viewer.ViewModels
             parent.Save();
         }
 
-        public void Cancle()
+        public void Cancel()
         {
             parent.Cancel();
         }

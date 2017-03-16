@@ -151,11 +151,11 @@ namespace TT.Viewer.ViewModels
                     filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
                 }
 
-                var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
+                var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
 
                 pendingType = SaveCancelActionType.ActionType.Add;
 
-                parent.ActivateItem(saveCancleView);
+                parent.ActivateItem(saveCancelView);
             }
             else
             {
@@ -178,11 +178,11 @@ namespace TT.Viewer.ViewModels
             else
                 filterView = new ServiceViewModel(this.events, Manager, pendingFilter, false);
 
-            var saveCancleView = new SaveCancleViewModel(this.events, Manager, this, filterView);
+            var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
 
             pendingType = SaveCancelActionType.ActionType.Edit;
 
-            parent.ActivateItem(saveCancleView);
+            parent.ActivateItem(saveCancelView);
         }
 
         public void DeleteFilter()
