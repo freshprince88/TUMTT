@@ -174,7 +174,6 @@
     <Compile Include="ViewModels\ResultMiniStatisticViewModel.cs" />
     <Compile Include="ViewModels\ResultTabViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
-    <Compile Include="ViewModels\SaveCancelViewModel.cs" />
     <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />
     <Compile Include="ViewModels\ServiceViewModel.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
@@ -228,9 +227,6 @@
     </Compile>
     <Compile Include="Views\MatchView.xaml.cs">
       <DependentUpon>MatchView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SaveCancelView.xaml.cs">
-      <DependentUpon>SaveCancelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
       <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
@@ -380,10 +376,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MatchView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SaveCancelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

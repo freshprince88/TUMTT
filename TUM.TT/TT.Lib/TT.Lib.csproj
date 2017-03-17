@@ -175,10 +175,19 @@
     <Compile Include="Util\ObservableSortedList.cs" />
     <Compile Include="Util\Secure.cs" />
     <Compile Include="Util\ShortcutFactory.cs" />
+    <Compile Include="ViewModels\INavigationViewModel.cs" />
+    <Compile Include="ViewModels\NavigationControlViewModel.cs" />
+    <Compile Include="ViewModels\SaveCancelViewModel.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
     <Compile Include="Views\ISaveCancle.cs" />
+    <Compile Include="Views\NavigationControlView.xaml.cs">
+      <DependentUpon>NavigationControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReportGenerationNotifyIcon.cs" />
+    <Compile Include="Views\SaveCancelView.xaml.cs">
+      <DependentUpon>SaveCancelView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Webbrowser\Test.cs" />
     <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />
@@ -217,9 +226,7 @@
     <Compile Include="Util\GridViewSort.cs" />
     <Compile Include="Util\StringExtensions.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -279,6 +286,14 @@
     <Page Include="Templates\CircleBorder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NavigationControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SaveCancelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

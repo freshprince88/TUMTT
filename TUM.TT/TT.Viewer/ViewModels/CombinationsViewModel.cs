@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using TT.Models.Serialization;
 using TT.Models.Util.Enums;
+using TT.Lib.ViewModels;
 
 namespace TT.Viewer.ViewModels
 {
@@ -37,7 +38,7 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
-        private Conductor<IScreen>.Collection.OneActive parent;
+        private INavigationViewModel navigationController;
 
         #region Enums
 
@@ -51,9 +52,9 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IViewManager Manager;
 
-        public CombinationsViewModel(IEventAggregator eventAggregator, IViewManager man, Conductor<IScreen>.Collection.OneActive parent)
+        public CombinationsViewModel(IEventAggregator eventAggregator, IViewManager man, INavigationViewModel navigationController)
         {
-            this.parent = parent;
+            this.navigationController = navigationController;
             this.events = eventAggregator;
             this.Manager = man;
             _combinations = man.Combinations;
@@ -67,13 +68,13 @@ namespace TT.Viewer.ViewModels
             IScreen filterView;
             pendingCombination = new Combination();
 
-            filterView = new CombiViewModel(this.events, Manager, parent, pendingCombination);
+            filterView = new CombiViewModel(this.events, Manager, navigationController, pendingCombination);
 
             var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
 
             pendingType = SaveCancelActionType.ActionType.Add;
 
-            parent.ActivateItem(saveCancelView);
+            navigationController.ActivateItem(saveCancelView);
         }
         
         public void EditCombination()
@@ -127,12 +128,12 @@ namespace TT.Viewer.ViewModels
 
         public void Save()
         {
-            throw new NotImplementedException();
+            navigationController.NavigateBack();
         }
 
         public void Cancel()
         {
-            throw new NotImplementedException();
+            navigationController.NavigateBack();
         }
 
         #endregion

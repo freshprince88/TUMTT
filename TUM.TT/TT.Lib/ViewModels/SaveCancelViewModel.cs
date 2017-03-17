@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using TT.Lib.Managers;
 using TT.Lib.Views;
 
-namespace TT.Viewer.ViewModels
+namespace TT.Lib.ViewModels
 {
     public class SaveCancelViewModel : Conductor<IScreen>.Collection.AllActive
     {

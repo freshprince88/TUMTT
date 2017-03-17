@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using TT.Models.Serialization;
 using TT.Models.Util.Enums;
+using TT.Lib.ViewModels;
 
 namespace TT.Viewer.ViewModels
 {
@@ -117,7 +118,7 @@ namespace TT.Viewer.ViewModels
 
         #endregion
 
-        private Conductor<IScreen>.Collection.OneActive parent;
+        private INavigationViewModel navigationController;
 
         #region Enums
 
@@ -131,9 +132,9 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IViewManager Manager;
 
-        public CombiViewModel(IEventAggregator eventAggregator, IViewManager man, Conductor<IScreen>.Collection.OneActive parent, Combination filterCombi)
+        public CombiViewModel(IEventAggregator eventAggregator, IViewManager man, INavigationViewModel navigationController, Combination filterCombi)
         {
-            this.parent = parent;
+            this.navigationController = navigationController;
             this.events = eventAggregator;
             this.Manager = man;
             this.FilterCombi = filterCombi;
@@ -164,7 +165,7 @@ namespace TT.Viewer.ViewModels
 
                 pendingType = SaveCancelActionType.ActionType.Add;
 
-                parent.ActivateItem(saveCancelView);
+                navigationController.ActivateItem(saveCancelView);
             }
             else
             {
@@ -191,7 +192,7 @@ namespace TT.Viewer.ViewModels
 
             pendingType = SaveCancelActionType.ActionType.Edit;
 
-            parent.ActivateItem(saveCancelView);
+            navigationController.ActivateItem(saveCancelView);
         }
 
         public void DeleteFilter()
@@ -281,7 +282,7 @@ namespace TT.Viewer.ViewModels
                     break;
             }
 
-            parent.ActivateItem(this);
+            navigationController.NavigateBack();
 
             FilterList_CollectionChanged(this, null);
         }
@@ -306,7 +307,7 @@ namespace TT.Viewer.ViewModels
                     break;
             }
 
-            parent.ActivateItem(this);
+            navigationController.NavigateBack();
 
             FilterList_CollectionChanged(this, null);
         }

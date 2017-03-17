@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using TT.Lib.Managers;
+using TT.Lib.ViewModels;
 
 namespace TT.Viewer.ViewModels
 {
@@ -23,6 +24,9 @@ namespace TT.Viewer.ViewModels
             this.Manager = new ViewManager(man);
 
             var combi = new TT.Models.Combination();
+            var navControl = new NavigationControlViewModel();
+            navControl.ActivateItem(new CombinationsViewModel(this.events, Manager, navControl));
+
 
             _tabNameDictionary = new Dictionary<string, object[]>()
             {
@@ -32,7 +36,8 @@ namespace TT.Viewer.ViewModels
                 ["FourthFilterTab"] = new object[] { new BallFilterViewModel(this.events, Manager, 3), 4 },
                 ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 5 },
                 ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager.MatchManager), 6 },
-                ["KombiFilterTab"] = new object[] { new CombinationsViewModel(this.events, Manager, this), 7 }
+                ["KombiFilterTab"] = new object[] { navControl, 7 }
+                //["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager, this, combi), 7 }
             };
 
             SelectedTab = 0;

@@ -60,5 +60,13 @@ namespace TT.Viewer {
                 UserTto = e.Args[0];
             DisplayRootViewFor<IShell>();
         }
+
+        protected override IEnumerable<Assembly> SelectAssemblies()
+        {
+            return new[] {
+                    Assembly.GetEntryAssembly(),
+                    System.Reflection.Assembly.GetAssembly(typeof(TT.Lib.ViewModels.NavigationControlViewModel))
+                };
+        }
     }
 }

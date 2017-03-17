@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TT.Viewer.Views
+namespace TT.Lib.Views
 {
     /// <summary>
-    /// Interaction logic for NewFilterView.xaml
+    /// Interaction logic for NavigationControl.xaml
     /// </summary>
-    public partial class SaveCancelView : UserControl
+    public partial class NavigationControlView : UserControl
     {
-        public SaveCancelView()
+        public NavigationControlView()
         {
             InitializeComponent();
         }
