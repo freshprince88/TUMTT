@@ -83,7 +83,10 @@ namespace TT.Viewer.ViewModels
         public void EditCombination()
         {
             if (SelectedCombinations.Count != 1)
-                System.Windows.MessageBox.Show("You can only edit one Messagebox");
+            {
+                System.Windows.MessageBox.Show("Please select one Messagebox");
+                return;
+            }
 
             IScreen filterView;
             pendingCombination = SelectedCombinations.FirstOrDefault();
