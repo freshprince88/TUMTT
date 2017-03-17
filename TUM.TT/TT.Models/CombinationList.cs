@@ -21,7 +21,7 @@ namespace TT.Models
 
         public Rally[] filter(IEnumerable<Rally> inputRallies)
         {
-            return RallyFilterListMethods.filter(Util.Enums.FilterCombination.CombinationType.And, inputRallies, this);
+            return RallyFilterListMethods.filter(Util.Enums.FilterCombination.CombinationType.Or, inputRallies, this);
         }
     }
 }

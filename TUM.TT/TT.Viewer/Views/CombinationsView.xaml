@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}"><Run Text="Combinations"/></TextBlock>
         <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="1" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
-        <ListView Grid.Row="2" SelectionMode="Multiple" ItemsSource="{Binding Path=SortedCombinationList}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0 5 0 0"></ListView>
+        <ListView Grid.Row="2" SelectionMode="Multiple" ItemsSource="{Binding Path=SortedCombinationList}" cal:Message.Attach="[Event SelectionChanged] = [Action ListView_SelectionChanged($source, $eventArgs)]" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0 5 0 0"></ListView>
         <Grid Grid.Row="3" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

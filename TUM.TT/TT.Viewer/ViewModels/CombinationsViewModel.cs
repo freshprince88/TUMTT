@@ -16,6 +16,7 @@ using System.IO;
 using TT.Models.Serialization;
 using TT.Models.Util.Enums;
 using TT.Lib.ViewModels;
+using System.Windows.Controls;
 
 namespace TT.Viewer.ViewModels
 {
@@ -35,7 +36,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public IEnumerable<Combination> SelectedCombinations { get; set; }
+        private CombinationList SelectedCombinations;
 
         #endregion
 
@@ -59,7 +60,7 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             this.Manager = man;
             Manager.Combinations.CollectionChanged += Combinations_CollectionChanged;
-            
+            SelectedCombinations = new CombinationList();
         }
 
         #region View Methods
@@ -125,11 +126,22 @@ namespace TT.Viewer.ViewModels
 
         #region Helper Methods
 
-        private void UpdateSelection(Playlist list)
+        public void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (list.Rallies != null)
+            foreach (Combination c in e.AddedItems)
+                SelectedCombinations.Add(c);
+
+            foreach (Combination c in e.RemovedItems)
+                SelectedCombinations.Remove(c);
+
+            UpdateSelection();
+        }
+
+        private void UpdateSelection()
+        {
+            if (Manager.ActivePlaylist.Rallies != null)
             {
-                Manager.MatchManager.SelectedRallies = Manager.Combinations.filter(Manager.MatchManager.ActivePlaylist.Rallies);
+                Manager.SelectedRallies = SelectedCombinations.filter(Manager.ActivePlaylist.Rallies);
             }
         }
 

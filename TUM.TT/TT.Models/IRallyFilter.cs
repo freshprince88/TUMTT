@@ -43,6 +43,9 @@ namespace TT.Models
 
         private static IEnumerable<Rally> filterOr(IEnumerable<Rally> rallies, IEnumerable<IRallyFilter> rallyFilters)
         {
+            if (rallyFilters.Count() == 0)
+                return rallies;
+
             List<Rally> allResults = new List<Rally>();
             foreach (Rally rally in rallies)
             {
