@@ -179,16 +179,21 @@ namespace TT.Viewer.ViewModels
             {
                 case SaveCancelActionType.ActionType.Add:
                     Manager.Combinations.Add(pendingCombination);
+                    SelectedCombinations.Clear();
+                    NotifyOfPropertyChange("SortedCombinationList");
                     break;
                 case SaveCancelActionType.ActionType.Edit:
                     var idx = Manager.Combinations.IndexOf(pendingCombination);
                     Manager.Combinations[idx] = pendingCombination;
                     SelectedCombinations.Clear();
+                    NotifyOfPropertyChange("SortedCombinationList");
                     break;
                 default:
                     throw new NotImplementedException("Can only handle Add & Edit");
             }
+
             navigationController.NavigateBack();
+            UpdateSelection();
         }
 
         public void Cancel()
@@ -203,6 +208,7 @@ namespace TT.Viewer.ViewModels
                 default:
                     throw new NotImplementedException("Can only handle Add & Edit");
             }
+
             navigationController.NavigateBack();
         }
 
