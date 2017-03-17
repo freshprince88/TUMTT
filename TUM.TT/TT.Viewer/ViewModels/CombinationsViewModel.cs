@@ -27,6 +27,7 @@ namespace TT.Viewer.ViewModels
 
         private SaveCancelActionType.ActionType pendingType;
         private Combination pendingCombination;
+        private Combination tempCombination;
 
         public IEnumerable<Combination> SortedCombinationList
         {
@@ -81,7 +82,26 @@ namespace TT.Viewer.ViewModels
         
         public void EditCombination()
         {
+            if (SelectedCombinations.Count != 1)
+                System.Windows.MessageBox.Show("You can only edit one Messagebox");
 
+            IScreen filterView;
+            pendingCombination = SelectedCombinations.FirstOrDefault();
+            tempCombination = pendingCombination.Copy(); // creating a copy of the current filter
+
+            filterView = new CombiViewModel(this.events, Manager, navigationController, pendingCombination);
+
+            var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
+
+            pendingType = SaveCancelActionType.ActionType.Edit;
+
+            navigationController.ActivateItem(saveCancelView);
+        }
+
+        public void DeleteCombination()
+        {
+            while(SelectedCombinations.Count > 0)
+                Manager.Combinations.Remove(SelectedCombinations.FirstOrDefault());
         }
        
         #endregion
@@ -152,12 +172,34 @@ namespace TT.Viewer.ViewModels
 
         public void Save()
         {
-            Manager.Combinations.Add(pendingCombination);
+            switch (pendingType)
+            {
+                case SaveCancelActionType.ActionType.Add:
+                    Manager.Combinations.Add(pendingCombination);
+                    break;
+                case SaveCancelActionType.ActionType.Edit:
+                    var idx = Manager.Combinations.IndexOf(pendingCombination);
+                    Manager.Combinations[idx] = pendingCombination;
+                    SelectedCombinations.Clear();
+                    break;
+                default:
+                    throw new NotImplementedException("Can only handle Add & Edit");
+            }
             navigationController.NavigateBack();
         }
 
         public void Cancel()
         {
+            switch (pendingType)
+            {
+                case SaveCancelActionType.ActionType.Add:
+                    break;
+                case SaveCancelActionType.ActionType.Edit:
+                    pendingCombination = tempCombination;
+                    break;
+                default:
+                    throw new NotImplementedException("Can only handle Add & Edit");
+            }
             navigationController.NavigateBack();
         }
 

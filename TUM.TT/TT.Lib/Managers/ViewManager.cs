@@ -67,13 +67,13 @@ namespace TT.Lib.Managers
                     }
                     break;
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
-                    foreach (Combination item in e.NewItems)
-                    {
-                        SaveCombination(item);
-                    }
                     foreach (Combination item in e.OldItems)
                     {
                         DeleteCombination(item);
+                    }
+                    foreach (Combination item in e.NewItems)
+                    {
+                        SaveCombination(item);
                     }
                     break;
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
@@ -104,13 +104,13 @@ namespace TT.Lib.Managers
                     }
                     break;
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
-                    foreach (Filter item in e.NewItems)
-                    {
-                        SaveFilter(item);
-                    }
                     foreach (Filter item in e.OldItems)
                     {
                         DeleteFilter(item);
+                    }
+                    foreach (Filter item in e.NewItems)
+                    {
+                        SaveFilter(item);
                     }
                     break;
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
