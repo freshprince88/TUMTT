@@ -15,6 +15,6 @@ namespace TT.Lib.Managers
         Playlist ActivePlaylist { get; set; }
         IEnumerable<Rally> SelectedRallies { get; set; }
         
-        ObservableCollection<Combination> Combinations { get; }
+        CombinationList Combinations { get; }
     }
 }

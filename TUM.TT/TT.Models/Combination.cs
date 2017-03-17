@@ -7,8 +7,15 @@ using TT.Models.Util.Enums;
 
 namespace TT.Models
 {
-    public class Combination : IFilter
+    public class Combination : IRallyFilter
     {
+        public const string COMBINATION_PATH = "Combinations";
+
+        public Guid ID;
+        public DateTime CreationDate;
+
+        public string Name;
+
         public BasicFilter BasicFilter;
         public FilterList FilterList;
 
@@ -16,8 +23,26 @@ namespace TT.Models
 
         public Combination()
         {
+            ID = Guid.NewGuid();
+            CreationDate = DateTime.Now;
+            Name = "";
             FilterList = new FilterList();
             BasicFilter = new Models.BasicFilter();
+        }
+
+        public Combination Copy()
+        {
+            var newCombi = new Combination();
+
+            newCombi.ID = this.ID;
+            newCombi.CreationDate = this.CreationDate;
+
+            newCombi.Name = this.Name;
+
+            newCombi.FilterList = new Models.FilterList(this.FilterList.Select(f => f.Copy()));
+            newCombi.BasicFilter = this.BasicFilter.Copy();
+
+            return newCombi;
         }
 
 
@@ -29,6 +54,11 @@ namespace TT.Models
         public Rally[] filter(IEnumerable<Rally> inputRallies)
         {
             return FilterList.filter(FilterType, inputRallies).ToArray();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

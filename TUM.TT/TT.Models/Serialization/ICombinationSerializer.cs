@@ -25,6 +25,6 @@ namespace TT.Models.Serialization
         /// </summary>
         /// <param name="stream">The stream to deserialize from.</param>
         /// <returns>The combination.</returns>
-        Filter Deserialize(Stream stream);
+        Combination Deserialize(Stream stream);
     }
 }

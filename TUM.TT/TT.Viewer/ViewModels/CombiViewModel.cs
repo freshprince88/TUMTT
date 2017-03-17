@@ -116,6 +116,18 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public string CombinationName
+        {
+            get
+            {
+                return FilterCombi.Name;
+            }
+            set
+            {
+                FilterCombi.Name = value;
+            }
+        }
+
         #endregion
 
         private INavigationViewModel navigationController;
@@ -180,7 +192,7 @@ namespace TT.Viewer.ViewModels
 
             IScreen filterView;
             pendingFilter = SelectedItem;
-            tempFilter = new Filter(pendingFilter); // creating a copy of the current filter
+            tempFilter = pendingFilter.Copy(); // creating a copy of the current filter
 
             FilterCombi.FilterList.Remove(SelectedItem); // So Filter does not affect current SelectedRallies-List
             if (pendingFilter.StrokeNumber > 0)

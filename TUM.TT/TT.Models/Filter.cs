@@ -7,7 +7,7 @@ using TT.Models.Util.Enums;
 
 namespace TT.Models
 {
-    public class Filter : IFilter
+    public class Filter : IRallyFilter
     {
         public const string FILTER_PATH = "Filters";
 
@@ -75,28 +75,31 @@ namespace TT.Models
             this.Name = name;
         }
 
-        public Filter(Filter f)
+        public Filter Copy()
         {
-            this.id = f.id;
-            this.CreationDate = f.CreationDate;
+            var newFilter = new Filter();
+            newFilter.id = this.id;
+            newFilter.CreationDate = this.CreationDate;
 
-            this.Name = f.Name;
+            newFilter.Name = this.Name;
 
-            Spins = f.Spins;
-            Services = f.Services;
-            ServerPositions = f.ServerPositions;
+            newFilter.Spins = new HashSet<Util.Enums.Stroke.Spin>(this.Spins);
+            newFilter.Services = new HashSet<Util.Enums.Stroke.Services>(this.Services);
+            newFilter.ServerPositions = new HashSet<Positions.Server>(this.ServerPositions);
 
-            StrokeLengths = f.StrokeLengths;
-            TablePositions = f.TablePositions;
-            Aggressiveness = f.Aggressiveness;
-            Specials = f.Specials;
-            StepAround = f.StepAround;
-            StrokeTec = f.StrokeTec;
-            Hand = f.Hand;
-            Quality = f.Quality;
-            Player = f.Player;
+            newFilter.StrokeLengths = new HashSet<Util.Enums.Positions.Length>(this.StrokeLengths);
+            newFilter.TablePositions = new HashSet<Util.Enums.Positions.Table>(this.TablePositions);
+            newFilter.Aggressiveness = new HashSet<Util.Enums.Stroke.Aggressiveness>(this.Aggressiveness);
+            newFilter.Specials = new HashSet<Util.Enums.Stroke.Specials>(this.Specials);
+            newFilter.StepAround = this.StepAround;
+            newFilter.StrokeTec = new HashSet<Util.Enums.Stroke.Technique>(this.StrokeTec);
+            newFilter.Hand = this.Hand;
+            newFilter.Quality = this.Quality;
+            newFilter.Player = this.Player;
 
-            Enabled = f.Enabled;
+            newFilter.Enabled = this.Enabled;
+
+            return newFilter;
         }
 
         public Rally[] filter(IEnumerable<Rally> inputRallies)

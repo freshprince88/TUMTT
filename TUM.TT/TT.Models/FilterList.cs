@@ -9,78 +9,39 @@ using TT.Models.Util.Enums;
 
 namespace TT.Models
 {
-    public class FilterList : ObservableCollection<Filter>
+    public class FilterList : ObservableCollection<Filter>,
+        IRallyFilter
     {
         public FilterList() : base() { }
         public FilterList(List<Filter> list) : base(list) { }
         public FilterList(IEnumerable<Filter> collection) : base(collection) { }
 
-        public IEnumerable<Rally> filter(FilterCombination.CombinationType combinationType, IEnumerable<Rally> rallies)
+        public Rally[] filter(FilterCombination.CombinationType combinationType, IEnumerable<Rally> rallies)
         {
-            switch (combinationType)
-            {
-                case FilterCombination.CombinationType.And:
-                    return filterAnd(rallies);
-                case FilterCombination.CombinationType.Or:
-                    return filterOr(rallies);
-                default:
-                    throw new NotImplementedException();
-            }
+            return RallyFilterListMethods.filter(combinationType, rallies, this);
         }
 
         public bool accepts(FilterCombination.CombinationType combinationType, Rally rally)
         {
-            switch (combinationType)
-            {
-                case FilterCombination.CombinationType.And:
-                    return IsAcceptedAnd(rally);
-                case FilterCombination.CombinationType.Or:
-                    return isAcceptedOr(rally);
-                default:
-                    throw new NotImplementedException();
-            }
+            return RallyFilterListMethods.accepts(combinationType, rally, this);
         }
 
-        private IEnumerable<Rally> filterOr(IEnumerable<Rally> rallies)
+        /// <summary>
+        /// Applies ALL FILTERS on the inputtype (CombinationType = AND)
+        /// </summary>
+        /// <param name="inputRallies">Rallies to filter.</param>
+        public Rally[] filter(IEnumerable<Rally> inputRallies)
         {
-            List<Rally> allResults = new List<Rally>();
-            foreach (Rally rally in rallies)
-            {
-                if (isAcceptedOr(rally))
-                    allResults.Add(rally);
-            }
-
-            return allResults;
+            return this.filter(FilterCombination.CombinationType.And, inputRallies);
         }
 
-        private bool isAcceptedOr(Rally rally)
+        /// <summary>
+        /// Checks if a Rally is accepted by ALL Filters
+        /// </summary>
+        /// <param name="inputRallies">Rally to filter.</param>
+        public bool accepts(Rally rally)
         {
-            bool isAcceptedByOne = false;
-            foreach (Filter f in this)
-            {
-                if (f.accepts(rally)) isAcceptedByOne = true;
-            }
-            return isAcceptedByOne;
-        }
-
-        private IEnumerable<Rally> filterAnd(IEnumerable<Rally> rallies)
-        {
-            Rally[] temp = rallies.ToArray();
-            foreach (Filter f in this)
-            {
-                temp = f.filter(temp);
-            }
-            return temp;
-        }
-
-        private bool IsAcceptedAnd(Rally rally)
-        {
-            bool isAcceptedByAll = true;
-            foreach (Filter f in this)
-            {
-                if (!f.accepts(rally)) isAcceptedByAll = false;
-            }
-            return isAcceptedByAll;
+            return this.accepts(FilterCombination.CombinationType.And, rally);
         }
     }
 }

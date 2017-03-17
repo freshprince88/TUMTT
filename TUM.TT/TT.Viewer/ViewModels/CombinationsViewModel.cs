@@ -27,14 +27,15 @@ namespace TT.Viewer.ViewModels
         private SaveCancelActionType.ActionType pendingType;
         private Combination pendingCombination;
 
-        private ObservableCollection<Combination> _combinations;
-        public ObservableCollection<Combination> Combinations
+        public IEnumerable<Combination> SortedCombinationList
         {
             get
             {
-                return _combinations;
+                return Manager.Combinations.OrderBy(c => c.Name);
             }
         }
+
+        public IEnumerable<Combination> SelectedCombinations { get; set; }
 
         #endregion
 
@@ -57,7 +58,7 @@ namespace TT.Viewer.ViewModels
             this.navigationController = navigationController;
             this.events = eventAggregator;
             this.Manager = man;
-            _combinations = man.Combinations;
+            Manager.Combinations.CollectionChanged += Combinations_CollectionChanged;
             
         }
 
@@ -114,12 +115,23 @@ namespace TT.Viewer.ViewModels
 
         #region Event Handlers
 
-
+        private void Combinations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            NotifyOfPropertyChange("SortedCombinationList");
+        }
 
 
         #endregion
 
         #region Helper Methods
+
+        private void UpdateSelection(Playlist list)
+        {
+            if (list.Rallies != null)
+            {
+                Manager.MatchManager.SelectedRallies = Manager.Combinations.filter(Manager.MatchManager.ActivePlaylist.Rallies);
+            }
+        }
 
         #endregion
 
@@ -128,6 +140,7 @@ namespace TT.Viewer.ViewModels
 
         public void Save()
         {
+            Manager.Combinations.Add(pendingCombination);
             navigationController.NavigateBack();
         }
 

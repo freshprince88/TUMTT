@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TT.Models
 {
-    public class BasicFilter : IFilter
+    public class BasicFilter : IRallyFilter
     {
-
+        public Guid ID { get; set; }
         public Models.Util.Enums.Stroke.Point Point { get; set; }
 
         public Models.Util.Enums.Stroke.Crunch Crunch { get; set; }
@@ -18,8 +18,10 @@ namespace TT.Models
         public int MinRallyLength { get; set; }
         public bool LastStroke { get; set; }
 
-        public BasicFilter(int minRallyLength = 0, bool lastStroke = false)
+        public BasicFilter(int minRallyLength, bool lastStroke = false)
         {
+            ID = Guid.NewGuid();
+
             Point = Models.Util.Enums.Stroke.Point.None;
             Crunch = Models.Util.Enums.Stroke.Crunch.Not;
             Sets = new HashSet<int>();
@@ -27,6 +29,25 @@ namespace TT.Models
 
             MinRallyLength = minRallyLength;
             LastStroke = lastStroke;
+        }
+
+        public BasicFilter() : this(0) { }
+
+        public BasicFilter Copy()
+        {
+            var newFilter = new BasicFilter();
+
+            newFilter.ID = this.ID;
+
+            newFilter.Point = this.Point;
+            newFilter.Crunch = this.Crunch;
+            newFilter.Sets = new HashSet<int>(this.Sets);
+            newFilter.RallyLengths = new HashSet<int>(this.RallyLengths);
+
+            newFilter.MinRallyLength = this.MinRallyLength;
+            newFilter.LastStroke = this.LastStroke;
+
+            return newFilter;
         }
 
         public Rally[] filter(IEnumerable<Rally> inputRallies)

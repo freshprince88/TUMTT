@@ -60,11 +60,12 @@
   <ItemGroup>
     <Compile Include="BasicFilter.cs" />
     <Compile Include="Combination.cs" />
+    <Compile Include="CombinationList.cs" />
     <Compile Include="Exceptions\NoStrokeEndPointException.cs" />
     <Compile Include="Exceptions\NoStrokeStartingPointException.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="FilterList.cs" />
-    <Compile Include="IFilter.cs" />
+    <Compile Include="IRallyFilter.cs" />
     <Compile Include="Playlist.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
