@@ -112,6 +112,7 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
         private IViewManager Manager;
+        private BasicFilter basicFilter;
 
         public BallFilterViewModel(IEventAggregator eventAggregator, IViewManager man, int strokeNumber) 
             : this(eventAggregator, man, strokeNumber, String.Concat((strokeNumber + 1).ToString(), ". Stroke")) { }
@@ -131,7 +132,7 @@ namespace TT.Viewer.ViewModels
             BallFilter = filter;
             if (showBasicFilter)
             {
-                var basicFilter = new BasicFilter(strokeNumber);
+                basicFilter = new BasicFilter(strokeNumber);
                 BasicFilterView = new BasicFilterViewModel(this.events, Manager, basicFilter);
             }else {
                 selectedRalliesOnCreation = man.MatchManager.SelectedRallies.ToList();
@@ -598,7 +599,7 @@ namespace TT.Viewer.ViewModels
                     ralliesToFilter = selectedRalliesOnCreation;
                 } else
                 {
-                    ralliesToFilter = BasicFilterView.SelectedRallies;
+                    ralliesToFilter = basicFilter.filter(list.Rallies).ToList();
                 }
                 var results = BallFilter.filter(ralliesToFilter).ToList();
                 

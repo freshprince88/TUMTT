@@ -69,9 +69,11 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
         private IViewManager Manager;
+        private BasicFilter basicFilter;
 
-        public LastBallViewModel(IEventAggregator eventAggregator, IViewManager man)
+        public LastBallViewModel(IEventAggregator eventAggregator, IViewManager man, BasicFilter filter)
         {
+            this.basicFilter = filter;
             this.events = eventAggregator;
             Manager = man;
             Hand = Models.Util.Enums.Stroke.Hand.None;
@@ -543,19 +545,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                var results = BasicFilterView.SelectedRallies
-                    .Where(r => 
-                    r.Strokes[r.Length-1].HasWinner(this.Winner) &&
-                    r.LastWinnerStroke().Number>1 &&
-                    r.LastWinnerStroke().HasHand(this.Hand) &&
-                    r.LastWinnerStroke().HasStepAround(this.StepAround) && 
-                    r.LastWinnerStroke().HasStrokeTec(this.SelectedStrokeTec) &&
-                    r.LastWinnerStroke().HasQuality(this.Quality) &&
-                    r.LastWinnerStroke().HasTablePosition(this.SelectedTablePositions) &&
-                    r.LastWinnerStroke().HasStrokeLength(this.SelectedStrokeLengths) &&
-                    r.LastWinnerStroke().HasAggressiveness(this.SelectedAggressiveness) &&
-                    r.LastWinnerStroke().HasSpecials(this.SelectedSpecials)).
-                    ToList();
+                var results = basicFilter.filter(list.Rallies);
                 Manager.SelectedRallies = results;
             }
         }

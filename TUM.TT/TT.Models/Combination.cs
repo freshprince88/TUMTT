@@ -48,12 +48,22 @@ namespace TT.Models
 
         public bool accepts(Rally rally)
         {
-            return FilterList.accepts(FilterType, rally);
+            if (FilterType == FilterCombination.CombinationType.Or)
+                return FilterList.accepts(FilterType, rally) || BasicFilter.accepts(rally);
+            else if(FilterType == FilterCombination.CombinationType.And)
+                return FilterList.accepts(FilterType, rally) && BasicFilter.accepts(rally);
+
+            throw new NotImplementedException("FilterCombination is only implemented for AND & OR");
         }
 
         public Rally[] filter(IEnumerable<Rally> inputRallies)
         {
-            return FilterList.filter(FilterType, inputRallies).ToArray();
+            var result = new List<Rally>();
+            foreach(Rally r in inputRallies)
+            {
+                if (this.accepts(r)) result.Add(r);
+            }
+            return result.ToArray();
         }
 
         public override string ToString()

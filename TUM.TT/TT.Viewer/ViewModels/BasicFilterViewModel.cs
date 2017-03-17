@@ -23,7 +23,6 @@ namespace TT.Viewer.ViewModels
 
         public SpinControlViewModel SpinControl { get; private set; }
         public TableServiceViewModel TableView { get; private set; }
-        public List<Rally> SelectedRallies { get; private set; }
 
 
         public Models.Util.Enums.Stroke.Point Point { get
@@ -88,7 +87,6 @@ namespace TT.Viewer.ViewModels
             this.events = eventAggregator;
             Manager = man;
             this.Filter = filter;
-            SelectedRallies = new List<Rally>();
             Player1 = "Spieler 1";
             Player2 = "Spieler 2";
         }
@@ -393,11 +391,7 @@ namespace TT.Viewer.ViewModels
 
         public void UpdateSelection(Playlist list)
         {
-            if (list.Rallies != null)
-            {
-                SelectedRallies = Filter.filter(list.Rallies).ToList();
-                events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
-            }
+            events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(Filter.filter(list.Rallies).ToList()));
         }
 
         #endregion

@@ -154,6 +154,8 @@ namespace TT.Viewer.ViewModels
         private IEventAggregator events;
         private IViewManager Manager;
 
+        private BasicFilter basicFilter;
+
         public ServiceViewModel(IEventAggregator eventAggregator, IViewManager man, Filter f, bool showBasicFilter = true)
         {
             this.events = eventAggregator;
@@ -161,7 +163,7 @@ namespace TT.Viewer.ViewModels
 
             if (showBasicFilter)
             {
-                var basicFilter = new BasicFilter();
+                basicFilter = new BasicFilter();
                 BasicFilterView = new BasicFilterViewModel(this.events, Manager, basicFilter);
             }
             else
@@ -472,7 +474,7 @@ namespace TT.Viewer.ViewModels
                 }
                 else
                 {
-                    ralliesToFilter = BasicFilterView.SelectedRallies;
+                    ralliesToFilter = basicFilter.filter(list.Rallies).ToList();
                 }
                 var results = ServiceFilter.filter(ralliesToFilter).ToList();
 
