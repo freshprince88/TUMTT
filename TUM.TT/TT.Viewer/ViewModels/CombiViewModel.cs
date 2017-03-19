@@ -68,7 +68,7 @@ namespace TT.Viewer.ViewModels
             }
             set
             {
-                _newFilterStrokeNumber = int.Parse(value);
+                int.TryParse(value, out _newFilterStrokeNumber);
             }
         }
 
