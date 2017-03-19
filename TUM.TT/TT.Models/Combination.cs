@@ -70,5 +70,16 @@ namespace TT.Models
         {
             return Name;
         }
+
+        public void Load(Combination c)
+        {
+            this.ID = c.ID;
+            this.CreationDate = c.CreationDate;
+
+            this.Name = c.Name;
+
+            this.FilterList = c.FilterList;
+            this.BasicFilter = c.BasicFilter;
+        }
     }
 }
