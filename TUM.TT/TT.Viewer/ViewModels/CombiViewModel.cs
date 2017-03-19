@@ -156,7 +156,67 @@ namespace TT.Viewer.ViewModels
 
         }
 
-        
+        #region View Methods
+
+        public void AddFilter()
+        {
+            if (_newFilterStrokeNumber > 0)
+            {
+                IScreen filterView;
+                pendingFilter = new Filter((_newFilterStrokeNumber - 1), "<Enter Name>");
+                if (_newFilterStrokeNumber == 1)
+                {
+                    filterView = new ServiceViewModel(this.events, Manager, pendingFilter, false);
+                }
+                else
+                {
+                    filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
+                }
+
+                var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
+
+                pendingType = SaveCancelActionType.ActionType.Add;
+
+                navigationController.ActivateItem(saveCancelView);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Strokeindex starts with 1 = Service, 2 = Return, 3 = 3rd Stroke, ...", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
+        }
+
+        public void EditFilter()
+        {
+            if (SelectedItem == null)
+                return;
+
+            IScreen filterView;
+            pendingFilter = SelectedItem;
+            tempFilter = pendingFilter.Copy(); // creating a copy of the current filter
+
+            FilterCombi.FilterList.Remove(SelectedItem); // So Filter does not affect current SelectedRallies-List
+            if (pendingFilter.StrokeNumber > 0)
+                filterView = new BallFilterViewModel(this.events, Manager, pendingFilter, false);
+            else
+                filterView = new ServiceViewModel(this.events, Manager, pendingFilter, false);
+
+            var saveCancelView = new SaveCancelViewModel(this.events, Manager, this, filterView);
+
+            pendingType = SaveCancelActionType.ActionType.Edit;
+
+            navigationController.ActivateItem(saveCancelView);
+        }
+
+        public void DeleteFilter()
+        {
+            if (SelectedItem == null)
+                return;
+
+            var filterToDelete = SelectedItem;
+            FilterCombi.FilterList.Remove(SelectedItem);
+        }
+
+        #endregion
 
         #region Caliburn Hooks
 
