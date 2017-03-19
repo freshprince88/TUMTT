@@ -180,7 +180,7 @@
     <Compile Include="ViewModels\SaveCancelViewModel.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
-    <Compile Include="Views\ISaveCancle.cs" />
+    <Compile Include="Views\ISaveCancel.cs" />
     <Compile Include="Views\NavigationControlView.xaml.cs">
       <DependentUpon>NavigationControlView.xaml</DependentUpon>
     </Compile>
