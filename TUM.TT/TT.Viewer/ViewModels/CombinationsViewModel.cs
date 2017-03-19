@@ -203,13 +203,14 @@ namespace TT.Viewer.ViewModels
                 case SaveCancelActionType.ActionType.Add:
                     break;
                 case SaveCancelActionType.ActionType.Edit:
-                    pendingCombination = tempCombination;
+                    pendingCombination.Load(tempCombination);
                     break;
                 default:
                     throw new NotImplementedException("Can only handle Add & Edit");
             }
 
             navigationController.NavigateBack();
+            UpdateSelection();
         }
 
         #endregion
