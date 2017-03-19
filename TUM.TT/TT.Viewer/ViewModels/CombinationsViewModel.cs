@@ -84,7 +84,7 @@ namespace TT.Viewer.ViewModels
         {
             if (SelectedCombinations.Count != 1)
             {
-                System.Windows.MessageBox.Show("Please select one Messagebox");
+                System.Windows.MessageBox.Show("Please select only one Combination to edit", "Too many arguments for Edit", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                 return;
             }
 
