@@ -103,6 +103,12 @@ namespace TT.Viewer.ViewModels
 
         public void DeleteCombination()
         {
+            var question = String.Concat("Are you sure you want to delete ", SelectedCombinations.Count, " Combinations?");
+            var messageBoxAnswer = System.Windows.MessageBox.Show(question, "Please confirm", System.Windows.MessageBoxButton.YesNoCancel, System.Windows.MessageBoxImage.Warning, System.Windows.MessageBoxResult.No);
+
+            if (messageBoxAnswer != System.Windows.MessageBoxResult.Yes)
+                return;
+            
             while(SelectedCombinations.Count > 0)
                 Manager.Combinations.Remove(SelectedCombinations.FirstOrDefault());
         }
