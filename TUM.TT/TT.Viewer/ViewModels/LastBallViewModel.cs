@@ -25,6 +25,8 @@ namespace TT.Viewer.ViewModels
         public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
         public Models.Util.Enums.Stroke.WinnerOrNetOut Winner { get; private set; }
         public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
+        public Models.Util.Enums.Stroke.OpeningShot OpeningShot { get; private set; }
+
         private HashSet<Models.Util.Enums.Stroke.Aggressiveness> _aggressiveness;
         public HashSet<Models.Util.Enums.Stroke.Aggressiveness> SelectedAggressiveness
         {
@@ -82,6 +84,7 @@ namespace TT.Viewer.ViewModels
             SelectedStrokeTec = new HashSet<Models.Util.Enums.Stroke.Technique>();
             SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
             StepAround = Models.Util.Enums.Stroke.StepAround.Not;
+            OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
             Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.None;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
@@ -202,6 +205,22 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
+        public void OpeningShotOrNot(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("openingshotbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.OpeningShot;
+                }
+                else
+                {
+                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
 
         public void SelectStrokeTec(ToggleButton source)
         {
@@ -553,7 +572,8 @@ namespace TT.Viewer.ViewModels
                     r.Strokes[r.Length-1].HasWinner(this.Winner) &&
                     r.LastWinnerStroke().Number>1 &&
                     r.LastWinnerStroke().HasHand(this.Hand) &&
-                    r.LastWinnerStroke().HasStepAround(this.StepAround) && 
+                    r.LastWinnerStroke().HasStepAround(this.StepAround) &&
+                    r.LastWinnerStroke().HasOpeningShot(this.OpeningShot) &&
                     r.LastWinnerStroke().HasStrokeTec(this.SelectedStrokeTec) &&
                     r.LastWinnerStroke().HasQuality(this.Quality) &&
                     r.LastWinnerStroke().HasTablePosition(this.SelectedTablePositions) &&

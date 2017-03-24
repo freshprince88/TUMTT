@@ -245,6 +245,11 @@
             StepAround,
             Not
         }
+        public enum OpeningShot
+        {
+            OpeningShot,
+            Not
+        }
         public enum WinnerOrNetOut
         {
             Winner,

@@ -48,6 +48,7 @@ namespace TT.Viewer.ViewModels
             }
         }
         public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
+        public Models.Util.Enums.Stroke.OpeningShot OpeningShot { get; private set; }
 
         private HashSet<Models.Util.Enums.Stroke.Technique> _strokeTec;
         public HashSet<Models.Util.Enums.Stroke.Technique> SelectedStrokeTec
@@ -81,6 +82,7 @@ namespace TT.Viewer.ViewModels
             SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
             SelectedStrokeTec = new HashSet<Models.Util.Enums.Stroke.Technique>();
             StepAround = Models.Util.Enums.Stroke.StepAround.Not;
+            OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 1,
@@ -156,6 +158,21 @@ namespace TT.Viewer.ViewModels
                 else
                 {
                     StepAround = Models.Util.Enums.Stroke.StepAround.Not;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void OpeningShotOrNot(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("openingshotbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.OpeningShot;
+                }
+                else
+                {
+                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -510,6 +527,7 @@ namespace TT.Viewer.ViewModels
                     .Where(r => r.Strokes.Count > 1 &&
                     r.Strokes[1].HasHand(this.Hand) &&
                     r.Strokes[1].HasStepAround(this.StepAround) &&
+                    r.Strokes[1].HasOpeningShot(this.OpeningShot) &&
                     r.Strokes[1].HasStrokeTec(this.SelectedStrokeTec) &&
                     r.Strokes[1].HasQuality(this.Quality) &&
                     r.Strokes[1].HasTablePosition(this.SelectedTablePositions) &&

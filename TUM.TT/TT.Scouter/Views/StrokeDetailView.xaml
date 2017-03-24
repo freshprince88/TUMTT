@@ -34,6 +34,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="{Binding Path=Title}" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" />
             <Line X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
@@ -63,9 +64,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ToggleButton x:Name="Forehand"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                <ToggleButton x:Name="OpeningShot" Style="{StaticResource MetroAccentToggle}" Grid.Column="0" Content="Opening Shot" Height="30" MinWidth="90" HorizontalAlignment="Center" 
+                              IsChecked="{Binding Path=Stroke.OpeningShot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                </ToggleButton>
+                <ToggleButton x:Name="Forehand" Grid.Column="1"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                               cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
                     <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
                     <ToggleButton.IsChecked>
@@ -83,7 +88,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="Backhand" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                <ToggleButton x:Name="Backhand" Grid.Column="2"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                               cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
                     <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
                     <ToggleButton.IsChecked>
@@ -101,14 +106,13 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton Grid.Column="2" Style="{StaticResource MetroAccentToggle}" Height="30" Content="Step Around" MinWidth="90" HorizontalAlignment="Center"
+                <ToggleButton x:Name="StepAround" Style="{StaticResource MetroAccentToggle}" Grid.Column="3" Content="Step Around" Height="30" MinWidth="90" HorizontalAlignment="Center"
                              IsChecked="{Binding Path=Stroke.StepAround, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-      
                 </ToggleButton>
-                <Line Grid.Row="1" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+                <Line Grid.Row="1" Grid.ColumnSpan="4"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
             </Grid>
 
-            <Grid x:Name="TecGrid" Grid.Row="3">
+            <Grid x:Name="TecGrid" Grid.Row="4">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -407,7 +411,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -583,7 +587,7 @@
                 </Grid>
                 <Line Grid.Row="1" Grid.ColumnSpan="2" X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
             </Grid>
-            <Grid x:Name="CourseGrid" Grid.Row="5">
+            <Grid x:Name="CourseGrid" Grid.Row="6">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                 </Grid.RowDefinitions>

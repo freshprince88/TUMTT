@@ -41,7 +41,7 @@
                 <RowDefinition/>
                 <RowDefinition/>                
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Set:"/>
+            <TextBlock Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Set:"/>
             <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <!--<ToggleButton x:Name="FilterSetAllButton" Width="30" Height="30" IsChecked="True"  Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="A"/></TextBlock>
@@ -119,7 +119,7 @@
                 <Label Grid.Column="0"  FontSize="10" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="Option:"/>
                 <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" cal:Message.Attach="[Event Click] = [Action CrunchOrNot($source)]" IsChecked="{Binding Path=Crunch, Converter={conv:CrunchToBoolConverter}, Mode=OneWay}" />
             </Grid>
-            <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Player:"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Player:"/>
             <ToggleButton x:Name="PlayerPlayer1" Content="{Binding Path=Player1}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  cal:Message.Attach="[Event Click] = [Action P1P2($source]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:PlayerP1P2ToBoolConverter}" Mode="OneWay">
@@ -136,7 +136,7 @@
                     </MultiBinding>
                 </ToggleButton.IsChecked>
             </ToggleButton>
-            <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Display:"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Display:"/>
             <ToggleButton x:Name="FilterDetailInformationButton" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" IsChecked="True" Content="Details">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Checked">

@@ -78,6 +78,7 @@
     <Compile Include="NumAndLengthToLastVisibilityConverter.cs" />
     <Compile Include="NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="NumToPrevVisibleConverter.cs" />
+    <Compile Include="OpeningShotToBoolConverter.cs" />
     <Compile Include="PlayerP1P2ToBoolConverter.cs" />
     <Compile Include="PlayerToStringConverter.cs" />
     <Compile Include="PointP1P2ToBoolConverter.cs" />

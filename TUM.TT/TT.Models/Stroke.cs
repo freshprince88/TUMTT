@@ -624,6 +624,18 @@ namespace TT.Models
                     return false;
             }
         }
+        public bool HasOpeningShot(Util.Enums.Stroke.OpeningShot o)
+        {
+            switch (o)
+            {
+                case Util.Enums.Stroke.OpeningShot.OpeningShot:
+                    return OpeningShot;
+                case Util.Enums.Stroke.OpeningShot.Not:
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         public bool HasWinner(Util.Enums.Stroke.WinnerOrNetOut w)
         {

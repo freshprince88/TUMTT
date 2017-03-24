@@ -50,7 +50,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Type:</Label>
+            <TextBlock Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Type:</TextBlock>
             <ToggleButton x:Name="WinnerPoint" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action WinnerOrNetOut($source)]">
                 Winner
@@ -68,13 +68,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="70" />
-                <ColumnDefinition />
                 <ColumnDefinition MinWidth="55" />
                 <ColumnDefinition MinWidth="55"/>
+                <ColumnDefinition MaxWidth="20" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Technique:</Label>
-            <ToggleButton x:Name="Forehand" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+            <TextBlock Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Bottom" HorizontalAlignment="Left">Technique:</TextBlock>
+            <ToggleButton x:Name="Forehand" Grid.Row="0" Grid.Column="1"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                           cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
@@ -86,7 +86,7 @@
                     FH
                 </TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="Backhand" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+            <ToggleButton x:Name="Backhand" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
                           cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
@@ -98,7 +98,13 @@
                     BH
                 </TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="FilterStepAroundButton" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30"   Margin="0 0 0 0" HorizontalAlignment="Stretch" Style="{DynamicResource MetroAccentToggle}"
+
+            <TextBlock Grid.Row="0"  Grid.Column="4" FontSize="10" TextWrapping="WrapWithOverflow" Margin="5 0 5 0" TextAlignment="Center" VerticalAlignment="Bottom">
+                    Opening Shot:
+            </TextBlock>
+            <CheckBox x:Name="FilterOpeningShotButton" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="1" HorizontalAlignment="Center"
+                          cal:Message.Attach="[Event Click] = [Action OpeningShotOrNot($source)]" IsChecked="{Binding Path=OpeningShot, Converter={conv:OpeningShotToBoolConverter}, Mode=OneWay}"/>
+            <ToggleButton x:Name="FilterStepAroundButton" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30"   Margin="0 0 0 0" HorizontalAlignment="Stretch" Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action StepAroundOrNot($source)]" IsChecked="{Binding Path=StepAround, Converter={conv:StepAroundToBoolConverter}, Mode=OneWay}">
                 Step Around
             </ToggleButton>
@@ -367,7 +373,7 @@
                 <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aggressiveness:</Label>
+            <TextBlock Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aggressiveness:</TextBlock>
             <ToggleButton x:Name="Aggressive" Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" 
                           cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]" >
                 <ToggleButton.IsChecked>
@@ -408,7 +414,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Quality:</Label>
+            <TextBlock Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Quality:</TextBlock>
             <ToggleButton x:Name="BadQuality" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
                 <ToggleButton.IsChecked>
@@ -438,7 +444,7 @@
                 <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Specials:</Label>
+            <TextBlock Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Specials:</TextBlock>
             <ToggleButton x:Name="EdgeTable"  Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  
                           cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
                 <ToggleButton.IsChecked>

@@ -61,8 +61,8 @@
                     <ColumnDefinition />
 
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Count:"/>
-                <Label Grid.Row="1" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Point:"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Count:"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Point:"/>
                 <Label x:Name="BasisInformationLabelPlayer1"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player1}"/>
                 <Label x:Name="BasisInformationLabelPlayer2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Path=Player2}"/>
                 <ToggleButton x:Name="TotalLastBallsCount" Tag="r => (r.Length >2 || (r.Length==2 &amp;&amp; r.Winner != r.Server))" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"   Style="{DynamicResource MetroAccentFlatToggle}" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" FontWeight="Bold">

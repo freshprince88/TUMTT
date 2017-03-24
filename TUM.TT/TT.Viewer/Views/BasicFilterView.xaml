@@ -41,7 +41,7 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Set:"/>
+            <TextBlock Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Set:"/>
             <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <!--<ToggleButton x:Name="FilterSetAllButton" Width="30" Height="30" IsChecked="True"  Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Grid.Row="0" Grid.Column="0" cal:Message.Attach="[Event Click] = [Action SetFilter($source)]">
                     <TextBlock FontSize="12"><Run Text="A"/></TextBlock>
@@ -120,7 +120,7 @@
                 <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" 
                                cal:Message.Attach="[Event Click] = [Action CrunchOrNot($source)]" IsChecked="{Binding Path=Crunch, Converter={conv:CrunchToBoolConverter}, Mode=OneWay}"/>
             </Grid>
-            <Label Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Point:"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Point:"/>
             <ToggleButton  x:Name="PointPlayer1" Content="{Binding Path=Player1}" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  
                            cal:Message.Attach="[Event Click] = [Action P1P2Point($source]">
                 <ToggleButton.IsChecked>
@@ -139,7 +139,7 @@
                     </MultiBinding>
                 </ToggleButton.IsChecked>
             </ToggleButton>
-            <Label Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding PlayerLabel}"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding PlayerLabel}"/>
             <ToggleButton x:Name="PlayerPlayer1" Content="{Binding Path=Player1}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30" Style="{StaticResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action P1P2($source)]">
                 <ToggleButton.IsChecked>
@@ -158,7 +158,7 @@
                     </MultiBinding>
                 </ToggleButton.IsChecked>
             </ToggleButton>
-            <Label Grid.Row="4" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Length:"/>
+            <TextBlock Grid.Row="4" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Length:"/>
             <WrapPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" MinWidth="100" HorizontalAlignment="Center">
                 <!--<ToggleButton x:Name="FilterRallyLengthAllButton" Grid.Row="0" Grid.Column="0"  Width="30" Height="30" IsChecked="True" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="A" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]"/>-->
                 <ToggleButton x:Name="FilterRallyLength1Button"  Grid.Row="0" Grid.Column="1" Width="30" Height="30" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" Content="1" cal:Message.Attach="[Event Click] = [Action RallyLengthFilter($source)]">

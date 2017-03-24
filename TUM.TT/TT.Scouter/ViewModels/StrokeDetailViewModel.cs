@@ -547,6 +547,10 @@ namespace TT.Scouter.ViewModels
         {
             Stroke.StepAround = !Stroke.StepAround;
         }
+        public void SelectOpeningShot()
+        {
+            Stroke.OpeningShot = !Stroke.OpeningShot;
+        }
 
         // only Technique (Modifier = ALT) 
         public void SelectPush()

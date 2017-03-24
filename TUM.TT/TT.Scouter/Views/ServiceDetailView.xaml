@@ -60,9 +60,10 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ToggleButton x:Name="Forehand"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                <ToggleButton x:Name="Forehand" Grid.Column="1"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                               cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
                     <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
                     <ToggleButton.IsChecked>
@@ -80,7 +81,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <ToggleButton x:Name="Backhand" Grid.Column="1"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                <ToggleButton x:Name="Backhand" Grid.Column="2"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                               cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
                     <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
                     <ToggleButton.IsChecked>
@@ -98,7 +99,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ToggleButton>
-                <Line Grid.Row="1" Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
+                <Line Grid.Row="1" Grid.ColumnSpan="4"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
             </Grid>
 
             <Grid x:Name="TecGrid" Grid.Row="3" Margin="0 5 0 0">
