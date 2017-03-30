@@ -707,6 +707,9 @@ namespace TT.Models
                     case Util.Enums.Stroke.Technique.Lob:
                         ORresults.Add(Stroketechnique.Type == "Lob");
                         break;
+                    case Util.Enums.Stroke.Technique.Tetra:
+                        ORresults.Add(Stroketechnique.Type == "Lob" && Stroketechnique.Option == "Tetra");
+                        break;
                     case Util.Enums.Stroke.Technique.Chop:
                         ORresults.Add(Stroketechnique.Type == "Chop");
                         break;

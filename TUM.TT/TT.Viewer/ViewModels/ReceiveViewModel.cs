@@ -323,6 +323,17 @@ namespace TT.Viewer.ViewModels
                     SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Lob);
                 }
             }
+            else if (source.Name.ToLower().Equals("tetra"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Tetra);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Tetra);
+                }
+            }
             else if (source.Name.ToLower().Equals("chop"))
             {
                 if (source.IsChecked.Value)

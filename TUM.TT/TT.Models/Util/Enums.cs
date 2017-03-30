@@ -281,6 +281,7 @@
             Counter,
             Smash,
             Lob,
+            Tetra,
             Chop,
             Special,
             Miscellaneous

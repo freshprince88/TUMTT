@@ -65,6 +65,10 @@ namespace TT.Converters
                 {
                     return Type == "Lob";
                 }
+                else if (btnName == "Tetra")
+                {
+                    return Type == "Lob" && Option == "Tetra";
+                }
                 else if (btnName == "Smash")
                 {
                     return Type == "Smash";

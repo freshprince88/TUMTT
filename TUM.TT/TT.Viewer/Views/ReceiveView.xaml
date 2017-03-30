@@ -302,13 +302,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <GroupBox Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
-                           
+                            <ColumnDefinition/>                           
                         </Grid.ColumnDefinitions>
                         <ToggleButton  x:Name="Lob" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
@@ -320,7 +320,7 @@
                             </ToggleButton.IsChecked>
                             Lob
                         </ToggleButton>
-                        <ToggleButton  x:Name="Chop" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="Tetra" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             <ToggleButton.IsChecked>
                                 <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
@@ -328,12 +328,24 @@
                                     <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                 </MultiBinding>
                             </ToggleButton.IsChecked>
-                            Chop
-                        </ToggleButton>                        
+                            Tetra
+                        </ToggleButton>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">                   
-                        <ToggleButton  x:Name="Special" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <ToggleButton  x:Name="Chop" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                <Binding Path="SelectedStrokeTec" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
+                        Chop
+                    </ToggleButton>
+                </GroupBox>
+                <GroupBox Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <ToggleButton  x:Name="Special" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                         <ToggleButton.IsChecked>
                             <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
@@ -342,7 +354,7 @@
                             </MultiBinding>
                         </ToggleButton.IsChecked>
                         Special
-                        </ToggleButton>                    
+                    </ToggleButton>
                 </GroupBox>
             </Grid>        
         </Grid>

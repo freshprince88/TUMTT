@@ -281,6 +281,17 @@ namespace TT.Scouter.ViewModels
                     Stroke.Stroketechnique.Option = "";
                 }
             }
+            else if (source.Name.ToLower().Equals("tetra"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    Stroke.Stroketechnique.Option = "Tetra";
+                }
+                else
+                {
+                    Stroke.Stroketechnique.Option = "";
+                }
+            }
             else if (source.Name.ToLower().Equals("smash"))
             {
                 if (source.IsChecked.Value)

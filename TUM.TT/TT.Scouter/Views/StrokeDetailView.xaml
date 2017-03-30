@@ -328,6 +328,10 @@
                     </i:Interaction.Triggers>
                 </ToggleButton>
                 <Grid Grid.Row="5" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -352,6 +356,18 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ToggleButton>
+                    <CheckBox x:Name="Tetra" Content="Tetra" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=Lob, Path=IsChecked}"
+                          Visibility="{Binding ElementName=Lob, Path=IsChecked, Mode=TwoWay, Converter={conv:BoolToVisibilityCollapsedConverter}}"
+                          cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
+                        <CheckBox.IsChecked>
+                            <MultiBinding Converter="{conv:StrokeTechniqueToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Stroketechnique.Type"/>
+                                <Binding Path="Stroke.Stroketechnique.Option" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </CheckBox.IsChecked>
+                    </CheckBox>
+
                     <ToggleButton x:Name="Smash" Content="Smash"  Grid.Column="1" Style="{StaticResource MetroAccentToggle}" HorizontalContentAlignment="Center" Height="30"
                                   cal:Message.Attach="[Event Click] = [Action SelectStroketechnique($source)]">
                         <ToggleButton.IsChecked>
