@@ -31,7 +31,7 @@ namespace TT.Lib.Managers
             {
                 if (_match != value)
                 {
-                    MatchModified = _match == null ? false : true;
+                    //MatchModified = _match == null ? false : true;
                     _match = value;                    
                     NotifyOfPropertyChange("MatchModified");
                     NotifyOfPropertyChange();
@@ -429,6 +429,7 @@ namespace TT.Lib.Managers
                 Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
             };
             yield return videoDialog;
+            MatchModified = videoDialog.Result != temp.VideoFile;
             temp.VideoFile = videoDialog.Result;
             Events.PublishOnUIThread(new VideoLoadedEvent(temp.VideoFile));
         }
@@ -441,6 +442,7 @@ namespace TT.Lib.Managers
                 Filter = string.Format("{0}|{1}", "Video Files", "*.mp4; *.wmv; *.avi; *.mov")
             };
             yield return videoDialog;
+            MatchModified = videoDialog.Result != Match.VideoFile;
             Match.VideoFile = videoDialog.Result;
             Events.PublishOnUIThread(new VideoLoadedEvent(Match.VideoFile));
 
