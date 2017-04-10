@@ -65,6 +65,9 @@ namespace TT.Lib.Util
                 {"SelectForehand", new KeyBinding() {Key =Key.B, Modifiers = ModifierKeys.None}},
                 {"SelectBackhand", new KeyBinding() {Key =Key.N, Modifiers = ModifierKeys.None}},
                 {"SelectStepAround", new KeyBinding() {Key =Key.M, Modifiers = ModifierKeys.None}},
+                {"SelectOpeningShot", new KeyBinding() {Key =Key.V, Modifiers = ModifierKeys.None}},
+
+
 
 
                 
