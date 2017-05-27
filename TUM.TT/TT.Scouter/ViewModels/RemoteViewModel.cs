@@ -360,6 +360,9 @@ namespace TT.Scouter.ViewModels
 
             if (item != null)
             {
+                if (MediaPlayer == null)
+                    return;
+
                 if (MediaPlayer.toRallyStart == true)
                 {
                     CurrentRally = item;
