@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 
 namespace TT.Models
 {
@@ -62,6 +63,32 @@ namespace TT.Models
         Top=1,
 
         Bottom=2
+    }
+    public enum MaterialFH
+    {
+        None=0,
+        Normal=1,
+        [Description("Short Pimples")]
+        ShortPimples =2,
+        [Description("Halflong Pimples")]
+        HalfLongPimples = 3,
+        [Description("Long Pimples")]
+        LongPimples =4,
+        [Description("Anti Top")]
+        AntiTop =5
+    }
+    public enum MaterialBH
+    {
+        None = 0,
+        Normal = 1,
+        [Description("Short Pimples")]
+        ShortPimples = 2,
+        [Description("Halflong Pimples")]
+        HalfLongPimples = 3,
+        [Description("Long Pimples")]
+        LongPimples = 4,
+        [Description("Anti Top")]
+        AntiTop = 5
     }
 
     public enum CurrentTableEnd

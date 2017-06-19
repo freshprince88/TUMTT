@@ -37,6 +37,10 @@ namespace TT.Converters
                 {
                     return US == "0" && TS == "0" && SL == "1" && SR == "0" && No == "0";
                 }
+                else if (btnName == "SR")
+                {
+                    return US == "0" && TS == "0" && SL == "0" && SR == "1" && No == "0";
+                }
                 else if (btnName == "No")
                 {
                     return US == "0" && TS == "0" && SL == "0" && SR == "0" && No == "1";

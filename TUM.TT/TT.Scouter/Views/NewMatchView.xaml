@@ -7,6 +7,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
@@ -73,7 +74,13 @@
         <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="25" Text="{Binding Path=Match.Round, Mode=TwoWay}"/>
 
         <Label Content="Mode" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="25" VerticalAlignment="Center"/>
-        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedItem="{Binding Path=Match.Mode}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="20" />
+        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedItem="{Binding Path=Match.Mode}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <Label Content="Date" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="10" FontSize="25" VerticalAlignment="Center"/>
         <DatePicker x:Name="TourneyDate" SelectedDate="{Binding Path=Match.DateTime, Mode=TwoWay}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="10" FontSize="25" VerticalContentAlignment="Center"/>
