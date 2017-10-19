@@ -37,6 +37,42 @@ namespace TT.Lib.Util
             var second = match.SecondPlayer ?? new Player();
             if (match.DisabilityClass.ToString() == "NoClass")
             {
+                if (match.Round.ToString() == "GroupStage")
+                {
+                    return string.Format(
+                   "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - Group Stage",
+                   match.DateTime,
+                   first.Name.WhenNullOrEmpty("A"),
+                   second.Name.WhenNullOrEmpty("B"),
+                   match.Tournament.WhenNullOrEmpty("Unknown tournament"),
+                   match.Category.ToString().WhenNullOrEmpty("Unknown Category"));
+                }
+
+                else
+
+                    return string.Format(
+                    "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - {5}",
+                    match.DateTime,
+                    first.Name.WhenNullOrEmpty("A"),
+                    second.Name.WhenNullOrEmpty("B"),
+                    match.Tournament.WhenNullOrEmpty("Unknown tournament"),
+                    match.Category.ToString().WhenNullOrEmpty("Unknown Category"),
+                    match.Round.ToString().WhenNullOrEmpty("Unknown round"));
+            }
+            else
+               if (match.Round.ToString() == "GroupStage")
+            {
+                return string.Format(
+                "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - Group Stage",
+                match.DateTime,
+                first.Name.WhenNullOrEmpty("A"),
+                second.Name.WhenNullOrEmpty("B"),
+                match.Tournament.WhenNullOrEmpty("Unknown tournament"),
+                match.Category.ToString().WhenNullOrEmpty("Unknown Category"));
+            }
+
+            else
+
                 return string.Format(
                 "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - {5}",
                 match.DateTime,
@@ -44,16 +80,6 @@ namespace TT.Lib.Util
                 second.Name.WhenNullOrEmpty("B"),
                 match.Tournament.WhenNullOrEmpty("Unknown tournament"),
                 match.Category.ToString().WhenNullOrEmpty("Unknown Category"),
-                match.Round.ToString().WhenNullOrEmpty("Unknown round"));
-            }
-            else return string.Format(
-                "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - {5} - {6}",
-                match.DateTime,
-                first.Name.WhenNullOrEmpty("A"),
-                second.Name.WhenNullOrEmpty("B"),
-                match.Tournament.WhenNullOrEmpty("Unknown tournament"),
-                match.Category.ToString().WhenNullOrEmpty("Unknown Category"),
-                match.DisabilityClass.ToString().WhenNullOrEmpty("Unknown Class"),
                 match.Round.ToString().WhenNullOrEmpty("Unknown round"));
         }
     }
