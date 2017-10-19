@@ -5,7 +5,19 @@
                     Source="$(var.TT.Scouter.TargetDir)">
       
       <Component Id="Scouter.exe">
-        <File Name="TT.Scouter.exe" KeyPath="yes" />           
+        <File Name="TT.Scouter.exe" KeyPath="yes" />
+        
+
+        <!-- Add TUM.TT Scouter to the "open with" list for .tto files, and enable Windows 7 jump menu pinning -->
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\Applications\TT.Scouter.exe\SupportedTypes" Name=".tto" Value="" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\Applications\TT.Scouter.exe\shell\open" Name="FriendlyAppName" Value="TUM.TT Scouter" Type="string" />
+
+        <!-- Add TUM.TT Scouter to the context menu of .tto files, to support editing even when not associated -->
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\SystemFileAssociations\.xyz\shell\edit.TT.Scouter.exe.exe" Value="Open with TUM.TT Scouter" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\SystemFileAssociations\.xyz\shell\edit.TT.Scouter.exe.exe\command" Value="&quot;[APPLICATIONFOLDER]TT.Scouter.exe&quot; &quot;%1&quot;" Type="string" />
+
+
+
       </Component>
       <ComponentGroupRef Id="TT_Scouter.PMShortcuts" />
       <ComponentGroupRef Id="TT_Scouter.DTShortcuts" />
