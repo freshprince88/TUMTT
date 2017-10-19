@@ -199,6 +199,107 @@ namespace TT.Models
 
 
     }
+    /// <summary>
+    /// The Disability Class.
+    /// </summary>
+    public enum DisabilityClass
+    {
+        /// <summary>
+        /// Class.
+        /// </summary>
+        [Description("Class")]
+        Class,
+        /// <summary>
+        /// No Disability.
+        /// </summary>
+        [Description("No Class")]
+        NoClass,
+        /// <summary>
+        /// Class 1.
+        /// </summary>
+        [Description("Class 1")]
+        C1,
+        /// <summary>
+        /// Class 2.
+        /// </summary>
+        [Description("Class 2")]
+        C2,
+        /// <summary>
+        /// Class 3.
+        /// </summary>
+        [Description("Class 3")]
+        C3,
+        /// <summary>
+        /// Class 4.
+        /// </summary>
+        [Description("Class 4")]
+        C4,
+        /// <summary>
+        /// Class 5.
+        /// </summary>
+        [Description("Class 5")]
+        C5,
+        /// <summary>
+        /// Class 6.
+        /// </summary>
+        [Description("Class 6")]
+        C6,
+        /// <summary>
+        /// Class 7.
+        /// </summary>
+        [Description("Class 7")]
+        C7,
+        /// <summary>
+        /// Class 8.
+        /// </summary>
+        [Description("Class 8")]
+        C8,
+        /// <summary>
+        /// Class 9.
+        /// </summary>
+        [Description("Class 9")]
+        C9,
+        /// <summary>
+        /// Class 10.
+        /// </summary>
+        [Description("Class 10")]
+        C10,
+        /// <summary>
+        /// Class 11.
+        /// </summary>
+        [Description("Class 11")]
+        C11,
+        /// <summary>
+        /// Class 1-2.
+        /// </summary>
+        [Description("Class 1-2")]
+        C1_2,
+        /// <summary>
+        /// Class 1-3.
+        /// </summary>
+        [Description("Class 1-3")]
+        C1_3,
+        /// <summary>
+        /// Class 1-5.
+        /// </summary>
+        [Description("Class 1-5")]
+        C1_5,
+        /// <summary>
+        /// Class 4-5.
+        /// </summary>
+        [Description("Class 4-5")]
+        C4_5,
+        /// <summary>
+        /// Class 6-8.
+        /// </summary>
+        [Description("Class 6-8")]
+        C6_8,
+        /// <summary>
+        /// Class 9-10.
+        /// </summary>
+        [Description("Class 9-10")]
+        C9_10,
+ }
 
 
     /// <summary>

@@ -35,12 +35,26 @@
                     <x:Type TypeName="Models:MatchCategory"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+            <ObjectDataProvider x:Key="ClassFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}" >
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:DisabilityClass"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="RoundFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}" >
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MatchRound"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
         </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -64,17 +78,20 @@
         </Grid.ColumnDefinitions>
         <Label Content="Match Details" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="50" FontWeight="Bold" VerticalAlignment="Center"/>
 
-        <Label Content="Tournament" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="2" FontSize="25" VerticalAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="25" Text="{Binding Path=Match.Tournament, Mode=TwoWay}"/>
+        <Label Content="Tournament" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalAlignment="Center"/>
+        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="20" Text="{Binding Path=Match.Tournament, Mode=TwoWay}"/>
 
-        <Label Content="Category" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="25" VerticalContentAlignment="Center" Padding="5,5,5,0"/>
+        <Label Content="Category" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="20" VerticalContentAlignment="Center"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource CategoryFromEnum}}" SelectedItem="{Binding Path=Match.Category}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="20" />
 
-        <Label Content="Round" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="25" VerticalAlignment="Center"/>
-        <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="25" Text="{Binding Path=Match.Round, Mode=TwoWay}"/>
+        <Label Content="Class" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource ClassFromEnum}}" SelectedItem="{Binding Path=Match.DisabilityClass}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="20" />
 
-        <Label Content="Mode" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="25" VerticalAlignment="Center"/>
-        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedItem="{Binding Path=Match.Mode}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="20">
+        <Label Content="Round" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="20" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource RoundFromEnum}}" SelectedItem="{Binding Path=Match.Round}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="8" FontSize="20" />
+
+        <Label Content="Mode" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="10" FontSize="20" VerticalAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource ModeFromEnum}}" SelectedItem="{Binding Path=Match.Mode}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="10" FontSize="20">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
@@ -82,10 +99,10 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Label Content="Date" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="10" FontSize="25" VerticalAlignment="Center"/>
-        <DatePicker x:Name="TourneyDate" SelectedDate="{Binding Path=Match.DateTime, Mode=TwoWay}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="10" FontSize="25" VerticalContentAlignment="Center"/>
+        <Label Content="Date" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="12" FontSize="20" VerticalAlignment="Center"/>
+        <DatePicker x:Name="TourneyDate" SelectedDate="{Binding Path=Match.DateTime, Mode=TwoWay}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="12" FontSize="20" VerticalAlignment="Center"/>
 
-        <Grid Grid.Row="12" Grid.ColumnSpan="5">
+        <Grid Grid.Row="14" Grid.ColumnSpan="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
@@ -143,6 +160,6 @@
             </Grid>
         </Grid>
         
-        <Button Content="OK" FontSize="18" Grid.Row="13" Grid.ColumnSpan="5" Width="100" HorizontalAlignment="Center" cal:Message.Attach="[Event Click] = [Action SaveMatchDetails()]"/>
+        <Button Content="OK" FontSize="18" Grid.Row="15" Grid.ColumnSpan="5" Width="100" HorizontalAlignment="Center" cal:Message.Attach="[Event Click] = [Action SaveMatchDetails()]"/>
     </Grid>
 </UserControl>

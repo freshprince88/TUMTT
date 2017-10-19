@@ -41,7 +41,7 @@ namespace TT.Report.Generators
                     Subject = string.Format(
                          "{0} {1}, {2} vs. {3}",
                          match.Tournament,
-                         match.Round,
+                         match.Round.ToString(),
                          match.FirstPlayer.Name,
                          match.SecondPlayer.Name),
                     Title = "Table Tennis Performance Report",
@@ -51,9 +51,11 @@ namespace TT.Report.Generators
                  new HeaderSection()
                 {
                     Headline = "Table Tennis Performance Report",
-                    Round = match.Round,
-                    Tournament = match.Tournament,
-                    Date = match.DateTime
+                     Tournament = match.Tournament,
+                     Category = match.Category.ToString(),
+                     DisabilityClass = match.DisabilityClass.ToString(),
+                     Round = match.Round.ToString(),                    
+                     Date = match.DateTime
                 });
             report.Sections.Add(new BasicInformationSection(match));
             report.Sections.Add(new RallyLengthSection(match, plotStyle));

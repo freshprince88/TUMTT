@@ -522,4 +522,10 @@
   <data name="report_header_default_tournament" xml:space="preserve">
     <value>Tournament</value>
   </data>
+  <data name="report_header_default_category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="report_header_default_disabilityclass" xml:space="preserve">
+    <value>Class</value>
+  </data>
 </root>

@@ -224,7 +224,7 @@ namespace TT.Models.Serialization
             return new Match()
             {
                 Tournament = GetTextByLabelPattern(sheet.Cells[searchRange], TournamentLabelPattern),
-                Round = GetTextByLabelPattern(sheet.Cells[searchRange], RoundLabelPattern),
+                Round = (MatchRound) Enum.Parse(typeof(MatchRound), GetTextByLabelPattern(sheet.Cells[searchRange], RoundLabelPattern)),
                 FirstPlayer = ParsePlayer(GetTextByLabelPattern(sheet.Cells[searchRange], FirstPlayerLabelPattern)),
                 SecondPlayer = ParsePlayer(GetTextByLabelPattern(sheet.Cells[searchRange], SecondPlayerLabelPattern)),
 

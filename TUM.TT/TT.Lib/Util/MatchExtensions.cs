@@ -23,7 +23,7 @@ namespace TT.Lib.Util
             return string.Format(
                 "{0} - {1}",
                 match.Tournament.WhenNullOrEmpty("Unknown tournament"),
-                match.Round.WhenNullOrEmpty("Unknown round"));
+                match.Round.ToString().WhenNullOrEmpty("Unknown round"));
         }
 
         /// <summary>
@@ -35,14 +35,26 @@ namespace TT.Lib.Util
         {
             var first = match.FirstPlayer ?? new Player();
             var second = match.SecondPlayer ?? new Player();
-            return string.Format(
+            if (match.DisabilityClass.ToString() == "NoClass")
+            {
+                return string.Format(
                 "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - {5}",
                 match.DateTime,
                 first.Name.WhenNullOrEmpty("A"),
                 second.Name.WhenNullOrEmpty("B"),
-                match.Category,
-                match.Round.WhenNullOrEmpty("Unknown round"),
-                match.Tournament.WhenNullOrEmpty("Unknown tournament"));
+                match.Tournament.WhenNullOrEmpty("Unknown tournament"),
+                match.Category.ToString().WhenNullOrEmpty("Unknown Category"),
+                match.Round.ToString().WhenNullOrEmpty("Unknown round"));
+            }
+            else return string.Format(
+                "{0:yyyy-MM-dd} - {1} vs {2} - {3} - {4} - {5} - {6}",
+                match.DateTime,
+                first.Name.WhenNullOrEmpty("A"),
+                second.Name.WhenNullOrEmpty("B"),
+                match.Tournament.WhenNullOrEmpty("Unknown tournament"),
+                match.Category.ToString().WhenNullOrEmpty("Unknown Category"),
+                match.DisabilityClass.ToString().WhenNullOrEmpty("Unknown Class"),
+                match.Round.ToString().WhenNullOrEmpty("Unknown round"));
         }
     }
 }

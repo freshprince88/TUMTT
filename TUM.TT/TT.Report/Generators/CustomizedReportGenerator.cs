@@ -98,7 +98,7 @@ namespace TT.Report.Generators
 
             report.Sections.Add(new MetadataSection()
             {
-                Subject = $"{match.Tournament} {match.Round}, {match.FirstPlayer.Name} vs. {match.SecondPlayer.Name}",
+                Subject = $"{match.Tournament} {match.Round.ToString()}, {match.FirstPlayer.Name} vs. {match.SecondPlayer.Name}",
                 Title = Properties.Resources.report_title,
                 Author = "TUM - Fakultät für Sport- und Gesundheitswissenschaft"
             });
@@ -107,8 +107,10 @@ namespace TT.Report.Generators
                  new HeaderSection
                  {
                      Headline = Properties.Resources.report_header_headline,
-                     Round = match.Round ?? Properties.Resources.report_header_default_round,
                      Tournament = match.Tournament ?? Properties.Resources.report_header_default_tournament,
+                     Category = match.Category.ToString() ?? Properties.Resources.report_header_default_tournament,
+                     DisabilityClass = (match.DisabilityClass.ToString() == null ) ? Properties.Resources.report_header_default_tournament : ((match.DisabilityClass.ToString() == "NoClass") ? "" : match.DisabilityClass.ToString()),
+                     Round = match.Round.ToString() ?? Properties.Resources.report_header_default_round,
                      Date = match.DateTime
                  });
 

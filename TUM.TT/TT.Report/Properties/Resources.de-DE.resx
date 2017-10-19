@@ -520,6 +520,12 @@
     <value>Runde</value>
   </data>
   <data name="report_header_default_tournament" xml:space="preserve">
-    <value>Tournament</value>
+    <value>Turnier</value>
+  </data>
+  <data name="report_header_default_category" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="report_header_default_disabilityclass" xml:space="preserve">
+    <value>Klasse</value>
   </data>
 </root>

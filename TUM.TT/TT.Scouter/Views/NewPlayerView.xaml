@@ -4,48 +4,51 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:System="clr-namespace:System;assembly=mscorlib"
-             xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
-             xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
+             xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"           
              xmlns:local="clr-namespace:TT.Scouter.Views"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
+
     <UserControl.Resources>
-        <ObjectDataProvider x:Key="PlayingStyleFromEnum" MethodName="GetValues"
+        <ResourceDictionary>
+            <ObjectDataProvider x:Key="PlayingStyleFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Models:PlayingStyle"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider x:Key="HandFromEnum" MethodName="GetValues"
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:PlayingStyle"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="HandFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Models:Handedness"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider x:Key="GripFromEnum" MethodName="GetValues"
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:Handedness"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="GripFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Models:Grip"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider x:Key="MaterialFHFromEnum" MethodName="GetValues"
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:Grip"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="MaterialFHFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Models:MaterialFH"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider x:Key="MaterialBHFromEnum" MethodName="GetValues"
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MaterialFH"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="MaterialBHFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Models:MaterialBH"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MaterialBH"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </ResourceDictionary>
     </UserControl.Resources>
-    
-    
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
@@ -94,7 +97,6 @@
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
             <TextBox Text="{Binding Path=Player.Rank.Position}" Background="{DynamicResource AccentColorBrush2}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20">
                 <i:Interaction.Behaviors>
                     <ob:SelectAllTextOnFocusBehavior />
@@ -114,12 +116,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ComboBox SelectedIndex="0" SelectedItem="{Binding Path=Player.PlayingStyle}" ItemsSource="{Binding Source={StaticResource PlayingStyleFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+            <ComboBox SelectedItem="{Binding Path=Player.PlayingStyle}" ItemsSource="{Binding Source={StaticResource PlayingStyleFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
             <Label Content="Grip" Background="{DynamicResource AccentColorBrush2}" Grid.Column="2" Grid.Row="10" FontSize="25" VerticalAlignment="Center"/>
-
-            <!--<Label Content="Material" Background="{DynamicResource AccentColorBrush2}" Grid.Column="2" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-            <TextBox Text="{Binding Path=Player.Material}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="4" VerticalContentAlignment="Center" FontSize="20"/>-->
-            <ComboBox Grid.Column="4" SelectedIndex="0" SelectedItem="{Binding Path=Player.Grip}" ItemsSource="{Binding Source={StaticResource GripFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+            <ComboBox Grid.Column="4" SelectedItem="{Binding Path=Player.Grip}" ItemsSource="{Binding Source={StaticResource GripFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
 
         </Grid>
 
@@ -137,14 +136,14 @@
             <Label Content="FH" Background="{DynamicResource AccentColorBrush2}" Grid.Column="0" Grid.Row="10" FontSize="25" VerticalAlignment="Center"/>
             <Label Content="BH" Background="{DynamicResource AccentColorBrush2}" Grid.Column="4" Grid.Row="10" FontSize="25" VerticalAlignment="Center"/>
 
-            <ComboBox Grid.Column="2" SelectedIndex="0" SelectedItem="{Binding Path=Player.MaterialFH}" ItemsSource="{Binding Source={StaticResource MaterialFHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
+            <ComboBox Grid.Column="2" SelectedItem="{Binding Path=Player.MaterialFH}" ItemsSource="{Binding Source={StaticResource MaterialFHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <ComboBox Grid.Column="6" SelectedIndex="0" SelectedItem="{Binding Path=Player.MaterialBH}" ItemsSource="{Binding Source={StaticResource MaterialBHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
+            <ComboBox Grid.Column="6" SelectedItem="{Binding Path=Player.MaterialBH}" ItemsSource="{Binding Source={StaticResource MaterialBHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
@@ -161,7 +160,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ComboBox SelectedIndex="0" SelectedItem="{Binding Path=Player.Handedness}" ItemsSource="{Binding Source={StaticResource HandFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+            <ComboBox SelectedItem="{Binding Path=Player.Handedness}" ItemsSource="{Binding Source={StaticResource HandFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
         </Grid>
 
         <Grid Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="3">
