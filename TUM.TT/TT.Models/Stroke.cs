@@ -636,6 +636,22 @@ namespace TT.Models
                     return false;
             }
         }
+        public bool HasOpeningShotPlayer(Util.Enums.Stroke.Player p)
+        {
+            switch (p)
+            {
+                case Models.Util.Enums.Stroke.Player.Player1:
+                    return this.Player == MatchPlayer.First;
+                case Models.Util.Enums.Stroke.Player.Player2:
+                    return this.Player == MatchPlayer.Second;
+                case Models.Util.Enums.Stroke.Player.None:
+                    return true;
+                case Models.Util.Enums.Stroke.Player.Both:
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         public bool HasWinner(Util.Enums.Stroke.WinnerOrNetOut w)
         {

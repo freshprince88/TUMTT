@@ -153,6 +153,7 @@
     <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
     <Compile Include="ViewModels\KeyBindingEditorViewModel.cs" />
     <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\OpeningShotViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsTableViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PlayerInformationViewModel.cs" />
@@ -228,6 +229,9 @@
     </Compile>
     <Compile Include="Views\MatchView.xaml.cs">
       <DependentUpon>MatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OpeningShotView.xaml.cs">
+      <DependentUpon>OpeningShotView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
       <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
@@ -380,6 +384,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OpeningShotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

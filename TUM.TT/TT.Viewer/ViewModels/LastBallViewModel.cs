@@ -95,7 +95,7 @@ namespace TT.Viewer.ViewModels
             };
 
             TableView = new TableStandardViewModel(this.events,"Last");
-            TableView.lastStroke = true;
+            TableView.lastStrokeOrOpeningShot = 1;
 
         }
 

@@ -130,6 +130,7 @@ namespace TT.Models
             set { this.RaiseAndSetIfChanged(ref this.schläge, value); }
         }
 
+
         /// <summary>
         /// Gets or sets the winner <see cref="Player"/> of the Rally.
         /// </summary>
@@ -451,6 +452,46 @@ namespace TT.Models
             }
             return strokeNumber >= 0 ? Strokes[strokeNumber] : null;
         }
+
+        /// <summary>
+        /// Returns the last stroke of the Winner of this rally
+        /// </summary>
+        public bool HasOpeningShot()
+        {
+            if (Strokes.Count < 1)
+                return false;
+
+            for (int strokenumber=0; strokenumber<Strokes.Count; strokenumber++)
+            {
+                if (Strokes[strokenumber].OpeningShot == true)
+                    return true;
+            }
+            return false;
+
+        }
+        public Stroke OpeningShot()
+        {
+            if (Strokes.Count < 1)
+                return null;
+            for (int strokenumber = 0; strokenumber < Strokes.Count; strokenumber++)
+            {
+                if (Strokes[strokenumber].OpeningShot == true)
+                    return Strokes[strokenumber];
+            }
+            return null;
+
+
+            //int strokenumber = 0;
+            //while (strokenumber < Strokes.Count() && Strokes[strokenumber].OpeningShot == false)
+            //{
+            //    strokenumber++;
+            //}
+            //return strokenumber < Strokes.Count()? Strokes[strokenumber] : null;           
+        }
+
+       
+
+
 
         /// <summary>
         /// Handles changes to the list of rallies.

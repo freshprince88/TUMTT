@@ -24,11 +24,11 @@ namespace TT.Report.Sections
         public string Tournament { get; set; }
 
         /// <summary>
-        /// Gets or sets the tournament.
+        /// Gets or sets the match category.
         /// </summary>
         public string Category { get; set; }
         /// <summary>
-        /// Gets or sets the tournament.
+        /// Gets or sets the disability class.
         /// </summary>
         public string DisabilityClass { get; set; }
 

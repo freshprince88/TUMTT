@@ -88,7 +88,7 @@ namespace TT.Viewer.ViewModels
             };
             TableView = new TableStandardViewModel(this.events,"Fourth");
             TableView.StrokeNumber = 3;
-            TableView.lastStroke=false;
+            TableView.lastStrokeOrOpeningShot=0;
 
                 
         }

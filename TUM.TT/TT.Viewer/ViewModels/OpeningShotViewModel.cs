@@ -13,16 +13,23 @@ using TT.Lib.Managers;
 
 namespace TT.Viewer.ViewModels
 {
-    public class ThirdBallViewModel : Conductor<IScreen>.Collection.AllActive,
+    public class OpeningShotViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
         IHandle<BasicFilterSelectionChangedEvent>
     {
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
         public Models.Util.Enums.Stroke.Hand Hand { get; private set; }
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
         public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
+        //public Models.Util.Enums.Stroke.WinnerOrNetOut Winner { get; private set; }
+        public Models.Util.Enums.Stroke.Player OpeningShotPlayer { get; private set; }
+        public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
+        //public Models.Util.Enums.Stroke.OpeningShot OpeningShot { get; private set; }
+
         private HashSet<Models.Util.Enums.Stroke.Aggressiveness> _aggressiveness;
         public HashSet<Models.Util.Enums.Stroke.Aggressiveness> SelectedAggressiveness
         {
@@ -47,12 +54,8 @@ namespace TT.Viewer.ViewModels
                 _specials = value;
             }
         }
-        public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
-        public Models.Util.Enums.Stroke.OpeningShot OpeningShot { get; private set; }
-
 
         private HashSet<Models.Util.Enums.Stroke.Technique> _strokeTec;
-
         public HashSet<Models.Util.Enums.Stroke.Technique> SelectedStrokeTec
         {
             get
@@ -65,13 +68,14 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+
         /// <summary>
         /// Gets the event bus of this shell.
         /// </summary>
         private IEventAggregator events;
         private IMatchManager Manager;
 
-        public ThirdBallViewModel(IEventAggregator eventAggregator, IMatchManager man)
+        public OpeningShotViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
             Manager = man;
@@ -80,21 +84,24 @@ namespace TT.Viewer.ViewModels
             SelectedTablePositions = new HashSet<Positions.Table>();
             Quality = Models.Util.Enums.Stroke.Quality.None;
             SelectedAggressiveness = new HashSet<Models.Util.Enums.Stroke.Aggressiveness>();
-            SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
             SelectedStrokeTec = new HashSet<Models.Util.Enums.Stroke.Technique>();
+            SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
             StepAround = Models.Util.Enums.Stroke.StepAround.Not;
-            OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
+            //OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
+            //Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.None;
+            OpeningShotPlayer = Models.Util.Enums.Stroke.Player.None;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
-                MinRallyLength = 2,
-                PlayerLabel="3rd Stroke:",
-                StrokeNumber = 2
+                MinRallyLength = 1,
+                PlayerLabel = "Service:",
+                LastStroke = false,
+                StrokeNumber = 0
             };
-            TableView = new TableStandardViewModel(this.events,"Third");
-            TableView.StrokeNumber = 2;
-            TableView.lastStrokeOrOpeningShot = 0;
-        }
 
+            TableView = new TableStandardViewModel(this.events, "Opening");
+            TableView.lastStrokeOrOpeningShot = 2;
+
+        }
 
         #region View Methods
         public void SwitchTable(bool check)
@@ -108,6 +115,85 @@ namespace TT.Viewer.ViewModels
                 TableView.Mode = ViewMode.Position.Bottom;
             }
         }
+
+        //public void WinnerOrNetOut(ToggleButton source)
+        //{
+        //    if (source.Name.ToLower().Contains("winner"))
+        //    {
+        //        if (source.IsChecked.Value)
+        //        {
+        //            if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.None)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.Winner;
+        //            else if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.NetOut)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.Both;
+        //        }
+        //        else
+        //        {
+        //            if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.Winner)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.None;
+        //            else if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.Both)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.NetOut;
+        //        }
+        //    }
+        //    else if (source.Name.ToLower().Contains("netout"))
+        //    {
+        //        if (source.IsChecked.Value)
+        //        {
+        //            if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.None)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.NetOut;
+        //            else if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.Winner)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.Both;
+        //        }
+        //        else
+        //        {
+        //            if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.NetOut)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.None;
+        //            else if (Winner == Models.Util.Enums.Stroke.WinnerOrNetOut.Both)
+        //                Winner = Models.Util.Enums.Stroke.WinnerOrNetOut.Winner;
+        //        }
+        //    }
+        //    UpdateSelection(Manager.ActivePlaylist);
+        //}
+
+        public void P1P2OpeningShot(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("player1"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.None)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.Player1;
+                    else if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.Player2)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.Both;
+                }
+                else
+                {
+                    if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.Player1)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.None;
+                    else if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.Both)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.Player2;
+                }
+            }
+            else if (source.Name.ToLower().Contains("player2"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.None)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.Player2;
+                    else if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.Player1)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.Both;
+                }
+                else
+                {
+                    if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.Player2)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.None;
+                    else if (OpeningShotPlayer == Models.Util.Enums.Stroke.Player.Both)
+                        OpeningShotPlayer = Models.Util.Enums.Stroke.Player.Player1;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
 
         public void ForeBackHand(ToggleButton source)
         {
@@ -163,21 +249,22 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
-        public void OpeningShotOrNot(ToggleButton source)
-        {
-            if (source.Name.ToLower().Contains("openingshotbutton"))
-            {
-                if (source.IsChecked.Value)
-                {
-                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.OpeningShot;
-                }
-                else
-                {
-                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
-                }
-            }
-            UpdateSelection(Manager.ActivePlaylist);
-        }
+        //public void OpeningShotOrNot(ToggleButton source)
+        //{
+        //    if (source.Name.ToLower().Contains("openingshotbutton"))
+        //    {
+        //        if (source.IsChecked.Value)
+        //        {
+        //            OpeningShot = Models.Util.Enums.Stroke.OpeningShot.OpeningShot;
+        //        }
+        //        else
+        //        {
+        //            OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
+        //        }
+        //    }
+        //    UpdateSelection(Manager.ActivePlaylist);
+        //}
+
 
         public void SelectStrokeTec(ToggleButton source)
         {
@@ -437,7 +524,6 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
-
         public void EdgeSpecials(ToggleButton source)
         {
             if (source.Name.ToLower().Equals("edgetable"))
@@ -475,6 +561,7 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
+
         #endregion
 
         #region Caliburn Hooks
@@ -493,6 +580,8 @@ namespace TT.Viewer.ViewModels
             this.events.Subscribe(this);
             this.ActivateItem(TableView);
             this.ActivateItem(BasicFilterView);
+            Player1 = Manager.Match.FirstPlayer.Name.Split(' ')[0];
+            Player2 = Manager.Match.SecondPlayer.Name.Split(' ')[0];
 
             //UpdateSelection(Manager.ActivePlaylist);
         }
@@ -536,16 +625,20 @@ namespace TT.Viewer.ViewModels
             if (list.Rallies != null)
             {
                 var results = BasicFilterView.SelectedRallies
-                    .Where(r => r.Strokes.Count > 2 &&
-                    r.Strokes[2].HasHand(this.Hand) &&
-                    r.Strokes[2].HasStepAround(this.StepAround) &&
-                    r.Strokes[2].HasOpeningShot(this.OpeningShot) &&
-                    r.Strokes[2].HasStrokeTec(this.SelectedStrokeTec) &&
-                    r.Strokes[2].HasQuality(this.Quality) &&
-                    r.Strokes[2].HasTablePosition(this.SelectedTablePositions) &&
-                    r.Strokes[2].HasStrokeLength(this.SelectedStrokeLengths) &&
-                    r.Strokes[2].HasAggressiveness(this.SelectedAggressiveness) &&
-                    r.Strokes[2].HasSpecials(this.SelectedSpecials)).
+                    .Where(r =>
+                    r.HasOpeningShot() && 
+                    r.OpeningShot() != null &&                 
+                    r.OpeningShot().Number > 1 &&
+                    r.OpeningShot().HasOpeningShotPlayer(this.OpeningShotPlayer) &&
+                    r.OpeningShot().HasHand(this.Hand) &&
+                    r.OpeningShot().HasStepAround(this.StepAround) &&
+                    //r.OpeningShot().HasOpeningShot(this.OpeningShot) &&
+                    r.OpeningShot().HasStrokeTec(this.SelectedStrokeTec) &&
+                    r.OpeningShot().HasQuality(this.Quality) &&
+                    r.OpeningShot().HasTablePosition(this.SelectedTablePositions) &&
+                    r.OpeningShot().HasStrokeLength(this.SelectedStrokeLengths) &&
+                    r.OpeningShot().HasAggressiveness(this.SelectedAggressiveness) &&
+                    r.OpeningShot().HasSpecials(this.SelectedSpecials)).
                     ToList();
                 Manager.SelectedRallies = results;
             }
