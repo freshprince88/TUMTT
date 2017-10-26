@@ -64,7 +64,7 @@ namespace TT.Scouter.ViewModels
                 ActivateItem(new WelcomeViewModel(Events, MatchManager));
             }
 
-            string registry = @"Software\Technische Universit�t M�nchen\Table Tennis Analysis\Secure";
+            string registry = @"Software\Technische Universität München\Table Tennis Analysis\Secure";
             Secure scr = new Secure(Secure.Mode.Date);
             bool validVersion = scr.Algorithm("xyz", registry);
             if (validVersion != true)
