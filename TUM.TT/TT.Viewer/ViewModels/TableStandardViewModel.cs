@@ -163,7 +163,7 @@ namespace TT.Viewer.ViewModels
                     botMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotMid()).Count();
                     botRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotRight()).Count();
                 }
-                if (lastStrokeOrOpeningShot == 1)
+                else if (lastStrokeOrOpeningShot == 1)
                 {
                     topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.LastWinnerStroke().IsTopLeft()).Count();
                     topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.LastWinnerStroke().IsTopMid()).Count();
