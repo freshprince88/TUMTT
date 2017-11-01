@@ -19,6 +19,8 @@ using TT.Models.Util;
 using TT.Report.Renderers;
 using Application = System.Windows.Application;
 using Match = System.Text.RegularExpressions.Match;
+using System.ComponentModel;
+
 
 
 namespace TT.Viewer.ViewModels
@@ -178,6 +180,13 @@ namespace TT.Viewer.ViewModels
                 return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
             }
         }
+        public bool CanExportExcel
+        {
+            get
+            {
+                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
+            }
+        }
         public bool CanShowPlayer
         {
             get
@@ -193,6 +202,12 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        
+
+        /// <summary>
+        /// Generates a PDF report.
+        /// </summary>
+        /// <returns>The actions to generate the report.</returns>
         public IEnumerable<IResult> GenerateReport()
         {
             var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, Events);
@@ -213,6 +228,7 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanGenerateReport);
             NotifyOfPropertyChange(() => this.CanSaveMatch);
             NotifyOfPropertyChange(() => this.CanSaveMatchAs);
+            NotifyOfPropertyChange(() => this.CanExportExcel);
             NotifyOfPropertyChange(() => this.CanShowPlayer);
             NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
@@ -265,6 +281,22 @@ namespace TT.Viewer.ViewModels
                     yield return action;
                 }
             }
+        }
+
+        /// <summary>
+        /// Exports to Excel.
+        /// </summary>
+        /// <returns>The actions to export to Excel.</returns>
+
+        public IEnumerable<IResult> ExportExcel()
+        {
+            //if (MatchManager.MatchExportExcel)
+            //{
+                foreach (var action in MatchManager.ExportExcel())
+                {
+                    yield return action;
+                }
+            //}
         }
         public static bool IsWindowOpen<T>(string name ="") where T : Window
         {

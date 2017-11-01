@@ -24,6 +24,8 @@ namespace TT.Lib.Managers
 
         bool MatchModified { get; set; }
         bool MatchSaveAs { get; set; }
+        bool MatchExportExcel { get; set; }
+
 
         void DeleteRally(Rally r);
 
@@ -33,6 +35,7 @@ namespace TT.Lib.Managers
 
         IEnumerable<IResult> SaveMatch();
         IEnumerable<IResult> SaveMatchAs();
+        IEnumerable<IResult> ExportExcel();
         IEnumerable<IResult> OpenMatch(string fileName = null);
         IEnumerable<IResult> OpenLiveMatch();
 
