@@ -14,6 +14,8 @@ using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Lib.Util;
+using TT.Lib.ViewModels;
+using TT.Lib.Views;
 using TT.Models;
 using TT.Models.Util;
 using TT.Report.Renderers;
@@ -35,8 +37,10 @@ namespace TT.Viewer.ViewModels
         private IReportGenerationQueueManager _reportGenerationQueueManager;
         private IDialogCoordinator DialogCoordinator;
         private readonly IWindowManager _windowManager;
+        private IMatchLibraryManager MatchLibrary;
+        private ICloudSyncManager CloudSyncManager;
 
-        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IReportGenerationQueueManager queueManager, IDialogCoordinator coordinator)
+        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IReportGenerationQueueManager queueManager, IDialogCoordinator coordinator, ICloudSyncManager cloudSyncManager, IMatchLibraryManager matchLibrary)
         {
             this.DisplayName = "";
 
@@ -45,6 +49,8 @@ namespace TT.Viewer.ViewModels
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
+            MatchLibrary = matchLibrary;
+            CloudSyncManager = cloudSyncManager;
 
             // for translation testing - don't set for production!
             //CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("de-DE");
@@ -64,12 +70,12 @@ namespace TT.Viewer.ViewModels
 
             // Subscribe ourself to the event bus
             //this.Events.Subscribe(this);
+            CloudSyncManager.Login();
         }
 
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-
         }
 
         protected override void OnActivate()
@@ -270,8 +276,20 @@ namespace TT.Viewer.ViewModels
         {
             return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
         }
+
+        public void ShowMatchLibrary()
+        {
+            if (IsWindowOpen<Window>("MatchLibrary"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "MatchLibrary").FirstOrDefault().Focus();
+            }
+            else
+            {
+                _windowManager.ShowDialog(new MatchLibraryViewModel(_windowManager, Events, DialogCoordinator, MatchManager, CloudSyncManager, MatchLibrary));
+            }
+        }
+
         public void ShowPlayer()
-            
         {  if (IsWindowOpen<Window>("ShowPlayer"))
             {
                 Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ShowPlayer").FirstOrDefault().Focus();

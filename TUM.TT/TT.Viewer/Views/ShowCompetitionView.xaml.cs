@@ -23,7 +23,7 @@ namespace TT.Viewer.Views
         public ShowCompetitionView()
         {
             InitializeComponent();
-            Name = "ShowCompetition";
+            this.Name = "Competition";
         }
     }
 }

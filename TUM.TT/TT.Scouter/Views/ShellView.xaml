@@ -130,7 +130,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
+                        <!--<ColumnDefinition Width="auto"/>-->
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
@@ -191,7 +191,6 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </Controls:Tile>-->
-
                     <Controls:Tile Grid.Column="7" Title="Shortcuts" cal:Message.Attach="[Event Click] = [Action ShowKeyBindingEditor()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
@@ -201,8 +200,14 @@
                         </Rectangle>
                     </Controls:Tile>
 
-
-
+                    <Controls:Tile Grid.Column="8" Title="Upload Settings" cal:Message.Attach="[Event Click] = [Action ShowUploadSettings()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                        <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_cloud_upload}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
                     <Controls:Tile Grid.Column="9" Title="Competition" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">

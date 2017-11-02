@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TT.Lib.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Height" Type="System.String" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="Width" Type="System.String" Scope="User">
+      <Value Profile="(Default)">750</Value>
+    </Setting>
+    <Setting Name="Top" Type="System.String" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="Left" Type="System.String" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="WindowState" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
+    </Setting>
+    <Setting Name="CloudApiEndpoint" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://torbens-macbook-pro.local:3000/api/</Value>
+    </Setting>
+    <Setting Name="CloudApiFrontend" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://torbens-macbook-pro.local:3000/</Value>
+    </Setting>
+    <Setting Name="LocalLibraryPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Z:\Developer\tum.tt-data\TUM.TT Library</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

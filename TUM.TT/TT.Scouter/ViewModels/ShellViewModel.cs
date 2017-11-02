@@ -23,17 +23,19 @@ namespace TT.Scouter.ViewModels
         /// </summary>
         public IEventAggregator Events { get; private set; }
         public IMatchManager MatchManager { get; set; }
+        public ICloudSyncManager CloudSyncManager { get; set; }
         private IDialogCoordinator DialogCoordinator;
         private readonly IWindowManager _windowManager;
 
 
-        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, IDialogCoordinator coordinator)
+        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, ICloudSyncManager cloudSyncManager, IDialogCoordinator coordinator)
         {
             this.DisplayName = "";
             _windowManager = windowmanager;
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
+            CloudSyncManager = cloudSyncManager;
         }
 
         #region Caliburn hooks
@@ -137,6 +139,7 @@ namespace TT.Scouter.ViewModels
             this.NotifyOfPropertyChange(() => this.CanSaveMatchAs);
             this.NotifyOfPropertyChange(() => this.CanShowPlayer);
             this.NotifyOfPropertyChange(() => this.CanShowCompetition);
+            this.NotifyOfPropertyChange(() => this.CanShowUploadSettings);
             MatchManager.Match.PropertyChanged += SetMatchModified;
             MatchManager.Match.FirstPlayer.PropertyChanged += SetMatchModified;
             MatchManager.Match.SecondPlayer.PropertyChanged += SetMatchModified;
@@ -193,6 +196,7 @@ namespace TT.Scouter.ViewModels
             this.NotifyOfPropertyChange(() => this.CanSaveMatchAs);
             this.NotifyOfPropertyChange(() => this.CanShowPlayer);
             this.NotifyOfPropertyChange(() => this.CanShowCompetition);
+            this.NotifyOfPropertyChange(() => this.CanShowUploadSettings);
             Events.PublishOnUIThread(new HideMenuEvent());
             var next = ShowScreenResult.Of<NewMatchViewModel>();
             yield return next;
@@ -255,6 +259,14 @@ namespace TT.Scouter.ViewModels
             }
         }
         public bool CanSaveMatchAs
+        {
+            get
+            {
+                return MatchManager.Match != null;
+            }
+        }
+
+        public bool CanShowUploadSettings
         {
             get
             {
@@ -340,8 +352,18 @@ namespace TT.Scouter.ViewModels
                 _windowManager.ShowWindow(new KeyBindingEditorViewModel(_windowManager, Events, DialogCoordinator));
             }
         }
+        public void ShowUploadSettings()
+        {
+            if (IsWindowOpen<Window>("ShowUploadSettings"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ShowUploadSettings").FirstOrDefault().Focus();
 
-
+            }
+            else
+            {
+                _windowManager.ShowWindow(new ShowUploadSettingsViewModel(_windowManager, Events, MatchManager, CloudSyncManager, DialogCoordinator));
+            }
+        }
 
         #endregion
     }

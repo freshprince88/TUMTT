@@ -50,7 +50,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\MatchMeta.cs" />
+    <Compile Include="Api\PlayerMeta.cs" />
+    <Compile Include="Api\User.cs" />
     <Compile Include="Exceptions\NoStrokeEndPointException.cs" />
     <Compile Include="Exceptions\NoStrokeStartingPointException.cs" />
     <Compile Include="Playlist.cs" />

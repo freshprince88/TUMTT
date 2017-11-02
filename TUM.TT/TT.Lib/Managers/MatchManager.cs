@@ -189,10 +189,6 @@ namespace TT.Lib.Managers
         }
 
         #region Business Logic
-
-        
-
-
         public IEnumerable<IResult> SaveMatch()
         {
             if (FileName == null || FileName == string.Empty)

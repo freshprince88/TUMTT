@@ -48,6 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageUrlConcatConverter .cs" />
+    <Compile Include="ImagePathConcatConverter.cs" />
     <Compile Include="AggressivenessToBoolConverter.cs" />
     <Compile Include="AggressivenessToBoolScouterConverter.cs" />
     <Compile Include="BaseConverter.cs" />

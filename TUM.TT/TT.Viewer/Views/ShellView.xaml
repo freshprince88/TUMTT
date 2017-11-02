@@ -150,6 +150,14 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Column="0" HorizontalAlignment="Left">
+                        <Controls:Tile Title="Open Library" cal:Message.Attach="[Event Click] = [Action ShowMatchLibrary()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                            <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_cabinet_variant}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Controls:Tile>
                         <Controls:Tile Title="Open Match" cal:Message.Attach="[Event Click] = [Action OpenMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
@@ -158,6 +166,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Controls:Tile>
+                        
                         <Controls:Tile Title="Save Match" cal:Message.Attach="[Event Click] = [Action SaveMatch()]" 
                                    IsEnabled="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged}" 
                                    Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">

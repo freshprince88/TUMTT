@@ -1,0 +1,131 @@
+﻿<Controls:MetroWindow x:Class="TT.Scouter.Views.ShowUploadSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:cal="http://www.caliburnproject.org"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
+                      xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+                      xmlns:System="clr-namespace:System;assembly=mscorlib"
+                      xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
+                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                      Dialog:DialogParticipation.Register="{Binding}"
+                      ResizeMode="CanResizeWithGrip"
+                      Width="300"
+                      Height="800"                               
+                      EnableDWMDropShadow="True"
+                      IgnoreTaskbarOnMaximize="True"
+                      WindowTransitionsEnabled="False"
+                      WindowStartupLocation="CenterScreen"            
+                      ShowTitleBar="True"
+                      ShowIconOnTitleBar="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ObjectDataProvider x:Key="ModeFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}" >
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MatchMode"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="CategoryFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}" >
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Models:MatchCategory"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <Style x:Key="LargeTileStyle"
+                   TargetType="Controls:Tile">
+                <Setter Property="Width"
+                        Value="300" />
+                <Setter Property="Height"
+                        Value="125" />
+                <Setter Property="TitleFontSize"
+                        Value="12" />
+            </Style>
+
+            <Style x:Key="SmallTileStyle"
+                   TargetType="Controls:Tile">
+                <Setter Property="Width"
+                        Value="100" />
+                <Setter Property="Height"
+                        Value="100" />
+                <Setter Property="TitleFontSize"
+                        Value="10" />
+            </Style>
+            <Style x:Key="BigTileStyle"
+                   TargetType="Controls:Tile">
+                <Setter Property="Width"
+                        Value="200" />
+                <Setter Property="Height"
+                        Value="100" />
+                <Setter Property="TitleFontSize"
+                        Value="10" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Center"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button ToolTip="Save Match"
+                    cal:Message.Attach="[Event Click] = [Action SaveMatch()]"
+                    Visibility="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}" >
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_save}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition />
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="2.4*" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="Upload Settings" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" FontSize="50" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
+
+        <Label Content="Account" Grid.Column="4" Grid.Row="1" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
+        <Button Grid.Row="2" Grid.Column="4" Content="{Binding Path=AccountLabel}" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"
+                VerticalContentAlignment="Center" HorizontalAlignment="Right" FontSize="14" FontWeight="Medium" />
+
+        <Controls:ToggleSwitch Header="Upload this Match" IsChecked="{Binding Path=MatchManager.Match.SyncToCloud}" OnLabel="Yes" OffLabel="No" Grid.Column="1" Grid.Row="4" 
+                               VerticalContentAlignment="Center" FontSize="16"/>
+
+        <Label Content="Status" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="5" FontSize="20" VerticalContentAlignment="Center"/>
+        <Label Content="{Binding Path=CloudSyncManager.SyncStatus}" Grid.Column="3" Grid.Row="5" FontSize="20" VerticalContentAlignment="Center"/>
+
+        <Controls:MetroProgressBar Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="1" VerticalContentAlignment="Top" />
+        <Label Content="Progess... (0%)"  Grid.Row="6" Grid.Column="3" FontSize="20" VerticalContentAlignment="Bottom" HorizontalAlignment="Center" />
+
+    </Grid>
+</Controls:MetroWindow>

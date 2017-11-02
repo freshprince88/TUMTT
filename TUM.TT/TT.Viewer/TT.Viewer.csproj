@@ -84,6 +84,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=3.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.3.1.4\lib\net35\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.4.1.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.4.1\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -116,6 +119,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="Xceed.Wpf.AvalonDock, Version=2.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.7\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>True</Private>
@@ -225,6 +229,9 @@
     </Compile>
     <Compile Include="Views\LastBallStatisticsView.xaml.cs">
       <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MatchLibraryView.xaml.cs">
+      <DependentUpon>MatchLibraryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MatchView.xaml.cs">
       <DependentUpon>MatchView.xaml</DependentUpon>
@@ -378,6 +385,10 @@
     <Page Include="Views\LastBallView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MatchLibraryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MatchView.xaml">
       <SubType>Designer</SubType>
@@ -565,6 +576,7 @@
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />
     <Content Include="Libs\Microsoft.TeamFoundation.Controls.dll" />
+    <Resource Include="Resources\example-preview.jpeg" />
     <Resource Include="Resources\rally_winner.png" />
     <Resource Include="Resources\rally_server.png" />
     <Resource Include="TUM_Logo_weiss_rgb_p.png" />

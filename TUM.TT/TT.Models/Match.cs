@@ -69,6 +69,9 @@ namespace TT.Models
         /// Backs the <see cref="Synchro"/> property.
         /// </summary>
         private double synchro;
+
+        private bool syncToCloud;
+        private DateTime lastCloudSync;
         
         /// <summary>
         /// Backs the <see cref="Rallies"/> property.
@@ -85,7 +88,10 @@ namespace TT.Models
         /// </summary>
         public Match()
         {
-            this.id = new Guid();
+            if (this.id == null || this.id == Guid.Empty)
+            {
+                this.id = Guid.NewGuid();
+            }
             this.tournament = Properties.Resources.tournament_title_default;
             this.playlists.CollectionChanged += this.OnPlaylistsChanged;
             this.rallies.CollectionChanged += this.OnRalliesChanged;
@@ -94,9 +100,11 @@ namespace TT.Models
         /// <summary>
         ///  Gets the Unique ID of this match
         /// </summary>
+        [XmlAttribute]
         public Guid ID
         {
             get { return this.id; }
+            set { this.id = value; }
         }
 
         /// <summary>
@@ -305,6 +313,26 @@ namespace TT.Models
                 r.End += offset;
             }
 
+        }
+
+        /// <summary>
+        /// Gets or sets the if the match is synchronised to cloud
+        /// </summary>
+        [XmlAttribute]
+        public Boolean SyncToCloud
+        {
+            get { return this.syncToCloud; }
+            set { this.RaiseAndSetIfChanged(ref this.syncToCloud, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the date/time of last cloud sync
+        /// </summary>
+        [XmlAttribute]
+        public DateTime LastCloudSync
+        {
+            get { return this.lastCloudSync; }
+            set { this.RaiseAndSetIfChanged(ref this.lastCloudSync, value); }
         }
 
         /// <summary>

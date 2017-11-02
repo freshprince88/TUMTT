@@ -30,6 +30,8 @@ namespace TT.Viewer {
             container.Singleton<IReportGenerationQueueManager, ReportGenerationQueueManager>();
             container.Singleton<IShell, ShellViewModel>();
             container.Singleton<IDialogCoordinator, DialogCoordinator>();
+            container.Singleton<IMatchLibraryManager, MatchLibraryManager>();
+            container.Singleton<ICloudSyncManager, CloudSyncManager>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
             // Report generation
             container.Singleton<IReportGenerator, DefaultReportGenerator>("default");
