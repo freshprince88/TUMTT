@@ -7,6 +7,7 @@
              xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
              xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
              xmlns:local="clr-namespace:TT.Viewer.Views"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
@@ -30,12 +31,26 @@
                 <x:Type TypeName="Models:Grip"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="MaterialFHFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:MaterialFH"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="MaterialBHFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:MaterialBH"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
 
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
             <RowDefinition />
             <RowDefinition Height="2*"/>
             <RowDefinition />
@@ -94,15 +109,30 @@
         <Label Content="Style" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="20" VerticalContentAlignment="Center"/>
         <ComboBox SelectedItem="{Binding Path=Player.PlayingStyle}" Grid.Row="8" Grid.Column="3" ItemsSource="{Binding Source={StaticResource PlayingStyleFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
 
-        <Label Grid.Column="1" Grid.Row="10"  Content="Material" Background="{DynamicResource AccentColorBrush2}" FontSize="20" VerticalContentAlignment="Center" />
-        <TextBox Grid.Column="3" Grid.Row="10"  Text="{Binding Path=Player.Material}" Background="{DynamicResource AccentColorBrush2}" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Column="1" Grid.Row="10"  Content="Material (FH)" Background="{DynamicResource AccentColorBrush2}" FontSize="20" VerticalContentAlignment="Center" />
+        <ComboBox Grid.Row="10" Grid.Column="3" SelectedItem="{Binding Path=Player.MaterialFH}" ItemsSource="{Binding Source={StaticResource MaterialFHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
-        <Label Content="Grip" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="12" FontSize="20" VerticalContentAlignment="Center"/>
-        <ComboBox Grid.Row="12" Grid.Column="3" SelectedItem="{Binding Path=Player.Grip}" ItemsSource="{Binding Source={StaticResource GripFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+        <Label Grid.Column="1" Grid.Row="12"  Content="Material (BH)" Background="{DynamicResource AccentColorBrush2}" FontSize="20" VerticalContentAlignment="Center" />
+        <ComboBox Grid.Row="12" Grid.Column="3" SelectedItem="{Binding Path=Player.MaterialBH}" ItemsSource="{Binding Source={StaticResource MaterialBHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Label Content="Grip" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="14" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox Grid.Row="14" Grid.Column="3" SelectedItem="{Binding Path=Player.Grip}" ItemsSource="{Binding Source={StaticResource GripFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
 
 
-        <Label Content="Handedness" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="14" FontSize="20" VerticalContentAlignment="Center"/>
-        <ComboBox Grid.Row="14" Grid.Column="3" SelectedItem="{Binding Path=Player.Handedness}" ItemsSource="{Binding Source={StaticResource HandFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+        <Label Content="Handedness" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="16" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox Grid.Row="16" Grid.Column="3" SelectedItem="{Binding Path=Player.Handedness}" ItemsSource="{Binding Source={StaticResource HandFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
 
 
     </Grid>

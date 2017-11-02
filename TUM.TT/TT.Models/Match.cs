@@ -50,10 +50,16 @@ namespace TT.Models
         /// </summary>
         private MatchCategory category = MatchCategory.Category;
 
+
+        /// <summary>
+        /// Backs the <see cref="Class"/> property.
+        /// </summary>
+        private DisabilityClass disabilityClass = DisabilityClass.Class;
+
         /// <summary>
         /// Backs the <see cref="Round"/> property.
         /// </summary>
-        private string round;
+        private MatchRound round=MatchRound.Round;
 
         /// <summary>
         /// Backs the <see cref="Mode"/> property.
@@ -242,11 +248,22 @@ namespace TT.Models
             set { this.RaiseAndSetIfChanged(ref this.category, value); }
         }
 
+
+        /// <summary>
+        /// Gets or sets the Disability Class of the Players.
+        /// </summary>
+        [XmlAttribute]
+        public DisabilityClass DisabilityClass
+        {
+            get { return this.disabilityClass; }
+            set { this.RaiseAndSetIfChanged(ref this.disabilityClass, value); }
+        }
+
         /// <summary>
         /// Gets or sets the round of the match.
         /// </summary>
         [XmlAttribute]
-        public string Round
+        public MatchRound Round
         {
             get { return this.round; }
             set { this.RaiseAndSetIfChanged(ref this.round, value); }

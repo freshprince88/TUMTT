@@ -69,6 +69,21 @@ namespace TT.Lib.Managers
                 }
             }
         }
+        private bool _matchExportExcel;
+        public bool MatchExportExcel
+        {
+            get { return _matchExportExcel; }
+            set
+            {
+                if (_matchExportExcel != value)
+                {
+                    _matchExportExcel = value;
+                    NotifyOfPropertyChange("MatchExportExcel");
+                    NotifyOfPropertyChange();
+
+                }
+            }
+        }
 
         private string _activeList;
         public Playlist ActivePlaylist
@@ -270,6 +285,34 @@ namespace TT.Lib.Managers
 
         }
 
+        public IEnumerable<IResult> ExportExcel()
+        {
+            // yield return new SequentialResult(this.SwapPlayersIfNecessary().GetEnumerator());
+
+            var dialog = new SaveFileDialogResult()
+            {
+                Title = string.Format("Export match \"{0}\" to Excel...", Match.Title()),
+                Filter = Format.Excel.DialogFilter,
+                DefaultFileName = Match.DefaultFilename(),
+            };
+            yield return dialog;
+
+            var fileName = dialog.Result;
+
+            var serialization = new SerializeMatchResult(Match, FileName, Format.Excel.Serializer);
+            yield return serialization
+               .Rescue()
+               .WithMessage("Error exporting the match", string.Format("Could not export the match to {0}.", FileName))
+               .Propagate(); // Reraise the error to abort the coroutine
+
+
+            //yield return new SerializeMatchResult(Match, FileName, Format.Excel.Serializer)
+            //    //.IsBusy("Exporting")
+            //    .Rescue()
+            //    .WithMessage("Error exporting the match", string.Format("Could not export the match to {0}.", FileName))
+            //    .Propagate();
+        }
+
         public IEnumerable<IResult> DownloadMatch()
         {
             if (FileName == null || FileName == string.Empty)
@@ -375,6 +418,9 @@ namespace TT.Lib.Managers
             NotifyOfPropertyChange("MatchModified");
 
         }
+
+
+
 
         public void DeleteRally(Rally r)
         {

@@ -20,7 +20,7 @@ namespace TT.Viewer.ViewModels
         public HashSet<Positions.Table> SelectedPositions { get; set; }
         public HashSet<Positions.Length> SelectedStrokeLength { get; set; }
         public int StrokeNumber { get; set; }  
-        public bool lastStroke { get; set; }
+        public int lastStrokeOrOpeningShot { get; set; }
         public Dictionary<string, int> PositionCounts { get; set; }
         public string name
         {
@@ -48,7 +48,7 @@ namespace TT.Viewer.ViewModels
         {
             name = n;
             StrokeNumber = 0;
-            lastStroke = false;
+            lastStrokeOrOpeningShot = 0;
             this.events = eventAggregator;
             PositionCounts = new Dictionary<string, int>();
             PositionCounts.Add("BotLeft", 0);
@@ -144,11 +144,11 @@ namespace TT.Viewer.ViewModels
             int botRight = 0;
 
             int t1 = StrokeNumber;
-            bool t2 = lastStroke;
+            int t2 = lastStrokeOrOpeningShot;
 
             if (rallies != null)
             {
-                if (lastStroke == false)
+                if (lastStrokeOrOpeningShot == 0)
                 {
 
                     topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsTopLeft()).Count();
@@ -163,7 +163,7 @@ namespace TT.Viewer.ViewModels
                     botMid = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotMid()).Count();
                     botRight = rallies.Where(r => Convert.ToInt32(r.Length) > StrokeNumber && r.Strokes[StrokeNumber].IsBotRight()).Count();
                 }
-                else
+                else if (lastStrokeOrOpeningShot == 1)
                 {
                     topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.LastWinnerStroke().IsTopLeft()).Count();
                     topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.LastWinnerStroke().IsTopMid()).Count();
@@ -177,6 +177,20 @@ namespace TT.Viewer.ViewModels
                     botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.LastWinnerStroke().IsBotMid()).Count();
                     botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.LastWinnerStroke().IsBotRight()).Count();
 
+                }
+                else
+                {
+                    topLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsTopLeft()).Count();
+                    topMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsTopMid()).Count();
+                    topRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsTopRight()).Count();
+
+                    midLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsMidLeft()).Count();
+                    midMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsMidMid()).Count();
+                    midRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsMidRight()).Count();
+
+                    botLeft = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsBotLeft()).Count();
+                    botMid = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsBotMid()).Count();
+                    botRight = rallies.Where(r => Convert.ToInt32(r.Length) > 1 && r.OpeningShot().IsBotRight()).Count();
                 }
             }
             PositionCounts["BotLeft"] = botLeft;

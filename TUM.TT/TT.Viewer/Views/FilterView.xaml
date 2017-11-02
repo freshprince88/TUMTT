@@ -26,7 +26,8 @@
             <TabItem x:Name="ReceiveFilterTab" Header="R"/>
             <TabItem x:Name="ThirdFilterTab" Header="3"/>
             <TabItem x:Name="FourthFilterTab" Header="4"/>
-            <TabItem x:Name="LastFilterTab" Header="L" />
+            <TabItem x:Name="OpeningShotFilterTab" Header="O" />
+            <TabItem x:Name="LastFilterTab" Header="L" />             
             <!--<TabItem x:Name="TotalMatchFilterTab" Header="G" IsEnabled="False"/>
             <TabItem x:Name="KombiFilterTab" Header="C" IsEnabled="False"/>-->            
         </TabControl>                    

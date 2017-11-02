@@ -55,6 +55,15 @@ namespace TT.Models
         /// </summary>
         private string material;
 
+        /// <summary>
+        /// Backs the <see cref="MaterialBH"/> property.
+        /// </summary>
+        private MaterialBH materialBH;
+        /// <summary>
+        /// Backs the <see cref="MaterialFH"/> property.
+        /// </summary>
+        private MaterialFH materialFH;
+
         private MatchPlayer playerIndex;
 
         /// <summary>
@@ -220,6 +229,47 @@ namespace TT.Models
                 if (this.playerIndex != value)
                 {
                     this.playerIndex = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Material in the Forehand of this player.
+        /// </summary>
+        [XmlAttribute]
+        public MaterialFH MaterialFH
+        {
+            get
+            {
+                return this.materialFH;
+            }
+
+            set
+            {
+                if (this.materialFH != value)
+                {
+                    this.materialFH = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+        /// <summary>
+        /// Gets or sets the Material in the Backhand of this player.
+        /// </summary>
+        [XmlAttribute]
+        public MaterialBH MaterialBH
+        {
+            get
+            {
+                return this.materialBH;
+            }
+
+            set
+            {
+                if (this.materialBH != value)
+                {
+                    this.materialBH = value;
                     this.NotifyPropertyChanged();
                 }
             }

@@ -261,6 +261,9 @@ namespace TT.Report.Renderers
                 .Style = OurStyleNames.Title;
             section.AddParagraph(header.Tournament)
                 .Style = OurStyleNames.Subtitle;
+            section.AddParagraph(header.Category+" "+header.DisabilityClass)
+                .Style = OurStyleNames.Subtitle;
+
             section.AddParagraph(header.Round)
                 .Style = OurStyleNames.Subtitle;
             var subtitleRound = section.AddParagraph(header.Date.ToShortDateString());

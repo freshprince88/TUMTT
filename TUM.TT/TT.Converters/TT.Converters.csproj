@@ -58,6 +58,7 @@
     <Compile Include="BoolNotToVisibilityConverter.cs" />
     <Compile Include="BoolToVisibilityCollapsedConverter.cs" />
     <Compile Include="BoolToVisibilityConverter.cs" />
+    <Compile Include="CamelCaseConverter.cs" />
     <Compile Include="CircleMarginConverter .cs" />
     <Compile Include="Column2TabConverter.cs" />
     <Compile Include="CourseToBoolScouterConverter.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="NumAndLengthToLastVisibilityConverter.cs" />
     <Compile Include="NumAndLengthToNextVisibilityConverter.cs" />
     <Compile Include="NumToPrevVisibleConverter.cs" />
+    <Compile Include="OpeningShotP1P2toBoolConverter.cs" />
     <Compile Include="OpeningShotToBoolConverter.cs" />
     <Compile Include="PlayerP1P2ToBoolConverter.cs" />
     <Compile Include="PlayerToStringConverter.cs" />

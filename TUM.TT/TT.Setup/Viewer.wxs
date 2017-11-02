@@ -10,16 +10,16 @@
         <!-- Capabilities keys for Vista/7 "Set Program Access and Defaults" -->
         <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities" Name="ApplicationDescription" Value="Table tennis observation and statistical analysis" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities" Name="ApplicationIcon" Value="[APPLICATIONFOLDER]TT.Viewer.exe,0" Type="string" />
-        <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities" Name="ApplicationName" Value="Table Tennis Analysis" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities" Name="ApplicationName" Value="TUM.TT" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities\DefaultIcon" Value="[APPLICATIONFOLDER]TT.Viewer.exe,1" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities\FileAssociations" Name=".tto" Value="TTO.Document" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities\MIMEAssociations" Name="application/x-tto" Value="TTO.Document" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\[Manufacturer]\[ProductName]\Capabilities\shell\Open\command" Value="&quot;[APPLICATIONFOLDER]TT.Viewer.exe&quot; &quot;%1&quot;" Type="string" />
-        <RegistryValue Root="HKCU" Key="SOFTWARE\RegisteredApplications" Name="TUM Table Tennis Analysis" Value="SOFTWARE\Table Tennis Analysis\Capabilities" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\RegisteredApplications" Name="TUM.TT" Value="SOFTWARE\TUM.TT\Capabilities" Type="string" />
 
-        <!-- Add TTA to the "open with" list for .tto files, and enable Windows 7 jump menu pinning -->
+        <!-- Add TUM.TT Viewer to the "open with" list for .tto files, and enable Windows 7 jump menu pinning -->
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\Applications\TT.Viewer.exe\SupportedTypes" Name=".tto" Value="" Type="string" />
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\Applications\TT.Viewer.exe\shell\open" Name="FriendlyAppName" Value="TUM Table Tennis Analysis" Type="string" />
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\Applications\TT.Viewer.exe\shell\open" Name="FriendlyAppName" Value="TUM.TT Viewer" Type="string" />
 
         <!-- TTO.Document ProgID -->
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\Table Tennis Observation.Document" Name="FriendlyTypeName" Value="Table Tennis Observation" Type="string" />
@@ -30,8 +30,8 @@
           </Extension>
         </ProgId>
 
-        <!-- Add TTA to the context menu of .tto files, to support editing even when not associated -->
-        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\SystemFileAssociations\.xyz\shell\edit.TT.Viewer.exe.exe" Value="Open with Table Tennis Analysis" Type="string" />
+        <!-- Add TUM.TT Viewer to the context menu of .tto files, to support editing even when not associated -->
+        <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\SystemFileAssociations\.xyz\shell\edit.TT.Viewer.exe.exe" Value="Open with TUM.TT Viewer" Type="string" />
         <RegistryValue Root="HKCU" Key="SOFTWARE\Classes\SystemFileAssociations\.xyz\shell\edit.TT.Viewer.exe.exe\command" Value="&quot;[APPLICATIONFOLDER]TT.Viewer.exe&quot; &quot;%1&quot;" Type="string" />               
       </Component>
       <ComponentGroupRef Id="TT_Viewer.PMShortcuts" />
@@ -42,8 +42,8 @@
     <ComponentGroup Id="TT_Viewer.DTShortcuts" Directory="DesktopFolder">
       <Component Id="ViewerDesktopShortcut" Guid="43BCE21E-5F83-45AB-9195-633AB7DCD894">
         <Shortcut Id="ViewerDTShortcut"
-                  Name="Table Tennis Viewer"
-                  Description="Scout table tennis matches"
+                  Name="TUM.TT Viewer"
+                  Description="View table tennis matches"
                   Target="[INSTALLFOLDER]TT.Viewer.exe"
                   WorkingDirectory="INSTALLFOLDER" />
         <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]"
@@ -55,7 +55,7 @@
     <ComponentGroup Id="TT_Viewer.PMShortcuts" Directory="ApplicationProgramsFolder">
       <Component Id="ViewerProgramsShortcut" Guid="64A0B4C5-BB90-4117-85DB-15BF3B2826DE">
         <Shortcut Id="ViewerPMShortcut"
-                  Name="Table Tennis Viewer"
+                  Name="TUM.TT Viewer"
                   Description="View table tennis matches"
                   Target="[INSTALLFOLDER]TT.Viewer.exe"
                   WorkingDirectory="INSTALLFOLDER" />
@@ -66,7 +66,7 @@
 
       <Component Id="UninstallProgramsShortcut" Guid="B2917D83-42CC-43E6-8821-27B372762BA5">
         <Shortcut Id="SC_UninstallPM"
-         Name="Uninstall TUM Table Tennis Analysis"
+         Name="Uninstall TUM.TT"
          Description="Uninstalls TUM.TT Analysis Software"
          Target="[System64Folder]msiexec.exe"
          Arguments="/x [ProductCode]"

@@ -92,7 +92,7 @@ namespace TT.Viewer.ViewModels
 
             TableView = new TableStandardViewModel(this.events, "Receive");
             TableView.StrokeNumber = 1;
-            TableView.lastStroke = false;
+            TableView.lastStrokeOrOpeningShot = 0;
         }
 
         #region View Methods

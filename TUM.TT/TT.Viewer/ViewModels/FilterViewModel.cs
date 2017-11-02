@@ -32,7 +32,9 @@ namespace TT.Viewer.ViewModels
                 ["ReceiveFilterTab"] = new object[] { new ReceiveViewModel(this.events, Manager), 2 },
                 ["ThirdFilterTab"] = new object[] { new ThirdBallViewModel(this.events, Manager), 3 },
                 ["FourthFilterTab"] = new object[] { new FourthBallViewModel(this.events, Manager), 4 },
-                ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 5 },
+                ["OpeningShotFilterTab"] = new object[] { new OpeningShotViewModel(this.events, Manager), 5 },
+
+                ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 6 },
                 ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager), 1 },
                 ["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager), 1 }
             };

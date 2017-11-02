@@ -19,6 +19,8 @@ namespace TT.Lib.Util
         static Format()
         {
             XML = new Format(new XmlMatchSerializer(), "Table Tennis Observation", ".tto");
+            Excel = new Format(new ExcelMatchSerializer(), "Excel sheet", ".xlsx");
+
         }
 
         /// <summary>
@@ -33,6 +35,16 @@ namespace TT.Lib.Util
             this.Description = description;
             this.Extension = extension;
         }
+
+        /// <summary>
+        /// Gets the Excel format.
+        /// </summary>
+        public static Format Excel
+        {
+            get;
+            private set;
+        }
+
 
         /// <summary>
         /// Gets the standard XML serialization format.
