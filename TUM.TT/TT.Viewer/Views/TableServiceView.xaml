@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:lib="clr-namespace:TT.Models.Util;assembly=TT.Lib"
+             xmlns:lib="clr-namespace:TT.Models.Util;assembly=TT.Models"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="655" d:DesignWidth="354">
@@ -115,7 +115,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ToggleButton x:Name="TopLeft_top" Content="1" Background="Transparent" Grid.Row="0" Grid.Column="0" FontSize="30"
+                            <ToggleButton x:Name="TopLeft_top" Style="{DynamicResource MetroAccentTableFlatToggle}"  Grid.Row="0" Grid.Column="0" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -123,8 +123,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="TopMid_top" Content="2" Background="Transparent" Grid.Row="0" Grid.Column="1" FontSize="30"
+                            <ToggleButton x:Name="TopMid_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="0" Grid.Column="1" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -132,8 +138,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="TopRight_top" Content="3" Background="Transparent" Grid.Row="0" Grid.Column="2" FontSize="30"
+                            <ToggleButton x:Name="TopRight_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="0" Grid.Column="2" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -141,8 +153,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="MidLeft_top" Content="4" Background="Transparent" Grid.Row="1" Grid.Column="0" FontSize="30"
+                            <ToggleButton x:Name="MidLeft_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="1" Grid.Column="0" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -150,8 +168,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="MidMid_top" Content="5" Background="Transparent" Grid.Row="1" Grid.Column="1" FontSize="30"
+                            <ToggleButton x:Name="MidMid_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="1" Grid.Column="1" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -159,8 +183,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="MidRight_top" Content="6" Background="Transparent" Grid.Row="1" Grid.Column="2" FontSize="30"
+                            <ToggleButton x:Name="MidRight_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="1" Grid.Column="2" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -168,8 +198,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="BotLeft_top" Content="7" Background="Transparent" Grid.Row="2" Grid.Column="0" FontSize="30"
+                            <ToggleButton x:Name="BotLeft_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="2" Grid.Column="0" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -177,8 +213,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="BotMid_top" Content="8" Background="Transparent" Grid.Row="2" Grid.Column="1" FontSize="30"
+                            <ToggleButton x:Name="BotMid_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="2" Grid.Column="1" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -186,8 +228,14 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="BotRight_top" Content="9" Background="Transparent" Grid.Row="2" Grid.Column="2" FontSize="30"
+                            <ToggleButton x:Name="BotRight_top" Style="{DynamicResource MetroAccentTableFlatToggle}" Grid.Row="2" Grid.Column="2" FontSize="30"
                                           cal:Message.Attach="[Event Click] = [Action TablePositionClicked($source)]">
                                 <ToggleButton.IsChecked>
                                     <MultiBinding Converter="{conv:TablePositionToCheckedConverter}" Mode="OneWay">
@@ -195,6 +243,12 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
+                                <ToggleButton.Content>
+                                    <MultiBinding Converter="{conv:TablePositionCountConverter}" Mode="OneWay">
+                                        <Binding Path="PositionCounts" />
+                                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                                    </MultiBinding>
+                                </ToggleButton.Content>
                             </ToggleButton>
                         </Grid>
 

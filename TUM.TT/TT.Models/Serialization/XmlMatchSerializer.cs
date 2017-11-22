@@ -8,6 +8,7 @@ namespace TT.Models.Serialization
 {
     using System.IO;
     using System.Xml.Serialization;
+    using System.Linq;
 
     /// <summary>
     /// Serializes matches to XML>
@@ -36,7 +37,11 @@ namespace TT.Models.Serialization
         /// <returns>The deserialized match.</returns>
         public Match Deserialize(Stream stream)
         {
-            return (Match)this.serializer.Deserialize(stream);
+            Match temp = (Match)this.serializer.Deserialize(stream);
+            foreach (Playlist p in temp.Playlists)
+                p.Match = temp;
+
+            return temp;
         }
     }
 }

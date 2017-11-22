@@ -29,15 +29,15 @@ namespace TT.Models.Statistics
         public RallyLengthStatistics(Match match)
             : base(match)
         {
-            this.TotalLengths = this.Match.DefaultPlaylist.FinishedRallies
+            this.TotalLengths = this.Match.FinishedRallies
                 .Select(r => r.Length)
                 .ToList();
             this.MaximumLength = this.TotalLengths.Max();
-            this.ByServer = this.Match.DefaultPlaylist.FinishedRallies
+            this.ByServer = this.Match.FinishedRallies
                 .ToLookup(r => r.Server, r => r.Length);
-            this.ByWinner = this.Match.DefaultPlaylist.FinishedRallies
+            this.ByWinner = this.Match.FinishedRallies
                 .ToLookup(r => r.Winner, r => r.Length);
-            this.ByServerAndWinner = this.Match.DefaultPlaylist.FinishedRallies
+            this.ByServerAndWinner = this.Match.FinishedRallies
                 .GroupBy(r => r.Server)
                 .ToDictionary(
                     g => g.Key,
@@ -133,7 +133,7 @@ namespace TT.Models.Statistics
         /// <returns>The expected rally lengths</returns>
         private double[] ExpectedRallyLengths()
         {
-            var total = this.Match.DefaultPlaylist.FinishedRallies.Count();
+            var total = this.Match.FinishedRallies.Count();
             var possion = new Poisson(this.TotalLengths.Select(l => (double)l).Mean());
 
             var d = new double[NumberOfRallyLengthBuckets];
@@ -163,7 +163,7 @@ namespace TT.Models.Statistics
         /// </returns>
         private double[] ExpectedRallyLengths(MatchPlayer winner)
         {
-            var total = this.Match.DefaultPlaylist.FinishedRallies
+            var total = this.Match.FinishedRallies
                     .Where(r => r.Winner == winner)
                     .Count();
 

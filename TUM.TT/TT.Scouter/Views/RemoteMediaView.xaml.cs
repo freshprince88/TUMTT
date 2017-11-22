@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TT.Lib.Events;
 using TT.Lib.Managers;
+using TT.Lib.Views;
 using TT.Models.Util.Enums;
 
 namespace TT.Scouter.Views
@@ -22,21 +23,27 @@ namespace TT.Scouter.Views
     /// <summary>
     /// Interaction logic for RemoteMediaView.xaml
     /// </summary>
-    public partial class RemoteMediaView : UserControl,
+    public partial class RemoteMediaView : ControlWithBindableKeyGestures,
         IHandle<MediaControlEvent>,
         IHandle<MediaSpeedEvent>,
         IHandle<MediaMuteEvent>,
-        IHandle<VideoLoadedEvent>
+        IHandle<VideoLoadedEvent>,
+        IHandle<DrawLineEvent>,
+        IHandle<DeleteLinesEvent>,
+        IHandle<FollowMouseEvent>
     {
-        private IEventAggregator Events;
+        public IEventAggregator Events { get; set; }
+
         private IMatchManager Manager;
         TimeSpan currentTime;
+
+        private bool lineIsDisplayed = false;
 
         public RemoteMediaView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
-            //Events.Subscribe(this);
+            Events.Subscribe(this);
             Manager = IoC.Get<IMatchManager>();
             this.Loaded += RemoteMediaView_Loaded;
             this.Unloaded += ExtendedMediaView_Unloaded;
@@ -54,7 +61,6 @@ namespace TT.Scouter.Views
         {
             Events.Unsubscribe(this);
             currentTime = MediaPlayer.Position;
-
         }
 
         public void Handle(MediaControlEvent message)
@@ -64,13 +70,13 @@ namespace TT.Scouter.Views
                 switch (message.Ctrl)
                 {
                     case Media.Control.Stop:
-                        MediaPlayer.Stop();
+                        MediaPlayer.StopWithState();
                         break;
                     case Media.Control.Pause:
-                        MediaPlayer.Pause();
+                        MediaPlayer.PauseWithState();
                         break;
                     case Media.Control.Play:
-                        MediaPlayer.Play();
+                        MediaPlayer.PlayWithState();
                         break;
                     default:
                         break;
@@ -84,15 +90,17 @@ namespace TT.Scouter.Views
 
             if (Manager.Match.VideoFile != null && Manager.Match.VideoFile != string.Empty)
             {
-                MediaPlayer.Stop();
+
+                MediaPlayer.StopWithState();
                 MediaPlayer.Close();
                 MediaPlayer.Source = new Uri(Manager.Match.VideoFile);
                 MediaPlayer.MediaPosition = currentTime;
-                MediaPlayer.Play();
-                MediaPlayer.Pause();
+                MediaPlayer.PlayWithState();
+
+                MediaPlayer.PauseWithState();
+
                 PlayButton.Visibility = System.Windows.Visibility.Visible;
-                
-                
+
             }
         }
 
@@ -135,13 +143,66 @@ namespace TT.Scouter.Views
 
         public void Handle(VideoLoadedEvent message)
         {
-            MediaPlayer.Stop();
+            MediaPlayer.StopWithState();
             MediaPlayer.Close();
             MediaPlayer.Source = Manager.Match.VideoFile != null ? new Uri(Manager.Match.VideoFile) : MediaPlayer.Source;
-            MediaPlayer.Play();
-            MediaPlayer.Pause();
+            MediaPlayer.PlayWithState();
+            MediaPlayer.PauseWithState();
+
+            PlayButton.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        public void Handle(DrawLineEvent message)
+        {
+            MediaContainer.Children.Add(message.Line);
+        }
+
+        public void Handle(DeleteLinesEvent message)
+        {
+            foreach(Line l in message.Lines)
+            {
+                MediaContainer.Children.Remove(l);
+            }
+        }
+
+        public void Handle(FollowMouseEvent message)
+        {
+            if (message.LastPosition.X == -1 && message.LastPosition.Y == -1)
+            {
+                interactiveLine.X1 = 0;
+                interactiveLine.Y1 = 0;
+                interactiveLine.Visibility = Visibility.Hidden;
+                lineIsDisplayed = false;
+            }else
+            {
+                interactiveLine.X1 = message.LastPosition.X;
+                interactiveLine.Y1 = message.LastPosition.Y;
+                interactiveLine.Visibility = Visibility.Visible;
+                lineIsDisplayed = true;
+            }
+        }
+
+        private void ContentControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Get the x and y coordinates of the mouse pointer.
+            System.Windows.Point position = e.GetPosition(MediaContainer);
+            interactiveLine.X2 = position.X;
+            interactiveLine.Y2 = position.Y;
         }
 
         #endregion
+
+        private void ContentControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            interactiveLine.Visibility = Visibility.Hidden;
+        }
+
+        private void ContentControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (lineIsDisplayed)
+                interactiveLine.Visibility = Visibility.Visible;
+            else
+                interactiveLine.Visibility = Visibility.Hidden;
+        }
     }
 }

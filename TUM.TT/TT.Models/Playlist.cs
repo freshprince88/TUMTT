@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Serialization;
+using TT.Models.Util;
 
 namespace TT.Models
 {
@@ -12,7 +14,7 @@ namespace TT.Models
         /// <summary>
         /// Backs the <see cref="Rallies"/> property.
         /// </summary>
-        private ObservableCollection<Rally> rallies = new ObservableCollection<Rally>();
+        private ObservableCollectionEx<Guid> rallyIDs = new ObservableCollectionEx<Guid>();
 
         private string name;
 
@@ -21,9 +23,23 @@ namespace TT.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Playlist"/> class.
         /// </summary>
+        public Playlist(Match m)
+        {
+            this.match = m;
+        }
+
+        /// <summary>
+        /// PLEASE DON'T CALL WITHOUT INITIALIZING MATCH
+        /// </summary>
         public Playlist()
         {
-            this.rallies.CollectionChanged += this.OnRalliesChanged;
+
+        }
+
+        [XmlArray]
+        public ObservableCollectionEx<Guid> RallyIDs
+        {
+            get { return this.rallyIDs; }
         }
 
         /// <summary>
@@ -39,13 +55,17 @@ namespace TT.Models
         /// <summary>
         /// Gets all rallies of this match.
         /// </summary>
-        public ObservableCollection<Rally> Rallies
+        [XmlIgnore]
+        public ReadOnlyCollection<Rally> Rallies
         {
-            get { return this.rallies; }
+            get
+            {
+                return new ReadOnlyCollection<Rally>(match.Rallies.Where<Rally>((item) => rallyIDs.Contains(item.ID)).ToList<Rally>());
+            }
         }
 
         /// <summary>
-        /// Gets or sets the round of the match.
+        /// Gets or sets the name of the Playlist.
         /// </summary>
         [XmlAttribute]
         public string Name
@@ -61,8 +81,8 @@ namespace TT.Models
         /// <returns>The rally, or <c>null</c> if there is no next rally.</returns>
         public Rally FindNextRally(Rally rally)
         {
-            var index = this.rallies.IndexOf(rally);
-            return index >= 0 ? this.rallies.ElementAtOrDefault(index + 1) : null;
+            var index = this.Rallies.IndexOf(rally);
+            return index >= 0 ? this.match.Rallies.ElementAtOrDefault(index + 1) : null;
         }
 
         /// <summary>
@@ -72,77 +92,61 @@ namespace TT.Models
         /// <returns>The previous rally, or <c>null</c> if there is no previous rally.</returns>
         public Rally FindPreviousRally(Rally rally)
         {
-            var index = this.rallies.IndexOf(rally);
-            return index >= 0 ? this.rallies.ElementAtOrDefault(index - 1) : null;
+            var index = this.Rallies.IndexOf(rally);
+            return index >= 0 ? this.match.Rallies.ElementAtOrDefault(index - 1) : null;
         }
 
         /// <summary>
-        /// Gets the finished rallies of this match.
+        /// Adds Rally to Playlist if not already in Playlist
         /// </summary>
-        [XmlIgnore]
-        public IEnumerable<Rally> FinishedRallies
+        /// <param name="r">Rally which should be added to the playlist</param>
+        public void Add(Rally r)
         {
-            get
-            {
-                return this.rallies.Where(r => r.Length > 0 && r.Winner != MatchPlayer.None);
+            if (!rallyIDs.Contains(r.ID))
+                rallyIDs.Add(r.ID);
+        }
+
+        /// <summary>
+        /// Adds Range of Rallies to Playlist
+        /// </summary>
+        /// <param name="itemsToAdd">Range of Rallies</param>
+        public void AddRange(IEnumerable<Rally> itemsToAdd)
+        {
+            foreach(Rally item in itemsToAdd){
+                Add(item);
             }
         }
 
         /// <summary>
-        /// Handles changes to the list of rallies.
+        /// Remove Rally from Playlist
         /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="args">The event arguments.</param>
-        private void OnRalliesChanged(object sender, NotifyCollectionChangedEventArgs args)
+        /// <param name="r">Rally to Remove</param>
+        public void Remove(Rally r)
         {
-            if (args.NewItems != null)
+            rallyIDs.Remove(r.ID);
+        }
+
+        /// <summary>
+        /// Sort Playlist by Rally-Number
+        /// </summary>
+        public void Sort()
+        {
+            List<Guid> sorted = rallyIDs.OrderBy(x => match.Rallies.Where<Rally>(r => r.ID == x).FirstOrDefault<Rally>().Number).ToList();
+            int ptr = 0;
+            while (ptr < sorted.Count)
             {
-                foreach (var rally in args.NewItems.Cast<Rally>())
+                if (!rallyIDs[ptr].Equals(sorted[ptr]))
                 {
-                    // Connect to each new rally, and update its data.
-                    rally.Playlist = this;
-                    rally.PropertyChanged += this.OnRallyChanged;
-                    //rally.UpdateServerAndScore();
+                    Guid t = rallyIDs[ptr];
+                    rallyIDs.RemoveAt(ptr);
+                    rallyIDs.Insert(sorted.IndexOf(t), t);
                 }
-                NotifyPropertyChanged("Rallies");
+                else
+                {
+                    ptr++;
+                }
             }
-
-            //// Update the rally after the new one
-            //this.rallies[args.NewStartingIndex].UpdateServerAndScore();
-
-            //if (args.OldItems != null)
-            //{
-            //    foreach (var rally in args.OldItems.Cast<Rally>())
-            //    {
-            //        // Disconnect from each removed rally.
-            //        rally.Playlist = null;
-            //        rally.PropertyChanged -= this.OnRallyChanged;
-            //    }
-
-            //    // Update the rally after the removed one.
-            //    if (args.OldStartingIndex < this.rallies.Count)
-            //    {
-            //        this.rallies[args.OldStartingIndex].UpdateServerAndScore();
-            //    }
-            //}
         }
 
-        /// <summary>
-        /// Handles a change of a rally.
-        /// </summary>
-        /// <param name="sender">The changed rally.</param>
-        /// <param name="args">The arguments describing the change.</param>
-        private void OnRallyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            //var rally = (Rally)sender;
-            //if (this.rallies.Contains(rally))
-            //{
-            //    var nextRally = this.FindNextRally(rally);
-            //    if (nextRally != null)
-            //    {
-            //        nextRally.UpdateServerAndScore();
-            //    }
-            //}
-        }
     }
 }

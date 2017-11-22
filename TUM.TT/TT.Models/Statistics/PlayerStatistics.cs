@@ -25,23 +25,23 @@ namespace TT.Models.Statistics
         {
             this.Player = player;
 
-            this.TotalSets = this.Match.DefaultPlaylist.FinishedRallies
+            this.TotalSets = this.Match.FinishedRallies
                     .Where(r => r.IsEndOfSet && r.Winner == this.Player)
                     .Count();
-            this.TotalPoints = this.Match.DefaultPlaylist.FinishedRallies
+            this.TotalPoints = this.Match.FinishedRallies
                     .Where(r => r.Winner == this.Player)
                     .Count();
-            this.WinningProbability = this.TotalPoints / (double)this.Match.DefaultPlaylist.FinishedRallies
+            this.WinningProbability = this.TotalPoints / (double)this.Match.FinishedRallies
                     .Where(r => r.Winner != MatchPlayer.None)
                     .Count();
-            this.ServiceFrequency = this.Match.DefaultPlaylist.FinishedRallies
+            this.ServiceFrequency = this.Match.FinishedRallies
                     .Where(r => r.Server == this.Player)
                     .Count();
-            this.ProbabilityOfWinningAfterService = this.Match.DefaultPlaylist.FinishedRallies
+            this.ProbabilityOfWinningAfterService = this.Match.FinishedRallies
                     .Where(r => r.Server == this.Player && r.Winner == this.Player)
                     .Count() / (double)this.ServiceFrequency;
 
-            var sets = this.Match.DefaultPlaylist.FinishedRallies
+            var sets = this.Match.FinishedRallies
                     .Where(r => r.IsEndOfSet)
                     .ToArray();
             var rallyPerformance = sets
@@ -50,7 +50,7 @@ namespace TT.Models.Statistics
 
             var scoringProcess = new List<List<int>>() { new List<int>() };
 
-            foreach (var rally in this.Match.DefaultPlaylist.FinishedRallies)
+            foreach (var rally in this.Match.FinishedRallies)
             {
                 scoringProcess.Last().Add(rally.FinalRallyScore.Of(this.Player));
                 if (rally.IsEndOfSet)

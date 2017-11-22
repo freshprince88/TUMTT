@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="TT.Viewer.Views.PlayerInformationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
+             xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
+             xmlns:local="clr-namespace:TT.Viewer.Views"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="PlayingStyleFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:PlayingStyle"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="HandFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:Handedness"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="GripFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:Grip"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="MaterialFHFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:MaterialFH"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="MaterialBHFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Models:MaterialBH"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="4 *" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <WrapPanel Grid.Row="0" Grid.RowSpan="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+        <Label Content="Player " FontSize="50" FontWeight="Bold" />
+            <Label Content="{Binding Path=Number}" FontSize="50" FontWeight="Bold" />      
+            <!--Todo Binding-->
+        </WrapPanel>
+        <Label Height="auto" Content="Name" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalContentAlignment="Center"/>
+        <TextBox Text="{Binding Path=Player.Name}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Center">
+        </TextBox>
+
+        <Label Content="Nationality" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox Text="{Binding Path=Player.Nationality}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="16" IsEditable="True"/>
+
+        <Label Content="Ranking" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="20" VerticalContentAlignment="Center"/>
+        <Grid Grid.Row="6" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Text="{Binding Path=Player.Rank.Position}" Background="{DynamicResource AccentColorBrush2}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16">
+                <i:Interaction.Behaviors>
+                    <ob:SelectAllTextOnFocusBehavior />
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <Label Content="at" Background="{DynamicResource AccentColorBrush2}" Grid.Column="2" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <DatePicker SelectedDateFormat="Short"  SelectedDate="{Binding Path=Player.Rank.Date}" Background="{DynamicResource AccentColorBrush2}" FontSize="16" Grid.Column="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        </Grid>
+
+        <Label Content="Style" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="8" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox SelectedItem="{Binding Path=Player.PlayingStyle}" Grid.Row="8" Grid.Column="3" ItemsSource="{Binding Source={StaticResource PlayingStyleFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+
+        <Label Grid.Column="1" Grid.Row="10"  Content="Material (FH)" Background="{DynamicResource AccentColorBrush2}" FontSize="20" VerticalContentAlignment="Center" />
+        <ComboBox Grid.Row="10" Grid.Column="3" SelectedItem="{Binding Path=Player.MaterialFH}" ItemsSource="{Binding Source={StaticResource MaterialFHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Label Grid.Column="1" Grid.Row="12"  Content="Material (BH)" Background="{DynamicResource AccentColorBrush2}" FontSize="20" VerticalContentAlignment="Center" />
+        <ComboBox Grid.Row="12" Grid.Column="3" SelectedItem="{Binding Path=Player.MaterialBH}" ItemsSource="{Binding Source={StaticResource MaterialBHFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={conv:CamelCaseConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Label Content="Grip" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="14" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox Grid.Row="14" Grid.Column="3" SelectedItem="{Binding Path=Player.Grip}" ItemsSource="{Binding Source={StaticResource GripFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+
+
+        <Label Content="Handedness" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="16" FontSize="20" VerticalContentAlignment="Center"/>
+        <ComboBox Grid.Row="16" Grid.Column="3" SelectedItem="{Binding Path=Player.Handedness}" ItemsSource="{Binding Source={StaticResource HandFromEnum}}" Background="{DynamicResource AccentColorBrush2}" FontSize="16"/>
+
+
+    </Grid>
+</UserControl>
+

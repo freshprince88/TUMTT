@@ -1,28 +1,24 @@
 using Caliburn.Micro;
-using System.Windows;
-using System.Reflection;
-using TT.Lib.Results;
-using TT.Models.Util;
 using TT.Lib.Events;
 using System.Collections.Generic;
 using TT.Models;
-using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using TT.Lib.Managers;
-using TT.Models.Util.Enums;
+using TT.Lib.Interfaces;
+using System.Linq;
+using System;
 
 namespace TT.Viewer.ViewModels
 {
 
-    public class MatchViewModel : Conductor<IScreen>.Collection.AllActive
-        
-        
+    public class MatchViewModel : Conductor<IScreen>.Collection.AllActive,
+        IHandle<ActiveRallyChangedEvent>              
     {
-        public MediaViewModel MediaView { get; private set; }
+        public IMediaPosition MediaPlayer { get; private set; }
         public FilterStatisticsViewModel FilterStatisticsView { get; private set; }
         public ResultViewModel ResultView { get; private set; }
         public PlaylistViewModel PlaylistView { get; private set; } 
-        public CommentViewModel CommentView { get; private set; }      
+        public CommentViewModel CommentView { get; private set; }
 
         /// <summary>
         /// Gets the event bus of this shell.
@@ -37,28 +33,12 @@ namespace TT.Viewer.ViewModels
             Manager = manager;
             ResultView = new ResultViewModel(resultTabs, eventAggregator, manager);
             PlaylistView = new PlaylistViewModel(Events, Manager, dc);
-            MediaView = new MediaViewModel(Events, Manager);
+            MediaPlayer = new MediaViewModel(Events, Manager, dc);
             FilterStatisticsView = new FilterStatisticsViewModel(Events, Manager);
             CommentView = new CommentViewModel(Events, Manager);                  
         }
 
         #region Caliburn hooks
-
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            // Subscribe ourself to the event bus
-            //this.Events.Subscribe(this);        
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-        }
 
         protected override void OnActivate()
         {
@@ -66,16 +46,55 @@ namespace TT.Viewer.ViewModels
             Events.Subscribe(this);
             this.ActivateItem(ResultView);
             this.ActivateItem(PlaylistView);
-            this.ActivateItem(MediaView);
+            this.ActivateItem(MediaPlayer);
             this.ActivateItem(FilterStatisticsView);
             this.ActivateItem(CommentView);                              
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
 
         #endregion
 
         #region Methods
-       
 
+
+
+        #endregion
+
+        #region Events
+
+        public void Handle(ActiveRallyChangedEvent message)
+        {
+            var item = message.Current;
+
+            if (item != null)
+            {
+                MediaPlayer.Minimum = item.Start;
+                MediaPlayer.Maximum = item.End;
+
+                if (MediaPlayer.toRallyStart == true)
+                {
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Start);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.End);               
+                    MediaPlayer.MediaPosition = anfangRally;
+                    MediaPlayer.EndPosition = endeRally;
+                    MediaPlayer.Play();
+                }
+                else if (MediaPlayer.toRallyStart != true)
+                {
+                    TimeSpan anfangRally = TimeSpan.FromMilliseconds(item.Start);
+                    TimeSpan vorEndeRally = TimeSpan.FromMilliseconds(item.End - 1000);
+                    TimeSpan endeRally = TimeSpan.FromMilliseconds(item.End);
+                    MediaPlayer.MediaPosition = vorEndeRally;
+                    MediaPlayer.EndPosition = endeRally;
+                    MediaPlayer.Play();
+                }
+            }
+        }
 
         #endregion
     }

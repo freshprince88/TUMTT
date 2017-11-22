@@ -1,12 +1,18 @@
-﻿<UserControl x:Class="TT.Scouter.Views.LiveMediaView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<views:ControlWithBindableKeyGestures BindableKeyGestures="{Binding KeyBindings}" x:Class="TT.Scouter.Views.LiveMediaView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:views="clr-namespace:TT.Lib.Views;assembly=TT.Lib"
-             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:styles="clr-namespace:TT.Lib.Styles;assembly=TT.Lib"
              xmlns:cal="http://www.caliburnproject.org"
-             mc:Ignorable="d" 
+             xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:local="clr-namespace:TT.Scouter.Views"
+             xmlns:views="clr-namespace:TT.Lib.Views;assembly=TT.Lib"
+             mc:Ignorable="d"  
              d:DesignHeight="350" d:DesignWidth="525">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -26,7 +32,8 @@
 
         <views:ExtendedMediaElement x:Name="MediaPlayer" Grid.Row="0" ScrubbingEnabled="True" LoadedBehavior="Manual" UnloadedBehavior="Stop"
                                     MediaLength="{Binding MediaLength, Mode=OneWayToSource}"
-                                    MediaPosition="{Binding MediaPosition, Mode=TwoWay}"/>
+                                    MediaPosition="{Binding MediaPosition, Mode=TwoWay}"
+                                    IsPlaying="{Binding IsPlaying, Mode=OneWayToSource}"/>
         <Slider x:Name="MediaSlider" Grid.Row="1" IsSnapToTickEnabled="False" IsMoveToPointEnabled="True"
                 Maximum="{Binding MediaLength, Converter={conv:TimeSpanToMillisecondsConverter}, Mode=OneWay}"
                 Value="{Binding MediaPosition, Converter={conv:TimeSpanToMillisecondsConverter}, Mode=TwoWay}"/>
@@ -42,20 +49,28 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <RadioButton x:Name="Slow150Button" Content="150%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="1" IsChecked="True"
-                          cal:Message.Attach="[Event Checked] = [Action Slow(150)]"/>
-            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="2" IsChecked="True"
-                          cal:Message.Attach="[Event Checked] = [Action Slow(100)]"/>
-            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="3" 
-                          cal:Message.Attach="[Event Checked] = [Action Slow(75)]"/>
-            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
-                          cal:Message.Attach="[Event Checked] = [Action Slow(50)]"/>
-            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="Speed" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="5" 
-                          cal:Message.Attach="[Event Checked] = [Action Slow(25)]" />
+            <RadioButton x:Name="Slow150Button" Content="150%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="1"
+                          cal:Message.Attach="[Event Checked] = [Action Slow(150)]">
+               
+            </RadioButton>
+            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="2"
+                          cal:Message.Attach="[Event Checked] = [Action Slow(100)]" IsChecked="True">
+            </RadioButton>
+            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="3" 
+                          cal:Message.Attach="[Event Checked] = [Action Slow(75)]">
+            </RadioButton>
+            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="4" 
+                          cal:Message.Attach="[Event Checked] = [Action Slow(50)]">
+            </RadioButton>
+            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="SpeedLive" Style="{StaticResource MetroAccentFlatRadio}"  Grid.Column="5" 
+                          cal:Message.Attach="[Event Checked] = [Action Slow(25)]">
+            </RadioButton>
             <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="7"
                     Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"
                     cal:Message.Attach="[Event Click] = [Action Play()]">
@@ -79,7 +94,6 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
-
             <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8"
                     cal:Message.Attach="[Event Click] = [Action Stop()]">
                 <Rectangle Width="15" Height="15" 
@@ -90,8 +104,101 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
+            <Button x:Name="SkipBackwards" Style="{StaticResource MetroAccentFlat}" Grid.Column="9" >
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_navigate_previous}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Selected skip duration (in s):" IsEnabled="False"/>
+                        <MenuItem Header="1" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=OneBackwardsChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipBackwardsDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="2" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=TwoBackwardsChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipBackwardsDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="3" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ThreeBackwardsChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipBackwardsDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="4" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=FourBackwardsChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipBackwardsDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="5" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=FiveBackwardsChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipBackwardsDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="6" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=SixBackwardsChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipBackwardsDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="7" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=SevenBackwardsChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipBackwardsDuration($source)]">
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="SkipBackwards"/>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Ctrl" Key="Left"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="SkipBackwards"/>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="SkipForward" Style="{StaticResource MetroAccentFlat}" Grid.Column="10" >
+                <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_navigate_next}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Selected skip duration (in s):" IsEnabled="False"/>
+                        <MenuItem Header="1" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=OneForwardChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipForwardDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="2" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=TwoForwardChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipForwardDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="3" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=ThreeForwardChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipForwardDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="4" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=FourForwardChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipForwardDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="5" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=FiveForwardChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipForwardDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="6" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=SixForwardChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipForwardDuration($source)]">
+                        </MenuItem>
+                        <MenuItem Header="7" IsCheckable="True"  StaysOpenOnClick="True" IsChecked="{Binding Path=SevenForwardChecked}"
+                                  cal:Message.Attach="[Event Click] = [Action SetDefaultSkipForwardDuration($source)]">
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="SkipForward"/>
+                    </i:EventTrigger>
+                    <ob:GlobalInputBindingTrigger>
+                        <ob:GlobalInputBindingTrigger.InputBinding>
+                            <KeyBinding Modifiers="Ctrl" Key="Right"/>
+                        </ob:GlobalInputBindingTrigger.InputBinding>
+                        <cal:ActionMessage MethodName="SkipForward"/>
+                    </ob:GlobalInputBindingTrigger>
+                </i:Interaction.Triggers>
+            </Button>
 
-            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Column="10">
+
+            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Column="11">
                 <Label.Content>
                     <TextBlock FontSize="12">
                         <TextBlock.Text>
@@ -106,7 +213,7 @@
                 </Label.Content>
             </Label>
 
-            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="11"                     
+            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="12"                     
                     cal:Message.Attach="[Event Click] = [Action Mute()]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -116,7 +223,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="11"
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="12"
                           Visibility="{Binding IsMuted, Converter={conv:BoolToVisibilityConverter}}"
                           IsChecked="{Binding IsMuted}"
                           cal:Message.Attach="[Event Click] = [Action UnMute()]">
@@ -131,4 +238,4 @@
 
         </Grid>
     </Grid>
-</UserControl>
+</views:ControlWithBindableKeyGestures>

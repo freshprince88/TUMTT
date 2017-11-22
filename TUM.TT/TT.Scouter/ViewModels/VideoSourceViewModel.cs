@@ -21,12 +21,11 @@ namespace TT.Scouter.ViewModels
         //Load Video File and go to next scene
         public IEnumerable<IResult> WithVideo()
         {
-            foreach (var result in MatchManager.LoadVideo())
-                yield return result;
-
             var nextScreen = ShowScreenResult.Of<MainViewModel>();
             nextScreen.Properties.Add("SelectedTab", MainViewModel.Tabs.Live);
             nextScreen.Properties.Add("LiveMode", LiveViewModel.TimeMode.Video);
+            foreach (var result in MatchManager.LoadVideo())
+                yield return result;
             yield return nextScreen;
         }
 

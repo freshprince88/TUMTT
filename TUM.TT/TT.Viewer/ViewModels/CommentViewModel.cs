@@ -15,7 +15,7 @@ using TT.Models;
 
 namespace TT.Viewer.ViewModels
 {
-    public class CommentViewModel : Screen, IHandle<VideoPlayEvent>
+    public class CommentViewModel : Screen, IHandle<ActiveRallyChangedEvent>
     {
         private IEventAggregator events;
         private IMatchManager Manager;
@@ -25,14 +25,16 @@ namespace TT.Viewer.ViewModels
         {
             get
             {
-                return CurrentRally != null ? CurrentRally.Kommentar : string.Empty;
+                return CurrentRally != null ? CurrentRally.Comment : string.Empty;
             }
             set
             {
-                if (value != CurrentRally.Kommentar)
+                if (value != CurrentRally.Comment)
                 {
-                    CurrentRally.Kommentar = value;
+                    CurrentRally.Comment = value;
+                    Manager.MatchModified = true;
                     NotifyOfPropertyChange();
+
                 }
             }
         }
@@ -45,13 +47,14 @@ namespace TT.Viewer.ViewModels
         }
 
         #region Event Handlers
-        public void Handle(VideoPlayEvent message)
+        public void Handle(ActiveRallyChangedEvent message)
         {
             CurrentRally = message.Current;
-            Comment = CurrentRally.Kommentar;
+            Comment = CurrentRally.Comment;
             NotifyOfPropertyChange("Comment");
         }
         #endregion
+
         #region Caliburn Hooks
 
         protected override void OnActivate()
@@ -60,7 +63,14 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
         }
+
+        protected override void OnDeactivate(bool close)
+        {
+            events.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
         #endregion
+
         #region Helper Methods
 
         public void ChangeCommentOnEnter()

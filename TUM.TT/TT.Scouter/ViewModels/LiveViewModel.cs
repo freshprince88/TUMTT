@@ -3,20 +3,54 @@ using Caliburn.Micro;
 using TT.Lib.Managers;
 using TT.Models;
 using System.Collections.ObjectModel;
-using TT.Scouter.Interfaces;
+using TT.Lib.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
 using TT.Lib.Util;
 using TT.Lib.Results;
 using System.Collections.Generic;
+using System.Windows.Input;
+using System.Reflection;
+using System;
 
 namespace TT.Scouter.ViewModels
 {
     public class LiveViewModel : Conductor<IScreen>.Collection.AllActive
     {
+        /// <summary>
+        /// Sets key bindings for ControlWithBindableKeyGestures
+        /// </summary>
+        public Dictionary<string, KeyBinding> KeyBindings
+        {
+            get
+            {
+                //get all method names of this class
+                var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
+
+                //get all existing key gestures that match the method names
+                var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+                //return relevant key gestures
+                return keyGesture.ToDictionary(x => x.Key, x => (KeyBinding)x.Value); // TODO
+            }
+            set { }
+        }
+
         private IEventAggregator Events;
         private IMatchManager MatchManager;
-       
+        private IDialogCoordinator Dialogs;
+
+        public bool FirstServerSet
+        {
+            get
+            {
+                return Match.FirstServer != MatchPlayer.None;
+
+            }
+
+
+        }
+
         public int LengthHelper
         {
             get
@@ -32,7 +66,7 @@ namespace TT.Scouter.ViewModels
                     {
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Schläge.Add(new Schlag());
+                            CurrentRally.Strokes.Add(new Stroke());
                         }
 
                     }
@@ -41,7 +75,7 @@ namespace TT.Scouter.ViewModels
                         diff = -diff;
                         for (int i = 0; i < diff; i++)
                         {
-                            CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
+                            CurrentRally.Strokes.Remove(CurrentRally.Strokes.Last());
                         }
                     }
 
@@ -55,6 +89,7 @@ namespace TT.Scouter.ViewModels
 
         public enum TimeMode
         {
+            None,
             Video,
             Timer
         }
@@ -70,12 +105,13 @@ namespace TT.Scouter.ViewModels
             {
                 if (_mode != value)
                 {
-                    this.DeactivateItem(MediaPlayer, true);
+                    //this.DeactivateItem(MediaPlayer, true);
                     _mode = value;
                     switch (_mode)
                     {
                         case TimeMode.Video:
-                            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+                            MediaPlayer = new LiveMediaViewModel(Events, MatchManager, Dialogs);
+                            //this.ActivateItem(MediaPlayer);
                             break;
                         case TimeMode.Timer:
                             MediaPlayer = new LiveTimerViewModel();
@@ -83,8 +119,9 @@ namespace TT.Scouter.ViewModels
                         default:
                             break;
                     }
-                    this.ActivateItem(MediaPlayer);
+                    //this.ActivateItem(MediaPlayer);
                     NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("MediaPlayer");
                 }
             }
         }
@@ -92,9 +129,10 @@ namespace TT.Scouter.ViewModels
         public IMediaPosition MediaPlayer { get; set; }
 
         public MatchPlayer Server { get; set; }
+        public MatchPlayer firstServerBackup { get; set; }
 
         public Match Match { get { return MatchManager.Match; } }
-        public ObservableCollection<Rally> Rallies { get { return MatchManager.ActivePlaylist.Rallies; } }
+        public ObservableCollection<Rally> Rallies { get { return MatchManager.Match.Rallies; } }
 
         private Rally _currentRally;
         /// <summary>
@@ -118,6 +156,8 @@ namespace TT.Scouter.ViewModels
                 }
                 NotifyOfPropertyChange();
                 NotifyOfPropertyChange("LengthHelper");
+                NotifyOfPropertyChange("CurrentRally");
+
             }
         }
 
@@ -138,6 +178,7 @@ namespace TT.Scouter.ViewModels
 
             }
         }
+
         private bool _winnerEnabled;
         /// <summary>
         /// Determines whether the "Winner of the Rally" Buttons are shown
@@ -156,38 +197,84 @@ namespace TT.Scouter.ViewModels
             }
         }
 
-
         public bool Markiert { get; set; }
+        public ChoiceOfEndsViewModel ChoiceOfEnds { get; private set; }
+        public ChoiceOfServiceReceiveViewModel ChoiceOfServiceReceive { get; private set; }
+        public LiveScoutingViewModel LiveScouting { get; private set; }
 
-        public LiveViewModel(IEventAggregator ev, IMatchManager man)
+        private Screen _trans;
+        public Screen TransitioningContent
         {
-          
+            get { return _trans; }
+            set
+            {
+                if (_trans != value)
+                {
+                    _trans = value;
+                    NotifyOfPropertyChange();
+                }
+            }
+        }
+
+        public Screen CurrentScreen { get; set; }
+
+        public LiveViewModel(IEventAggregator ev, IMatchManager man,IDialogCoordinator cor)
+        {
             Events = ev;
             MatchManager = man;
+            Dialogs = cor;
             IsNewRally = true;
             IsWinnerEnabled = false;
-            CurrentRally = MatchManager.ActivePlaylist.Rallies.FirstOrDefault();
+            CurrentRally = MatchManager.Match.Rallies.FirstOrDefault();
             //Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
             //Markiert = marked != null && marked.Rallies != null && marked.Rallies.Contains(CurrentRally);
-            MediaPlayer = new LiveMediaViewModel(Events, MatchManager);
+            //MediaPlayer = new LiveMediaViewModel(Events, MatchManager,Dialogs);
+            ChoiceOfEnds = new ChoiceOfEndsViewModel(Events, MatchManager, this);
+            ChoiceOfServiceReceive = new ChoiceOfServiceReceiveViewModel(Events, MatchManager, this);
+            LiveScouting = new LiveScoutingViewModel(Events, MatchManager, MediaPlayer, this);
+
+            if (MatchManager.Match.FirstPlayer.StartingTableEnd == StartingTableEnd.None || MatchManager.Match.SecondPlayer.StartingTableEnd == StartingTableEnd.None)
+            {
+                CurrentScreen = ChoiceOfEnds;
+            }
+            else
+            {
+                if (!FirstServerSet)
+                {
+                    CurrentScreen = ChoiceOfEnds;
+                }
+                else
+                {
+                    CurrentScreen = LiveScouting;
+                }
+            }
         }
 
         #region Caliburn Hooks
-
         protected override void OnActivate()
         {
             base.OnActivate();
+            this.Events.Subscribe(this);
+
+            if (ViewMode == TimeMode.None && !String.IsNullOrWhiteSpace(MatchManager.Match.VideoFile))
+            {
+                ViewMode = TimeMode.Video;
+                NotifyOfPropertyChange("MediaPlayer");
+            }
+
+
             this.ActivateItem(MediaPlayer);
+            this.ActivateItem(ChoiceOfEnds);
+            this.ActivateItem(ChoiceOfServiceReceive);
+            this.ActivateItem(LiveScouting);
+            TransitioningContent = CurrentScreen;
+        }
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
 
-        protected override void OnViewReady(object view)
-        {
-            CoroutineExecutionContext context = new CoroutineExecutionContext() { Target = this, Source = view, View = view };
-            if (Rallies.Count < 2)
-            {
-                Coroutine.ExecuteAsync(ShowServer().GetEnumerator(), context);
-            }
-        }
 
         #endregion
 
@@ -195,33 +282,15 @@ namespace TT.Scouter.ViewModels
 
         public void SetRallyLength(int length)
         {
-            //var diff = length - CurrentRally.Length;
-            //if (CurrentRally.Length < length)
-            //{
-            //    for (int i = 0; i < diff; i++)
-            //    {
-            //        CurrentRally.Schläge.Add(new Schlag());
-            //    }
-
-            //}
-            //else if (CurrentRally.Length > length)
-            //{
-            //    diff = -diff;
-            //    for (int i = 0; i < diff; i++)
-            //    {
-            //        CurrentRally.Schläge.Remove(CurrentRally.Schläge.Last());
-            //    }
-            //}
-
-            //CurrentRally.Length = length;
-            //NotifyOfPropertyChange("CurrentRally");
             LengthHelper = length;
+            NotifyOfPropertyChange("LengthHelper");
+            MatchManager.MatchModified = true;
+
         }
 
-        public void RallyWon(int player, int length)
+        public void RallyWon(int player)
         {
-            //SetRallyLength(length);
-            //LengthHelper = length;
+
             if (!IsNewRally)
             {
                 // Add CurrentRally to Playlists (Alle und Markiert, falls Checkbox)
@@ -231,25 +300,26 @@ namespace TT.Scouter.ViewModels
                 else
                     CurrentRally.Winner = MatchPlayer.Second;
 
-                CurrentRally.Ende = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+                CurrentRally.End = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
 
                 if (Markiert)
                 {
                     Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                    marked.Rallies.Add(CurrentRally);
+                    marked.Add(CurrentRally);
                 }
 
-                CurrentRally = new Rally();
+                CurrentRally = new Rally(Match);
                 Rallies.Add(CurrentRally);
                 CurrentRally.UpdateServerAndScore();
                 Server = CurrentRally.Server;
                 //LengthHelper = 0;
+                NotifyOfPropertyChange("CurrentRally");
                 NotifyOfPropertyChange();
                 NotifyOfPropertyChange("Server");
-                               
-
                 IsNewRally = true;
                 IsWinnerEnabled = false;
+                MatchManager.MatchModified = true;
+
             }
         }
 
@@ -257,13 +327,21 @@ namespace TT.Scouter.ViewModels
         {
             if (IsNewRally)
             {
-                CurrentRally.Anfang = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
-
+                CurrentRally.Start = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
                 IsNewRally = false;
                 IsWinnerEnabled = true;
-
-
                 MediaPlayer.Play();
+                MatchManager.MatchModified = true;
+
+            }
+        }
+
+        public void SetNewStart()
+        {
+            if (!IsNewRally)
+            {
+                CurrentRally.Start = MediaPlayer.MediaPosition.TotalMilliseconds + Match.Synchro;
+                MatchManager.MatchModified = true;
             }
         }
 
@@ -274,7 +352,7 @@ namespace TT.Scouter.ViewModels
             dialog.Combo = new ComboBox() { ItemsSource = Match.Players, SelectedIndex = 0, DisplayMemberPath = "Name" };
             StackPanel panel = new StackPanel() { Orientation = Orientation.Vertical };
             panel.Margin = new System.Windows.Thickness(10);
-            TextBlock message = new TextBlock() { Text = "Bitte Aufschlagspieler Auswählen" };
+            TextBlock message = new TextBlock() { Text = "Bitte Aufschlagspieler auswählen" };
             panel.Children.Add(message);
             panel.Children.Add(dialog.Combo);
             panel.Children.Add(dialog.CloseButton);
@@ -283,14 +361,23 @@ namespace TT.Scouter.ViewModels
             var result = new CustomDialogResult<Player>() { Title = "Server", DialogContent = dialog };
             yield return result;
 
+
+            NotifyOfPropertyChange("FirstServerSet");
             this.Server = MatchManager.ConvertPlayer(result.Result);
             CurrentRally.Server = this.Server;
             NotifyOfPropertyChange("Server");
         }
-
+        public void SetFirstServer(Player p)
+        {
+            this.Server = MatchManager.ConvertPlayer(p);
+            CurrentRally.Server = this.Server;
+            NotifyOfPropertyChange("Server");
+            NotifyOfPropertyChange("FirstServerSet");
+            MatchManager.MatchModified = true;
+        }
         public void DeleteLastRally()
         {
-            if (Rallies.Count > 1)
+            if (Rallies.Count == 2)
             {
                 Rally lastRally = Rallies.Last();
                 if (lastRally.Winner == MatchPlayer.None)
@@ -298,26 +385,43 @@ namespace TT.Scouter.ViewModels
                     Rallies.Remove(lastRally);
                     lastRally = Rallies.Last();
                 }
-                
                 Rallies.Remove(lastRally);
-                Rallies.Add(new Rally());
+                Rallies.Add(new Rally(Match));
+                CurrentRally = Rallies.Last();
+                this.Server = firstServerBackup;
+                CurrentRally.Server = this.Server;
+                NotifyOfPropertyChange("LiveView.Server");
+                NotifyOfPropertyChange("LiveView.FirstServerSet");
+                MatchManager.MatchModified = true;
+                CurrentRally.UpdateServerAndScore();
+                IsNewRally = true;
+                IsWinnerEnabled = false;
+                MatchManager.MatchModified = true;
+                NotifyOfPropertyChange("FirstServerSet");
+                NotifyOfPropertyChange("CurrentRally");
+
+            }
+            if (Rallies.Count > 2)
+            {
+                Rally lastRally = Rallies.Last();
+                if (lastRally.Winner == MatchPlayer.None)
+                {
+                    Rallies.Remove(lastRally);
+                    lastRally = Rallies.Last();
+                }
+                Rallies.Remove(lastRally);
+                Rallies.Add(new Rally(Match));
                 CurrentRally = Rallies.Last();
                 CurrentRally.UpdateServerAndScore();
-            }
-        }
+                IsNewRally = true;
+                IsWinnerEnabled = false;
+                MatchManager.MatchModified = true;
+                NotifyOfPropertyChange("FirstServerSet");
+                NotifyOfPropertyChange("CurrentRally");
 
-        //public void UpdateScoreAndServer()
-        //{
-        //    CurrentRally = Rallies.Last();
-        //    CurrentRally = new Rally();
-        //    Rallies.Add(CurrentRally);
-        //    CurrentRally.UpdateServerAndScore();
-        //    Server = CurrentRally.Server;
-        //    NotifyOfPropertyChange("Server");
-        //    IsNewRally = true;
-        //    IsWinnerEnabled = false;
-        //    CurrentRally.UpdateServerAndScore();
-        //}
+            }
+
+        }
 
         public void FinalizeLiveMode()
         {
@@ -326,8 +430,26 @@ namespace TT.Scouter.ViewModels
                 Rallies.Remove(Rallies.Last());
                 Rallies.Last().UpdateServerAndScore();
             }
-
         }
+
+        public void ChangeTransitioningContent()
+        {
+            TransitioningContent = CurrentScreen;
+        }
+
+        #endregion
+
+        #region Helper Methods for Shortcuts
+
+        public void DeleteLastRallyLiveMode()
+        {
+            DeleteLastRally();
+        }
+     
+        
+
+    
+
 
         #endregion
     }

@@ -24,8 +24,8 @@ namespace TT.Report.Sections
         {
             this.FirstPlayer = match.FirstPlayer;
             this.SecondPlayer = match.SecondPlayer;
-            this.FinalSetScore = match.DefaultPlaylist.FinishedRallies.Last().FinalSetScore;
-            this.FinalRallyScores = match.DefaultPlaylist.FinishedRallies
+            this.FinalSetScore = match.FinishedRallies.Last().FinalSetScore;
+            this.FinalRallyScores = match.FinishedRallies
                 .Where(r => r.IsEndOfSet)
                 .Select(r => r.FinalRallyScore)
                 .ToList();

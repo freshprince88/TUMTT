@@ -1,0 +1,16 @@
+introduce a tag
+---------------
+search for: 
+<Binding Path="SelectedRallies" />\r\n.*<Binding RelativeSource=\"{RelativeSource Self}" Path="Tag"/>
+
+replace by:
+<Binding Path="SelectedRallies" />\r\n\t\t\t\t\t\t<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>\r\n\t\t\t\t\t\t<Binding Path="Player" />
+
+
+get rid of tags
+---------------
+search for:
+\r\n\s*<i:Interaction.Triggers>\r\n.*\r\n.*\r\n.*\r\n.*\r\n.*\r\n.*\r\n.*\r\n.*\r\n.*\r\n\s*</i:Interaction.Triggers>
+
+replace by:
+[empty]

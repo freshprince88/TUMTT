@@ -59,12 +59,72 @@ namespace TT.Report
         /// Visits the technical efficiency section.
         /// </summary>
         /// <param name="section">The section</param>
-        void Visit(TechnicalEfficiencySection section);
+        void Visit(TechnicalEfficiencySection section);        
 
         /// <summary>
-        /// Visits the simulation section.
+        /// Visits the part section.
         /// </summary>
         /// <param name="section">The section</param>
-        void Visit(RelevanceOfStrokeSection section);
+        void Visit(PartSection section);
+
+        /// <summary>
+        /// Visits the stroke stats heading section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(StrokeStatsHeadingSection section);
+
+        /// <summary>
+        /// Visits the side section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(SideSection section);
+
+        /// <summary>
+        /// Visits the spin section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(SpinSection section);
+
+        /// <summary>
+        /// Visits the technique section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(TechniqueSection section);
+
+        /// <summary>
+        /// Visits the placement section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(PlacementSection section);
+
+        /// <summary>
+        /// Visits the large table section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(LargeTableSection section);
+
+        /// <summary>
+        /// Visits the last stroke number section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(StrokeNumberSection section);
+
+        /// <summary>
+        /// Visits the last stroke service section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(LastStrokeServiceSection section);
+
+        /// <summary>
+        /// Visits the section that warns about being an empty section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(SectionEmptyWarningSection section);
+
+        /// <summary>
+        /// Visits the table legend section.
+        /// </summary>
+        /// <param name="section">The section</param>
+        void Visit(TableLegendSection section);
     }
 }

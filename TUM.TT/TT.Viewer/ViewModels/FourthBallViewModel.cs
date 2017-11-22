@@ -15,27 +15,40 @@ namespace TT.Viewer.ViewModels
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
-        public List<Rally> SelectedRallies { get; private set; }
+
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
-        public Stroke.Quality Quality { get; private set; }
-        private HashSet<Stroke.Aggression> _aggression;
-        public HashSet<Stroke.Aggression> SelectedAggression
+        public Models.Util.Enums.Stroke.Quality Quality { get; private set; }
+        private HashSet<Models.Util.Enums.Stroke.Aggressiveness> _aggressiveness;
+        public HashSet<Models.Util.Enums.Stroke.Aggressiveness> SelectedAggressiveness
         {
             get
             {
-                return _aggression;
+                return _aggressiveness;
             }
             private set
             {
-                _aggression = value;
+                _aggressiveness = value;
             }
         }
-        public Stroke.Specials Specials { get; private set; }
-        public Stroke.StepAround StepAround { get; private set; }
-        private HashSet<Stroke.Technique> _strokeTec;
-        public Stroke.Hand Hand { get; private set; }
-        public HashSet<Stroke.Technique> SelectedStrokeTec
+        private HashSet<Models.Util.Enums.Stroke.Specials> _specials;
+        public HashSet<Models.Util.Enums.Stroke.Specials> SelectedSpecials
+        {
+            get
+            {
+                return _specials;
+            }
+            private set
+            {
+                _specials = value;
+            }
+        }
+        public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
+        public Models.Util.Enums.Stroke.OpeningShot OpeningShot { get; private set; }
+
+        private HashSet<Models.Util.Enums.Stroke.Technique> _strokeTec;
+        public Models.Util.Enums.Stroke.Hand Hand { get; private set; }
+        public HashSet<Models.Util.Enums.Stroke.Technique> SelectedStrokeTec
         {
             get
             {
@@ -58,24 +71,24 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            SelectedRallies = new List<Rally>();
-            Hand = Stroke.Hand.None;
+            Hand = Models.Util.Enums.Stroke.Hand.None;
             SelectedStrokeLengths = new HashSet<Positions.Length>();
             SelectedTablePositions = new HashSet<Positions.Table>();
-            Quality = Stroke.Quality.None;
-            SelectedAggression = new HashSet<Stroke.Aggression>();
-            Specials = Stroke.Specials.None;
-            SelectedStrokeTec = new HashSet<Stroke.Technique>();
-            StepAround = Stroke.StepAround.Not;
+            Quality = Models.Util.Enums.Stroke.Quality.None;
+            SelectedAggressiveness = new HashSet<Models.Util.Enums.Stroke.Aggressiveness>();
+            SelectedSpecials = new HashSet<Models.Util.Enums.Stroke.Specials>();
+            SelectedStrokeTec = new HashSet<Models.Util.Enums.Stroke.Technique>();
+            StepAround = Models.Util.Enums.Stroke.StepAround.Not;
+            OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength = 3,
-                PlayerLabel = "4.Schlag:",
+                PlayerLabel = "4th Stroke:",
                 StrokeNumber = 3
             };
             TableView = new TableStandardViewModel(this.events,"Fourth");
             TableView.StrokeNumber = 3;
-            TableView.lastStroke=false;
+            TableView.lastStrokeOrOpeningShot=0;
 
                 
         }
@@ -99,34 +112,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Fore;
-                    else if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.Both;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.None)
+                        Hand = Models.Util.Enums.Stroke.Hand.Forehand;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Backhand)
+                        Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Back;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.Forehand)
+                        Hand = Models.Util.Enums.Stroke.Hand.None;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
+                        Hand = Models.Util.Enums.Stroke.Hand.Backhand;
                 }
             }
             else if (source.Name.ToLower().Contains("backhand"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Hand == Stroke.Hand.None)
-                        Hand = Stroke.Hand.Back;
-                    else if (Hand == Stroke.Hand.Fore)
-                        Hand = Stroke.Hand.Both;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.None)
+                        Hand = Models.Util.Enums.Stroke.Hand.Backhand;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Forehand)
+                        Hand = Models.Util.Enums.Stroke.Hand.Both;
                 }
                 else
                 {
-                    if (Hand == Stroke.Hand.Back)
-                        Hand = Stroke.Hand.None;
-                    else if (Hand == Stroke.Hand.Both)
-                        Hand = Stroke.Hand.Fore;
+                    if (Hand == Models.Util.Enums.Stroke.Hand.Backhand)
+                        Hand = Models.Util.Enums.Stroke.Hand.None;
+                    else if (Hand == Models.Util.Enums.Stroke.Hand.Both)
+                        Hand = Models.Util.Enums.Stroke.Hand.Forehand;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -137,11 +150,26 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    StepAround = Stroke.StepAround.StepAround;
+                    StepAround = Models.Util.Enums.Stroke.StepAround.StepAround;
                 }
                 else
                 {
-                    StepAround = Stroke.StepAround.Not;
+                    StepAround = Models.Util.Enums.Stroke.StepAround.Not;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void OpeningShotOrNot(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("openingshotbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.OpeningShot;
+                }
+                else
+                {
+                    OpeningShot = Models.Util.Enums.Stroke.OpeningShot.Not;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -153,165 +181,176 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Push);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Push);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Push);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Push);
                 }
             }
             else if (source.Name.ToLower().Contains("pushaggressive"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.PushAggressive);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.PushAggressive);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.PushAggressive);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.PushAggressive);
                 }
             }
             else if (source.Name.ToLower().Equals("flip"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Flip);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Flip);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Flip);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Flip);
                 }
             }
             else if (source.Name.ToLower().Equals("banana"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Banana);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Banana);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Banana);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Banana);
                 }
             }
             else if (source.Name.ToLower().Equals("topspin"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Topspin);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Topspin);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Topspin);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Topspin);
                 }
             }
             else if (source.Name.ToLower().Equals("topspinspin"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.TopspinSpin);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.TopspinSpin);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.TopspinSpin);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.TopspinSpin);
                 }
             }
             else if (source.Name.ToLower().Equals("topspintempo"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.TopspinTempo);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.TopspinTempo);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.TopspinTempo);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.TopspinTempo);
                 }
             }
             else if (source.Name.ToLower().Equals("block"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Block);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Block);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Block);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Block);
                 }
             }
             else if (source.Name.ToLower().Equals("blocktempo"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.BlockTempo);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.BlockTempo);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.BlockTempo);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.BlockTempo);
                 }
             }
             else if (source.Name.ToLower().Equals("blockchop"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.BlockChop);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.BlockChop);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.BlockChop);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.BlockChop);
                 }
             }
             else if (source.Name.ToLower().Equals("counter"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Counter);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Counter);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Counter);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Counter);
                 }
             }
             else if (source.Name.ToLower().Equals("smash"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Smash);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Smash);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Smash);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Smash);
                 }
             }
             else if (source.Name.ToLower().Equals("lob"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Lob);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Lob);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Lob);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Lob);
+                }
+            }
+            else if (source.Name.ToLower().Equals("tetra"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Tetra);
+                }
+                else
+                {
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Tetra);
                 }
             }
             else if (source.Name.ToLower().Equals("chop"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Chop);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Chop);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Chop);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Chop);
                 }
             }
             else if (source.Name.ToLower().Equals("special"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedStrokeTec.Add(Stroke.Technique.Special);
+                    SelectedStrokeTec.Add(Models.Util.Enums.Stroke.Technique.Special);
                 }
                 else
                 {
-                    SelectedStrokeTec.Remove(Stroke.Technique.Special);
+                    SelectedStrokeTec.Remove(Models.Util.Enums.Stroke.Technique.Special);
                 }
             }
 
@@ -325,34 +364,34 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == Stroke.Quality.None)
-                        Quality = Stroke.Quality.Good;
-                    else if (Quality == Stroke.Quality.Bad)
-                        Quality = Stroke.Quality.Both;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.None)
+                        Quality = Models.Util.Enums.Stroke.Quality.Good;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Bad)
+                        Quality = Models.Util.Enums.Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == Stroke.Quality.Good)
-                        Quality = Stroke.Quality.None;
-                    else if (Quality == Stroke.Quality.Both)
-                        Quality = Stroke.Quality.Bad;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.Good)
+                        Quality = Models.Util.Enums.Stroke.Quality.None;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Both)
+                        Quality = Models.Util.Enums.Stroke.Quality.Bad;
                 }
             }
             else if (source.Name.ToLower().Contains("badq"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Quality == Stroke.Quality.None)
-                        Quality = Stroke.Quality.Bad;
-                    else if (Quality == Stroke.Quality.Good)
-                        Quality = Stroke.Quality.Both;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.None)
+                        Quality = Models.Util.Enums.Stroke.Quality.Bad;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Good)
+                        Quality = Models.Util.Enums.Stroke.Quality.Both;
                 }
                 else
                 {
-                    if (Quality == Stroke.Quality.Bad)
-                        Quality = Stroke.Quality.None;
-                    else if (Quality == Stroke.Quality.Both)
-                        Quality = Stroke.Quality.Good;
+                    if (Quality == Models.Util.Enums.Stroke.Quality.Bad)
+                        Quality = Models.Util.Enums.Stroke.Quality.None;
+                    else if (Quality == Models.Util.Enums.Stroke.Quality.Both)
+                        Quality = Models.Util.Enums.Stroke.Quality.Good;
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -363,33 +402,33 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedAggression.Add(Stroke.Aggression.Aggressive);
+                    SelectedAggressiveness.Add(Models.Util.Enums.Stroke.Aggressiveness.Aggressive);
                 }
                 else
                 {
-                    SelectedAggression.Remove(Stroke.Aggression.Aggressive);
+                    SelectedAggressiveness.Remove(Models.Util.Enums.Stroke.Aggressiveness.Aggressive);
                 }
             }
             else if (source.Name.ToLower().Equals("passive"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedAggression.Add(Stroke.Aggression.Passive);
+                    SelectedAggressiveness.Add(Models.Util.Enums.Stroke.Aggressiveness.Passive);
                 }
                 else
                 {
-                    SelectedAggression.Remove(Stroke.Aggression.Passive);
+                    SelectedAggressiveness.Remove(Models.Util.Enums.Stroke.Aggressiveness.Passive);
                 }
             }
             else if (source.Name.ToLower().Equals("control"))
             {
                 if (source.IsChecked.Value)
                 {
-                    SelectedAggression.Add(Stroke.Aggression.Control);
+                    SelectedAggressiveness.Add(Models.Util.Enums.Stroke.Aggressiveness.Control);
                 }
                 else
                 {
-                    SelectedAggression.Remove(Stroke.Aggression.Control);
+                    SelectedAggressiveness.Remove(Models.Util.Enums.Stroke.Aggressiveness.Control);
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -397,38 +436,37 @@ namespace TT.Viewer.ViewModels
 
         public void EdgeSpecials(ToggleButton source)
         {
-            if (source.Name.ToLower().Contains("edgetable"))
+            if (source.Name.ToLower().Equals("edgetable"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Stroke.Specials.None)
-                        Specials = Stroke.Specials.EdgeTable;
-                    else if (Specials == Stroke.Specials.EdgeNet)
-                        Specials = Stroke.Specials.Both;
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeTable);
                 }
                 else
                 {
-                    if (Specials == Stroke.Specials.EdgeTable)
-                        Specials = Stroke.Specials.None;
-                    else if (Specials == Stroke.Specials.Both)
-                        Specials = Stroke.Specials.EdgeNet;
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeTable);
                 }
             }
-            else if (source.Name.ToLower().Contains("edgenet"))
+            else if (source.Name.ToLower().Equals("edgenet"))
             {
                 if (source.IsChecked.Value)
                 {
-                    if (Specials == Stroke.Specials.None)
-                        Specials = Stroke.Specials.EdgeNet;
-                    else if (Specials == Stroke.Specials.EdgeTable)
-                        Specials = Stroke.Specials.Both;
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeNet);
                 }
                 else
                 {
-                    if (Specials == Stroke.Specials.EdgeNet)
-                        Specials = Stroke.Specials.None;
-                    else if (Specials == Stroke.Specials.Both)
-                        Specials = Stroke.Specials.EdgeTable;
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNet);
+                }
+            }
+            else if (source.Name.ToLower().Equals("edgenettable"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    SelectedSpecials.Add(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
+                }
+                else
+                {
+                    SelectedSpecials.Remove(Models.Util.Enums.Stroke.Specials.EdgeNetTable);
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -496,17 +534,19 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies.Where(r =>
-                    r.Schläge[3].HasHand(this.Hand) &&
-                    r.Schläge[3].HasStepAround(this.StepAround) &&
-                    r.Schläge[3].HasStrokeTec(this.SelectedStrokeTec) &&
-                    r.Schläge[3].HasQuality(this.Quality) &&
-                    r.Schläge[3].HasTablePosition(this.SelectedTablePositions) &&
-                    r.Schläge[3].HasStrokeLength(this.SelectedStrokeLengths) &&
-                    r.Schläge[3].HasAggression(this.SelectedAggression) &&
-                    r.Schläge[3].HasSpecials(this.Specials)).
+                var results = BasicFilterView.SelectedRallies
+                    .Where(r => r.Strokes.Count > 3 &&
+                    r.Strokes[3].HasHand(this.Hand) &&
+                    r.Strokes[3].HasStepAround(this.StepAround) && 
+                    r.Strokes[3].HasOpeningShot(this.OpeningShot) &&
+                    r.Strokes[3].HasStrokeTec(this.SelectedStrokeTec) &&
+                    r.Strokes[3].HasQuality(this.Quality) &&
+                    r.Strokes[3].HasTablePosition(this.SelectedTablePositions) &&
+                    r.Strokes[3].HasStrokeLength(this.SelectedStrokeLengths) &&
+                    r.Strokes[3].HasAggressiveness(this.SelectedAggressiveness) &&
+                    r.Strokes[3].HasSpecials(this.SelectedSpecials)).
                     ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
+                Manager.SelectedRallies = results;
             }
         }
         #endregion

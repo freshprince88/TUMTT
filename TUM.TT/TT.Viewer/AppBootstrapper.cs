@@ -14,6 +14,7 @@ namespace TT.Viewer {
 
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
+        internal static string UserTto;
 
         public AppBootstrapper() {
             Initialize();
@@ -24,15 +25,17 @@ namespace TT.Viewer {
 
             container.Singleton<IWindowManager, WindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
-            container.Singleton<IMatchSerializer, XmlMatchSerializer>();
+            container.AllTypesOf<IMatchSerializer>(Assembly.GetExecutingAssembly());
             container.Singleton<IMatchManager, MatchManager>();
+            container.Singleton<IReportGenerationQueueManager, ReportGenerationQueueManager>();
             container.Singleton<IShell, ShellViewModel>();
             container.Singleton<IDialogCoordinator, DialogCoordinator>();
             container.AllTypesOf<IResultViewTabItem>(Assembly.GetExecutingAssembly());
             // Report generation
-            container.Singleton<IReportGenerator, DefaultReportGenerator>();
+            container.Singleton<IReportGenerator, DefaultReportGenerator>("default");
+            container.Singleton<IReportGenerator, CustomizedReportGenerator>("customized");
             // Report rendering
-            container.Singleton<IReportRenderer, PdfRenderer>("PDF");
+            container.RegisterPerRequest(typeof(IReportRenderer),"PDF", typeof(PdfRenderer));
         }
 
         protected override object GetInstance(Type service, string key) {
@@ -51,7 +54,10 @@ namespace TT.Viewer {
             container.BuildUp(instance);
         }
 
-        protected override void OnStartup(object sender, System.Windows.StartupEventArgs e) {
+        protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
+        {
+            if (e.Args.Length > 0)
+                UserTto = e.Args[0];
             DisplayRootViewFor<IShell>();
         }
     }

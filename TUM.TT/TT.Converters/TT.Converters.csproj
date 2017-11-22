@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{257F3B3F-EE44-4B7B-A629-218F37047D49}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TT.Converters</RootNamespace>
+    <AssemblyName>TT.Converters</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Zhucai.LambdaParser">
+      <HintPath>Libs\Zhucai.LambdaParser.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AggressivenessToBoolConverter.cs" />
+    <Compile Include="AggressivenessToBoolScouterConverter.cs" />
+    <Compile Include="BaseConverter.cs" />
+    <Compile Include="BoolAndConverter.cs" />
+    <Compile Include="BoolNotConverter.cs" />
+    <Compile Include="BoolNotToVisibilityConverter.cs" />
+    <Compile Include="BoolToVisibilityCollapsedConverter.cs" />
+    <Compile Include="BoolToVisibilityConverter.cs" />
+    <Compile Include="CamelCaseConverter.cs" />
+    <Compile Include="CircleMarginConverter .cs" />
+    <Compile Include="Column2TabConverter.cs" />
+    <Compile Include="CourseToBoolScouterConverter.cs" />
+    <Compile Include="CrunchToBoolConverter.cs" />
+    <Compile Include="CurrentRallyNumberToVisibilityConverter.cs" />
+    <Compile Include="CurrentRallyServerToBallIsVisibleConverter.cs" />
+    <Compile Include="CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
+    <Compile Include="ForeBackHandToBoolConverter.cs" />
+    <Compile Include="IntMaskMatchToBooleanConverter.cs" />
+    <Compile Include="LabelBackhandForehandRowConverter.cs" />
+    <Compile Include="MatchPlayerToBrushConverter.cs" />
+    <Compile Include="MatchPlayerToColorConverter.cs" />
+    <Compile Include="MatchPlayerToStringConverter.cs" />
+    <Compile Include="MatchPlayerToVisibilityConverter.cs" />
+    <Compile Include="MathConverter.cs" />
+    <Compile Include="MediaSpeedToBoolConverter.cs" />
+    <Compile Include="MinRallyLengthToVisibleConverter.cs" />
+    <Compile Include="MSToTimeConverter.cs" />
+    <Compile Include="NullToVisibilityConverter.cs" />
+    <Compile Include="NumAndLengthToLastVisibilityConverter.cs" />
+    <Compile Include="NumAndLengthToNextVisibilityConverter.cs" />
+    <Compile Include="NumToPrevVisibleConverter.cs" />
+    <Compile Include="OpeningShotP1P2toBoolConverter.cs" />
+    <Compile Include="OpeningShotToBoolConverter.cs" />
+    <Compile Include="PlayerP1P2ToBoolConverter.cs" />
+    <Compile Include="PlayerToStringConverter.cs" />
+    <Compile Include="PointP1P2ToBoolConverter.cs" />
+    <Compile Include="QualityToBoolConverter.cs" />
+    <Compile Include="QualityToBoolScouterConverter.cs" />
+    <Compile Include="RallyExpressionToCountConverter.cs" />
+    <Compile Include="RallyLengthToBoolConverter.cs" />
+    <Compile Include="RallyLengthToCheckedConverter.cs" />
+    <Compile Include="RallyLengthToColSpanConverter.cs" />
+    <Compile Include="RallyLengthToVisibilityConverter.cs" />
+    <Compile Include="RallyToVisibilityConverter.cs" />
+    <Compile Include="RoundingConverter.cs" />
+    <Compile Include="ScoreToStringConverter.cs" />
+    <Compile Include="ServerPositionToCheckedConverter.cs" />
+    <Compile Include="ServiceToBoolConverter.cs" />
+    <Compile Include="ServiceToBoolScouterConverter.cs" />
+    <Compile Include="SetToBoolConverter.cs" />
+    <Compile Include="SideToBoolScouterConverter.cs" />
+    <Compile Include="SpecialsToBoolScouterConverter.cs" />
+    <Compile Include="SpecialToBoolConverter.cs" />
+    <Compile Include="SpinToBoolScouterConverter.cs" />
+    <Compile Include="SpinToCheckedConverter.cs" />
+    <Compile Include="StepAroundToBoolConverter.cs" />
+    <Compile Include="CollectionContainsToVisibilityConverter.cs" />
+    <Compile Include="StrokeTechniqueToBoolScouterConverter.cs" />
+    <Compile Include="TableLengthToCheckedConverter.cs" />
+    <Compile Include="TablePositionCountConverter.cs" />
+    <Compile Include="TablePositionToCheckedConverter.cs" />
+    <Compile Include="TabSizeConverter.cs" />
+    <Compile Include="TechniqueCountToRankingColumnConverter.cs" />
+    <Compile Include="TechniqueCountToRankingRowConverter.cs" />
+    <Compile Include="TechniqueToBoolConverter.cs" />
+    <Compile Include="TimeSpanToMilliSecondsConverter.cs" />
+    <Compile Include="TwoBoolToBoolConverter.cs" />
+    <Compile Include="VideoSourceAndRallyCountToBoolConverter.cs" />
+    <Compile Include="VideoSourceToBoolConverter.cs" />
+    <Compile Include="VideoSourceToNotVisibilityConverter.cs" />
+    <Compile Include="VideoSourceToVisibilityConverter.cs" />
+    <Compile Include="VisibilityToBoolConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TT.Models\TT.Models.csproj">
+      <Project>{bfdd82b6-73a9-4408-a183-4acc3dc7e2c0}</Project>
+      <Name>TT.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

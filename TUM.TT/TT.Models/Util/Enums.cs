@@ -31,6 +31,15 @@
             Half = 50,
             Third = 33,
             Full = 100,
+            None
+        }
+
+        public enum LiveScouterSpeed
+        {
+            Quarter = 25,
+            Half = 50,
+            Third = 33,
+            Full = 100,
             Faster = 150,
             None
         }
@@ -192,10 +201,8 @@
         public enum Specials
         {
             EdgeTable,
-            EdgeRacket,
             EdgeNet,
-            None,
-            Both
+            EdgeNetTable,
         }
 
         public enum Services
@@ -208,15 +215,15 @@
 
         public enum Spin
         {
-            ÜS,
+            TS,
             SR,
             No,
             SL,
             US,
-            ÜSSR,
+            TSSR,
             USSR,
             USSL,
-            ÜSSL,
+            TSSL,
             Hidden
         }
 
@@ -227,7 +234,7 @@
             None,
             Both
         }
-        public enum Aggression
+        public enum Aggressiveness
         {
             Aggressive,
             Control,
@@ -238,12 +245,25 @@
             StepAround,
             Not
         }
+        public enum OpeningShot
+        {
+            OpeningShot,
+            Not
+        }
         public enum WinnerOrNetOut
         {
             Winner,
             NetOut,
             None,
             Both
+        }
+
+        public enum Course
+        {
+            Continue,
+            Winner,
+            NetOut,
+            None
         }
 
         public enum Technique
@@ -261,14 +281,38 @@
             Counter,
             Smash,
             Lob,
+            Tetra,
             Chop,
-            Special
+            Special,
+            Miscellaneous
+        }
+
+        public enum TechniqueBasic
+        {
+            Push,
+            Flip,
+            Topspin,
+            Block,
+            Counter,
+            Smash,
+            Lob,
+            Chop,
+            Special,
+            Miscellaneous
+        }
+
+        public enum PointOfContact
+        {
+            Over,
+            Behind,
+            HalfDistance,
+            None
         }
 
         public enum Hand
         {
-            Fore,
-            Back,
+            Forehand,
+            Backhand,
             None,
             Both
         }

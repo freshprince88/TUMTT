@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="legend_backhand_title" xml:space="preserve">
+    <value>Rückhand:</value>
+  </data>
+  <data name="legend_banana_flip_title" xml:space="preserve">
+    <value>Banane / Flip</value>
+  </data>
+  <data name="legend_block_counter_title" xml:space="preserve">
+    <value>Block / Konterball</value>
+  </data>
+  <data name="legend_chop_title" xml:space="preserve">
+    <value>Schnittabwehr</value>
+  </data>
+  <data name="legend_forehand_title" xml:space="preserve">
+    <value>Vorhand:</value>
+  </data>
+  <data name="legend_lineexplanation_intercept_title" xml:space="preserve">
+    <value>Annahme</value>
+  </data>
+  <data name="legend_lineexplanation_poc_pl_title" xml:space="preserve">
+    <value>Annahmepunkt → Platzierung</value>
+  </data>
+  <data name="legend_lob_title" xml:space="preserve">
+    <value>Ballonabwehr</value>
+  </data>
+  <data name="legend_misc_title" xml:space="preserve">
+    <value>Sonstige</value>
+  </data>
+  <data name="legend_push_title" xml:space="preserve">
+    <value>Schupfball</value>
+  </data>
+  <data name="legend_service_without_spin_title" xml:space="preserve">
+    <value>Aufschlag (ohne Spin)</value>
+  </data>
+  <data name="legend_service_with_spin_title" xml:space="preserve">
+    <value>Aufschlag (mit Spin)</value>
+  </data>
+  <data name="legend_smash_title" xml:space="preserve">
+    <value>Schuss</value>
+  </data>
+  <data name="legend_topspin_title" xml:space="preserve">
+    <value>Topspin</value>
+  </data>
+  <data name="table_direction_title" xml:space="preserve">
+    <value>Richtung</value>
+  </data>
+  <data name="table_intercept_title" xml:space="preserve">
+    <value>Annahme</value>
+  </data>
+  <data name="table_large_tab_title" xml:space="preserve">
+    <value>Großer Tisch</value>
+  </data>
+  <data name="table_legend_title" xml:space="preserve">
+    <value>Legende</value>
+  </data>
+  <data name="table_small_tab_title" xml:space="preserve">
+    <value>Kleine Tische</value>
+  </data>
+  <data name="table_spin_title" xml:space="preserve">
+    <value>Spin</value>
+  </data>
+  <data name="table_numbers_title" xml:space="preserve">
+    <value>Zahlen</value>
+  </data>
+  <data name="table_rally_title" xml:space="preserve">
+    <value>Rally:</value>
+  </data>
+  <data name="table_score_rally_title" xml:space="preserve">
+    <value>Rally score:</value>
+  </data>
+  <data name="table_score_set_title" xml:space="preserve">
+    <value>Satz score:</value>
+  </data>
+  <data name="table_show_strokes_title" xml:space="preserve">
+    <value>Schläge:</value>
+  </data>
+  <data name="table_stroke_1_title" xml:space="preserve">
+    <value>Schlag 1</value>
+  </data>
+  <data name="table_stroke_2_title" xml:space="preserve">
+    <value>Schlag 2</value>
+  </data>
+  <data name="table_stroke_3_title" xml:space="preserve">
+    <value>Schlag 3</value>
+  </data>
+  <data name="table_stroke_4_title" xml:space="preserve">
+    <value>Schlag 4</value>
+  </data>
+  <data name="table_score_title" xml:space="preserve">
+    <value>Score:</value>
+  </data>
+  <data name="table_tooltip_rally_point" xml:space="preserve">
+    <value>Punkt:</value>
+  </data>
+  <data name="table_tooltip_rally_server" xml:space="preserve">
+    <value>Aufschlag:</value>
+  </data>
+  <data name="table_tooltip_score_rally" xml:space="preserve">
+    <value>Punktestand Spiel</value>
+  </data>
+  <data name="table_tooltip_score_set" xml:space="preserve">
+    <value>Punktestand Satz</value>
+  </data>
+  <data name="result_list_tab_title" xml:space="preserve">
+    <value>Hitlist</value>
+  </data>
+  <data name="result_list_tab_title_short" xml:space="preserve">
+    <value>H</value>
+  </data>
+  <data name="table_large_tab_title_short" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="table_small_tab_title_short" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="table_netout_label" xml:space="preserve">
+    <value>Netz/Aus:</value>
+  </data>
+  <data name="report_settings_title" xml:space="preserve">
+    <value>Berichteinstellungen</value>
+  </data>
+  <data name="report_settings_cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="report_settings_ok" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="report_settings_ok_generate" xml:space="preserve">
+    <value>Speichern &amp; Erstellen</value>
+  </data>
+  <data name="report_settings_playerchoice_both" xml:space="preserve">
+    <value>Beide</value>
+  </data>
+  <data name="report_settings_playerchoice_title" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="report_settings_setchoice_all" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="report_settings_setchoice_pluscombi" xml:space="preserve">
+    <value>+Combi</value>
+  </data>
+  <data name="report_settings_setchoice_title" xml:space="preserve">
+    <value>Sätze</value>
+  </data>
+  <data name="affirmitive1" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="player_1" xml:space="preserve">
+    <value>Spieler 1</value>
+  </data>
+  <data name="player_2" xml:space="preserve">
+    <value>Spieler 2</value>
+  </data>
+  <data name="report_settings_strokechoice_title" xml:space="preserve">
+    <value>Schläge</value>
+  </data>
+  <data name="report_settings_window_title" xml:space="preserve">
+    <value>Berichteinstellungen</value>
+  </data>
+  <data name="report_settings_strokechoice_fourth" xml:space="preserve">
+    <value>4.</value>
+  </data>
+  <data name="report_settings_strokechoice_last" xml:space="preserve">
+    <value>Letzter</value>
+  </data>
+  <data name="report_settings_strokechoice_placement" xml:space="preserve">
+    <value>Platzierung</value>
+  </data>
+  <data name="report_settings_strokechoice_return" xml:space="preserve">
+    <value>Rückschlag</value>
+  </data>
+  <data name="report_settings_strokechoice_service" xml:space="preserve">
+    <value>Aufschlag</value>
+  </data>
+  <data name="report_settings_strokechoice_steparound" xml:space="preserve">
+    <value>Umlaufen</value>
+  </data>
+  <data name="report_settings_strokechoice_technique" xml:space="preserve">
+    <value>Technik</value>
+  </data>
+  <data name="report_settings_strokechoice_third" xml:space="preserve">
+    <value>3.</value>
+  </data>
+  <data name="report_settings_strokechoice_number" xml:space="preserve">
+    <value>Nummer</value>
+  </data>
+  <data name="report_settings_generalchoice_matchdynamics" xml:space="preserve">
+    <value>Match-Dynamik</value>
+  </data>
+  <data name="report_settings_generalchoice_rallylength" xml:space="preserve">
+    <value>Ballwechsellänge</value>
+  </data>
+  <data name="report_settings_generalchoice_techefficiency" xml:space="preserve">
+    <value>Technische Effizienz</value>
+  </data>
+  <data name="report_settings_generalchoice_title" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="report_settings_generalchoice_transitionmatrix" xml:space="preserve">
+    <value>Übergangsmatrix</value>
+  </data>
+  <data name="report_settings_strokechoice_side" xml:space="preserve">
+    <value>Vor-/Rückhand</value>
+  </data>
+  <data name="report_settings_no_match_loaded" xml:space="preserve">
+    <value>Kein Match geladen.
+Keine Vorschau möglich.</value>
+  </data>
+  <data name="report_settings_setchoice_crunchtime" xml:space="preserve">
+    <value>Crunch</value>
+  </data>
+  <data name="statistics" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
+</root>

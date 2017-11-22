@@ -15,6 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -84,8 +84,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Itenso.Windows.Controls.ListViewLayout.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+    <Reference Include="MahApps.Metro, Version=1.4.1.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.4.1\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Microsoft.TeamFoundation.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.VideoConverter, Version=1.1.2.0, Culture=neutral, PublicKeyToken=395ccb334978a0cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.VideoConverter.1.1.2\lib\net20\NReco.VideoConverter.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -94,7 +102,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.1.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -143,9 +151,12 @@
     <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\KeyBindingEditorViewModel.cs" />
     <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\OpeningShotViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsTableViewModel.cs" />
     <Compile Include="ViewModels\PlacementStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PlayerInformationViewModel.cs" />
     <Compile Include="ViewModels\PlaylistItem.cs" />
     <Compile Include="ViewModels\BasicFilterViewModel.cs" />
     <Compile Include="ViewModels\CombiViewModel.cs" />
@@ -153,8 +164,11 @@
     <Compile Include="ViewModels\FourthBallViewModel.cs" />
     <Compile Include="ViewModels\IResultViewTabItem.cs" />
     <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ReportSettingsViewModel.cs" />
+    <Compile Include="ViewModels\ResultSmallTablesViewModel.cs" />
     <Compile Include="ViewModels\ResultListItem.cs" />
     <Compile Include="ViewModels\LastBallViewModel.cs" />
+    <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
     <Compile Include="ViewModels\ResultListViewModel.cs" />
     <Compile Include="ViewModels\MediaViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
@@ -170,9 +184,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\ShowAllPlayerViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
     <Compile Include="ViewModels\SpinControlViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\TableKombiViewModel.cs" />
+    <Compile Include="ViewModels\TableLegendViewModel.cs" />
     <Compile Include="ViewModels\TableServiceViewModel.cs" />
     <Compile Include="ViewModels\TableStandardViewModel.cs" />
     <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
@@ -204,17 +221,26 @@
     <Compile Include="Views\FourthBallView.xaml.cs">
       <DependentUpon>FourthBallView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\KeyBindingEditorView.xaml.cs">
+      <DependentUpon>KeyBindingEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LastBallStatisticsView.xaml.cs">
       <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MatchView.xaml.cs">
       <DependentUpon>MatchView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OpeningShotView.xaml.cs">
+      <DependentUpon>OpeningShotView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
       <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlacementStatisticsView.xaml.cs">
       <DependentUpon>PlacementStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayerInformationView.xaml.cs">
+      <DependentUpon>PlayerInformationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
@@ -227,6 +253,15 @@
     </Compile>
     <Compile Include="Views\ReceiveView.xaml.cs">
       <DependentUpon>ReceiveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportSettingsView.xaml.cs">
+      <DependentUpon>ReportSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultSmallTablesView.xaml.cs">
+      <DependentUpon>ResultSmallTablesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultLargeTableView.xaml.cs">
+      <DependentUpon>ResultLargeTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResultMiniStatisticView.xaml.cs">
       <DependentUpon>ResultMiniStatisticView.xaml</DependentUpon>
@@ -246,11 +281,29 @@
     <Compile Include="Views\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowAllPlayerView.xaml.cs">
+      <DependentUpon>ShowAllPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowCompetitionView.xaml.cs">
+      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SmallTableView.xaml.cs">
+      <DependentUpon>SmallTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LargeTableView.xaml.cs">
+      <DependentUpon>LargeTableView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StatisticsView.xaml.cs">
       <DependentUpon>StatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableKombiView.xaml.cs">
       <DependentUpon>TableKombiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableLegendView.xaml.cs">
+      <DependentUpon>TableLegendView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableServiceView.xaml.cs">
       <DependentUpon>TableServiceView.xaml</DependentUpon>
@@ -261,6 +314,7 @@
     <Compile Include="Views\TableStandardView.xaml.cs">
       <DependentUpon>TableStandardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TableView.cs" />
     <Compile Include="Views\ThirdBallStatisticsView.xaml.cs">
       <DependentUpon>ThirdBallStatisticsView.xaml</DependentUpon>
     </Compile>
@@ -317,6 +371,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\KeyBindingEditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\LastBallStatisticsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -328,6 +386,26 @@
     <Page Include="Views\MatchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OpeningShotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerInformationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReportSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ResultSmallTablesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ResultLargeTableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ResultListView.xaml">
       <SubType>Designer</SubType>
@@ -381,6 +459,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ShowAllPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowCompetitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SmallTableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LargeTableView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SpinControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -390,6 +484,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TableKombiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TableLegendView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -437,14 +535,17 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
+    <EmbeddedResource Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <AppDesigner Include="Properties\" />
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
@@ -452,6 +553,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TT.Converters\TT.Converters.csproj">
+      <Project>{257f3b3f-ee44-4b7b-a629-218f37047d49}</Project>
+      <Name>TT.Converters</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TT.Lib\TT.Lib.csproj">
       <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
       <Name>TT.Lib</Name>
@@ -467,6 +572,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />
+    <Content Include="Libs\Microsoft.TeamFoundation.Controls.dll" />
+    <Resource Include="Resources\rally_winner.png" />
+    <Resource Include="Resources\rally_server.png" />
+    <Resource Include="TUM_Logo_weiss_rgb_p.png" />
     <Resource Include="olive-letter-v-512.ico" />
     <Resource Include="Resources\Entypo-license.txt" />
     <Resource Include="Resources\WindowsIcons-license.txt" />
@@ -485,6 +594,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

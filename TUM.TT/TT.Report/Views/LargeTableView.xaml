@@ -1,0 +1,40 @@
+﻿<local:TableView x:Class="TT.Report.Views.LargeTableView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TT.Report.Views"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+             xmlns:prop="clr-namespace:TT.Report.Properties"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d"
+             d:DesignHeight="344" d:DesignWidth="252.5">
+
+    <UserControl.Resources>
+        <prop:Resources x:Key="LocalizedStrings"/>
+    </UserControl.Resources>
+
+    <Grid Name="TableGrid" Width="252.5" Height="344" Background="Transparent">
+
+        <Border Name="TableBorder" Margin="50,35,50,35" BorderThickness="3"  BorderBrush="Black" Panel.ZIndex="-99">
+            <Line X1="0" X2="252.5" Stroke="Black" StrokeThickness="3" VerticalAlignment="Center" Panel.ZIndex="-98" Margin="-22 0 -22 0"/>
+        </Border>
+
+        <Grid Name="InnerFieldGrid" Height="274" Width="252.5" Margin="0,35,0,35"/>
+        <Grid Name="InnerFieldBehindGrid" Height="304" Width="252.5" Margin="0,20,0,20"/>
+        <Grid Name="InnerFieldHalfDistanceGrid" Height="344" Width="252.5" Margin="0,0,0,0"/>
+        <Grid Name="InnerFieldSpinGrid" Height="332" Width="252.5" Margin="0,6,0,6"/>
+
+        <Grid Name="NetOutStrokesContainerGrid" Width="35" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Width="26">
+                <TextBlock Name="NetOutLabelName" Text="{Binding Path=table_netout_label, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top"/>
+            </Viewbox>
+            <Grid Grid.Row="1" Name="NetOutStrokesGrid" Width="10" Height="Auto" HorizontalAlignment="Center" Margin="4,0,4,0"/>
+        </Grid>
+    </Grid>
+
+</local:TableView>

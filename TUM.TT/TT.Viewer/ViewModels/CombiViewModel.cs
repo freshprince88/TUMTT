@@ -18,8 +18,6 @@ namespace TT.Viewer.ViewModels
     {
         #region Properties
         public BasicFilterViewModel BasicFilterView { get; set; }
-        public List<Rally> SelectedRallies { get; private set; }
-
         public TableKombiViewModel TableKombi { get; private set; } 
 
         #endregion
@@ -40,7 +38,6 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             this.Manager = man;
-            SelectedRallies = new List<Rally>();
             BasicFilterView = new BasicFilterViewModel(this.events, Manager)
             {
                 MinRallyLength= 0,
@@ -107,9 +104,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = BasicFilterView.SelectedRallies; 
-                // .Where().ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
+                Manager.SelectedRallies = BasicFilterView.SelectedRallies;
             }
         }
        

@@ -30,8 +30,8 @@ namespace TT.Models.Statistics
                 i =>
                 {
                     var w = i == 0 ? MatchPlayer.First : MatchPlayer.Second;
-                    return this.Match.DefaultPlaylist.Rallies.Count(r => r.Winner == w) /
-                        (double)this.Match.DefaultPlaylist.Rallies.Count;
+                    return this.Match.Rallies.Count(r => r.Winner == w) /
+                        (double)this.Match.Rallies.Count;
                 });
 
             var probabilities = transitions.TransitionProbabilities;

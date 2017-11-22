@@ -22,13 +22,14 @@
                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
                 </Style>
             </TabControl.Resources>
-            <TabItem x:Name="ServiceFilterTabHeader" Header="A"/>
-            <TabItem x:Name="ReceiveFilterTabHeader" Header="R"/>
-            <TabItem x:Name="ThirdFilterTabHeader" Header="3"/>
-            <TabItem x:Name="FourthFilterTabHeader" Header="4"/>
-            <TabItem x:Name="LastFilterTabHeader" Header="L" />
-            <TabItem x:Name="TotalMatchFilterTabHeader" Header="G" IsEnabled="False"/>
-            <TabItem x:Name="KombiFilterTabHeader" Header="K" IsEnabled="False"/>            
+            <TabItem x:Name="ServiceFilterTab" Header="S"/>
+            <TabItem x:Name="ReceiveFilterTab" Header="R"/>
+            <TabItem x:Name="ThirdFilterTab" Header="3"/>
+            <TabItem x:Name="FourthFilterTab" Header="4"/>
+            <TabItem x:Name="OpeningShotFilterTab" Header="O" />
+            <TabItem x:Name="LastFilterTab" Header="L" />             
+            <!--<TabItem x:Name="TotalMatchFilterTab" Header="G" IsEnabled="False"/>
+            <TabItem x:Name="KombiFilterTab" Header="C" IsEnabled="False"/>-->            
         </TabControl>                    
         <ScrollViewer Grid.Row="0" Grid.Column="1">
             <ContentControl x:Name="ActiveItem" />

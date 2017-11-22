@@ -70,7 +70,7 @@ namespace TT.Report.Sections
             // The axis for the rally lengths
             var lengthAxis = new CategoryAxis()
             {
-                Title = "Rally length",
+                Title = Properties.Resources.section_rallylength_dist_rallylength,
                 MajorStep = 1,
                 TickStyle = TickStyle.None,
                 IsTickCentered = true,
@@ -91,7 +91,7 @@ namespace TT.Report.Sections
             // The axis for the number of matches
             var noMatches = new LinearAxis()
             {
-                Title = "#Rallies",
+                Title = Properties.Resources.section_rallylength_dist_ralliescount,
 
                 AbsoluteMinimum = 0,
                 MinimumPadding = 0,
@@ -118,7 +118,7 @@ namespace TT.Report.Sections
 
             var observed = new ColumnSeries()
             {
-                Title = "Observed",
+                Title = Properties.Resources.section_rallylength_dist_observed,
             };
             plot.Series.Add(observed);
             foreach (var item in this.Statistics.ObservedLengths.ColumnItems())
@@ -128,7 +128,7 @@ namespace TT.Report.Sections
 
             var expected = new LineSeries()
             {
-                Title = "Expected",
+                Title = Properties.Resources.section_rallylength_dist_expected,
                 Smooth = true,
             };
             plot.Series.Add(expected);
@@ -160,7 +160,7 @@ namespace TT.Report.Sections
 
                 var observed = new ColumnSeries()
                 {
-                    Title = string.Format("{0} observed", name),
+                    Title = string.Format("{0} {1}", name, Properties.Resources.section_rallylength_dist_observed.ToLower()),
                     FillColor = color,
                 };
                 plot.Series.Add(observed);
@@ -174,7 +174,7 @@ namespace TT.Report.Sections
 
                 var expected = new LineSeries()
                 {
-                    Title = string.Format("{0} expected", name),
+                    Title = string.Format("{0} {1}", name, Properties.Resources.section_rallylength_dist_expected.ToLower()),
                     Color = color,
                     Smooth = true,
                 };

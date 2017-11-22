@@ -1,0 +1,824 @@
+﻿<UserControl x:Class="TT.Report.Views.StrokePlacementGridView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
+             xmlns:prop="clr-namespace:TT.Report.Properties"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="315">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="AccentColorBrush">#CC6D8764</SolidColorBrush>
+            <SolidColorBrush x:Key="GrayBrush5">#FFB9B9B9</SolidColorBrush>
+            <prop:Resources x:Key="LocalizedStrings"/>
+        </ResourceDictionary>    
+    </UserControl.Resources>
+    
+    <Grid Grid.Row="1" Width="315" Height="300" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" MinHeight="50"/>
+            <RowDefinition Height="auto" MinHeight="50" />
+            <RowDefinition Height="auto" MinHeight="50"/>
+            <RowDefinition Height="auto" MinHeight="50"/>
+            <RowDefinition Height="auto" MinHeight="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*" MinWidth="60"/>
+            <ColumnDefinition Width="*" MinWidth="60"/>
+            <ColumnDefinition Width="*" MinWidth="60"/>
+            <ColumnDefinition Width="*" MinWidth="60"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource GrayBrush5}"/>
+        <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" BorderBrush="White" BorderThickness="2 2 2 0" Background="{StaticResource AccentColorBrush}"/>
+        <Border Grid.Row="4" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="3" BorderBrush="White" BorderThickness="2 2 2 0" Background="{StaticResource AccentColorBrush}"/>
+        <Border Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1 0 1 0" />
+        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Margin="2 0 0 0" BorderBrush="Black" BorderThickness="0 1 0 1" />
+
+        <Label Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="∑"/>
+        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="{Binding Path=placement_long_short, Source={StaticResource LocalizedStrings}}"/>
+        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="{Binding Path=placement_halflong_short, Source={StaticResource LocalizedStrings}}"/>
+        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="{Binding Path=placement_short_short, Source={StaticResource LocalizedStrings}}"/>
+        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Content="{Binding Path=placement_error_short, Source={StaticResource LocalizedStrings}}"/>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="PlacementForehandAllTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsBotLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="2 2 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementForehandLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1" Margin="2 1 0 1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementForehandHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidLeft()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1" Margin="2 0 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementForehandShortTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementForehandShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotLeft() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementMiddleAllTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible" >
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsBotMid()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2" Margin="1 2 1 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementMiddleLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="2" Margin="1 1 1 1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementMiddleHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleHalfLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="2" Margin="1 0 1 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementMiddleShortTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementMiddleShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotMid() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementBackhandAllTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandAllPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandAllDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandAllPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopRight() || r.Strokes[$$StrokeNumber$$].IsMidRight() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="3" Margin="0 2 2 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementBackhandLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandLongPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsTopRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="3" Margin="0 1 2 1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementBackhandHalfLongTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidRight()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandHalfLongDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandHalfLongPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsMidRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="3" Margin="0 0 2 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementBackhandShortTotalButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight()" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandShortPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandShortDirectPointsWonButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementBackhandShortPointsLostButton" Tag="r => $$Player$$ r.Strokes[$$StrokeNumber$$].IsBotRight() &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="4" Margin="0 2 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementAllLongTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllLongDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllLongPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsTopLeft() || r.Strokes[$$StrokeNumber$$].IsTopMid() || r.Strokes[$$StrokeNumber$$].IsTopRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="4" Margin="0 1 0 1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementAllHalfLongTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllHalfLongPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllHalfLongDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllHalfLongPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsMidLeft() || r.Strokes[$$StrokeNumber$$].IsMidMid() || r.Strokes[$$StrokeNumber$$].IsMidRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PlacementAllShortTotalButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight())" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1" Padding="2 0 2 0" FontSize="40" HorizontalAlignment="Center">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllShortPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="2 0 2 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllShortDirectPointsWonButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player == r.Winner &amp;&amp; r.Length &lt; 3" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+            <Label x:Name="PlacementAllShortPointsLostButton" Tag="r => $$Player$$ (r.Strokes[$$StrokeNumber$$].IsBotLeft() || r.Strokes[$$StrokeNumber$$].IsBotMid() || r.Strokes[$$StrokeNumber$$].IsBotRight()) &amp;&amp; r.Strokes[$$StrokeNumber$$].Player != r.Winner" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Padding="1 0 1 0" FontWeight="Bold" Visibility="Visible">
+                <Label.Content>
+                    <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                        <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+                </Label.Content>
+            </Label>
+        </Grid>
+
+        <Label x:Name="PlacementAllServiceErrorsTotalButton" Tag="r => $$Player$$ (r.Server $$EqualsOrNot$$ r.Winner &amp;&amp; r.Length == ($$StrokeNumber$$ + 1))" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" Padding="2 0 2 0" Margin="2 2 2 0" FontSize="40" HorizontalAlignment="Center">
+            <Label.Content>
+                <MultiBinding Converter="{conv:RallyExpressionToCountConverter}" Mode="OneWay" ConverterParameter="r.Strokes[$$StrokeNumber$$].Player == '$$PlayerString$$' &amp;&amp;">
+                    <Binding Path="SelectedRallies" />
+						<Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+						<Binding Path="Player" />
+						<Binding Path="StrokeNumber" />
+					</MultiBinding>
+            </Label.Content>
+        </Label>
+    </Grid>
+</UserControl>

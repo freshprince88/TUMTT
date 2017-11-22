@@ -24,6 +24,7 @@ namespace TT.Viewer.ViewModels
         public string PointsPlayer2Percent { get; set; }
         public double totalRalliesCount { get; set; }
 
+
         #endregion
 
 
@@ -37,8 +38,8 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            Player1 = "Spieler 1";
-            Player2 = "Spieler 2";
+            Player1 = "Player 1";
+            Player2 = "Player 2";
 
             
         }
@@ -74,6 +75,8 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange("PointsPlayer2Percent");
             NotifyOfPropertyChange("Player1");
             NotifyOfPropertyChange("Player2");
+            NotifyOfPropertyChange("totalRalliesCount");
+
 
         }
 

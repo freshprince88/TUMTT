@@ -21,16 +21,16 @@ namespace TT.Viewer.ViewModels
         public ResultMiniStatisticViewModel MiniStatistic { get; set; }
         public ResultTabViewModel ResultTabView { get; set; }
 
-        private IEventAggregator events;
+        private IEventAggregator Events;
         private IMatchManager manager;
 
         public ResultViewModel(IEnumerable<IResultViewTabItem> tabs, IEventAggregator e, IMatchManager man)
         {
-            events = e;
+            Events = e;
             manager = man;
             //Items.AddRange(tabs);
-            MiniStatistic = new ResultMiniStatisticViewModel(this.events, manager);
-            ResultTabView = new ResultTabViewModel(tabs);
+            MiniStatistic = new ResultMiniStatisticViewModel(this.Events, manager);
+            ResultTabView = new ResultTabViewModel(tabs, e);
         }
 
         protected override void OnActivate()
@@ -38,9 +38,15 @@ namespace TT.Viewer.ViewModels
             base.OnActivate();
 
             // Subscribe ourself to the event bus
-            this.events.Subscribe(this);
+            this.Events.Subscribe(this);
             this.ActivateItem(MiniStatistic);
             this.ActivateItem(ResultTabView);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Events.Unsubscribe(this);
+            base.OnDeactivate(close);
         }
     }
 }

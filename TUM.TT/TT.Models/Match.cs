@@ -13,12 +13,18 @@ namespace TT.Models
     using System.ComponentModel;
     using System.Linq;
     using System.Xml.Serialization;
+    using TT.Models.Util;
 
     /// <summary>
     /// The data model which represents a single match.
     /// </summary>
     public class Match : PropertyChangedBase
     {
+        /// <summary>
+        /// Backs the GUID of the Match
+        /// </summary>
+        private Guid id;
+
         /// <summary>
         /// Backs the <see cref="FirstPlayer"/> property.
         /// </summary>
@@ -40,9 +46,20 @@ namespace TT.Models
         private string tournament;
 
         /// <summary>
+        /// Backs the <see cref="Category"/> property.
+        /// </summary>
+        private MatchCategory category = MatchCategory.Category;
+
+
+        /// <summary>
+        /// Backs the <see cref="Class"/> property.
+        /// </summary>
+        private DisabilityClass disabilityClass = DisabilityClass.Class;
+
+        /// <summary>
         /// Backs the <see cref="Round"/> property.
         /// </summary>
-        private string round;
+        private MatchRound round=MatchRound.Round;
 
         /// <summary>
         /// Backs the <see cref="Mode"/> property.
@@ -58,6 +75,11 @@ namespace TT.Models
         /// Backs the <see cref="Synchro"/> property.
         /// </summary>
         private double synchro;
+        
+        /// <summary>
+        /// Backs the <see cref="Rallies"/> property.
+        /// </summary>
+        private ObservableCollectionEx<Rally> rallies = new ObservableCollectionEx<Rally>();
 
         /// <summary>
         /// Backs the <see cref="Playlists"/> property.
@@ -69,7 +91,18 @@ namespace TT.Models
         /// </summary>
         public Match()
         {
+            this.id = new Guid();
+            this.tournament = Properties.Resources.tournament_title_default;
             this.playlists.CollectionChanged += this.OnPlaylistsChanged;
+            this.rallies.CollectionChanged += this.OnRalliesChanged;
+        }
+
+        /// <summary>
+        ///  Gets the Unique ID of this match
+        /// </summary>
+        public Guid ID
+        {
+            get { return this.id; }
         }
 
         /// <summary>
@@ -91,6 +124,22 @@ namespace TT.Models
         }
 
         /// <summary>
+        /// Gets all playlists of this match.
+        /// </summary>
+        public ObservableCollection<Playlist> Playlists
+        {
+            get { return this.playlists; }
+        }
+
+        /// <summary>
+        /// Gets all rallies of this match.
+        /// </summary>
+        public ObservableCollectionEx<Rally> Rallies
+        {
+            get { return this.rallies; }
+        }
+
+        /// <summary>
         /// Gets the first serving player.
         /// </summary>
         /// <remarks>
@@ -101,7 +150,7 @@ namespace TT.Models
         {
             get
             {
-                return this.Playlists.Where(p => p.Name == "Alle").FirstOrDefault().Rallies
+                return this.Rallies
                     .Select(r => r.Server)
                     .DefaultIfEmpty(MatchPlayer.None)
                     .First();
@@ -119,7 +168,7 @@ namespace TT.Models
         {
             get
             {
-                return this.Playlists.Where(p => p.Name == "Alle").FirstOrDefault().Rallies
+                return this.Rallies
                     .Reverse()
                     .Select(r => r.Winner)
                     .FirstOrDefault(w => w != MatchPlayer.None);
@@ -134,19 +183,11 @@ namespace TT.Models
         {
             get
             {
-                var rally = this.Playlists.Where(p => p.Name == "Alle").FirstOrDefault().Rallies.LastOrDefault();
+                var rally = this.Rallies.LastOrDefault();
                 return rally != null ?
                     rally.FinalSetScore.Highest >= this.Mode.RequiredSets() :
                     false;
             }
-        }
-
-        /// <summary>
-        /// Gets all playlists of this match.
-        /// </summary>
-        public ObservableCollection<Playlist> Playlists
-        {
-            get { return this.playlists; }
         }
 
         /// <summary>
@@ -169,9 +210,6 @@ namespace TT.Models
             }
         }
 
-       [XmlIgnore]
-       public Playlist DefaultPlaylist { get { return this.Playlists.Where(p => p.Name.Equals("Alle")).FirstOrDefault(); } }
-
         /// <summary>
         /// Gets or sets the tournament the match is part of.
         /// </summary>
@@ -193,10 +231,31 @@ namespace TT.Models
         }
 
         /// <summary>
+        /// Gets or sets the category of the match.
+        /// </summary>
+        [XmlAttribute]
+        public MatchCategory Category
+        {
+            get { return this.category; }
+            set { this.RaiseAndSetIfChanged(ref this.category, value); }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the Disability Class of the Players.
+        /// </summary>
+        [XmlAttribute]
+        public DisabilityClass DisabilityClass
+        {
+            get { return this.disabilityClass; }
+            set { this.RaiseAndSetIfChanged(ref this.disabilityClass, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the round of the match.
         /// </summary>
         [XmlAttribute]
-        public string Round
+        public MatchRound Round
         {
             get { return this.round; }
             set { this.RaiseAndSetIfChanged(ref this.round, value); }
@@ -234,15 +293,35 @@ namespace TT.Models
                 var diff = this.synchro - value;
                 this.RaiseAndSetIfChanged(ref this.synchro, value);
 
-                foreach (var p in Playlists)
+                foreach (var r in this.Rallies)
                 {
-                    foreach (var r in p.Rallies)
-                    {
-                        r.Anfang -= diff;
-                        r.Ende -= diff;
-                    }
+                    r.Start -= diff;
+                    r.End -= diff;
                 }
             }
+        }
+        /// <summary>
+        /// Sets video offset for Start of the Rally 
+        /// </summary>
+        public void StartOffset(double offset)
+        {
+            foreach (var r in this.Rallies)
+            {
+                r.Start += offset;
+
+            }
+        }
+        /// <summary>
+        /// Sets video offset for End of the Rally 
+        /// </summary>
+        public void EndOffset(double offset)
+        {
+            foreach (var r in this.Rallies)
+            {
+
+                r.End += offset;
+            }
+
         }
 
         /// <summary>
@@ -255,24 +334,58 @@ namespace TT.Models
 
             this.FirstPlayer = second;
             this.SecondPlayer = first;
+        }
 
-            foreach (var pl in Playlists)
-            {
-                // Swap the server
-                pl.Rallies.First().Server = FirstServer.Other();
-
-                // Swap the winner of each rally
-                foreach (var rally in pl.Rallies)
-                {
-                    rally.Winner = rally.Winner.Other();
-                }
-            }
+        /// <summary>
+        /// Finds the previous rally.
+        /// </summary>
+        /// <param name="rally">The next rally.</param>
+        /// <returns>The previous rally, or <c>null</c> if there is no previous rally.</returns>
+        public Rally FindPreviousRally(Rally rally)
+        {
+            var index = this.Rallies.IndexOf(rally);
+            return index >= 0 ? this.rallies.ElementAtOrDefault(index - 1) : null;
         }
 
         private void OnPlaylistsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //TODO: See Playlist.RalliesChanged
             //throw new NotImplementedException();
+        }
+
+        private void OnRalliesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Playlist list = playlists.Where<Playlist>(p => p.Name == "Alle").FirstOrDefault<Playlist>();
+            if (list != null)
+            {
+                if (e.NewItems != null)
+                {
+                    foreach (Rally newRally in e.NewItems)
+                    {
+                        list.Add(newRally);
+                    }
+                }
+
+                if (e.OldItems != null)
+                {
+                    foreach(Rally oldRally in e.OldItems)
+                    {
+                        list.Remove(oldRally);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the finished rallies of this match.
+        /// </summary>
+        [XmlIgnore]
+        public IEnumerable<Rally> FinishedRallies
+        {
+            get
+            {
+                return this.Rallies.Where(r => r.Length > 0 && r.Winner != MatchPlayer.None);
+            }
         }
     }
 }

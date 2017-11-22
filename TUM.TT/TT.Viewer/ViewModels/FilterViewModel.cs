@@ -12,13 +12,6 @@ namespace TT.Viewer.ViewModels
 {
     public class FilterViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public ServiceViewModel ServiceView { get; set; }
-        public ReceiveViewModel ReceiveView { get; set; }
-        public ThirdBallViewModel ThirdBallView { get; set; }
-        public FourthBallViewModel FourthBallView { get; set; }
-        public LastBallViewModel LastBallView { get; set; }
-        public TotalMatchViewModel TotalMatchView { get; set; }
-        public CombiViewModel CombiView { get; set; }
         public int SelectedTab { get; set; }
 
         /// <summary>
@@ -26,11 +19,26 @@ namespace TT.Viewer.ViewModels
         /// </summary>
         private IEventAggregator events;
         private IMatchManager Manager;
+        private readonly Dictionary<string, object[]> _tabNameDictionary;
 
         public FilterViewModel(IEventAggregator eventAggregator, IMatchManager man)
         {
             this.events = eventAggregator;
             this.Manager = man;
+
+            _tabNameDictionary = new Dictionary<string, object[]>()
+            {
+                ["ServiceFilterTab"] = new object[] { new ServiceViewModel(this.events, Manager), 1 },
+                ["ReceiveFilterTab"] = new object[] { new ReceiveViewModel(this.events, Manager), 2 },
+                ["ThirdFilterTab"] = new object[] { new ThirdBallViewModel(this.events, Manager), 3 },
+                ["FourthFilterTab"] = new object[] { new FourthBallViewModel(this.events, Manager), 4 },
+                ["OpeningShotFilterTab"] = new object[] { new OpeningShotViewModel(this.events, Manager), 5 },
+
+                ["LastFilterTab"] = new object[] { new LastBallViewModel(this.events, Manager), 6 },
+                ["TotalMatchFilterTab"] = new object[] { new TotalMatchViewModel(this.events, Manager), 1 },
+                ["KombiFilterTab"] = new object[] { new CombiViewModel(this.events, Manager), 1 }
+            };
+
             SelectedTab = 0;
         }
 
@@ -43,58 +51,35 @@ namespace TT.Viewer.ViewModels
 
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
-            LastBallView = new LastBallViewModel(this.events, Manager);
-            FourthBallView = new FourthBallViewModel(this.events, Manager);
-            ThirdBallView = new ThirdBallViewModel(this.events, Manager);
-            ReceiveView = new ReceiveViewModel(this.events, Manager);
-            ServiceView = new ServiceViewModel(this.events, Manager);
-            TotalMatchView = new TotalMatchViewModel(this.events, Manager);
-            CombiView = new CombiViewModel(this.events, Manager);
-
-            // Activate the welcome model
-            if (this.ActiveItem == null)
-            {
-                this.ActivateItem(ServiceView);
-            }
         }
 
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            
+            if (this.ActiveItem == null)
+            {
+                var s = _tabNameDictionary["ServiceFilterTab"];
+                this.ActivateItem((IScreen)s[0]);
+                Manager.CurrentRallyLength = (int)s[1];
+            }
+            else
+            {
+                var sel = _tabNameDictionary.Where(vmAndRallyLength => ActiveItem == vmAndRallyLength.Value[0]);
+                var first = sel.First();
+                Manager.CurrentRallyLength = (int)first.Value[1];
+            }
+        }
 
         public void FilterSelected(SelectionChangedEventArgs args)
         {
             TabItem selected = args.AddedItems[0] as TabItem;
-            switch (selected.Name)
-            {
-                case "ServiceFilterTabHeader":
-                    this.ActivateItem(ServiceView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(1));
-                    break;
-                case "ReceiveFilterTabHeader":
-                    this.ActivateItem(ReceiveView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(2));
-                    break;
-                case "ThirdFilterTabHeader":
-                    this.ActivateItem(ThirdBallView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(3));
-                    break;
-                case "FourthFilterTabHeader":
-                    this.ActivateItem(FourthBallView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(4));
-                    break;
-                case "LastFilterTabHeader":
-                    this.ActivateItem(LastBallView);
-                    this.events.PublishOnUIThread(new RallyLengthChangedEvent(5));
-                    break;
-                case "TotalMatchFilterTabHeader":
-                    this.ActivateItem(TotalMatchView);
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
-                    break;
-                case "KombiFilterTabHeader":
-                    this.ActivateItem(CombiView);
-                    this.events.BeginPublishOnUIThread(new RallyLengthChangedEvent(1));
-                    break;
-                default:
-                    break;
-            }
+            if (selected == null)
+                return;
+
+            var s = _tabNameDictionary[selected.Name];
+            ActivateItem((IScreen)s[0]);
+            Manager.CurrentRallyLength = (int)s[1];
         }
     }
 }

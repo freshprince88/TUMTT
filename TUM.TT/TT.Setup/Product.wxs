@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Use * to generate product ID on every build -->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="TUM.TT" Language="1033" Codepage="1252"
+           Version="!(bind.FileVersion.TT.Viewer.exe)"
+           Manufacturer="Technische Universität München"
+           UpgradeCode="4BA29266-C904-4B01-8534-E05F33E91CB0">
+
+    <!--<?if $(var.Platform) = x64 ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+    <?else ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+    <?endif ?>-->
+
+    <Package InstallerVersion="400" Compressed="yes" InstallScope="perUser" />
+
+    <Condition Message="This application only runs on Windows Vista, Windows Server 2008, or higher.">
+      <![CDATA[Installed OR (VersionNT >= 600)]]>
+    </Condition>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="Complete" Title="TUM.TT" Display="expand" ConfigurableDirectory="INSTALLFOLDER" Level="1">
+      <Feature Id="Viewer" Title="Viewer" Level="1">
+        <ComponentGroupRef Id="DependencyComponents" />
+        <ComponentGroupRef Id="ViewerComponents" />
+      </Feature>
+
+      <Feature Id="Scouter" Title="Scouter" Level="99">
+        <ComponentGroupRef Id="ScouterComponents" />
+      </Feature>
+    </Feature>    
+
+
+    <UI Id='Mondo'>
+      <UIRef Id="WixUI_Mondo" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="SetupTypeDlg" Order="3">1</Publish>
+      <Publish Dialog="SetupTypeDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="3">1</Publish>
+    </UI>
+    
+    <UIRef Id="Mondo"/>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="LocalAppDataFolder">
+        <Directory Id="INSTALLFOLDER" Name="TUM.TT">
+          <Component Id="RemoveInstallFolder" Guid="{4F886F4F-3929-4C43-8490-021873AB955E}">
+            <RemoveFolder Id="RM_InstallFolder" On="uninstall"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="TUM.TT"/>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="DesktopFolder"/>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <!-- Dependencies -->
+    <ComponentGroup Id="DependencyComponents" Directory="INSTALLFOLDER">
+      <ComponentGroupRef Id="Caliburn.Micro" />
+      <ComponentGroupRef Id="EPPlus" />
+      <ComponentGroupRef Id="MahApps.Metro" />
+      <ComponentGroupRef Id="MathNet.Numerics" />
+      <ComponentGroupRef Id="MigraDoc" />
+      <ComponentGroupRef Id="OxyPlot" />
+      <ComponentGroupRef Id="PdfSharp" />
+      <ComponentGroupRef Id="System.Windows.Interactivity" />
+      <ComponentGroupRef Id="Xceed.Wpf.Toolkit" />
+      <ComponentGroupRef Id="NReco" />
+      <ComponentGroupRef Id="LambdaParser" />
+      <ComponentGroupRef Id="DragDrop" />
+      <ComponentGroupRef Id="TTProjects" />
+      <ComponentGroupRef Id="ListView" />
+      <ComponentGroupRef Id="TeamFoundation.Controls"/>
+      <ComponentRef Id="RemoveInstallFolder"/>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <!-- Scouter -->
+    <ComponentGroup Id="ScouterComponents" Directory="INSTALLFOLDER">
+      <ComponentGroupRef Id="TT_Scouter" />
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <!-- Viewer -->
+    <ComponentGroup Id="ViewerComponents" Directory="INSTALLFOLDER">
+      <ComponentGroupRef Id="TT_Viewer" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>
+

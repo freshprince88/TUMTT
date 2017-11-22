@@ -40,12 +40,6 @@
         /// <param name="context">The execution context</param>
         public async void Execute(CoroutineExecutionContext context)
         {
-            //var result = MessageBox.Show(
-            //    this.Question,
-            //    this.Title,
-            //    this.AllowCancel ? MessageBoxButton.YesNoCancel : MessageBoxButton.YesNo,
-            //    MessageBoxImage.Question,
-            //    MessageBoxResult.Yes);
 
             var mySettings = new MetroDialogSettings()
             {

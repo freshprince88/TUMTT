@@ -17,11 +17,6 @@ namespace TT.Viewer.ViewModels
     {
 
         #region Properties
-
-        public List<Rally> SelectedRallies { get; private set; }
-        public Playlist ActivePlaylist { get; private set; }
-
-
         #endregion
 
         #region Enums
@@ -40,9 +35,6 @@ namespace TT.Viewer.ViewModels
         {
             this.events = eventAggregator;
             Manager = man;
-            SelectedRallies = new List<Rally>();
-            ActivePlaylist = new Playlist();
-
         }
 
         #region View Methods
@@ -95,8 +87,8 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = this.ActivePlaylist.Rallies.ToList();
-                this.events.PublishOnUIThread(new ResultsChangedEvent(SelectedRallies));
+                var results = Manager.ActivePlaylist.Rallies.ToList();
+                Manager.SelectedRallies = results;
             }
         }
         #endregion

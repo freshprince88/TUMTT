@@ -5,6 +5,8 @@ using TT.Lib.Managers;
 using TT.Models;
 using TT.Lib.Results;
 using TT.Lib;
+using MahApps.Metro.Controls.Dialogs;
+using System.Windows;
 
 namespace TT.Scouter.ViewModels
 {
@@ -17,7 +19,8 @@ namespace TT.Scouter.ViewModels
         public NewMatchViewModel(IEventAggregator ev, IMatchManager man)
         {
             Events = ev;
-            MatchManager = man;
+            MatchManager = man;           
+
         }
 
         protected override void OnActivate()
@@ -48,17 +51,44 @@ namespace TT.Scouter.ViewModels
 
         public IEnumerable<IResult> SaveMatchDetails()
         {
-            //TODO: Save Match Details in MatchManager and go to Video Choice
-            MatchManager.MatchModified = true;
+            //Save Match Details in MatchManager and go to Video Choice
+            bool canNext = !String.IsNullOrWhiteSpace(Match.Tournament) && !String.IsNullOrWhiteSpace(Match.FirstPlayer.Name) && !String.IsNullOrWhiteSpace(Match.SecondPlayer.Name);
 
-            Rally first = new Rally();
-            first.Nummer = 1;
+            if (!canNext)
+            {
+                var mySettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = "OK",
+                    AnimateShow = true,
+                    AnimateHide = false
+                };
+                IDialogCoordinator coordinator = IoC.Get<IDialogCoordinator>();
+                var context = new CoroutineExecutionContext()
+                {
+                    Target = this,
+                    View = this.GetView() as DependencyObject,
+                };
+                coordinator.ShowMessageAsync(context.Target, "Missing Information",
+                    "You have to provide at least a tournament name and names for both players to continue!",
+                    MessageDialogStyle.Affirmative, mySettings);
 
-            MatchManager.ActivePlaylist.Rallies.Add(first);
-            first.UpdateServerAndScore();
+                yield return new DoNothingResult();
+            }
+            else
+            {
 
-            var nextScreen = ShowScreenResult.Of<VideoSourceViewModel>();
-            yield return nextScreen;
+                MatchManager.MatchModified = true;
+                NotifyOfPropertyChange("MatchModified");
+
+                Rally first = new Rally(Match);
+                first.Number = 1;
+
+                MatchManager.Match.Rallies.Add(first);
+                first.UpdateServerAndScore();
+
+                var nextScreen = ShowScreenResult.Of<VideoSourceViewModel>();
+                yield return nextScreen;
+            }
         }
 
         #endregion

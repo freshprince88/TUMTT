@@ -2,18 +2,20 @@
 // <copyright file="Player.cs" company="Fakultät für Sport- und Gesundheitswissenschaft">
 //    Copyright © 2013, 2014 Fakultät für Sport- und Gesundheitswissenschaft
 // </copyright>
-//-----------------------------------------------------------------------
+//-------------------------------------------------------------------
 
 namespace TT.Models
 {
     using System;
     using System.Xml.Serialization;
 
+
     /// <summary>
     /// A player participating in a <see cref="Match"/>.
     /// </summary>
     public class Player : PropertyChangedBase
     {
+
         /// <summary>
         /// Backs the <see cref="Name"/> property.
         /// </summary>
@@ -30,24 +32,37 @@ namespace TT.Models
         private Rank rank;
 
         /// <summary>
-        /// Backs the <see cref="Spielsystem"/> property.
+        /// Backs the <see cref="PlayingStyle"/> property.
         /// </summary>
-        private Spielsystem spielsystem = Spielsystem.None;
+        private PlayingStyle playingStyle = PlayingStyle.None;
 
         /// <summary>
-        /// Backs the <see cref="Händigkeit"/> property.
+        /// Backs the <see cref="Handedness"/> property.
         /// </summary>
-        private Händigkeit händigkeit = Händigkeit.None;
+        private Handedness handedness = Handedness.None;
 
         /// <summary>
-        /// Backs the <see cref="Griffhaltung"/> property.
+        /// Backs the <see cref="Grip"/> property.
         /// </summary>
-        private Griffhaltung griffhaltung = Griffhaltung.None;
+        private Grip grip = Grip.None;
+        /// <summary>
+        /// Backs the <see cref="StartingTableEnd"/> property.
+        /// </summary>
+        private StartingTableEnd startingTableEnd = StartingTableEnd.None;
 
         /// <summary>
         /// Backs the <see cref="Material"/> property.
         /// </summary>
         private string material;
+
+        /// <summary>
+        /// Backs the <see cref="MaterialBH"/> property.
+        /// </summary>
+        private MaterialBH materialBH;
+        /// <summary>
+        /// Backs the <see cref="MaterialFH"/> property.
+        /// </summary>
+        private MaterialFH materialFH;
 
         private MatchPlayer playerIndex;
 
@@ -57,6 +72,11 @@ namespace TT.Models
         public Player()
         {
             this.rank = new Rank(0, DateTime.Today);
+        }
+
+        public Player(int index) : this()
+        {
+            this.name = string.Format(Properties.Resources.player_name_default, index);
         }
 
         /// <summary>
@@ -104,70 +124,97 @@ namespace TT.Models
 
 
         /// <summary>
-        /// Gets or sets the Spielsystem of this player.
+        /// Gets or sets the PlayingStyle of this player.
         /// </summary>
         [XmlAttribute]
-        public Spielsystem Spielsystem
+        public PlayingStyle PlayingStyle
         {
             get
             {
-                return this.spielsystem;
+                return this.playingStyle;
             }
 
             set
             {
-                if (this.spielsystem != value)
+                if (this.playingStyle != value)
                 {
-                    this.spielsystem = value;
+                    this.playingStyle = value;
+                    this.NotifyPropertyChanged("PlayingStyle");
+                    this.NotifyPropertyChanged();
+
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the StartingTableEnd of this player.
+        /// </summary>
+        [XmlAttribute]
+        public StartingTableEnd StartingTableEnd
+        {
+            get
+            {
+                return this.startingTableEnd;
+            }
+
+            set
+            {
+                if (this.startingTableEnd != value)
+                {
+                    this.startingTableEnd = value;
+                    this.NotifyPropertyChanged("StartingTableEnd");
+                    this.NotifyPropertyChanged();
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Handedness of this player.
+        /// </summary>
+        [XmlAttribute]
+        public Handedness Handedness
+        {
+            get
+            {
+                return this.handedness;
+            }
+
+            set
+            {
+                if (this.handedness != value)
+                {
+                    this.handedness = value;
+                    this.NotifyPropertyChanged("Handedness");
                     this.NotifyPropertyChanged();
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the Händigkeit of this player.
+        /// Gets or sets the Grip of this player.
         /// </summary>
         [XmlAttribute]
-        public Händigkeit Händigkeit
+        public Grip Grip
         {
             get
             {
-                return this.händigkeit;
+                return this.grip;
             }
 
             set
             {
-                if (this.händigkeit != value)
+                if (this.grip != value)
                 {
-                    this.händigkeit = value;
+                    this.grip = value;
                     this.NotifyPropertyChanged();
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the Griffhaltung of this player.
-        /// </summary>
-        [XmlAttribute]
-        public Griffhaltung Griffhaltung
-        {
-            get
-            {
-                return this.griffhaltung;
-            }
-
-            set
-            {
-                if (this.griffhaltung != value)
-                {
-                    this.griffhaltung = value;
-                    this.NotifyPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the Griffhaltung of this player.
+        /// Gets or sets the PlayerIndex of this player.
         /// </summary>
         [XmlAttribute]
         public MatchPlayer PlayerIndex
@@ -182,6 +229,47 @@ namespace TT.Models
                 if (this.playerIndex != value)
                 {
                     this.playerIndex = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Material in the Forehand of this player.
+        /// </summary>
+        [XmlAttribute]
+        public MaterialFH MaterialFH
+        {
+            get
+            {
+                return this.materialFH;
+            }
+
+            set
+            {
+                if (this.materialFH != value)
+                {
+                    this.materialFH = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+        /// <summary>
+        /// Gets or sets the Material in the Backhand of this player.
+        /// </summary>
+        [XmlAttribute]
+        public MaterialBH MaterialBH
+        {
+            get
+            {
+                return this.materialBH;
+            }
+
+            set
+            {
+                if (this.materialBH != value)
+                {
+                    this.materialBH = value;
                     this.NotifyPropertyChanged();
                 }
             }
@@ -226,6 +314,8 @@ namespace TT.Models
                     this.nationality = value;
                     this.NotifyPropertyChanged();
                     this.NotifyPropertyChanged("FullName");
+                    
+
                 }
             }
         }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="300">
@@ -38,7 +38,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}">Rückschlag</TextBlock>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}">Receive</TextBlock>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="1" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
         <ContentControl x:Name="BasicFilterView" Grid.Row="2" />
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="3" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
@@ -49,13 +49,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="70" />
-                <ColumnDefinition />
                 <ColumnDefinition MinWidth="55" />
                 <ColumnDefinition MinWidth="55"/>
+                <ColumnDefinition MaxWidth="20" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Technik:</Label>
-            <ToggleButton x:Name="Forehand" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+            <TextBlock Grid.Row="0" Grid.Column="0"  FontSize="10" Margin="5 0 5 0" VerticalAlignment="Bottom" HorizontalAlignment="Left">Technique:</TextBlock>
+            <ToggleButton x:Name="Forehand" Grid.Row="0" Grid.Column="1"  Width="50" Height="50" Margin="0 0 5 0" HorizontalAlignment="Right" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                           cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
@@ -67,7 +67,7 @@
                     FH
                 </TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="Backhand" Grid.Row="0" Grid.Column="3"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
+            <ToggleButton x:Name="Backhand" Grid.Row="0" Grid.Column="2"  Width="50" Height="50" Margin="5 0 0 0" HorizontalAlignment="Left" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}" 
                           cal:Message.Attach="[Event Click] = [Action ForeBackHand($source)]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:ForeBackHandToBoolConverter}" Mode="OneWay">
@@ -76,12 +76,18 @@
                     </MultiBinding>
                 </ToggleButton.IsChecked>
                 <TextBlock FontSize="16">
-                    RH
+                    BH
                 </TextBlock>
             </ToggleButton>
-            <ToggleButton x:Name="FilterStepAroundButton" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30"   Margin="0 0 0 0" HorizontalAlignment="Stretch" Style="{DynamicResource MetroAccentToggle}"
+
+            <TextBlock Grid.Row="0"  Grid.Column="4" FontSize="10" TextWrapping="WrapWithOverflow" Margin="5 0 5 0" TextAlignment="Center" VerticalAlignment="Bottom">
+                    Opening Shot:
+            </TextBlock>
+            <CheckBox x:Name="FilterOpeningShotButton" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="1" HorizontalAlignment="Center"
+                          cal:Message.Attach="[Event Click] = [Action OpeningShotOrNot($source)]" IsChecked="{Binding Path=OpeningShot, Converter={conv:OpeningShotToBoolConverter}, Mode=OneWay}"/>
+            <ToggleButton x:Name="FilterStepAroundButton" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="auto" MinWidth="60" Height="30"   Margin="0 0 0 0" HorizontalAlignment="Stretch" Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action StepAroundOrNot($source)]" IsChecked="{Binding Path=StepAround, Converter={conv:StepAroundToBoolConverter}, Mode=OneWay}">
-                Umlaufen
+                Step Around
             </ToggleButton>
         </Grid>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="5" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
@@ -100,11 +106,11 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center">
-                Schlagart
+                Stroke Technique
             </Label>
             <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <Label.Content>
-                    <AccessText TextWrapping="Wrap" Text="Position &amp; Platzierung"/>
+                    <AccessText TextWrapping="Wrap" Text="Position &amp; Placement"/>
                 </Label.Content>
             </Label>
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
@@ -133,7 +139,7 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
-                                Schupf
+                                Push
                             </ToggleButton>                            
                             <ToggleButton  x:Name="PushAggressive" Grid.Row="1" Grid.Column="0" MinWidth="30" MaxWidth="100"  Height="30" FontSize="8"   Style="{DynamicResource MetroAccentToggle}"
                                            cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
@@ -143,7 +149,7 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
-                                aggressiv
+                                aggressive
                             </ToggleButton>                            
                         </Grid>
                     </GroupBox>
@@ -171,7 +177,7 @@
                                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                     </MultiBinding>
                                 </ToggleButton.IsChecked>
-                                Banane
+                                Banana
                             </ToggleButton>
                         </Grid>
                     </GroupBox>
@@ -276,7 +282,7 @@
                                     <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                 </MultiBinding>
                             </ToggleButton.IsChecked>
-                            Konter
+                            Counter
                         </ToggleButton>
                         <ToggleButton  x:Name="Smash" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
@@ -286,7 +292,7 @@
                                     <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                 </MultiBinding>
                             </ToggleButton.IsChecked>
-                            Schuss
+                            Smash
                         </ToggleButton>
                     </Grid>
                 </GroupBox>
@@ -296,13 +302,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <GroupBox Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
-                           
+                            <ColumnDefinition/>                           
                         </Grid.ColumnDefinitions>
                         <ToggleButton  x:Name="Lob" Grid.Row="0" Grid.Column="0" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
@@ -312,9 +318,9 @@
                                     <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                 </MultiBinding>
                             </ToggleButton.IsChecked>
-                            Ballonabwehr
+                            Lob
                         </ToggleButton>
-                        <ToggleButton  x:Name="Chop" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                        <ToggleButton  x:Name="Tetra" Grid.Row="0" Grid.Column="1" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                             <ToggleButton.IsChecked>
                                 <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
@@ -322,12 +328,12 @@
                                     <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                                 </MultiBinding>
                             </ToggleButton.IsChecked>
-                            Schnittabwehr
-                        </ToggleButton>                        
+                            Tetra
+                        </ToggleButton>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">                   
-                        <ToggleButton  x:Name="Special" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                <GroupBox Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <ToggleButton  x:Name="Chop" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
                                        cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
                         <ToggleButton.IsChecked>
                             <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
@@ -335,8 +341,20 @@
                                 <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                             </MultiBinding>
                         </ToggleButton.IsChecked>
-                        Sonstiges
-                        </ToggleButton>                    
+                        Chop
+                    </ToggleButton>
+                </GroupBox>
+                <GroupBox Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Focusable="False">
+                    <ToggleButton  x:Name="Special" Grid.Row="0" Grid.Column="2" MinWidth="30" MaxWidth="100" Height="30"  FontSize="10"   Style="{DynamicResource MetroAccentToggle}"
+                                       cal:Message.Attach="[Event Click] = [Action SelectStrokeTec($source]">
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:TechniqueToBoolConverter}" Mode="OneWay">
+                                <Binding Path="SelectedStrokeTec" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
+                        Special
+                    </ToggleButton>
                 </GroupBox>
             </Grid>        
         </Grid>
@@ -348,36 +366,36 @@
                 <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aktivität:</Label>
+            <TextBlock Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Aggressiveness:</TextBlock>
             <ToggleButton x:Name="Aggressive" Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}" 
                           cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]" >
                 <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
-                        <Binding Path="SelectedAggression" />
+                    <MultiBinding Converter="{conv:AggressivenessToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggressiveness" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
-                aggressiv
+                aggressive
             </ToggleButton>
             <ToggleButton x:Name="Control" Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]">
                 <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
-                        <Binding Path="SelectedAggression" />
+                    <MultiBinding Converter="{conv:AggressivenessToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggressiveness" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
-                Kontrolle
+                Control
             </ToggleButton>
             <ToggleButton x:Name="Passive" Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                           cal:Message.Attach="[Event Click] = [Action AggressivePassiveControl($source)]">
                 <ToggleButton.IsChecked>
-                    <MultiBinding Converter="{conv:AggressionToBoolConverter}" Mode="OneWay">
-                        <Binding Path="SelectedAggression" />
+                    <MultiBinding Converter="{conv:AggressivenessToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedAggressiveness" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
-                passiv
+                passive
             </ToggleButton>
         </Grid>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="9" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
@@ -389,7 +407,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Qualität:</Label>
+            <TextBlock Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left">Quality:</TextBlock>
             <ToggleButton x:Name="BadQuality" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
                 <ToggleButton.IsChecked>
@@ -398,7 +416,7 @@
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
-                Schlecht
+                bad
             </ToggleButton>
             <ToggleButton x:Name="GoodQuality" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  Width="auto" MinWidth="60" Height="30"  Style="{DynamicResource MetroAccentToggle}"
                            cal:Message.Attach="[Event Click] = [Action GoodBadQuality($source)]">
@@ -408,41 +426,48 @@
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
-                Gut
+                good
             </ToggleButton>            
         </Grid>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="11" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
         <Grid Grid.Row="12">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="70"/>
+                <ColumnDefinition MinWidth="70" Width="3*" />
                 <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="4*" />
-
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Besonderes:</Label>
+            <TextBlock Grid.Row="0"  Grid.Column="0" FontSize="10" Margin="5 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left">Specials:</TextBlock>
             <ToggleButton x:Name="EdgeTable"  Grid.Row="0" Grid.Column="1"   Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  
                           cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:SpecialToBoolConverter}" Mode="OneWay">
-                        <Binding Path="Specials" />
+                        <Binding Path="SelectedSpecials" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
-                Tischkante
+                Edge(Table)
             </ToggleButton>
             <ToggleButton x:Name="EdgeNet"  Grid.Row="0" Grid.Column="2"  Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  
                           cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
                 <ToggleButton.IsChecked>
                     <MultiBinding Converter="{conv:SpecialToBoolConverter}" Mode="OneWay">
-                        <Binding Path="Specials" />
+                        <Binding Path="SelectedSpecials" />
                         <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
                     </MultiBinding>
                 </ToggleButton.IsChecked>
-                Netzkante
+                Edge(Net)
             </ToggleButton>
-            <!--<ToggleButton x:Name="FilterEdgeRacketButton"  Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30" FontSize="10"  Style="{DynamicResource MetroAccentToggle}" >
-                Schlägerkante
-            </ToggleButton>-->
+            <ToggleButton x:Name="EdgeNetTable"  Grid.Row="0" Grid.Column="3"  Width="auto" MinWidth="40" Height="30" FontSize="10" Style="{DynamicResource MetroAccentToggle}"  
+                          cal:Message.Attach="[Event Click] = [Action EdgeSpecials($source)]">
+                <ToggleButton.IsChecked>
+                    <MultiBinding Converter="{conv:SpecialToBoolConverter}" Mode="OneWay">
+                        <Binding Path="SelectedSpecials" />
+                        <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                    </MultiBinding>
+                </ToggleButton.IsChecked>
+                Both
+            </ToggleButton>
         </Grid>
     </Grid>
 </UserControl>

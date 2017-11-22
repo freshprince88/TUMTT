@@ -6,18 +6,34 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             Dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300">
 
     <UserControl.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="/Resources/Icons.xaml" />     
             </ResourceDictionary.MergedDictionaries>
+            <!--<Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Delete Playlist">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cal:ActionMessage MethodName="DeletePlaylist" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </MenuItem>
+                            <MenuItem Header="Rename Playlist" cal:Message.Attach="[Event Click] = [Action RenamePlaylist($datacontext)]"/>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
         </ResourceDictionary>
     </UserControl.Resources>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -54,15 +70,17 @@
                                     </Rectangle>
                                 </BulletDecorator.Bullet>
                             </BulletDecorator>
-                            <TextBlock Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0"/>
+                            <TextBlock Text="{Binding Path=NameStr, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0"/>
                             <TextBlock Text="{Binding Path=CountStr, UpdateSourceTrigger=PropertyChanged}" Margin="5 0 0 0"/>
+                            <TextBlock Text="{Binding Path=PlayTimeStr, UpdateSourceTrigger=PropertyChanged}" Margin="5 0 0 0"/>
                         </WrapPanel>
                     </DataTemplate>
+
                 </ListView.ItemTemplate>
             </ListView>
         </Border>
 
-        <Button x:Name="AddButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="0" Grid.Row="1" Height="25" Width="25">
+        <Button x:Name="AddButton" ToolTip="Add Playlist" Style="{StaticResource MetroAccentFlat}" Grid.Column="0" Grid.Row="1" Height="25" Width="25">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>
@@ -77,7 +95,7 @@
             </i:Interaction.Triggers>
         </Button>
 
-        <Button x:Name="SaveButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Grid.Row="1" Height="25" Width="25">
+        <!--<Button x:Name="SaveButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Grid.Row="1" Height="25" Width="25">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>
@@ -90,9 +108,9 @@
                     <cal:ActionMessage MethodName="Save" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Button>
+        </Button>-->
 
-        <Button x:Name="DeleteButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="2" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
+        <Button x:Name="DeleteButton" ToolTip="Delete Playlist"  Style="{StaticResource MetroAccentFlat}" Grid.Column="2" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>
@@ -106,7 +124,27 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
-        <Button x:Name="SettingsButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="3" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
+        <Button x:Name="ExportButton" ToolTip="Export Playlist" Style="{StaticResource MetroAccentFlat}" Grid.Column="1" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
+            <Rectangle Width="15" Height="15" 
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Fill"
+                          Visual="{DynamicResource appbar_video}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Single Rallies (splited)" IsCheckable="True" IsChecked="{Binding singleRalliesBool}" StaysOpenOnClick="True"/>
+                    <MenuItem Header="Collection" IsCheckable="True" IsChecked="{Binding rallyCollectionBool}" StaysOpenOnClick="True"/>
+                </ContextMenu>
+            </Button.ContextMenu>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <cal:ActionMessage MethodName="ExportPlaylist" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <Button x:Name="RenameButton" ToolTip="Rename Playlist"  Style="{StaticResource MetroAccentFlat}" Grid.Column="3" Grid.Row="1" Height="25" Width="25" HorizontalAlignment="Right">
             <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                 <Rectangle.OpacityMask>
@@ -116,7 +154,7 @@
             </Rectangle>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
-                    <cal:ActionMessage MethodName="ShowSettings" />
+                    <cal:ActionMessage MethodName="RenamePlaylist" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>

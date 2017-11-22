@@ -1,0 +1,531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="section_part_general" xml:space="preserve">
+    <value>Allgemeine Statistiken</value>
+  </data>
+  <data name="section_part_player" xml:space="preserve">
+    <value>Spielerstatistiken</value>
+  </data>
+  <data name="section_placement" xml:space="preserve">
+    <value>Platzierung</value>
+  </data>
+  <data name="section_side" xml:space="preserve">
+    <value>Hand</value>
+  </data>
+  <data name="side_backhand" xml:space="preserve">
+    <value>Rückhand</value>
+  </data>
+  <data name="side_forehand" xml:space="preserve">
+    <value>Vorhand</value>
+  </data>
+  <data name="section_spin" xml:space="preserve">
+    <value>Spin</value>
+  </data>
+  <data name="section_spin_down" xml:space="preserve">
+    <value>Unter</value>
+  </data>
+  <data name="section_spin_hidden" xml:space="preserve">
+    <value>Verdeckt</value>
+  </data>
+  <data name="section_spin_no" xml:space="preserve">
+    <value>Ohne</value>
+  </data>
+  <data name="section_spin_up" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="section_strokenumber" xml:space="preserve">
+    <value>Schlagnummer</value>
+  </data>
+  <data name="section_stroke_lost" xml:space="preserve">
+    <value>Kein Punkt</value>
+  </data>
+  <data name="section_stroke_name_all" xml:space="preserve">
+    <value>Alle Schläge</value>
+  </data>
+  <data name="section_stroke_name_fourth" xml:space="preserve">
+    <value>Vierter Schlag</value>
+  </data>
+  <data name="section_stroke_name_last" xml:space="preserve">
+    <value>Letzter Schlag</value>
+  </data>
+  <data name="section_stroke_name_return" xml:space="preserve">
+    <value>Rückschlag</value>
+  </data>
+  <data name="section_stroke_name_service" xml:space="preserve">
+    <value>Aufschlag</value>
+  </data>
+  <data name="section_stroke_name_third" xml:space="preserve">
+    <value>Dritter Schlag</value>
+  </data>
+  <data name="section_stroke_won" xml:space="preserve">
+    <value>Punkt</value>
+  </data>
+  <data name="section_table" xml:space="preserve">
+    <value>Tisch</value>
+  </data>
+  <data name="section_technique" xml:space="preserve">
+    <value>Technik</value>
+  </data>
+  <data name="section_technique_banana" xml:space="preserve">
+    <value>Banane</value>
+  </data>
+  <data name="section_technique_block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="section_technique_blockchop" xml:space="preserve">
+    <value>BlockChop</value>
+  </data>
+  <data name="section_technique_blocktempo" xml:space="preserve">
+    <value>BlockTempo</value>
+  </data>
+  <data name="section_technique_chop" xml:space="preserve">
+    <value>Abwehr</value>
+  </data>
+  <data name="section_technique_counter" xml:space="preserve">
+    <value>Konter</value>
+  </data>
+  <data name="section_technique_flip" xml:space="preserve">
+    <value>Flip</value>
+  </data>
+  <data name="section_technique_lob" xml:space="preserve">
+    <value>Ballonabwehr</value>
+  </data>
+  <data name="section_technique_miscellaneous" xml:space="preserve">
+    <value>Andere</value>
+  </data>
+  <data name="section_technique_na" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="section_technique_push" xml:space="preserve">
+    <value>Schupf</value>
+  </data>
+  <data name="section_technique_pushaggressive" xml:space="preserve">
+    <value>SchupfAggressive</value>
+  </data>
+  <data name="section_technique_smash" xml:space="preserve">
+    <value>Schuss</value>
+  </data>
+  <data name="section_technique_special" xml:space="preserve">
+    <value>Spezial</value>
+  </data>
+  <data name="section_technique_topspin" xml:space="preserve">
+    <value>Topspin</value>
+  </data>
+  <data name="section_technique_topspinspin" xml:space="preserve">
+    <value>TopspinSpin</value>
+  </data>
+  <data name="section_technique_topspintempo" xml:space="preserve">
+    <value>TopspinTempo</value>
+  </data>
+  <data name="sets_all" xml:space="preserve">
+    <value>Alle Sätze</value>
+  </data>
+  <data name="sets_one" xml:space="preserve">
+    <value>Satz</value>
+  </data>
+  <data name="table_netout_label" xml:space="preserve">
+    <value>Netz/Aus</value>
+  </data>
+  <data name="technique_pendulum" xml:space="preserve">
+    <value>Pendulum</value>
+  </data>
+  <data name="section_side_steparound" xml:space="preserve">
+    <value>Hand (+Umlaufen)</value>
+  </data>
+  <data name="side_backhand_short" xml:space="preserve">
+    <value>RH</value>
+  </data>
+  <data name="side_backhand_steparound" xml:space="preserve">
+    <value>Rückhand (Umlaufen)</value>
+  </data>
+  <data name="side_backhand_steparound_short" xml:space="preserve">
+    <value>RH (U)</value>
+  </data>
+  <data name="side_forehand_short" xml:space="preserve">
+    <value>VH</value>
+  </data>
+  <data name="side_forehand_steparound" xml:space="preserve">
+    <value>Vorhand (Umlaufen)</value>
+  </data>
+  <data name="side_forehand_steparound_short" xml:space="preserve">
+    <value>VH (U)</value>
+  </data>
+  <data name="stat_not_analysed" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="technique_block_short" xml:space="preserve">
+    <value>Blk</value>
+  </data>
+  <data name="technique_chop_short" xml:space="preserve">
+    <value>Abw</value>
+  </data>
+  <data name="technique_counter_short" xml:space="preserve">
+    <value>Kntr</value>
+  </data>
+  <data name="technique_flip_short" xml:space="preserve">
+    <value>Flp</value>
+  </data>
+  <data name="technique_lob_short" xml:space="preserve">
+    <value>Blln</value>
+  </data>
+  <data name="technique_miscellaneous_short" xml:space="preserve">
+    <value>Andere</value>
+  </data>
+  <data name="technique_push_short" xml:space="preserve">
+    <value>Psh</value>
+  </data>
+  <data name="technique_reverse" xml:space="preserve">
+    <value>Gegenläufer</value>
+  </data>
+  <data name="technique_smash_short" xml:space="preserve">
+    <value>Sm</value>
+  </data>
+  <data name="technique_special" xml:space="preserve">
+    <value>Spezial</value>
+  </data>
+  <data name="technique_special_short" xml:space="preserve">
+    <value>Spzl</value>
+  </data>
+  <data name="technique_tomahawk" xml:space="preserve">
+    <value>Tomahawk</value>
+  </data>
+  <data name="technique_topspin_short" xml:space="preserve">
+    <value>TS</value>
+  </data>
+  <data name="section_basicinfo_compref" xml:space="preserve">
+    <value>Comp. Perf.</value>
+  </data>
+  <data name="section_basicinfo_player" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="section_basicinfo_ranking" xml:space="preserve">
+    <value>Ranking</value>
+  </data>
+  <data name="section_basicinfo_result" xml:space="preserve">
+    <value>Ergebnis</value>
+  </data>
+  <data name="section_basicinfo_service" xml:space="preserve">
+    <value>Aufschlag</value>
+  </data>
+  <data name="section_basicinfo_service_freq" xml:space="preserve">
+    <value>Anz.</value>
+  </data>
+  <data name="section_basicinfo_service_winprob" xml:space="preserve">
+    <value>Gew.wahrs.</value>
+  </data>
+  <data name="section_basicinfo_title" xml:space="preserve">
+    <value>Basis Informationen</value>
+  </data>
+  <data name="section_basicinfo_totalpoints" xml:space="preserve">
+    <value>Punkte gesamt</value>
+  </data>
+  <data name="section_basicinfo_winprob" xml:space="preserve">
+    <value>Gew.wahrs.</value>
+  </data>
+  <data name="section_matchdynamics_byplayer" xml:space="preserve">
+    <value>Für aufschlagenden Spieler</value>
+  </data>
+  <data name="section_matchdynamics_overall" xml:space="preserve">
+    <value>Gesamt</value>
+  </data>
+  <data name="section_matchdynamics_title" xml:space="preserve">
+    <value>Match Dynamics</value>
+  </data>
+  <data name="section_rallylength_avg_mean" xml:space="preserve">
+    <value>Mittelwert</value>
+  </data>
+  <data name="section_rallylength_avg_median" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="section_rallylength_avg_service" xml:space="preserve">
+    <value>Aufschlag</value>
+  </data>
+  <data name="section_rallylength_avg_title" xml:space="preserve">
+    <value>Durschschnitt</value>
+  </data>
+  <data name="section_rallylength_avg_totallengths" xml:space="preserve">
+    <value>Länge (gesamt)</value>
+  </data>
+  <data name="section_rallylength_avg_winner" xml:space="preserve">
+    <value>Winner</value>
+  </data>
+  <data name="section_rallylength_dist_expected" xml:space="preserve">
+    <value>erwartet</value>
+  </data>
+  <data name="section_rallylength_dist_observed" xml:space="preserve">
+    <value>beobachtet</value>
+  </data>
+  <data name="section_rallylength_dist_ralliescount" xml:space="preserve">
+    <value>#Rallies</value>
+  </data>
+  <data name="section_rallylength_dist_rallylength" xml:space="preserve">
+    <value>Rallylänge</value>
+  </data>
+  <data name="section_rallylength_title" xml:space="preserve">
+    <value>Rallylänge</value>
+  </data>
+  <data name="section_scoringprocess_title" xml:space="preserve">
+    <value>Punktverlauf</value>
+  </data>
+  <data name="section_techefficiency_error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="section_techefficiency_title" xml:space="preserve">
+    <value>Technische Effizienz</value>
+  </data>
+  <data name="section_transitionmatrix_abs_title" xml:space="preserve">
+    <value>Absolute Anzahl an Übergängen</value>
+  </data>
+  <data name="section_transitionmatrix_prob_title" xml:space="preserve">
+    <value>Übergangswahrscheinlichkeiten</value>
+  </data>
+  <data name="section_transitionmatrix_title" xml:space="preserve">
+    <value>Übergangsmatrix</value>
+  </data>
+  <data name="sets_multiple" xml:space="preserve">
+    <value>Sätze</value>
+  </data>
+  <data name="placement_error_short" xml:space="preserve">
+    <value>F</value>
+  </data>
+  <data name="placement_halflong_short" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="placement_long_short" xml:space="preserve">
+    <value>l</value>
+  </data>
+  <data name="placement_short_short" xml:space="preserve">
+    <value>k</value>
+  </data>
+  <data name="report_header_headline" xml:space="preserve">
+    <value>Tischtennis Leistungsbericht</value>
+  </data>
+  <data name="report_title" xml:space="preserve">
+    <value>Tischtennis Leistungsbericht</value>
+  </data>
+  <data name="section_rallylength_dist_title" xml:space="preserve">
+    <value>Verteilung</value>
+  </data>
+  <data name="section_technique_block_diag" xml:space="preserve">
+    <value>Block
+(diagonal)</value>
+  </data>
+  <data name="section_technique_block_middle" xml:space="preserve">
+    <value>Block
+(Mitte)</value>
+  </data>
+  <data name="section_technique_block_parallel" xml:space="preserve">
+    <value>Block
+(parallel)</value>
+  </data>
+  <data name="section_technique_push_halflong" xml:space="preserve">
+    <value>Schupf
+(halblang)</value>
+  </data>
+  <data name="section_technique_push_long" xml:space="preserve">
+    <value>Schupf
+(lang)</value>
+  </data>
+  <data name="section_technique_push_short" xml:space="preserve">
+    <value>Schupf
+(kurz)</value>
+  </data>
+  <data name="section_technique_topspin_diag" xml:space="preserve">
+    <value>Topspin
+(diagonal)</value>
+  </data>
+  <data name="section_technique_topspin_middle" xml:space="preserve">
+    <value>Topspin
+(Mitte)</value>
+  </data>
+  <data name="section_technique_topspin_parallel" xml:space="preserve">
+    <value>Topspin
+(parallel)</value>
+  </data>
+  <data name="technique_label_short" xml:space="preserve">
+    <value>T</value>
+  </data>
+  <data name="section_empty_warning" xml:space="preserve">
+    <value>Sie haben keine Statistiken für einzelne Schläge ausgewählt, deshalb ist der Spielerteil für {0} leer.</value>
+  </data>
+  <data name="sets_crunchtime" xml:space="preserve">
+    <value>Crunch Time</value>
+  </data>
+  <data name="legend_backhand_title" xml:space="preserve">
+    <value>Rückhand:</value>
+  </data>
+  <data name="legend_banana_flip_title" xml:space="preserve">
+    <value>Banane / Flip</value>
+  </data>
+  <data name="legend_block_counter_title" xml:space="preserve">
+    <value>Block / Konterball</value>
+  </data>
+  <data name="legend_chop_title" xml:space="preserve">
+    <value>Schnittabwehr</value>
+  </data>
+  <data name="legend_forehand_title" xml:space="preserve">
+    <value>Vorhand:</value>
+  </data>
+  <data name="legend_lineexplanation_intercept_title" xml:space="preserve">
+    <value>Annahme</value>
+  </data>
+  <data name="legend_lineexplanation_poc_pl_title" xml:space="preserve">
+    <value>Annahmepunkt → Platzierung</value>
+  </data>
+  <data name="legend_lob_title" xml:space="preserve">
+    <value>Ballonabwehr</value>
+  </data>
+  <data name="legend_misc_title" xml:space="preserve">
+    <value>Sonstige</value>
+  </data>
+  <data name="legend_push_title" xml:space="preserve">
+    <value>Schupfball</value>
+  </data>
+  <data name="legend_section_header" xml:space="preserve">
+    <value>Legende für Tisch</value>
+  </data>
+  <data name="legend_service_without_spin_title" xml:space="preserve">
+    <value>Aufschlag (ohne Spin)</value>
+  </data>
+  <data name="legend_service_with_spin_title" xml:space="preserve">
+    <value>Aufschlag (mit Spin)</value>
+  </data>
+  <data name="legend_smash_title" xml:space="preserve">
+    <value>Schuss</value>
+  </data>
+  <data name="legend_topspin_title" xml:space="preserve">
+    <value>Topspin</value>
+  </data>
+  <data name="part_appendix" xml:space="preserve">
+    <value>APPENDIX</value>
+  </data>
+  <data name="report_header_default_round" xml:space="preserve">
+    <value>Runde</value>
+  </data>
+  <data name="report_header_default_tournament" xml:space="preserve">
+    <value>Turnier</value>
+  </data>
+  <data name="report_header_default_category" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="report_header_default_disabilityclass" xml:space="preserve">
+    <value>Klasse</value>
+  </data>
+</root>

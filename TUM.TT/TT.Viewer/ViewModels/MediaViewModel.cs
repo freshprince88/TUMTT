@@ -1,29 +1,107 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Input;
 using TT.Models.Util.Enums;
 using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Models;
-using System.Windows.Controls.Primitives;
+using MahApps.Metro.Controls.Dialogs;
+using TT.Lib.Interfaces;
+using TT.Lib.Util;
 
 namespace TT.Viewer.ViewModels
 {
-    public class MediaViewModel : Screen,
-        IHandle<ResultsChangedEvent>,
-        IHandle<VideoPlayEvent>,
-        IHandle<MediaControlEvent>,
-        IHandle<MatchOpenedEvent>
+    public class MediaViewModel : Screen, IMediaPosition,
+        IHandle<PlayModeEvent>, IHandle<MediaControlEvent>
     {
-        private IEventAggregator events;
-        private IMatchManager Manager;
+        #region Properties
 
-        public LinkedList<Rally> Playlist { get; set; }
-        public LinkedListNode<Rally> CurrentRally { get; set; }
+        ///// <summary>
+        ///// Sets key bindings for ControlWithBindableKeyGestures
+        ///// </summary>
+        //public Dictionary<string, KeyBinding> KeyBindings
+        //{
+        //    get
+        //    {
+        //        //get all method names of this class
+        //        var methodNames = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).Select(info => info.Name);
 
-        private Media.Mute _muted;
-        public Media.Mute Muted
+        //        //get all existing key gestures that match the method names
+        //        var keyGesture = ShortcutFactory.Instance.KeyGestures.Where(pair => methodNames.Contains(pair.Key));
+
+        //        //return relevant key gestures
+        //        return keyGesture.ToDictionary(x => x.Key, x => (KeyBinding)x.Value); // TODO
+        //    }
+        //    set { }
+        //}
+
+        private TimeSpan _mediaLength;
+        public TimeSpan MediaLength
+        {
+            get
+            {
+                return _mediaLength;
+            }
+            set
+            {
+                if (_mediaLength != value)
+                    _mediaLength = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private TimeSpan _mediaPos;
+        public TimeSpan MediaPosition
+        {
+            get
+            {
+                return _mediaPos;
+            }
+            set
+            {
+                if (_mediaPos != value)
+                    _mediaPos = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private TimeSpan _endPos;
+        public TimeSpan EndPosition
+        {
+            get
+            {
+                return _endPos;
+            }
+            set
+            {
+                if (_endPos != value)
+                    _endPos = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        private bool _playing;
+        public bool IsPlaying
+        {
+            get
+            {
+                return _playing;
+            }
+            set
+            {
+                if (_playing != value)
+                {
+                    _playing = value;
+                    NotifyOfPropertyChange();
+                }
+            }
+        }
+
+        private bool _muted;
+        public bool IsMuted
         {
             get
             {
@@ -31,44 +109,14 @@ namespace TT.Viewer.ViewModels
             }
             set
             {
-                if (!_mode.Equals(value))
-
+                if (_muted != value)
                     _muted = value;
-
+                NotifyOfPropertyChange();
             }
         }
 
-        private Media.Speed _speed;
-        public Media.Speed Speed
-        {
-            get
-            {
-                return _speed;
-            }
-            set
-            {
-                if (!_mode.Equals(value))
-
-                    _speed = value;
-
-            }
-        }
-
-        private Media.Control _mode;
-        public Media.Control Control
-        {
-            get
-            {
-                return _mode;
-            }
-            set
-            {
-                _mode = value;
-            }
-        }
-
-        private Media.Fullscreen _fullscreen;
-        public Media.Fullscreen Fullscreen
+        private bool _fullscreen;
+        public bool IsFullscreen
         {
             get
             {
@@ -76,365 +124,307 @@ namespace TT.Viewer.ViewModels
             }
             set
             {
-                _fullscreen = value;
+                if (_fullscreen != value)
+                    _fullscreen = value;
+                NotifyOfPropertyChange();
             }
         }
 
-        private Media.Repeat _repeat;
-        public Media.Repeat Repeat
+        private double _min;
+        public double Minimum
         {
             get
             {
-                return _repeat;
+                return _min;
             }
             set
             {
-                _repeat = value;
+                if (_min != value)
+                    _min = value;
+                NotifyOfPropertyChange();
             }
         }
 
-        private Media.Infinite _infinite;
-        public Media.Infinite Infinite
+        private double _max;
+        public double Maximum
         {
             get
             {
-                return _infinite;
+                return _max;
             }
             set
             {
-                _infinite = value;
+                if (_max != value)
+                    _max = value;
+                NotifyOfPropertyChange();
             }
         }
 
-        public MediaViewModel(IEventAggregator eventAggregator, IMatchManager man)
-        {
-            events = eventAggregator;
-            Manager = man;
-            _speed = Media.Speed.Full;
-            _muted = Media.Mute.Unmute;
-            _mode = Media.Control.Stop;
-            _repeat = Media.Repeat.Off;
-            _infinite = Media.Infinite.Off;
-        }
+        public Match Match { get { return Manager.Match; } }
+        private IEventAggregator Events;
+        private IMatchManager Manager;
+        private IDialogCoordinator Dialogs;
+        public bool syncStart { get; set; }
+        public bool syncEnd { get; set; }
 
-        #region View Methods
-        public void PlayPause()
+        private bool _toRallyStart;
+        public bool toRallyStart
         {
-            if (this.Control == Media.Control.Pause || this.Control == Media.Control.Stop)
+            get
             {
-                Play();
+                return _toRallyStart;
             }
-            else
-                Pause();
-        }
-        public void Play()
-        {
-            if (CurrentRally != null)
+            set
             {
-                events.PublishOnUIThread(new VideoControlEvent()
+                if (_toRallyStart != value)
                 {
-                    Start = this.Control == Media.Control.Pause ? -100 : Convert.ToDouble(CurrentRally.Value.Anfang),
-                    End = Convert.ToDouble(CurrentRally.Value.Ende),
-                    PlayMode = Media.Control.Play,
-                    PlaySpeed = this.Speed,
-                    Restart = true,
-                    Init = this.Control == Media.Control.Pause ? false : true
-                });
-            }
-
-            this.Control = Media.Control.Play;
-        }
-
-        public void Pause()
-        {
-            this.Control = Media.Control.Pause;
-
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlayMode = this.Control,
-                PlaySpeed = this.Speed
-            });
-
-        }
-
-        public void Stop()
-        {
-            this.Control = Media.Control.Stop;
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlayMode = this.Control
-            });
-        }
-
-        public void Previous5Frames(MediaElement myMediaElement)
-        {
-            this.Control = Media.Control.Pause;
-            TimeSpan Position_now = myMediaElement.Position;
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlayMode = this.Control,
-                PlaySpeed = this.Speed,
-                Position = Position_now - delta_time
-            });
-
-        }
-
-        public void PreviousFrame(MediaElement myMediaElement)
-        {
-            this.Control = Media.Control.Pause;
-            TimeSpan Position_now = myMediaElement.Position;
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlayMode = this.Control,
-                PlaySpeed = this.Speed,
-                Position = Position_now - delta_time
-            });
-        }
-
-        public void Next5Frames(MediaElement myMediaElement)
-        {
-            this.Control = Media.Control.Pause;
-            TimeSpan Position_now = myMediaElement.Position;
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlayMode = this.Control,
-                PlaySpeed = this.Speed,
-                Position = Position_now + delta_time
-            });
-        }
-
-        public void NextFrame(MediaElement myMediaElement)
-        {
-            this.Control = Media.Control.Pause;
-            TimeSpan Position_now = myMediaElement.Position;
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlayMode = this.Control,
-                PlaySpeed = this.Speed,
-                Position = Position_now + delta_time
-            });
-        }
-
-        public void PreviousRally()
-        {
-
-            CurrentRally = CurrentRally == Playlist.First ? Playlist.Last : CurrentRally.Previous;
-
-            if (CurrentRally == null && Playlist.Count == 0)
-                return;
-
-            events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
-
-        }
-
-        public void NextRally()
-        {
-            CurrentRally = CurrentRally == Playlist.Last ? Playlist.First : CurrentRally.Next;
-
-            if (CurrentRally == null && Playlist.Count == 0)
-                return;
-
-            events.PublishOnUIThread(new ResultListControlEvent(CurrentRally.Value));
-        }
-
-        public void Slow75Percent(bool isChecked)
-        {
-            if (isChecked)
-                this.Speed = Media.Speed.Third;
-            else
-                this.Speed = Media.Speed.Full;
-
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlaySpeed = this.Speed,
-                PlayMode = this.Control,
-                Restart = this.Control == Media.Control.Play ? true : false
-            });
-        }
-
-        public void Slow50Percent(bool isChecked)
-        {
-            if (isChecked)
-                this.Speed = Media.Speed.Half;
-            else
-                this.Speed = Media.Speed.Full;
-
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlaySpeed = this.Speed,
-                PlayMode = this.Control,
-                Restart = this.Control == Media.Control.Play ? true : false
-            });
-        }
-
-        public void Slow25Percent(bool isChecked)
-        {
-            if (isChecked)
-                this.Speed = Media.Speed.Quarter;
-            else
-                this.Speed = Media.Speed.Full;
-
-            events.PublishOnUIThread(new VideoControlEvent()
-            {
-                PlaySpeed = this.Speed,
-                PlayMode = this.Control,
-                Restart = this.Control == Media.Control.Play ? true : false
-            });
-        }
-        public void MuteUnmute()
-        {
-            if (this.Muted == Media.Mute.Unmute)
-            {
-                Mute();
-            }
-            else if (this.Muted == Media.Mute.Mute)
-            {
-                Unmute();
+                    _toRallyStart = value;
+                    NotifyOfPropertyChange();
+                    NotifyOfPropertyChange("roRallyStart");
+                }
             }
         }
 
-        public void Mute()
+        private bool? _playMode;
+        public bool? PlayMode
         {
-            
-            this.Muted = Media.Mute.Mute;
-            events.PublishOnUIThread(this.Muted);
+            get
+            {
+                return _playMode;
+            }
+            set
+            {
+                if (_playMode != value)
+                    _playMode = value;
+                NotifyOfPropertyChange();
+            }
         }
 
-        public void Unmute()
+        #endregion
+
+        public MediaViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator cor)
         {
-            
-            this.Muted = Media.Mute.Unmute;
-            events.PublishOnUIThread(this.Muted);
+            Events = ev;
+            Manager = man;
+            IsFullscreen = false;
+            Dialogs = cor;
+            syncStart = true;
+            syncEnd = true;
+            toRallyStart = true;
+            PlayMode = false;
         }
 
-      
-        public void toFullscreen()
-        {
-            if (this.Fullscreen == Media.Fullscreen.Off)
-            {
-                this.Fullscreen = Media.Fullscreen.On;
-                events.PublishOnUIThread(new FullscreenEvent(false));
-            }
-            else if (this.Fullscreen == Media.Fullscreen.On)
-            {
-                this.Fullscreen = Media.Fullscreen.Off;
-                events.PublishOnUIThread(new FullscreenEvent(true));
-            }
-            events.PublishOnUIThread(this.Fullscreen);
-        }
-        public void toRepeat()
-        {
-            if (this.Repeat == Media.Repeat.Off)
-            {
-                this.Repeat = Media.Repeat.On;
-            }
-            else if (this.Repeat == Media.Repeat.On)
-            {
-                this.Repeat = Media.Repeat.Off;
-            }
-            events.PublishOnUIThread(this.Repeat);
-        }
-        public void toInfinite()
-        {
-            if (this.Infinite == Media.Infinite.Off)
-            {
-                
-                this.Infinite = Media.Infinite.On;
-            }
-            else if (this.Infinite == Media.Infinite.On)
-            {
-                
-                this.Infinite = Media.Infinite.Off;
-            }
-            events.PublishOnUIThread(this.Infinite);
-        }
-
-
-
-#endregion
-
-        #region Caliburn Hooks
-
-        /// <summary>
-        /// Initializes this view model.
-        /// </summary>
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-        }
+        #region Caliburn hooks
 
         protected override void OnActivate()
         {
             base.OnActivate();
-            events.Subscribe(this);
+            Events.Subscribe(this);
         }
 
-        /// <summary>
-        /// Handles deactivation of this view model.
-        /// </summary>
-        /// <param name="close">Whether the view model is closed</param>
         protected override void OnDeactivate(bool close)
         {
-            events.Unsubscribe(this);
+            Events.PublishOnUIThread(new DeactivationEvent(close));
+            Events.Unsubscribe(this);
             base.OnDeactivate(close);
         }
-            #endregion
+
+        #endregion        
+
+        public IEnumerable<IResult> Open()
+        {
+            return Manager.LoadVideo();
+        }
+
+        public void PlayModeHelper()
+        {
+            switch (PlayMode)
+            {
+                case null:
+                    PlayMode = false;
+                    break;
+                case false:
+                    PlayMode = true;
+                    break;
+                case true:
+                    PlayMode = null;
+                    break;
+            }
+        }
+
+        #region Media Methods
+
+        public void Pause()
+        {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+        }
+
+        public void Play()
+        {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Play, Media.Source.Viewer));
+        }
+
+        public void PlayPause()
+        {
+            if (IsPlaying)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
+        }
+
+        public void Stop()
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));;
+        }
+
+        public void NextFrame()
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
+            MediaPosition = MediaPosition + delta_time;
+        }
+
+        public void Next5Frames()
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
+            MediaPosition = MediaPosition + delta_time;
+        }
+
+        public void PreviousFrame()
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
+            MediaPosition = MediaPosition - delta_time;
+        }
+
+        public void Previous5Frames()
+        {            
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.Viewer));
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
+            MediaPosition = MediaPosition - delta_time;
+        }
+
+
+        public void Slow(int slow)
+        {
+            if (slow == 50)
+                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Half));
+            else if (slow == 75)
+                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Third));
+            else if (slow == 25)
+                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Quarter));
+            else
+                Events.PublishOnUIThread(new MediaSpeedEvent(Media.Speed.Full));
+        }
+
+        public void Mute()
+        {
+            IsMuted = true;
+            Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Mute));
+        }
+
+        public void UnMute()
+        {
+            IsMuted = false;
+            Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Unmute));
+        }
+        public void FullscreenHelper()
+        {
+            IsFullscreen = !IsFullscreen;
+            FullscreenOnOff();
+        }
+
+        public void FullscreenOnOff()
+        {
+            if (IsFullscreen)
+            {
+                Events.PublishOnUIThread(new FullscreenEvent(true));
+            }
+            else
+            {
+                Events.PublishOnUIThread(new FullscreenHidePlayerEvent(false));
+                Events.PublishOnUIThread(new FullscreenEvent(false));
+
+            }
+        }
+
+        public void NextRally()
+        {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Next, Media.Source.Viewer));
+        }
+
+        public void PreviousRally()
+        {
+            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Previous, Media.Source.Viewer));
+        }
+
+        public void StartRallyAtBeginning()
+        {
+            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Start);
+        }
+
+        public void PauseRallyAtBeginning()
+        {
+            MediaPosition = TimeSpan.FromMilliseconds(Manager.ActiveRally.Start);
+            Pause();
+        }
+        public void SkipForward()
+        {
+
+        }
+        public void SkipBackwards()
+        {
+
+        }
+
+        #endregion
 
         #region Event Handlers
 
-        public void Handle(ResultsChangedEvent message)
+        public void Handle(PlayModeEvent message)
         {
-            this.Playlist = new LinkedList<Rally>(message.Rallies);
-            CurrentRally = Playlist.First;
-        }
-
-        public void Handle(MediaControlEvent message)
-        {
-            switch (message.Ctrl)
+            switch (message.PlayMode)
             {
-                case Media.Control.Previous:
-                    this.PreviousRally();
+                case null:
+                    Pause();
+                    NextRally();
                     break;
-                case Media.Control.Next:
-                    this.NextRally();
+                case false:
+                    PauseRallyAtBeginning();
                     break;
-                case Media.Control.Pause:
-                    this.Pause();
+                case true:
+                    StartRallyAtBeginning();
                     break;
                 default:
                     break;
             }
         }
 
-        public void Handle(VideoPlayEvent message)
+        public void Handle(MediaControlEvent message)
         {
-            Rally r = message.Current;
-            CurrentRally = Playlist.Find(r);
-            this.Control = Media.Control.Play;
-            Play();
+            if (message.Source == Media.Source.Viewer)
+            {
+                switch (message.Ctrl)
+                {
+                    case Media.Control.Stop:
+                        IsPlaying = false;
+                        break;
+                    case Media.Control.Pause:
+                        IsPlaying = false;
+                        break;
+                    case Media.Control.Play:
+                        IsPlaying = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
-
-        public void Handle(MatchOpenedEvent message)
-        {
-            this.Speed = Media.Speed.Full;
-            this.Muted = Media.Mute.Unmute;
-            this.Control = Media.Control.Stop;
-            this.Repeat = Media.Repeat.Off;
-            this.Infinite = Media.Infinite.Off;
-            events.PublishOnUIThread(this.Infinite);
-            events.PublishOnUIThread(this.Repeat);
-            events.PublishOnUIThread(this.Muted);
-            events.PublishOnUIThread(this.Speed);
-            events.PublishOnUIThread(this.Control);
-        }
-
-        #endregion
-
-        #region Helper Methods
 
         #endregion
     }

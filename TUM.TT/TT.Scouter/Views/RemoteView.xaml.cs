@@ -2,43 +2,27 @@
 using System.Linq;
 using System.Windows.Controls;
 using TT.Lib.Events;
+using TT.Lib.Managers;
 using TT.Models;
+using TT.Lib.Views;
+
 
 namespace TT.Scouter.Views
 {
     /// <summary>
     /// Interaction logic for RemoteView.xaml
     /// </summary>
-    public partial class RemoteView : UserControl,
-        IHandle<ResultListControlEvent>
+    public partial class RemoteView : ControlWithBindableKeyGestures
     {
         public IEventAggregator Events { get; private set; }
+        public IMatchManager Manager { get; private set; }
 
         public RemoteView()
         {
             InitializeComponent();
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
-        }
-
-
-        public void Handle(ResultListControlEvent msg)
-        {
-            var newSelection = Items.Items.Cast<Rally>().Where(i => i.Equals(msg.SelectedRally)).FirstOrDefault();
-
-            if (newSelection != null && Items.SelectedItem != newSelection)
-                Items.SelectedItem = newSelection;
-            else
-            {
-                if (newSelection != null)
-                {
-                    Events.PublishOnUIThread(new VideoPlayEvent()
-                    {
-                        Current = newSelection
-                    });
-                }
-            }
-
+            Manager = IoC.Get<IMatchManager>();
         }
     }
 }

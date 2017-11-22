@@ -24,7 +24,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <!--<Grid>
         <controls:Tile Title="Open match" Grid.Column="2" cal:Message.Attach="[Event Click] = [Action OpenMatch()]" Background="{DynamicResource AccentColorBrush}">
             <Rectangle Width="48" Height="48" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Tile}}}">
@@ -33,5 +33,13 @@
                 </Rectangle.OpacityMask>
             </Rectangle>
         </controls:Tile>
+    </Grid>-->
+    <Grid>
+        <StackPanel VerticalAlignment="Center" >
+            <Label Content="TUM.TT Viewer" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Light" FontSize="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{DynamicResource AccentColorBrush3}"></Label>
+            <Label Content="Developers: Sebastian Wenninger - Tom Ladek - Michael Fuchs" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Light" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{DynamicResource AccentColorBrush3}"></Label>
+            <Label Content="BISp-Projekt: ZMVI1-070602/15-16" Foreground="{DynamicResource AccentColorBrush}" FontWeight="Light" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{DynamicResource AccentColorBrush3}"></Label>
+
+        </StackPanel>
     </Grid>
 </UserControl>

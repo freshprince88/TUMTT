@@ -3,8 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:views="clr-namespace:TT.Lib.Views;assembly=TT.Lib"
              xmlns:local="clr-namespace:TT.Scouter.Views"
-             xmlns:conv="clr-namespace:TT.Lib.Converters;assembly=TT.Lib"
+             xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1024">
@@ -42,15 +47,23 @@
                 </TabItem.Header>-->
 
                 <ContentControl x:Name="LiveView" />
-                
+
             </TabItem>
-            <TabItem Header="Remote">
+            <TabItem Header="Remote" Visibility="{Binding Path=LiveView.ViewMode, Converter={conv:VideoSourceToVisibilityConverter}}" >
+                <!--IsEnabled="{Binding Path=LiveView.ViewMode, Converter={conv:VideoSourceToBoolConverter}}">-->
+                <TabItem.IsEnabled>
+                    <MultiBinding Converter="{conv:VideoSourceAndRallyCountToBoolConverter}">
+                        <Binding Path="LiveView.ViewMode"/>
+                        <Binding Path="LiveView.Rallies.Count"/>
+                    </MultiBinding>
+                </TabItem.IsEnabled>
                 <TabItem.Width>
                     <MultiBinding Converter="{conv:TabSizeConverter}">
                         <Binding Path="ActualWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}"/>
                         <Binding Path="Items.Count" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:MetroAnimatedTabControl}}"/>
                     </MultiBinding>
                 </TabItem.Width>
+
                 <!--<TabItem.Header>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Rectangle Width="25" Height="25" Fill="{DynamicResource AccentColorBrush2}">
@@ -63,9 +76,27 @@
                     </StackPanel>
 
                 </TabItem.Header>-->
-
                 <ContentControl x:Name="RemoteView" />
+            </TabItem>
 
+            <TabItem Header="Add Video File" Visibility="{Binding Path=LiveView.ViewMode, Converter={conv:VideoSourceToNotVisibilityConverter}}" >
+                <TabItem.Width>
+                    <MultiBinding Converter="{conv:TabSizeConverter}">
+                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}"/>
+                        <Binding Path="Items.Count" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:MetroAnimatedTabControl}}"/>
+                    </MultiBinding>
+                </TabItem.Width>
+                <TabItem.Template>
+                    <ControlTemplate>
+                        <Button Style="{StaticResource MetroAccentFlatAccent}" Content="Add Video File" FontSize="{DynamicResource TabItemFontSize}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <cal:ActionMessage MethodName="AddVideoFile" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </ControlTemplate>
+                </TabItem.Template>
             </TabItem>
         </Controls:MetroAnimatedTabControl>
     </Grid>
