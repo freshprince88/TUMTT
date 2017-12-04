@@ -34,6 +34,9 @@ namespace TT.Viewer.ViewModels
         }
         public Models.Util.Enums.Stroke.Player Player { get; private set; }
         public Models.Util.Enums.Stroke.Crunch Crunch { get; private set; }
+        public Models.Util.Enums.Stroke.BeginningOfGame BeginningOfGame { get; private set; }
+        public Models.Util.Enums.Stroke.GamePhase GamePhase { get; private set; }
+
         public HashSet<int> SelectedSets { get; private set; }
         public int MinRallyLength { get; set; }
         public bool LastStroke { get; set; }
@@ -57,6 +60,7 @@ namespace TT.Viewer.ViewModels
             SelectedRallies = new List<Rally>();
             Player = Models.Util.Enums.Stroke.Player.None;
             Crunch = Models.Util.Enums.Stroke.Crunch.Not;
+            BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.Not;
             SelectedSets = new HashSet<int>();
 
             Player1 = "Spieler 1";
@@ -180,11 +184,37 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    Crunch = Models.Util.Enums.Stroke.Crunch.CrunchTime;
+                    //Crunch = Models.Util.Enums.Stroke.Crunch.CrunchTime;
+                    //BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.Not;
+                    GamePhase = Models.Util.Enums.Stroke.GamePhase.CrunchTime;
+
                 }
                 else
                 {
-                    Crunch = Models.Util.Enums.Stroke.Crunch.Not;
+                    //Crunch = Models.Util.Enums.Stroke.Crunch.Not;
+                    GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
+
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void BeginningOfGameOrNot(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("beginningofgame"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    //BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.BeginningOfGame;
+                    //Crunch = Models.Util.Enums.Stroke.Crunch.Not;
+                    GamePhase = Models.Util.Enums.Stroke.GamePhase.BeginningOfGame;
+
+
+                }
+                else
+                {
+                    //BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.Not;
+                    GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
+
                 }
             }
             UpdateSelection(Manager.ActivePlaylist);
@@ -296,7 +326,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasCrunchTime(r) && HasPlayer(r)).ToList();
+                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasGamePhase(r) && HasPlayer(r)).ToList();
                 this.events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -355,6 +385,33 @@ namespace TT.Viewer.ViewModels
                 case Models.Util.Enums.Stroke.Crunch.CrunchTime:
                     return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
                 case Models.Util.Enums.Stroke.Crunch.Not:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        private bool HasBeginningOfGame(Rally r)
+        {
+            switch (this.BeginningOfGame)
+            {
+                case Models.Util.Enums.Stroke.BeginningOfGame.BeginningOfGame:
+                    return (((Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) <= 8) && (Convert.ToInt32(r.CurrentRallyScore.First) <= 4) && (Convert.ToInt32(r.CurrentRallyScore.Second) <= 4));
+                case Models.Util.Enums.Stroke.BeginningOfGame.Not:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private bool HasGamePhase(Rally r)
+        {
+            switch (this.GamePhase)
+            {
+                case Models.Util.Enums.Stroke.GamePhase.BeginningOfGame:
+                    return (((Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) <= 8) && (Convert.ToInt32(r.CurrentRallyScore.First) <= 4) && (Convert.ToInt32(r.CurrentRallyScore.Second) <= 4));
+                case Models.Util.Enums.Stroke.GamePhase.CrunchTime:
+                    return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
+                case Models.Util.Enums.Stroke.GamePhase.Not:
                     return true;
                 default:
                     return false;

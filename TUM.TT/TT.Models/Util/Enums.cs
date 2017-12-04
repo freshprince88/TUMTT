@@ -197,6 +197,17 @@
             CrunchTime,
             Not
         }
+        public enum BeginningOfGame
+        {
+            BeginningOfGame,
+            Not
+        }
+        public enum GamePhase
+        {
+            BeginningOfGame,
+            CrunchTime,
+            Not
+        }
 
         public enum Specials
         {

@@ -117,7 +117,9 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"  FontSize="10" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="Option:"/>
-                <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="2"  Content="Crunch-Time" 
+                <ToggleButton  x:Name="FilterGameBeginningOfGameButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="1" Grid.ColumnSpan="1"  Content="Beginning" 
+                               cal:Message.Attach="[Event Click] = [Action BeginningOfGameOrNot($source)]" IsChecked="{Binding Path=BeginningOfGame, Converter={conv:BeginningOfGameToBoolConverter}, Mode=OneWay}"/>
+                <ToggleButton  x:Name="FilterGameCrunchTimeButton" MinWidth="80" MaxWidth="120" Height="30" Style="{StaticResource MetroAccentToggle}"  Grid.Column="2" Grid.ColumnSpan="1"  Content="Crunch-Time" 
                                cal:Message.Attach="[Event Click] = [Action CrunchOrNot($source)]" IsChecked="{Binding Path=Crunch, Converter={conv:CrunchToBoolConverter}, Mode=OneWay}"/>
             </Grid>
             <TextBlock Grid.Row="2" Grid.Column="0" FontSize="10" Margin="5 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Point:"/>

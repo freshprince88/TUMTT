@@ -51,6 +51,7 @@
     <Compile Include="AggressivenessToBoolConverter.cs" />
     <Compile Include="AggressivenessToBoolScouterConverter.cs" />
     <Compile Include="BaseConverter.cs" />
+    <Compile Include="BeginningOfGameToBoolConverter.cs" />
     <Compile Include="BoolAndConverter.cs" />
     <Compile Include="BoolNotConverter.cs" />
     <Compile Include="BoolNotToVisibilityConverter.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="NumToPrevVisibleConverter.cs" />
     <Compile Include="OpeningShotP1P2toBoolConverter.cs" />
     <Compile Include="OpeningShotToBoolConverter.cs" />
+    <Compile Include="PhaseToBoolConverter.cs" />
     <Compile Include="PlayerP1P2ToBoolConverter.cs" />
     <Compile Include="PlayerToStringConverter.cs" />
     <Compile Include="PointP1P2ToBoolConverter.cs" />
