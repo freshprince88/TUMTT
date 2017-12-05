@@ -206,6 +206,7 @@
         {
             BeginningOfGame,
             CrunchTime,
+            AllPhases,
             Not
         }
 

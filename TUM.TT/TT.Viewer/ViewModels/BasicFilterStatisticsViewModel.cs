@@ -61,6 +61,7 @@ namespace TT.Viewer.ViewModels
             Player = Models.Util.Enums.Stroke.Player.None;
             Crunch = Models.Util.Enums.Stroke.Crunch.Not;
             BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.Not;
+            GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
             SelectedSets = new HashSet<int>();
 
             Player1 = "Spieler 1";
@@ -184,15 +185,13 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    //Crunch = Models.Util.Enums.Stroke.Crunch.CrunchTime;
-                    //BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.Not;
-                    GamePhase = Models.Util.Enums.Stroke.GamePhase.CrunchTime;
+                    Crunch = Models.Util.Enums.Stroke.Crunch.CrunchTime;
 
                 }
                 else
                 {
-                    //Crunch = Models.Util.Enums.Stroke.Crunch.Not;
-                    GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
+                    Crunch = Models.Util.Enums.Stroke.Crunch.Not;
+                    //GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
 
                 }
             }
@@ -204,19 +203,55 @@ namespace TT.Viewer.ViewModels
             {
                 if (source.IsChecked.Value)
                 {
-                    //BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.BeginningOfGame;
-                    //Crunch = Models.Util.Enums.Stroke.Crunch.Not;
-                    GamePhase = Models.Util.Enums.Stroke.GamePhase.BeginningOfGame;
-
+                    BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.BeginningOfGame;
+                    
 
                 }
                 else
                 {
-                    //BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.Not;
-                    GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
+                    BeginningOfGame = Models.Util.Enums.Stroke.BeginningOfGame.Not;
 
                 }
             }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+        public void CrunchOrBeginningPhase(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("beginningofgame"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (GamePhase == Models.Util.Enums.Stroke.GamePhase.Not)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.BeginningOfGame;
+                    else if (GamePhase == Models.Util.Enums.Stroke.GamePhase.CrunchTime)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.AllPhases;
+                }
+                else
+                {
+                    if (GamePhase == Models.Util.Enums.Stroke.GamePhase.BeginningOfGame)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
+                    else if (GamePhase == Models.Util.Enums.Stroke.GamePhase.AllPhases)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.CrunchTime;
+                }
+            }
+            else if (source.Name.ToLower().Contains("crunchtime"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    if (GamePhase == Models.Util.Enums.Stroke.GamePhase.Not)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.CrunchTime;
+                    else if (GamePhase == Models.Util.Enums.Stroke.GamePhase.BeginningOfGame)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.AllPhases;
+                }
+                else
+                {
+                    if (GamePhase == Models.Util.Enums.Stroke.GamePhase.CrunchTime)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.Not;
+                    else if (GamePhase == Models.Util.Enums.Stroke.GamePhase.AllPhases)
+                        GamePhase = Models.Util.Enums.Stroke.GamePhase.BeginningOfGame;
+                }
+            }
+
             UpdateSelection(Manager.ActivePlaylist);
         }
 
@@ -411,6 +446,8 @@ namespace TT.Viewer.ViewModels
                     return (((Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) <= 8) && (Convert.ToInt32(r.CurrentRallyScore.First) <= 4) && (Convert.ToInt32(r.CurrentRallyScore.Second) <= 4));
                 case Models.Util.Enums.Stroke.GamePhase.CrunchTime:
                     return (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16;
+                case Models.Util.Enums.Stroke.GamePhase.AllPhases:
+                    return ((((Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) <= 8) && (Convert.ToInt32(r.CurrentRallyScore.First) <= 4) && (Convert.ToInt32(r.CurrentRallyScore.Second) <= 4)) || (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16);
                 case Models.Util.Enums.Stroke.GamePhase.Not:
                     return true;
                 default:
