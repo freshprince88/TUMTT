@@ -75,7 +75,7 @@ namespace TT.Models.Api
             MatchMeta.Tournament = Match.Tournament;
             MatchMeta.Category = EnumExtensions.GetDescription<MatchCategory>(Match.Category);
             MatchMeta.Mode = EnumExtensions.GetDescription<MatchMode>(Match.Mode);
-            MatchMeta.Round = Match.Round;
+            MatchMeta.Round = EnumExtensions.GetDescription<MatchRound>(Match.Round);
             MatchMeta.Date = Match.DateTime;
 
             MatchMeta.FirstPlayer = PlayerMeta.fromPlayer(Match.FirstPlayer);
