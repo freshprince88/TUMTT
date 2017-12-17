@@ -88,7 +88,7 @@ namespace TT.Models.Serialization
         /// <param name="match">The match to serialize</param>
         public void Serialize(Stream stream, Match match)
         {
-            var pkg = new ExcelPackage();
+            var pkg = new ExcelPackage(stream);
             var sheet = pkg.Workbook.Worksheets.Add("Raw data");
 
             // The match metadata
@@ -162,6 +162,7 @@ namespace TT.Models.Serialization
             }
 
             pkg.SaveAs(stream);
+            stream.Close();                     
         }
 
         /// <summary>

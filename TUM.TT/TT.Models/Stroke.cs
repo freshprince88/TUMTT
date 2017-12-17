@@ -1144,7 +1144,6 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref us, value);
-                NotifyPropertyChanged();
             }
         }
 
@@ -1159,7 +1158,6 @@ namespace TT.Models
             set
             {
                 RaiseAndSetIfChanged(ref ts, value);
-                NotifyPropertyChanged();
 
             }
         }

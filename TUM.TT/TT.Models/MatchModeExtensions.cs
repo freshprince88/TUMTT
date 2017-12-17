@@ -83,6 +83,17 @@ namespace TT.Models
         /// </summary>
         [Description("Group Stage/Qualification")]
         GroupStage,
+        /// <summary>
+        /// Bronze Medal Match.
+        /// </summary>
+        [Description("BronzeMedalMatch")]
+        BronzeMedalMatch,
+        /// <summary>
+        /// Placement Match.
+        /// </summary>
+        [Description("PlacementMatch")]
+        PlacementMatch,
+       
     }
 
     /// <summary>

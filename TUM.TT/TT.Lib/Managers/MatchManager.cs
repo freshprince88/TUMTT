@@ -299,7 +299,7 @@ namespace TT.Lib.Managers
 
             var fileName = dialog.Result;
 
-            var serialization = new SerializeMatchResult(Match, FileName, Format.Excel.Serializer);
+            var serialization = new SerializeMatchResult(Match, fileName, Format.Excel.Serializer);
             yield return serialization
                .Rescue()
                .WithMessage("Error exporting the match", string.Format("Could not export the match to {0}.", FileName))
