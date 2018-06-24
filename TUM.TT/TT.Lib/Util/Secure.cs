@@ -11,8 +11,8 @@ namespace TT.Lib.Util
     public class Secure
     {
         private string globalPath;
-        private string startDate = Base64Encode(new DateTime(2017, 01, 01).ToShortDateString());
-        private string endDate = Base64Encode(new DateTime(2018, 01, 01).ToShortDateString());
+        private string startDate = Base64Encode(new DateTime(2018, 01, 01).ToShortDateString());
+        private string endDate = Base64Encode(new DateTime(2019, 01, 01).ToShortDateString());
 
 
         public enum Mode

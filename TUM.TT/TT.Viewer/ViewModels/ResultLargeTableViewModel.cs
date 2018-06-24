@@ -121,6 +121,10 @@ namespace TT.Viewer.ViewModels
                 Stroke stroke;
                 if (RallyLength == 5)
                 {
+                    stroke = r.OpeningShot();
+                }
+                else if (RallyLength == 6)
+                {
                     stroke = r.LastWinnerStroke();
                 }
                 else
