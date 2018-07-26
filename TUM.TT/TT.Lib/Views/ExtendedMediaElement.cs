@@ -107,6 +107,7 @@ namespace TT.Lib.Views
             Events.Subscribe(this);
             MediaOpened += MediaOpenedHandler;
             MediaEnded += MediaEndedHandler;
+            this.Volume = 1.0;
 
             mediaTimer = new DispatcherTimer();
             mediaTimer.Interval = TimeSpan.FromMilliseconds(100);
