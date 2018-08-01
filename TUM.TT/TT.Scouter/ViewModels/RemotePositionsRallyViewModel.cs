@@ -444,12 +444,13 @@ namespace TT.Scouter.ViewModels
 
         private void showCorrectStrokes()
         {
-            for (int i = 0; i < DrawnStrokes.Count; i++)
+            for (int i = 0; i < Strokes.Count; i++)
             {
                 if (Math.Abs((CurrentStroke.Number - 1 - i)) <= (_maxVisibleStrokes - 1) / 2)
                 {
                     if (Strokes.Count > 0 && Strokes[i].Placement != null && Strokes[i].Placement.WX >= 0 && Strokes[i].Placement.WY >= 0) DrawnStrokes[i].g.Visibility = Visibility.Visible;
-                } else
+                }
+                else
                 {
                     DrawnStrokes[i].g.Visibility = Visibility.Hidden;
                 }
