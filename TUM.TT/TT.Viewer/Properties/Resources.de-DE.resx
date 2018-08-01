@@ -331,4 +331,7 @@ Keine Vorschau möglich.</value>
   <data name="statistics" xml:space="preserve">
     <value>Statistik</value>
   </data>
+  <data name="ui_rallylength_short" xml:space="preserve">
+    <value>Länge</value>
+  </data>
 </root>

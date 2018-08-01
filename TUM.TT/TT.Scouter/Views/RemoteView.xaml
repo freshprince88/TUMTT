@@ -165,15 +165,16 @@
                 </Viewbox>
 
                 <TextBox Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Path=LengthHelper, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
-                <ToggleButton  x:Name="AddToMarkedPlaylist" Style="{StaticResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="4" Grid.Column="5" Height="20" Width="20" Foreground="White" IsChecked="{Binding IsMarked}" cal:Message.Attach="[Event Click] = [Action AddToMarkedPlaylist()]">
-                    <Rectangle Width="15" Height="15" 
+                <ToggleButton  x:Name="AddToMarkedPlaylist" Grid.Row="4" Grid.Column="5" Style="{DynamicResource MetroAccentFlatReverseToggle}"  IsChecked="{Binding IsMarked}" cal:Message.Attach="[Event Click] = [Action AddToMarkedPlaylist()]">
+                    <Rectangle Width="25" Height="25" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform"
-                          Visual="{DynamicResource appbar_heart}" />
+                          Visual="{DynamicResource appbar_heart}"  />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </ToggleButton>
+                
             </Grid>
 
             <Border Grid.Column="0" BorderThickness="0 0 3 0" BorderBrush="Gray"/>

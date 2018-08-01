@@ -719,5 +719,14 @@ namespace TT.Viewer.Properties {
                 return ResourceManager.GetString("table_tooltip_score_set", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Length ähnelt.
+        /// </summary>
+        public static string ui_rallylength_short {
+            get {
+                return ResourceManager.GetString("ui_rallylength_short", resourceCulture);
+            }
+        }
     }
 }
