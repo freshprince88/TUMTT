@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="ScouterRes.de_DE" Directory="DE_RES_FOLDER"
+                    Source="$(var.TT.Scouter.TargetDir).\de-DE\">
+      <Component>
+        <File Name="TT.Scouter.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
