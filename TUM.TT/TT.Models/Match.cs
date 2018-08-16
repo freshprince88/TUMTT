@@ -91,7 +91,10 @@ namespace TT.Models
         /// </summary>
         public Match()
         {
-            this.id = new Guid();
+            if (this.id == null || this.id == Guid.Empty)
+            {
+                this.id = Guid.NewGuid();
+            }
             this.tournament = Properties.Resources.tournament_title_default;
             this.playlists.CollectionChanged += this.OnPlaylistsChanged;
             this.rallies.CollectionChanged += this.OnRalliesChanged;
@@ -100,9 +103,12 @@ namespace TT.Models
         /// <summary>
         ///  Gets the Unique ID of this match
         /// </summary>
+        [XmlAttribute]
+
         public Guid ID
         {
             get { return this.id; }
+            set { this.id = value; }
         }
 
         /// <summary>
