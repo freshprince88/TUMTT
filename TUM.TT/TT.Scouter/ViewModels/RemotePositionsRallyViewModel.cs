@@ -444,7 +444,8 @@ namespace TT.Scouter.ViewModels
 
         private void showCorrectStrokes()
         {
-            for (int i = 0; i < DrawnStrokes.Count; i++)
+            if (Strokes.Count == DrawnStrokes.Count) { 
+            for (int i = 0; i < Strokes.Count; i++)
             {
                 if (Math.Abs((CurrentStroke.Number - 1 - i)) <= (_maxVisibleStrokes - 1) / 2)
                 {
@@ -454,6 +455,7 @@ namespace TT.Scouter.ViewModels
                 {
                     DrawnStrokes[i].g.Visibility = Visibility.Hidden;
                 }
+            }
             }
         }
 
