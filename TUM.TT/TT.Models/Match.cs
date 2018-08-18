@@ -94,6 +94,7 @@ namespace TT.Models
             if (this.id == null || this.id == Guid.Empty)
             {
                 this.id = Guid.NewGuid();
+                
             }
             this.tournament = Properties.Resources.tournament_title_default;
             this.playlists.CollectionChanged += this.OnPlaylistsChanged;
@@ -108,7 +109,7 @@ namespace TT.Models
         public Guid ID
         {
             get { return this.id; }
-            set { this.id = value; }
+            set { this.RaiseAndSetIfChanged(ref this.id, value); }
         }
 
         /// <summary>
