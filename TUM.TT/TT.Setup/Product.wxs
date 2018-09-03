@@ -25,6 +25,7 @@
       <Feature Id="Viewer" Title="Viewer" Level="1">
         <ComponentGroupRef Id="DependencyComponents" />
         <ComponentGroupRef Id="ViewerComponents" />
+        <ComponentGroupRef Id="ResourceComponents" />
       </Feature>
 
       <Feature Id="Scouter" Title="Scouter" Level="99">
@@ -50,6 +51,11 @@
           <Component Id="RemoveInstallFolder" Guid="{4F886F4F-3929-4C43-8490-021873AB955E}">
             <RemoveFolder Id="RM_InstallFolder" On="uninstall"/>
           </Component>
+          <Directory Id="DE_RES_FOLDER" Name="de-DE">
+            <Component Id="RemoveResourceFolder" Guid="{DFF80606-DCE2-4425-9E6C-CCD70C4DFFC7}">
+              <RemoveFolder Id="RM_ResourceFolder" On="uninstall"/>
+            </Component>
+          </Directory>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -78,6 +84,14 @@
       <ComponentGroupRef Id="ListView" />
       <ComponentGroupRef Id="TeamFoundation.Controls"/>
       <ComponentRef Id="RemoveInstallFolder"/>
+      <ComponentRef Id="RemoveResourceFolder"/>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <!-- Resources-->
+    <ComponentGroup Id="ResourceComponents" Directory="DE_RES_FOLDER">
+      <ComponentGroupRef Id="Resources.de_DE"/>
     </ComponentGroup>
   </Fragment>
 

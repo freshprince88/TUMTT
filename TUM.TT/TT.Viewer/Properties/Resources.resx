@@ -338,4 +338,7 @@ Preview not available.</value>
   <data name="statistics" xml:space="preserve">
     <value>Statistics</value>
   </data>
+  <data name="ui_rallylength_short" xml:space="preserve">
+    <value>Length</value>
+  </data>
 </root>

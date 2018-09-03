@@ -15,7 +15,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
-    <SuppressIces>ICE38;ICE91</SuppressIces>
+    <SuppressIces>ICE38;ICE91;ICE30</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -36,6 +36,9 @@
     <Compile Include="OxyPlot.wxs" />
     <Compile Include="PdfSharp.wxs" />
     <Compile Include="Product.wxs" />
+    <Compile Include="Resources.de_DE.wxs" />
+    <Compile Include="ScouterRes.de_DE.wxs" />
+    <Compile Include="ViewerRes.de_DE.wxs" />
     <Compile Include="System.Windows.Interactivity.wxs" />
     <Compile Include="Scouter.wxs" />
     <Compile Include="TeamFoundation.Controls.wxs" />

@@ -11,6 +11,7 @@
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:prop="clr-namespace:TT.Scouter.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024"
              Background="{DynamicResource AccentColorBrush4}"
@@ -18,18 +19,24 @@
              x:Name="LiveViewRef">
 
     <UserControl.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <conv:MatchPlayerToStringConverter x:Key="MatchPlayerToStringConverter"
                                                Player1="{Binding DataContext.Match.FirstPlayer, Source={x:Reference LiveViewRef}}" 
                                                Player2="{Binding DataContext.Match.SecondPlayer, Source={x:Reference LiveViewRef}}" />
+
+            <prop:Resources x:Key ="LocalizedStrings"/>
             <!-- See 
                  http://stackoverflow.com/questions/7445119/improved-ivalueconverter-markupextension-or-dependencyobject 
                  http://stackoverflow.com/questions/21505449/binding-datacontext-in-resources
                  on why the converter has to be a dependency object and why there has to be the x:Reference nonsense -->
         </ResourceDictionary>
+        
+
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="Left" Command="{Binding RallyWon}">
@@ -44,7 +51,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -64,11 +71,14 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding Number}" />
+                            <Label Content="{Binding Number}" ContentStringFormat="#{0}" />
                             <Label Content="{Binding CurrentRallyScore}" FontWeight="Bold"/>
-                            <Label Content="{Binding CurrentSetScore, StringFormat=({0})}" />
+                            <Label Content="{Binding CurrentSetScore}" ContentStringFormat="({0})"/>
+                            <Label Content="|"/>
                             <Label Content="{Binding Winner, Converter={StaticResource MatchPlayerToStringConverter}}" />
-                            <Label Content="{Binding Length, StringFormat='Länge {}'}" />
+                            <Label Content="|"/>
+                            <Label Content="{Binding Path=ui_rallylength_short, Source={StaticResource LocalizedStrings}}"/>
+                            <Label Content="{Binding Length}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
