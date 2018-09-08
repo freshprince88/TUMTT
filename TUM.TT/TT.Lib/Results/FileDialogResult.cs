@@ -78,9 +78,12 @@ namespace TT.Lib.Results
                 dialog.Filter = this.Filter;
                 dialog.FileName = this.DefaultFileName;
                 var test1 = context.View as FrameworkElement;
-                var test2 = Window.GetWindow(test1);
-                this.Result = dialog.ShowDialog(test2) == true ?
-                             dialog.FileName : null;
+                if (test1 != null)
+                {
+                    var test2 = Window.GetWindow(test1);
+                    this.Result = dialog.ShowDialog(test2) == true ? dialog.FileName : null;
+                }
+
 
                 var args = new ResultCompletionEventArgs()
                 {
