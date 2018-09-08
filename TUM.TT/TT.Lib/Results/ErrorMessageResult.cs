@@ -49,7 +49,7 @@ namespace TT.Lib.Results
             var shell = (IoC.Get<IShell>() as Screen); //context.Target
 
             var curWindow=Application.Current;
-            var result = await Dialogs.ShowMessageAsync(context.Target, this.Title,
+            var result = await Dialogs.ShowMessageAsync(context.Target ?? shell, this.Title,
                 this.Message,
                 MessageDialogStyle.Affirmative, mySettings);
 
