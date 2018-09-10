@@ -225,7 +225,7 @@ namespace TT.Lib.Managers
             bool haveToAddAgain = false;
             if (Match.Rallies.Any())
             {
-                if (lastRally.Winner == MatchPlayer.None)
+                if (lastRally.Winner == MatchPlayer.None && Match.Rallies.Count > 0)
                 {
                     Match.Rallies.Remove(lastRally);
                     haveToAddAgain = true;
@@ -338,7 +338,7 @@ namespace TT.Lib.Managers
 
         }
 
-        public IEnumerable<IResult> OpenMatch(string fileName = null)
+        public IEnumerable<IResult> OpenMatch(string fileName = null, string videoFile=null)
         {
             Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Stop, Media.Source.Viewer));
             bool newVideoLoaded = false;
@@ -363,6 +363,12 @@ namespace TT.Lib.Managers
                 .Propagate(); // Reraise the error to abort the coroutine            
 
             var tempMatch = deserialization.Result;
+
+            if (!string.IsNullOrEmpty(videoFile))
+            {
+                tempMatch.VideoFile = videoFile;
+                MatchModified = true;
+            }
 
             if (string.IsNullOrEmpty(tempMatch.VideoFile) || !File.Exists(tempMatch.VideoFile))
             {

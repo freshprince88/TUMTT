@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using LiteDB;
 using TT.Lib.Events;
-using TT.Lib.Api;
+using TT.Lib.Util;
 using TT.Models.Api;
 using TT.Lib.Properties;
 using Caliburn.Micro;
@@ -26,8 +26,13 @@ namespace TT.Lib.Managers
         private IEventAggregator EventAggregator { get; set; }
         public IMatchManager MatchManager { get; set; }
 
-        private LiteDatabase db { get; }
-        private string libraryPath { get; set; }
+        private LiteDatabase db { get; set; }
+        public string LibraryPath { get; private set; }
+
+        private const string matchesCollection = "matches";
+        private const string libraryFileName = "Library.db";
+        private const string analysisExtension = ".tto";
+        private const string videoExtension = ".mp4";
         #endregion
 
         #region Calculated Properties
@@ -37,42 +42,95 @@ namespace TT.Lib.Managers
         {
             EventAggregator = eventAggregator;
             this.MatchManager = matchManager;
-
             EventAggregator.Subscribe(this);
 
-            libraryPath = Settings.Default.LocalLibraryPath;
-            string libraryFile = Path.Combine(libraryPath, "Library.db");
-            db = new LiteDatabase(libraryFile);
+            LibraryPath = Settings.Default.LocalLibraryPath;
             initDb();
+            resetDb(false);
         }
+
+        #region Static Functions
+        public static void GenerateThumbnail(string videoPath, string thumbPath)
+        {
+            if (File.Exists(thumbPath))
+            {
+                File.Delete(thumbPath);
+            }
+
+            var ffmpeg = new NReco.VideoConverter.FFMpegConverter();
+            ffmpeg.GetVideoThumbnail(videoPath, thumbPath);
+        }
+        #endregion
+
+        #region Path Generator
+        public string GetMatchFilePath(MatchMeta match)
+        {
+            return Path.Combine(LibraryPath, MatchMetaExtensions.DefaultFilename(match) + analysisExtension);
+        }
+
+        public string GetVideoFilePath(MatchMeta match)
+        {
+            return Path.Combine(LibraryPath, MatchMetaExtensions.DefaultFilename(match) + videoExtension);
+        }
+
+        public string GetThumbnailPath(MatchMeta match)
+        {
+            return Path.Combine(LibraryPath, match.Guid.ToString());
+        }
+
+        #endregion
+
+        #region Database scaffolding
 
         private void initDb()
         {
-            var col = db.GetCollection<MatchMeta>("matches");
+            string libraryFile = Path.Combine(LibraryPath, libraryFileName);
+            db = new LiteDatabase(libraryFile);
+            var col = db.GetCollection<MatchMeta>(matchesCollection);
             col.EnsureIndex(x => x.Guid, true);
             col.EnsureIndex(x => x.LastOpenedAt, false);
         }
 
-        public IEnumerable<MatchMeta> GetMatches(String query = null)
+        public void resetDb(bool deleteFiles = false)
         {
-            var col = db.GetCollection<MatchMeta>("matches");
-            var results = col.Find(Query.All("LastOpenedAt", Query.Descending), 0, 100);
+            if (deleteFiles) {
+                DirectoryInfo di = new DirectoryInfo(LibraryPath);
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    try
+                    {
+                        file.Delete();
+                    }
+                    catch { /* Best effort */ }
+                }
+            }
+            db.DropCollection(matchesCollection);
+        }
+        #endregion
+
+        #region Library Functions
+        public IEnumerable<MatchMeta> GetMatches(String query = null, int limit=30)
+        {
+            var col = db.GetCollection<MatchMeta>(matchesCollection);
+            var results = col.Find(Query.All("LastOpenedAt", Query.Descending), 0, limit);
 
             return results;
         }
 
         public MatchMeta FindMatch(Guid guid)
         {
-            var col = db.GetCollection<MatchMeta>("matches");
+            var col = db.GetCollection<MatchMeta>(matchesCollection);
             return col.FindById(guid.ToString());
         }
+        #endregion
 
+        #region Events
         public void Handle(MatchOpenedEvent message)
         {
             var meta = MatchMeta.fromMatch(MatchManager.Match);
             meta.FileName = MatchManager.FileName;
             
-            var col = db.GetCollection<MatchMeta>("matches");
+            var col = db.GetCollection<MatchMeta>(matchesCollection);
 
             var oldMeta = col.FindById(meta._id);
 
@@ -80,23 +138,22 @@ namespace TT.Lib.Managers
                 oldMeta.LastOpenedAt = DateTime.Now;
                 return;
             }
-
-            if(MatchManager.Match.VideoFile != null)
-            {
-                ConvertVideoFile(MatchManager.Match.VideoFile, MatchManager.Match.ID.ToString());
-
-            }
             col.Insert(meta);
-        }
 
-        public string ConvertVideoFile(string videoPath, string imageName)
-        {
-            var thumb = Path.Combine(libraryPath, imageName);
+            // Try to generate thumbnail
+            Task.Factory.StartNew(() =>
+            {
+                if (MatchManager.Match.VideoFile != null)
+                {
+                    try
+                    {
+                        GenerateThumbnail(MatchManager.Match.VideoFile, GetThumbnailPath(meta));
+                    } catch { /* best effort */ }
 
-            var ffmpeg = new NReco.VideoConverter.FFMpegConverter();
-            ffmpeg.GetVideoThumbnail(videoPath, thumb);
-            return thumb;
+                }
+            });
         }
+        #endregion
 
     }
 }

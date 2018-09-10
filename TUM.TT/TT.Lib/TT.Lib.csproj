@@ -190,12 +190,14 @@
     <Compile Include="Results\DoNothingResult.cs" />
     <Compile Include="SimpleJson.cs" />
     <Compile Include="Util\Interfaces\IMediaPosition.cs" />
+    <Compile Include="Util\MatchMetaExtensions.cs" />
     <Compile Include="Util\MatchHashGenerator.cs" />
     <Compile Include="Util\NotifyTaskCompletion.cs" />
     <Compile Include="Util\ObservableSortedList.cs" />
     <Compile Include="Util\Secure.cs" />
     <Compile Include="Util\ShortcutFactory.cs" />
     <Compile Include="ViewModels\MatchLibraryViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
     <Compile Include="Views\ReportGenerationNotifyIcon.cs" />

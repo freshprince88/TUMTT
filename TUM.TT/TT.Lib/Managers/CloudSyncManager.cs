@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using TT.Lib.Events;
@@ -119,6 +117,28 @@ namespace TT.Lib.Managers
         public Task<MatchMetaResult> GetMatches()
         {
             return CloudApi.GetMatches();
+        }
+
+        public async Task<Tuple<MatchMeta, string, string>> DownloadMatch(Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null)
+        {
+            if (callback != null) { callback("Finding match..."); }
+            var match = await CloudApi.GetMatch(matchId);
+
+            if (match.AnalysisFileStatus)
+            {
+                if (callback != null) { callback("Downloading analysis file..."); }
+                await CloudApi.DownloadFile(match.Guid, matchFilePath, token);
+            } else { matchFilePath = null; }
+
+            if (match.VideoStatus == VideoStatus.Ready)
+            {
+                if (callback != null) { callback("Downloading video... (this may take some time)"); }
+                await CloudApi.DownloadVideo(match.Guid, videoFilePath, token);
+            } else { videoFilePath = null; }
+
+            token.ThrowIfCancellationRequested();
+
+            return new Tuple<MatchMeta, string, string>(match, matchFilePath, videoFilePath);
         }
 
         public void ConvertVideoFile()

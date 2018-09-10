@@ -1,31 +1,29 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using Caliburn.Micro;
+using System.Windows.Shapes;
 
-
-namespace TT.Lib.Views
+namespace TT.Viewer.Views
 {
     /// <summary>
-    /// Interaktionslogik für MatchLibraryView.xaml
+    /// Interaktionslogik für SettingsView.xaml
     /// </summary>
-    public partial class MatchLibraryView : MahApps.Metro.Controls.MetroWindow
+    public partial class SettingsView : MahApps.Metro.Controls.MetroWindow
     {
-
-        public MatchLibraryView()
+        public SettingsView()
         {
-            InitializeComponent();
-            Name = "MatchLibrary";
+            //InitializeComponent();
+            this.Name = "Settings";
         }
-
     }
 }

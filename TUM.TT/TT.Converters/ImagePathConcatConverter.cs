@@ -18,7 +18,12 @@ namespace TT.Converters
             {
                 result = Path.Combine(result, value.ToString());
             }
-            return new BitmapImage(new Uri(result, UriKind.Absolute));
+            BitmapImage image = null;
+            try
+            {
+                image = new BitmapImage(new Uri(result, UriKind.Absolute));
+            } catch { }
+            return image;  
         }
 
 

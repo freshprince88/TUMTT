@@ -32,6 +32,10 @@ namespace TT.Models.Api
         [DataMember(Name = "date")]
         public DateTime Date { get; set; }
         [IgnoreDataMember]
+        public Boolean AnalysisFileStatus { get; set; }
+        [IgnoreDataMember]
+        public DateTime AnalysisFileUpdatedAt { get; set; }
+        [IgnoreDataMember]
         public VideoStatus VideoStatus { get; set; }
         [IgnoreDataMember]
         public String VideoInfo { get; set; }

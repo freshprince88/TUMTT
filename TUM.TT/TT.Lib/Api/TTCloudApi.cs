@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Configuration;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using RestSharp;
@@ -51,11 +51,17 @@ namespace TT.Lib.Api
             return json["token"] as string;
         } 
 
-        public async Task<T> Execute<T>(RestRequest request) where T : new()
+        private RestClient GetClient()
         {
             var client = new RestClient();
             client.BaseUrl = new Uri(BaseUrl);
             client.Authenticator = new JwtAuthenticator(_accessToken);
+            return client;
+        }
+
+        public async Task<T> Execute<T>(RestRequest request) where T : new()
+        {
+            var client = GetClient();
             var response = await client.ExecuteTaskAsync<T>(request);
 
             if (response.ErrorException != null)
@@ -68,15 +74,32 @@ namespace TT.Lib.Api
 
         public IRestResponse Execute(RestRequest request)
         {
-            var client = new RestClient();
-            client.BaseUrl = new Uri(BaseUrl);
-            client.Authenticator = new JwtAuthenticator(_accessToken);
+            var client = GetClient();
             var response = client.Execute(request);
 
             if (response.ErrorException != null)
             {
                 const string message = "Error retrieving response. Check inner details for more info.";
                 throw new ApplicationException(message, response.ErrorException);
+            }
+            return response;
+        }
+
+        private async Task<IRestResponse> DownloadToFile(IRestRequest request, string location, CancellationToken token)
+        {
+            var client = GetClient();
+            IRestResponse response;
+            using (var writer = File.OpenWrite(location))
+            {
+                request.ResponseWriter = (responseStream) =>
+                {
+                    try { responseStream.CopyTo(writer); }
+                    catch
+                    {
+                        writer.Close();
+                    }
+                };
+                response = await client.ExecuteGetTaskAsync(request, token);
             }
             return response;
         }
@@ -99,16 +122,36 @@ namespace TT.Lib.Api
             return Execute<MatchMetaResult>(request);
         }
 
-        //public MatchMeta GetMatch(Guid matchGuid)
-        //{
-        //    var request = new RestRequest();
-        //    request.Resource = "matches/{MatchGuid}";
-        //    request.RootElement = "MatchMeta";
+        public Task<MatchMeta> GetMatch(Guid matchGuid)
+        {
+            var request = new RestRequest();
+            request.Resource = "matches/{MatchGuid}";
+            request.RootElement = "MatchMeta";
 
-        //    request.AddParameter("MatchGuid", matchGuid, ParameterType.UrlSegment);
+            request.AddParameter("MatchGuid", matchGuid, ParameterType.UrlSegment);
 
-        //    return Execute<MatchMeta>(request);
-        //}
+            return Execute<MatchMeta>(request);
+        }
+
+        public Task<IRestResponse> DownloadFile(Guid matchGuid, string location, CancellationToken token)
+        {
+            var request = new RestRequest();
+            request.Resource = "matches/{MatchGuid}/file";
+
+            request.AddParameter("MatchGuid", matchGuid, ParameterType.UrlSegment);
+
+            return DownloadToFile(request, location, token);
+        }
+
+        public Task<IRestResponse> DownloadVideo(Guid matchGuid, string location, CancellationToken token)
+        {
+            var request = new RestRequest();
+            request.Resource = "matches/{MatchGuid}/video";
+
+            request.AddParameter("MatchGuid", matchGuid, ParameterType.UrlSegment);
+
+            return DownloadToFile(request, location, token);
+        }
 
         //public MatchMeta PutMatch(MatchMeta Match)
         //{
@@ -136,6 +179,6 @@ namespace TT.Lib.Api
 
         //    return Execute<MatchMeta>(request);
         //}
-        
+
     }
 }

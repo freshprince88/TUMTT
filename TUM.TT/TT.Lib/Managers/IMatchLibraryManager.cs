@@ -9,7 +9,15 @@ namespace TT.Lib.Managers
 {
     public interface IMatchLibraryManager
     {
-        IEnumerable<MatchMeta> GetMatches(String query=null);
+        string LibraryPath { get; }
+
+        void resetDb(bool deleteFiles = false);
+
+        string GetMatchFilePath(MatchMeta match);
+        string GetVideoFilePath(MatchMeta match);
+        string GetThumbnailPath(MatchMeta match);
+
+        IEnumerable<MatchMeta> GetMatches(String query=null, int limit=100);
         MatchMeta FindMatch(Guid guid);
     }
 }

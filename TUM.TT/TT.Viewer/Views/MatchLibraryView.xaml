@@ -42,74 +42,37 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            <Style x:Key="SmallTileStyle"
+                   TargetType="Controls:Tile">
+                <Setter Property="Width"
+                        Value="100" />
+                <Setter Property="Height"
+                        Value="100" />
+                <Setter Property="TitleFontSize"
+                        Value="10" />
+            </Style>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <conv:ImagePathConcatConverter x:Key="ImagePathConcatConverter"/>
             <conv:ImageUrlConcatConverter x:Key="ImageUrlConcatConverter"/>
         </ResourceDictionary>
     </Window.Resources>
-
-    <TabControl TabStripPlacement="Top" Margin="10">
-        <TabItem Name="localMatches" Header="Local">
-            <StackPanel>
-                <Label Content="Search Bar"  Margin="5" Height="50"/>
-                <ListView  ItemsSource="{Binding localResults}" AlternationCount="2" Height="600" cal:Message.Attach="[Event MouseDoubleClick] = [OpenMatch($source)]">
-                    <ListView.Resources>
-                        <Style TargetType="GridViewColumnHeader">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </Style>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="180" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-
-                                <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
-                                    <Image.Source>
-                                        <MultiBinding Converter="{StaticResource ImagePathConcatConverter}">
-                                            <Binding Path="DataContext.LibraryPath" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
-                                            <Binding Path="Guid" />
-                                        </MultiBinding>
-                                    </Image.Source>
-                                </Image>
-
-                                <Label Grid.Column="1" Grid.Row="0" Content="{Binding Date}" />
-                                <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" Margin="5 0">
-                                    <Run Text="{Binding Path=FirstPlayer.Name}" />
-                                    <Run Text=" vs. " />
-                                    <Run Text="{Binding Path=SecondPlayer.Name}" />
-                                </TextBlock>
-                                <Label Grid.Column="1" Grid.Row="2" Content="{Binding Tournament}" />
-                                <TextBlock Grid.Column="1" Grid.Row="3" Margin="5 0">
-                                    <Run Text="{Binding Round}"/>
-                                    <Run Text=" | "/>
-                                    <Run Text="{Binding Mode}"/>
-                                    <Run Text=" | "/>
-                                    <Run Text="{Binding Category}"/> 
-                                </TextBlock>
-                            </Grid>
-                        </DataTemplate>
-
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackPanel>
-
-        </TabItem>
-
-        <TabItem Name="onlienMatches" Header="Cloud">
-            <TabItem.Content>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TabControl TabStripPlacement="Top" Margin="10">
+            <TabItem Name="localMatches" Header="Local">
                 <StackPanel>
-                    <Controls:ProgressRing IsActive="True" Visibility="{Binding cloudResults.IsNotCompleted, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <ListView  ItemsSource="{Binding cloudResults.Result.rows}" Visibility="{Binding cloudResults.IsSuccessfullyCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"
-                               AlternationCount="2" Height="600" cal:Message.Attach="[Event MouseDoubleClick] = [DownloadMatch($source)]">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <TextBox Text="{Binding Path=SearchLocal}" Width="250" FontSize="14" />
+                        <Button Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}">
+                            <TextBlock>Search</TextBlock>
+                        </Button>
+                    </StackPanel>
+                    <ListView ItemsSource="{Binding localResults}" AlternationCount="2"
+                              Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              cal:Message.Attach="[Event MouseDoubleClick] = [OpenMatch($source)]">
                         <ListView.Resources>
                             <Style TargetType="GridViewColumnHeader">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -131,38 +94,122 @@
 
                                     <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
                                         <Image.Source>
-                                            <MultiBinding Converter="{StaticResource ImageUrlConcatConverter}">
-                                                <Binding Path="DataContext.BaseUrl" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
-                                                <Binding Path="PreviewUrl" />
+                                            <MultiBinding Converter="{StaticResource ImagePathConcatConverter}">
+                                                <Binding Path="DataContext.LibraryPath" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+                                                <Binding Path="Guid" />
                                             </MultiBinding>
                                         </Image.Source>
                                     </Image>
 
                                     <Label Grid.Column="1" Grid.Row="0" Content="{Binding Date}" />
                                     <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" Margin="5 0">
-                                    <Run Text="{Binding Path=FirstPlayer.Name}" />
-                                    <Run Text=" vs. " />
-                                    <Run Text="{Binding Path=SecondPlayer.Name}" />
+                                        <Run Text="{Binding Path=FirstPlayer.Name}" />
+                                        <Run Text=" vs. " />
+                                        <Run Text="{Binding Path=SecondPlayer.Name}" />
                                     </TextBlock>
                                     <Label Grid.Column="1" Grid.Row="2" Content="{Binding Tournament}" />
                                     <TextBlock Grid.Column="1" Grid.Row="3" Margin="5 0">
-                                    <Run Text="{Binding Round}"/>
-                                    <Run Text=" | "/>
-                                    <Run Text="{Binding Mode}"/>
-                                    <Run Text=" | "/>
-                                    <Run Text="{Binding Category}"/>
+                                        <Run Text="{Binding Round}"/>
+                                        <Run Text=" | "/>
+                                        <Run Text="{Binding Mode}"/>
+                                        <Run Text=" | "/>
+                                        <Run Text="{Binding Category}"/>
                                     </TextBlock>
                                 </Grid>
                             </DataTemplate>
 
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Label Content="{Binding cloudResults.ExceptionMessage}" Background="Red"
-                        Visibility="{Binding cloudResults.IsFaulted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
-            </TabItem.Content>
-        </TabItem>
 
-    </TabControl>
+            </TabItem>
 
+            <TabItem Name="onlienMatches" Header="Cloud">
+                <TabItem.Content>
+                    <StackPanel>
+                        <Controls:ProgressRing IsActive="True" Visibility="{Binding cloudResults.IsNotCompleted, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <ListView ItemsSource="{Binding cloudResults.Result.rows}" Visibility="{Binding cloudResults.IsSuccessfullyCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  AlternationCount="2" Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  cal:Message.Attach="[Event MouseDoubleClick] = [DownloadMatch($source)]">
+                            <ListView.Resources>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                            </ListView.Resources>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="180" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
+                                            <Image.Source>
+                                                <MultiBinding Converter="{StaticResource ImageUrlConcatConverter}">
+                                                    <Binding Path="DataContext.BaseUrl" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+                                                    <Binding Path="PreviewUrl" />
+                                                </MultiBinding>
+                                            </Image.Source>
+                                        </Image>
+
+                                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding Date}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" Margin="5 0">
+                                        <Run Text="{Binding Path=FirstPlayer.Name}" />
+                                        <Run Text=" vs. " />
+                                        <Run Text="{Binding Path=SecondPlayer.Name}" />
+                                        </TextBlock>
+                                        <Label Grid.Column="1" Grid.Row="2" Content="{Binding Tournament}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="3" Margin="5 0">
+                                        <Run Text="{Binding Round}"/>
+                                        <Run Text=" | "/>
+                                        <Run Text="{Binding Mode}"/>
+                                        <Run Text=" | "/>
+                                        <Run Text="{Binding Category}"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Label Content="{Binding cloudResults.ExceptionMessage}" Background="Red"
+                            Visibility="{Binding cloudResults.IsFaulted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+
+        </TabControl>
+        <Grid Height="110" Background="#2b2b2b" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Column="0" HorizontalAlignment="Left">
+                <Controls:Tile Width="150" Title="Open Match from Disk" cal:Message.Attach="[Event Click] = [Action OpenMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Controls:Tile>
+            </WrapPanel>
+            <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                <Controls:Tile Width="150" Title="Library &amp; Cloud Settings" cal:Message.Attach="[Event Click] = [Action OpenSettings()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Rectangle Width="30" Height="30" 
+                       Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Controls:Tile>
+            </WrapPanel>
+        </Grid>
+    </Grid>
 </Controls:MetroWindow>

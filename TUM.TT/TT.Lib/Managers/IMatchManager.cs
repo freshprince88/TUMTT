@@ -36,7 +36,7 @@ namespace TT.Lib.Managers
         IEnumerable<IResult> SaveMatch();
         IEnumerable<IResult> SaveMatchAs();
         IEnumerable<IResult> ExportExcel();
-        IEnumerable<IResult> OpenMatch(string fileName = null);
+        IEnumerable<IResult> OpenMatch(string fileName = null, string videoFile = null);
         IEnumerable<IResult> OpenLiveMatch();
 
 

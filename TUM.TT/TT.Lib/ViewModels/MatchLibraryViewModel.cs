@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
 using MahApps.Metro.Controls.Dialogs;
-using LiteDB;
 using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,14 +13,16 @@ using System.Collections.ObjectModel;
 using TT.Lib;
 using TT.Lib.Managers;
 using TT.Lib.Events;
-using TT.Models;
+using TT.Lib.Util;
 using TT.Models.Api;
 using TT.Lib.Properties;
+using System.Threading;
+using Application = System.Windows.Application;
 
 namespace TT.Lib.ViewModels
 {
 
-    public class MatchLibraryViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx
+    public class MatchLibraryViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx, IHandle<MatchOpenedEvent>
     {
         public IEventAggregator events { get; private set; }
         private readonly IWindowManager _windowManager;
@@ -33,7 +35,13 @@ namespace TT.Lib.ViewModels
         public NotifyTaskCompletion<MatchMetaResult> cloudResults { get; private set; }
 
         public string BaseUrl { get; private set; }
-        public string LibraryPath { get; private set; }
+        public string LibraryPath
+        {
+            get
+            {
+                return MatchLibrary.LibraryPath;
+            }
+        }
 
         public MatchLibraryViewModel(IWindowManager windowManager, IEventAggregator eventAggregator, IDialogCoordinator coordinator, IMatchManager matchManager, ICloudSyncManager cloudSyncManager, IMatchLibraryManager matchLibrary)
         {
@@ -46,7 +54,6 @@ namespace TT.Lib.ViewModels
             CloudSyncManager = cloudSyncManager;
 
             BaseUrl = Settings.Default.CloudApiFrontend;
-            LibraryPath = Settings.Default.LocalLibraryPath;
         }
 
         #region Caliburn Hooks
@@ -70,7 +77,7 @@ namespace TT.Lib.ViewModels
         {
             base.OnViewReady(view);
 
-            localResults = new BindableCollection<MatchMeta>(MatchLibrary.GetMatches());
+            LoadLocalResults();
             cloudResults = new NotifyTaskCompletion<MatchMetaResult>(CloudSyncManager.GetMatches());
         }
 
@@ -81,17 +88,44 @@ namespace TT.Lib.ViewModels
         #endregion
 
         #region View Methods
+        public void LoadLocalResults()
+        {
+            localResults = new BindableCollection<MatchMeta>(MatchLibrary.GetMatches());
+        }
+
         public void OpenMatch(ListView listView)
         {
+            if(listView.SelectedItems.Count < 1)
+            {
+                return;
+            }
             var item = listView.SelectedItems[0] as MatchMeta;
             Coroutine.BeginExecute(MatchManager.OpenMatch(item.FileName).GetEnumerator());
             this.TryClose();
         }
 
-        public void DownloadMatch(ListView listView)
+        public static bool IsWindowOpen<T>(string name = "") where T : Window
         {
-            var item = listView.SelectedItems[0] as MatchMeta;
-            var local = MatchLibrary.FindMatch(item.Guid);
+            return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
+        }
+
+        public void OpenSettings()
+        {
+            if (IsWindowOpen<Window>("Settings"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "Settings").FirstOrDefault().Focus();
+
+            }
+            else
+            {
+                _windowManager.ShowWindow(new SettingsViewModel(_windowManager, events, MatchManager, DialogCoordinator, MatchLibrary));
+            }
+        }
+
+        public async void DownloadMatch(ListView listView)
+        {
+            var matchMeta = listView.SelectedItems[0] as MatchMeta;
+            var local = MatchLibrary.FindMatch(matchMeta.Guid);
             if (local != null)
             {
                 Coroutine.BeginExecute(MatchManager.OpenMatch(local.FileName).GetEnumerator());
@@ -99,13 +133,74 @@ namespace TT.Lib.ViewModels
                 return;
             }
 
+            var tokenSource = new CancellationTokenSource();
+            var token = tokenSource.Token;
 
+            var mySettings = new MetroDialogSettings() { CancellationToken = token };
+            ProgressDialogController controller = await DialogCoordinator.ShowProgressAsync(this, "Downloading Match from Cloud", String.Empty, isCancelable: true, settings: mySettings);
+            controller.Canceled += (sender, e) =>
+            {
+                tokenSource.Cancel();
+            };
+            controller.SetIndeterminate();
 
+            string matchFilePath = MatchLibrary.GetMatchFilePath(matchMeta);
+            string videoFilePath = MatchLibrary.GetVideoFilePath(matchMeta);
+            MatchMeta meta;
 
+            try
+            {
+                (meta, matchFilePath, videoFilePath) = await CloudSyncManager.DownloadMatch(
+                    matchMeta.Guid, matchFilePath, videoFilePath, token, (status) =>
+                 {
+                     controller.SetMessage(status);
+                 });
+            }
+            catch (TaskCanceledException)
+            {
+                // Delete downloaded artifacts
+                try
+                {
+                    if (File.Exists(matchFilePath)) { File.Delete(matchFilePath); }
+                    if (File.Exists(videoFilePath)) { File.Delete(videoFilePath); }
+                } catch { /* Best effoty */ }
+
+                await controller.CloseAsync();
+                tokenSource.Dispose();
+                return;
+            }
+
+            controller.SetMessage("Opening Match...");
+
+            // Create phantom analysis for download w/o analysis
+            if (String.IsNullOrEmpty(matchFilePath))
+            {
+                MatchManager.CreateNewMatch();
+                MatchManager.FileName = matchFilePath = MatchLibrary.GetMatchFilePath(meta);
+                MatchManager.Match.VideoFile = videoFilePath;
+                MatchMetaExtensions.UpdateMatchWithMetaInfo(MatchManager.Match, meta);
+
+                await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
+            }
+            Coroutine.BeginExecute(MatchManager.OpenMatch(matchFilePath, videoFilePath).GetEnumerator());
+
+            await controller.CloseAsync();
+            tokenSource.Dispose();
+            this.TryClose();
+        }
+
+        public IEnumerable<IResult> OpenMatch()
+        {
+            return MatchManager.OpenMatch();
         }
         #endregion
 
         #region Events
+        public void Handle(MatchOpenedEvent message)
+        {
+            this.TryClose();
+        }
+
         #endregion
 
         #region Helper Methods

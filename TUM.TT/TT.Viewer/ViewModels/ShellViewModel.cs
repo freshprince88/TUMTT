@@ -197,14 +197,14 @@ namespace TT.Viewer.ViewModels
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
+                return MatchManager.Match != null;
             }
         }
         public bool CanShowCompetition
         {
             get
             {
-                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
+                return MatchManager.Match != null;
             }
         }
 

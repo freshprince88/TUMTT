@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TT.Models.Api;
 using TT.Lib.Api;
@@ -14,5 +14,7 @@ namespace TT.Lib.Managers
         User LoggedInUser { get; }
         void Login();
         Task<MatchMetaResult> GetMatches();
+        Task<Tuple<MatchMeta, string, string>> DownloadMatch(
+            Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null);
     }
 }
