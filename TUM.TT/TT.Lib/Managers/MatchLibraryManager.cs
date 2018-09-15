@@ -46,7 +46,6 @@ namespace TT.Lib.Managers
 
             LibraryPath = Settings.Default.LocalLibraryPath;
             initDb();
-            resetDb(false);
         }
 
         #region Static Functions
@@ -112,7 +111,33 @@ namespace TT.Lib.Managers
         public IEnumerable<MatchMeta> GetMatches(String query = null, int limit=30)
         {
             var col = db.GetCollection<MatchMeta>(matchesCollection);
-            var results = col.Find(Query.All("LastOpenedAt", Query.Descending), 0, limit);
+            IEnumerable<MatchMeta> results;
+            if (query != null && query != String.Empty)
+            {
+                string[] squery = query.ToLower().Split(null);
+                results = col
+                    .Find(Query.All("LastOpenedAt", Query.Descending))
+                    .Where<MatchMeta>(x => {
+                        bool cond = true;
+                        foreach (string q in squery)
+                        {
+                            cond = cond && (
+                                x.Tournament.ToLower().Contains(q) ||
+                                x.Category.ToLower().Contains(q) ||
+                                x.FirstPlayer.Name.ToLower().Contains(q) ||
+                                x.FirstPlayer.Nationality.ToLower().Contains(q) ||
+                                x.SecondPlayer.Name.ToLower().Contains(q) ||
+                                x.SecondPlayer.Nationality.ToLower().Contains(q)
+                            );
+                        }
+                        return cond;
+                    });
+            }
+            else
+            {
+                results = col.Find(Query.All("LastOpenedAt", Query.Descending), 0, limit);
+            }
+
 
             return results;
         }

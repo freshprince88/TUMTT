@@ -31,7 +31,7 @@ namespace TT.Lib.ViewModels
         private IMatchLibraryManager MatchLibrary;
         private ICloudSyncManager CloudSyncManager;
 
-        public BindableCollection<MatchMeta> localResults { get; private set; }
+        public ObservableCollection<MatchMeta> localResults { get; private set; }
         public NotifyTaskCompletion<MatchMetaResult> cloudResults { get; private set; }
 
         public string BaseUrl { get; private set; }
@@ -53,6 +53,7 @@ namespace TT.Lib.ViewModels
             MatchLibrary = matchLibrary;
             CloudSyncManager = cloudSyncManager;
 
+            localResults = new ObservableCollection<MatchMeta>();
             BaseUrl = Settings.Default.CloudApiFrontend;
         }
 
@@ -87,26 +88,10 @@ namespace TT.Lib.ViewModels
         }
         #endregion
 
-        #region View Methods
-        public void LoadLocalResults()
+        #region Menu
+        public IEnumerable<IResult> OpenMatch()
         {
-            localResults = new BindableCollection<MatchMeta>(MatchLibrary.GetMatches());
-        }
-
-        public void OpenMatch(ListView listView)
-        {
-            if(listView.SelectedItems.Count < 1)
-            {
-                return;
-            }
-            var item = listView.SelectedItems[0] as MatchMeta;
-            Coroutine.BeginExecute(MatchManager.OpenMatch(item.FileName).GetEnumerator());
-            this.TryClose();
-        }
-
-        public static bool IsWindowOpen<T>(string name = "") where T : Window
-        {
-            return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
+            return MatchManager.OpenMatch();
         }
 
         public void OpenSettings()
@@ -120,6 +105,41 @@ namespace TT.Lib.ViewModels
             {
                 _windowManager.ShowWindow(new SettingsViewModel(_windowManager, events, MatchManager, DialogCoordinator, MatchLibrary));
             }
+        }
+        #endregion
+
+        #region Search
+        public void LoadLocalResults(string query = null)
+        {
+            var matches = MatchLibrary.GetMatches(query);
+            localResults.Clear();
+            matches.ToList().ForEach(localResults.Add);
+
+        }
+
+        public async void LocalQuery(TextBox textBox)
+        {
+            var query = textBox.Text;
+            await Task.Delay(250);
+            if(query == textBox.Text)
+            {
+                LoadLocalResults(query);
+            }
+        }
+
+        #endregion
+
+        #region ListView Actions
+
+        public void OpenMatch(ListView listView)
+        {
+            if(listView.SelectedItems.Count < 1)
+            {
+                return;
+            }
+            var item = listView.SelectedItems[0] as MatchMeta;
+            Coroutine.BeginExecute(MatchManager.OpenMatch(item.FileName).GetEnumerator());
+            this.TryClose();
         }
 
         public async void DownloadMatch(ListView listView)
@@ -188,11 +208,6 @@ namespace TT.Lib.ViewModels
             tokenSource.Dispose();
             this.TryClose();
         }
-
-        public IEnumerable<IResult> OpenMatch()
-        {
-            return MatchManager.OpenMatch();
-        }
         #endregion
 
         #region Events
@@ -204,6 +219,10 @@ namespace TT.Lib.ViewModels
         #endregion
 
         #region Helper Methods
+        public static bool IsWindowOpen<T>(string name = "") where T : Window
+        {
+            return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
+        }
         #endregion
     }
 }

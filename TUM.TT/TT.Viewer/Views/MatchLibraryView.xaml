@@ -65,12 +65,10 @@
             <TabItem Name="localMatches" Header="Local">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                        <TextBox Text="{Binding Path=SearchLocal}" Width="250" FontSize="14" />
-                        <Button Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}">
-                            <TextBlock>Search</TextBlock>
-                        </Button>
+                        <Label Content="Search: " FontSize="14" />
+                        <TextBox Width="250" FontSize="14" cal:Message.Attach="[Event TextChanged] = [LocalQuery($source)]"/>
                     </StackPanel>
-                    <ListView ItemsSource="{Binding localResults}" AlternationCount="2"
+                    <ListView x:Name="LocalListView" ItemsSource="{Binding localResults}" AlternationCount="2"
                               Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
                               cal:Message.Attach="[Event MouseDoubleClick] = [OpenMatch($source)]">
                         <ListView.Resources>
@@ -124,7 +122,7 @@
 
             </TabItem>
 
-            <TabItem Name="onlienMatches" Header="Cloud">
+            <TabItem Name="onlineMatches" Header="Cloud">
                 <TabItem.Content>
                     <StackPanel>
                         <Controls:ProgressRing IsActive="True" Visibility="{Binding cloudResults.IsNotCompleted, Converter={StaticResource BooleanToVisibilityConverter}}" />
