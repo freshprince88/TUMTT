@@ -32,7 +32,21 @@ namespace TT.Lib.ViewModels
         private ICloudSyncManager CloudSyncManager;
 
         public ObservableCollection<MatchMeta> localResults { get; private set; }
-        public NotifyTaskCompletion<MatchMetaResult> cloudResults { get; private set; }
+        public ObservableCollection<MatchMeta> cloudResults { get; private set; }
+
+        private bool _searchIsActive;
+        public bool SearchIsActive
+        {
+            get { return _searchIsActive; }
+            set
+            {
+                if (_searchIsActive != value)
+                {
+                    _searchIsActive = value;
+                    NotifyOfPropertyChange("SearchIsActive");
+                }
+            }
+        }
 
         public string BaseUrl { get; private set; }
         public string LibraryPath
@@ -54,6 +68,7 @@ namespace TT.Lib.ViewModels
             CloudSyncManager = cloudSyncManager;
 
             localResults = new ObservableCollection<MatchMeta>();
+            cloudResults = new ObservableCollection<MatchMeta>();
             BaseUrl = Settings.Default.CloudApiFrontend;
         }
 
@@ -79,7 +94,7 @@ namespace TT.Lib.ViewModels
             base.OnViewReady(view);
 
             LoadLocalResults();
-            cloudResults = new NotifyTaskCompletion<MatchMetaResult>(CloudSyncManager.GetMatches());
+            LoadCloudResults();
         }
 
         protected override void OnDeactivate(bool close)
@@ -114,7 +129,6 @@ namespace TT.Lib.ViewModels
             var matches = MatchLibrary.GetMatches(query);
             localResults.Clear();
             matches.ToList().ForEach(localResults.Add);
-
         }
 
         public async void LocalQuery(TextBox textBox)
@@ -123,7 +137,28 @@ namespace TT.Lib.ViewModels
             await Task.Delay(250);
             if(query == textBox.Text)
             {
+                SearchIsActive = true;
                 LoadLocalResults(query);
+                SearchIsActive = false;
+            }
+        }
+
+        public async void LoadCloudResults(string query = null)
+        {
+            var matches = await CloudSyncManager.GetMatches(query);
+            cloudResults.Clear();
+            matches.rows.ForEach(cloudResults.Add);
+        }
+
+        public async void CloudQuery(TextBox textBox)
+        {
+            var query = textBox.Text;
+            await Task.Delay(250);
+            if (query == textBox.Text)
+            {
+                SearchIsActive = true;
+                LoadCloudResults(query);
+                SearchIsActive = false;
             }
         }
 

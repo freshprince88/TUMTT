@@ -113,10 +113,11 @@ namespace TT.Lib.Api
         //    return Execute<User>(request);
         //}
 
-        public Task<MatchMetaResult> GetMatches()
+        public Task<MatchMetaResult> GetMatches(string query=null)
         {
             var request = new RestRequest();
             request.Resource = "matches";
+            request.AddParameter("q", query);
             request.RootElement = "MatchMetaResult";
 
             return Execute<MatchMetaResult>(request);

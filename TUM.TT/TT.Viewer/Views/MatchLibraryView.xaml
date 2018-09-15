@@ -66,7 +66,9 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                         <Label Content="Search: " FontSize="14" />
-                        <TextBox Width="250" FontSize="14" cal:Message.Attach="[Event TextChanged] = [LocalQuery($source)]"/>
+                        <TextBox Width="250" FontSize="14" Controls:TextBoxHelper.ClearTextButton="True"
+                                 cal:Message.Attach="[Event TextChanged] = [LocalQuery($source)]"/>
+                        <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
                     </StackPanel>
                     <ListView x:Name="LocalListView" ItemsSource="{Binding localResults}" AlternationCount="2"
                               Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -125,8 +127,13 @@
             <TabItem Name="onlineMatches" Header="Cloud">
                 <TabItem.Content>
                     <StackPanel>
-                        <Controls:ProgressRing IsActive="True" Visibility="{Binding cloudResults.IsNotCompleted, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        <ListView ItemsSource="{Binding cloudResults.Result.rows}" Visibility="{Binding cloudResults.IsSuccessfullyCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                            <Label Content="Search: " FontSize="14" />
+                            <TextBox Width="250" FontSize="14" Controls:TextBoxHelper.ClearTextButton="True"
+                                 cal:Message.Attach="[Event TextChanged] = [CloudQuery($source)]"/>
+                            <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
+                        </StackPanel>
+                        <ListView ItemsSource="{Binding cloudResults}" 
                                   AlternationCount="2" Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   cal:Message.Attach="[Event MouseDoubleClick] = [DownloadMatch($source)]">
                             <ListView.Resources>
@@ -176,8 +183,8 @@
 
                             </ListView.ItemTemplate>
                         </ListView>
-                        <Label Content="{Binding cloudResults.ExceptionMessage}" Background="Red"
-                            Visibility="{Binding cloudResults.IsFaulted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <!--<Label Content="{Binding cloudResults.ExceptionMessage}" Background="Red"
+                            Visibility="{Binding cloudResults.IsFaulted, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
                     </StackPanel>
                 </TabItem.Content>
             </TabItem>

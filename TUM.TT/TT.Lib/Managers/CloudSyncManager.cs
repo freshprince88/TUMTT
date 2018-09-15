@@ -114,9 +114,9 @@ namespace TT.Lib.Managers
             //CloudApi.PutMatch(matchMeta);
         }
 
-        public Task<MatchMetaResult> GetMatches()
+        public Task<MatchMetaResult> GetMatches(string query=null)
         {
-            return CloudApi.GetMatches();
+            return CloudApi.GetMatches(query);
         }
 
         public async Task<Tuple<MatchMeta, string, string>> DownloadMatch(Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null)

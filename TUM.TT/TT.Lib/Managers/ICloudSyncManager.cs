@@ -13,7 +13,7 @@ namespace TT.Lib.Managers
     {
         User LoggedInUser { get; }
         void Login();
-        Task<MatchMetaResult> GetMatches();
+        Task<MatchMetaResult> GetMatches(string query = null);
         Task<Tuple<MatchMeta, string, string>> DownloadMatch(
             Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null);
     }
