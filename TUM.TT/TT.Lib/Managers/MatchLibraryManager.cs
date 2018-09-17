@@ -93,7 +93,7 @@ namespace TT.Lib.Managers
         public void resetDb(bool deleteFiles = false)
         {
             if(deleteFiles) { 
-                var matches = GetMatches(null, 0);
+                var matches = GetMatches(null, int.MaxValue);
                 foreach(MatchMeta match in matches)
                 {
                     TryDelteFile(match.FileName);
