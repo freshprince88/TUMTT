@@ -11,9 +11,16 @@ namespace TT.Lib.Managers
 {
     public interface ICloudSyncManager
     {
-        User LoggedInUser { get; }
-        void Login();
+        string GetAccountEmail();
+
+        Task<string> Login();
+        string GetConnectionMessage();
+        ConnectionStatus GetConnectionStatus();
+
+        SyncStatus GetSyncStatus(MatchMeta meta);
+
         Task<MatchMetaResult> GetMatches(string query = null);
+        Task<MatchMeta> GetMatch(Guid id);
         Task<Tuple<MatchMeta, string, string>> DownloadMatch(
             Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null);
     }

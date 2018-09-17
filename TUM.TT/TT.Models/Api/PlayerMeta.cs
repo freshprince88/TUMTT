@@ -17,7 +17,7 @@ namespace TT.Models.Api
         public string Nationality { get; set; }
         [DataMember(Name = "playingStyle")]
         public string PlayingStyle { get; set; }
-        [DataMember(Name = "playingStyle")]
+        [DataMember(Name = "material")]
         public string Material { get; set; }
         [DataMember(Name = "handedness")]
         public string Handedness { get; set; }

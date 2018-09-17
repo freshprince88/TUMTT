@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.IO;
 using System.Collections.ObjectModel;
-using TT.Lib;
+using TT.Lib.Api;
 using TT.Lib.Managers;
 using TT.Lib.Events;
 using TT.Lib.Util;
@@ -33,6 +33,9 @@ namespace TT.Lib.ViewModels
 
         public ObservableCollection<MatchMeta> localResults { get; private set; }
         public ObservableCollection<MatchMeta> cloudResults { get; private set; }
+
+        public bool IsCloudError = false;
+        public string CloudErrorMessage;
 
         private bool _searchIsActive;
         public bool SearchIsActive
@@ -111,15 +114,7 @@ namespace TT.Lib.ViewModels
 
         public void OpenSettings()
         {
-            if (IsWindowOpen<Window>("Settings"))
-            {
-                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "Settings").FirstOrDefault().Focus();
-
-            }
-            else
-            {
-                _windowManager.ShowWindow(new SettingsViewModel(_windowManager, events, MatchManager, DialogCoordinator, MatchLibrary));
-            }
+            _windowManager.ShowDialog(new SettingsViewModel(_windowManager, events, MatchManager, DialogCoordinator, CloudSyncManager, MatchLibrary));
         }
         #endregion
 
@@ -145,9 +140,16 @@ namespace TT.Lib.ViewModels
 
         public async void LoadCloudResults(string query = null)
         {
-            var matches = await CloudSyncManager.GetMatches(query);
-            cloudResults.Clear();
-            matches.rows.ForEach(cloudResults.Add);
+            try
+            {
+                var matches = await CloudSyncManager.GetMatches(query);
+                cloudResults.Clear();
+                matches.rows.ForEach(cloudResults.Add);
+            } catch(TTCloudApiException e)
+            {
+                Console.WriteLine(e.Message);
+                //TODO: Set Cloud error
+            }
         }
 
         public async void CloudQuery(TextBox textBox)
@@ -179,7 +181,13 @@ namespace TT.Lib.ViewModels
 
         public async void DownloadMatch(ListView listView)
         {
+            if (listView.SelectedItems.Count < 1)
+            {
+                return;
+            }
             var matchMeta = listView.SelectedItems[0] as MatchMeta;
+
+            // Open local match if in library
             var local = MatchLibrary.FindMatch(matchMeta.Guid);
             if (local != null)
             {
@@ -211,7 +219,7 @@ namespace TT.Lib.ViewModels
                      controller.SetMessage(status);
                  });
             }
-            catch (TaskCanceledException)
+            catch(TaskCanceledException)
             {
                 // Delete downloaded artifacts
                 try
@@ -222,6 +230,11 @@ namespace TT.Lib.ViewModels
 
                 await controller.CloseAsync();
                 tokenSource.Dispose();
+                return;
+            }
+            catch(TTCloudApiException)
+            {
+                //TODO: Show downlaod failure
                 return;
             }
 
@@ -254,10 +267,7 @@ namespace TT.Lib.ViewModels
         #endregion
 
         #region Helper Methods
-        public static bool IsWindowOpen<T>(string name = "") where T : Window
-        {
-            return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
-        }
+
         #endregion
     }
 }

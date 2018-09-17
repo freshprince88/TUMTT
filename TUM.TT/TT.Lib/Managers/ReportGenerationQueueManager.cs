@@ -205,7 +205,7 @@ namespace TT.Lib.Managers
 
                     if (RunOnce)
                         RunOnce = false;
-                    Thread.Sleep(500);
+                   Thread.Sleep(500);
                 }
             }
 

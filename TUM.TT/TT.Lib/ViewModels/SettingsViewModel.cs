@@ -3,13 +3,13 @@ using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TT.Lib.Events;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Models;
+using TT.Models.Api;
+using TT.Models.Util;
 
 namespace TT.Lib.ViewModels
 {
@@ -17,30 +17,66 @@ namespace TT.Lib.ViewModels
     {
         public IEventAggregator events { get; private set; }
         public IMatchManager MatchManager { get; set; }
+        public ICloudSyncManager CloudSyncManager;
         private IMatchLibraryManager MatchLibrary;
         private readonly IWindowManager _windowManager;
         private IDialogCoordinator DialogCoordinator;
-        public Match Match { get { return MatchManager.Match; } }
-        private Boolean settingsModified;
 
-        public SettingsViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager man, IDialogCoordinator coordinator, IMatchLibraryManager libraryManager)
+        #region Calculated Properties
+        public string AccountEmail
+        {
+            get
+            {
+                return CloudSyncManager.GetAccountEmail();
+            }
+        }
+
+        public string AccountStatus
+        {
+            get
+            {
+                return EnumExtensions.GetDescription<ConnectionStatus>(CloudSyncManager.GetConnectionStatus());
+            }
+        }
+
+        public string AccountMessage
+        {
+            get
+            {
+                return CloudSyncManager.GetConnectionMessage();
+            }
+        }
+
+        private string _matchStatus = "Loading...";
+        public string MatchStatus
+        {
+            get
+            {
+                return _matchStatus;
+            }
+        }
+
+        public string LibraryPath
+        {
+            get
+            {
+                return MatchLibrary.LibraryPath;
+            }
+        }
+        #endregion
+
+
+        public SettingsViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager man, IDialogCoordinator coordinator, ICloudSyncManager cloudSyncManager, IMatchLibraryManager libraryManager)
         {
             this.DisplayName = "Settings";
             this.events = eventAggregator;
             MatchManager = man;
             MatchLibrary = libraryManager;
+            CloudSyncManager = cloudSyncManager;
             _windowManager = windowmanager;
             DialogCoordinator = coordinator;
 
-            settingsModified = false;
-        }
-        /// <summary>
-        /// Set MatchModified=true, if match informations are modified
-        /// </summary>
-
-        private void SetSettingsModified(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            settingsModified = true;
+            RefreshMatchStatus();
         }
 
         #region Caliburn Hooks
@@ -157,28 +193,47 @@ namespace TT.Lib.ViewModels
         }
 
         #endregion
+
         #region View Methods
-
-        /// <summary>
-        /// Gets a value indicating whether a report can be generated.
-        /// </summary>
-
-        public bool CanSaveMatch
+        public void ChangeAccount()
         {
-            get
-            {
-                return MatchManager.Match != null && MatchManager.Match.FinishedRallies.Any();
-            }
-        }
-        #endregion
 
-        #region Events
+        }
+
+        public async void RefreshAccount()
+        {
+            await CloudSyncManager.Login();
+            NotifyOfPropertyChange("AccountStatus");
+            NotifyOfPropertyChange("AccountMessage");
+        }
+
+        public async void RefreshMatchStatus()
+        {
+            _matchStatus = EnumExtensions.GetDescription<SyncStatus>(SyncStatus.None);
+            if (MatchManager.Match != null)
+            {
+                try
+                {
+                    MatchMeta meta = await CloudSyncManager.GetMatch(MatchManager.Match.ID);
+                    _matchStatus = EnumExtensions.GetDescription<SyncStatus>(CloudSyncManager.GetSyncStatus(meta));
+                }
+                catch { }
+            }
+            NotifyOfPropertyChange("MatchStatus");
+        }
+
+        public void ChangeLibraryLocation()
+        {
+
+        }
 
         public void ResetLibrary()
         {
             MatchLibrary.resetDb();
         }
+        #endregion
 
+        #region Events
         #endregion
 
         #region Helper Methods

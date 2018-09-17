@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Net;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +11,23 @@ using TT.Lib.Properties;
 
 namespace TT.Lib.Api
 {
+    public class TTCloudApiException : Exception
+    {
+        public TTCloudApiException()
+        {
+        }
+
+        public TTCloudApiException(string message)
+            : base(message)
+        {
+        }
+
+        public TTCloudApiException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
+
     public class TTCloudApi
     {
         static string BaseUrl = Settings.Default.CloudApiEndpoint;
@@ -37,15 +54,19 @@ namespace TT.Lib.Api
             if (response.ErrorException != null)
             {
                 const string message = "Error connecting to server.";
-                throw new ApplicationException(message, response.ErrorException);
+                throw new TTCloudApiException(message, response.ErrorException);
             }
 
             var json = SimpleJson.DeserializeObject<JsonObject>(response.Content);
 
             if (!json.ContainsKey("token"))
             {
-                // TODO: Error Handling
-                throw new ApplicationException("lol");
+                string message = "Invalid server response.";
+                if(json.ContainsKey("message"))
+                {
+                    message = json["message"] as string;
+                }
+                throw new TTCloudApiException(message);
             }
 
             return json["token"] as string;
@@ -67,8 +88,15 @@ namespace TT.Lib.Api
             if (response.ErrorException != null)
             {
                 const string message = "Error retrieving response. Check inner details for more info.";
-                throw new ApplicationException(message, response.ErrorException);
+                throw new TTCloudApiException(message, response.ErrorException);
             }
+
+            if(response.StatusCode != HttpStatusCode.OK)
+            {
+                string message = response.StatusDescription;
+                throw new TTCloudApiException(message);
+            }
+
             return response.Data;
         }
 
@@ -80,7 +108,7 @@ namespace TT.Lib.Api
             if (response.ErrorException != null)
             {
                 const string message = "Error retrieving response. Check inner details for more info.";
-                throw new ApplicationException(message, response.ErrorException);
+                throw new TTCloudApiException(message, response.ErrorException);
             }
             return response;
         }

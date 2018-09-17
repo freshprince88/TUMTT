@@ -130,25 +130,49 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="5" />
             </Grid.ColumnDefinitions>
             <Label Content="Account" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="24" FontWeight="Bold" VerticalContentAlignment="Center"/>
 
             <Label Content="E-Mail" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="2" FontSize="16" VerticalContentAlignment="Center"/>
-            <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="2" FontSize="20" Text="{Binding Path=Match.Tournament}"/>
+            <Label Content="{Binding Path=AccountEmail}" Grid.Column="3" Grid.Row="2" FontSize="18"/>
+            <Button Grid.Column="5" Grid.Row="2" Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                    cal:Message.Attach="[Event Click] = [Action ChangeAccount()]">
+                <TextBlock>Change...</TextBlock>
+            </Button>
 
             <Label Content="Account Status" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="4" FontSize="16" VerticalContentAlignment="Center"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource CategoryFromEnum}}" SelectedItem="{Binding Path=Match.Category}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="4" FontSize="16" />
+            <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="4">
+                <Label FontSize="18" Content="{Binding Path=AccountStatus}" />
+                <Label FontSize="14" Content="{Binding Path=AccountMessage}" VerticalContentAlignment="Bottom" />
+            </StackPanel>
+            <Button Grid.Column="5" Grid.Row="4" Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                    cal:Message.Attach="[Event Click] = [Action RefreshAccount()]">
+                <TextBlock>Refresh...</TextBlock>
+            </Button>
 
             <Label Content="Match Status" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="6" FontSize="16" VerticalContentAlignment="Center"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource ClassFromEnum}}" SelectedItem="{Binding Path=Match.DisabilityClass}" Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="6" FontSize="16" />
-
+            <Label Content="{Binding Path=MatchStatus}" Grid.Column="3" Grid.Row="6" FontSize="18"/>
+            <Button Grid.Column="5" Grid.Row="6" Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                    cal:Message.Attach="[Event Click] = [Action RefreshMatchStatus()]">
+                <TextBlock>Refresh...</TextBlock>
+            </Button>
+            
             <Label Content="Library" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="3" FontSize="24" FontWeight="Bold" VerticalContentAlignment="Center"/>
 
             <Label Content="Location" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="10" FontSize="16" VerticalContentAlignment="Center"/>
-            <TextBox Background="{DynamicResource AccentColorBrush2}" Grid.Column="3" Grid.Row="10" FontSize="16" Text="{Binding Path=Match.Tournament}"/>
+            <Label Content="{Binding Path=LibraryPath}" Grid.Column="3" Grid.Row="10" FontSize="14"/>
+            <Button Grid.Column="5" Grid.Row="10" Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                    cal:Message.Attach="[Event Click] = [Action ChangeLibraryLocation()]">
+                <TextBlock>Change...</TextBlock>
+            </Button>
 
-            <Label Content="Move" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="12" FontSize="16" VerticalContentAlignment="Center"/>
+            <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="12" Grid.ColumnSpan="5" Margin="2 0">
+                <CheckBox />
+                <Label FontSize="16" Content="Move new matches to library folder." />
+            </StackPanel>
 
             <Label Content="Advanced" Grid.Column="1" Grid.Row="15" Grid.ColumnSpan="3" FontSize="24" FontWeight="Bold" VerticalContentAlignment="Center"/>
 

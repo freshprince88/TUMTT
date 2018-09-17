@@ -133,7 +133,9 @@
                                  cal:Message.Attach="[Event TextChanged] = [CloudQuery($source)]"/>
                             <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
                         </StackPanel>
-                        <ListView ItemsSource="{Binding cloudResults}" 
+                        <!--<Label Content="{Binding CloudErrorMessage}" Background="Red"
+                            Visibility="{Binding IsCloudError, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+                        <ListView ItemsSource="{Binding cloudResults}"
                                   AlternationCount="2" Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   cal:Message.Attach="[Event MouseDoubleClick] = [DownloadMatch($source)]">
                             <ListView.Resources>
@@ -183,8 +185,6 @@
 
                             </ListView.ItemTemplate>
                         </ListView>
-                        <!--<Label Content="{Binding cloudResults.ExceptionMessage}" Background="Red"
-                            Visibility="{Binding cloudResults.IsFaulted, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
                     </StackPanel>
                 </TabItem.Content>
             </TabItem>
