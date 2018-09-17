@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using TT.Lib.Managers;
-using TT.Lib.Results;
+using TT.Lib.Events;
 using TT.Models;
 using TT.Models.Api;
 using TT.Models.Util;
@@ -103,93 +103,10 @@ namespace TT.Lib.ViewModels
             base.OnViewReady(view);
         }
 
-        protected override async void OnDeactivate(bool close)
+        protected override void OnDeactivate(bool close)
         {
 
-            if (MatchManager.MatchModified)
-            {
-                var mySettings = new MetroDialogSettings()
-                {
-                    AffirmativeButtonText = "Save and Close",
-                    NegativeButtonText = "Cancel",
-                    FirstAuxiliaryButtonText = "Close Without Saving",
-                    AnimateShow = true,
-                    AnimateHide = false
-                };
-
-                var result = await DialogCoordinator.ShowMessageAsync(this, "Close Window?",
-                    "You didn't save your changes?",
-                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
-
-                bool _shutdown = result == MessageDialogResult.Affirmative;
-
-                if (_shutdown)
-                {
-                    Coroutine.BeginExecute(MatchManager.SaveMatch().GetEnumerator(), new CoroutineExecutionContext() { View = this.GetView() });
-                    Application.Current.Shutdown();
-                }
-            }
             events.Unsubscribe(this);
-        }
-
-        /// <summary>
-        /// Determines whether the view model can be closed.
-        /// </summary>
-        /// <param name="callback">Called to perform the closing</param>
-        public override void CanClose(System.Action<bool> callback)
-        {
-            var context = new CoroutineExecutionContext()
-            {
-                Target = this,
-                View = this.GetView() as DependencyObject,
-            };
-
-            Coroutine.BeginExecute(
-                this.PrepareClose().GetEnumerator(),
-                context,
-                (sender, args) =>
-                {
-                    callback(args.WasCancelled != true);
-                });
-        }
-
-        /// <summary>
-        /// Prepare the closing of this view model.
-        /// </summary>
-        /// <returns>The actions to execute before closing</returns>
-        private IEnumerable<IResult> PrepareClose()
-        {
-            if (MatchManager.MatchModified)
-            {
-
-
-
-                var question = new YesNoCloseQuestionResult()
-                {
-                    Title = "Save the Changes?",
-                    Question = "The Player Informations are modified. Save changes?",
-                    AllowCancel = true,
-
-                };
-                yield return question;
-
-                var match = MatchManager.Match;
-                var lastRally = match.Rallies.LastOrDefault();
-                //TODO
-                if (match.Rallies.Any())
-                {
-                    if (lastRally.Winner == MatchPlayer.None)
-                        match.Rallies.Remove(lastRally);
-                }
-
-                if (question.Result)
-                {
-                    foreach (var action in MatchManager.SaveMatch())
-                    {
-                        yield return action;
-                    }
-                }
-            }
         }
 
         #endregion
@@ -227,9 +144,17 @@ namespace TT.Lib.ViewModels
 
         }
 
-        public void ResetLibrary()
+        public async void ResetLibrary()
         {
-            MatchLibrary.resetDb();
+            MessageDialogResult result = await DialogCoordinator.ShowMessageAsync(this,
+                "Reset Match Library",
+                "Are you sure to reset the match library and delete all associated files?",
+                MessageDialogStyle.AffirmativeAndNegative);
+            if(result == MessageDialogResult.Affirmative)
+            {
+                MatchLibrary.resetDb(true);
+                events.PublishOnUIThread(new LibraryResetEvent());
+            }
         }
         #endregion
 

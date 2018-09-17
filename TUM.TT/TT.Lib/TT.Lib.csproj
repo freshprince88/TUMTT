@@ -129,6 +129,7 @@
     <Compile Include="Api\TTCloudApi.cs" />
     <Compile Include="Events\FollowMouseEvent.cs" />
     <Compile Include="Events\FullscreenHidePlayerEvent.cs" />
+    <Compile Include="Events\LibraryResetEvent.cs" />
     <Compile Include="Events\MediaLiveScouterMuteEvent.cs" />
     <Compile Include="Events\MediaLiveScouterSpeedEvent.cs" />
     <Compile Include="Events\PointAddedEventArgs.cs" />
@@ -245,8 +246,6 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="CHANGELOG.md" />
-    <None Include="LICENSE" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

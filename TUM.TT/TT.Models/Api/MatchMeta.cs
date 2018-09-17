@@ -51,6 +51,8 @@ namespace TT.Models.Api
         public DateTime LastOpenedAt { get; set; }
         [IgnoreDataMember]
         public String FileName { get; set; }
+        [IgnoreDataMember]
+        public String VideoFileName { get; set; }
 
         [DataMember(Name = "firstPlayer")]
         public PlayerMeta FirstPlayer { get; set; }

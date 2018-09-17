@@ -22,7 +22,7 @@ using Application = System.Windows.Application;
 namespace TT.Lib.ViewModels
 {
 
-    public class MatchLibraryViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx, IHandle<MatchOpenedEvent>
+    public class MatchLibraryViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx, IHandle<MatchOpenedEvent>, IHandle<LibraryResetEvent>
     {
         public IEventAggregator events { get; private set; }
         private readonly IWindowManager _windowManager;
@@ -262,6 +262,11 @@ namespace TT.Lib.ViewModels
         public void Handle(MatchOpenedEvent message)
         {
             this.TryClose();
+        }
+
+        public void Handle(LibraryResetEvent message)
+        {
+            LoadLocalResults();
         }
 
         #endregion

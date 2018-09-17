@@ -92,15 +92,13 @@ namespace TT.Lib.Managers
 
         public void resetDb(bool deleteFiles = false)
         {
-            if (deleteFiles) {
-                DirectoryInfo di = new DirectoryInfo(LibraryPath);
-                foreach (FileInfo file in di.GetFiles())
+            if(deleteFiles) { 
+                var matches = GetMatches(null, 0);
+                foreach(MatchMeta match in matches)
                 {
-                    try
-                    {
-                        file.Delete();
-                    }
-                    catch { /* Best effort */ }
+                    TryDelteFile(match.FileName);
+                    TryDelteFile(match.VideoFileName);
+                    TryDelteFile(GetThumbnailPath(match));
                 }
             }
             db.DropCollection(matchesCollection);
@@ -117,7 +115,7 @@ namespace TT.Lib.Managers
                 string[] squery = query.ToLower().Split(null);
                 results = col
                     .Find(Query.All("LastOpenedAt", Query.Descending))
-                    .Where<MatchMeta>(x => {
+                    .Where(x => {
                         bool cond = true;
                         foreach (string q in squery)
                         {
@@ -138,7 +136,6 @@ namespace TT.Lib.Managers
                 results = col.Find(Query.All("LastOpenedAt", Query.Descending), 0, limit);
             }
 
-
             return results;
         }
 
@@ -154,6 +151,7 @@ namespace TT.Lib.Managers
         {
             var meta = MatchMeta.fromMatch(MatchManager.Match);
             meta.FileName = MatchManager.FileName;
+            meta.VideoFileName = MatchManager.Match.VideoFile;
             
             var col = db.GetCollection<MatchMeta>(matchesCollection);
 
@@ -180,5 +178,18 @@ namespace TT.Lib.Managers
         }
         #endregion
 
+        #region Helper
+        private void TryDelteFile(string Path)
+        {
+            try
+            {
+                if (File.Exists(Path))
+                {
+                    File.Delete(Path);
+                }
+            }
+            catch { /* Best effort */ }
+        }
+        #endregion
     }
 }

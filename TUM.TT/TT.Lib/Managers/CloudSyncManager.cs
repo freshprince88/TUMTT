@@ -113,7 +113,6 @@ namespace TT.Lib.Managers
 
         public SyncStatus GetSyncStatus(MatchMeta meta)
         {
-
             if (meta == null)
             {
                 return SyncStatus.NotExists;
@@ -169,18 +168,18 @@ namespace TT.Lib.Managers
 
         public async Task<Tuple<MatchMeta, string, string>> DownloadMatch(Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null)
         {
-            if (callback != null) { callback("Finding match..."); }
+            callback?.Invoke("Finding match...");
             var match = await CloudApi.GetMatch(matchId);
 
             if (match.AnalysisFileStatus)
             {
-                if (callback != null) { callback("Downloading analysis file..."); }
+                callback?.Invoke("Downloading analysis file...");
                 await CloudApi.DownloadFile(match.Guid, matchFilePath, token);
             } else { matchFilePath = null; }
 
             if (match.VideoStatus == VideoStatus.Ready)
             {
-                if (callback != null) { callback("Downloading video... (this may take some time)"); }
+                callback?.Invoke("Downloading video... (this may take some time)");
                 await CloudApi.DownloadVideo(match.Guid, videoFilePath, token);
             } else { videoFilePath = null; }
 
