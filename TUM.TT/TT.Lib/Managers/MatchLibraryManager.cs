@@ -51,10 +51,7 @@ namespace TT.Lib.Managers
         #region Static Functions
         public static void GenerateThumbnail(string videoPath, string thumbPath)
         {
-            if (File.Exists(thumbPath))
-            {
-                File.Delete(thumbPath);
-            }
+            TryDelteFile(thumbPath);
 
             var ffmpeg = new NReco.VideoConverter.FFMpegConverter();
             ffmpeg.GetVideoThumbnail(videoPath, thumbPath);
@@ -139,6 +136,18 @@ namespace TT.Lib.Managers
             return results;
         }
 
+        public void DeleteMatch(Guid guid)
+        {
+            var col = db.GetCollection<MatchMeta>(matchesCollection);
+            var match = col.FindById(guid);
+            if(match != null) {
+                TryDelteFile(match.FileName);
+                TryDelteFile(match.VideoFileName);
+                TryDelteFile(GetThumbnailPath(match));
+                col.Delete(guid);
+            }
+        }
+
         public MatchMeta FindMatch(Guid guid)
         {
             var col = db.GetCollection<MatchMeta>(matchesCollection);
@@ -179,7 +188,7 @@ namespace TT.Lib.Managers
         #endregion
 
         #region Helper
-        private void TryDelteFile(string Path)
+        static private void TryDelteFile(string Path)
         {
             try
             {

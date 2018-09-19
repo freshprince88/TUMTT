@@ -179,6 +179,12 @@ namespace TT.Lib.ViewModels
             this.TryClose();
         }
 
+        public void DeleteMatch(MatchMeta match)
+        {
+            MatchLibrary.DeleteMatch(match.Guid);
+            localResults.Remove(match);
+        }
+
         public async void DownloadMatch(ListView listView)
         {
             if (listView.SelectedItems.Count < 1)

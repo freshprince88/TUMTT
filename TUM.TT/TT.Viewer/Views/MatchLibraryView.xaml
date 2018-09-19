@@ -62,7 +62,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TabControl TabStripPlacement="Top" Margin="10">
-            <TabItem Name="localMatches" Header="Local">
+            <TabItem Name="LocalMatches" Header="Local">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                         <Label Content="Search: " FontSize="14" />
@@ -70,7 +70,7 @@
                                  cal:Message.Attach="[Event TextChanged] = [LocalQuery($source)]"/>
                         <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
                     </StackPanel>
-                    <ListView x:Name="LocalListView" ItemsSource="{Binding localResults}" AlternationCount="2"
+                    <ListView ItemsSource="{Binding localResults}" AlternationCount="2"
                               Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
                               cal:Message.Attach="[Event MouseDoubleClick] = [OpenMatch($source)]">
                         <ListView.Resources>
@@ -80,7 +80,12 @@
                         </ListView.Resources>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Tag="{Binding DataContext, ElementName=LocalMatches}">
+                                    <Grid.ContextMenu>
+                                        <ContextMenu Name="cm" cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                            <MenuItem Header="Delete Match..." cal:Message.Attach="DeleteMatch($dataContext)" />
+                                        </ContextMenu>
+                                    </Grid.ContextMenu>
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />

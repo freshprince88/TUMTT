@@ -18,6 +18,7 @@ namespace TT.Lib.Managers
         string GetThumbnailPath(MatchMeta match);
 
         IEnumerable<MatchMeta> GetMatches(String query=null, int limit=100);
+        void DeleteMatch(Guid guid);
         MatchMeta FindMatch(Guid guid);
     }
 }
