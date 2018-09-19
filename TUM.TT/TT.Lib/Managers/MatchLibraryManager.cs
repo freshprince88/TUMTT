@@ -139,12 +139,12 @@ namespace TT.Lib.Managers
         public void DeleteMatch(Guid guid)
         {
             var col = db.GetCollection<MatchMeta>(matchesCollection);
-            var match = col.FindById(guid);
-            if(match != null) {
+            var match = col.FindById(guid.ToString());
+            if (match != null) {
+                col.Delete(match._id);
                 TryDelteFile(match.FileName);
                 TryDelteFile(match.VideoFileName);
                 TryDelteFile(GetThumbnailPath(match));
-                col.Delete(guid);
             }
         }
 
