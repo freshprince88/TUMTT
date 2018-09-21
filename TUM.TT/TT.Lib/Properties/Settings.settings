@@ -26,5 +26,8 @@
     <Setting Name="LocalLibraryPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">Z:\Developer\tum.tt-data\TUM.TT Library</Value>
     </Setting>
+    <Setting Name="IsMovingFilesToLibrary" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

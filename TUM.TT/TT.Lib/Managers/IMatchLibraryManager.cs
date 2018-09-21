@@ -10,9 +10,10 @@ namespace TT.Lib.Managers
     public interface IMatchLibraryManager
     {
         string LibraryPath { get; }
+        bool IsMovingFilesToLibrary { get; }
 
-        void resetDb(bool deleteFiles = false);
-
+        void ResetLibrary(bool deleteFiles = false);
+    
         string GetMatchFilePath(MatchMeta match);
         string GetVideoFilePath(MatchMeta match);
         string GetThumbnailPath(MatchMeta match);

@@ -63,6 +63,14 @@ namespace TT.Lib.ViewModels
                 return MatchLibrary.LibraryPath;
             }
         }
+
+        public bool IsMovingFilesToLibrary
+        {
+            get
+            {
+                return MatchLibrary.IsMovingFilesToLibrary;
+            }
+        }
         #endregion
 
 
@@ -152,7 +160,7 @@ namespace TT.Lib.ViewModels
                 MessageDialogStyle.AffirmativeAndNegative);
             if(result == MessageDialogResult.Affirmative)
             {
-                MatchLibrary.resetDb(true);
+                MatchLibrary.ResetLibrary(true);
                 events.PublishOnUIThread(new LibraryResetEvent());
             }
         }

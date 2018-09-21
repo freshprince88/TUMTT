@@ -118,5 +118,17 @@ namespace TT.Lib.Properties {
                 this["LocalLibraryPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsMovingFilesToLibrary {
+            get {
+                return ((bool)(this["IsMovingFilesToLibrary"]));
+            }
+            set {
+                this["IsMovingFilesToLibrary"] = value;
+            }
+        }
     }
 }

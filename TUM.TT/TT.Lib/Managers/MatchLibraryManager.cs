@@ -28,6 +28,7 @@ namespace TT.Lib.Managers
 
         private LiteDatabase db { get; set; }
         public string LibraryPath { get; private set; }
+        public bool IsMovingFilesToLibrary { get; private set; }
 
         private const string matchesCollection = "matches";
         private const string libraryFileName = "Library.db";
@@ -45,7 +46,8 @@ namespace TT.Lib.Managers
             EventAggregator.Subscribe(this);
 
             LibraryPath = Settings.Default.LocalLibraryPath;
-            initDb();
+            IsMovingFilesToLibrary = Settings.Default.IsMovingFilesToLibrary;
+            InitDatabase();
         }
 
         #region Static Functions
@@ -73,12 +75,11 @@ namespace TT.Lib.Managers
         {
             return Path.Combine(LibraryPath, match.Guid.ToString());
         }
-
         #endregion
 
         #region Database scaffolding
 
-        private void initDb()
+        private void InitDatabase()
         {
             string libraryFile = Path.Combine(LibraryPath, libraryFileName);
             db = new LiteDatabase(libraryFile);
@@ -87,15 +88,15 @@ namespace TT.Lib.Managers
             col.EnsureIndex(x => x.LastOpenedAt, false);
         }
 
-        public void resetDb(bool deleteFiles = false)
+        public void ResetLibrary(bool deleteFiles = false)
         {
             if(deleteFiles) { 
                 var matches = GetMatches(null, int.MaxValue);
                 foreach(MatchMeta match in matches)
                 {
-                    TryDelteFile(match.FileName);
-                    TryDelteFile(match.VideoFileName);
-                    TryDelteFile(GetThumbnailPath(match));
+                    TryDelteFile(match.FileName, LibraryPath);
+                    TryDelteFile(match.VideoFileName, LibraryPath);
+                    TryDelteFile(GetThumbnailPath(match), LibraryPath);
                 }
             }
             db.DropCollection(matchesCollection);
@@ -159,6 +160,11 @@ namespace TT.Lib.Managers
         public void Handle(MatchOpenedEvent message)
         {
             var meta = MatchMeta.fromMatch(MatchManager.Match);
+            if (IsMovingFilesToLibrary)
+            {
+                MoveFilesToLibrary(meta);
+            }
+
             meta.FileName = MatchManager.FileName;
             meta.VideoFileName = MatchManager.Match.VideoFile;
             
@@ -188,11 +194,39 @@ namespace TT.Lib.Managers
         #endregion
 
         #region Helper
-        static private void TryDelteFile(string Path)
+        private void MoveFilesToLibrary(MatchMeta meta)
+        {
+            if(MatchManager.FileName.IsSubPathOf(LibraryPath) && MatchManager.Match.VideoFile.IsSubPathOf(LibraryPath))
+            {
+                return;
+            }
+
+            // Move video
+            if(!MatchManager.Match.VideoFile.IsSubPathOf(LibraryPath))
+            {
+                try
+                {
+                    string newVideoFile = GetVideoFilePath(meta);
+                    File.Copy(MatchManager.Match.VideoFile, newVideoFile);
+                    MatchManager.Match.VideoFile = newVideoFile;
+                }
+                catch { }
+            }
+
+            // Move File
+            if(!MatchManager.FileName.IsSubPathOf(LibraryPath))
+            {
+                MatchManager.FileName = GetMatchFilePath(meta);
+            }
+
+            Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
+        }
+
+        static private void TryDelteFile(string Path, string SubPath)
         {
             try
             {
-                if (File.Exists(Path))
+                if (File.Exists(Path) && Path.IsSubPathOf(SubPath))
                 {
                     File.Delete(Path);
                 }
