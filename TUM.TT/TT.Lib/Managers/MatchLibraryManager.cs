@@ -104,7 +104,7 @@ namespace TT.Lib.Managers
         #endregion
 
         #region Library Functions
-        public IEnumerable<MatchMeta> GetMatches(String query = null, int limit=30)
+        public IEnumerable<MatchMeta> GetMatches(String query = null, int limit=100)
         {
             var col = db.GetCollection<MatchMeta>(matchesCollection);
             IEnumerable<MatchMeta> results;
@@ -143,9 +143,9 @@ namespace TT.Lib.Managers
             var match = col.FindById(guid.ToString());
             if (match != null) {
                 col.Delete(match._id);
-                TryDelteFile(match.FileName);
-                TryDelteFile(match.VideoFileName);
-                TryDelteFile(GetThumbnailPath(match));
+                TryDelteFile(match.FileName, LibraryPath);
+                TryDelteFile(match.VideoFileName, LibraryPath);
+                TryDelteFile(GetThumbnailPath(match), LibraryPath);
             }
         }
 
@@ -222,11 +222,12 @@ namespace TT.Lib.Managers
             Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
         }
 
-        static private void TryDelteFile(string Path, string SubPath)
+        static private void TryDelteFile(string Path, string SubPath = null)
         {
             try
             {
-                if (File.Exists(Path) && Path.IsSubPathOf(SubPath))
+                bool SubPathCond = (SubPath != null) ? Path.IsSubPathOf(SubPath) : true;
+                if (File.Exists(Path) && SubPathCond)
                 {
                     File.Delete(Path);
                 }
