@@ -9,9 +9,11 @@ namespace TT.Lib.Managers
 {
     public interface IMatchLibraryManager
     {
-        string LibraryPath { get; }
-        bool IsMovingFilesToLibrary { get; }
+        string LibraryPath { get; set; }
+        bool IsMovingFilesToLibrary { get; set; }
+        bool Uninitialized { get; }
 
+        void InitDatabase(bool ValidateFileExistence = true);
         void ResetLibrary(bool deleteFiles = false);
     
         string GetMatchFilePath(MatchMeta match);

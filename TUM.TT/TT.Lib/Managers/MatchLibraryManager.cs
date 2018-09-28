@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +12,11 @@ using TT.Lib.Events;
 using TT.Lib.Util;
 using TT.Models.Api;
 using TT.Lib.Properties;
-using Caliburn.Micro;
 
 namespace TT.Lib.Managers
 {
 
-
-    public class MatchLibraryManager : IMatchLibraryManager, IHandle<MatchOpenedEvent>
+    public class MatchLibraryManager : PropertyChangedBase, IMatchLibraryManager, IHandle<MatchOpenedEvent>
     {
         #region Properties
         /// <summary>
@@ -27,16 +26,58 @@ namespace TT.Lib.Managers
         public IMatchManager MatchManager { get; set; }
 
         private LiteDatabase db { get; set; }
-        public string LibraryPath { get; private set; }
-        public bool IsMovingFilesToLibrary { get; private set; }
 
         private const string matchesCollection = "matches";
+        private const string libraryDirectoryName = "TUM.TT Library";
         private const string libraryFileName = "Library.db";
         private const string analysisExtension = ".tto";
         private const string videoExtension = ".mp4";
         #endregion
 
         #region Calculated Properties
+        public string LibraryPath {
+            get
+            {
+                return Settings.Default.LocalLibraryPath;
+            }
+            set
+            {
+                if (Settings.Default.LocalLibraryPath != value)
+                {
+                    Settings.Default.LocalLibraryPath = value;
+                    Settings.Default.Save();
+                    InitDatabase(false);
+                    
+                    NotifyOfPropertyChange("LibraryPath");
+                }
+            }
+        }
+
+        public bool IsMovingFilesToLibrary
+        {
+            get
+            {
+                return Settings.Default.IsMovingFilesToLibrary;
+            }
+            set
+            {
+                if (Settings.Default.IsMovingFilesToLibrary != value)
+                {
+                    Settings.Default.IsMovingFilesToLibrary = value;
+                    Settings.Default.Save();
+              
+                    NotifyOfPropertyChange("IsMovingFilesToLibrary");
+                }
+            }
+        }
+
+        public bool Uninitialized
+        {
+            get
+            {
+                return db == null;
+            }
+        }
         #endregion
 
         public MatchLibraryManager(IEventAggregator eventAggregator, IMatchManager matchManager)
@@ -44,9 +85,7 @@ namespace TT.Lib.Managers
             EventAggregator = eventAggregator;
             this.MatchManager = matchManager;
             EventAggregator.Subscribe(this);
-
-            LibraryPath = Settings.Default.LocalLibraryPath;
-            IsMovingFilesToLibrary = Settings.Default.IsMovingFilesToLibrary;
+            
             InitDatabase();
         }
 
@@ -78,14 +117,39 @@ namespace TT.Lib.Managers
         #endregion
 
         #region Database scaffolding
-
-        private void InitDatabase()
+        public void InitDatabase(bool ValidateFileExistence = true)
         {
+            if(!ValidateLibraryPath(ValidateFileExistence)) {
+                return;
+            }
             string libraryFile = Path.Combine(LibraryPath, libraryFileName);
             db = new LiteDatabase(libraryFile);
             var col = db.GetCollection<MatchMeta>(matchesCollection);
             col.EnsureIndex(x => x.Guid, true);
             col.EnsureIndex(x => x.LastOpenedAt, false);
+        }
+
+        private bool ValidateLibraryPath(bool CheckExistence = true)
+        {
+            if(String.IsNullOrEmpty(LibraryPath))
+            {
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                var defaultibraryPath = Path.Combine(documentsPath, libraryDirectoryName);
+                if (!Directory.Exists(defaultibraryPath))
+                {
+                    Directory.CreateDirectory(defaultibraryPath);
+                }
+                LibraryPath = defaultibraryPath;
+                return true;
+            }
+
+            string libraryFile = Path.Combine(LibraryPath, libraryFileName);
+            if (!Directory.Exists(LibraryPath) || (CheckExistence && !File.Exists(libraryFile)))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void ResetLibrary(bool deleteFiles = false)

@@ -18,7 +18,7 @@ namespace TT.Lib.ViewModels
         public IEventAggregator events { get; private set; }
         public IMatchManager MatchManager { get; set; }
         public ICloudSyncManager CloudSyncManager;
-        private IMatchLibraryManager MatchLibrary;
+        public IMatchLibraryManager MatchLibrary { get; private set; }
         private readonly IWindowManager _windowManager;
         private IDialogCoordinator DialogCoordinator;
 
@@ -53,22 +53,6 @@ namespace TT.Lib.ViewModels
             get
             {
                 return _matchStatus;
-            }
-        }
-
-        public string LibraryPath
-        {
-            get
-            {
-                return MatchLibrary.LibraryPath;
-            }
-        }
-
-        public bool IsMovingFilesToLibrary
-        {
-            get
-            {
-                return MatchLibrary.IsMovingFilesToLibrary;
             }
         }
         #endregion
@@ -149,7 +133,15 @@ namespace TT.Lib.ViewModels
 
         public void ChangeLibraryLocation()
         {
-
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if(result == System.Windows.Forms.DialogResult.OK)
+                {
+                    MatchLibrary.LibraryPath = dialog.SelectedPath;
+                }
+            }
+            events.PublishOnUIThread(new LibraryResetEvent());
         }
 
         public async void ResetLibrary()

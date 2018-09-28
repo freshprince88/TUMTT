@@ -27,61 +27,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <ObjectDataProvider x:Key="ModeFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}" >
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="Models:MatchMode"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-            <ObjectDataProvider x:Key="CategoryFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}" >
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="Models:MatchCategory"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-            <ObjectDataProvider x:Key="ClassFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}" >
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="Models:DisabilityClass"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-            <ObjectDataProvider x:Key="RoundFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}" >
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="Models:MatchRound"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-            <Style x:Key="LargeTileStyle"
-                   TargetType="Controls:Tile">
-                <Setter Property="Width"
-                        Value="300" />
-                <Setter Property="Height"
-                        Value="125" />
-                <Setter Property="TitleFontSize"
-                        Value="12" />
-            </Style>
-
-            <Style x:Key="SmallTileStyle"
-                   TargetType="Controls:Tile">
-                <Setter Property="Width"
-                        Value="100" />
-                <Setter Property="Height"
-                        Value="100" />
-                <Setter Property="TitleFontSize"
-                        Value="10" />
-            </Style>
-            <Style x:Key="BigTileStyle"
-                   TargetType="Controls:Tile">
-                <Setter Property="Width"
-                        Value="200" />
-                <Setter Property="Height"
-                        Value="100" />
-                <Setter Property="TitleFontSize"
-                        Value="10" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Center"/>
-            </Style>
-
         </ResourceDictionary>
     </Window.Resources>
 
@@ -146,14 +91,14 @@
             <Label Content="Library" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="3" FontSize="24" FontWeight="Bold" VerticalContentAlignment="Center"/>
 
             <Label Content="Location" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="10" FontSize="16" VerticalContentAlignment="Center"/>
-            <Label Content="{Binding Path=LibraryPath}" Grid.Column="3" Grid.Row="10" FontSize="14"/>
+            <Label Content="{Binding Path=MatchLibrary.LibraryPath}" Grid.Column="3" Grid.Row="10" FontSize="14"/>
             <Button Grid.Column="5" Grid.Row="10" Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
                     cal:Message.Attach="[Event Click] = [Action ChangeLibraryLocation()]">
                 <TextBlock>Change...</TextBlock>
             </Button>
 
             <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="12" Grid.ColumnSpan="5" Margin="2 0">
-                <CheckBox x:Name="IsMovingFilesToLibrary" />
+                <CheckBox IsChecked="{Binding Path=MatchLibrary.IsMovingFilesToLibrary}" />
                 <Label FontSize="16" Content="Move new matches to library folder." />
             </StackPanel>
 

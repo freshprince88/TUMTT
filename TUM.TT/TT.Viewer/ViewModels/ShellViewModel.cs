@@ -66,18 +66,51 @@ namespace TT.Viewer.ViewModels
         /// <summary>
         /// Initializes this view model.
         /// </summary>
-        protected override void OnInitialize()
+        protected  override void OnInitialize()
         {
             base.OnInitialize();
 
             // Subscribe ourself to the event bus
             //this.Events.Subscribe(this);
-            CloudSyncManager.Login();
         }
 
-        protected override void OnViewLoaded(object view)
+        protected async override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
+            CloudSyncManager.Login();
+
+            while (MatchLibrary.Uninitialized)
+            {
+                MetroDialogSettings settings = new MetroDialogSettings()
+                {
+                    FirstAuxiliaryButtonText = "Try Again",
+                    AffirmativeButtonText = "Quit",
+                    NegativeButtonText = "Change Location...",
+                    DefaultButtonFocus = MessageDialogResult.FirstAuxiliary
+                };
+                MessageDialogResult result = await DialogCoordinator.ShowMessageAsync(this,
+                "TT.Viewer cannot find library folder",
+                "The library is not accessible at: " + MatchLibrary.LibraryPath + "\n" +
+                "Please make sure the path is accessibale and try again or choose a new location for the library.",
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    Application.Current.Shutdown();
+                }
+                else if (result == MessageDialogResult.Negative)
+                {
+                    using (var dialog = new FolderBrowserDialog())
+                    {
+                        DialogResult resultFolder = dialog.ShowDialog();
+                        if (resultFolder == DialogResult.OK)
+                        {
+                            MatchLibrary.LibraryPath = dialog.SelectedPath;
+                        }
+                    }
+                }
+                MatchLibrary.InitDatabase(false);
+            }
         }
 
         protected override void OnActivate()

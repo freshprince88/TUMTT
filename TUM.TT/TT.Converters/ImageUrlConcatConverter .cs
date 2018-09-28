@@ -14,11 +14,18 @@ namespace TT.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var result = "";
-            foreach(var value in values)
+            foreach (var value in values)
             {
                 result += value.ToString();
             }
-            return new BitmapImage(new Uri(result, UriKind.Absolute));
+
+            BitmapImage image = null;
+            try
+            {
+                image = new BitmapImage(new Uri(result, UriKind.Absolute));
+            }
+            catch { }
+            return image;
         }
 
 

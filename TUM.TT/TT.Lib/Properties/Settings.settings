@@ -18,13 +18,13 @@
       <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="CloudApiEndpoint" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://torbens-macbook-pro.local:3000/api/</Value>
+      <Value Profile="(Default)">https://tumttcloud.tee.pe/api</Value>
     </Setting>
     <Setting Name="CloudApiFrontend" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://torbens-macbook-pro.local:3000/</Value>
+      <Value Profile="(Default)">https://tumttcloud.tee.pe</Value>
     </Setting>
     <Setting Name="LocalLibraryPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Z:\Developer\tum.tt-data\TUM.TT Library</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsMovingFilesToLibrary" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

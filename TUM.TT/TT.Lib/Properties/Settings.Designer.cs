@@ -85,7 +85,7 @@ namespace TT.Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://torbens-macbook-pro.local:3000/api/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://tumttcloud.tee.pe/api")]
         public string CloudApiEndpoint {
             get {
                 return ((string)(this["CloudApiEndpoint"]));
@@ -97,7 +97,7 @@ namespace TT.Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://torbens-macbook-pro.local:3000/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://tumttcloud.tee.pe")]
         public string CloudApiFrontend {
             get {
                 return ((string)(this["CloudApiFrontend"]));
@@ -109,7 +109,7 @@ namespace TT.Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Z:\\Developer\\tum.tt-data\\TUM.TT Library")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LocalLibraryPath {
             get {
                 return ((string)(this["LocalLibraryPath"]));
