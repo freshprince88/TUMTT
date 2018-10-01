@@ -124,6 +124,18 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
+            <Button ToolTip="Show Account Status"
+                    cal:Message.Attach="[Event Click] = [Action ShowSettings()]"
+                    Visibility="{Binding Path=IsOffline, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="Red">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_cloud_delete}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
             <!--<Button ToolTip="Open new Match"
                     cal:Message.Attach="[Event Click] = [Action OpenMatch()]">
                 <Rectangle Width="22"

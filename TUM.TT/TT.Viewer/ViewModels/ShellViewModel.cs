@@ -29,7 +29,8 @@ namespace TT.Viewer.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
         IShell,
-        IHandle<MatchOpenedEvent>
+        IHandle<MatchOpenedEvent>,
+        IHandle<CloudSyncConnectionStatusChangedEvent>
     {
         /// <summary>
         /// Gets the event bus of this shell.
@@ -252,6 +253,14 @@ namespace TT.Viewer.ViewModels
             }
         }
 
+        public bool IsOffline
+        {
+            get
+            {
+                return CloudSyncManager.GetConnectionStatus() != ConnectionStatus.Online;
+            }
+        }
+
         /// <summary>
         /// Generates a PDF report.
         /// </summary>
@@ -285,6 +294,11 @@ namespace TT.Viewer.ViewModels
             var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, Events);
             reportVm.GenerateReport();
             reportVm.DiscardViewModel(true);
+        }
+
+        public void Handle(CloudSyncConnectionStatusChangedEvent e)
+        {
+            NotifyOfPropertyChange(() => this.IsOffline);
         }
         #endregion
         
@@ -348,6 +362,11 @@ namespace TT.Viewer.ViewModels
             //}
         }
 
+        public void ShowSettings()
+        {
+            _windowManager.ShowDialog(new SettingsViewModel(_windowManager, Events, MatchManager, DialogCoordinator, CloudSyncManager, MatchLibrary));
+        }
+
         public async void UploadUpdates()
         {
             MessageDialogResult result = await DialogCoordinator.ShowMessageAsync(this,
@@ -360,8 +379,7 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-
-            public static bool IsWindowOpen<T>(string name ="") where T : Window
+        public static bool IsWindowOpen<T>(string name ="") where T : Window
         {
             return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
         }
