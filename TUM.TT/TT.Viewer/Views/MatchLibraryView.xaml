@@ -64,12 +64,23 @@
         <TabControl TabStripPlacement="Top" Margin="10">
             <TabItem Name="LocalMatches" Header="Local">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                    <DockPanel Margin="0 0 0 10">
                         <Label Content="Search: " FontSize="14" />
                         <TextBox Width="250" FontSize="14" Controls:TextBoxHelper.ClearTextButton="True"
+                                 x:Name="LocalQueryValue"
                                  cal:Message.Attach="[Event TextChanged] = [LocalQuery($source)]"/>
                         <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
-                    </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Width="170" HorizontalAlignment="Right">
+                            <Label Content="Sort: " FontSize="14" />
+                            <ComboBox Width="120" SelectedValue="{Binding SelectedLocalSort}" SelectedValuePath="Tag"
+                                      cal:Message.Attach="[Event SelectionChanged] = [LoadLocalResults]">
+                                <ComboBoxItem Content="Last Opened (Descending)" Tag="LastOpenedAt.Descending" IsSelected="True"/>
+                                <ComboBoxItem Content="Match Date (Descending)" Tag="Date.Descending" />
+                                <ComboBoxItem Content="Match Date (Ascending)" Tag="Date.Ascending" />
+                            </ComboBox>
+                        </StackPanel>
+                    </DockPanel>
                     <ListView ItemsSource="{Binding LocalResults}" AlternationCount="2"
                               Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
                               cal:Message.Attach="[Event MouseDoubleClick] = [OpenMatch($source)]">
@@ -97,7 +108,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
+                                    <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Width="180" Height="100">
                                         <Image.Source>
                                             <MultiBinding Converter="{StaticResource ImagePathConcatConverter}">
                                                 <Binding Path="DataContext.LibraryPath" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
@@ -119,6 +130,8 @@
                                         <Run Text="{Binding Mode}"/>
                                         <Run Text=" | "/>
                                         <Run Text="{Binding Category}"/>
+                                        <Run Text=" | "/>
+                                        <Run Text="{Binding DisabilityClass}"/>
                                     </TextBlock>
                                 </Grid>
                             </DataTemplate>
@@ -132,12 +145,22 @@
             <TabItem Name="onlineMatches" Header="Cloud">
                 <TabItem.Content>
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                        <DockPanel Margin="0 0 0 10">
                             <Label Content="Search: " FontSize="14" />
                             <TextBox Width="250" FontSize="14" Controls:TextBoxHelper.ClearTextButton="True"
-                                 cal:Message.Attach="[Event TextChanged] = [CloudQuery($source)]"/>
+                                     x:Name="CloudQueryValue" cal:Message.Attach="[Event TextChanged] = [CloudQuery($source)]"/>
                             <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
-                        </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Width="170" HorizontalAlignment="Right">
+                                <Label Content="Sort: " FontSize="14" />
+                                <ComboBox Width="120" SelectedValue="{Binding SelectedCloudSort}" SelectedValuePath="Tag"
+                                      cal:Message.Attach="[Event SelectionChanged] = [LoadCloudResults]">
+                                    <ComboBoxItem Content="Updated (Descending)" Tag="updatedAt.desc" IsSelected="True"/>
+                                    <ComboBoxItem Content="Match Date (Descending)" Tag="date.desc" />
+                                    <ComboBoxItem Content="Match Date (Ascending)" Tag="date.asc" />
+                                </ComboBox>
+                            </StackPanel>
+                        </DockPanel>
                         <!-- Login Info -->
                         <Grid Visibility="{Binding HasNoLogin, Converter={StaticResource BooleanToVisibilityConverter}}"
                               HorizontalAlignment="Left" Margin="20">
@@ -212,7 +235,7 @@
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
 
-                                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
+                                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Width="180" Height="100">
                                             <Image.Source>
                                                 <MultiBinding Converter="{StaticResource ImageUrlConcatConverter}">
                                                     <Binding Path="DataContext.BaseUrl" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
@@ -234,6 +257,8 @@
                                         <Run Text="{Binding Mode}"/>
                                         <Run Text=" | "/>
                                         <Run Text="{Binding Category}"/>
+                                        <Run Text=" | "/>
+                                        <Run Text="{Binding DisabilityClass}"/>
                                         </TextBlock>
                                     </Grid>
                                 </DataTemplate>

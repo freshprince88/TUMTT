@@ -23,7 +23,7 @@ namespace TT.Lib.Managers
 
         void UpdateMatch();
 
-        Task<MatchMetaResult> GetMatches(string query = null);
+        Task<MatchMetaResult> GetMatches(string query = null, string sortFild = "updatedAt", string sortOrder = "desc", int limit = 100);
         Task<MatchMeta> GetMatch(Guid id);
         Task<Tuple<MatchMeta, string, string>> DownloadMatch(
             Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null);

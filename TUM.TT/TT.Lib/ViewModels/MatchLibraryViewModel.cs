@@ -29,6 +29,7 @@ namespace TT.Lib.ViewModels
         IHandle<LibraryResetEvent>,
         IHandle<CloudSyncConnectionStatusChangedEvent>
     {
+        #region Properties
         public IEventAggregator events { get; private set; }
         private readonly IWindowManager _windowManager;
         private IDialogCoordinator DialogCoordinator;
@@ -39,6 +40,13 @@ namespace TT.Lib.ViewModels
         public ObservableCollection<MatchMeta> LocalResults { get; private set; }
         public ObservableCollection<MatchMeta> CloudResults { get; private set; }
 
+        public string LocalQueryValue { get; set; }
+        public string CloudQueryValue { get; set; }
+        public string SelectedLocalSort { get; set; } = "LastOpenedAt.Descending";
+        public string SelectedCloudSort { get; set; } = "updatedAt.desc";
+        #endregion
+
+        #region Computed Properties
         private bool _searchIsActive;
         public bool SearchIsActive
         {
@@ -85,6 +93,7 @@ namespace TT.Lib.ViewModels
                 return CloudSyncManager.GetConnectionMessage();
             }
         }
+        #endregion
 
         public MatchLibraryViewModel(IWindowManager windowManager, IEventAggregator eventAggregator, IDialogCoordinator coordinator, IMatchManager matchManager, ICloudSyncManager cloudSyncManager, IMatchLibraryManager matchLibrary)
         {
@@ -150,9 +159,10 @@ namespace TT.Lib.ViewModels
         #endregion
 
         #region Search
-        public void LoadLocalResults(string query = null)
+        public void LoadLocalResults()
         {
-            var matches = MatchLibrary.GetMatches(query);
+            var sort = SelectedLocalSort.Split('.');
+            var matches = MatchLibrary.GetMatches(LocalQueryValue, sort[0], sort[1]);
             LocalResults.Clear();
             matches.ToList().ForEach(LocalResults.Add);
         }
@@ -164,19 +174,20 @@ namespace TT.Lib.ViewModels
             if(query == textBox.Text)
             {
                 SearchIsActive = true;
-                LoadLocalResults(query);
+                LoadLocalResults();
                 SearchIsActive = false;
             }
         }
 
-        public async void LoadCloudResults(string query = null)
+        public async void LoadCloudResults()
         {
+            var sort = SelectedCloudSort.Split('.');
             try
             {
-                var matches = await CloudSyncManager.GetMatches(query);
+                var matches = await CloudSyncManager.GetMatches(CloudQueryValue, sort[0], sort[1]);
                 CloudResults.Clear();
                 matches.rows.ForEach(CloudResults.Add);
-            } catch(TTCloudApiException e)  { }
+            } catch(TTCloudApiException) { }
         }
 
         public async void CloudQuery(TextBox textBox)
@@ -186,7 +197,7 @@ namespace TT.Lib.ViewModels
             if (query == textBox.Text)
             {
                 SearchIsActive = true;
-                LoadCloudResults(query);
+                LoadCloudResults();
                 SearchIsActive = false;
             }
         }
@@ -308,10 +319,6 @@ namespace TT.Lib.ViewModels
             NotifyOfPropertyChange(() => this.CloudErrorMessage);
             LoadCloudResults();
         }
-        #endregion
-
-        #region Helper Methods
-
         #endregion
     }
 }

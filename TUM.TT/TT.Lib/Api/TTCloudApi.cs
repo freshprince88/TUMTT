@@ -141,11 +141,13 @@ namespace TT.Lib.Api
             return Execute<User>(request);
         }
 
-        public Task<MatchMetaResult> GetMatches(string query=null)
+        public Task<MatchMetaResult> GetMatches(string query = null, string sortFild = "updatedAt", string sortOrder = "desc", int limit = 100)
         {
             var request = new RestRequest();
             request.Resource = "matches";
             request.AddParameter("q", query);
+            request.AddParameter("s_[" + sortFild + "]", sortOrder);
+            request.AddParameter("l", limit.ToString());
             request.RootElement = "MatchMetaResult";
 
             return Execute<MatchMetaResult>(request);

@@ -20,7 +20,7 @@ namespace TT.Lib.Managers
         string GetVideoFilePath(MatchMeta match);
         string GetThumbnailPath(MatchMeta match);
 
-        IEnumerable<MatchMeta> GetMatches(String query=null, int limit=100);
+        IEnumerable<MatchMeta> GetMatches(String query = null, String sortFild = "LastOpenedAt", string order = "Descending", int limit = 100);
         void DeleteMatch(Guid guid);
         MatchMeta FindMatch(Guid guid);
     }

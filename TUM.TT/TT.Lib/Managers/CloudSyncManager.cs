@@ -202,9 +202,9 @@ namespace TT.Lib.Managers
             await UploadAnalysisFile();
         }
 
-        public Task<MatchMetaResult> GetMatches(string query=null)
+        public Task<MatchMetaResult> GetMatches(string query=null, string sortFild="updatedAt", string sortOrder="desc", int limit = 100)
         {
-            return CloudApi.GetMatches(query);
+            return CloudApi.GetMatches(query, sortFild, sortOrder, limit);
         }
 
         public Task<MatchMeta> GetMatch(Guid id)

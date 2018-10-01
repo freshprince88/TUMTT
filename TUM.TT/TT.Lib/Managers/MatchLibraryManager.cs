@@ -155,7 +155,7 @@ namespace TT.Lib.Managers
         public void ResetLibrary(bool deleteFiles = false)
         {
             if(deleteFiles) { 
-                var matches = GetMatches(null, int.MaxValue);
+                var matches = GetMatches(limit: int.MaxValue);
                 foreach(MatchMeta match in matches)
                 {
                     TryDelteFile(match.FileName, LibraryPath);
@@ -168,15 +168,16 @@ namespace TT.Lib.Managers
         #endregion
 
         #region Library Functions
-        public IEnumerable<MatchMeta> GetMatches(String query = null, int limit=100)
+        public IEnumerable<MatchMeta> GetMatches(String query = null, String sortFild= "LastOpenedAt", string order = "Descending", int limit=100)
         {
             var col = db.GetCollection<MatchMeta>(matchesCollection);
             IEnumerable<MatchMeta> results;
+            int orderVal = (int) typeof(Query).GetField(order).GetRawConstantValue();
             if (query != null && query != String.Empty)
             {
                 string[] squery = query.ToLower().Split(null);
                 results = col
-                    .Find(Query.All("LastOpenedAt", Query.Descending))
+                    .Find(Query.All(sortFild, orderVal))
                     .Where(x => {
                         bool cond = true;
                         foreach (string q in squery)
@@ -195,7 +196,7 @@ namespace TT.Lib.Managers
             }
             else
             {
-                results = col.Find(Query.All("LastOpenedAt", Query.Descending), 0, limit);
+                results = col.Find(Query.All(sortFild, orderVal), 0, limit);
             }
 
             return results;
