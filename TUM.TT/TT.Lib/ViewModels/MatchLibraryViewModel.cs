@@ -22,7 +22,12 @@ using Application = System.Windows.Application;
 namespace TT.Lib.ViewModels
 {
 
-    public class MatchLibraryViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx, IHandle<MatchOpenedEvent>, IHandle<LibraryResetEvent>
+    public class MatchLibraryViewModel : 
+        Conductor<IScreen>.Collection.AllActive,
+        IShell, INotifyPropertyChangedEx,
+        IHandle<MatchOpenedEvent>,
+        IHandle<LibraryResetEvent>,
+        IHandle<CloudSyncConnectionStatusChangedEvent>
     {
         public IEventAggregator events { get; private set; }
         private readonly IWindowManager _windowManager;
@@ -31,11 +36,8 @@ namespace TT.Lib.ViewModels
         private IMatchLibraryManager MatchLibrary;
         private ICloudSyncManager CloudSyncManager;
 
-        public ObservableCollection<MatchMeta> localResults { get; private set; }
-        public ObservableCollection<MatchMeta> cloudResults { get; private set; }
-
-        public bool IsCloudError = false;
-        public string CloudErrorMessage;
+        public ObservableCollection<MatchMeta> LocalResults { get; private set; }
+        public ObservableCollection<MatchMeta> CloudResults { get; private set; }
 
         private bool _searchIsActive;
         public bool SearchIsActive
@@ -52,11 +54,35 @@ namespace TT.Lib.ViewModels
         }
 
         public string BaseUrl { get; private set; }
+
         public string LibraryPath
         {
             get
             {
                 return MatchLibrary.LibraryPath;
+            }
+        }
+
+        public bool HasNoLogin
+        {
+            get
+            {
+                return CloudSyncManager.GetAccountEmail() == null;
+            }
+        }
+
+        public bool IsOffline
+        {
+            get
+            {
+                return !HasNoLogin && (CloudSyncManager.GetConnectionStatus() != ConnectionStatus.Online);
+            }
+        }
+        public string CloudErrorMessage
+        {
+            get
+            {
+                return CloudSyncManager.GetConnectionMessage();
             }
         }
 
@@ -70,8 +96,8 @@ namespace TT.Lib.ViewModels
             MatchLibrary = matchLibrary;
             CloudSyncManager = cloudSyncManager;
 
-            localResults = new ObservableCollection<MatchMeta>();
-            cloudResults = new ObservableCollection<MatchMeta>();
+            LocalResults = new ObservableCollection<MatchMeta>();
+            CloudResults = new ObservableCollection<MatchMeta>();
             BaseUrl = Settings.Default.CloudApiFrontend;
         }
 
@@ -116,14 +142,19 @@ namespace TT.Lib.ViewModels
         {
             _windowManager.ShowDialog(new SettingsViewModel(_windowManager, events, MatchManager, DialogCoordinator, CloudSyncManager, MatchLibrary));
         }
+
+        public void OpenLogin()
+        {
+            _windowManager.ShowDialog(new LoginViewModel(_windowManager, events, MatchManager, DialogCoordinator, CloudSyncManager, MatchLibrary));
+        }
         #endregion
 
         #region Search
         public void LoadLocalResults(string query = null)
         {
             var matches = MatchLibrary.GetMatches(query);
-            localResults.Clear();
-            matches.ToList().ForEach(localResults.Add);
+            LocalResults.Clear();
+            matches.ToList().ForEach(LocalResults.Add);
         }
 
         public async void LocalQuery(TextBox textBox)
@@ -143,8 +174,8 @@ namespace TT.Lib.ViewModels
             try
             {
                 var matches = await CloudSyncManager.GetMatches(query);
-                cloudResults.Clear();
-                matches.rows.ForEach(cloudResults.Add);
+                CloudResults.Clear();
+                matches.rows.ForEach(CloudResults.Add);
             } catch(TTCloudApiException e)
             {
                 Console.WriteLine(e.Message);
@@ -182,7 +213,7 @@ namespace TT.Lib.ViewModels
         public void DeleteMatch(MatchMeta match)
         {
             MatchLibrary.DeleteMatch(match.Guid);
-            localResults.Remove(match);
+            LocalResults.Remove(match);
         }
 
         public async void DownloadMatch(ListView listView)
@@ -275,6 +306,13 @@ namespace TT.Lib.ViewModels
             LoadLocalResults();
         }
 
+        public void Handle(CloudSyncConnectionStatusChangedEvent e)
+        {
+            NotifyOfPropertyChange(() => this.HasNoLogin);
+            NotifyOfPropertyChange(() => this.IsOffline);
+            NotifyOfPropertyChange(() => this.CloudErrorMessage);
+            LoadCloudResults();
+        }
         #endregion
 
         #region Helper Methods

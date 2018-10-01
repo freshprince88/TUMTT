@@ -70,7 +70,7 @@
                                  cal:Message.Attach="[Event TextChanged] = [LocalQuery($source)]"/>
                         <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
                     </StackPanel>
-                    <ListView ItemsSource="{Binding localResults}" AlternationCount="2"
+                    <ListView ItemsSource="{Binding LocalResults}" AlternationCount="2"
                               Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
                               cal:Message.Attach="[Event MouseDoubleClick] = [OpenMatch($source)]">
                         <ListView.Resources>
@@ -138,9 +138,59 @@
                                  cal:Message.Attach="[Event TextChanged] = [CloudQuery($source)]"/>
                             <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
                         </StackPanel>
-                        <!--<Label Content="{Binding CloudErrorMessage}" Background="Red"
-                            Visibility="{Binding IsCloudError, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
-                        <ListView ItemsSource="{Binding cloudResults}"
+                        <!-- Login Info -->
+                        <Grid Visibility="{Binding HasNoLogin, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              HorizontalAlignment="Left" Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.RowSpan="3"
+                                Width="75" Height="75" Fill="LightGray">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_cloud}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <Label Grid.Row="0" Grid.Column="1" FontSize="16" FontWeight="Bold" Content="Login to use Cloud features" />
+                            <Button Grid.Row="1" Grid.Column="1" Width="100" HorizontalAlignment="Left" Margin="5"
+                                    Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                                    cal:Message.Attach="[Event Click] = [Action OpenLogin()]">
+                                <TextBlock>Login...</TextBlock>
+                            </Button>
+                        </Grid>
+                        <!-- /Login Info -->
+                        <!-- Offline Info -->
+                        <Grid Visibility="{Binding IsOffline, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              HorizontalAlignment="Left" Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.RowSpan="3"
+                                Width="75" Height="75" Fill="Red">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_cloud_delete}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <Label Grid.Row="0" Grid.Column="1" FontSize="16" FontWeight="Bold" Content="No Connection to Cloud" />
+                            <Label Grid.Row="1" Grid.Column="1" FontSize="14" Content="{Binding CloudErrorMessage}" />
+                            <Button Grid.Row="2" Grid.Column="1" Width="100" HorizontalAlignment="Left" Margin="5"
+                                    Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                                    cal:Message.Attach="[Event Click] = [Action OpenSettings()]">
+                                <TextBlock>Open Settings...</TextBlock>
+                            </Button>
+                        </Grid>
+                        <!-- /Offline Info -->
+                        <ListView ItemsSource="{Binding CloudResults}"
                                   AlternationCount="2" Height="550" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   cal:Message.Attach="[Event MouseDoubleClick] = [DownloadMatch($source)]">
                             <ListView.Resources>

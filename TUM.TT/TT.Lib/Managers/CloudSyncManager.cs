@@ -68,6 +68,8 @@ namespace TT.Lib.Managers
             this.MatchManager = matchManager;
 
             EventAggregator.Subscribe(this);
+
+            CloudApi = new TTCloudApi("");
         }
 
         public void SetCredentials(string email, string password)
@@ -106,7 +108,11 @@ namespace TT.Lib.Managers
             {
                 ConnectionMessage = e.Message;
                 ConnectionStatus = ConnectionStatus.Offline;
+            } catch
+            {
+                ConnectionStatus = ConnectionStatus.Offline;
             }
+            
 
             CloudApi = new TTCloudApi(AccessToken);
             if (ConnectionStatus == ConnectionStatus.Online)

@@ -59,7 +59,7 @@ namespace TT.Scouter.ViewModels
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);
-            AccountLabel = CloudSyncManager.LoggedInUser.Email;
+            AccountLabel = "";
         }
 
         protected override async void OnDeactivate(bool close)
