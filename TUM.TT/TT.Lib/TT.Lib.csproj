@@ -133,6 +133,7 @@
     <Compile Include="Events\MediaLiveScouterMuteEvent.cs" />
     <Compile Include="Events\MediaLiveScouterSpeedEvent.cs" />
     <Compile Include="Events\PointAddedEventArgs.cs" />
+    <Compile Include="Events\CloudSyncConnectionStatusChangedEvent.cs" />
     <Compile Include="Events\StrokePositionCalculatedEventArgs.cs" />
     <Compile Include="Events\BasicFilterSelectionChangedEvent.cs" />
     <Compile Include="Events\DeactivationEvent.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Util\Secure.cs" />
     <Compile Include="Util\ShortcutFactory.cs" />
     <Compile Include="ViewModels\MatchLibraryViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />

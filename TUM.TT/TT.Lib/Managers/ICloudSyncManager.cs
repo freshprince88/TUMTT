@@ -12,7 +12,7 @@ namespace TT.Lib.Managers
     public interface ICloudSyncManager
     {
         string GetAccountEmail();
-
+        void SetCredentials(string email, string password);
         Task<string> Login();
         string GetConnectionMessage();
         ConnectionStatus GetConnectionStatus();

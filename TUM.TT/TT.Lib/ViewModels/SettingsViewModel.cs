@@ -13,7 +13,7 @@ using TT.Models.Util;
 
 namespace TT.Lib.ViewModels
 {
-    public class SettingsViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx
+    public class SettingsViewModel : Conductor<IScreen>.Collection.AllActive, IShell, INotifyPropertyChangedEx, IHandle<CloudSyncConnectionStatusChangedEvent>
     {
         public IEventAggregator events { get; private set; }
         public IMatchManager MatchManager { get; set; }
@@ -106,7 +106,7 @@ namespace TT.Lib.ViewModels
         #region View Methods
         public void ChangeAccount()
         {
-
+            _windowManager.ShowDialog(new LoginViewModel(_windowManager, events, MatchManager, DialogCoordinator, CloudSyncManager, MatchLibrary));
         }
 
         public async void RefreshAccount()
@@ -159,6 +159,10 @@ namespace TT.Lib.ViewModels
         #endregion
 
         #region Events
+        public void Handle(CloudSyncConnectionStatusChangedEvent e)
+        {
+            RefreshAccount();
+        }
         #endregion
 
         #region Helper Methods

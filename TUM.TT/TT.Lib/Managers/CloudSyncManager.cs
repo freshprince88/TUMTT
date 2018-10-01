@@ -56,7 +56,6 @@ namespace TT.Lib.Managers
             this.MatchManager = matchManager;
 
             EventAggregator.Subscribe(this);
-            SetCredentials("admin@example.com", "admin123");
         }
 
         public void SetCredentials(string email, string password)
@@ -83,6 +82,7 @@ namespace TT.Lib.Managers
         {
             Credential Credentials = GetCredentials();
             string AccessToken = "";
+            var oldStatus = ConnectionStatus;
             try
             {
                 ConnectionStatus = ConnectionStatus.Connecting;
@@ -98,6 +98,10 @@ namespace TT.Lib.Managers
             }
 
             CloudApi = new TTCloudApi(AccessToken);
+            if (oldStatus != ConnectionStatus)
+            {
+                EventAggregator.PublishOnUIThread(new CloudSyncConnectionStatusChangedEvent(ConnectionStatus));
+            }
             return AccessToken;
         }
 
