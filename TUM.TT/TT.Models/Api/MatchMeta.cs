@@ -76,9 +76,9 @@ namespace TT.Models.Api
             {
                 Guid = Match.ID,
                 Tournament = Match.Tournament,
-                Category = EnumExtensions.GetDescription<MatchCategory>(Match.Category),
-                Mode = EnumExtensions.GetDescription<MatchMode>(Match.Mode),
-                Round = EnumExtensions.GetDescription<MatchRound>(Match.Round),
+                Category = Enum.GetName(typeof(MatchCategory), Match.Category),
+                Mode = Enum.GetName(typeof(MatchMode), Match.Mode),
+                Round = Enum.GetName(typeof(MatchRound), Match.Round),
                 Date = Match.DateTime,
 
                 FirstPlayer = PlayerMeta.FromPlayer(Match.FirstPlayer),

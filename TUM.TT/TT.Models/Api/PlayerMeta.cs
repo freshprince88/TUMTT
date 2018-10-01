@@ -34,12 +34,12 @@ namespace TT.Models.Api
             {
                 Name = Player.Name,
                 Nationality = Player.Nationality,
-                PlayingStyle = EnumExtensions.GetDescription<PlayingStyle>(Player.PlayingStyle),
+                PlayingStyle = Enum.GetName(typeof(PlayingStyle), Player.PlayingStyle),
                 Material = Player.Material,
-                MaterialBackhand = EnumExtensions.GetDescription<MaterialBH>(Player.MaterialBH),
-                MaterialForehand = EnumExtensions.GetDescription<MaterialFH>(Player.MaterialFH),
-                Handedness = EnumExtensions.GetDescription<Handedness>(Player.Handedness),
-                Grip = EnumExtensions.GetDescription<Grip>(Player.Grip)
+                MaterialBackhand = Enum.GetName(typeof(MaterialBH), Player.MaterialBH),
+                MaterialForehand = Enum.GetName(typeof(MaterialFH), Player.MaterialFH),
+                Handedness = Enum.GetName(typeof(Handedness), Player.Handedness),
+                Grip = Enum.GetName(typeof(Grip), Player.Grip)
             };
             return PlayerMeta;
         }
