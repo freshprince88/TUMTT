@@ -29,6 +29,8 @@ namespace TT.Models.Api
         public string Round { get; set; }
         [DataMember(Name = "mode")]
         public string Mode { get; set; }
+        [DataMember(Name = "disabilityClass")]
+        public string DisabilityClass { get; set; }
         [DataMember(Name = "date")]
         public DateTime Date { get; set; }
         [IgnoreDataMember]
@@ -79,6 +81,7 @@ namespace TT.Models.Api
                 Category = Enum.GetName(typeof(MatchCategory), Match.Category),
                 Mode = Enum.GetName(typeof(MatchMode), Match.Mode),
                 Round = Enum.GetName(typeof(MatchRound), Match.Round),
+                DisabilityClass = Enum.GetName(typeof(DisabilityClass), Match.DisabilityClass),
                 Date = Match.DateTime,
 
                 FirstPlayer = PlayerMeta.FromPlayer(Match.FirstPlayer),

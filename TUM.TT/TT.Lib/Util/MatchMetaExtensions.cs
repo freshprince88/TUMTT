@@ -46,6 +46,7 @@ namespace TT.Lib.Util
                 match.Category = (MatchCategory)Enum.Parse(typeof(MatchCategory), meta.Category);
                 match.Round = (MatchRound)Enum.Parse(typeof(MatchRound), meta.Round);
                 match.Mode = (MatchMode)Enum.Parse(typeof(MatchMode), meta.Mode);
+                match.DisabilityClass = (DisabilityClass)Enum.Parse(typeof(DisabilityClass), meta.DisabilityClass);
             }
             catch { }
             UpdatePlayerWithMeta(match.FirstPlayer, meta.FirstPlayer);
@@ -62,6 +63,8 @@ namespace TT.Lib.Util
                 player.PlayingStyle = (PlayingStyle)Enum.Parse(typeof(PlayingStyle), meta.PlayingStyle);
                 player.Handedness = (Handedness)Enum.Parse(typeof(Handedness), meta.Handedness);
                 player.Grip = (Grip)Enum.Parse(typeof(Grip), meta.Grip);
+                player.MaterialBH = (MaterialBH)Enum.Parse(typeof(MaterialBH), meta.MaterialBackhand);
+                player.MaterialFH = (MaterialFH)Enum.Parse(typeof(MaterialFH), meta.MaterialForehand);
             }
             catch { }
         }

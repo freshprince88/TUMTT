@@ -176,11 +176,7 @@ namespace TT.Lib.ViewModels
                 var matches = await CloudSyncManager.GetMatches(query);
                 CloudResults.Clear();
                 matches.rows.ForEach(CloudResults.Add);
-            } catch(TTCloudApiException e)
-            {
-                Console.WriteLine(e.Message);
-                //TODO: Set Cloud error
-            }
+            } catch(TTCloudApiException e)  { }
         }
 
         public async void CloudQuery(TextBox textBox)
@@ -271,7 +267,6 @@ namespace TT.Lib.ViewModels
             }
             catch(TTCloudApiException)
             {
-                //TODO: Show downlaod failure
                 return;
             }
 
