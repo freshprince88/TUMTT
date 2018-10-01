@@ -77,7 +77,10 @@ namespace TT.Viewer.ViewModels
         protected async override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
+
+            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             CloudSyncManager.Login();
+            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
             while (MatchLibrary.Uninitialized)
             {
@@ -241,7 +244,13 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        
+        public bool CanUploadMatch
+        {
+            get
+            {
+                return (MatchManager.Match != null && CloudSyncManager.CurrentUser != null && CloudSyncManager.CurrentUser.Role == "admin");
+            }
+        }
 
         /// <summary>
         /// Generates a PDF report.
@@ -270,6 +279,7 @@ namespace TT.Viewer.ViewModels
             NotifyOfPropertyChange(() => this.CanExportExcel);
             NotifyOfPropertyChange(() => this.CanShowPlayer);
             NotifyOfPropertyChange(() => this.CanShowCompetition);
+            NotifyOfPropertyChange(() => this.CanUploadMatch);
             this.ActivateItem(new MatchViewModel(Events, IoC.GetAll<IResultViewTabItem>().OrderBy(i => i.GetOrderInResultView()), MatchManager, DialogCoordinator));
 
             var reportVm = new ReportSettingsViewModel(MatchManager, _reportGenerationQueueManager, Events);
@@ -337,7 +347,21 @@ namespace TT.Viewer.ViewModels
                 }
             //}
         }
-        public static bool IsWindowOpen<T>(string name ="") where T : Window
+
+        public async void UploadUpdates()
+        {
+            MessageDialogResult result = await DialogCoordinator.ShowMessageAsync(this,
+                "Upload Match to Cloud",
+                "Are you sure to upload match updates to Cloud?",
+                MessageDialogStyle.AffirmativeAndNegative);
+            if (result == MessageDialogResult.Affirmative)
+            {
+                CloudSyncManager.UpdateMatch();
+            }
+        }
+
+
+            public static bool IsWindowOpen<T>(string name ="") where T : Window
         {
             return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
         }

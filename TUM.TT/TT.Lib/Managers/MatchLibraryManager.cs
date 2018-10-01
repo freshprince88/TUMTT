@@ -223,7 +223,7 @@ namespace TT.Lib.Managers
         #region Events
         public void Handle(MatchOpenedEvent message)
         {
-            var meta = MatchMeta.fromMatch(MatchManager.Match);
+            var meta = MatchMeta.FromMatch(MatchManager.Match);
             if (IsMovingFilesToLibrary)
             {
                 MoveFilesToLibrary(meta);

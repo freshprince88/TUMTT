@@ -132,14 +132,14 @@ namespace TT.Lib.Api
             return response;
         }
 
-        //public User GetCurrentUser()
-        //{
-        //    var request = new RestRequest();
-        //    request.Resource = "users/me";
-        //    request.RootElement = "User";
+        public Task<User> GetCurrentUser()
+        {
+            var request = new RestRequest();
+            request.Resource = "users/me";
+            request.RootElement = "User";
 
-        //    return Execute<User>(request);
-        //}
+            return Execute<User>(request);
+        }
 
         public Task<MatchMetaResult> GetMatches(string query=null)
         {
@@ -182,32 +182,45 @@ namespace TT.Lib.Api
             return DownloadToFile(request, location, token);
         }
 
-        //public MatchMeta PutMatch(MatchMeta Match)
-        //{
-        //    var request = new RestRequest(Method.PUT);
-        //    request.Resource = "matches/{MatchGuid}";
-        //    request.RootElement = "MatchMeta";
+        public Task<MatchMeta> PutMatch(MatchMeta Match)
+        {
+            var request = new RestRequest(Method.PUT);
+            request.Resource = "matches/{MatchGuid}";
+            request.RootElement = "MatchMeta";
 
-        //    request.AddParameter("MatchGuid", Match.Guid, ParameterType.UrlSegment);
+            request.AddParameter("MatchGuid", Match.Guid, ParameterType.UrlSegment);
 
-        //    var json = SimpleJson.SerializeObject(Match, SimpleJson.DataContractJsonSerializerStrategy);
-        //    request.AddParameter("application/json", json, ParameterType.RequestBody);
+            var json = SimpleJson.SerializeObject(Match, SimpleJson.DataContractJsonSerializerStrategy);
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
 
-        //    return Execute<MatchMeta>(request);
-        //}
+            return Execute<MatchMeta>(request);
+        }
 
-        //public MatchMeta UploadMatchVideo(MatchMeta Match)
-        //{
-        //    var request = new RestRequest(Method.POST);
-        //    request.Resource = "matches/{MatchGuid}/video";
-        //    request.RootElement = "MatchMeta";
+        public Task<MatchMeta> UploadAnalysisFile(Guid MatchGuid, string FilePath)
+        {
+            var request = new RestRequest(Method.POST);
+            request.Resource = "matches/{MatchGuid}/file";
+            request.RootElement = "MatchMeta";
 
-        //    request.AddParameter("MatchGuid", Match.Guid, ParameterType.UrlSegment);
+            request.AddParameter("MatchGuid", MatchGuid, ParameterType.UrlSegment);
 
-        //    request.AddFile("video", Match.ConvertedVideoFile);
+            request.AddFile("file", FilePath);
 
-        //    return Execute<MatchMeta>(request);
-        //}
+            return Execute<MatchMeta>(request);
+        }
+
+        public Task<MatchMeta> UploadMatchVideo(Guid MatchGuid, string VideoPath)
+        {
+            var request = new RestRequest(Method.POST);
+            request.Resource = "matches/{MatchGuid}/video";
+            request.RootElement = "MatchMeta";
+
+            request.AddParameter("MatchGuid", MatchGuid, ParameterType.UrlSegment);
+
+            request.AddFile("video", VideoPath);
+
+            return Execute<MatchMeta>(request);
+        }
 
     }
 }

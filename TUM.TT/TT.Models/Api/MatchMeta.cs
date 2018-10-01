@@ -61,10 +61,6 @@ namespace TT.Models.Api
 
         [IgnoreDataMember]
         public String ConvertedVideoFile { get; set; }
-        [IgnoreDataMember]
-        public String TempAnalysisFile { get; set; }
-        [IgnoreDataMember]
-        public object Thumbnail { get; set; }
 
         public string _id
         {
@@ -74,19 +70,20 @@ namespace TT.Models.Api
             }
         }
 
-        static public MatchMeta fromMatch(Match Match)
+        static public MatchMeta FromMatch(Match Match)
         {
-            MatchMeta MatchMeta = new MatchMeta();
-            MatchMeta.Guid = Match.ID;
-            MatchMeta.Tournament = Match.Tournament;
-            MatchMeta.Category = EnumExtensions.GetDescription<MatchCategory>(Match.Category);
-            MatchMeta.Mode = EnumExtensions.GetDescription<MatchMode>(Match.Mode);
-            MatchMeta.Round = EnumExtensions.GetDescription<MatchRound>(Match.Round);
-            MatchMeta.Date = Match.DateTime;
+            MatchMeta MatchMeta = new MatchMeta()
+            {
+                Guid = Match.ID,
+                Tournament = Match.Tournament,
+                Category = EnumExtensions.GetDescription<MatchCategory>(Match.Category),
+                Mode = EnumExtensions.GetDescription<MatchMode>(Match.Mode),
+                Round = EnumExtensions.GetDescription<MatchRound>(Match.Round),
+                Date = Match.DateTime,
 
-            MatchMeta.FirstPlayer = PlayerMeta.fromPlayer(Match.FirstPlayer);
-            MatchMeta.SecondPlayer = PlayerMeta.fromPlayer(Match.SecondPlayer);
-
+                FirstPlayer = PlayerMeta.FromPlayer(Match.FirstPlayer),
+                SecondPlayer = PlayerMeta.FromPlayer(Match.SecondPlayer)
+            };
             return MatchMeta;
         }
     }

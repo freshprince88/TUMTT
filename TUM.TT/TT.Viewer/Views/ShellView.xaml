@@ -112,6 +112,18 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
+            <Button ToolTip="Upload Match Updates to Cloud"
+                    cal:Message.Attach="[Event Click] = [Action UploadUpdates()]"
+                    Visibility="{Binding Path=CanUploadMatch, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_cloud_upload}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
             <!--<Button ToolTip="Open new Match"
                     cal:Message.Attach="[Event Click] = [Action OpenMatch()]">
                 <Rectangle Width="22"

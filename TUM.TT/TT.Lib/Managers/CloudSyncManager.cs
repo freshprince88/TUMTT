@@ -50,6 +50,18 @@ namespace TT.Lib.Managers
         private const string applicationName = "TUM.TT Cloud";
         #endregion
 
+        #region Calculated Prperties
+        private User currentUser = null;
+        public User CurrentUser
+        {
+            get
+            {
+                return currentUser;
+            }
+        }
+        #endregion
+
+
         public CloudSyncManager(IEventAggregator eventAggregator, IMatchManager matchManager)
         {
             EventAggregator = eventAggregator;
@@ -90,7 +102,6 @@ namespace TT.Lib.Managers
                 AccessToken = await TTCloudApi.Login(Credentials.UserName, password);
                 ConnectionStatus = ConnectionStatus.Online;
                 ConnectionMessage = String.Empty;
-
             } catch(TTCloudApiException e)
             {
                 ConnectionMessage = e.Message;
@@ -98,10 +109,16 @@ namespace TT.Lib.Managers
             }
 
             CloudApi = new TTCloudApi(AccessToken);
+            if (ConnectionStatus == ConnectionStatus.Online)
+            {
+                currentUser = await CloudApi.GetCurrentUser();
+            }
+
             if (oldStatus != ConnectionStatus)
             {
                 EventAggregator.PublishOnUIThread(new CloudSyncConnectionStatusChangedEvent(ConnectionStatus));
             }
+
             return AccessToken;
         }
 
@@ -154,10 +171,29 @@ namespace TT.Lib.Managers
             //CloudApi.UploadMatchVideo(MatchMeta);
         }
 
-        public void UpsertMatchMeta()
+        private Task<MatchMeta> UpsertMatchMeta()
         {
-            MatchMeta matchMeta = MatchMeta.fromMatch(MatchManager.Match);
-            //CloudApi.PutMatch(matchMeta);
+            MatchMeta matchMeta = MatchMeta.FromMatch(MatchManager.Match);
+            return CloudApi.PutMatch(matchMeta);
+        }
+
+        private async Task<MatchMeta> UploadAnalysisFile()
+        {
+            await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
+            return await CloudApi.UploadAnalysisFile(MatchManager.Match.ID, MatchManager.FileName);
+        }
+
+        public async void UpdateMatch()
+        {
+            var cloudMeta = await CloudApi.GetMatch(MatchManager.Match.ID);
+            var status = GetSyncStatus(cloudMeta);
+            if (status == SyncStatus.NotExists || status == SyncStatus.None)
+            {
+                return;
+            }
+
+            await UpsertMatchMeta();
+            await UploadAnalysisFile();
         }
 
         public Task<MatchMetaResult> GetMatches(string query=null)

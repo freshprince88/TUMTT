@@ -11,6 +11,8 @@ namespace TT.Lib.Managers
 {
     public interface ICloudSyncManager
     {
+        User CurrentUser { get; }
+
         string GetAccountEmail();
         void SetCredentials(string email, string password);
         Task<string> Login();
@@ -18,6 +20,8 @@ namespace TT.Lib.Managers
         ConnectionStatus GetConnectionStatus();
 
         SyncStatus GetSyncStatus(MatchMeta meta);
+
+        void UpdateMatch();
 
         Task<MatchMetaResult> GetMatches(string query = null);
         Task<MatchMeta> GetMatch(Guid id);
