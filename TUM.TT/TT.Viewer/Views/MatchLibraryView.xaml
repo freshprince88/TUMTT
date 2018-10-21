@@ -30,8 +30,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <BitmapImage x:Key="example-preview" UriSource="/Resources/example-preview.jpeg" />
-
             <Style TargetType="ListViewItem">
                 <Style.Triggers>
                     <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
@@ -91,7 +89,7 @@
                         </ListView.Resources>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Tag="{Binding DataContext, ElementName=LocalMatches}">
+                                <Grid Tag="{Binding DataContext, ElementName=LocalMatches}" Width="900">
                                     <Grid.ContextMenu>
                                         <ContextMenu Name="cm" cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                                             <MenuItem Header="Delete Match..." cal:Message.Attach="DeleteMatch($dataContext)" />

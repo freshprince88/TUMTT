@@ -187,7 +187,7 @@ namespace TT.Lib.ViewModels
                 var matches = await CloudSyncManager.GetMatches(CloudQueryValue, sort[0], sort[1]);
                 CloudResults.Clear();
                 matches.rows.ForEach(CloudResults.Add);
-            } catch(TTCloudApiException) { }
+            } catch(CloudException) { }
         }
 
         public async void CloudQuery(TextBox textBox)
@@ -276,7 +276,7 @@ namespace TT.Lib.ViewModels
                 tokenSource.Dispose();
                 return;
             }
-            catch(TTCloudApiException)
+            catch(CloudException)
             {
                 return;
             }
@@ -289,6 +289,7 @@ namespace TT.Lib.ViewModels
                 MatchManager.CreateNewMatch();
                 MatchManager.FileName = matchFilePath = MatchLibrary.GetMatchFilePath(meta);
                 MatchManager.Match.VideoFile = videoFilePath;
+                MatchManager.Match.SyncToCloud = true;
                 MatchMetaExtensions.UpdateMatchWithMetaInfo(MatchManager.Match, meta);
 
                 await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());

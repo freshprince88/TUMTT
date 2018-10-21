@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumToDescriptionConverter.cs" />
     <Compile Include="ImageUrlConcatConverter .cs" />
     <Compile Include="ImagePathConcatConverter.cs" />
     <Compile Include="AggressivenessToBoolConverter.cs" />

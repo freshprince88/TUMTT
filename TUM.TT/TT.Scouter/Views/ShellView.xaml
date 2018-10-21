@@ -110,7 +110,30 @@
                     </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
-
+            <Button ToolTip="Upload in Progress"
+                    cal:Message.Attach="[Event Click] = [Action ShowUploadSettings()]"
+                    Visibility="{Binding Path=IsUploadingMatch, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_cloud_upload}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button ToolTip="Cloud Upload is Enabled"
+                    cal:Message.Attach="[Event Click] = [Action ShowUploadSettings()]"
+                    Visibility="{Binding Path=IsCloudSyncEnabled, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_cloud}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Flyouts>

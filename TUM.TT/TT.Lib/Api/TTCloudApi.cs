@@ -8,26 +8,10 @@ using RestSharp;
 using RestSharp.Authenticators;
 using TT.Models.Api;
 using TT.Lib.Properties;
+using TT.Lib.Managers;
 
 namespace TT.Lib.Api
 {
-    public class TTCloudApiException : Exception
-    {
-        public TTCloudApiException()
-        {
-        }
-
-        public TTCloudApiException(string message)
-            : base(message)
-        {
-        }
-
-        public TTCloudApiException(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
-    }
-
     public class TTCloudApi
     {
         static string BaseUrl = Settings.Default.CloudApiEndpoint;
@@ -54,7 +38,7 @@ namespace TT.Lib.Api
             if (response.ErrorException != null)
             {
                 const string message = "Error connecting to server.";
-                throw new TTCloudApiException(message, response.ErrorException);
+                throw new CloudException(message, response.ErrorException);
             }
 
             var json = SimpleJson.DeserializeObject<JsonObject>(response.Content);
@@ -66,7 +50,7 @@ namespace TT.Lib.Api
                 {
                     message = json["message"] as string;
                 }
-                throw new TTCloudApiException(message);
+                throw new CloudException(message);
             }
 
             return json["token"] as string;
@@ -80,21 +64,21 @@ namespace TT.Lib.Api
             return client;
         }
 
-        public async Task<T> Execute<T>(RestRequest request) where T : new()
+        public async Task<T> Execute<T>(RestRequest request, CancellationToken token=default(CancellationToken)) where T : new()
         {
             var client = GetClient();
-            var response = await client.ExecuteTaskAsync<T>(request);
+            var response = await client.ExecuteTaskAsync<T>(request, token);
 
             if (response.ErrorException != null)
             {
                 const string message = "Error retrieving response. Check inner details for more info.";
-                throw new TTCloudApiException(message, response.ErrorException);
+                throw new CloudException(message, response.ErrorException);
             }
 
-            if(response.StatusCode != HttpStatusCode.OK)
+            if(response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.NotFound)
             {
-                string message = response.StatusDescription;
-                throw new TTCloudApiException(message);
+                string message = "Error retrieving response. HTTP Response:" + response.StatusCode + " " + response.StatusDescription;
+                throw new CloudException(message);
             }
 
             return response.Data;
@@ -108,7 +92,7 @@ namespace TT.Lib.Api
             if (response.ErrorException != null)
             {
                 const string message = "Error retrieving response. Check inner details for more info.";
-                throw new TTCloudApiException(message, response.ErrorException);
+                throw new CloudException(message, response.ErrorException);
             }
             return response;
         }
@@ -153,7 +137,7 @@ namespace TT.Lib.Api
             return Execute<MatchMetaResult>(request);
         }
 
-        public Task<MatchMeta> GetMatch(Guid matchGuid)
+        public Task<MatchMeta> GetMatch(Guid matchGuid, CancellationToken token = default(CancellationToken))
         {
             var request = new RestRequest();
             request.Resource = "matches/{MatchGuid}";
@@ -211,7 +195,7 @@ namespace TT.Lib.Api
             return Execute<MatchMeta>(request);
         }
 
-        public Task<MatchMeta> UploadMatchVideo(Guid MatchGuid, string VideoPath)
+        public Task<MatchMeta> UploadMatchVideo(Guid MatchGuid, string VideoPath, CancellationToken token)
         {
             var request = new RestRequest(Method.POST);
             request.Resource = "matches/{MatchGuid}/video";
@@ -221,7 +205,7 @@ namespace TT.Lib.Api
 
             request.AddFile("video", VideoPath);
 
-            return Execute<MatchMeta>(request);
+            return Execute<MatchMeta>(request, token);
         }
 
     }

@@ -5,9 +5,10 @@ using System.IO;
 using System.ComponentModel;
 using TT.Lib.Events;
 using TT.Lib.Api;
-using TT.Models;
 using TT.Models.Api;
 using Caliburn.Micro;
+using NReco.VideoConverter;
+using NReco.VideoInfo;
 using vaultsharp;
 using vaultsharp.native;
 
@@ -26,9 +27,9 @@ namespace TT.Lib.Managers
 
     public enum SyncStatus
     {
-        [Description("No Match")]
+        [Description("No status")]
         None,
-        [Description("Match does not exist in Cloud")]
+        [Description("Match does not exist in cloud")]
         NotExists,
         [Description("Local match is outdated")]
         Outdated,
@@ -38,7 +39,40 @@ namespace TT.Lib.Managers
         ChangedByOther
     }
 
-    public class CloudSyncManager : ICloudSyncManager, IHandle<MatchOpenedEvent>
+    public enum ActivityStauts
+    {
+        [Description("No Activity")]
+        None,
+        [Description("Checking Upload Status")]
+        Check,
+        [Description("Updating Match")]
+        Updating,
+        [Description("Uploading Video")]
+        UploadVideo,
+        [Description("Transcoding Video")]
+        TranscodingVideo,
+    }
+
+    public class CloudException : Exception
+    {
+
+        public CloudException()
+        {
+        }
+
+        public CloudException(string message)
+            : base(message)
+        {
+        }
+
+        public CloudException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
+
+    public class CloudSyncManager : PropertyChangedBase, ICloudSyncManager,
+        IHandle<MatchOpenedEvent>, IHandle<MatchSavedEvent>
     {
         #region Properties
         private IEventAggregator EventAggregator { get; set; }
@@ -46,8 +80,12 @@ namespace TT.Lib.Managers
         public ConnectionStatus ConnectionStatus = ConnectionStatus.Offline;
         public string ConnectionMessage;
         private TTCloudApi CloudApi;
+        private CancellationTokenSource TokenSource;
+        private FFMpegConverter ffmpeg;
 
+        public bool AutoUpload { get; set; } = false;
         private const string applicationName = "TUM.TT Cloud";
+        public bool IsUploadRequired { get; private set; } = false;
         #endregion
 
         #region Calculated Prperties
@@ -59,8 +97,37 @@ namespace TT.Lib.Managers
                 return currentUser;
             }
         }
-        #endregion
 
+        private double uploadProgress;
+        public double UploadProgress
+        {
+            get
+            {
+                return uploadProgress;
+            }
+            private set
+            {
+                uploadProgress = value;
+                NotifyOfPropertyChange(() => UploadProgress);
+            }
+        }
+
+        private ActivityStauts activityStauts = ActivityStauts.None;
+        public ActivityStauts ActivityStauts
+        {
+            get
+            {
+                return activityStauts;
+            }
+            private set
+            {
+                var notify = activityStauts != value;
+                activityStauts = value;
+                NotifyOfPropertyChange(() => ActivityStauts);
+                if(notify) EventAggregator.PublishOnUIThread(new CloudSyncActivityStatusChangedEvent(activityStauts));
+            }
+        }
+        #endregion
 
         public CloudSyncManager(IEventAggregator eventAggregator, IMatchManager matchManager)
         {
@@ -69,12 +136,15 @@ namespace TT.Lib.Managers
 
             EventAggregator.Subscribe(this);
 
-            CloudApi = new TTCloudApi("");
+            CloudApi = new TTCloudApi(String.Empty);
+            TokenSource = new CancellationTokenSource();
+            ffmpeg = new FFMpegConverter();
         }
 
+        #region Login
         public void SetCredentials(string email, string password)
         {
-            WindowsCredentialManager.WriteCredentials(applicationName, email, password, (int) CredentialPersistence.LocalMachine);
+            WindowsCredentialManager.WriteCredentials(applicationName, email, password, (int)CredentialPersistence.LocalMachine);
         }
 
         private Credential GetCredentials()
@@ -104,7 +174,7 @@ namespace TT.Lib.Managers
                 AccessToken = await TTCloudApi.Login(Credentials.UserName, password);
                 ConnectionStatus = ConnectionStatus.Online;
                 ConnectionMessage = String.Empty;
-            } catch(TTCloudApiException e)
+            } catch(CloudException e)
             {
                 ConnectionMessage = e.Message;
                 ConnectionStatus = ConnectionStatus.Offline;
@@ -127,7 +197,9 @@ namespace TT.Lib.Managers
 
             return AccessToken;
         }
+        #endregion
 
+        #region Status Flags
         public ConnectionStatus GetConnectionStatus()
         {
             return ConnectionStatus;
@@ -144,62 +216,52 @@ namespace TT.Lib.Managers
             {
                 return SyncStatus.NotExists;
             }
-            else if (MatchManager.Match.LastCloudSync < meta.UpdatedAt)
+            else if (MatchManager.Match.LastCloudSync == new DateTime())
+            {
+                return SyncStatus.Outdated;
+            }
+            else if (MatchManager.Match.LastCloudSync < meta.AnalysisFileUpdatedAt)
             {
                 return SyncStatus.ChangedByOther;
             }
-            else if (MatchManager.Match.LastCloudSync == meta.UpdatedAt)
+            else if (MatchManager.Match.LastCloudSync >= meta.AnalysisFileUpdatedAt)
             {
-                if (MatchManager.MatchModified)
-                {
-                    return SyncStatus.Outdated;
-                }
                 return SyncStatus.InSync;
             }
             return SyncStatus.None;
-
         }
+        #endregion
 
+        #region Events
         public async void Handle(MatchOpenedEvent message)
         {
-            MatchMeta meta;
-            SyncStatus syncStatus;
-            try
+            // Wait for match to be fully loaded
+            await Task.Delay(5000);
+            if (AutoUpload && MatchManager.Match.SyncToCloud)
             {
-                meta = await CloudApi.GetMatch(MatchManager.Match.ID);
-                syncStatus = GetSyncStatus(meta);
-            } catch  {
-                syncStatus = SyncStatus.None;
+                HandleMatch();
             }
-            Console.WriteLine(syncStatus);
-            //UpsertMatchMeta();
-            //ConvertVideoFile();
-            //CloudApi.UploadMatchVideo(MatchMeta);
         }
 
+        public async void Handle(MatchSavedEvent message)
+        {
+            if(message.Match.SyncToCloud && ActivityStauts != ActivityStauts.None)
+            {
+                try {
+                    await UploadAnalysisFile();
+                } catch(CloudException)
+                {
+                    IsUploadRequired = true;
+                }
+            }
+        }
+        #endregion
+
+        #region Basic Api Functions
         private Task<MatchMeta> UpsertMatchMeta()
         {
             MatchMeta matchMeta = MatchMeta.FromMatch(MatchManager.Match);
             return CloudApi.PutMatch(matchMeta);
-        }
-
-        private async Task<MatchMeta> UploadAnalysisFile()
-        {
-            await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
-            return await CloudApi.UploadAnalysisFile(MatchManager.Match.ID, MatchManager.FileName);
-        }
-
-        public async void UpdateMatch()
-        {
-            var cloudMeta = await CloudApi.GetMatch(MatchManager.Match.ID);
-            var status = GetSyncStatus(cloudMeta);
-            if (status == SyncStatus.NotExists || status == SyncStatus.None)
-            {
-                return;
-            }
-
-            await UpsertMatchMeta();
-            await UploadAnalysisFile();
         }
 
         public Task<MatchMetaResult> GetMatches(string query=null, string sortFild="updatedAt", string sortOrder="desc", int limit = 100)
@@ -211,7 +273,124 @@ namespace TT.Lib.Managers
         {
             return CloudApi.GetMatch(id);
         }
+        #endregion
 
+        #region Upload
+        public async void HandleMatch()
+        {
+            if (TokenSource.IsCancellationRequested)
+            {
+                TokenSource.Dispose();
+                TokenSource = new CancellationTokenSource();
+                ActivityStauts = ActivityStauts.None;
+                return;
+            }
+
+            MatchMeta meta;
+            ActivityStauts = ActivityStauts.Check;
+            try
+            {
+                meta = await CloudApi.GetMatch(MatchManager.Match.ID, TokenSource.Token);
+            }
+            catch (CloudException)
+            {
+                ActivityStauts = ActivityStauts.None;
+                return;
+            }
+            var status = GetSyncStatus(meta);
+
+            if (status == SyncStatus.NotExists)
+            {
+                ActivityStauts = ActivityStauts.Updating;
+                try
+                {
+                    await UpsertMatchMeta();
+                    await UploadAnalysisFile();
+                }
+                catch (TaskCanceledException) {}
+                catch (CloudException)
+                {
+                    TokenSource.Cancel();
+                }
+                HandleMatch();
+                return;
+            }
+
+            if (status == SyncStatus.Outdated)
+            {
+                ActivityStauts = ActivityStauts.Updating;
+                try
+                {
+                    await UploadAnalysisFile();
+                }
+                catch (TaskCanceledException) {}
+                catch (CloudException)
+                {
+                    TokenSource.Cancel();
+                }
+                HandleMatch();
+                return;
+            }
+
+            if (status == SyncStatus.InSync && meta.VideoStatus == VideoStatus.None)
+            {
+                try
+                {
+                    await UploadVideo();
+                }
+                catch (TaskCanceledException) {}
+                catch (CloudException)
+                {
+                    TokenSource.Cancel();
+                }
+                HandleMatch();
+                return;
+            }
+
+            ActivityStauts = ActivityStauts.None;
+        }
+
+        private async Task<MatchMeta> UploadAnalysisFile()
+        {
+            await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
+            var meta = await CloudApi.UploadAnalysisFile(MatchManager.Match.ID, MatchManager.FileName);
+            MatchManager.Match.LastCloudSync = meta.AnalysisFileUpdatedAt;
+            await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
+            IsUploadRequired = false;
+            return meta;
+        }
+
+        public async Task<MatchMeta> UpdateAnalysis()
+        {
+            var cloudMeta = await CloudApi.GetMatch(MatchManager.Match.ID);
+            var status = GetSyncStatus(cloudMeta);
+
+            await UpsertMatchMeta();
+            return await UploadAnalysisFile();
+        }
+
+        public async Task<MatchMeta> UploadVideo()
+        {
+            var videoFile = MatchManager.Match.VideoFile;
+            var isVideoValid = await IsVideoValid(videoFile);
+            if (!isVideoValid)
+            {
+                ActivityStauts = ActivityStauts.TranscodingVideo;
+                videoFile = await ConvertVideoFile(MatchManager.Match.VideoFile);
+            }
+            ActivityStauts = ActivityStauts.UploadVideo;
+            return await CloudApi.UploadMatchVideo(MatchManager.Match.ID, videoFile, TokenSource.Token);
+        }
+
+        public void CancelSync()
+        {
+            ffmpeg?.Stop();
+            ffmpeg?.Abort();
+            TokenSource.Cancel();
+        }
+        #endregion
+
+        #region Download
         public async Task<Tuple<MatchMeta, string, string>> DownloadMatch(Guid matchId, string matchFilePath, string videoFilePath, CancellationToken token, Action<string> callback = null)
         {
             callback?.Invoke("Finding match...");
@@ -233,18 +412,50 @@ namespace TT.Lib.Managers
 
             return new Tuple<MatchMeta, string, string>(match, matchFilePath, videoFilePath);
         }
+        #endregion
 
-        public void ConvertVideoFile(MatchMeta meta)
+        #region Video Helper Functions
+        public Task<bool> IsVideoValid(string fileName)
         {
-            meta.ConvertedVideoFile = Path.GetTempFileName();
-            Console.Write(meta.ConvertedVideoFile);
-
-            var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
-            NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
+            return Task.Run(() =>
             {
-                VideoFrameSize = NReco.VideoConverter.FrameSize.hd480
-            };
-            ffMpeg.ConvertMedia(MatchManager.Match.VideoFile, null, meta.ConvertedVideoFile, NReco.VideoConverter.Format.mp4, settings);
+                var ffProbe = new FFProbe();
+                var videoInfo = ffProbe.GetMediaInfo(fileName);
+                if(videoInfo.Streams.Length >= 2)
+                {
+                    foreach(var stream in videoInfo.Streams)
+                    {
+                        if(stream.CodecType == "video" && stream.CodecName != "h264")
+                        {
+                            return false;
+                        }
+                        if(stream.CodecType == "audio" && stream.CodecName != "aac")
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }, cancellationToken: TokenSource.Token);
         }
+
+        public Task<string> ConvertVideoFile(string fileName)
+        {
+            return Task.Run(() =>
+            {
+                string convertedFileName = Path.GetTempFileName();
+
+                ffmpeg = new FFMpegConverter();
+                ffmpeg.ConvertProgress += (sender, arg) =>
+                {
+                    UploadProgress = 100 * arg.Processed.Ticks / (double)arg.TotalDuration.Ticks;
+                };
+                ffmpeg.ConvertMedia(fileName, convertedFileName, Format.mp4);
+                return convertedFileName;
+            }, cancellationToken: TokenSource.Token);
+
+        }
+        #endregion
     }
 }

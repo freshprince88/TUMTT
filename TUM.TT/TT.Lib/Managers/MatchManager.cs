@@ -62,10 +62,14 @@ namespace TT.Lib.Managers
             {
                 if (_matchMod != value)
                 {
+                    var saved = (_matchMod == true) && (value == false);
                     _matchMod = value;
                     NotifyOfPropertyChange("MatchModified");
                     NotifyOfPropertyChange();
-
+                    if(saved)
+                    {
+                        Events.PublishOnUIThread(new MatchSavedEvent(Match));
+                    }
                 }
             }
         }

@@ -11,13 +11,12 @@
                       xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
                       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       Dialog:DialogParticipation.Register="{Binding}"
-                      ResizeMode="CanResizeWithGrip"
-                      Width="300"
+                      Width="750"
                       Height="800"                               
                       EnableDWMDropShadow="True"
                       IgnoreTaskbarOnMaximize="True"
                       WindowTransitionsEnabled="False"
-                      WindowStartupLocation="CenterScreen"            
+                      WindowStartupLocation="CenterOwner"            
                       ShowTitleBar="True"
                       ShowIconOnTitleBar="True">
     <Window.Resources>
@@ -27,105 +26,69 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <ObjectDataProvider x:Key="ModeFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}" >
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="Models:MatchMode"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-            <ObjectDataProvider x:Key="CategoryFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}" >
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="Models:MatchCategory"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-            <Style x:Key="LargeTileStyle"
-                   TargetType="Controls:Tile">
-                <Setter Property="Width"
-                        Value="300" />
-                <Setter Property="Height"
-                        Value="125" />
-                <Setter Property="TitleFontSize"
-                        Value="12" />
-            </Style>
-
-            <Style x:Key="SmallTileStyle"
-                   TargetType="Controls:Tile">
-                <Setter Property="Width"
-                        Value="100" />
-                <Setter Property="Height"
-                        Value="100" />
-                <Setter Property="TitleFontSize"
-                        Value="10" />
-            </Style>
-            <Style x:Key="BigTileStyle"
-                   TargetType="Controls:Tile">
-                <Setter Property="Width"
-                        Value="200" />
-                <Setter Property="Height"
-                        Value="100" />
-                <Setter Property="TitleFontSize"
-                        Value="10" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Center"/>
-            </Style>
-
+            <conv:EnumToDescriptionConverter x:Key="EnumToDescriptionConverter"/>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <conv:BoolNotToVisibilityConverter x:Key="BoolNotToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
-    <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands>
-            <Button ToolTip="Save Match"
-                    cal:Message.Attach="[Event Click] = [Action SaveMatch()]"
-                    Visibility="{Binding Path=MatchManager.MatchModified, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibilityConverter}}" >
-                <Rectangle Width="22"
-                           Height="22"
-                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform"
-                                     Visual="{StaticResource appbar_save}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
-
-
-
-    <Grid>
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition />
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
             <ColumnDefinition />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="2.4*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition />
-            <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
-        
-        <Label Content="Upload Settings" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" FontSize="50" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
 
-        <Label Content="Account" Grid.Column="4" Grid.Row="1" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
-        <Button Grid.Row="2" Grid.Column="4" Content="{Binding Path=AccountLabel}" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"
-                VerticalContentAlignment="Center" HorizontalAlignment="Right" FontSize="14" FontWeight="Medium" />
+        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"
+               Content="Upload Settings" FontSize="32" FontWeight="Bold" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
 
-        <Controls:ToggleSwitch Header="Upload this Match" IsChecked="{Binding Path=MatchManager.Match.SyncToCloud}" OnLabel="Yes" OffLabel="No" Grid.Column="1" Grid.Row="4" 
-                               VerticalContentAlignment="Center" FontSize="16"/>
+        <Controls:ToggleSwitch Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"
+                               Header="Upload this Match" IsChecked="{Binding Path=MatchManager.Match.SyncToCloud}"
+                               OnLabel="Yes" OffLabel="No" VerticalContentAlignment="Center" FontSize="16"
+                               cal:Message.Attach="[Event Checked] = [Action SyncMatch()]"/>
 
-        <Label Content="Status" Background="{DynamicResource AccentColorBrush2}" Grid.Column="1" Grid.Row="5" FontSize="20" VerticalContentAlignment="Center"/>
-        <Label Content="{Binding Path=CloudSyncManager.SyncStatus}" Grid.Column="3" Grid.Row="5" FontSize="20" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="0" Grid.Row="2" Width="250"
+               Content="Sync Status" Background="{DynamicResource AccentColorBrush2}" FontSize="20" VerticalContentAlignment="Center"/>
+        <Label Grid.Column="1" Grid.Row="2" FontSize="20" VerticalContentAlignment="Center" Margin="5 0"
+               Content="{Binding MatchStatus}"/>
+        <Button Grid.Column="3" Grid.Row="2" Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                    cal:Message.Attach="[Event Click] = [Action RefreshMatchStatus()]">
+            <TextBlock>Refresh</TextBlock>
+        </Button>
 
-        <Controls:MetroProgressBar Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="1" VerticalContentAlignment="Top" />
-        <Label Content="Progess... (0%)"  Grid.Row="6" Grid.Column="3" FontSize="20" VerticalContentAlignment="Bottom" HorizontalAlignment="Center" />
+        <Label Grid.Row="4" Grid.Column="0"  Width="250"
+               Content="Sync Activity" Background="{DynamicResource AccentColorBrush2}" FontSize="20" VerticalContentAlignment="Center"/>
+        <Label Grid.Row="4" Grid.Column="1" FontSize="20" Margin="5 0 0 0" VerticalContentAlignment="Center"
+               Content="{Binding CloudSyncManager.ActivityStauts, Converter={StaticResource EnumToDescriptionConverter}}" 
+               Visibility="{Binding IsActivity, Converter={StaticResource BoolNotToVisibilityConverter}}"/>
+        <Button Grid.Row="4" Grid.Column="2" Height="40"
+                Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                Visibility="{Binding IsActivity, Converter={StaticResource BoolNotToVisibilityConverter}}"
+                cal:Message.Attach="[Event Click] = [Action SyncMatch()]">
+            <TextBlock>Sync</TextBlock>
+        </Button>
+        <StackPanel Grid.Row="4"  Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10 0 0 0"
+                     Visibility="{Binding IsActivity, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Label Content="{Binding CloudSyncManager.ActivityStauts, Converter={StaticResource EnumToDescriptionConverter}}"  FontSize="20" HorizontalAlignment="Center"/>
+            <Controls:MetroProgressBar 
+                IsIndeterminate="{Binding IsIndeterminate}"
+                Value="{Binding CloudSyncManager.UploadProgress}" Minimum="0" Maximum="100" />
+            <Label Content="{Binding Path=CloudSyncManager.UploadProgress}" ContentStringFormat="{}{0:N1}%"
+                   Visibility="{Binding IsProgressValue, Converter={StaticResource BoolToVisibilityConverter}}"
+                   FontSize="20" HorizontalAlignment="Center"/>
+            <Button HorizontalAlignment="Right"
+                    Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                    cal:Message.Attach="[Event Click] = [Action CacnelSync()]">
+            <TextBlock>Cancel</TextBlock>
+            </Button>
+        </StackPanel>
 
     </Grid>
 </Controls:MetroWindow>

@@ -375,7 +375,14 @@ namespace TT.Viewer.ViewModels
                 MessageDialogStyle.AffirmativeAndNegative);
             if (result == MessageDialogResult.Affirmative)
             {
-                CloudSyncManager.UpdateMatch();
+                try
+                {
+                    await CloudSyncManager.UpdateAnalysis();
+                }
+                catch (CloudException e)
+                {
+                    await DialogCoordinator.ShowMessageAsync(this, "Upload Error", e.Message + e.InnerException?.Message);
+                }
             }
         }
 

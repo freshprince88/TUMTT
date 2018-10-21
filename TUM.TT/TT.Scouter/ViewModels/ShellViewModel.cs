@@ -3,11 +3,10 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using TT.Models;
+using System.Threading.Tasks;
 using TT.Lib;
 using TT.Lib.Managers;
 using TT.Lib.Results;
-using TT.Scouter.ViewModels;
 using TT.Lib.Events;
 using System;
 using TT.Lib.Util;
@@ -16,7 +15,7 @@ namespace TT.Scouter.ViewModels
 {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive,
         IShell,
-        IHandle<MatchOpenedEvent>, IHandle<RalliesStrokesAddedEvent>
+        IHandle<MatchOpenedEvent>, IHandle<RalliesStrokesAddedEvent>, IHandle<CloudSyncActivityStatusChangedEvent>
     {
         /// <summary>
         /// Gets the event bus of this shell.
@@ -36,6 +35,7 @@ namespace TT.Scouter.ViewModels
             MatchManager = manager;
             DialogCoordinator = coordinator;
             CloudSyncManager = cloudSyncManager;
+            CloudSyncManager.AutoUpload = true;
         }
 
         #region Caliburn hooks
@@ -53,7 +53,11 @@ namespace TT.Scouter.ViewModels
 
         protected override void OnViewLoaded(object view)
         {
-            base.OnViewLoaded(view);            
+            base.OnViewLoaded(view);
+
+            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            CloudSyncManager.Login();
+            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed  
         }
 
         protected override void OnActivate()
@@ -77,8 +81,15 @@ namespace TT.Scouter.ViewModels
         /// Determines whether the view model can be closed.
         /// </summary>
         /// <param name="callback">Called to perform the closing</param>
-        public override void CanClose(System.Action<bool> callback)
+        public async override void CanClose(Action<bool> callback)
         {
+            if (MatchManager.Match.SyncToCloud)
+            {
+                var canCloseSync = await CanCloseSync();
+                callback(canCloseSync);
+                return;
+            }
+
             var context = new CoroutineExecutionContext()
             {
                 Target = this,
@@ -120,8 +131,71 @@ namespace TT.Scouter.ViewModels
             }
         }
 
+        private async Task<bool> CanCloseSync()
+        {
+            if (CloudSyncManager.ActivityStauts != ActivityStauts.None)
+            {
+                var mySettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = "Wait",
+                    NegativeButtonText = "Cancel",
+                    FirstAuxiliaryButtonText = "Quit and Cancel Sync",
+                };
+                var result = await DialogCoordinator.ShowMessageAsync(this, "Sync Activity in Progress", "Wait for the sync activity to finish or quit?",
+                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
+                if(result == MessageDialogResult.Affirmative)
+                {
+                    ShowUploadSettings();
+                    return false;
+                }
+                else if(result == MessageDialogResult.FirstAuxiliary)
+                {
+                    CloudSyncManager.CancelSync();
+                    return true;
+                }
+                else if(result == MessageDialogResult.Negative)
+                {
+                    return false;
+                }
+            }
 
+            if (CloudSyncManager.IsUploadRequired || MatchManager.MatchModified)
+            {
+                var mySettings = new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = "Save, Upload & Quit",
+                    NegativeButtonText = "Cancel",
+                    FirstAuxiliaryButtonText = "Quit without saving",
+                };
+                var result = await DialogCoordinator.ShowMessageAsync(this, "Save & Upload the match?", "The match is modified. Save and upload changes?",
+                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    try
+                    {
+                        await CloudSyncManager.UpdateAnalysis();
+                    }
+                    catch (CloudException e)
+                    {
+                        await DialogCoordinator.ShowMessageAsync(this, "Upload Error", e.Message + e.InnerException?.Message);
+                        return false;
+                    }
+                    return true;
+                }
+                else if (result == MessageDialogResult.FirstAuxiliary)
+                {
+                    return true;
+                }
+                else if (result == MessageDialogResult.Negative)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         #endregion
 
         #region Events
@@ -161,6 +235,7 @@ namespace TT.Scouter.ViewModels
             }
 
         }
+
         public void Handle(RalliesStrokesAddedEvent message)
         {
             int countRallies = MatchManager.Match.Rallies.Count;
@@ -183,7 +258,11 @@ namespace TT.Scouter.ViewModels
                 }
             }
         }
-
+        public void Handle(CloudSyncActivityStatusChangedEvent messege)
+        {
+            NotifyOfPropertyChange(() => IsUploadingMatch);
+            NotifyOfPropertyChange(() => IsCloudSyncEnabled);
+        }
 
         #endregion
 
@@ -197,6 +276,7 @@ namespace TT.Scouter.ViewModels
             this.NotifyOfPropertyChange(() => this.CanShowPlayer);
             this.NotifyOfPropertyChange(() => this.CanShowCompetition);
             this.NotifyOfPropertyChange(() => this.CanShowUploadSettings);
+            this.NotifyOfPropertyChange(() => this.IsCloudSyncEnabled);
             Events.PublishOnUIThread(new HideMenuEvent());
             var next = ShowScreenResult.Of<NewMatchViewModel>();
             yield return next;
@@ -249,8 +329,6 @@ namespace TT.Scouter.ViewModels
             yield return next;
         }
 
-
-
         public bool CanSaveMatch
         {
             get
@@ -294,6 +372,22 @@ namespace TT.Scouter.ViewModels
             get
             {
                 return MatchManager.Match != null;
+            }
+        }
+        public bool IsUploadingMatch
+        {
+            get
+            {
+                return CloudSyncManager.ActivityStauts != ActivityStauts.None;
+            }
+        }
+        public bool IsCloudSyncEnabled
+        {
+            get
+            {
+                return CloudSyncManager.ActivityStauts == ActivityStauts.None
+                    && MatchManager.Match != null
+                    && MatchManager.Match.SyncToCloud;
             }
         }
 
@@ -361,7 +455,7 @@ namespace TT.Scouter.ViewModels
             }
             else
             {
-                _windowManager.ShowWindow(new ShowUploadSettingsViewModel(_windowManager, Events, MatchManager, CloudSyncManager, DialogCoordinator));
+                _windowManager.ShowDialog(new ShowUploadSettingsViewModel(_windowManager, Events, MatchManager, CloudSyncManager, DialogCoordinator));
             }
         }
 

@@ -70,6 +70,9 @@
       <HintPath>..\packages\NReco.VideoConverter.1.1.2\lib\net20\NReco.VideoConverter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NReco.VideoInfo, Version=1.1.1.0, Culture=neutral, PublicKeyToken=8f59ee36d2987295, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.VideoInfo.1.1.1\lib\net35\NReco.VideoInfo.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -127,9 +130,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\TTCloudApi.cs" />
+    <Compile Include="Events\CloudSyncActivityStatusChangedEvent.cs" />
     <Compile Include="Events\FollowMouseEvent.cs" />
     <Compile Include="Events\FullscreenHidePlayerEvent.cs" />
     <Compile Include="Events\LibraryResetEvent.cs" />
+    <Compile Include="Events\MatchSavedEvent.cs" />
     <Compile Include="Events\MediaLiveScouterMuteEvent.cs" />
     <Compile Include="Events\MediaLiveScouterSpeedEvent.cs" />
     <Compile Include="Events\PointAddedEventArgs.cs" />

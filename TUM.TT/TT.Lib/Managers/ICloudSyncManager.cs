@@ -11,6 +11,9 @@ namespace TT.Lib.Managers
 {
     public interface ICloudSyncManager
     {
+        bool AutoUpload { get; set; }
+        bool IsUploadRequired { get; }
+        ActivityStauts ActivityStauts { get; }
         User CurrentUser { get; }
 
         string GetAccountEmail();
@@ -21,8 +24,10 @@ namespace TT.Lib.Managers
 
         SyncStatus GetSyncStatus(MatchMeta meta);
 
-        void UpdateMatch();
+        void HandleMatch();
+        void CancelSync();
 
+        Task<MatchMeta> UpdateAnalysis();
         Task<MatchMetaResult> GetMatches(string query = null, string sortFild = "updatedAt", string sortOrder = "desc", int limit = 100);
         Task<MatchMeta> GetMatch(Guid id);
         Task<Tuple<MatchMeta, string, string>> DownloadMatch(
