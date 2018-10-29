@@ -132,6 +132,12 @@ namespace TT.Scouter.ViewModels
 
         public async void OpenFiles()
         {
+            if(!CloudSyncManager.IsUserAdmin)
+            {
+                await DialogCoordinator.ShowMessageAsync(this, "User rights not sufficient", "User needs to be admin to run batch uploads.");
+                TryClose();
+                return;
+            }
             InitializeOpenFileDialog();
             DialogResult dr = openFileDialog.ShowDialog();
             if (dr != DialogResult.OK)

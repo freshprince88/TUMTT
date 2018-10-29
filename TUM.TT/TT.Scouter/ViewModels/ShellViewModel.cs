@@ -265,6 +265,7 @@ namespace TT.Scouter.ViewModels
         }
         public void Handle(CloudSyncActivityStatusChangedEvent messege)
         {
+            NotifyOfPropertyChange(() => CanShowUploadSettings);
             NotifyOfPropertyChange(() => IsUploadingMatch);
             NotifyOfPropertyChange(() => IsCloudSyncEnabled);
         }
@@ -353,7 +354,7 @@ namespace TT.Scouter.ViewModels
         {
             get
             {
-                return MatchManager.Match != null;
+                return MatchManager.Match != null && CloudSyncManager.CanUserContribute;
             }
         }
         public bool CanShowPlayer

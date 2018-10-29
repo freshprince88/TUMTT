@@ -234,7 +234,6 @@
                             </Rectangle>
                         </Controls:Tile>
                         <Controls:Tile Title="Export Excel" cal:Message.Attach="[Event Click] = [Action ExportExcel()]" 
-                                        
                                        Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle}">
                             <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">

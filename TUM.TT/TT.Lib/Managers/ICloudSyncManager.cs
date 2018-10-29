@@ -15,6 +15,8 @@ namespace TT.Lib.Managers
         bool IsUploadRequired { get; }
         ActivityStauts ActivityStauts { get; }
         User CurrentUser { get; }
+        bool IsUserAdmin { get; }
+        bool CanUserContribute { get; }
 
         string GetAccountEmail();
         void SetCredentials(string email, string password);

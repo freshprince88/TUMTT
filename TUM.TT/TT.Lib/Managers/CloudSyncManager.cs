@@ -86,15 +86,31 @@ namespace TT.Lib.Managers
         public bool AutoUpload { get; set; } = false;
         private const string applicationName = "TUM.TT Cloud";
         public bool IsUploadRequired { get; private set; } = false;
-        #endregion
-
-        #region Calculated Prperties
-        private User currentUser = null;
+        private User currentUser;
         public User CurrentUser
         {
             get
             {
                 return currentUser;
+            }
+            private set
+            {
+                currentUser = value;
+                NotifyOfPropertyChange(() => CurrentUser);
+                NotifyOfPropertyChange(() => IsUserAdmin);
+                NotifyOfPropertyChange(() => CanUserContribute);
+            }
+        }
+        public bool IsUserAdmin {
+            get {
+                return CurrentUser != null && CurrentUser.Role == "admin";
+            }
+        }
+        public bool CanUserContribute
+        {
+            get
+            {
+                return CurrentUser != null && (CurrentUser.Role == "admin" || CurrentUser.Role == "contributor");
             }
         }
 
@@ -187,7 +203,7 @@ namespace TT.Lib.Managers
             CloudApi = new TTCloudApi(AccessToken);
             if (ConnectionStatus == ConnectionStatus.Online)
             {
-                currentUser = await CloudApi.GetCurrentUser();
+                CurrentUser = await CloudApi.GetCurrentUser();
             }
 
             if (oldStatus != ConnectionStatus)

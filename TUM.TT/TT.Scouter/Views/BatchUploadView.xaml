@@ -18,7 +18,7 @@
                       ShowTitleBar="True"
                       ShowIconOnTitleBar="True">
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
+        <i:EventTrigger EventName="ContentRendered">
             <mi:CallMethodAction TargetObject="{Binding}" MethodName="OpenFiles"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>

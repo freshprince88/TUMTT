@@ -247,7 +247,7 @@ namespace TT.Viewer.ViewModels
         {
             get
             {
-                return (MatchManager.Match != null && CloudSyncManager.CurrentUser != null && CloudSyncManager.CurrentUser.Role == "admin");
+                return (MatchManager.Match != null && CloudSyncManager.CurrentUser != null && CloudSyncManager.IsUserAdmin);
             }
         }
 
