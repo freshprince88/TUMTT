@@ -7,6 +7,7 @@
 namespace TT.Lib.Util
 {
     using System;
+    using System.Linq;
     using TT.Models.Api;
     using TT.Models;
 
@@ -34,6 +35,63 @@ namespace TT.Lib.Util
                 match.Category.ToString().WhenNullOrEmpty("Unknown Category"),
                 match.Round.ToString().WhenNullOrEmpty("Unknown round")
             );
+        }
+
+        public static MatchMeta MatchMetaFromMagicFilename(string filename)
+        {
+            string[] playerFields;
+            string[] matchFields;
+
+            var slices = filename.Split('.')[0].Split('_');
+            var length = slices.Length;
+            // Double
+            if (length == 17 || length == 18)
+            {
+                playerFields = new string[]
+                {
+                  slices[1] + ' ' + slices[2] + '+' + slices[4] + ' ' + slices[5], slices[3],
+                  slices[7] + ' ' + slices[8] + '+' + slices[10] + ' ' + slices[11], slices[9]
+                };
+                matchFields = slices.Skip(13).ToArray();
+            }
+            // Single
+            else if (length == 11 || length == 12)
+            {
+                playerFields = new string[]
+{
+                  slices[1] + ' ' + slices[2], slices[3],
+                  slices[4] + ' ' + slices[5], slices[6]
+};
+                matchFields = slices.Skip(7).ToArray();
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+
+            var year = int.Parse("20" + slices[0].Substring(0, 2));
+            var month = int.Parse(slices[0].Substring(2, 2));
+            var day = int.Parse(slices[0].Substring(4, 2));
+
+            return new MatchMeta()
+            {
+                Guid = Guid.NewGuid(),
+                Date = new DateTime(year, month, day),
+                Tournament = matchFields[0] + ' ' + matchFields[1],
+                Category = matchFields[2],
+                Round = matchFields.Length == 5 ? matchFields[4] : matchFields[3],
+                DisabilityClass = matchFields.Length == 5 ? matchFields[2] : "NoClass",
+
+                FirstPlayer = new PlayerMeta() {
+                    Name = playerFields[0],
+                    Nationality = playerFields[1]
+                },
+                SecondPlayer = new PlayerMeta()
+                {
+                    Name = playerFields[2],
+                    Nationality = playerFields[3]
+                }
+            };
         }
 
         public static void UpdateMatchWithMetaInfo(Match match, MatchMeta meta)

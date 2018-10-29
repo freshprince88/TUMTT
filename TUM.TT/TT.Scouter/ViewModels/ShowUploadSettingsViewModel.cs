@@ -118,9 +118,9 @@ namespace TT.Scouter.ViewModels
             NotifyOfPropertyChange(() => MatchStatus);
         }
 
-        public void SyncMatch()
+        public async void SyncMatch()
         {
-            CloudSyncManager.HandleMatch();
+            await CloudSyncManager.UploadMatch();
         }
 
         public void CacnelSync()
@@ -139,11 +139,5 @@ namespace TT.Scouter.ViewModels
         }
 
         #endregion
-
-        #region Helper Methods
-
-        #endregion
-
-
     }
 }

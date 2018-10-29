@@ -24,7 +24,8 @@ namespace TT.Lib.Managers
 
         SyncStatus GetSyncStatus(MatchMeta meta);
 
-        void HandleMatch();
+        Task<MatchMeta> UploadMatch();
+        Task<MatchMeta> UploadMetaVideo(MatchMeta match, string videoFilename);
         void CancelSync();
 
         Task<MatchMeta> UpdateAnalysis();

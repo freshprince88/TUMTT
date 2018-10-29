@@ -83,7 +83,7 @@ namespace TT.Scouter.ViewModels
         /// <param name="callback">Called to perform the closing</param>
         public async override void CanClose(Action<bool> callback)
         {
-            if (MatchManager.Match.SyncToCloud)
+            if (MatchManager.Match != null && MatchManager.Match.SyncToCloud)
             {
                 var canCloseSync = await CanCloseSync();
                 callback(canCloseSync);
@@ -448,17 +448,16 @@ namespace TT.Scouter.ViewModels
         }
         public void ShowUploadSettings()
         {
-            if (IsWindowOpen<Window>("ShowUploadSettings"))
-            {
-                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "ShowUploadSettings").FirstOrDefault().Focus();
-
-            }
-            else
-            {
-                _windowManager.ShowDialog(new ShowUploadSettingsViewModel(_windowManager, Events, MatchManager, CloudSyncManager, DialogCoordinator));
-            }
+            _windowManager.ShowDialog(new ShowUploadSettingsViewModel(_windowManager, Events, MatchManager, CloudSyncManager, DialogCoordinator));
         }
-
+        public void ShowBatchUpload()
+        {
+            try
+            {
+                _windowManager.ShowDialog(new BatchUploadViewModel(_windowManager, Events, MatchManager, CloudSyncManager, DialogCoordinator));
+            }
+            catch (InvalidOperationException) { /* File selection canceled */} 
+        }
         #endregion
     }
 }

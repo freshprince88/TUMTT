@@ -154,6 +154,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ShowAllPlayerViewModel.cs" />
+    <Compile Include="ViewModels\BatchUploadViewModel.cs" />
     <Compile Include="ViewModels\ShowUploadSettingsViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
     <Compile Include="ViewModels\SpinRadioViewModel.cs" />
@@ -220,6 +221,9 @@
     </Compile>
     <Compile Include="Views\ShowAllPlayerView.xaml.cs">
       <DependentUpon>ShowAllPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BatchUploadView.xaml.cs">
+      <DependentUpon>BatchUploadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowUploadSettingsView.xaml.cs">
       <DependentUpon>ShowUploadSettingsView.xaml</DependentUpon>
@@ -328,6 +332,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowAllPlayerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BatchUploadView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

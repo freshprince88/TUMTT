@@ -3,13 +3,8 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:cal="http://www.caliburnproject.org"
                       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-                      xmlns:ob="clr-namespace:TT.Lib.Interactivity;assembly=TT.Lib"
                       xmlns:conv="clr-namespace:TT.Converters;assembly=TT.Converters"
-                      xmlns:System="clr-namespace:System;assembly=mscorlib"
-                      xmlns:Models="clr-namespace:TT.Models;assembly=TT.Models"
-                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       Dialog:DialogParticipation.Register="{Binding}"
                       Width="750"
                       Height="800"                               
@@ -86,7 +81,7 @@
             <Button HorizontalAlignment="Right"
                     Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
                     cal:Message.Attach="[Event Click] = [Action CacnelSync()]">
-            <TextBlock>Cancel</TextBlock>
+                <TextBlock>Cancel</TextBlock>
             </Button>
         </StackPanel>
 

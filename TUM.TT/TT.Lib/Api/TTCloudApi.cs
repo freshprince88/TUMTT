@@ -145,7 +145,7 @@ namespace TT.Lib.Api
 
             request.AddParameter("MatchGuid", matchGuid, ParameterType.UrlSegment);
 
-            return Execute<MatchMeta>(request);
+            return Execute<MatchMeta>(request, token);
         }
 
         public Task<IRestResponse> DownloadFile(Guid matchGuid, string location, CancellationToken token)
@@ -168,7 +168,7 @@ namespace TT.Lib.Api
             return DownloadToFile(request, location, token);
         }
 
-        public Task<MatchMeta> PutMatch(MatchMeta Match)
+        public Task<MatchMeta> PutMatch(MatchMeta Match, CancellationToken token = default(CancellationToken))
         {
             var request = new RestRequest(Method.PUT);
             request.Resource = "matches/{MatchGuid}";
@@ -179,10 +179,10 @@ namespace TT.Lib.Api
             var json = SimpleJson.SerializeObject(Match, SimpleJson.DataContractJsonSerializerStrategy);
             request.AddParameter("application/json", json, ParameterType.RequestBody);
 
-            return Execute<MatchMeta>(request);
+            return Execute<MatchMeta>(request, token);
         }
 
-        public Task<MatchMeta> UploadAnalysisFile(Guid MatchGuid, string FilePath)
+        public Task<MatchMeta> UploadAnalysisFile(Guid MatchGuid, string FilePath, CancellationToken token = default(CancellationToken))
         {
             var request = new RestRequest(Method.POST);
             request.Resource = "matches/{MatchGuid}/file";
@@ -192,7 +192,7 @@ namespace TT.Lib.Api
 
             request.AddFile("file", FilePath);
 
-            return Execute<MatchMeta>(request);
+            return Execute<MatchMeta>(request, token);
         }
 
         public Task<MatchMeta> UploadMatchVideo(Guid MatchGuid, string VideoPath, CancellationToken token)

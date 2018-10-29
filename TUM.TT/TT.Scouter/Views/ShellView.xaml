@@ -144,8 +144,9 @@
                              CloseButtonVisibility="Collapsed"
                              TitleVisibility="Collapsed"
                              Height="110">
-                <Grid>
+                <Grid Margin="2 0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
@@ -205,6 +206,14 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </Controls:Tile>
+                    <Controls:Tile Grid.Column="5" Title="Batch Upload" cal:Message.Attach="[Event Click] = [Action ShowBatchUpload()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                        <Rectangle Width="30" Height="30" 
+                                   Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_list_create}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Controls:Tile>
 
                     <!--<Controls:Tile Grid.Column="6" Title="ITTV" cal:Message.Attach="[Event Click] = [Action OpenITTV()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
@@ -223,7 +232,7 @@
                         </Rectangle>
                     </Controls:Tile>
 
-                    <Controls:Tile Grid.Column="8" Title="Upload Settings" cal:Message.Attach="[Event Click] = [Action ShowUploadSettings()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="9" Title="Upload Settings" cal:Message.Attach="[Event Click] = [Action ShowUploadSettings()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>
@@ -231,7 +240,7 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </Controls:Tile>
-                    <Controls:Tile Grid.Column="9" Title="Competition" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="10" Title="Competition" cal:Message.Attach="[Event Click] = [Action ShowCompetition()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>
@@ -239,7 +248,7 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </Controls:Tile>
-                    <Controls:Tile Grid.Column="10" Title="Player" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"  Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="11" Title="Player" cal:Message.Attach="[Event Click] = [Action ShowPlayer()]"  Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>
