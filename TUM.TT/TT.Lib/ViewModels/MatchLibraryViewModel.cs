@@ -236,7 +236,7 @@ namespace TT.Lib.ViewModels
             if (local != null)
             {
                 Coroutine.BeginExecute(MatchManager.OpenMatch(local.FileName).GetEnumerator());
-                this.TryClose();
+                TryClose();
                 return;
             }
 
@@ -251,6 +251,21 @@ namespace TT.Lib.ViewModels
             };
             controller.SetIndeterminate();
 
+            await DownloadMatch(matchMeta, token, callback:(msg) =>
+            {
+                controller.SetMessage(msg);
+            });    
+
+            await controller.CloseAsync();
+            if (!tokenSource.IsCancellationRequested)
+            {
+                TryClose();
+            }
+            tokenSource.Dispose();
+        }
+
+        private async Task<MatchMeta> DownloadMatch(MatchMeta matchMeta, CancellationToken token, bool openVideo = true, Action<string> callback = null)
+        {
             string matchFilePath = MatchLibrary.GetMatchFilePath(matchMeta);
             string videoFilePath = MatchLibrary.GetVideoFilePath(matchMeta);
             MatchMeta meta;
@@ -259,32 +274,30 @@ namespace TT.Lib.ViewModels
             {
                 (meta, matchFilePath, videoFilePath) = await CloudSyncManager.DownloadMatch(
                     matchMeta.Guid, matchFilePath, videoFilePath, token, (status) =>
-                 {
-                     controller.SetMessage(status);
-                 });
+                    {
+                        callback?.Invoke(status);
+                    });
             }
-            catch(TaskCanceledException)
+            catch (TaskCanceledException)
             {
                 // Delete downloaded artifacts
                 try
                 {
                     if (File.Exists(matchFilePath)) { File.Delete(matchFilePath); }
                     if (File.Exists(videoFilePath)) { File.Delete(videoFilePath); }
-                } catch { /* Best effoty */ }
-
-                await controller.CloseAsync();
-                tokenSource.Dispose();
-                return;
+                }
+                catch { /* Best effoty */ }
+                return matchMeta;
             }
-            catch(CloudException)
+            catch (CloudException)
             {
-                return;
+                return matchMeta;
             }
 
-            controller.SetMessage("Opening Match...");
+            callback?.Invoke("Opening Match...");
 
             // Create phantom analysis for download w/o analysis
-            if (String.IsNullOrEmpty(matchFilePath))
+            if (string.IsNullOrEmpty(matchFilePath))
             {
                 MatchManager.CreateNewMatch();
                 MatchManager.FileName = matchFilePath = MatchLibrary.GetMatchFilePath(meta);
@@ -294,11 +307,58 @@ namespace TT.Lib.ViewModels
 
                 await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
             }
-            Coroutine.BeginExecute(MatchManager.OpenMatch(matchFilePath, videoFilePath).GetEnumerator());
+            if (openVideo)
+            {
+                Coroutine.BeginExecute(MatchManager.OpenMatch(matchFilePath, videoFilePath).GetEnumerator());
+            } else
+            {
+                Coroutine.BeginExecute(MatchManager.OpenMatch(matchFilePath).GetEnumerator());
+            }
+
+            return meta;
+        }
+
+        public async void DownloadResults()
+        {
+            var tokenSource = new CancellationTokenSource();
+            var token = tokenSource.Token;
+            var count = CloudResults.Count;
+
+            var mySettings = new MetroDialogSettings() { CancellationToken = token };
+            ProgressDialogController controller = await DialogCoordinator.ShowProgressAsync(this,
+                "Downloading " + count.ToString() + " Matches from Cloud",
+                string.Empty, isCancelable: true, settings: mySettings);
+            controller.SetProgress(0);
+            controller.Canceled += (sender, e) =>
+            {
+                tokenSource.Cancel();
+                controller.CloseAsync();
+            };
+
+            int progessCount = 0;
+            foreach(MatchMeta matchMeta in CloudResults)
+            {
+                if(tokenSource.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                if(MatchLibrary.FindMatch(matchMeta.Guid) == null)
+                {
+                    await DownloadMatch(matchMeta, token, openVideo: false, callback: (msg) =>
+                    {
+                        string s = string.Format("({0}/{1}): ", progessCount + 1, count);
+                        controller.SetMessage(s + msg);
+                    });
+                }
+
+                progessCount++;
+                controller.SetProgress(progessCount / (double)count);
+            }
 
             await controller.CloseAsync();
             tokenSource.Dispose();
-            this.TryClose();
+            LoadLocalResults();
         }
         #endregion
 

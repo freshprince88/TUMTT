@@ -149,7 +149,20 @@
                                      x:Name="CloudQueryValue" cal:Message.Attach="[Event TextChanged] = [CloudQuery($source)]"/>
                             <Controls:ProgressRing IsActive="{Binding SearchIsActive}" Height="25" Width="25" Margin="5 0" />
 
-                            <StackPanel Orientation="Horizontal" Width="170" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal" Width="270" HorizontalAlignment="Right">
+                                <Button Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
+                                        Margin="0 0 20 0" ToolTip="Download all Results"
+                                        cal:Message.Attach="[Event Click] = [Action DownloadResults()]">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Rectangle Width="20"  Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_download}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock>Download</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                
                                 <Label Content="Sort: " FontSize="14" />
                                 <ComboBox Width="120" SelectedValue="{Binding SelectedCloudSort}" SelectedValuePath="Tag"
                                       cal:Message.Attach="[Event SelectionChanged] = [LoadCloudResults]">
