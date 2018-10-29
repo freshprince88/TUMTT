@@ -8,6 +8,7 @@ using TT.Lib;
 using TT.Lib.Managers;
 using TT.Lib.Results;
 using TT.Lib.Events;
+using TT.Lib.ViewModels;
 using System;
 using TT.Lib.Util;
 
@@ -22,18 +23,20 @@ namespace TT.Scouter.ViewModels
         /// </summary>
         public IEventAggregator Events { get; private set; }
         public IMatchManager MatchManager { get; set; }
-        public ICloudSyncManager CloudSyncManager { get; set; }
         private IDialogCoordinator DialogCoordinator;
         private readonly IWindowManager _windowManager;
+        private IMatchLibraryManager MatchLibrary;
+        private ICloudSyncManager CloudSyncManager;
 
 
-        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, ICloudSyncManager cloudSyncManager, IDialogCoordinator coordinator)
+        public ShellViewModel(IWindowManager windowmanager, IEventAggregator eventAggregator, IMatchManager manager, ICloudSyncManager cloudSyncManager, IDialogCoordinator coordinator, IMatchLibraryManager matchLibrary)
         {
             this.DisplayName = "";
             _windowManager = windowmanager;
             Events = eventAggregator;
             MatchManager = manager;
             DialogCoordinator = coordinator;
+            MatchLibrary = matchLibrary;
             CloudSyncManager = cloudSyncManager;
             CloudSyncManager.AutoUpload = true;
         }
@@ -51,13 +54,11 @@ namespace TT.Scouter.ViewModels
             //this.Events.Subscribe(this);
         }
 
-        protected override void OnViewLoaded(object view)
+        protected async override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
 
-            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            CloudSyncManager.Login();
-            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed  
+            await CloudSyncManager.Login(); 
         }
 
         protected override void OnActivate()
@@ -207,8 +208,12 @@ namespace TT.Scouter.ViewModels
 
         public void Handle(MatchOpenedEvent message)
         {
-            // We must reconsider, whether we can generate a report now.
+            var next = ShowScreenResult.Of<MainViewModel>();
+            next.Shell = this;
+            next.Properties.Add("SelectedTab", MainViewModel.Tabs.Remote);
+            next.Execute(new CoroutineExecutionContext());
 
+            // We must reconsider, whether we can generate a report now.
             this.NotifyOfPropertyChange(() => this.CanSaveMatch);
             this.NotifyOfPropertyChange(() => this.CanSaveMatchAs);
             this.NotifyOfPropertyChange(() => this.CanShowPlayer);
@@ -395,6 +400,18 @@ namespace TT.Scouter.ViewModels
         public static bool IsWindowOpen<T>(string name = "") where T : Window
         {
             return string.IsNullOrEmpty(name) ? Application.Current.Windows.OfType<T>().Any() : Application.Current.Windows.OfType<T>().Any(wde => wde.Name.Equals(name));
+        }
+
+        public void ShowMatchLibrary()
+        {
+            if (IsWindowOpen<Window>("MatchLibrary"))
+            {
+                Application.Current.Windows.OfType<Window>().Where(win => win.Name == "MatchLibrary").FirstOrDefault().Focus();
+            }
+            else
+            {
+                _windowManager.ShowDialog(new MatchLibraryViewModel(_windowManager, Events, DialogCoordinator, MatchManager, CloudSyncManager, MatchLibrary));
+            }
         }
         public void ShowPlayer()
 

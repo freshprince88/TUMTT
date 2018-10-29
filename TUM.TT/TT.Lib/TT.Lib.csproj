@@ -211,7 +211,13 @@
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\ControlWithBindableKeyGestures.cs" />
     <Compile Include="Views\ExtendedMediaElement.cs" />
+    <Compile Include="Views\MatchLibraryView.xaml.cs">
+      <DependentUpon>MatchLibraryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReportGenerationNotifyIcon.cs" />
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Webbrowser\Test.cs" />
     <Compile Include="Webbrowser\WebBrowserUtility.cs" />
     <Compile Include="IShell.cs" />
@@ -314,6 +320,14 @@
     <Page Include="Templates\CircleBorder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MatchLibraryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

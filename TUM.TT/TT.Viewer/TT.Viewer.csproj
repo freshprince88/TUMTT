@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>CS0436</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -153,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\TT.Lib\Views\SettingsView.xaml.cs">
+      <Link>Views\SettingsView.xaml.cs</Link>
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="ViewModels\BasicFilterStatisticsViewModel.cs" />
     <Compile Include="ViewModels\CommentViewModel.cs" />
@@ -234,9 +239,6 @@
     <Compile Include="Views\LastBallStatisticsView.xaml.cs">
       <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MatchLibraryView.xaml.cs">
-      <DependentUpon>MatchLibraryView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MatchView.xaml.cs">
       <DependentUpon>MatchView.xaml</DependentUpon>
     </Compile>
@@ -300,9 +302,6 @@
     <Compile Include="Views\ShowAllPlayerView.xaml.cs">
       <DependentUpon>ShowAllPlayerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ShowCompetitionView.xaml.cs">
       <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
     </Compile>
@@ -347,6 +346,16 @@
       <DependentUpon>WelcomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowManager.cs" />
+    <Page Include="..\TT.Lib\Views\MatchLibraryView.xaml">
+      <Link>Views\MatchLibraryView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\TT.Lib\Views\SettingsView.xaml">
+      <Link>Views\SettingsView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -398,10 +407,6 @@
     <Page Include="Views\LastBallView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MatchLibraryView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MatchView.xaml">
       <SubType>Designer</SubType>
@@ -486,10 +491,6 @@
     <Page Include="Views\ShowAllPlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ShowCompetitionView.xaml">
       <SubType>Designer</SubType>

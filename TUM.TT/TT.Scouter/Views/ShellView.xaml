@@ -170,11 +170,11 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </Controls:Tile>
-                    <Controls:Tile Grid.Column="1" Title="Open Match" cal:Message.Attach="[Event Click] = [Action OpenMatch()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
+                    <Controls:Tile Grid.Column="1" Title="Open Library" cal:Message.Attach="[Event Click] = [Action ShowMatchLibrary()]" Background="{DynamicResource AccentColorBrush}" Style="{StaticResource SmallTileStyle }">
                         <Rectangle Width="30" Height="30" 
                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Tile}}}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_folder_open}" />
+                                <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_cabinet_variant}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </Controls:Tile>

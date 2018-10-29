@@ -24,6 +24,7 @@ namespace TT.Scouter {
             container.Singleton<IMatchManager, MatchManager>();
             container.Singleton<IShell, ShellViewModel>();
             container.Singleton<IDialogCoordinator, DialogCoordinator>();
+            container.Singleton<IMatchLibraryManager, MatchLibraryManager>();
             container.Singleton<ICloudSyncManager, CloudSyncManager>();
 
             container.PerRequest<NewMatchViewModel>("NewMatchViewModel");

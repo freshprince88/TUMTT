@@ -168,7 +168,7 @@
                              CloseButtonVisibility="Collapsed"
                              TitleVisibility="Collapsed"
                              Height="110">
-                <Grid>
+                <Grid Margin="2 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
