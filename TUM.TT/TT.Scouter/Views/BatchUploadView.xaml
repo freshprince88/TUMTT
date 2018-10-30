@@ -38,7 +38,7 @@
             <Label Content="{Binding CloudSyncManager.ActivityStauts, Converter={StaticResource EnumToDescriptionConverter}}"
                    FontSize="20" HorizontalAlignment="Center" />
             <Controls:MetroProgressBar Height="25" Value="{Binding Progress}" Minimum="0" Maximum="100" />
-            <Label FontSize="18" Content="{Binding Path=Progress}" ContentStringFormat="{}{0}%" 
+            <Label FontSize="18" Content="{Binding Path=Progress}" ContentStringFormat="{}{0:N0}%" 
                    HorizontalAlignment="Center"/>
             <Button HorizontalAlignment="Right" Style="{DynamicResource SquareButtonStyle}" Background="{DynamicResource AccentColorBrush2}"
                     cal:Message.Attach="[Event Click] = [Action Cancel()]">

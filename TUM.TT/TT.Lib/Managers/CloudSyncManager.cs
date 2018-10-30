@@ -358,6 +358,7 @@ namespace TT.Lib.Managers
 
         private async Task<MatchMeta> UploadAnalysisFile()
         {
+            ActivityStauts = ActivityStauts.Updating;
             await Coroutine.ExecuteAsync(MatchManager.SaveMatch().GetEnumerator());
             var meta = await CloudApi.UploadAnalysisFile(MatchManager.Match.ID, MatchManager.FileName, TokenSource.Token);
             MatchManager.Match.LastCloudSync = meta.AnalysisFileUpdatedAt;
