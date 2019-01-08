@@ -134,9 +134,7 @@
     <Compile Include="Plots\PlotStyle.cs" />
     <Compile Include="Renderers\Pdf\OurStyleNames.cs" />
     <Compile Include="Renderers\IReportRenderer.cs" />
-    <Compile Include="Renderers\PdfRenderer.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="Renderers\PdfRenderer.cs" />
     <Compile Include="Renderers\Pdf\ColumnExtensions.cs" />
     <Compile Include="Sections\BasicInformationSection.cs" />
     <Compile Include="Sections\HeaderSection.cs" />

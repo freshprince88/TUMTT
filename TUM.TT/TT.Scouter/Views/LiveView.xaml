@@ -143,18 +143,7 @@
             <TextBox AcceptsReturn="True" TextWrapping="Wrap" Grid.Row="1" Text="{Binding Path=CurrentRally.Comment}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-                <CheckBox IsChecked="{Binding Path=Markiert, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
-                    <i:Interaction.Triggers>
-                        
-                        <ob:GlobalInputBindingTrigger>
-                            <ob:GlobalInputBindingTrigger.InputBinding>
-                                <KeyBinding Key="OemComma"/>
-                            </ob:GlobalInputBindingTrigger.InputBinding>
-                            <cal:ActionMessage MethodName="ChangeMarkiert" >
-                            </cal:ActionMessage>
-                        </ob:GlobalInputBindingTrigger>
-                    </i:Interaction.Triggers>
-                </CheckBox>
+                <CheckBox IsChecked="{Binding Path=Markiert}" VerticalAlignment="Center" />
                 <Label Content="marked" FontSize="18" VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>

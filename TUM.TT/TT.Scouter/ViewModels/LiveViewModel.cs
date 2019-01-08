@@ -445,22 +445,12 @@ namespace TT.Scouter.ViewModels
         {
             DeleteLastRally();
         }
+     
+        
 
-
-
-
+    
 
 
         #endregion
-        #region HelperMethods
-        public void ChangeMarkiert()
-        {
-            Markiert = !Markiert;
-            NotifyOfPropertyChange("Markiert");
-
-        }
-
-        #endregion
-
     }
 }

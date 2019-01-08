@@ -104,13 +104,6 @@
                         <cal:ActionMessage MethodName="StartRallyAtBeginning">
                         </cal:ActionMessage>
                     </i:EventTrigger>
-                    <ob:GlobalInputBindingTrigger>
-                        <ob:GlobalInputBindingTrigger.InputBinding>
-                            <KeyBinding Key="X" Modifiers="Alt"/>
-                        </ob:GlobalInputBindingTrigger.InputBinding>
-                        <cal:ActionMessage MethodName="StartRallyAtBeginning">
-                        </cal:ActionMessage>
-                    </ob:GlobalInputBindingTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="3">
