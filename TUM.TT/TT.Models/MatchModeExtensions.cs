@@ -301,30 +301,10 @@ namespace TT.Models
         [Description("Class 4-5")]
         C4_5,
         /// <summary>
-        /// Class 6-7.
-        /// </summary>
-        [Description("Class 6-7")]
-        C6_7,
-        /// <summary>
         /// Class 6-8.
         /// </summary>
         [Description("Class 6-8")]
         C6_8,
-        /// <summary>
-        /// Class 6-10.
-        /// </summary>
-        [Description("Class 6-10")]
-        C6_10,
-        /// <summary>
-        /// Class 8-9.
-        /// </summary>
-        [Description("Class 8-9")]
-        C8_9,
-        /// <summary>
-        /// Class 8-10.
-        /// </summary>
-        [Description("Class 8-10")]
-        C8_10,
         /// <summary>
         /// Class 9-10.
         /// </summary>
