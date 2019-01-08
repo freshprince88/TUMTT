@@ -105,17 +105,14 @@ namespace TT.Lib.Results
                 RallyCollection[i] = fileName;
 
                 var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
-
                 NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
                 {
                     Seek = Convert.ToSingle(curRally.Start / 1000),
                     MaxDuration = Convert.ToSingle((curRally.End - curRally.Start) / 1000),
-                    //VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
-                    AudioCodec = "copy", VideoCodec="copy"
-        
+                    VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
 
                 };
-                ffMpeg.ConvertMedia(@Manager.Match.VideoFile, null, fileName, null, settings);
+                ffMpeg.ConvertMedia(@Manager.Match.VideoFile, NReco.VideoConverter.Format.mp4, fileName, NReco.VideoConverter.Format.mp4, settings);
 
 
                 currentProgress = currentProgress + (i + 1);
