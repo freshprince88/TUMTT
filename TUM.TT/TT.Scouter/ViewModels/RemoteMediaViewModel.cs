@@ -300,7 +300,6 @@ namespace TT.Scouter.ViewModels
         {
             IsMuted = true;
             Events.PublishOnUIThread(new MediaMuteEvent(Media.Mute.Mute));
-         
         }
 
         public void UnMute()
