@@ -160,20 +160,12 @@
                 <Viewbox Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
                     <TextBlock Text="{Binding Path=CurrentRally.CurrentRallyScore.Second}" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Viewbox>
-                <Viewbox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Center" Margin="10 0 10 0">
+                <Viewbox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" StretchDirection="DownOnly" HorizontalAlignment="Center" Margin="10 0 10 0">
                     <TextBlock Text="Length:"  FontSize="20" Foreground="White" />
                 </Viewbox>
 
-                <TextBox Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="1" Text="{Binding Path=LengthHelper, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
-                <ToggleButton  x:Name="AddToMarkedPlaylist" Style="{StaticResource MetroAccentFlatGrayCheckedToggle}" Grid.Row="4" Grid.Column="5" Height="20" Width="20" Foreground="White" IsChecked="{Binding IsMarked}" cal:Message.Attach="[Event Click] = [Action AddToMarkedPlaylist()]">
-                    <Rectangle Width="15" Height="15" 
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform"
-                          Visual="{DynamicResource appbar_heart}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </ToggleButton>
+                <TextBox Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding Path=LengthHelper, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" MinWidth="10" MaxWidth="40" />
+
             </Grid>
 
             <Border Grid.Column="0" BorderThickness="0 0 3 0" BorderBrush="Gray"/>

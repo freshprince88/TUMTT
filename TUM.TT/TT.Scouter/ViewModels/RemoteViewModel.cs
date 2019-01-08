@@ -152,7 +152,6 @@ namespace TT.Scouter.ViewModels
                         }
                         SchlagView.Strokes = CurrentRally.Strokes;
                         Events.PublishOnUIThread(new RalliesStrokesAddedEvent());
-                        PositionsRallyView.OnNewStrokes();
                         //SchlagView.CurrentStroke = CurrentStroke;
 
                     }
@@ -165,7 +164,6 @@ namespace TT.Scouter.ViewModels
                         }
                         SchlagView.Strokes = CurrentRally.Strokes;
                         SchlagView.CurrentStroke = CurrentRally.Strokes.Last();
-                        PositionsRallyView.OnNewStrokes();
                     }
                     else if (value == 0)
                     {
@@ -174,7 +172,6 @@ namespace TT.Scouter.ViewModels
                         {
                             CurrentRally.Strokes.Remove(CurrentRally.Strokes.Last());
                         }
-                        PositionsRallyView.OnNewStrokes();
                     }
 
                     CurrentRally.Length = value;
@@ -198,16 +195,6 @@ namespace TT.Scouter.ViewModels
                 if (value != null && (fromConstructor || _rally != value))
                 {
                     MatchManager.ActiveRally = value;
-
-                    Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                    bool mark = marked != null && marked.Rallies != null && marked.Rallies.Contains(MatchManager.ActiveRally);
-
-                    if (mark != IsMarked)
-                    {
-                        IsMarked = mark;
-                        //NotifyOfPropertyChange();
-                                          
-                    }
 
                     if (SchlagView == null || PositionsRallyView == null)
                     {
@@ -290,7 +277,6 @@ namespace TT.Scouter.ViewModels
                     NotifyOfPropertyChange("SchlagView.Strokes");
                     NotifyOfPropertyChange("SchlagView.CurrentRally");
                     NotifyOfPropertyChange("HasLength");
-                    NotifyOfPropertyChange("IsMarked");
                 }
             }
         }
@@ -324,21 +310,6 @@ namespace TT.Scouter.ViewModels
 
         public IDialogCoordinator Dialogs { get; set; }
 
-        private bool _marked;
-        public bool IsMarked
-        {
-            get
-            {
-                return _marked;
-            }
-            set
-            {
-                if (_marked != value)
-                    _marked = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
         #endregion
 
         public RemoteViewModel(IEventAggregator ev, IMatchManager man, IDialogCoordinator dia)
@@ -353,7 +324,6 @@ namespace TT.Scouter.ViewModels
             ThirdChecked = false;
             FourthChecked = false;
             LastChecked = false;
-            IsMarked = false;
         }
         protected override void OnActivate()
         {
@@ -507,31 +477,6 @@ namespace TT.Scouter.ViewModels
                     LastChecked = true;
                     break;
             }
-
-        }
-
-        public void AddToMarkedPlaylist()
-        {
-
-            if (IsMarked)
-            {
-                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                marked.Add(CurrentRally);
-            }
-
-            else
-            {
-                Playlist marked = Match.Playlists.Where(p => p.Name == "Markiert").FirstOrDefault();
-                marked.Remove(CurrentRally);
-
-            }
-            MatchManager.MatchModified = true;
-            NotifyOfPropertyChange("MatchManager.MatchModified");
-            NotifyOfPropertyChange();
-            NotifyOfPropertyChange("IsMarked");
-            NotifyOfPropertyChange("CurrentRally");
-
-
 
         }
 
