@@ -12,7 +12,7 @@ namespace TT.Lib.Util
     {
         private string globalPath;
         private string startDate = Base64Encode(new DateTime(2018, 01, 01).ToShortDateString());
-        private string endDate = Base64Encode(new DateTime(2019, 01, 01).ToShortDateString());
+        private string endDate = Base64Encode(new DateTime(2055, 01, 01).ToShortDateString());
 
 
         public enum Mode
