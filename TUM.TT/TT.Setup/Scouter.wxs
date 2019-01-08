@@ -21,7 +21,6 @@
       </Component>
       <ComponentGroupRef Id="TT_Scouter.PMShortcuts" />
       <ComponentGroupRef Id="TT_Scouter.DTShortcuts" />
-      <ComponentGroupRef Id="ScouterRes.de_DE"/>
     </ComponentGroup>
     
     <!-- Desktop shortcut -->

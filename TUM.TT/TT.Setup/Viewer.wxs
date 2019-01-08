@@ -36,7 +36,6 @@
       </Component>
       <ComponentGroupRef Id="TT_Viewer.PMShortcuts" />
       <ComponentGroupRef Id="TT_Viewer.DTShortcuts" />
-      <ComponentGroupRef Id="ViewerRes.de_DE"/>
     </ComponentGroup>
     
     <!-- Desktop shortcut -->
