@@ -108,7 +108,7 @@ namespace TT.Models
         public Guid ID
         {
             get { return this.id; }
-            set { this.RaiseAndSetIfChanged(ref this.id, value); }
+            set { this.id = value; }
         }
 
         /// <summary>

@@ -444,7 +444,7 @@ namespace TT.Scouter.ViewModels
 
         private void showCorrectStrokes()
         {
-            for (int i = 0; i < DrawnStrokes.Count; i++)
+            for (int i = 0; i < Strokes.Count; i++)
             {
                 if (Math.Abs((CurrentStroke.Number - 1 - i)) <= (_maxVisibleStrokes - 1) / 2)
                 {
