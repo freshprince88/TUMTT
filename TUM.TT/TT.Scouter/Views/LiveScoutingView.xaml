@@ -64,14 +64,8 @@
                     </MultiBinding>
                 </Grid.Visibility>
             </Grid>
-            <Viewbox Grid.Column="1" Grid.RowSpan="2" StretchDirection="DownOnly" >
-                <TextBlock Name="Player1" Text="{Binding Path=LiveView.Match.FirstPlayer.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" />
-            </Viewbox>
-            <Viewbox Grid.Column="6" Grid.RowSpan="2" StretchDirection="DownOnly" >
-                <TextBlock Name="Player2" Text="{Binding Path=LiveView.Match.SecondPlayer.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" />
-            </Viewbox>
-            <!--<Label Name="Player1" Content="{Binding Path=LiveView.Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" FontSize="20" />-->
-            <!--<Label Name="Player2" Content="{Binding Path=LiveView.Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Grid.RowSpan="2"  FontSize="20"/>-->
+            <Label Name="Player1" Content="{Binding Path=LiveView.Match.FirstPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.RowSpan="2" FontSize="20" />
+            <Label Name="Player2" Content="{Binding Path=LiveView.Match.SecondPlayer.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Grid.RowSpan="2"  FontSize="20"/>
             <Grid x:Name="Second" Grid.Row="1" Grid.RowSpan="2" Grid.Column="6">
                 <Grid.RowDefinitions>
                     <RowDefinition />
