@@ -272,11 +272,21 @@ namespace TT.Lib.ViewModels
 
             try
             {
-                (meta, matchFilePath, videoFilePath) = await CloudSyncManager.DownloadMatch(
-                    matchMeta.Guid, matchFilePath, videoFilePath, token, (status) =>
+                //(meta, matchFilePath, videoFilePath) = await CloudSyncManager.DownloadMatch(
+                //    matchMeta.Guid, matchFilePath, videoFilePath, token, (status) =>
+                //    {
+                //        callback?.Invoke(status);
+                //    });
+
+                var result = await CloudSyncManager.DownloadMatch(matchMeta.Guid, matchFilePath, videoFilePath, token,
+                    (status) =>
                     {
                         callback?.Invoke(status);
                     });
+                meta = result.Item1;
+                matchFilePath = result.Item2;
+                videoFilePath = result.Item3;
+
             }
             catch (TaskCanceledException)
             {
