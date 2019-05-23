@@ -56,7 +56,7 @@
                 <Line Grid.Row="2"  Grid.ColumnSpan="3"  X1="0" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" VerticalAlignment="Bottom" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
             </Grid>
 
-            <Grid x:Name="SideGrid" Grid.Row="2" Margin="0 5 0 0">
+            <Grid x:Name="OpenSideStepAroundGrid" Grid.Row="2" Margin="0 5 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="Auto" />
@@ -70,42 +70,50 @@
                 <ToggleButton x:Name="OpeningShot" Style="{StaticResource MetroAccentToggle}" Grid.Column="0" Content="Opening Shot" Height="30" MinWidth="90" HorizontalAlignment="Center" 
                               IsChecked="{Binding Path=Stroke.OpeningShot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 </ToggleButton>
-                <ToggleButton x:Name="Forehand" Grid.Column="1"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                <Grid x:Name="SideGrid" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton x:Name="Forehand" Grid.Column="0"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                               cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
-                    <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
-                    <ToggleButton.IsChecked>
-                        <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
-                            <Binding Path="Stroke.Side" />
-                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                        </MultiBinding>
-                    </ToggleButton.IsChecked>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                <cal:Parameter Value="{Binding ElementName=SideGrid}" />
-                                <cal:Parameter Value="$source" />
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ToggleButton>
-                <ToggleButton x:Name="Backhand" Grid.Column="2"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
+                        <TextBlock FontSize="16"><Run Text="FH"/></TextBlock>
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Side" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=SideGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                    <ToggleButton x:Name="Backhand" Grid.Column="1"  Width="50" Height="50" HorizontalAlignment="Center" Style="{DynamicResource MetroAccentCircleToggleButtonStyle}"
                               cal:Message.Attach="[Event Click] = [Action SelectSide($source)]">
-                    <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
-                    <ToggleButton.IsChecked>
-                        <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
-                            <Binding Path="Stroke.Side" />
-                            <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
-                        </MultiBinding>
-                    </ToggleButton.IsChecked>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                <cal:Parameter Value="{Binding ElementName=SideGrid}" />
-                                <cal:Parameter Value="$source" />
-                            </cal:ActionMessage>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ToggleButton>
+                        <TextBlock FontSize="16"><Run Text="BH"/></TextBlock>
+                        <ToggleButton.IsChecked>
+                            <MultiBinding Converter="{conv:SideToBoolScouterConverter}" Mode="OneWay">
+                                <Binding Path="Stroke.Side" />
+                                <Binding Path="Name" RelativeSource="{RelativeSource Mode=Self}" />
+                            </MultiBinding>
+                        </ToggleButton.IsChecked>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
+                                    <cal:Parameter Value="{Binding ElementName=SideGrid}" />
+                                    <cal:Parameter Value="$source" />
+                                </cal:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+
+                </Grid>
+                
                 <ToggleButton x:Name="StepAround" Style="{StaticResource MetroAccentToggle}" Grid.Column="3" Content="Step Around" Height="30" MinWidth="90" HorizontalAlignment="Center"
                              IsChecked="{Binding Path=Stroke.StepAround, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 </ToggleButton>
@@ -283,7 +291,7 @@
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                    <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                    <cal:Parameter Value="{Binding ElementName=BlockGrid}" />
                                     <cal:Parameter Value="$source" />
                                 </cal:ActionMessage>
                             </i:EventTrigger>
@@ -302,7 +310,7 @@
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <cal:ActionMessage MethodName="MutualExclusiveToggleButtonClick">
-                                    <cal:Parameter Value="{Binding ElementName=TopspinGrid}" />
+                                    <cal:Parameter Value="{Binding ElementName=BlockGrid}" />
                                     <cal:Parameter Value="$source" />
                                 </cal:ActionMessage>
                             </i:EventTrigger>

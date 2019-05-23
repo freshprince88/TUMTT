@@ -782,11 +782,19 @@ namespace TT.Scouter.ViewModels
             {
                 Stroke.Stroketechnique.Option = "Spin";
             }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Stroketechnique.Option == "Tempo")
+            {
+                Stroke.Stroketechnique.Option = "Spin";
+            }
             else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "Chop")
             {
                 Stroke.Stroketechnique.Option = "";
             }
             else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "")
+            {
+                Stroke.Stroketechnique.Option = "Chop";
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "Tempo")
             {
                 Stroke.Stroketechnique.Option = "Chop";
             }
@@ -807,11 +815,19 @@ namespace TT.Scouter.ViewModels
             {
                 Stroke.Stroketechnique.Option = "Tempo";
             }
+            else if (Stroke.Stroketechnique.Type == "Topspin" && Stroke.Stroketechnique.Option == "Spin")
+            {
+                Stroke.Stroketechnique.Option = "Tempo";
+            }
             else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "Tempo")
             {
                 Stroke.Stroketechnique.Option = "";
             }
             else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "")
+            {
+                Stroke.Stroketechnique.Option = "Tempo";
+            }
+            else if (Stroke.Stroketechnique.Type == "Block" && Stroke.Stroketechnique.Option == "Chop")
             {
                 Stroke.Stroketechnique.Option = "Tempo";
             }
