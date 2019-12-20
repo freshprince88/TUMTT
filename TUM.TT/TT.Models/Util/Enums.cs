@@ -31,6 +31,7 @@
             Half = 50,
             Third = 33,
             Full = 100,
+            Faster = 150,
             None
         }
 

@@ -70,6 +70,7 @@
                 <ColumnDefinition Width="2*" MaxWidth="40" />
                 <ColumnDefinition Width="2*" MaxWidth="40" />
                 <ColumnDefinition Width="2*" MaxWidth="40" />
+                <ColumnDefinition Width="2*" MaxWidth="40" />
                 <ColumnDefinition Width="2*" MaxWidth="30" />
                 <ColumnDefinition Width="2*" MaxWidth="30" />
                 <ColumnDefinition Width="2*" MaxWidth="30" />
@@ -91,19 +92,22 @@
                 <ColumnDefinition Width="2*" MaxWidth="30" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="1" IsChecked="True"
+            <RadioButton x:Name="Slow150Button" Content="150%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="1"
+                          cal:Message.Attach="[Event Checked] = [Action Slow(150)]">
+            </RadioButton>
+            <RadioButton x:Name="Slow100Button" Content="100%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="2" IsChecked="True"
                           cal:Message.Attach="[Event Checked] = [Action Slow(100)]">
             </RadioButton>
-            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="2" 
+            <RadioButton x:Name="Slow75Button" Content="75%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="3" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(75)]">
             </RadioButton>
-            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="3" 
+            <RadioButton x:Name="Slow50Button" Content="50%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="4" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(50)]">
             </RadioButton>
-            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="4" 
+            <RadioButton x:Name="Slow25Button" Content="25%" GroupName="SpeedRemote" Style="{StaticResource MetroAccentFlatRadio}" Grid.Column="5" 
                           cal:Message.Attach="[Event Checked] = [Action Slow(25)]">
             </RadioButton>
-            <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="6"  Foreground="White">
+            <Button x:Name="PreviousRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="7"  Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -123,7 +127,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="StartRallyAtBeginningButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="7" Foreground="White">
+            <Button x:Name="StartRallyAtBeginningButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8" Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -144,7 +148,7 @@
                     </ob:GlobalInputBindingTrigger>-->
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="8" Foreground="White">
+            <Button x:Name="Previous5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="9" Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -159,7 +163,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="PreviousFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="9"  Foreground="White">
+            <Button x:Name="PreviousFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="10"  Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -175,7 +179,7 @@
                 </i:Interaction.Triggers>
             </Button>
 
-            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="11" Foreground="White"
+            <Button x:Name="PlayButton" Style="{StaticResource MetroAccentFlat}"  Grid.Column="12" Foreground="White"
                     Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolNotToVisibilityConverter}}"
 >
                 <Rectangle Width="15" Height="15" 
@@ -192,7 +196,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="11"
+            <ToggleButton x:Name="PauseButton" Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="12"
                           Visibility="{Binding IsPlaying, Mode=TwoWay, Converter={conv:BoolToVisibilityConverter}}"
                           IsChecked="{Binding IsPlaying, Mode=OneWay}"
                           cal:Message.Attach="[Event Click] = [Action Pause()]">
@@ -210,7 +214,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ToggleButton>
-            <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="12" Foreground="White"
+            <Button x:Name="StopButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="13" Foreground="White"
                     cal:Message.Attach="[Event Click] = [Action Stop()]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -220,7 +224,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="14" Foreground="White">
+            <Button x:Name="NextFrameButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="15" Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -235,7 +239,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button  x:Name="Next5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="15" Foreground="White">
+            <Button  x:Name="Next5FramesButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="16" Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -250,7 +254,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="16" Foreground="White">
+            <Button x:Name="NextRallyButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="17" Foreground="White">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
@@ -270,7 +274,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Column="18">
+            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Column="19">
                 <Label.Content>
                     <TextBlock FontSize="12">
                         <TextBlock.Text>
@@ -284,11 +288,11 @@
 
                 </Label.Content>
             </Label>
-            <ToggleButton IsThreeState="True" Grid.Column="20" Style="{StaticResource MetroAccentFlatRepeatToggle}" IsChecked="{Binding Path=PlayMode}">
+            <ToggleButton IsThreeState="True" Grid.Column="21" Style="{StaticResource MetroAccentFlatRepeatToggle}" IsChecked="{Binding Path=PlayMode}">
                 
             </ToggleButton>
 
-            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="21" Foreground="White"  
+            <Button x:Name="MuteButton"  Style="{StaticResource MetroAccentFlat}" Grid.Column="22" Foreground="White"  
                     Visibility="{Binding IsMuted, Converter={conv:BoolNotToVisibilityConverter}}"
                     cal:Message.Attach="[Event Click] = [Action Mute()]" >
                 <Rectangle Width="15" Height="15" 
@@ -299,7 +303,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="21"
+            <ToggleButton x:Name="UnmuteButton"  Style="{StaticResource MetroAccentFlatToggle}" Grid.Column="22"
                           Visibility="{Binding IsMuted, Converter={conv:BoolToVisibilityConverter}}"
                           IsChecked="{Binding IsMuted}"
                           cal:Message.Attach="[Event Click] = [Action UnMute()]">
@@ -312,7 +316,7 @@
                 </Rectangle>
             </ToggleButton>
             
-            <Button x:Name="LoadButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="22" Foreground="White" ToolTip="Load Video"
+            <Button x:Name="LoadButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="23" Foreground="White" ToolTip="Load Video"
                     cal:Message.Attach="[Event Click] = [Action Open()]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
@@ -323,7 +327,7 @@
                 </Rectangle>
             </Button>
 
-            <Button x:Name="SyncButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="23" ToolTip="Synchronize Video" Foreground="White"
+            <Button x:Name="SyncButton" Style="{StaticResource MetroAccentFlat}" Grid.Column="24" ToolTip="Synchronize Video" Foreground="White"
                     cal:Message.Attach="[Event Click] = [Action Sync()]">
                 <Rectangle Width="15" Height="15" 
                 Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
