@@ -257,29 +257,42 @@ namespace TT.Scouter.ViewModels
         }
 
         public void NextFrame()
-        {            
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
+        {
+            if (IsPlaying)
+            {
+                Pause();
+            }
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 80);
             MediaPosition = MediaPosition + delta_time;
         }
 
         public void Next5Frames()
-        {            
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
+        {
+            if (IsPlaying)
+            {
+                Pause();
+            }
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             MediaPosition = MediaPosition + delta_time;
         }
 
         public void PreviousFrame()
-        {            
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
-            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 40);
+        {
+            if (IsPlaying)
+            {
+                Pause();
+            }
+            TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 80);
             MediaPosition = MediaPosition - delta_time;
         }
 
         public void Previous5Frames()
-        {            
-            Events.PublishOnUIThread(new MediaControlEvent(Media.Control.Pause, Media.Source.RemoteScouter));
+        {
+
+            if (IsPlaying)
+            {
+                Pause();
+            }
             TimeSpan delta_time = new TimeSpan(0, 0, 0, 0, 200);
             MediaPosition = MediaPosition - delta_time;
         }

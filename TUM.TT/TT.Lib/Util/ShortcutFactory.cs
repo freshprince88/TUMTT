@@ -44,19 +44,19 @@ namespace TT.Lib.Util
                 {"NextRally", new KeyBinding() {Key =Key.D, Modifiers = ModifierKeys.Shift}},
                 {"PreviousStroke", new KeyBinding() {Key =Key.A, Modifiers = ModifierKeys.None}},
                 {"NextStroke", new KeyBinding() {Key =Key.D, Modifiers = ModifierKeys.None}},
-                {"SkipBackwards", new KeyBinding() {Key =Key.Q, Modifiers = ModifierKeys.None}},
-                {"SkipForward", new KeyBinding() {Key =Key.E, Modifiers = ModifierKeys.None}},
+                //{"SkipBackwards", new KeyBinding() {Key =Key.Q, Modifiers = ModifierKeys.None}},
+                //{"SkipForward", new KeyBinding() {Key =Key.E, Modifiers = ModifierKeys.None}},
 
 
                 {"StartRallyAtBeginning", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt | ModifierKeys.Control  } },
-                {"Previous5Frames", new KeyBinding() {Key =Key.MediaPreviousTrack,Modifiers =  ModifierKeys.Shift}},
-                {"PreviousFrame", new KeyBinding() {Key =Key.MediaPreviousTrack, Modifiers = ModifierKeys.Alt}},
+                {"Previous5Frames", new KeyBinding() {Key =Key.Q, Modifiers = ModifierKeys.Shift}},
+                {"PreviousFrame", new KeyBinding() {Key =Key.Q, Modifiers = ModifierKeys.None}},
                 {"PlayPauseRemoteMode", new KeyBinding() {Key =Key.S, Modifiers = ModifierKeys.None}},
                 {"PlayPauseLiveMode", new KeyBinding() {Key =Key.S, Modifiers = ModifierKeys.None}},
                 
 
-                {"NextFrame", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Alt}},
-                {"Next5Frames", new KeyBinding() {Key =Key.MediaNextTrack, Modifiers = ModifierKeys.Shift}},
+                {"NextFrame", new KeyBinding() {Key =Key.E, Modifiers = ModifierKeys.None}},
+                {"Next5Frames", new KeyBinding() {Key =Key.E, Modifiers = ModifierKeys.Shift}},
                 
                 //{"NextRally", new KeyBinding() {Key =Key.Right, Modifiers = ModifierKeys.Alt | ModifierKeys.Control }},
                 {"FullscreenHelper", new KeyBinding() {Key =Key.F, Modifiers = ModifierKeys.Alt}},
