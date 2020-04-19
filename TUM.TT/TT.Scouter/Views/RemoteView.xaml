@@ -291,7 +291,7 @@
                     <Viewbox StretchDirection="DownOnly" Grid.ColumnSpan="2">
                         <TextBlock Text="Comment" HorizontalAlignment="Center" FontSize="16" Foreground="White" />
                     </Viewbox>
-                    <TextBox Text="{Binding Path=CurrentRally.Comment}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
+                    <TextBox Text="{Binding Path=CurrentRally.Comment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" Margin="10,0,10,0" Grid.ColumnSpan="2"/>
                 </Grid>
             </Grid>
 
