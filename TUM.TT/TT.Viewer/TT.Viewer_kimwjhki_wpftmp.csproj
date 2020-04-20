@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{91CCD1DE-DF21-4AEA-B1CD-62274C5F7D90}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TT.Viewer</RootNamespace>
+    <AssemblyName>TT.Viewer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TT.Viewer.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>olive-letter-v-512.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="ViewModels\BasicFilterStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\CommentViewModel.cs" />
+    <Compile Include="ViewModels\FilterStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\FourthBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\KeyBindingEditorViewModel.cs" />
+    <Compile Include="ViewModels\LastBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\OpeningShotViewModel.cs" />
+    <Compile Include="ViewModels\PlacementStatisticsTableViewModel.cs" />
+    <Compile Include="ViewModels\PlacementStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PlayerInformationViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistItem.cs" />
+    <Compile Include="ViewModels\BasicFilterViewModel.cs" />
+    <Compile Include="ViewModels\CombiViewModel.cs" />
+    <Compile Include="ViewModels\FilterViewModel.cs" />
+    <Compile Include="ViewModels\FourthBallViewModel.cs" />
+    <Compile Include="ViewModels\IResultViewTabItem.cs" />
+    <Compile Include="ViewModels\ReceiveStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ReportSettingsViewModel.cs" />
+    <Compile Include="ViewModels\ResultSmallTablesViewModel.cs" />
+    <Compile Include="ViewModels\ResultListItem.cs" />
+    <Compile Include="ViewModels\LastBallViewModel.cs" />
+    <Compile Include="ViewModels\ResultLargeTableViewModel.cs" />
+    <Compile Include="ViewModels\ResultListViewModel.cs" />
+    <Compile Include="ViewModels\MediaViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistViewModel.cs" />
+    <Compile Include="ViewModels\ReceiveViewModel.cs" />
+    <Compile Include="ViewModels\ResultMiniStatisticViewModel.cs" />
+    <Compile Include="ViewModels\ResultTabViewModel.cs" />
+    <Compile Include="ViewModels\ResultViewModel.cs" />
+    <Compile Include="ViewModels\ServiceStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ServiceViewModel.cs" />
+    <Compile Include="ViewModels\MatchViewModel.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\ShowAllPlayerViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
+    <Compile Include="ViewModels\SpinControlViewModel.cs" />
+    <Compile Include="ViewModels\StatisticsViewModel.cs" />
+    <Compile Include="ViewModels\TableKombiViewModel.cs" />
+    <Compile Include="ViewModels\TableLegendViewModel.cs" />
+    <Compile Include="ViewModels\TableServiceViewModel.cs" />
+    <Compile Include="ViewModels\TableStandardViewModel.cs" />
+    <Compile Include="ViewModels\ThirdBallStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\ThirdBallViewModel.cs" />
+    <Compile Include="ViewModels\TotalMatchStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\TotalMatchViewModel.cs" />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="Views\BasicFilterStatisticsView.xaml.cs">
+      <DependentUpon>BasicFilterStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicFilterView.xaml.cs">
+      <DependentUpon>BasicFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CombiView.xaml.cs">
+      <DependentUpon>CombiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CommentView.xaml.cs">
+      <DependentUpon>CommentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterStatisticsView.xaml.cs">
+      <DependentUpon>FilterStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterView.xaml.cs">
+      <DependentUpon>FilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FourthBallStatisticsView.xaml.cs">
+      <DependentUpon>FourthBallStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FourthBallView.xaml.cs">
+      <DependentUpon>FourthBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KeyBindingEditorView.xaml.cs">
+      <DependentUpon>KeyBindingEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LastBallStatisticsView.xaml.cs">
+      <DependentUpon>LastBallStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MatchView.xaml.cs">
+      <DependentUpon>MatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OpeningShotView.xaml.cs">
+      <DependentUpon>OpeningShotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlacementStatisticsTableView.xaml.cs">
+      <DependentUpon>PlacementStatisticsTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlacementStatisticsView.xaml.cs">
+      <DependentUpon>PlacementStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayerInformationView.xaml.cs">
+      <DependentUpon>PlayerInformationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlaylistView.xaml.cs">
+      <DependentUpon>PlaylistView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LastBallView.xaml.cs">
+      <DependentUpon>LastBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReceiveStatisticsView.xaml.cs">
+      <DependentUpon>ReceiveStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReceiveView.xaml.cs">
+      <DependentUpon>ReceiveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportSettingsView.xaml.cs">
+      <DependentUpon>ReportSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultSmallTablesView.xaml.cs">
+      <DependentUpon>ResultSmallTablesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultLargeTableView.xaml.cs">
+      <DependentUpon>ResultLargeTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultMiniStatisticView.xaml.cs">
+      <DependentUpon>ResultMiniStatisticView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultTabView.xaml.cs">
+      <DependentUpon>ResultTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceStatisticsView.xaml.cs">
+      <DependentUpon>ServiceStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ServiceView.xaml.cs">
+      <DependentUpon>ServiceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultListView.xaml.cs">
+      <DependentUpon>ResultListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResultView.xaml.cs">
+      <DependentUpon>ResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowAllPlayerView.xaml.cs">
+      <DependentUpon>ShowAllPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowCompetitionView.xaml.cs">
+      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SmallTableView.xaml.cs">
+      <DependentUpon>SmallTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LargeTableView.xaml.cs">
+      <DependentUpon>LargeTableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticsView.xaml.cs">
+      <DependentUpon>StatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableKombiView.xaml.cs">
+      <DependentUpon>TableKombiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableLegendView.xaml.cs">
+      <DependentUpon>TableLegendView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableServiceView.xaml.cs">
+      <DependentUpon>TableServiceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaView.xaml.cs">
+      <DependentUpon>MediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableStandardView.xaml.cs">
+      <DependentUpon>TableStandardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableView.cs" />
+    <Compile Include="Views\ThirdBallStatisticsView.xaml.cs">
+      <DependentUpon>ThirdBallStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ThirdBallView.xaml.cs">
+      <DependentUpon>ThirdBallView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TotalMatchStatisticsView.xaml.cs">
+      <DependentUpon>TotalMatchStatisticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TotalMatchView.xaml.cs">
+      <DependentUpon>TotalMatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomeView.xaml.cs">
+      <DependentUpon>WelcomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
+    <None Include="packages.config" />
+    <EmbeddedResource Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TT.Converters\TT.Converters.csproj">
+      <Project>{257f3b3f-ee44-4b7b-a629-218f37047d49}</Project>
+      <Name>TT.Converters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.Lib\TT.Lib.csproj">
+      <Project>{f24a8ecc-c00e-4af4-af20-5292744810a9}</Project>
+      <Name>TT.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.Models\TT.Models.csproj">
+      <Project>{bfdd82b6-73a9-4408-a183-4acc3dc7e2c0}</Project>
+      <Name>TT.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.Report\TT.Report.csproj">
+      <Project>{9f1fd7dd-1706-4327-89f1-722284fbbdb9}</Project>
+      <Name>TT.Report</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libs\Itenso.Windows.Controls.ListViewLayout.dll" />
+    <Content Include="Libs\Microsoft.TeamFoundation.Controls.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Aktivieren Sie die Wiederherstellung von NuGet-Paketen, um die fehlende Datei herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ReferencePath Include="C:\Users\Michael Fuchs\Documents\GitHub\tum-tt\TUM.TT\packages\Caliburn.Micro.Core.3.0.0\lib\net45\Caliburn.Micro.dll" />
+    <ReferencePath Include="C:\Users\Michael Fuchs\Documents\GitHub\tum-tt\TUM.TT\packages\Caliburn.Micro.3.0.0\lib\net45\Caliburn.Micro.Platform.Core.dll" />
+    <ReferencePath Include="C:\Users\Michael Fuchs\Documents\GitHub\tum-tt\TUM.TT\packages\Caliburn.Micro.3.0.0\lib\net45\Caliburn.Micro.Platform.dll" />
+    <ReferencePath Include="C:\Users\Michael Fuchs\Documents\GitHub\tum-t

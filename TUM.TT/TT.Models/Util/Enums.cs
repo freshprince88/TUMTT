@@ -337,4 +337,13 @@
             Long
         }
     }
+
+    public static class EnumRally
+    {
+        public enum HasNoOpeningShot
+        {
+            AllRallies,
+            NoOpeningShot
+        }
+    }
 }

@@ -33,6 +33,7 @@ namespace TT.Viewer.ViewModels
         public Models.Util.Enums.Stroke.Crunch Crunch { get; private set; }
         public Models.Util.Enums.Stroke.BeginningOfGame BeginningOfGame { get; private set; }
         public Models.Util.Enums.Stroke.GamePhase GamePhase { get; private set; }
+        public Models.Util.Enums.EnumRally.HasNoOpeningShot HasNoOpeningShot { get; private set; }
 
         public HashSet<int> SelectedSets { get; private set; }
         public HashSet<int> SelectedRallyLengths { get; private set; }
@@ -68,6 +69,7 @@ namespace TT.Viewer.ViewModels
             PlayerLabel = "";
             LastStroke = false;
             StrokeNumber = 0;
+            HasNoOpeningShot = Models.Util.Enums.EnumRally.HasNoOpeningShot.AllRallies;
         }
 
         #region View Methods
@@ -423,6 +425,23 @@ namespace TT.Viewer.ViewModels
             }
             UpdateSelection(Manager.ActivePlaylist);
         }
+
+        public void OpeningShotOrNot(ToggleButton source)
+        {
+            if (source.Name.ToLower().Contains("openingshotbutton"))
+            {
+                if (source.IsChecked.Value)
+                {
+                    HasNoOpeningShot = Models.Util.Enums.EnumRally.HasNoOpeningShot.NoOpeningShot;
+                }
+                else
+                {
+                    HasNoOpeningShot = Models.Util.Enums.EnumRally.HasNoOpeningShot.AllRallies;
+                }
+            }
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
         #endregion
 
         #region Caliburn Hooks
@@ -471,7 +490,7 @@ namespace TT.Viewer.ViewModels
         {
             if (list.Rallies != null)
             {
-                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasGamePhase(r) && HasPoint(r) && HasPlayer(r)).ToList();
+                SelectedRallies = list.Rallies.Where(r => Convert.ToInt32(r.Length) > MinRallyLength && HasSet(r) && HasRallyLength(r) && HasGamePhase(r) && HasPoint(r) && HasPlayer(r) && HasNoOpeningShots(r)).ToList();
                 events.PublishOnUIThread(new BasicFilterSelectionChangedEvent(SelectedRallies));
             }
         }
@@ -579,6 +598,18 @@ namespace TT.Viewer.ViewModels
                 case Models.Util.Enums.Stroke.GamePhase.AllPhases:
                     return ((((Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) <= 8) && (Convert.ToInt32(r.CurrentRallyScore.First) <= 4) && (Convert.ToInt32(r.CurrentRallyScore.Second) <= 4)) || (Convert.ToInt32(r.CurrentRallyScore.First) + Convert.ToInt32(r.CurrentRallyScore.Second)) >= 16);
                 case Models.Util.Enums.Stroke.GamePhase.Not:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        private bool HasNoOpeningShots(Rally r)
+        {
+            switch (this.HasNoOpeningShot)
+            {
+                case Models.Util.Enums.EnumRally.HasNoOpeningShot.NoOpeningShot:
+                    return !r.HasOpeningShot();
+                case Models.Util.Enums.EnumRally.HasNoOpeningShot.AllRallies:
                     return true;
                 default:
                     return false;

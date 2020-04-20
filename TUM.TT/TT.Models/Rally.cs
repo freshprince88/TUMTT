@@ -454,7 +454,7 @@ namespace TT.Models
         }
 
         /// <summary>
-        /// Returns the last stroke of the Winner of this rally
+        /// Returns if the Rally has an Opening Shot
         /// </summary>
         public bool HasOpeningShot()
         {

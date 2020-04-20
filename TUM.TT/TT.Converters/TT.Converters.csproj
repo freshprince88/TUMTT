@@ -66,6 +66,7 @@
     <Compile Include="CurrentRallyServerToBallIsVisibleConverter.cs" />
     <Compile Include="CurrentRallyWinnerToButtonIsEnabledConverter.cs" />
     <Compile Include="ForeBackHandToBoolConverter.cs" />
+    <Compile Include="HasNoOpeningShotToBoolConverter.cs" />
     <Compile Include="IntMaskMatchToBooleanConverter.cs" />
     <Compile Include="LabelBackhandForehandRowConverter.cs" />
     <Compile Include="MatchPlayerToBrushConverter.cs" />

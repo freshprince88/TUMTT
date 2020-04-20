@@ -29,7 +29,6 @@ namespace TT.Viewer.ViewModels
         public Models.Util.Enums.Stroke.Player OpeningShotPlayer { get; private set; }
         public Models.Util.Enums.Stroke.StepAround StepAround { get; private set; }
         //public Models.Util.Enums.Stroke.OpeningShot OpeningShot { get; private set; }
-
         private HashSet<Models.Util.Enums.Stroke.Aggressiveness> _aggressiveness;
         public HashSet<Models.Util.Enums.Stroke.Aggressiveness> SelectedAggressiveness
         {
@@ -264,6 +263,7 @@ namespace TT.Viewer.ViewModels
         //    }
         //    UpdateSelection(Manager.ActivePlaylist);
         //}
+
 
 
         public void SelectStrokeTec(ToggleButton source)
@@ -626,8 +626,8 @@ namespace TT.Viewer.ViewModels
             {
                 var results = BasicFilterView.SelectedRallies
                     .Where(r =>
-                    r.HasOpeningShot() && 
-                    r.OpeningShot() != null &&                 
+                    r.HasOpeningShot() &&
+                    r.OpeningShot() != null &&
                     r.OpeningShot().Number > 1 &&
                     r.OpeningShot().HasOpeningShotPlayer(this.OpeningShotPlayer) &&
                     r.OpeningShot().HasHand(this.Hand) &&
@@ -642,6 +642,7 @@ namespace TT.Viewer.ViewModels
                     ToList();
                 Manager.SelectedRallies = results;
             }
+
         }
         #endregion
     }
