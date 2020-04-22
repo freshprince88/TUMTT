@@ -13,6 +13,7 @@
     Width="1024"
     Height="768"                            
     EnableDWMDropShadow="True"
+    IgnoreTaskbarOnMaximize="False"
     WindowTransitionsEnabled="True"
     WindowStartupLocation="CenterScreen"
     Icon="/8e00ff-letter-s-512.ico"
