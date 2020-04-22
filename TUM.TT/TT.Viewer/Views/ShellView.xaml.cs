@@ -54,7 +54,7 @@ namespace TT.Viewer.Views
                     SolidColorBrush bg = new SolidColorBrush();
                     bg.Opacity = 0.5;
                     Background = bg;
-                    IgnoreTaskbarOnMaximize = true;
+                    IgnoreTaskbarOnMaximize = false;
                     ShowTitleBar = false;
                     Topmost = true;
                     WindowState = WindowState.Maximized;
