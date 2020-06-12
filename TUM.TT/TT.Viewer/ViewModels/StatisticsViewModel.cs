@@ -35,7 +35,7 @@ namespace TT.Viewer.ViewModels
                 ["ReceiveStatisticsTab"] = new object[] {new ReceiveStatisticsViewModel(this.events, Manager), 2},
                 ["ThirdStatisticsTab"] = new object[] {new ThirdBallStatisticsViewModel(this.events, Manager), 3},
                 ["FourthStatisticsTab"] = new object[] {new FourthBallStatisticsViewModel(this.events, Manager), 4},
-                ["LastStatisticsTab"] = new object[] {new LastBallStatisticsViewModel(this.events, Manager), 5},
+                ["LastStatisticsTab"] = new object[] {new LastBallStatisticsViewModel(this.events, Manager), 6},
                 ["TotalMatchStatisticsTab"] = new object[] {new TotalMatchStatisticsViewModel(this.events, Manager), 1}
             };
 
