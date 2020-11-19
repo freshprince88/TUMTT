@@ -129,24 +129,24 @@ namespace TT.Models
         /// <summary>
         /// Sort Playlist by Rally-Number
         /// </summary>
-        public void Sort()
-        {
-            List<Guid> sorted = rallyIDs.OrderBy(x => match.Rallies.Where<Rally>(r => r.ID == x).FirstOrDefault<Rally>().Number).ToList();
-            int ptr = 0;
-            while (ptr < sorted.Count)
-            {
-                if (!rallyIDs[ptr].Equals(sorted[ptr]))
-                {
-                    Guid t = rallyIDs[ptr];
-                    rallyIDs.RemoveAt(ptr);
-                    rallyIDs.Insert(sorted.IndexOf(t), t);
-                }
-                else
-                {
-                    ptr++;
-                }
-            }
-        }
+        //public void Sort()
+        //{
+        //    List<Guid> sorted = rallyIDs.OrderBy(x => match.Rallies.Where<Rally>(r => r.ID == x).FirstOrDefault<Rally>().Number).ToList();
+        //    int ptr = 0;
+        //    while (ptr < sorted.Count)
+        //    {
+        //        if (!rallyIDs[ptr].Equals(sorted[ptr]))
+        //        {
+        //            Guid t = rallyIDs[ptr];
+        //            rallyIDs.RemoveAt(ptr);
+        //            rallyIDs.Insert(sorted.IndexOf(t), t);
+        //        }
+        //        else
+        //        {
+        //            ptr++;
+        //        }
+        //    }
+        //}
 
     }
 }

@@ -277,7 +277,7 @@ namespace TT.Viewer.ViewModels
                 {
                     list.Add(sourceItem.Rally);
                     //Sort List after Rally-Number
-                    list.Sort();
+                    //list.Sort(); Is already sorted because of the Order of the Rallies in the <Rallies> in the XML
                     MatchManager.MatchModified = true;
                     NotifyOfPropertyChange("MatchManager.MatchModified");
                     targetItem.Count++;
@@ -299,7 +299,7 @@ namespace TT.Viewer.ViewModels
                 targetItem.Count = list.Rallies.Count;
                 targetItem.PlayTime = calcPlaytime(list);
                 //Sort List after Rally-Number                        
-                list.Sort();
+                //list.Sort(); Is already sorted because of the Order of the Rallies in the <Rallies> in the XML
                 targetItem.PlayTime= calcPlaytime(list);
                 this.Items.Refresh();
                 MatchManager.MatchModified = true;
@@ -323,7 +323,7 @@ namespace TT.Viewer.ViewModels
                 {
                     playlist.Add(sourceItem);
                     //Sort List after Rally-Number
-                    playlist.Sort();
+                    //playlist.Sort(); Is already sorted because of the Order of the Rallies in the <Rallies> in the XML
                     MatchManager.MatchModified = true;
                     NotifyOfPropertyChange("MatchManager.MatchModified");
                     targetItem.Count++;
@@ -363,25 +363,25 @@ namespace TT.Viewer.ViewModels
             }
         }
 
-        public ObservableCollection<Rally> Sort(ObservableCollection<Rally> r)
-        {
-            List<Rally> sorted = r.OrderBy(x => x.Number).ToList();
-            int ptr = 0;
-            while (ptr < sorted.Count)
-            {
-                if (!r[ptr].Equals(sorted[ptr]))
-                {
-                    Rally t = r[ptr];
-                    r.RemoveAt(ptr);
-                    r.Insert(sorted.IndexOf(t), t);
-                }
-                else
-                {
-                    ptr++;
-                }
-            }
-            return r;
-        }
+        //public ObservableCollection<Rally> Sort(ObservableCollection<Rally> r)
+        //{
+        //    List<Rally> sorted = r.OrderBy(x => x.Number).ToList();
+        //    int ptr = 0;
+        //    while (ptr < sorted.Count)
+        //    {
+        //        if (!r[ptr].Equals(sorted[ptr]))
+        //        {
+        //            Rally t = r[ptr];
+        //            r.RemoveAt(ptr);
+        //            r.Insert(sorted.IndexOf(t), t);
+        //        }
+        //        else
+        //        {
+        //            ptr++;
+        //        }
+        //    }
+        //    return r;
+        //}
         public double calcPlaytime(Playlist l)
         {
             double pt = 0;
