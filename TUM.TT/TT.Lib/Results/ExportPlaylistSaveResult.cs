@@ -52,7 +52,7 @@ namespace TT.Lib.Results
             dialog = await Dialogs.ShowProgressAsync(shell, "Please wait...", "Export is in Progress...", false);
             if (singleRallies != false || rallyCollection != false)
             {
-                   await Task.Factory.StartNew(() => ExportVideo(dialog));
+                await Task.Factory.StartNew(() => ExportVideo(dialog));
             }
             await dialog.CloseAsync();
         }
@@ -60,7 +60,7 @@ namespace TT.Lib.Results
 
         public void ExportVideo(ProgressDialogController progress)
         {
-            
+
 
             string inputFile = @Manager.Match.VideoFile;
             string videoName = Manager.Match.VideoFile.Split('\\').Last();
@@ -81,21 +81,25 @@ namespace TT.Lib.Results
             {
                 progressBar = sum;
             }
-            
+
             currentProgress = 0;
 
             string[] RallyCollection = new string[rallyCount];
+
+
             string[] ConcatRally = new string[2];
             progress.Minimum = 0;
             progress.Maximum = progressBar;
             progress.SetProgress(0);
 
             for (int i = 0; i < rallyCount; i++)
-            {   
+            {
 
 
                 progress.SetMessage("Export Playlist '" + Manager.ActivePlaylist.Name + "': \n\nRally " + (i + 1) + " is being created...");
                 Rally curRally = Manager.ActivePlaylist.Rallies[i];
+
+
                 string RallyNumber = curRally.Number.ToString();
                 string RallyScore = curRally.CurrentRallyScore.ToString();
                 RallyScore = RallyScore.Replace(":", "-");
@@ -112,7 +116,7 @@ namespace TT.Lib.Results
                     MaxDuration = Convert.ToSingle((curRally.End - curRally.Start) / 1000),
                     VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
                     //AudioCodec = "copy", VideoCodec="copy"
-        
+
 
                 };
                 ffMpeg.ConvertMedia(@Manager.Match.VideoFile, NReco.VideoConverter.Format.mp4, fileName, NReco.VideoConverter.Format.mp4, settings);
@@ -124,12 +128,57 @@ namespace TT.Lib.Results
 
             if (rallyCollection)
             {
+                if (rallyCount <= 98)
+                {
+                    progress.SetMessage("\n Collection is currently being created! \n\nIt may take a while...");
+                    var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
+                    ffMpeg.ConvertProgress += UpdateProgress;
+                    NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
+                    ffMpeg.ConcatMedia(RallyCollection, @Location + @"\" + Manager.ActivePlaylist.Name + "_collection(" + rallyCount + ").mp4", NReco.VideoConverter.Format.mp4, settings);
+
+                }
+                else { 
+                int rallyCollectionLength = RallyCollection.Length;
+                string[] RallyCollection1 = new string[(rallyCollectionLength + 1) / 2];
+                string[] RallyCollection2 = new string[rallyCollectionLength - RallyCollection1.Length];
+
+                for (int j = 0; j < rallyCollectionLength; j++)
+                {
+                    if (j < RallyCollection1.Length)
+                    {
+                        RallyCollection1[j] = RallyCollection[j];
+                    }
+                    else
+                    {
+                        RallyCollection2[j - RallyCollection1.Length] = RallyCollection[j];
+                    }
+                }
+
+
                 progress.SetMessage("\n Collection is currently being created! \n\nIt may take a while...");
                 var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
-                ffMpeg.ConvertProgress += UpdateProgress;                
+                var ffMpeg2 = new NReco.VideoConverter.FFMpegConverter();
+
+
+                ffMpeg.ConvertProgress += UpdateProgress;
+                string collection1 = @Location + @"\" + Manager.ActivePlaylist.Name + "_collection1(" + RallyCollection1.Length + ").mp4";
+                string collection2 = @Location + @"\" + Manager.ActivePlaylist.Name + "_collection2(" + RallyCollection1.Length + ").mp4";
 
                 NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
-                ffMpeg.ConcatMedia(RallyCollection, @Location + @"\" + Manager.ActivePlaylist.Name + "_collection("+rallyCount+").mp4", NReco.VideoConverter.Format.mp4, settings);
+
+                ffMpeg.ConcatMedia(RallyCollection1, collection1, NReco.VideoConverter.Format.mp4, settings);
+                ffMpeg.ConcatMedia(RallyCollection2, collection2, NReco.VideoConverter.Format.mp4, settings);
+
+                string[] concatCollections = new string[2];
+                concatCollections[0] = collection1;
+                concatCollections[1] = collection2;
+
+
+
+                ffMpeg.ConcatMedia(concatCollections, @Location + @"\" + Manager.ActivePlaylist.Name + "_collection(" + rallyCount + ").mp4", NReco.VideoConverter.Format.mp4, settings);
+                File.Delete(collection1);
+                File.Delete(collection2);
+            }
                 progress.SetProgress(progressBar);
             }
 
@@ -142,12 +191,13 @@ namespace TT.Lib.Results
             }
         }
 
-        private void UpdateProgress (object sender, ConvertProgressEventArgs e)
-        {   double rT = e.TotalDuration.TotalSeconds-e.Processed.TotalSeconds;
+        private void UpdateProgress(object sender, ConvertProgressEventArgs e)
+        {
+            double rT = e.TotalDuration.TotalSeconds - e.Processed.TotalSeconds;
             if (rT < 0) rT = 0;
             TimeSpan remainingTime = TimeSpan.FromSeconds(rT);
-            ConvertProgress = (double) e.Processed.TotalMilliseconds;
-            ConvertDuration = (double) e.TotalDuration.TotalMilliseconds;
+            ConvertProgress = (double)e.Processed.TotalMilliseconds;
+            ConvertDuration = (double)e.TotalDuration.TotalMilliseconds;
             currentProgress = (progressBar / 2) + (progressBar / 2) * (ConvertProgress / ConvertDuration);
             if (currentProgress > progressBar)
             {
@@ -155,7 +205,7 @@ namespace TT.Lib.Results
             }
             dialog.SetMessage("\nCollection is currently being created! \n\nIt may take a while...(" + remainingTime.ToString(@"mm\:ss") + ")");
             dialog.SetProgress(currentProgress);
-            
+
         }
         private static string Execute(string exePath, string parameters)
         {
