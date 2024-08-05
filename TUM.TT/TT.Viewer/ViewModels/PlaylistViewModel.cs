@@ -30,6 +30,8 @@ namespace TT.Viewer.ViewModels
         private IDialogCoordinator Dialogs;
         public bool singleRalliesBool { get; set; }
         public bool rallyCollectionBool { get; set; }
+        public bool rallyScoreInVideoBool { get; set; }
+
 
 
         public PlaylistViewModel(IEventAggregator e, IMatchManager man, IDialogCoordinator dc)
@@ -39,6 +41,7 @@ namespace TT.Viewer.ViewModels
             Dialogs = dc;
             singleRalliesBool = false;
             rallyCollectionBool = true;
+            rallyScoreInVideoBool = true;
         }
 
         #region View Methods
@@ -177,11 +180,11 @@ namespace TT.Viewer.ViewModels
 
 
 
-                var progressDialog = new ExportPlaylistSaveResult(MatchManager, Dialogs, folderName, singleRalliesBool, rallyCollectionBool);
+                var progressDialog = new ExportPlaylistSaveResult(MatchManager, Dialogs, folderName, singleRalliesBool, rallyCollectionBool, rallyScoreInVideoBool);
                 yield return progressDialog;
             }
             else
-            {
+            { // TODO
                 var errorDialog = new ErrorMessageResult()
                 {
                     Title = "No Export Option chosen!",
@@ -192,7 +195,7 @@ namespace TT.Viewer.ViewModels
 
             }
         }
-
+       
         public void singleRallies()
         {
             singleRalliesBool = !singleRalliesBool;

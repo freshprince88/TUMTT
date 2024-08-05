@@ -25,6 +25,7 @@ namespace TT.Lib.Results
         public string Location { get; set; }
         public bool singleRallies { get; set; }
         public bool rallyCollection { get; set; }
+        public bool rallyScoreInVideo { get; set; }
         public IEventAggregator Events { get; private set; }
         public double ConvertProgress { get; set; }
         public double ConvertDuration { get; set; }
@@ -33,13 +34,14 @@ namespace TT.Lib.Results
         double progressBar { get; set; }
 
 
-        public ExportPlaylistSaveResult(IMatchManager manager, IDialogCoordinator dialogs, string location, bool sr, bool rc)
+        public ExportPlaylistSaveResult(IMatchManager manager, IDialogCoordinator dialogs, string location, bool sr, bool rc, bool rsiv)
         {
             Manager = manager;
             Location = location;
             Dialogs = dialogs;
             singleRallies = sr;
             rallyCollection = rc;
+            rallyScoreInVideo = rsiv;
             Events = IoC.Get<IEventAggregator>();
             Events.Subscribe(this);
         }
@@ -57,11 +59,8 @@ namespace TT.Lib.Results
             await dialog.CloseAsync();
         }
 
-
         public void ExportVideo(ProgressDialogController progress)
         {
-
-
             string inputFile = @Manager.Match.VideoFile;
             string videoName = Manager.Match.VideoFile.Split('\\').Last();
             videoName = videoName.Split('.').First();
@@ -71,7 +70,7 @@ namespace TT.Lib.Results
             int sum = 0;
             for (int s = 1; s <= rallyCount; s++)
             {
-                sum = sum + s;
+                sum += s;
             }
             if (rallyCollection)
             {
@@ -85,8 +84,6 @@ namespace TT.Lib.Results
             currentProgress = 0;
 
             string[] RallyCollection = new string[rallyCount];
-
-
             string[] ConcatRally = new string[2];
             progress.Minimum = 0;
             progress.Maximum = progressBar;
@@ -94,35 +91,71 @@ namespace TT.Lib.Results
 
             for (int i = 0; i < rallyCount; i++)
             {
-
-
                 progress.SetMessage("Export Playlist '" + Manager.ActivePlaylist.Name + "': \n\nRally " + (i + 1) + " is being created...");
                 Rally curRally = Manager.ActivePlaylist.Rallies[i];
-
 
                 string RallyNumber = curRally.Number.ToString();
                 string RallyScore = curRally.CurrentRallyScore.ToString();
                 RallyScore = RallyScore.Replace(":", "-");
                 string SetScore = curRally.CurrentSetScore.ToString();
                 SetScore = SetScore.Replace(":", "-");
-                string fileName = @Location + @"\#" + RallyNumber + "_" + RallyScore + " (" + SetScore + ").mp4";
+                string filename = $"#{RallyNumber}_{RallyScore} ({SetScore})";
+                string fileName = @Location + @"\" + filename + ".mp4";
                 RallyCollection[i] = fileName;
 
                 var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
 
+                // Escape special characters in the filename for use in FFmpeg arguments
+                string filenameForVideo = $"#{RallyNumber} {RallyScore} ({SetScore})";
+                string escapedFilename = EscapeText(filenameForVideo);
+
+                // Create drawText arguments
+                string drawTextArgs = $"drawtext=text='{escapedFilename}':x=10:y=10:fontsize=28:fontcolor=white";
+
+                if (rallyScoreInVideo) { 
+
+                // Set ConvertSettings with the dynamic drawText arguments
                 NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
                 {
                     Seek = Convert.ToSingle(curRally.Start / 1000),
                     MaxDuration = Convert.ToSingle((curRally.End - curRally.Start) / 1000),
                     VideoFrameSize = NReco.VideoConverter.FrameSize.hd720,
-                    //AudioCodec = "copy", VideoCodec="copy"
-
-
+                    CustomOutputArgs = $"-vf \"{drawTextArgs}\""
                 };
-                ffMpeg.ConvertMedia(@Manager.Match.VideoFile, NReco.VideoConverter.Format.mp4, fileName, NReco.VideoConverter.Format.mp4, settings);
+                    try
+                    {
+                        ffMpeg.ConvertMedia(inputFile, NReco.VideoConverter.Format.mp4, fileName, NReco.VideoConverter.Format.mp4, settings);
+                    }
+                    catch (NReco.VideoConverter.FFMpegException ex)
+                    {
+                        Console.WriteLine($"Error converting media: {ex.Message}");
+                        throw;
+                    }
+                }
+                else
+                {
+
+                    // Set ConvertSettings WITHOUT the dynamic drawText arguments
+                    NReco.VideoConverter.ConvertSettings settings = new NReco.VideoConverter.ConvertSettings()
+                    {
+                        Seek = Convert.ToSingle(curRally.Start / 1000),
+                        MaxDuration = Convert.ToSingle((curRally.End - curRally.Start) / 1000),
+                        VideoFrameSize = NReco.VideoConverter.FrameSize.hd720
+                    };
+                    try
+                    {
+                        ffMpeg.ConvertMedia(inputFile, NReco.VideoConverter.Format.mp4, fileName, NReco.VideoConverter.Format.mp4, settings);
+                    }
+                    catch (NReco.VideoConverter.FFMpegException ex)
+                    {
+                        Console.WriteLine($"Error converting media: {ex.Message}");
+                        throw;
+                    }
+
+                }
 
 
-                currentProgress = currentProgress + (i + 1);
+                currentProgress += (i + 1);
                 progress.SetProgress(currentProgress);
             }
 
@@ -135,50 +168,46 @@ namespace TT.Lib.Results
                     ffMpeg.ConvertProgress += UpdateProgress;
                     NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
                     ffMpeg.ConcatMedia(RallyCollection, @Location + @"\" + Manager.ActivePlaylist.Name + "_collection(" + rallyCount + ").mp4", NReco.VideoConverter.Format.mp4, settings);
-
                 }
-                else { 
-                int rallyCollectionLength = RallyCollection.Length;
-                string[] RallyCollection1 = new string[(rallyCollectionLength + 1) / 2];
-                string[] RallyCollection2 = new string[rallyCollectionLength - RallyCollection1.Length];
-
-                for (int j = 0; j < rallyCollectionLength; j++)
+                else
                 {
-                    if (j < RallyCollection1.Length)
+                    int rallyCollectionLength = RallyCollection.Length;
+                    string[] RallyCollection1 = new string[(rallyCollectionLength + 1) / 2];
+                    string[] RallyCollection2 = new string[rallyCollectionLength - RallyCollection1.Length];
+
+                    for (int j = 0; j < rallyCollectionLength; j++)
                     {
-                        RallyCollection1[j] = RallyCollection[j];
+                        if (j < RallyCollection1.Length)
+                        {
+                            RallyCollection1[j] = RallyCollection[j];
+                        }
+                        else
+                        {
+                            RallyCollection2[j - RallyCollection1.Length] = RallyCollection[j];
+                        }
                     }
-                    else
-                    {
-                        RallyCollection2[j - RallyCollection1.Length] = RallyCollection[j];
-                    }
+
+                    progress.SetMessage("\n Collection is currently being created! \n\nIt may take a while...");
+                    var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
+                    var ffMpeg2 = new NReco.VideoConverter.FFMpegConverter();
+
+                    ffMpeg.ConvertProgress += UpdateProgress;
+                    string collection1 = @Location + @"\" + Manager.ActivePlaylist.Name + "_collection1(" + RallyCollection1.Length + ").mp4";
+                    string collection2 = @Location + @"\" + Manager.ActivePlaylist.Name + "_collection2(" + RallyCollection1.Length + ").mp4";
+
+                    NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
+
+                    ffMpeg.ConcatMedia(RallyCollection1, collection1, NReco.VideoConverter.Format.mp4, settings);
+                    ffMpeg.ConcatMedia(RallyCollection2, collection2, NReco.VideoConverter.Format.mp4, settings);
+
+                    string[] concatCollections = new string[2];
+                    concatCollections[0] = collection1;
+                    concatCollections[1] = collection2;
+
+                    ffMpeg.ConcatMedia(concatCollections, @Location + @"\" + Manager.ActivePlaylist.Name + "_collection(" + rallyCount + ").mp4", NReco.VideoConverter.Format.mp4, settings);
+                    File.Delete(collection1);
+                    File.Delete(collection2);
                 }
-
-
-                progress.SetMessage("\n Collection is currently being created! \n\nIt may take a while...");
-                var ffMpeg = new NReco.VideoConverter.FFMpegConverter();
-                var ffMpeg2 = new NReco.VideoConverter.FFMpegConverter();
-
-
-                ffMpeg.ConvertProgress += UpdateProgress;
-                string collection1 = @Location + @"\" + Manager.ActivePlaylist.Name + "_collection1(" + RallyCollection1.Length + ").mp4";
-                string collection2 = @Location + @"\" + Manager.ActivePlaylist.Name + "_collection2(" + RallyCollection1.Length + ").mp4";
-
-                NReco.VideoConverter.ConcatSettings settings = new NReco.VideoConverter.ConcatSettings();
-
-                ffMpeg.ConcatMedia(RallyCollection1, collection1, NReco.VideoConverter.Format.mp4, settings);
-                ffMpeg.ConcatMedia(RallyCollection2, collection2, NReco.VideoConverter.Format.mp4, settings);
-
-                string[] concatCollections = new string[2];
-                concatCollections[0] = collection1;
-                concatCollections[1] = collection2;
-
-
-
-                ffMpeg.ConcatMedia(concatCollections, @Location + @"\" + Manager.ActivePlaylist.Name + "_collection(" + rallyCount + ").mp4", NReco.VideoConverter.Format.mp4, settings);
-                File.Delete(collection1);
-                File.Delete(collection2);
-            }
                 progress.SetProgress(progressBar);
             }
 
@@ -190,6 +219,12 @@ namespace TT.Lib.Results
                 }
             }
         }
+
+        private string EscapeText(string text)
+        {
+            return text.Replace(":", "\\:").Replace(",", "\\,").Replace("'", "\\'");
+        }
+
 
         private void UpdateProgress(object sender, ConvertProgressEventArgs e)
         {

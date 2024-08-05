@@ -60,6 +60,10 @@ namespace TT.Models
         private MatchPlayer server;
 
         /// <summary>
+        /// Backs the <see cref="ServerSide"/> property.
+        /// </summary>
+
+        /// <summary>
         /// Backs the <see cref="Number"/> property.
         /// </summary>
         private int nummer = 1;

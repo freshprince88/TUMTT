@@ -8,10 +8,14 @@ namespace TT.Models
 {
     public class Stroke : PropertyChangedBase
     {
+        
+
         /// <summary>
         /// Backs the <see cref="Rally"/> property.
         /// </summary>
         private Rally rally;
+
+     
 
         private Stroketechnique strokeTechniqueField;
 
@@ -122,6 +126,9 @@ namespace TT.Models
             set { this.RaiseAndSetIfChanged(ref this.rally, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the match this rally.
+        /// </summary>
         /// <remarks/>
         [XmlAttribute]
         public bool OpeningShot
@@ -1052,6 +1059,35 @@ namespace TT.Models
 
             double aufschlagPosition;
             double seite = this.Placement.WY == double.NaN ? 999 : Convert.ToDouble(this.Placement.WY);
+            //MatchPlayer player = this.Player;
+            
+            //if (seite <= -1)
+            //{
+            //    if (this.Player == MatchPlayer.First)
+            //    {
+            //        if (match.FirstPlayer.StartingTableEnd == StartingTableEnd.Top)
+            //        {
+            //            aufschlagPosition = this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition);
+            //        }
+            //        else
+            //        {
+            //            aufschlagPosition = 152.5 - (this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition));
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (match.SecondPlayer.StartingTableEnd == StartingTableEnd.Top)
+            //        {
+            //            aufschlagPosition = this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition);
+            //        }
+            //        else
+            //        {
+            //            aufschlagPosition = 152.5 - (this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition));
+            //        }
+            //    }
+
+            //}
+
             if (seite >= 137)
             {
                 aufschlagPosition = 152.5 - (this.Playerposition == double.NaN ? 999 : Convert.ToDouble(this.Playerposition));

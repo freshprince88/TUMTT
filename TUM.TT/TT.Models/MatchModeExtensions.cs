@@ -163,6 +163,11 @@ namespace TT.Models
         [Description("Women's Doubles")]
         WD,
         /// <summary>
+        /// Mixed Doubles.
+        /// </summary>
+        [Description("Mixeds Doubles")]
+        XD,
+        /// <summary>
         /// Junior Boys' Doubles.
         /// </summary>
         [Description("Junior Boys' Doubles")]
@@ -335,7 +340,78 @@ namespace TT.Models
         /// </summary>
         [Description("Class 9-10")]
         C9_10,
- }
+        /// <summary>
+        /// Class 14.
+        /// </summary>
+        [Description("Class 14")]
+        C14,
+        /// <summary>
+        /// Class 17.
+        /// </summary>
+        [Description("Class 17")]
+        C17,
+        /// <summary>
+        /// Class 18.
+        /// </summary>
+        [Description("Class 18")]
+        C18,
+        /// <summary>
+        /// Class 20.
+        /// </summary>
+        [Description("Class 18")]
+        C20,
+        /// <summary>
+        /// Class 22.
+        /// </summary>
+        [Description("Class 22")]
+        C22,
+        /// <summary>
+        /// Class 4-7.
+        /// </summary>
+        [Description("Class 4-7")]
+        C4_7,
+        /// <summary>
+        /// Class 4-8.
+        /// </summary>
+        [Description("Class 4-8")]
+        C4_8,
+        /// <summary>
+        /// Class 4-10.
+        /// </summary>
+        [Description("Class 4-10")]
+        C4_10,
+        /// <summary>
+        /// Class 5-10.
+        /// </summary>
+        [Description("Class 5-10")]
+        C5_10,
+        /// <summary>
+        /// Class 7-10.
+        /// </summary>
+        [Description("Class 7-10")]
+        C7_10,
+        /// <summary>
+        /// Class 14-17.
+        /// </summary>
+        [Description("Class 14-17")]
+        C14_17,
+        /// <summary>
+        /// Class 14-18.
+        /// </summary>
+        [Description("Class 14-18")]
+        C14_18,
+        /// <summary>
+        /// Class 14-20.
+        /// </summary>
+        [Description("Class 14-20")]
+        C14_20,
+        /// <summary>
+        /// Class 17-20.
+        /// </summary>
+        [Description("Class 17-20")]
+        C17_20,
+
+    }
 
 
     /// <summary>
