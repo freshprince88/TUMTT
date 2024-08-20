@@ -15,10 +15,18 @@ namespace TT.Viewer.ViewModels
 {
     public class ReceiveViewModel : Conductor<IScreen>.Collection.AllActive,
         IHandle<TableStdViewSelectionChangedEvent>,
+        IHandle<TableViewSelectionChangedEvent>,
+        IHandle<SpinControlSelectionChangedEvent>,
         IHandle<BasicFilterSelectionChangedEvent>
     {
         public BasicFilterViewModel BasicFilterView { get; set; }
         public TableStandardViewModel TableView { get; set; }
+
+        public SpinControlViewModel ServiceSpinControl { get; private set; }
+        public List<Models.Util.Enums.Stroke.Spin> SelectedSpins { get; private set; }
+        public TableServiceViewModel ServiceTableView { get; private set; }
+        public HashSet<Positions.Table> SelectedServiceTablePositions { get; set; }
+        public HashSet<Positions.Server> SelectedServerPositions { get; set; }
         public Models.Util.Enums.Stroke.Hand Hand { get; private set; }
         public HashSet<Positions.Length> SelectedStrokeLengths { get; set; }
         public HashSet<Positions.Table> SelectedTablePositions { get; set; }
@@ -93,6 +101,14 @@ namespace TT.Viewer.ViewModels
             TableView = new TableStandardViewModel(this.events, "Receive");
             TableView.StrokeNumber = 1;
             TableView.lastStrokeOrOpeningShot = 0;
+
+            ServiceTableView = new TableServiceViewModel(events);
+            SelectedSpins = new List<Models.Util.Enums.Stroke.Spin>();
+            SelectedServerPositions = new HashSet<Positions.Server>();
+            SelectedServiceTablePositions = new HashSet<Positions.Table>();
+            ServiceSpinControl = new SpinControlViewModel(events);
+
+
         }
 
         #region View Methods
@@ -491,12 +507,16 @@ namespace TT.Viewer.ViewModels
             // Subscribe ourself to the event bus
             this.events.Subscribe(this);
             this.ActivateItem(TableView);
+            this.ActivateItem(ServiceSpinControl);
+            this.ActivateItem(ServiceTableView);
             this.ActivateItem(BasicFilterView);
 
            //UpdateSelection(Manager.ActivePlaylist);
         }
         protected override void OnDeactivate(bool close)
         {
+            this.DeactivateItem(ServiceSpinControl, close);
+            this.DeactivateItem(ServiceTableView, close);
             this.DeactivateItem(TableView, close);
             this.DeactivateItem(BasicFilterView, close);
             // Unsubscribe ourself to the event bus
@@ -526,6 +546,21 @@ namespace TT.Viewer.ViewModels
            UpdateSelection(Manager.ActivePlaylist);
         }
 
+        public void Handle(TableViewSelectionChangedEvent message)
+        {
+            SelectedServerPositions = message.PlayerPositions;
+            SelectedServiceTablePositions = message.Positions;
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
+        public void Handle(SpinControlSelectionChangedEvent message)
+        {
+            SelectedSpins = message.Selected;
+            UpdateSelection(Manager.ActivePlaylist);
+        }
+
+
+
         #endregion
 
         #region Helper Methods
@@ -544,7 +579,10 @@ namespace TT.Viewer.ViewModels
                     r.Strokes[1].HasTablePosition(this.SelectedTablePositions) &&
                     r.Strokes[1].HasStrokeLength(this.SelectedStrokeLengths) &&
                     r.Strokes[1].HasAggressiveness(this.SelectedAggressiveness) &&
-                    r.Strokes[1].HasSpecials(this.SelectedSpecials)).
+                    r.Strokes[1].HasSpecials(this.SelectedSpecials)&&
+                    r.Strokes[0].HasSpins(this.SelectedSpins)&&
+                    r.Strokes[0].HasServerPosition(this.SelectedServerPositions) &&
+                    r.Strokes[0].HasTablePosition(this.SelectedServiceTablePositions)).
                     ToList();
 
                 Manager.SelectedRallies = results;

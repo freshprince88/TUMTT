@@ -37,6 +37,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentColorBrush}">Receive</TextBlock>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="1" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 0"/>
@@ -359,7 +361,42 @@
             </Grid>        
         </Grid>
         <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="7" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
-        <Grid Grid.Row="8">
+        <Grid x:Name="ServeSpinPlacementExpanderGrid" Grid.Row="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Expander  Grid.Row="0" BorderThickness="0" Background="Transparent"  Controls:ControlsHelper.ContentCharacterCasing="Normal" IsExpanded="False">
+                <Expander.Header>
+                    <Label HorizontalAlignment="Center" Content="Service Spin &amp; Placement"/>
+                </Expander.Header>
+                <Grid x:Name="SpinPlacementGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Spin"/>
+                    <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" FontSize="10" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                        <AccessText TextWrapping="Wrap" Text="Position &amp; Placement"/>
+                    </Label>
+                    <ContentControl x:Name="ServiceSpinControl" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Margin="5 5 5 5" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                    <ContentControl x:Name="ServiceTableView" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3" Margin="5 5 5 5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    
+                </Grid>
+            </Expander>
+        </Grid>
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="9" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
+
+        <Grid Grid.Row="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="70" Width="3*" />
                 <ColumnDefinition Width="4*" />
@@ -398,8 +435,8 @@
                 passive
             </ToggleButton>
         </Grid>
-        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="9" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
-        <Grid Grid.Row="10">
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="11" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
+        <Grid Grid.Row="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="70" />
                 <ColumnDefinition />
@@ -429,8 +466,8 @@
                 good
             </ToggleButton>            
         </Grid>
-        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="11" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
-        <Grid Grid.Row="12">
+        <Line X1="0" X2="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Y1="0" Y2="0" Grid.Row="13" Stroke="{DynamicResource AccentColorBrush}" StrokeDashArray="6,2"  Margin="0 5 0 5"/>
+        <Grid Grid.Row="14">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="70" Width="3*" />
                 <ColumnDefinition Width="4*" />
